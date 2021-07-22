@@ -8,13 +8,13 @@
   ### Error -- forgot to put the text message in quotes
   # cat(Hello);   # error unless there is a variable named Hello
   
-  ### Outputting multiple text message
+  ### Outputting multiple text messages
   cat("Hello, World");
   cat("How are you?");
   cat("I am fine?");
   
   ### adding linefeeds to the output ( \n )
-  cat("Hello, World.\n");
+  cat("Hello, World.Hello, World.\n");
   cat("How are you?\n");
   cat("I am\n fine?\n");
   
