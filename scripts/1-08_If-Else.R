@@ -18,70 +18,101 @@
   {
     cat("  high temp 3 is greater than 50\n");
   }
+  else
+  {
+    cat("  high temp 3 is not greater than 50\n");
+  }
   if(highTemps[4] > 50)
   {
     cat("  high temp 4 is greater than 50\n");
   } 
+  else
+  {
+    cat("  high temp 4 is not greater than 50\n");
+  }
   if(highTemps[5] > 50)
   {
     cat("  high temp 5 is greater than 50\n");
   }
-  
-  cat("\n---------\nChecking high temp 2 using all 6 conditional operators:\n");
-  
-  if(highTemps[2] >= 50)
+  else
   {
-    cat("  high temp is greater than or equal to 50\n");
-  }
-  if(highTemps[2] <= 50)
-  {
-    cat("  high temp is less than or equal to 50\n");
-  }
-  if(highTemps[2] > 50)
-  {
-    cat("  high temp is greater than 50\n");
-  }
-  if(highTemps[2] < 50)
-  {
-    cat("  high temp is less than 50\n");
-  }
-  if(highTemps[2] == 50)
-  {
-    cat("  high temp is equal to 50\n");
-  }
-  if(highTemps[2] != 50)
-  {
-    cat("  high temp is not equal to 50\n");
+    cat("  high temp 5 is not greater than 50\n");
   }
   
-  cat("\n---------\nCheck to see the noon condition on the day 2:\n");
+  cat("\n---------\nCheck to see the noon condition on the days 2 and 3:\n");
   
   # checking the second noonCond, which is "Cloudy"
   if(noonCond[2] == "Cloudy")  # noonCond[2] is "Cloudy"
   {
     cat("  Day was Cloudy\n");
   }
-  if(noonCond[2] != "Sunny")   # noonCond[2] is not "Sunny"
+  else # noonCond[2] is not "Cloudy"
+  {
+    cat("  Day was not Cloudy\n");
+  }
+  if(noonCond[3] != "Sunny")   # noonCond[3] is not "Sunny"
   {
     cat("  Day was not Sunny\n")
   }
+  else # noonCond[3] is "Sunny"
+  {
+    cat("  Day was Sunny\n")
+  }
  
-  cat("\n---------\nChecking same condition but changed 'Cloudy' to 'cloudy':\n");
+  cat("\n---------\nChecking day 4 against multiple conditions:\n");
   
-  if(noonCond[2] == "cloudy")   # This will be FALSE because of the lowercase c
+  if(noonCond[4] == "Cloudy")       # 1st check: the day is cloudy
   {
-    cat("  Day was cloudy\n");
+    cat("  Day 4 was cloudy\n");
   }
-  if(noonCond[2] != "cloudy")   # This will be TRUE because of the lowercase c
+  else if(noonCond[4] == "Sunny")   # 2nd check: the day is sunny
   {
-    cat("  Day was NOT cloudy\n"); 
+    cat("  Day 4 was sunny\n"); 
+  }
+  else if(noonCond[4] == "Rain")   # 3rd check: the day is rainy
+  {
+    cat("  Day 4 was rainy\n"); 
   }
   
-  cat("\n---------\nOutputting information from another column:\n");
+  cat("\n---------\nChecking day 5 against multiple conditions:\n");
   
-  if(noonCond[2] == "Cloudy")   # back to correct spelling of Cloudy
+  
+  if(noonCond[5] == "Cloudy")       # 1st check: the day is cloudy
   {
-    cat("  Day was Cloudy");
-    cat(" and the high temperature that day was", highTemps[2], "\n");
+    cat("  Day 5 was cloudy\n");
+  }
+  else if(noonCond[5] == "Sunny")   # 2nd check: the day is sunny
+  {
+    cat("  Day 5 was sunny\n"); 
+  }
+  else if(noonCond[5] == "Rain")    # 3rd check: the day is rainy
+  {
+    cat("  Day 5 was rainy\n"); 
+  }
+  else  # none of the above are TRUE so output some error message
+  {
+    cat("  The condition for day 5 is unknown"); 
+  }
+  
+  cat("\n---------\nChecking temperature of day 3:\n");
+  if(highTemps[3] > 70)      # check for anything above 70
+  {
+    cat("  That is hot for April!"); 
+  }
+  else if(highTemps[3] > 60) # check for temps 61-70
+  {
+    cat("  That is warm for April!");   
+  }
+  else if(highTemps[3] > 50) # check for temps 51-60
+  {
+    cat("  That temperature is about right for April!");   
+  }
+  else if(highTemps[3] > 40) # check for temps 41-50
+  {
+    cat("  That is a little cold for April!");   
+  }
+  else # temperatures 40 and below
+  {
+    cat("  That is a usually cold for April!");   
   }
 }
