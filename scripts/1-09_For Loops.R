@@ -62,7 +62,7 @@
   }
   
   # Using state variables to find general information about the values in a vector
-  sunnyDays = 0; # state variable -- will hold the count of cloudy days
+  sunnyDays = 0; # state variable -- will hold the count of sunny days
   for(i in 1:numDays)
   {
     if(noonCond[i] == "Sunny")

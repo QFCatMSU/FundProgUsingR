@@ -2,103 +2,93 @@
   rm(list=ls());  # cleans out the Environment every time the code is executed
   options(show.error.locations = TRUE);  # show the line number of errors in the Console
 
-  cat("---------\nRepeating the same code multiple times:\n");
-  for(i in 1:5)  # repeat 5 times
-  {
-    cat("Hello\n");
-  }
-  
-  cat("---------\nUsing the indexing variable as a counter:\n");
-  for(i in 1:5) # repeat 5 times
-  {
-    cat("The count is:", i, "\n");
-  }
-
-  cat("---------\nUsing a more complicated sequence:\n");
-  for(day in seq(from=20, to=2, by=-3))
-  {
-    cat("The count is:", day, "\n");
-  }
-  
   ### read in data from  twoWeekWeatherData.csv
   weatherData = read.csv(file="data/twoWeekWeatherData.csv", 
                          sep=",",
                          header=TRUE, 
                          stringsAsFactors = FALSE);  
   
-  
-  
   ### Extract the highTemps column from the data frame -- save it to a variable
   highTemps = weatherData$highTemp;
   noonCond = weatherData$noonCondition;
+  precip = weatherData$precipitation;
   
   # get length of vector
   numDays  = nrow(weatherData);  # length of the vectors is number of rows (14)
-  # numDays = length(highTemp);  # an alternate way to get length
  
-  cat("---------\nIndexing highTemps with the indexing variable:\n");
-  for(day in 1:numDays)
-  {
-    cat(highTemps[day], "\n");  # day will take the values 1-14
-  }
-
-  cat("---------\nUsing indexing variable as a counter and an index for noonCond:\n");
-  for(day in 1:numDays)
-  {
-    cat(day, ") ", noonCond[day], "\n", sep="");
-  }
-
-  cat("---------\nUsing if-else statements within a for loop:\n");
-  for(i in 1:numDays)
-  {
-    if(noonCond[i] == "Sunny")
-    {
-      cat("day ", i, " was sunny\n", sep="");
-    }
-    else
-    {
-      cat("day ", i, " was not sunny\n", sep="");
-    }
-  }
+  # Using two state variables
+  sunnyDays = 0; # state variable -- will hold the count of sunny days
+  rainyDays = 0; # state variable -- will hold the count of sunny days
   
-  # Using state variables to find general information about the values in a vector
-  sunnyDays = 0; # state variable -- will hold the count of cloudy days
   for(i in 1:numDays)
   {
     if(noonCond[i] == "Sunny")
     {
       sunnyDays = sunnyDays +1;   # increases sunnyDays by 1
     }
-    # there is no else here -- we don't care about non-sunny days
+    # We use else if here because we know "Sunny" and "Rain" are mutually exclusive
+    else if(noonCond[i] == "Rain")
+    {
+      rainyDays = rainyDays +1;   # increases rainyDays by 1
+    }
   }
   
-  # # if-any
-  # anyTornados = FALSE;  # often called state variables
-  # anyFog = FALSE;
-  # 
-  # cloudyDays = 0;
-  # for(i in 1:highTempsL)
-  # {
-  #   if(noonCond[i] == "Fog")
-  #   {
-  #     anyFog = TRUE;
-  #   }   
-  #   if(noonCond[i] == "Blizzard")
-  #   {
-  #     anyBlizzard = TRUE; 
-  #   }
-  # }
-  # # mention inefficiency of checking after values have been found
-  # cat("The number of cloudy days was: ", cloudyDays, "\n");
-  # 
-  # # go through only even values - note why you don't want to use 14:
-  # evenNum = seq(from=1, by=2, to=length(highTempsL));
-  # 
-  # for(i in evenNum)
-  # {
-  #   if(noonCond[i] == "Cloudy")
-  #   {
-  #     cloudyDays = cloudyDays +1; 
-  #   }   
-  # }
+  tempGT60 = 0; # days with temperatures greater than 60
+  tempLT50 = 0; # days with temperatures less than 50
+  
+  for(i in 1:numDays)
+  {
+    if(highTemps[i] > 60)
+    {
+      tempGT60 = tempGT60 +1;  
+    }
+    else if(highTemps[i] < 50)
+    {
+      tempLT50 = tempLT50 +1;
+    }
+  }
+  
+  tempGT60odd = 0; # odd days with temperatures greater than 60
+  tempLT50odd = 0; # odd days with temperatures less than 50
+  
+  for(i in seq(from=1, to=numDays, by=2))
+  {
+    if(highTemps[i] > 60)
+    {
+      tempGT60odd = tempGT60odd +1;  
+    }
+    else if(highTemps[i] < 50)
+    {
+      tempLT50odd = tempLT50odd +1;
+    }
+  }
+  
+  totalPrecip = 0;
+  for(i in 1:numDays)
+  {
+    totalPrecip = totalPrecip + precip[i];
+  }
+  
+  avgPrecip = totalPrecip/numDays;
+  
+  
+  anyDayLT40 = FALSE;
+  for(i in 1:numDays)
+  {
+    if(highTemps[i] < 40)
+    {
+      anyDayLT40 = TRUE;
+      # break;
+    }
+  }
+  
+  
+  highestHigh = highTemps[1];
+  for(i in 1:numDays)  # could be 2:numDays
+  {
+    if(highTemps[i] > highestHigh)
+    {
+      highestHigh = highTemps[i];
+    }
+  }
 }
