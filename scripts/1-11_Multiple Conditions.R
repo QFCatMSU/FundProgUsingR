@@ -3,109 +3,128 @@
   options(show.error.locations = TRUE);  # show the line number of errors in the Console
   
   ### read in data from  twoWeekWeatherData.csv
-  weatherData = read.csv(file="data/twoWeekWeatherData.csv", 
+  weatherData = read.csv(file="data/twoWeekWeatherData2.csv", 
                          sep=",",
                          header=TRUE, 
                          stringsAsFactors = FALSE);  
   
-  
-  ## add new data file with messy noonCond column
+  # get length of vector
+  numDays  = nrow(weatherData);  # length of the vectors is number of rows (14)
   
   ### Extract the highTemps column from the data frame -- save it to a variable
   highTemps = weatherData$highTemp;
   noonCond = weatherData$noonCondition;
-  precip = weatherData$precipitation;
 
-  # get length of vector
-  numDays  = nrow(weatherData);  # length of the vectors is number of rows (14)
-  
-  # Using two state variables
+  #### From last lesson 
   sunnyDays = 0; # state variable -- will hold the count of sunny days
   rainyDays = 0; # state variable -- will hold the count of sunny days
+  
+  for(i in 1:numDays)
+  {
+    if(noonCond[i] == "Sunny")
+    {
+      sunnyDays = sunnyDays +1;   # increases sunnyDays by 1
+    }
+    # We use else if here because we know "Sunny" and "Rain" are mutually exclusive
+    else if(noonCond[i] == "Rain")
+    {
+      rainyDays = rainyDays +1;   # increases rainyDays by 1
+    }
+  }
+
+  # Combine two conditional statements using the OR operator
+  sunnyOrRainyDays = 0; 
   
   for(i in 1:numDays)
   {
     if(noonCond[i] == "Sunny" || noonCond[i] == "Rain")
     {
-      sunnyDays = sunnyDays +1;   # increases sunnyDays by 1
+      sunnyOrRainyDays = sunnyOrRainyDays +1;   
     }
   }
   
-  # Using two state variables
-  sunnyDays = 0; # state variable -- will hold the count of sunny days
-  rainyDays = 0; # state variable -- will hold the count of sunny days
+  ### This codeblock will cause an error
+  # sunnyOrRainyDays2 = 0;
+  # for(i in 1:numDays)
+  # {
+  #   if(noonCond[i] == "Sunny" || "Rain")  # needs to be explicit
+  #   {
+  #     sunnyOrRainyDays2 = sunnyOrRainyDays2 +1;   
+  #   }
+  # }
   
+  
+  ### Using OR to check for multiple spellings 
+  noonCondMess = weatherData$noonCondMessy
+
+  sunnyDays1 = 0; 
+
   for(i in 1:numDays)
   {
-    if(noonCond[i] == "Sunny" || noonCond == "sunny" || noonCond == "sun")
+    if(noonCondMess[i] == "Sunny" || noonCondMess[i] == "sunny" || 
+       noonCondMess[i] == "sun" || noonCondMess[i] == "SUN")
     {
-      sunnyDays = sunnyDays +1;   # increases sunnyDays by 1
+      sunnyDays1 = sunnyDays1 +1; # increases sunnyDays by 1
     }
   }
-  
-  for(i in 1:numDays)
-  {
-    firstLetter = substr(noonCond[i], start=1, stop=1);
-    
-    if(firstLetter == "s" || firstLetter == "S")
-    {
-      sunnyDays = sunnyDays +1;   # increases sunnyDays by 1
-    }
-  }
-  
-  ## app -- alternate way to do this
-  for(i in 1:numDays)
-  {
-    firstLetter = substr(noonCond[i], start=1, stop=1);
-    secondLetter = substr(noonCond[i], start=2, stop=2);
-    
-    if( (firstLetter == "s" || firstLetter == "S") &&
-        (secondLetter == "u" || secondLetter == "U") )
-    {
-      sunnyDays = sunnyDays +1;   # increases sunnyDays by 1
-    }
-  }
-  
-  # grep has better (and faster)  ways to do this
-  
-  tempGT60 = 0; # days with temperatures greater than 60
-  tempLT50 = 0; # days with temperatures less than 50
-  
-  for(i in 1:numDays)
-  {
-    if(highTemps[i] > 50 && highTemps[i] < 60)
-    {
-      tempGT60 = tempGT60 +1;  
-    }
-    else if(highTemps[i] < -50 || highTemps > 150)
-    {
-      tempLT50 = tempLT50 +1;
-    }
-  }
-  
+
+  ### Using AND to check for conditions on two different variables
   goOutDay = 0;
   
   for(i in 1:numDays)
   {
-    if(highTemps[i] > 50 && noonCond[i] == "Sunny")
+    if(highTemps[i] > 60 && noonCond[i] == "Sunny")
     {
       goOutDay = goOutDay +1;
     }
   }
   
+  ### Reversing the conditions from above
+  stayInDay = 0;
+  
   for(i in 1:numDays)
   {
-    if(highTemps[i] > 50 && noonCond[i] == "Sunny")
+    if(highTemps[i] <= 50 && noonCond[i] != "Sunny")
     {
-      goOutDay = goOutDay +1;
+      stayInDay = stayInDay +1;
     }
-    else if(highTemps[i] > 50 && noonCond[i] == "Cloudy")
+  }
+
+  cat("\n------\n");
+  
+  ### Combining the last two conditional statements, which are mutually exclusive
+  for(i in 1:numDays)
+  {
+    if(highTemps[i] > 60 && noonCond[i] == "Sunny")
     {
-      goOutDay = goOutDay +1;
+      cat("day", i, " good day to go out\n");
     }
-    else if(highTemps[i] < 50 && noonCond[i] == "Sunny")
+    else if(highTemps[i] <= 50 && noonCond[i] != "Sunny")
     {
-      goOutDay = goOutDay +1;
+      cat("day", i, " good day to stay in\n");     
+    }
+  }
+  
+  cat("\n------\n");
+  
+  ### Using AND to bound numbers on both sides
+  for(i in 1:numDays)
+  {
+    if(highTemps[i] >= 50 && highTemps[i] < 60)
+    {
+      cat("It was ", highTemps[i], "degrees on day ", i, "\n");
+    }
+  }
+
+  cat("\n------\n");
+
+  ### Using OR to check extreme values on both sides 
+  precipBad = weatherData$precipBad;
+  for(i in 1:numDays)
+  {
+    if(precipBad[i] < 0 || precipBad[i] > 10)
+    {
+      cat("Day", i, "has a value of" , precipBad[i], "\n");
     }
   }
 }
