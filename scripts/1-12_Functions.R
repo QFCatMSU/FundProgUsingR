@@ -8,18 +8,35 @@
                          header=TRUE, 
                          stringsAsFactors = FALSE);  
   
-  highTemps = weatherData$highTemp;
-  precipBad = weatherData$precipBad;
+  precip = weatherData$precipitation;
   
-  maxHigh = max(highTemps);
-  minHigh = min(highTemps);
-  meanHigh = mean(highTemps);
-  sdHigh = sd(highTemps);
-  varHigh = var(highTemps);
-  medianHigh = median(highTemps,na.rm=TRUE);
+  precipMax = max(precip);
+  precipMean = mean(precip);
+  precipMed = median(precip);
+  precipSD = sd(precip);
   
-  maxPreci = max(precipBad);
-  maxPrecip2 = max(precipBad, na.rm=TRUE, "", "SDFDSA");
+  # see if the first number is divisible by the second
+  isDivisible = function(div1, div2)
+  {
+    remainder = div1 %% div2;
+    if(remainder == 0)
+    {
+      return(TRUE);
+    } 
+    else
+    {
+      return (FALSE);
+    }
+  }
   
-  bc = max(weatherData$noonCondition);
+  div12_4 = isDivisible(12,4);
+  div12_5 = isDivisible(12,5);
+  
+  # better to put in parameter names:
+  div12_4a = isDivisible(div1=12, div2=4);
+  div12_5a = isDivisible(div1=12, div2=5);
+  
+  # the order does not matter when you use parameter names:
+  div12_4b = isDivisible(div2=4, div1=12);
+  div12_5b = isDivisible(div2=5, div1=12);
 }
