@@ -73,6 +73,7 @@
   {
     cat("  Day 4 was rainy\n"); 
   }
+
   
   cat("\n---------\nChecking day 5 against multiple conditions:\n");
   
