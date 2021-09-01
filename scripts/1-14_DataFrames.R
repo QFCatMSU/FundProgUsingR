@@ -2,23 +2,55 @@
   rm(list=ls());  # cleans out the Environment every time the code is executed
   options(show.error.locations = TRUE);  # show the line number of errors in the Console
   
-  library(rnoaa);
-  library(reshape2);
-  myToken = "LfoeHFkVUMLcokHXGCTTjukJteFEcvvM";
-  
   source("scripts/toolbox.r");  # load script with isDivisible() function
-  lansingWeather = ncdc(datasetid="GHCND", 
-                        datatypeid=c("TMAX", "TAVG", "TMIN", "PRCP", 
-                                     "SNOW", "AWND", "WDF2", "WSF2", 
-                                     "WT01", "WT09"),
-                        stationid = "GHCND:USW00014836", 
-                        startdate = "2016-01-01", enddate ="2016-01-31",
-                        token = myToken,
-                        limit = 400);
   
-  lansingWeatherDF = lansingWeather$data;
+  weatherData = read.csv(file="data/Lansing2016NOAA.csv",
+                         sep=",",
+                         header=TRUE, 
+                         stringsAsFactors = FALSE);
   
-  lansingWeatherRS = dcast(data = lansingWeatherDF, 
-                           formula = date ~ datatype, 
-                           value.var = "value");
+  dateOnly = substr(weatherData$dateTime, start=6, stop=10);
+  dateYear = paste(dateOnly, "-2016", sep="");
+  
+  dateYearMistake1 = paste(dateOnly, "-2016");
+  dateYearMistake2 = paste(dateOnly, "-2016", "");
+  
+  windSpeedRounded = round(weatherData$windSpeed, digits=1);
+  weatherData$windSpeed = windSpeedRounded;
+  
+  TSDays1 = grep(pattern="TS", x=weatherData$weatherType);
+  TSDays2 = grepl(pattern="TS", x=weatherData$weatherType);
+  
+  day100_1 = TSDays2[100];
+  day100_2 = 100 %in% TSDays1;
+  
+  day91_1 = TSDays2[91];
+  day91_2 = 91 %in% TSDays1;
+  
+  yearDate = substr(weatherData$dateTime, start=1, stop=10);
+  dateOnly = substr(weatherData$dateTime, start=6, stop=10);
+  dateYear = paste(dateOnly, "-2016", sep="");
+  weatherData$dateTime = dateYear;
+  
+  colnames(weatherData)[1] = "date";
+
+  yearDate = as.Date(yearDate);
+  
+  precip = weatherData$precip;
+
+  for(i in 1:length(precip))
+  {
+    if(precip[i] == "T")
+    {
+      precip[i] = 0.005;
+    }
+  }
+
+  precip2 = as.numeric(precip);
+  
+  # write.csv(weatherData, file="data/Lansing2016Noaa.csv",
+  #           row.names = FALSE);
+  
+  dateYear = as.Date(dateYear);
+  aaa = substr(weatherData$weatherType, start=4, stop=5);
 }
