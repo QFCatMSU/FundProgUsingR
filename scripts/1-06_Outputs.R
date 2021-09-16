@@ -8,9 +8,6 @@
   ### Error -- forgot to put the text message in quotes
   # cat(Hello);   # error unless there is a variable named Hello
   
-  ### Multiple commands on one line
-  a=3; b=7; cat("a+b=", a+b);
-  
   ### Outputting multiple text messages
   cat("Hello, World");
   cat("How are you?");
@@ -46,10 +43,6 @@
   
   ### Output a more robust message about the 4th day:
   cat("On the 4th day the high temperature was", highTemps[4], "and the low temperature was", lowTemps[4], "\n");
-  
-  ### Same as above but break up line so you do not need to scroll:
-  cat("On the 4th day the high temperature was", highTemps[4], 
-      "and the low temperature was", lowTemps[4], "\n");
   
   ### Can do math on the values:
   cat("On the 4th day the difference in temperature was", 
