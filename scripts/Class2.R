@@ -19,6 +19,9 @@
   highTemps = weatherData$highTemp;
   precip = weatherData$precipitation;
   
+  # putting variables without context -- sends to Console if Run but not Source
+  seq(from=1, to=14, by=3);
+  
   # Create an index vector with sequenced numbers 
   seq1 = seq(from=1, to=14, by=3);   # 1,4,7,10,13
   
@@ -42,7 +45,7 @@
   # make row names = index values --not needed but some want it for aesthetics
   rownames(weatherData2) = 1:14; 
   
-  #### Skip the argument names -- need to keep the arguments in order:
+  #### Skip the argument names -- but you need to keep the arguments in order:
   highTempSeq1c = highTemps[seq(1, 14, 3)]; 
   
   ### Show boxplot in the search
@@ -69,7 +72,7 @@
   # (you will learn this in the next lesson)
   day= 12;   # only need to edit variables once...
   cat("On day ", day, " the high temp was: ", highTemps[day], 
-      "and the precip was ", precip[day], "\n", sep="");
+      " and the precip was ", precip[day], "\n", sep="");
   
   ### ACTIVITY 2
   # Convert highTemps from Fahrenheit to Celsius 
