@@ -35,11 +35,11 @@
   cat(lowTemps); 
   cat("\n");      #  adds a line feed (need to be in quotes!)
   
-  ### Can combine text and variable output using commas
+  ### Can combine text and variables output using commas
   cat("The low temps are: ", lowTemps, "\n");  
     
   ### Output a single value from a variable
-  cat(lowTemps[4], "\n");     # 4th value in LowTemps
+  cat(lowTemps[4], "\n");     # 4th value in lowTemps
   
   ### Output a more robust message about the 4th day:
   cat("On the 4th day the high temperature was", highTemps[4], "and the low temperature was", lowTemps[4], "\n");
@@ -59,4 +59,10 @@
   ### Same as above but combined into one cat() statement
   cat("Day 5-9 temperature:", lowTemps[5:9], "\n", 
       "Temp on odd days:", lowTemps[seq(from=1, by=2, to=10)], "\n");
+  
+  ### Change the sep argument:
+  cat("Day 5-9 temperature:", lowTemps[5:9], "\n", 
+      "Temp on odd days:", lowTemps[seq(from=1, by=2, to=10)], "\n",
+      sep=" ** ");
+  
 }
