@@ -1,6 +1,7 @@
 {
   # Challenge of a 2-credit class...
-  # More comfortable with Run/Source and Console/Environment
+  # Run All != Source (line 24)
+  # Console (temp), Environment (stored -- keeps information)
   
   # these lines should only occur once in the script
   rm(list=ls());  # cleans out the Environment every time the code is executed
@@ -20,8 +21,9 @@
   precip = weatherData$precipitation;
   
   # putting variables without context -- sends to Console if Run but not Source
-  seq(from=1, to=14, by=3);
+  seq(from=1, to=14, by=3);   # Run and Source this
   
+  #### SHORTCUTS ####
   # Create an index vector with sequenced numbers 
   seq1 = seq(from=1, to=14, by=3);   # 1,4,7,10,13
   
@@ -35,11 +37,11 @@
   highTempSeq1c = highTemps[seq(1, 14, 3)]; 
   # figuring out which is better is more of an art... but most instruction goes too far 
   
-  #### Reorder rows in weatherData
+  ### Reorder rows in weatherData
   # BAD: https://stackoverflow.com/questions/26548495/reorder-rows-using-custom-order/26548692
-  # rant about %>%, dplyr, and all the horrible "shortcuts" out there...
+  # Rube Goldberg -- %>%, dplyr, shortcuts to ??
   
-  # FAR BETTER:
+  # FAR BETTER (and easier to understand...):
   order = c(4,3,2,1,5:14);   # order you want the 14 rows
   
   # [X,Y] or [row,col] notation and col does not change so it is blank
@@ -62,6 +64,7 @@
 
   ### Pick 300 random numbers (do in Console and script)
   #randomTemp = sample(x=20:80, size=365);  # error: sample too large
+  #sample(x=20:80, size=365);  # will display in Console on Run
   randomTemp = sample(x=20:80, size=365, replace=TRUE);  # allow repeat values! 
   # mention: NA, NULL
   
