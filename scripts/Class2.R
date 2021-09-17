@@ -26,7 +26,7 @@
   #### SHORTCUTS ####
   # Create an index vector with sequenced numbers 
   seq1 = seq(from=1, to=14, by=3);   # 1,4,7,10,13
-  
+
   # Use the index vector to subset the highTemps vector
   highTempSeq1a = highTemps[seq1];   # values 1,4,7,10,13
   
@@ -65,7 +65,8 @@
   ### Pick 300 random numbers (do in Console and script)
   #randomTemp = sample(x=20:80, size=365);  # error: sample too large
   #sample(x=20:80, size=365);  # will display in Console on Run
-  randomTemp = sample(x=20:80, size=365, replace=TRUE);  # allow repeat values! 
+  randomTemp = sample(x=20:80, size=365, replace=TRUE);  # allow repeat values!
+  randomTempa = sample(x=20:80, size=1, replace=TRUE);  # allow repeat values!
   # mention: NA, NULL
   
   randomTempDiv10 = randomTemp/10;
@@ -78,8 +79,8 @@
       " and the precip was ", precip[day], "\n", sep="");
   
   ### ACTIVITY 2
-  # Convert highTemps from Fahrenheit to Celsius 
   # Convert precipitation from inches to centimeters
+  # Convert highTemps from Fahrenheit to Celsius 
   # Challenge: Add converted columns to weatherData
   
   ### Teams
