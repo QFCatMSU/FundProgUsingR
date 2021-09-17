@@ -26,10 +26,13 @@
   seq1 = seq(from=1, to=14, by=3);   # 1,4,7,10,13
   
   # Use the index vector to subset the highTemps vector
-  highTempSeq1 = highTemps[seq1];   # values 1,4,7,10,13
+  highTempSeq1a = highTemps[seq1];   # values 1,4,7,10,13
   
   # You could combine the two previous steps into 1 step -- info is lost here:
   highTempSeq1b = highTemps[seq(from=1, to=14, by=3)]; 
+
+  # Skip the argument names -- but you need to keep the arguments in order:
+  highTempSeq1c = highTemps[seq(1, 14, 3)]; 
   # figuring out which is better is more of an art... but most instruction goes too far 
   
   #### Reorder rows in weatherData
@@ -44,9 +47,6 @@
   
   # make row names = index values --not needed but some want it for aesthetics
   rownames(weatherData2) = 1:14; 
-  
-  #### Skip the argument names -- but you need to keep the arguments in order:
-  highTempSeq1c = highTemps[seq(1, 14, 3)]; 
   
   ### Show boxplot in the search
   ### x is only argument where name is rarely used (goes in order)
