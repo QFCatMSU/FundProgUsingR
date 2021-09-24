@@ -2,6 +2,15 @@
   rm(list=ls());  # cleans out the Environment every time the code is executed
   options(show.error.locations = TRUE);  # show the line number of errors in the Console
 
+  randomTemp = sample(30:80, size=1);  # pick a random number between 30 and 80
+  
+  if (randomTemp > 50)
+  { 
+    cat("The temperature is", randomTemp);
+    cat("warm enough to go outside\n");
+  }
+  
+  
   ### read in data from  twoWeekWeatherData.csv
   weatherData = read.csv(file="data/twoWeekWeatherData.csv", 
                          sep=",",
@@ -83,5 +92,20 @@
   {
     cat("  Day was Cloudy");
     cat(" and the high temperature that day was", highTemps[2], "\n");
+  }
+  
+  cat("\n---------\nUsing Embedded if() statements:\n");
+  
+  if(noonCond[2] == "Cloudy")   # checking if they are equal
+  {
+    # the following if statement are only check if conditions are cloudy
+    if( highTemps[2] > 60 )
+    {
+      cat("Still nice enough to go out!");
+    }
+    if( highTemps[2] < 60 )
+    {
+      cat("Best to stay indoors");
+    }
   }
 }
