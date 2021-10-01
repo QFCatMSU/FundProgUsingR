@@ -15,10 +15,7 @@
   #   ( ... ): any number of R objects (variables are saved Objects) 
   #   have to use argument names (sep, file)... why?
   
-  
-  
-  
-  ###### Unicode and escape characters
+    ###### Unicode and escape characters
   # 1) Instruction (go to next line)
   cat("first line\n\nsecond line\n");
   
