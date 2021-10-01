@@ -65,4 +65,12 @@
   {
     cat("Good day to stay in\n");
   }
+  
+  ##### Activity:
+  #   1) Randomly pick from 4 weather conditions with 
+  #      probabilities of 10%, 20%, 30%, and 40%
+  #   2) Randomly sample numbers from 45-55 with higher
+  #      probabilities in the middle (like a normal curve)
+  #   3) Create an if-else structure using both variables
+  
 }
