@@ -2,6 +2,25 @@
   rm(list=ls());  # cleans out the Environment every time the code is executed
   options(show.error.locations = TRUE);  # show the line number of errors in the Console
 
+  randomNum = sample(1:100, size=1);
+  
+  if(randomNum > 50)  # execute this codeblock if TRUE
+  {
+    cat("You win");
+  }
+  
+  randomNum2 = sample(1:100, size=1);
+  
+  if(randomNum2 > 50)  # execute this codeblock if TRUE
+  {
+    cat("You win");
+  }
+  else # execute this codeblock if FALSE
+  {
+    cat("You lose");
+  }
+  
+  
   ### read in data from  twoWeekWeatherData.csv
   weatherData = read.csv(file="data/twoWeekWeatherData.csv", 
                          sep=",",
@@ -50,6 +69,7 @@
   {
     cat("  Day was not Cloudy\n");
   }
+  
   if(noonCond[3] != "Sunny")   # noonCond[3] is not "Sunny"
   {
     cat("  Day was not Sunny\n")
@@ -92,7 +112,7 @@
   }
   else  # none of the above are TRUE so output some error message
   {
-    cat("  The condition for day 5 is unknown"); 
+    cat("  The condition for day 5,", noonCond[5], ", is invalid"); 
   }
   
   cat("\n---------\nChecking temperature of day 3:\n");
