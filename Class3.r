@@ -14,7 +14,7 @@
   ### cat()
   #   ( ... ): any number of R objects (variables are saved Objects) 
   #   have to use argument names (sep, file)... why?
-  
+
     ###### Unicode and escape characters
   # 1) Instruction (go to next line)
   cat("first line\n\nsecond line\n");
@@ -36,12 +36,12 @@
   
   # pick a number from 20 to 90, save to randomTemp
   randomTemp = sample(20:90, size=1);
-  
-  if(randomTemp > 60)
+
+  if(randomTemp > 60)  
   {
     climate = "Warm"; 
-  }
-  else
+  } 
+  else  
   {
     climate = "Cold"; 
   }
@@ -62,7 +62,13 @@
   {
     cat("Good day to stay in\n");
   }
+  options(encoding='native.enc')
+  unicode = "\u424 \u18e \u2230 \u23f0 \u2615";
+  cat(sep="~", "\u424 \u18e \u2230 \u23f0 \u2615", 
+      file="a.txt", useBytes = TRUE);
   
+  writeLines(unicode, con = "b.txt", sep = "\n", useBytes = TRUE)
+  plot(c(1,2,3), c(3,4,5), main=unicode)
   ##### Activity:
   #   1) Randomly pick from 4 weather conditions with 
   #      probabilities of 10%, 20%, 30%, and 40%

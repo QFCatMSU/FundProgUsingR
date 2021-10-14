@@ -5,7 +5,7 @@
   cat("---------\nRepeating the same code multiple times:\n");
   for(i in 1:5)  # repeat 5 times
   {
-    cat("Hello\n");
+    cat("Hello, World\n");
   }
   
   cat("---------\nUsing the indexing variable as a counter:\n");
@@ -13,9 +13,15 @@
   {
     cat("The count is:", i, "\n");
   }
+  
+  cat("---------\n#Changing the sequence numbers -- length is still 5:\n");
+  for(i in 12:8) # 12, 11, 10, 9, 8 (five values in sequence)
+  {
+    cat("The count is:", i, "\n");
+  }
 
-  cat("---------\nUsing a more complicated sequence:\n");
-  for(day in seq(from=20, to=2, by=-3))
+  cat("---------\nUsing a more complicated sequence with seven values:\n");
+  for(day in seq(from=20, to=2, by=-3)) # 20, 17, 14, 11, 8, 5, 2 (seven values)
   {
     cat("The count is:", day, "\n");
   }
@@ -26,17 +32,14 @@
                          header=TRUE, 
                          stringsAsFactors = FALSE);  
   
-  
-  
   ### Extract the highTemps column from the data frame -- save it to a variable
   highTemps = weatherData$highTemp;
   noonCond = weatherData$noonCondition;
   
   # get length of vector
-  numDays  = nrow(weatherData);  # length of the vectors is number of rows (14)
-  # numDays = length(highTemp);  # an alternate way to get length
+  numDays = length(highTemps); # numDays will be 14 (the number of values in highTemps)
  
-  cat("---------\nIndexing highTemps with the indexing variable:\n");
+  cat("---------\nThe 14 values in the vector highTemps in order:\n");
   for(day in 1:numDays)
   {
     cat(highTemps[day], "\n");  # day will take the values 1-14
@@ -50,6 +53,19 @@
 
   cat("---------\nUsing if-else statements within a for loop:\n");
   for(i in 1:numDays)
+  {
+    if(noonCond[i] == "Sunny")
+    {
+      cat("day ", i, " was sunny\n", sep="");
+    }
+    else
+    {
+      cat("day ", i, " was not sunny\n", sep="");
+    }
+  }
+  
+  cat("---------\nUsing a sequence to subset the values:\n");
+  for(i in 8:4)
   {
     if(noonCond[i] == "Sunny")
     {
