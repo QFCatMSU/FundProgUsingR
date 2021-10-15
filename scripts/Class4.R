@@ -103,7 +103,7 @@
   #  a) Move the else-if to the next line and try Source and Run
   #  b) Comment out the { on line 1 and the } on the last line and
   #     try Source and Run on the code
-  #  c) Uncomment lines 71 and 82, Run lines 71-82 
+  #  c) Uncomment lines 89 and 100, Run lines 889-100 
   
   #### Activity 2: ####
   ## To-do:
