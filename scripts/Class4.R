@@ -2,6 +2,16 @@
   rm(list=ls());  # cleans out the Environment every time the code is executed
   options(show.error.locations = TRUE);  # show the line number of errors in the Console
 
+  ### read in data from  twoWeekWeatherData.csv
+  weatherData = read.csv(file="data/twoWeekWeatherData.csv", 
+                         sep=",",
+                         header=TRUE, 
+                         stringsAsFactors = FALSE);  
+  
+  ### Extract the highTemps column from the data frame -- save it to a variable
+  highTemps = weatherData$highTemp;
+  noonCond = weatherData$noonCondition;
+  
   # Note: In RStudio, putting at least 4 number signs on the right side 
   #       of a comment will place the line in a dropdown menu, allowing
   #       you to directly access the line.  This is very useful as
@@ -13,6 +23,14 @@
   writeLines(unicode, con = "b.txt", 
              sep = "\n", useBytes = TRUE); # Works
 
+  #### Shortcuts ####
+  highTempMax = max(highTemps);
+  highTempMeans = mean(highTemps);
+  highTempSD = sd(highTemps);
+  
+  highTempsGT55 = which(highTemps > 55);
+  highTempsLength = length(highTempsGT55);
+  
   #### Activity 1: issues with if-else statements in R ####
   
   #### Issue 1: Conditions on an else ####
@@ -100,19 +118,9 @@
   #     6) Cloudy, less than 55
   #  b) Redo the embedded if-else reversing the inner and outer if-else
   #  c) For part (b), add an error statement to the weather condition
-  #  d) For part (b), add an error statement to the temperature 
+  #  d) For part (b), add an error  statement to the temperature 
   #  e) Redo with && operators
 
-  ### read in data from  twoWeekWeatherData.csv
-  weatherData = read.csv(file="data/twoWeekWeatherData.csv", 
-                         sep=",",
-                         header=TRUE, 
-                         stringsAsFactors = FALSE);  
-  
-  ### Extract the highTemps column from the data frame -- save it to a variable
-  highTemps = weatherData$highTemp;
-  noonCond = weatherData$noonCondition;
-  
   #### Add error to highTemps:
   highTemps[14] = 750;
   
