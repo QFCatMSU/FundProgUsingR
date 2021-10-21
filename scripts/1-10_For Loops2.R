@@ -1,7 +1,7 @@
 {
   rm(list=ls());  # cleans out the Environment every time the code is executed
   options(show.error.locations = TRUE);  # show the line number of errors in the Console
-
+  
   ### read in data from  twoWeekWeatherData.csv
   weatherData = read.csv(file="data/twoWeekWeatherData.csv", 
                          sep=",",
@@ -15,7 +15,7 @@
   
   # get length of vector
   numDays  = nrow(weatherData);  # length of the vectors is number of rows (14)
- 
+  
   # Using two state variables
   sunnyDays = 0; # state variable -- will hold the count of sunny days
   rainyDays = 0; # state variable -- will hold the count of sunny days
@@ -30,6 +30,18 @@
     else if(noonCond[i] == "Rain")
     {
       rainyDays = rainyDays +1;   # increases rainyDays by 1
+    }
+  }
+  
+  ### Finding the highest temperature in a vector
+  highestTemp = 0;  # initialize the state variable
+  
+  for (i in 1:numDays)
+  {
+    if(highTemps[i] > highestTemp) # is this day's value grater than the current high
+    {
+      # this day's value is higher -- set highestTemp to this value
+      highestTemp = highTemps[i];
     }
   }
   
@@ -69,26 +81,38 @@
     totalPrecip = totalPrecip + precip[i];
   }
   
+  # Find the average precipitation using the total and the number of days
   avgPrecip = totalPrecip/numDays;
   
-  
-  anyDayLT40 = FALSE;
-  for(i in 1:numDays)
+  # Check if any value in highTemps is less than 40
+  anyDayLT40 = FALSE;     # initialize state variable to FALSE
+  for(i in 1:numDays) 
   {
     if(highTemps[i] < 40)
     {
-      anyDayLT40 = TRUE;
-      # break;
+      anyDayLT40 = TRUE;  # found a value -- change state variable to TRUE
+      # break;            # not needed -- makes code more efficient
     }
   }
   
+  # Find the highest value in a vector
+  highestTemp = 0;  # initialize the high temp to 0 (this will be surpassed!)
+  for(i in 1:numDays)  
+  {
+    if(highTemps[i] > highestTemp) # is this day's value grater than the current high
+    {
+      # this day's value is higher -- set highestTemp to this value
+      highestTemp = highTemps[i];
+    }
+  }
   
-  highestHigh = highTemps[1];
+  # A better way to do the above for loop 
+  highestTemp2 = highTemps[1];
   for(i in 1:numDays)  # could be 2:numDays
   {
-    if(highTemps[i] > highestHigh)
+    if(highTemps[i] > highestTemp2)
     {
-      highestHigh = highTemps[i];
+      highestTemp2 = highTemps[i];
     }
   }
 }

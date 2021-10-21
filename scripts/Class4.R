@@ -70,7 +70,9 @@
   
   # This code works but is very easy to mess up!
   if(randomTemp > 50) 
+  {
     cat("That's nice\n")
+  }
   else
     cat("That's cold\n")
   
@@ -125,9 +127,31 @@
   highTemps[14] = 750;
   
   #### part (e) -- using &&:
-  # if(noonCond == "Sunny" && highTemps < 55)
+  #
+  if(noonCond == "Sunny" && highTemps < 55)
+  {
+    
+  }
+  else if(noonCond == "Sunny" && highTemps >= 55)
+  {
+    
+  }
+  else if(noonCond == "Rain" && highTemps < 55)
+  {
+    
+  }
+  else if(noonCond == "Rain" && highTemps >= 55)
+  {
+    
+  }
+  
   
   #### Activity 3: ####
   # Redo App 1-7A with a for loop
+  
+  for(i in 1:14)
+  {
+    cat("high temp", i, "is", highTemps[i], "\n"); 
+  }
 }
 
