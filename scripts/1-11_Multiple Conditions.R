@@ -47,7 +47,7 @@
   # sunnyOrRainyDays2 = 0;
   # for(i in 1:numDays)
   # {
-  #   if(noonCond[i] == "Sunny" || "Rain")  # needs to be explicit
+  #   if(noonCond[i] == "Sunny" || "Rain")  # conditions needs to be explicit
   #   {
   #     sunnyOrRainyDays2 = sunnyOrRainyDays2 +1;   
   #   }
