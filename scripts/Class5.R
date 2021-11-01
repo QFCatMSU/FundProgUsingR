@@ -19,13 +19,14 @@
   
   #### breaks and breakpoints #### 
   anyDayGT40 = FALSE;     # default state is FALSE
-  
+ 
   for(i in 1:366)
   {
     if(maxTemps[i] > 40)  # is the a temp greater than 40
     {
-      anyDayGT40 = TRUE;  # put a breakpoint here
-      break;    # when uncommented, this will break out of the for loop
+      # put a breakpoint on the next line
+      anyDayGT40 = TRUE; 
+      break;    
     }
   }
   
@@ -34,15 +35,21 @@
   #  - Next: executes next command only (e.g., Play only next frame)
   #  - Stop: ends script
   
-  #### generalizations (leads to functions) ####
+  dates = weatherData$dateTime;
+  minTemps = weatherData$minTemp;
+
   # finding the highest high temperature
-  highestTemp = 0;  # generalize: best to use value from vector
+  highestTemp = maxTemps[1];  # generalize: best to use value from vector
+  higestTempDate = dates[1];
+  highestTempMin = minTemps[1];
   
-  for(i in 1:366)   # generalize: replace 366 with something more generic  
+  for(i in 1:length(maxTemps))   # generalize: replace 366 with something more generic  
   {
     if(maxTemps[i] > highestTemp)
     {
       highestTemp = maxTemps[i];
+      highestTempDate = dates[i];
+      highestTempMin = minTemps[i]; 
     }
   }
   #### Activity 1 ####

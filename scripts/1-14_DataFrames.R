@@ -12,6 +12,7 @@
   dateOnly = substr(weatherData$dateTime, start=6, stop=10);
   dateYear = paste(dateOnly, "-2016", sep="");
   
+  # both of these common errors will add an extra space in the string
   dateYearMistake1 = paste(dateOnly, "-2016");
   dateYearMistake2 = paste(dateOnly, "-2016", "");
   
@@ -27,6 +28,8 @@
   day91_1 = TSDays2[91];
   day91_2 = 91 %in% TSDays1;
   
+  
+  ### End of lesson 14 -- this code will go into later lessons.
   yearDate = substr(weatherData$dateTime, start=1, stop=10);
   dateOnly = substr(weatherData$dateTime, start=6, stop=10);
   dateYear = paste(dateOnly, "-2016", sep="");
