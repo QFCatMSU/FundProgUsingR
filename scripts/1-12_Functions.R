@@ -10,12 +10,13 @@
   
   precip = weatherData$precipitation;
   
+  # Using R's built-in statisical functions
   precipMax = max(precip);
   precipMean = mean(precip);
   precipMed = median(precip);
   precipSD = sd(precip);
   
-  # see if the first number is divisible by the second
+  # function to see if the first number is divisible by the second
   isDivisible = function(div1, div2)
   {
     remainder = div1 %% div2;
@@ -25,10 +26,11 @@
     } 
     else
     {
-      return (FALSE);
+      return(FALSE);
     }
   }
   
+  # Testing the isDivisible() function
   div12_4 = isDivisible(12,4);
   div12_5 = isDivisible(12,5);
   
@@ -39,4 +41,17 @@
   # the order does not matter when you use parameter names:
   div12_4b = isDivisible(div2=4, div1=12);
   div12_5b = isDivisible(div2=5, div1=12);
+  
+  # function to convert Fahrenheit temperatures to Celsius
+  convertFtoC = function(fTemp=0)
+  {
+    celTemp = (5/9) * (fTemp - 32);
+    return(celTemp);
+  }
+  
+  # Testing the conversion function
+  convert1 = convertFtoC();
+  convert2 = convertFtoC(fTemp=32);
+  convert3 = convertFtoC(fTemp=c(40,50,60,70));
+  convert4 = convertFtoC(fTemp=weatherData$lowTemp);
 }
