@@ -33,17 +33,17 @@
     if(precip[i] >= 1)  
     {
       precipHighDays = precipHighDays + 1;
-      ph[length(ph)+1] = i;
+      ph = append(ph, i);
     }
     else if (precip[i] >= 0.1 && precip[i] < 1.0)
     {
       precipMedDays = precipMedDays + 1;     
-      pm[length(pm)+1] = i;
+      pm = append(pm, i);
     }
     else # this is a bug!
     {
       precipLowDays = precipLowDays + 1;  # this line will always execute
-      pl[length(pl)+1] = i;
+      pl = append(pl, i);
     }
   }
   
@@ -88,7 +88,7 @@
   
   # Force precip to be numeric:
   precip2 = as.numeric(precip);  # still have issues... NA is not the correct answer
-  
+
   precip3 = precip;  # make a copy so we see the difference
   
   # Change T values in precip3 into a number
