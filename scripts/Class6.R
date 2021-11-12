@@ -5,7 +5,7 @@
   #### Class 6 topics: ####
   #    - conditions on else statements
   #    - which statements
-  #    - numeric and string vectors
+  #    - data frame issues/manipulation 
   #    - Regular Expressions (grep)
   
   ### read in weather data for all of 2016 in Lansing
@@ -107,8 +107,8 @@
   precip4 = as.numeric(precip3);
   
   #### ACT 2:
-  # A) Use which() to create a precipitation vector with all numbers
-  #    from the precip vector
+  # A) Change precip to a numeric vector with "T" = 0.005 using which() 
+  #    In other words, repeat what was done with for loops above using which()
   # B) Add the new vector to the data frame as precip_num
   
   
