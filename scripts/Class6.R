@@ -26,20 +26,24 @@
   precipHighDays = 0;
   precipMedDays = 0;
   precipLowDays = 0;
+  ph = c();   pm = c();  pl = c();
   
   for(i in 1:length(precip))
   {
     if(precip[i] >= 1)  
     {
       precipHighDays = precipHighDays + 1;
+      ph[length(ph)+1] = i;
     }
     else if (precip[i] >= 0.1 && precip[i] < 1.0)
     {
       precipMedDays = precipMedDays + 1;     
+      pm[length(pm)+1] = i;
     }
-    else (precip[i] < 0.1)  # this is a bug!
+    else # this is a bug!
     {
       precipLowDays = precipLowDays + 1;  # this line will always execute
+      pl[length(pl)+1] = i;
     }
   }
   
@@ -70,9 +74,6 @@
   #### ACT 1:
   # Using the yearly weather data:
   # A) Find the cardinal direction the windPeakDir comes from:
-  #   - the east (45-135 degrees)
-  #   - the south (135-225 degrees)
-  #   - the west (225-315 degrees)
   #   - the north (315-360, 0-45 degrees)
   # B) Create a vector that gives wind peak direction for each
   #    day in terms of the cardinal directions (E, S, W, N)
