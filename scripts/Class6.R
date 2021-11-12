@@ -6,7 +6,7 @@
   #    - conditions on else statements
   #    - which statements
   #    - numeric and string vectors
-  #    - patter recognition (grep)
+  #    - Regular Expressions (grep)
   
   ### read in weather data for all of 2016 in Lansing
   weather2Week = read.csv(file="data/twoWeekWeatherData3.csv",
@@ -20,7 +20,7 @@
                          header=TRUE,               
                          stringsAsFactors = FALSE);
   
-  # get the maxTemp column from the data frame -- save to vector
+  # get the precip column from the data frame -- save to vector
   precip = weatherYear$precip;
   
   precipHighDays = 0;
@@ -60,7 +60,7 @@
   precipNew[lowIndex] = "Low";
   
   ### Add the vector to the data frame:
-  weatherYear$precipNew = precipNew;
+  weatherYear$precipLevels = precipNew;
   
   ### Save the new data frame to a CSV file 
   # write.csv(weatherYear, file="data/newWeather.csv",
@@ -69,28 +69,28 @@
    
   #### ACT 1:
   # Using the yearly weather data:
-  # A) Find which values in the windPeakDir comes from:
+  # A) Find the cardinal direction the windPeakDir comes from:
   #   - the east (45-135 degrees)
-  #   - the south (135-215 degrees)
-  #   - the west (215-315 degrees)
-  #   - the north (315-365, 0-45 degrees)
+  #   - the south (135-225 degrees)
+  #   - the west (225-315 degrees)
+  #   - the north (315-360, 0-45 degrees)
   # B) Create a vector that gives wind peak direction for each
-  #    day in terms of east, south, west, north
-  #   - use either for loops or which statements
+  #    day in terms of the cardinal directions (E, S, W, N)
+  #   - use either for loops or which statements to create the vector
   #   - challenge: use both
-  # C) Add the new vector the data frame
+  # C) Add the new vector the data frame as windCardinal
     
   
-  ### The "T" values in precip
-  # If there is one string value in a vector, 
-  # the whole vector is considered a string 
+  ### Back to precip, which is a chr vector
+  # If there is one string value in a vector in this case "T", then 
+  # the whole vector is considered a string (of characters)
   
   # Force precip to be numeric:
   precip2 = as.numeric(precip);  # still have issues... NA is not the correct answer
   
   precip3 = precip;  # make a copy so we see the difference
   
-  # Change T values in precip2 into a number
+  # Change T values in precip3 into a number
   for(i in 1:length(precip3))
   {
     if(precip3[i] == "T")  # find the "T" values
@@ -99,10 +99,12 @@
     }
   }
   
-  ### But, precip3 is still a string -- force it to become numeric
-  precip4 = as.numeric(precip3);
+  ### But, precip3 is still a string 
   
-  ### <, > work differently on string than numbers ###
+  # Show how <, > work differently on string than numbers ###
+  
+  ### force precip3 to become numeric
+  precip4 = as.numeric(precip3);
   
   #### ACT 2:
   # A) Use which() to create a precipitation vector with all numbers
@@ -110,8 +112,11 @@
   # B) Add the new vector to the data frame as precip_num
   
   
-  ### Pattern Recognition: grep()
-  grepPrecip = grep(pattern="T", x=precip);
+  ### Regular Expressions: grep() 
+  grepPrecip = grep(pattern="T", x=precip); # get index of all "T" values
+  precip5 = precip;                         # make copy of precip
+  precip5[grepPrecip] = 0.005;              # change "T" to 0.005
+  
   
   ### More complex -- 
   grepClouds = grep(pattern="[C|c][L|l][o|O|u|U]", 
