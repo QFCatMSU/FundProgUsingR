@@ -120,7 +120,7 @@
   
   
   ### More complex -- 
-  grepClouds = grep(pattern="[C|c][L|l][o|O|u|U]", 
+  grepClouds = grep(pattern="[_|-|C|c][L|l][o|O|u|U]", 
                     x=weather2Week$noonCondition);
   
   grepClouds2 = grep(pattern="cloudy", ignore.case = TRUE,
@@ -132,9 +132,9 @@
   #### ACT 3
   # In the yearly weather data
   # Find the days that had:
-  #  - rain 
-  #  - fog
-  #  - freezing fog 
+  #  - rain (RA)
+  #  - fog (FG)
+  #  - freezing fog (FZFG) 
   #  - fog but not freezing fog
   #     note: [^abc] means that the letters a,b, and c do not occur here
   #  - rain and fog

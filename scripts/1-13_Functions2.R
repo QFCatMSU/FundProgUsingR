@@ -16,14 +16,17 @@
   div12_4b = isDivisible(div2=4, div1=12);
   div12_5b = isDivisible(div2=5, div1=12);
   
+  ### Get the weather data
   weatherData = read.csv("data/twoWeekWeatherData.csv");
   highTemps = weatherData$highTemp;
   lowTemps = weatherData$lowTemp;
   
+  ### Calling counter()
   count1 = counter(vector = highTemps, compareVal = 45);
   count2 = counter(vector = highTemps, compareVal = 55);
   count3 = counter(lowTemps, 40);
   
+  ### Calling counter2()
   count1a = counter2(vector = highTemps, compareVal = 45);
   count2a = counter2(vector = highTemps, compareVal = 55);
   count3a = counter2(lowTemps, 40);
