@@ -8,50 +8,77 @@
                          header=TRUE, 
                          stringsAsFactors = FALSE);  
   
-  precip = weatherData$precipitation;
+  # single value conversions:
+  F1 = 50;     C1 = (5/9)*(F1 - 32);
+  F2 = 212;    C2 = (5/9)*(F2 - 32);
   
-  # Using R's built-in statisical functions
-  precipMax = max(precip);
-  precipMean = mean(precip);
-  precipMed = median(precip);
-  precipSD = sd(precip);
+  # multiple value conversion:
+  F3 = c(0,50,100,150);               # has 4 values
+  C3 = (5/9)*(F3 - 32);
+  F4 = seq(from=100, to=10, by=-10);  # has 10 values
+  C4 = (5/9)*(F4 - 32);
+ 
+  # convert column from data frame
+  F5 = weatherData$highTemp;
+  C5 = (5/9)*(F5 - 32);      # has 14 values
+  F6 = weatherData$lowTemp;
+  C6 = (5/9)*(F6 - 32);      # has 14 values
+  # the 2 lines above can be combined:  
+  #    C6 = (5/9)*(weatherData$lowTemp - 32);
+  
+
+  # function to convert Fahrenheit temperatures to Celsius
+  convertFtoC = function(fTemp)     # argument: values given be the caller to convert
+  {
+    celTemp = (5/9) * (fTemp - 32); # the argument is used as part of the calculation
+    return(celTemp);   # the results of the calculation are sent back to the caller           
+  }
+  
+  # calling the conversion function with argument names
+  C2b = convertFtoC(fTemp=F2);
+  C4b = convertFtoC(fTemp=F4);
+  C6b = convertFtoC(fTemp=F6);
+ 
+  # calling the conversion function without argument names 
+  C2c = convertFtoC(F2);
+  C4c = convertFtoC(F4);
+  C6c = convertFtoC(F6);
   
   # function to see if the first number is divisible by the second
-  isDivisible = function(div1, div2)
+  #   using the modulus operation ( %% )
+  isDivisible = function(div1, div2)  # arguments given by caller
   {
-    remainder = div1 %% div2;
-    if(remainder == 0)
+    remainder = div1 %% div2;  # calculating the modulus
+    if(remainder == 0)         # div2 divides div1 evenly (no remainder)
     {
       return(TRUE);
     } 
-    else
+    else                       # div2 does not divide div1 (there is a remainder)
     {
       return(FALSE);
     }
   }
   
-  # Testing the isDivisible() function
-  div12_4 = isDivisible(12,4);
-  div12_5 = isDivisible(12,5);
+  # testing the modulus function above
+  div12_4 = isDivisible(12,4);   # does 4 divide evenly into 12?
+  div12_5 = isDivisible(12,5);   # does 5 divide evenly into 12?
   
-  # better to put in parameter names:
-  div12_4a = isDivisible(div1=12, div2=4);
-  div12_5a = isDivisible(div1=12, div2=5);
   
-  # the order does not matter when you use parameter names:
-  div12_4b = isDivisible(div2=4, div1=12);
-  div12_5b = isDivisible(div2=5, div1=12);
-  
-  # function to convert Fahrenheit temperatures to Celsius
-  convertFtoC = function(fTemp=0)
+  # Extension: Same function but uses for loops
+  convertFtoC2 = function(fTemp)
   {
-    celTemp = (5/9) * (fTemp - 32);
-    return(celTemp);
+    celTemp = c();  # create a vector for the Celsius values
+    
+    for(i in 1:length(fTemp))  # go through each value in fTemp vector
+    { 
+      # convert the indexed fTemp -- save to the celTemp vector
+      celTemp[i] = (5/9) * (fTemp[i] - 32); 
+    }
+    return(celTemp);  # return the celsius temp vector to the caller
   }
   
-  # Testing the conversion function
-  convert1 = convertFtoC();
-  convert2 = convertFtoC(fTemp=32);
-  convert3 = convertFtoC(fTemp=c(40,50,60,70));
-  convert4 = convertFtoC(fTemp=weatherData$lowTemp);
+  # Test the conversion function that uses for loops
+  C2d = convertFtoC2(fTemp=F2);
+  C4d = convertFtoC2(fTemp=F4);
+  C6d = convertFtoC2(fTemp=F6);
 }
