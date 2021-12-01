@@ -2,6 +2,38 @@
   rm(list=ls());  # cleans out the Environment every time the code is executed
   options(show.error.locations = TRUE);  # show the line number of errors in the Console
   
+  # create 5 separate variables for 5 tempperature values
+  tempHigh1 = 65;
+  tempHigh2 = 57;
+  tempHigh3 = 61;
+  tempHigh4 = 64;
+  tempHigh5 = 59;
+  
+  # find the average of the 5 temperatures:
+  tempAvg = (tempHigh1 + tempHigh2 + tempHigh3 +
+             tempHigh4 + tempHigh5) / 5;
+
+  # create one temperature vector with 5 values:
+  tempHigh = c(65, 57, 61, 64, 59);
+  
+  # Convert all the values from Fahrenheit to Celsius:
+  tempHighCel = (5/9) * (tempHigh - 32);  
+    
+  # Find the mean of the the vector of temperature values:
+  tempMean = mean(tempHigh);
+  
+  # create a low temperature vector
+  tempLow = c(45, 40, 55, 37, 42);
+  
+  # find the difference between the high and low temperatures:
+  tempDiff = tempHigh - tempLow;
+  
+  # find the difference between individual high and low temperatures:
+  tempDiff_3 = tempHigh[3] - tempLow[3];
+  tempDiff_5 = tempHigh[5] - tempLow[5];
+  
+  
+  # Get the data from the twoweekWeatherData CSV file
   weatherData = read.csv(file="data/twoWeekWeatherData.csv", 
                          sep=",",
                          header=TRUE, 
@@ -9,7 +41,6 @@
   
   # Extract the highTemps column from the data frame -- save it to a variable
   highTemps = weatherData$highTemp;
-  
   
   # Three different ways to get the high temperature from the 7th day (April 2)
   highTempDay7a = highTemps[7];
@@ -23,7 +54,7 @@
   valComb = highTemps[c(1,5,12)];  
   
   # Use the sequence operator to get consecutive values
-  consecVals = highTemps[3:11];     
+  consecVals = highTemps[3:11];    # same as highTemps[c(3,4,5,6,7,8,9,10,11)]
   consecValsRev = highTemps[11:3]; # in reverse
   
   # Create a vector with sequenced numbers 
