@@ -48,6 +48,9 @@
   cat("On the 4th day the difference in temperature was", 
       highTemps[4] - lowTemps[4], "degrees\n"); 
   
+  ### Output multiple values using a index vector:
+  cat(lowTemps[c(4, 8, 3, 11)], "\n"); # 4th, 8th, 3rd, and 11th values in lowTemps
+  
   ### Output a sequence of values from a variable
   cat(lowTemps[5:9], "\n");   # 5th through 9th value
   cat(lowTemps[seq(from=1, by=2, to=10)], "\n"); # Values 1,3,5,7,9
@@ -61,7 +64,7 @@
       "Temp on odd days:", lowTemps[seq(from=1, by=2, to=10)], "\n");
   
   ### Change the sep argument:
-  cat("Day 5-9 temperature:", lowTemps[5:9], "\n", 
+  cat("Day 5-9 temperature:", lowTemps[5:9], "\n",
       "Temp on odd days:", lowTemps[seq(from=1, by=2, to=10)], "\n",
       sep=" ** ");
   
