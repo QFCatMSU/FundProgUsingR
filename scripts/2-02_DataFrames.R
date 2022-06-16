@@ -10,12 +10,12 @@
   # subset the dateTime column so that you only have the month and day (MM-DD)
   dateOnly = substr(weatherData$dateTime, start=6, stop=10);
 
-  # add the year after the date so you have MM-DD-YYYY
+  # paste dateOnly and the year, 2016 together  
+  dateYear = paste(dateOnly, "-2016", sep="");
+  
+  # if you do not use the argument sep, then the default separator is a space
   dateYearMistake = paste(dateOnly, "-2016");     # sep default to " "
   
-  # use sep="" to take out the extra space
-  dateYear = paste(dateOnly, "-2016", sep="");
-
   # rounding the wind speed to one decimal:
   windSpeedRounded = round(weatherData$windSpeed, digits=1);
 
@@ -38,7 +38,7 @@
   # Another way to remove a column
   # weatherData3 = within(weatherData, rm(dateTime));  
   
-  # Could use this method to remove multiple columns:
+  # Could also use this method to remove multiple columns:
   # weatherData3 = within(weatherData, rm(maxTemp, minTemp, avgTemp))
   
   # create another copy
@@ -51,7 +51,7 @@
   weatherData5 = weatherData4;
   
   # Move heatDays and coolDays after weatherType:
-  weatherData5 = subset(weatherData5, select=c(dateYear:tempDept, 
+  weatherData5 = subset(weatherData5, select=c(dateYear:tempDept,
                                                heatDays:coolDays,
                                                relHum:wetBulbTemp,
                                                sunrise:windSusDir));
@@ -59,40 +59,7 @@
   # write the new data frame to a csv file
   write.csv(weatherData5, file="data/Lansing2016Noaa-2-bad.csv");  
   
-  newData_Mistake = read.csv(file="data/Lansing2016Noaa-2-bad.csv");
-  
   # ... but don't include the row number as a new column
   write.csv(weatherData5, file="data/Lansing2016Noaa-2.csv",
             row.names = FALSE);  
-  
-  newData = read.csv(file="data/Lansing2016Noaa-2.csv");
-  
-  
-  ### End of lesson  -- the code underneath will go into later lessons. ###
-  yearDate = substr(weatherData$dateTime, start=1, stop=10);
-  dateOnly = substr(weatherData$dateTime, start=6, stop=10);
-  dateYear = paste(dateOnly, "-2016", sep="");
-  weatherData$dateTime = dateYear;
-  
-  colnames(weatherData)[1] = "date";
-
-  yearDate = as.Date(yearDate);
-  
-  precip = weatherData$precip;
-
-  for(i in 1:length(precip))
-  {
-    if(precip[i] == "T")
-    {
-      precip[i] = 0.005;
-    }
-  }
-
-  precip2 = as.numeric(precip);
-  
-  # write.csv(weatherData, file="data/Lansing2016Noaa.csv",
-  #           row.names = FALSE);
-  
-  dateYear = as.Date(dateYear);
-  aaa = substr(weatherData$weatherType, start=4, stop=5);
 }
