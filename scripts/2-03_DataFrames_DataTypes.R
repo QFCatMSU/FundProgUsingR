@@ -34,9 +34,6 @@
                          sep=",",
                          header=TRUE, 
                          stringsAsFactors = FALSE);
-  
-  # Make a copy of the data frame
-  #weatherData2 = weatherData;
 
   ### Let's grab the precip column 
   precip = weatherData$precip;
@@ -45,6 +42,7 @@
   #  totalPrecip = sum(precip);
   #  meanPrecip = mean(precip);
   
+  # Create a numeric version of precip -- call it precip2
   precip2 = as.numeric(precip);
   
   ### The error goes away but, because there are NA values, the result is NA
@@ -80,8 +78,8 @@
   ### Write the current data frame to a new CSV file -- this will be used next lesson
   write.csv(weatherData, file="data/Lansing2016Noaa-3.csv",
             row.names = FALSE);
-  
-  ## Will lists every precip value (with T at top (T is > all #s)
+
+  ## Scatterplot of precipitation vs date number
   plot1 = ggplot(data=weatherData ) +
     geom_point( mapping=aes(x=1:nrow(weatherData),  # 366
                             y=precipNum),
@@ -93,7 +91,8 @@
     theme_bw();
   plot(plot1);
   
-  ## 
+  ## Scatterplot using the precip column with chr values --
+  #  This lists every precip value with T at top since T is > all #s)
   plot2 = ggplot(data=weatherData ) +
     geom_point( mapping=aes(x=1:nrow(weatherData),  
                             y=precip),  # chr values
@@ -202,8 +201,4 @@
   # 
   # 
   # ### work with Dates later...
-  
-
-  
-#   App: create a column that alternates between 3 values
 }
