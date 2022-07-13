@@ -1,66 +1,56 @@
 {
   rm(list=ls());  options(show.error.locations = TRUE);
-  
-  # have data in data frame format
-  # switch to matrix
-  # transpose the data
-  # add two more -- have these files in vector format (Jan 2017/2018)
-  # color the lines in the plot two ways: scale_color_manual, color subcomponent
-  # t-test??
-  
-  # myToken is in the toolbox.r script
-  #source(file="scripts/toolbox.r");
-  # myToken = "LfoeHFkVUMLcokHXGCTTjukJteFEcvvM";
   library(package=ggplot2);   
   library(package=reshape2);   
-  # give this script access to the functions in the rnoaa package
-  #library(rnoaa);
-  
-  
-  #### For creating the data...  
- # # get the maximum temperatures for every day in  January 2011 from the NOAA database
- #  lansWeather17 = ncdc(datasetid="GHCND",
- #                       datatypeid=c("TMAX"),
- #                       stationid="GHCND:USW00014836",
- #                       startdate = "2018-01-01", enddate ="2018-01-31",
- #                       token=myToken,
- #                       limit=50  );
- #  
- #  Jan2017Temps = lansWeather17$data$value;
- #  write.csv(x=Jan2017Temps, file = "data/LansingJan2018Temps.csv",
- #            row.names = FALSE);
-  
+
   #### There are no column names in this data... so, V1, V2...
   lansingJanDF = read.csv(file = "data/LansingJanTemps.csv");
   
-  lansingJanMat = as.matrix(lansingJanDF);
+  lansingJanDF2 = lansingJanDF;
+
+  ## Not recommended to change column names to numbers only
+  # colnames(lansingJanDF2) = 2011:2016;
   
   ### Change column names from V1, V2... to c2011...
   ##  Explain why we add a letter at the beginning... (numeric column names)
-  colnames(lansingJanMat) = paste("Jan", 2011:2016, sep="");
+  colnames(lansingJanDF2) = paste("Jan", 2011:2016, sep="");
   
   
- # 1) Coverting the matrix from tenths of a Celsius to Celsius
-  lansingJanMat = lansingJanMat * 0.1;
+  lansingJanMat = as.matrix(lansingJanDF2);
   
-  # 2)  Converting the matrix from Celsius to Fahrenheit
-  lansingJanMat = (9/5) * lansingJanMat + 32;
+  # 1) Divide by 10 to get units from tenths of Celsius to Celsius
+  lansingJanMat2 = lansingJanMat / 10;
   
-  # 3) Setting the number of significant digits to 2
-  lansingJanMat = signif(x=lansingJanMat, digits=2);
+  # 2)  Converting from Celsius to Fahrenheit
+  lansingJanMat3 = (9/5) * lansingJanMat2 + 32;
+  
+  # 3) Set the number of significant digits to 2
+  lansingJanMat4 = signif(x=lansingJanMat3, digits=2);
   
   ### 4) finding mean values
   # find mean of the whole matrix
-  meanAllJan = mean(lansingJanMat);
+  meanAllTemps = mean(lansingJanMat4);
   
   
-  #### EXplain row/col notation....####
+  #### Explain row/col notation....####
   
   # find mean of January 2013 (the third column)
-  meanJan2013 = mean(lansingJanMat[,3]);
+  meanJan2013 = mean(lansingJanMat4[,3]);
   
   # find mean of all January 17ths (the 17th row)
-  meanJan17 = mean(lansingJanMat[17,]);
+  meanJan17 = mean(lansingJanMat4[17,]);
+  
+  # find mean of all January 10-19 from 2011-2013:
+  meanJanPart = mean(lansingJanMat4[10:19, 1:3]);
+ 
+  # find mean of every even days on odd years:
+  evenDays = seq(from=2, to=31, by=2);
+  oddYears = c(1,3,5);  
+
+  meanJanEvenOdd = mean(lansingJanMat4[evenDays, oddYears]);
+ 
+  ### Transposing the matrix:
+  lansingJanMat_T = t(lansingJanMat4);
   
   ### Find the mean for all columns (year)
   # vector that holds the yearly mean values
@@ -74,23 +64,11 @@
   }
   
   yearlyMean2 = apply(lansingJanMat, 2, mean);
-  
-  ### Find the mean for all rows (days in January)
-  # vector that holds the daily mean values
-  dailyMean = c();
-  
-  # go through each of the 31 rows and find the mean of the temperature values
-  for(i in 1:31)
-  {
-    # get the mean of all values in row i and save it to dailyMean[i]
-    dailyMean[i] = mean(lansingJanMat[i,]);
-  }
-  
-  dailyMean2 = apply(lansingJanMat, 1, mean);
+
   
   
-  # Reversing the matrix -- columns are days, rows are years
-  lansWeatherMatRev = t(lansingJanMat);
+  
+#### The code below is being moved to another lesson #####
   
   #### Part 1: Line plot for all years ####
   #### Note: need to plot as data frame 
@@ -113,7 +91,7 @@
           xlab = "day",
           y = "temperature (F)") +
     theme_bw();
-  plot(plot1);
+ # plot(plot1);
   
 ### Fix y-axis coords
   #### put color in the legend
@@ -134,7 +112,7 @@
           y = "temperature (F)") +
     scale_x_continuous(breaks = seq(1, 31, 1)) +
     theme_bw();
-  plot(plot2);
+  #plot(plot2);
   
 
 
@@ -156,4 +134,21 @@
   
   #### t-test/ anovas/lists -- next lesson
 
+    # give this script access to the functions in the rnoaa package
+  #library(rnoaa);
+  
+    # myToken = "LfoeHFkVUMLcokHXGCTTjukJteFEcvvM";
+
+  #### For creating the data...  
+ # # get the maximum temperatures for every day in  January 2011 from the NOAA database
+ #  lansWeather17 = ncdc(datasetid="GHCND",
+ #                       datatypeid=c("TMAX"),
+ #                       stationid="GHCND:USW00014836",
+ #                       startdate = "2018-01-01", enddate ="2018-01-31",
+ #                       token=myToken,
+ #                       limit=50  );
+ #  
+ #  Jan2017Temps = lansWeather17$data$value;
+ #  write.csv(x=Jan2017Temps, file = "data/LansingJan2018Temps.csv",
+ #            row.names = FALSE);
 }
