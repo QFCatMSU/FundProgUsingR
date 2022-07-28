@@ -10,7 +10,7 @@
   #### Convert into matrix
   lansJanTempsMat = as.matrix(x=lansJanTempsDF);
 
-    plot1 = ggplot(data=lansJanTempsDF) +
+  plot1 = ggplot(data=lansJanTempsDF) +
     geom_boxplot(mapping=aes(x=2011, y=Jan2011)) +
     geom_boxplot(mapping=aes(x=2012, y=Jan2012)) +
     theme_bw();
@@ -36,7 +36,6 @@
   stackedDF2 = stack(lansJanTempsDF[,c(2,4)]);
   stackedDF3 = stack(lansJanTempsDF[,c(1,2,5,6)]);
   
-  
   origDF = unstack(stackedDF);     
   
   tTest1 = t.test(x=lansJanTempsMat[,3], y=lansJanTempsMat[,6]);
@@ -54,23 +53,30 @@
   
   #### Second t-test as assignment
   
-  JanAnova1 = aov(data=stackedDF2, formula=values~ind);
-  print(summary(JanAnova1));
+  Jan12_14_Anova = aov(data=stackedDF2, formula=values~ind);
+  print(summary(Jan12_14_Anova));
   
-  JanAnova2 = aov(formula=values~ind, data=stackedDF3);
-  print(summary(JanAnova2));
-  
-  residuals = residuals(JanAnova2);
-  resid2 = JanAnova2$residuals;
-  
-  # $ can reference everything but vectors
-  # dropdown arrow means list??
-   #  otherwise, you need [[ ]] or [ ]  
-  
-  #### Find residuals in List
-  
-  #### Only one "third-level: JanAnova2$call$formula
+  stackedDF4 = stack(lansJanTempsDF[,c(3,5,6)]);
+  Jan4MonthAnova = aov(formula=values~ind, data=stackedDF4);
+  print(summary(Jan4MonthAnova));
+
+  residuals = residuals(Jan4MonthAnova);
+
+  plot3 = ggplot() +
+    geom_histogram(mapping=aes(x=residuals)) +
+    theme_bw();
+  plot(plot3);
   
   
+  plot4 = ggplot(data=lansJanTempsDF) +
+    theme_bw();
+  for(i in 1:ncol(lansJanTempsDF))
+  {
+    xVal = paste("201", i, sep="");
+    yVal = lansJanTempsDF[,i];
+    newBox = geom_boxplot(mapping=aes_(x=xVal, y=yVal));
+    plot4 = plot4 + newBox;
+  }
+  plot(plot4);
 }
   
