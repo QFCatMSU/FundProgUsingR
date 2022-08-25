@@ -64,70 +64,18 @@
   model1 = lm(formula=weatherData$avgTemp~weatherData$relHum);    
   print(summary(model1));
   
+  #### Subsetting model1 
+  intyercept = model1$coefficients["(Intercept)"];
+  first10Residuals = model1$residuals[1:10];
+  every20thFitted = model1$fitted.values[seq(from=1, to=366, by=20)];
   
-  avgTemp_SB = weatherData["avgTemp"];
-  avgTemp_DO = weatherData[,"avgTemp"];
-  avgTemp_DB = weatherData[["avgTemp"]];
-  avgTemp_DS = weatherData$avgTemp;
+  #### Changing values in the plot
+  plot2 = plot1;
   
-  avgTemp2_DO = weatherData[1:10,"avgTemp"];
-  avgTemp2_DB = weatherData[["avgTemp"]][1:10];
-  avgTemp2_DS = weatherData$avgTemp[1:10];
-  
-  #### Part 1: Humidity vs. Temperature with linear regression ####
-  plot1 = ggplot( data=weatherData ) +
-    geom_point( mapping=aes(x=avgTemp, y=relHum) ) +
-    geom_smooth( mapping=aes(x=avgTemp, y=relHum), 
-                 method="lm" ) +
-    labs( title="Humidity vs Temperature",
-          subtitle="Lansing, MI -- 2016",
-          x = "Average Temperatures (Fahrenheit)",
-          y = "Relative Humidity") +
-    scale_x_continuous( breaks = seq(from=10, to=80, by=10) ) +
-    theme_bw() +
-    theme( axis.text.x=element_text(angle=90, vjust=0.5) );
-  plot(plot1);
-
-  #### Part 2: Dewpoint vs. Temperature with linear regression ####
-  plot2 = ggplot( data=weatherData ) +
-    geom_point( mapping=aes(x=avgTemp, y=dewPoint) ) +
-    geom_smooth( mapping=aes(x=avgTemp, y=dewPoint), 
-                 method="lm" ) +
-    labs( title="Dewpoint vs Temperature",
-          subtitle="Lansing, MI -- 2016",
-          x = "Average Temperatures (Fahrenheit)",
-          y = "Dewpoint") +
-    scale_x_continuous( breaks = seq(from=10, to=80, by=10) ) +
-    theme_bw() +
-    theme( axis.text.x=element_text(angle=90, vjust=0.5) );
+  plot2$theme$text$colour = "red";
+  plot2$labels$x = "Average Temperature (\u00B0F)";
+  plot2$theme$line$linetype = 2;
+  plot2$theme$line$size = 0.8;
   plot(plot2);
-  
-  
-  model1 = lm(formula=weatherData$avgTemp~weatherData$relHum);    
-  model2 = lm(formula=weatherData$relHum~weatherData$dewPoint);    
-  
-  print(summary(model1));
-  print(summary(model2));
-  
-  names(model1);  # yeah, the names are the names...
-  names(weatherData);
-  class(model1);
-  class(weatherData);
-  dim(model1);
-  dim(weatherData);
-  
-  ### Use either $ (named objects) or [[ ]] (named or unamed) to subset Lists
-  
-  ### Subsetting object (help in RStudio Viewer)
-  ### all three methods (and when you cannot use the $)
-  
-  ### The attributes...
-  # Add attribute to the data frame and a column and a value (latter will not work)
-  
-  
-  ### Environments in plots
-  
-  
-  ### Cannot give names to column values...
 }
   
