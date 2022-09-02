@@ -65,7 +65,7 @@
   print(summary(model1));
   
   #### Subsetting model1 
-  intyercept = model1$coefficients["(Intercept)"];
+  intercept = model1$coefficients["(Intercept)"];
   first10Residuals = model1$residuals[1:10];
   every20thFitted = model1$fitted.values[seq(from=1, to=366, by=20)];
   
@@ -73,7 +73,7 @@
   plot2 = plot1;
   
   plot2$theme$text$colour = "red";
-  plot2$labels$x = "Average Temperature (\u00B0F)";
+  plot2$labels$x = "Average Temperature (\u00B0F)"; # \u00B0 is Unicode for the degree symbol
   plot2$theme$line$linetype = 2;
   plot2$theme$line$size = 0.8;
   plot(plot2);
