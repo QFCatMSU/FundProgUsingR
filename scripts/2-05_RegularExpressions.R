@@ -19,11 +19,11 @@
   noRainNorSnow = which(!(weatherData$weatherType == "SN" |
                           weatherData$weatherType == "RA"));
   
-  noRainNorSnow2 = which(!weatherData$weatherType == "SN" &
-                         !weatherData$weatherType == "RA");
+  noRainNorSnow2 = which(weatherData$weatherType != "SN" &
+                         weatherData$weatherType != "RA");
   
-  noRainNorSnow_bad = which(!weatherData$weatherType == "SN" |
-                            !weatherData$weatherType == "RA");
+  noRainNorSnow_bad = which(weatherData$weatherType != "SN" |
+                            weatherData$weatherType != "RA");
   
   rainAndHighTemps = which(weatherData$weatherType == "RA" &
                            weatherData$avgTemp >= 70);
@@ -34,7 +34,7 @@
                         weatherData$avgTemp <= 40) );
   
   
-  snowyDaysGrep = grep("SN", weatherData$weatherType);
+  snowyDaysGrep = grep(weatherData$weatherType, pattern="SN");
 
   ### Testing grep() out
   grepTestVec = c("one fish", "two fish", "one llama", "two llama",
@@ -47,13 +47,13 @@
   snowDaysGrepTemp = weatherData$avgTemp[snowyDaysGrep];
   snowDaysGrepWind = weatherData$windSpeed[snowyDaysGrep];
   
-  daysWithPrecipGrep = grep("RA|SN", weatherData$weatherType);
+  daysWithPrecipGrep = grep(weatherData$weatherType, pattern="RA|SN");
   
-  rainyDaysGrep = grep("RA", weatherData$weatherType);
-  snowyDaysGrep = grep("SN", weatherData$weatherType);
+  rainyDaysGrep = grep(weatherData$weatherType, pattern="RA");
+  snowyDaysGrep = grep(weatherData$weatherType, pattern="SN");
   daysWithPrecipUnion = union(rainyDaysGrep, snowyDaysGrep);
   
-  hazyDays = grep("RA", weatherData$weatherType);
+  hazyDays = grep(weatherData$weatherType, pattern="RA");
   hotDays = which(weatherData$maxTemp > 90);
   hazyOrHotDays = union(hazyDays, hotDays);
   
