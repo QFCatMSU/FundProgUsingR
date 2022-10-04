@@ -1,12 +1,3 @@
-### PAckages:
-# devtools needs to be installed/included
-#library(devtools);
-# package is added
-#devtools::install_github("ChrisFishCahill/gg-qfc", force=TRUE);
-#library(ggqfc);
-#hello()
-#tester()
-
 convertTime = function(time_24Hour)
 {
   # break the 4 digit number into hours and minutes
