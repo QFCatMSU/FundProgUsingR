@@ -19,7 +19,12 @@
   cat("I am\n fine?\n");
   
   ### Combining message into one cat command
-  cat("Hello, World.\nHow are you?\nI am\n fine?\n");
+  cat("Hello, World.\nHow are you?\nI am\n fine?\n\n");
+  
+  ### Using the backslash to print out special characters
+  cat("\tAnd the boy said, \"Hello\" \n");
+  cat("Send a backslash \\ to the Console\n");
+  cat("Some Unicode characters: \u00C5 \u0A94 \u0115\n\n");
   
   ### read in data from  twoWeekWeatherData.csv
   weatherData = read.csv(file="data/twoWeekWeatherData.csv", 
