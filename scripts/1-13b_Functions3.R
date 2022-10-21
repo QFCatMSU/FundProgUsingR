@@ -55,6 +55,9 @@
   #   they will be the last two columns
   
   #### Create a factor (categorical) vector:
-  factorVector = as.factor(cat5j);
+  factorVector = as.factor(cat5i);
   
+  reorderedFactor = factor(factorVector, 
+                           levels=c("freezing", "cold", "moderate", 
+                                    "warm", "hot"));
 }
