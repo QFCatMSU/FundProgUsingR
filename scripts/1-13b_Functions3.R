@@ -7,13 +7,13 @@
   cat1a = tempCategory(45);
   cat1b = tempCategory(tempValue=85);
   cat1c = tempCategory(tempValue=17);
-  cat1d = tempCategory(-2); 
+  cat1d = tempCategory(-2);
   
   cat2a = tempCategory2(45);
   cat2b = tempCategory2(15, "F");
   cat2c = tempCategory2(15, "C");
   cat2d = tempCategory2(tempValue=35, unit="C");
-  cat2e = tempCategory2(tempValue=45, unit="C");  # NULL because 45C > 100F
+  cat2e = tempCategory2(tempValue=45, unit="C");  # NULL because 45C > 100F
   
   
   cat3a = tempCategory3(45);
@@ -53,5 +53,8 @@
   
   # double-click on weatherData in the Environment to see these vectors
   #   they will be the last two columns
+  
+  #### Create a factor (categorical) vector:
+  factorVector = as.factor(cat5j);
   
 }

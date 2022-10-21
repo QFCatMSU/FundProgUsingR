@@ -2,6 +2,29 @@
   rm(list=ls());  # cleans out the Environment every time the code is executed
   options(show.error.locations = TRUE);  # show the line number of errors in the Console
   
+  #### functions need to go at the top of your script
+  # function to convert Fahrenheit temperatures to Celsius
+  convertFtoC = function(fTemp)     # argument: values given by the caller to convert
+  {
+    celTemp = (5/9) * (fTemp - 32); # the argument is used as part of the calculation
+    return(celTemp);   # the results of the calculation are sent back to the caller           
+  }
+  
+  # function to see if the first number is divisible by the second
+  #   using the modulus operation ( %% )
+  isDivisible = function(div1, div2)  # arguments given by caller
+  {
+    remainder = div1 %% div2;  # calculating the modulus
+    if(remainder == 0)         # div2 divides div1 evenly (no remainder)
+    {
+      return(TRUE);
+    } 
+    else                       # div2 does not divide div1 (there is a remainder)
+    {
+      return(FALSE);
+    }
+  }
+  
   ### read in data from  twoWeekWeatherData.csv
   weatherData = read.csv(file="data/twoWeekWeatherData3.csv", 
                          sep=",",
@@ -27,12 +50,6 @@
   #    C6 = (5/9)*(weatherData$lowTemp - 32);
   
 
-  # function to convert Fahrenheit temperatures to Celsius
-  convertFtoC = function(fTemp)     # argument: values given be the caller to convert
-  {
-    celTemp = (5/9) * (fTemp - 32); # the argument is used as part of the calculation
-    return(celTemp);   # the results of the calculation are sent back to the caller           
-  }
   
   # calling the conversion function with argument names
   C2b = convertFtoC(fTemp=F2);
@@ -44,20 +61,7 @@
   C4c = convertFtoC(F4);
   C6c = convertFtoC(F6);
   
-  # function to see if the first number is divisible by the second
-  #   using the modulus operation ( %% )
-  isDivisible = function(div1, div2)  # arguments given by caller
-  {
-    remainder = div1 %% div2;  # calculating the modulus
-    if(remainder == 0)         # div2 divides div1 evenly (no remainder)
-    {
-      return(TRUE);
-    } 
-    else                       # div2 does not divide div1 (there is a remainder)
-    {
-      return(FALSE);
-    }
-  }
+
   
   # testing the modulus function above
   div12_4 = isDivisible(12,4);   # does 4 divide evenly into 12?
