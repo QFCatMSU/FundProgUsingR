@@ -36,7 +36,9 @@
   weatherData3$dateTime = NULL; 
   
   # Another way to remove a column
-  # weatherData3 = within(weatherData, rm(dateTime));  
+  # weatherData5[c("dateYear", "maxTemp", "minTemp")] = NULL 
+  # weatherData5[,c("dateYear", "maxTemp", "minTemp")] = NULL 
+  # weatherData3 = within(weatherData, rm(dateTime, maxTemp, minTemp));  
   
   # Could also use this method to remove multiple columns:
   # weatherData3 = within(weatherData, rm(maxTemp, minTemp, avgTemp))
@@ -50,7 +52,7 @@
   # One last copy
   weatherData5 = weatherData4;
   
-  # Move heatDays and coolDays after weatherType:
+  # Move heatDays and coolDays after tempDept:
   weatherData5 = subset(weatherData5, select=c(dateYear:tempDept,
                                                heatDays:coolDays,
                                                relHum:wetBulbTemp,
@@ -62,4 +64,6 @@
   # ... but don't include the row number as a new column
   write.csv(weatherData5, file="data/Lansing2016Noaa-2.csv",
             row.names = FALSE);  
+  
+  weatherData6 = subset(weatherData, select=c(-(maxTemp:minTemp)));
 }

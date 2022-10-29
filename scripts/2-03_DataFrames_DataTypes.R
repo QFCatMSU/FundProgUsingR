@@ -12,14 +12,14 @@
   ### Keep writing with row.names then you can have multiple X columns
   
   ### Adding/modifying columns with incorrect number of values
-  ## badData$X = c(1:400); 
-  ## badData$Y = c(1:10);
+  ## badData$test1 = c(1:400); 
+  ## badData$test2 = c(1:10);
   ## The above lines will give an error
 
 
   ### Unless the number of values evenly divides the number of row in the data frame
-  badData$Z1 = 10;       # adding 1 value 366 times
-  badData$Z2 = c(1:6);   # adding 6 values 61 time (6*61 = 366)
+  badData$test3 = 10;       # adding 1 value 366 times
+  badData$test4 = c(1:6);   # adding 6 values 61 time (6*61 = 366)
   
   ### Repeating values in a vector --
   ##  The following two lines will both create a vector with 366 values

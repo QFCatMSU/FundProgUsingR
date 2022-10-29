@@ -1,7 +1,6 @@
 {
   rm(list=ls());  options(show.error.locations = TRUE);
   library(package=ggplot2);   
-  library(package=reshape2);   
 
   #### There are no column names in this data... so, V1, V2...
   lansingJanDF = read.csv(file = "data/LansingJanTemps.csv");
@@ -12,10 +11,10 @@
   # colnames(lansingJanDF2) = 2011:2016;
   
   ### Change column names from V1, V2... to c2011...
-  ##  Explain why we add a letter at the beginning... (numeric column names)
+  ##  Use column names that meet standards for variable naming
   colnames(lansingJanDF2) = paste("Jan", 2011:2016, sep="");
   
-  
+  ## convert data frame into a matrix
   lansingJanMat = as.matrix(lansingJanDF2);
   
   # 1) Divide by 10 to get units from tenths of Celsius to Celsius
@@ -28,8 +27,9 @@
   lansingJanMat4 = signif(x=lansingJanMat3, digits=2);
   
   ### 4) finding mean values
-  # find mean of the whole matrix
+  # find mean and standard deviation of the whole matrix
   meanAllTemps = mean(lansingJanMat4);
+  sdAllTemps = sd(lansingJanMat4);
   
   
   #### Explain row/col notation....####
@@ -60,12 +60,15 @@
   for(i in 1:6)  # remember i is used to index the iteration in the for()
   {
     # get the mean of all values in column i and save it to monthlyMean[i]
-    yearlyMean[i] = mean(lansingJanMat[,i]);
+    yearlyMean[i] = mean(lansingJanMat4[,i]);
   }
   
-  yearlyMean2 = apply(lansingJanMat, 2, mean);
+  # Use apply to get the mean for each column
+  yearlyMean2 = apply(lansingJanMat4, MARGIN=2, FUN=mean);
 
-  
+  ### Save the matrix to a CSV file for use in later lessons....
+  write.csv(x=lansingJanMat4, file = "data/LansingJanTempsFixed.csv",
+            row.names = FALSE);
   
   
 #### The code below is being moved to another lesson #####
@@ -73,10 +76,11 @@
   #### Part 1: Line plot for all years ####
   #### Note: need to plot as data frame 
   ### Can do with for loop -- in GGPlot class ###
-  plot1 = ggplot( data=as.data.frame(lansingJanMat) ) +
+  plot1 = ggplot( data=as.data.frame(lansingJanMat4) ) +
     geom_line( mapping=aes(x=1:31, y=Jan2011),
-               color = "red") +
-    geom_line( mapping=aes(x=(1:31), y=Jan2012),
+               color = "red",
+               show.legend = TRUE) +
+    geom_line( mapping=aes(x=1:31, y=Jan2012),
                color = "green") +
     geom_line( mapping=aes(x=(1:31), y=Jan2013),
                color = "orange") +
@@ -88,10 +92,10 @@
                color = "black") +
     labs( title="January Temperature",
           subtitle="Lansing, MI -- 2011-2016",
-          xlab = "day",
+          x = "January Days",
           y = "temperature (F)") +
     theme_bw();
- # plot(plot1);
+  plot(plot1);
   
 ### Fix y-axis coords
   #### put color in the legend
@@ -114,41 +118,16 @@
     theme_bw();
   #plot(plot2);
   
-
-
   
+  #### Stack the columns??? -- Extension
+  stackedDF = stack(lansingJanDF2);
+  plot3 = ggplot( data=stackedDF ) +
+    geom_line( mapping=aes(x=((1:186)%%31), 
+                           y=values, 
+                           color=ind) ) +
+    scale_color_manual(values=c("red", "green","blue","orange",
+                            "purple", "black")) +
+    theme_bw();
+  plot(plot3);
 
-
-  
- 
-
-  
-  #### cbind 2017 and 2018
-
-
-  # # bind the temperature vectors into a matrix -- each vector becomes a column 
-  # cbindMatrix = cbind(lw11Temps, lw12Temps, lw13Temps, 
-  #                     lw14Temps, lw15Temps, lw16Temps);
-  
-    # In app do a rbind?
-  
-  #### t-test/ anovas/lists -- next lesson
-
-    # give this script access to the functions in the rnoaa package
-  #library(rnoaa);
-  
-    # myToken = "LfoeHFkVUMLcokHXGCTTjukJteFEcvvM";
-
-  #### For creating the data...  
- # # get the maximum temperatures for every day in  January 2011 from the NOAA database
- #  lansWeather17 = ncdc(datasetid="GHCND",
- #                       datatypeid=c("TMAX"),
- #                       stationid="GHCND:USW00014836",
- #                       startdate = "2018-01-01", enddate ="2018-01-31",
- #                       token=myToken,
- #                       limit=50  );
- #  
- #  Jan2017Temps = lansWeather17$data$value;
- #  write.csv(x=Jan2017Temps, file = "data/LansingJan2018Temps.csv",
- #            row.names = FALSE);
 }

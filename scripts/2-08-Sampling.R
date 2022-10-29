@@ -4,25 +4,48 @@
   rm(list=ls());  options(show.error.locations = TRUE);
   library(package="ggplot2");
   
-  #### set.seed() is a session variable that helps with random values
-  set.seed(NULL);  #remove session variable -- explain this later
-  
   ### Read data from CSV file and save to a variable
-  lansJanTempsDF = read.csv(file = "data/lansingJanTemps.csv"); 
+  lansJanTempsDF = read.csv(file = "data/lansingJanTempsFixed.csv"); 
   lansJanTemps2017DF = read.csv(file = "data/lansingJan2017Temps.csv"); 
   
   ### Combine the data
+  colnames(lansJanTemps2017DF) = "Jan2017";   # only one column to name
   lansJanTempsDF2 = cbind(lansJanTempsDF, lansJanTemps2017DF);
-  colnames(lansJanTempsDF2) = paste("Jan", 2011:2017, sep=""); # would work with space but...
+
+  ### A Line plot of every column in the data frame
   
-  #### Convert into matrix
-  lansJanTempsMat = as.matrix(x=lansJanTempsDF2);
+  ## Since every line plot is mapped to the same x values (1-31) --
+  #  We can put the x mapping in the ggplot initialization
+  plot1 = ggplot( data=(lansJanTempsDF2), 
+                  mapping = aes(x=1:31)) +  # init x mapping
 
-  #### Convert the values to 2-sig digits and Fahr
-  lansJanTempsMat = lansJanTempsMat / 10;
-  lansJanTempsMat = (9/5) * lansJanTempsMat + 32;
-  lansJanTempsMat = signif(x=lansJanTempsMat, digits=2);
+    ## We set the color for the first four lines by treating color as a subcomponent
+    geom_line( mapping=aes(y=Jan2011),
+               color = "red") +
+    geom_line( mapping=aes(y=Jan2012),
+               color = "green") +
+    geom_line( mapping=aes(y=Jan2013),
+               color = "orange") +
+    geom_line( mapping=aes(y=Jan2014),
+               color = "blue") +
+    
+    ## We put the last four lines in the legend by treating color as a mapping
+    geom_line( mapping=aes(y=Jan2015, color="2015")) +
+    geom_line( mapping=aes(y=Jan2016, color="2016")) +
+    geom_line( mapping=aes(y=Jan2017, color="2017")) +
+    
+    labs( title="January Temperature",
+          subtitle="Lansing, MI -- 2011-2017",
+          x = "January Days",
+          y = "temperature (F)") +
+    theme_bw();
+  plot(plot1);
 
+  #### set.seed() is creates "random" values that are always the same
+  #### set.seed() is a session variable... like the working directory
+  #### need to set to NULL to remove it
+  set.seed(seed=NULL);  # remove seed value
+  
   #### Sampling from a vector
   randomSample1 = sample( c(1:10), size=8, replace=TRUE);
   randomSample2 = sample( c(1:10), size=8, replace=FALSE);
@@ -30,30 +53,25 @@
   #### Sample size larger than vector
   # randomSample2 = sample( c(1:10), size=12, replace=FALSE); # will cause error
   randomSample3 = sample( c(1:10), size=12, replace=TRUE);  # will work
-
-  #### Sampling from a matrix (which is a 2D vector)
-  randomSample4 = sample( lansJanTempsMat, size=80, replace=TRUE);
+ 
+  #### Convert into matrix
+  lansJanTempsMat = as.matrix(x=lansJanTempsDF2);
   
-  #### You can sample from a data frame but the results are not quite what you expect
-  randomSample5 = sample( lansJanTempsDF, size=80, replace=TRUE);
+  ### Sample 80 value -- will be different every time the code is sourced
+  randomTemps = sample(lansJanTempsMat, size=80, replace=TRUE);
   
-  #### up until this point, every time you Source the code, different random values appear
-
   #### set.seed() -- get the same "random" values every time
   set.seed(12345);
-  randomSampleSeeded = sample(lansJanTempsMat, size=200, replace=TRUE);
- 
-  #### set.seed() is a session variable...
-  #### need to set to NULL to remove it!
-  #### working directory is also a session variable!
+  randomTempsSeeded = sample(lansJanTempsMat, size=80, replace=TRUE);
+
   
   #### get mean and sd of seeded random sample
-  meanRandom = mean(randomSampleSeeded);  # 37.175
-  sdRandom = sd(randomSampleSeeded);      # ~ 4.46
+  meanRandom = mean(randomTempsSeeded);  # 28.58875
+  sdRandom = sd(randomTempsSeeded);      # ~ 10.82
   
   #### Plot a histogram with the mean value
   plot1 = ggplot() +
-    geom_histogram(mapping=aes(x=randomSampleSeeded),
+    geom_histogram(mapping=aes(x=randomTempsSeeded),
                    fill="gray50",
                    color="blue") +
     geom_vline(xintercept = meanRandom,
@@ -61,27 +79,30 @@
     theme_bw();
   plot(plot1);
   
+  #### Create a normal distribution with mean=20, sd =4 and 200 sampled values
+  normalDist1 = rnorm(n=200, mean=20, sd=2);
+  
   #### Get random values from a normal distribution
-  ## The normal distributioon will have the mean and sd of the randomly sampled values
-  normalDist = rnorm(n=200, 
-                     mean=meanRandom, 
-                     sd=sdRandom);
+  ## The normal distribution will have the mean and sd of the randomly sampled values
+  normalDist2 = rnorm(n=200, 
+                      mean=meanRandom, 
+                      sd=sdRandom);
   
   #### Plot a histogram of these normal dist values 
   plot2 = ggplot() +
-    geom_histogram(mapping=aes(x=normalDist),
+    geom_histogram(mapping=aes(x=normalDist2),
                    fill="gray50",
                    color="blue") +
-    geom_vline(xintercept = mean(normalDist),
+    geom_vline(xintercept = mean(normalDist2),
                color="red") +
     theme_bw();
   plot(plot2);
-  
-  ### If you want to save objects with different sizes to one place, you need a List
-  #### Make sure they are of different size (otherwise, could be a DF)
-  listOfTemps = list("Random_Pre_Seed" = randomSample4,
-                     "Random_Post_Seed" = randomSampleSeeded,
-                     "Normal_Temps" = normalDist);
+ 
+   
+  listOfTemps = list("Random_Temps" = randomTemps,
+                     "Random_Seeded_Temps" = randomTempsSeeded,
+                     "Normal_Dist" = normalDist1,
+                     "Normal_Dist2" = normalDist2);
   
   #### Accessing List values
   random = listOfTemps$Random_Temps;
@@ -92,20 +113,15 @@
   #### save and load a list
   save(listOfTemps, file = "data/tempList.rdata");
   load("data/tempList.rdata");
-  
-  # If you set.seed(12345) at the top of the script, will 
-  # randomSampleSeeded have the same values (test it!)?  
-  #   Why or why not?
-  #   
-  # Bind 2018 to the matrix
-  # 
-  # Bind 2 rows to the end --
-  # 
-  # Using weatherData -- get 50 samples of AWND
-  #   30 of PRCP 
-  #   
-  # Make of List of all the above results -- save as app2-8-List
-  
-  
-  
 }
+
+{
+  ### Put in seperate script (have not figured out yet...)
+  # rm(list=ls());  
+  # load("data/tempList.rdata");
+  # 
+  # obj1 = listOfTemps$Random_Temps;
+  # obj2 = listOfTemps[["Random_Temps"]];
+  # obj3 = listOfTemps["Random_Temps"];
+}
+  

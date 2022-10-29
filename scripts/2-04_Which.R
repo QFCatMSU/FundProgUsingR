@@ -3,14 +3,14 @@
   options(show.error.locations = TRUE);  # show the line number of errors in the Console
   library(package=ggplot2);
   
-  ages = c(2,7,3,9,6,3,5);
-  animals = c("llama", "alpaca", "goat", "llama", "guanaco");
+  ages = c(25,47,13,59,76,33,45);
+  animalNames = c("llama", "alpaca", "goat", "llama", "guanaco");
   
-  index1 = which(ages > 4);  # holds index of ages greater than 4
-  index2 = which(ages < 4);  # holds index of ages less than 4
-  
-  index3 = which(animals == "llama"); # holds index of animals that are "llama"
-  index4 = which(animals != "llama"); # holds index of animals that are not "llama"
+  ### use which() on the vectors above -- save the indexes to a variable
+  index1 = which(ages > 40);   # index of ages greater than 40
+  index2 = which(ages <= 33);  # index of ages less than or equal to 33
+  index3 = which(animalNames == "llama"); # index of animals named "llama"
+  index4 = which(animalNames != "llama"); # index of animals not named "llama"
   
   ### Get weatherData from the CSV file created last lesson
   weatherData = read.csv(file="data/Lansing2016NOAA-3.csv");
@@ -25,13 +25,12 @@
   daysNoPrecip = which(weatherData$precipNum == 0.00);  # days where precip is 0
   daysHighPrecip = which(weatherData$precipNum > 1.00); # days where precip is > 1
   
-  # this code is not explicit and will not produce the correct results
-  # daysModPrecip = which(weatherData$precipNum > 0.25 & < 0.50);
-  
   # correct code: days where precip is > 0.25 and < 0.50
   daysModPrecip = which(weatherData$precipNum > 0.25 & 
                         weatherData$precipNum < 0.50);
   
+  # this code is not explicit and will not produce the correct results
+  # daysModPrecip = which(weatherData$precipNum > 0.25 & < 0.50);
   
   rainyDates = weatherData$dateYear[daysHighPrecip];
   rainyDayWindSpeed = weatherData$windSpeed[daysHighPrecip];
@@ -56,7 +55,7 @@
     geom_point( mapping=aes(x=avgTemp, y=relHum),
                 color = "blue") +
     labs( title="Humidity vs. Temperature",
-          subtitle="Precipiation greater than 1 inch",
+          subtitle="Precipitation greater than 1 inch",
           x = "Temperature (F)",
           y = "Humidity (%)") +
     theme_bw();
@@ -67,7 +66,7 @@
                             y=weatherData$relHum[daysHighPrecip]),
                 color = "blue") +
     labs( title="Humidity vs. Temperature",
-          subtitle="Precipiation greater than 1 inch",
+          subtitle="Precipitation greater than 1 inch",
           x = "Temperature (F)",
           y = "Humidity (%)") +
     theme_bw();
@@ -79,7 +78,7 @@
                             y=c(85,85,82,78,77,90,88,83)),
                 color = "blue") +
     labs( title="Humidity vs. Temperature",
-          subtitle="Precipiation greater than 1 inch",
+          subtitle="Precipitation greater than 1 inch",
           x = "Temperature (F)",
           y = "Humidity (%)") +
     theme_bw();

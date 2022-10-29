@@ -33,9 +33,6 @@
                        (weatherData$avgTemp >= 25 &
                         weatherData$avgTemp <= 40) );
   
-  
-  snowyDaysGrep = grep(weatherData$weatherType, pattern="SN");
-
   ### Testing grep() out
   grepTestVec = c("one fish", "two fish", "one llama", "two llama",
                   "red fish", "blue fish");
@@ -44,6 +41,9 @@
   test2 = grep("lla", grepTestVec);  # values that have the substring "lla"
   test3 = grep("fish", grepTestVec); # values that have the substring "fish"
 
+  ### Using grep() on the dataframe to find snowy days
+  snowyDaysGrep = grep(weatherData$weatherType, pattern="SN");
+  
   snowDaysGrepTemp = weatherData$avgTemp[snowyDaysGrep];
   snowDaysGrepWind = weatherData$windSpeed[snowyDaysGrep];
   
@@ -57,7 +57,7 @@
   hotDays = which(weatherData$maxTemp > 90);
   hazyOrHotDays = union(hazyDays, hotDays);
   
-  # daysWithRainAndSnow = grep("RN&SN", weatherData$weatherType);  # this does not work!
+  # daysWithRainAndSnow = grep("RN&SN", weatherData$weatherType);  # this does not work!
   daysWithRainAndSnow = intersect(rainyDaysGrep, snowyDaysGrep);
   
   meetsCondition = c(3,5,6,9);
