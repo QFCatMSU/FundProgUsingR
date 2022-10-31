@@ -55,12 +55,12 @@
   set.seed(seed=NULL);  # remove seed value
   
   #### Sampling from a vector
-  randomSample1 = sample( c(1:10), size=8, replace=TRUE);
-  randomSample2 = sample( c(1:10), size=8, replace=FALSE);
+  randomSample1 = sample( 1:10, size=8, replace=TRUE);
+  randomSample2 = sample( 1:10, size=8, replace=FALSE);
 
   #### Sample size larger than vector
-  # randomSample2 = sample( c(1:10), size=12, replace=FALSE); # will cause error
-  randomSample3 = sample( c(1:10), size=12, replace=TRUE);  # will work
+  # randomSample3 = sample( 1:10, size=12, replace=FALSE); # will cause error
+  randomSample4 = sample( 1:10, size=12, replace=TRUE);  # will work
  
   #### Convert into matrix
   lansJanTempsMat = as.matrix(x=lansJanTempsDF2);
@@ -82,7 +82,7 @@
     geom_histogram(mapping=aes(x=randomTempsSeeded),
                    fill="gray50",
                    color="blue") +
-    geom_vline(xintercept = meanRandom,
+    geom_vline(xintercept = mean(randomTempsSeeded),
                color="red") +
     theme_bw();
   plot(plot1);
@@ -93,8 +93,8 @@
   #### Get random values from a normal distribution
   ## The normal distribution will have the mean and sd of the randomly sampled values
   normalDist2 = rnorm(n=200, 
-                      mean=meanRandom, 
-                      sd=sdRandom);
+                      mean=mean(randomTempsSeeded), 
+                      sd=sd(randomTempsSeeded));
   
   #### Plot a histogram of these normal dist values 
   plot2 = ggplot() +
@@ -106,30 +106,16 @@
     theme_bw();
   plot(plot2);
  
-   
+  ## Create a list of the four different random vectors created in this lesson:
   listOfTemps = list("Random_Temps" = randomTemps,
                      "Random_Seeded_Temps" = randomTempsSeeded,
-                     "Normal_Dist" = normalDist1,
+                     "Normal_Dist1" = normalDist1,
                      "Normal_Dist2" = normalDist2);
   
-  #### Accessing List values
-  random = listOfTemps$Random_Temps;
-  random2 = listOfTemps[["Random_Temps"]];
-    
-  random3 = listOfTemps["Random_Temps"];
-
-  #### save and load a list
+  #### save the information in a list to an rdata file
   save(listOfTemps, file = "data/tempList.rdata");
+  
+  ### Load information from an rdata file (execute this line in a different script)
   load("data/tempList.rdata");
-}
-
-{
-  ### Put in seperate script (have not figured out yet...)
-  # rm(list=ls());  
-  # load("data/tempList.rdata");
-  # 
-  # obj1 = listOfTemps$Random_Temps;
-  # obj2 = listOfTemps[["Random_Temps"]];
-  # obj3 = listOfTemps["Random_Temps"];
 }
   
