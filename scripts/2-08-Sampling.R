@@ -115,7 +115,9 @@
   #### save the information in a list to an rdata file
   save(listOfTemps, file = "data/tempList.rdata");
   
-  ### Load information from an rdata file (execute this line in a different script)
+  ### Load information from an rdata file -- and put in the Environment
+  ##  This line needs to be executed in a different script
+  ##  Or, clear the Environment and Run just this line
   load("data/tempList.rdata");
 }
   
