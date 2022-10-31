@@ -12,6 +12,14 @@
   colnames(lansJanTemps2017DF) = "Jan2017";   # only one column to name
   lansJanTempsDF2 = cbind(lansJanTempsDF, lansJanTemps2017DF);
 
+  ### Binding vectors of the same size together:
+  vectorA = 20:1;                        # 20 values 20, 19, 18, ..., 1
+  vectorB = seq(from=100, to=195, by=5); # 20 values: 100, 105, 110, ..., 195
+  matrixAB = cbind(vectorA, vectorB);    # matrix with 2 columns
+  
+  vectorC = seq(from=-20, to=18, by=2);  # 20 values -20, -18,..., 18
+  matrixABC = cbind(matrixAB, vectorC);  # matrix with 3 columns
+  
   ### A Line plot of every column in the data frame
   
   ## Since every line plot is mapped to the same x values (1-31) --
@@ -61,7 +69,7 @@
   randomTemps = sample(lansJanTempsMat, size=80, replace=TRUE);
   
   #### set.seed() -- get the same "random" values every time
-  set.seed(12345);
+  set.seed(54321);
   randomTempsSeeded = sample(lansJanTempsMat, size=80, replace=TRUE);
 
   
