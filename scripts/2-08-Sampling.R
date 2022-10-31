@@ -20,35 +20,6 @@
   vectorC = seq(from=-20, to=18, by=2);  # 20 values -20, -18,..., 18
   matrixABC = cbind(matrixAB, vectorC);  # matrix with 3 columns
   
-  ### A Line plot of every column in the data frame
-  
-  ## Since every line plot is mapped to the same x values (1-31) --
-  #  We can put the x mapping in the ggplot initialization
-  plot1 = ggplot( data=(lansJanTempsDF2), 
-                  mapping = aes(x=1:31)) +  # init x mapping
-
-    ## We set the color for the first four lines by treating color as a subcomponent
-    geom_line( mapping=aes(y=Jan2011),
-               color = "red") +
-    geom_line( mapping=aes(y=Jan2012),
-               color = "green") +
-    geom_line( mapping=aes(y=Jan2013),
-               color = "orange") +
-    geom_line( mapping=aes(y=Jan2014),
-               color = "blue") +
-    
-    ## We put the last four lines in the legend by treating color as a mapping
-    geom_line( mapping=aes(y=Jan2015, color="2015")) +
-    geom_line( mapping=aes(y=Jan2016, color="2016")) +
-    geom_line( mapping=aes(y=Jan2017, color="2017")) +
-    
-    labs( title="January Temperature",
-          subtitle="Lansing, MI -- 2011-2017",
-          x = "January Days",
-          y = "temperature (F)") +
-    theme_bw();
-  plot(plot1);
-
   #### set.seed() is creates "random" values that are always the same
   #### set.seed() is a session variable... like the working directory
   #### need to set to NULL to remove it
