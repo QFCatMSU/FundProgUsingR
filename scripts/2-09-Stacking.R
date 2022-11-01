@@ -1,6 +1,4 @@
 {
-  #### get a Boolean vector
-  
   rm(list=ls());  options(show.error.locations = TRUE);
   library(package="ggplot2");
   
@@ -74,15 +72,14 @@
     theme_bw();
   plot(plot3);
   
-  ## Most robust methos -- use for loops to plot each column
-  tempData = lansJanTempsDF;
-  plot4 = ggplot( data=(tempData));  # create a canvas
-  for(i in 1:ncol(tempData))         # add plots to canvas one at a time
+  ## Most robust methds -- use for loops to plot each column
+  plot4 = ggplot( data=(lansJanTempsDF));  # create a canvas
+  for(i in 1:ncol(lansJanTempsDF))         # add plots to canvas one at a time
   {
     # need to use aes_() instead of aes() for the mapping
-    plot4 = plot4 + geom_line( mapping=aes_(x=1:nrow(tempData), 
-                                            y=tempData[,i], 
-                                            color=colnames(tempData)[i]) )
+    plot4 = plot4 + geom_line( mapping=aes_(x=1:nrow(lansJanTempsDF), 
+                                            y=lansJanTempsDF[,i], 
+                                            color=colnames(lansJanTempsDF)[i]) )
   }
   # add the labels and theme to the canvas
   plot4 = plot4 + labs( title="January Temperature",
@@ -94,15 +91,15 @@
   
   ## Boxplots naively -- puts boxplots on top of each other (just do 2...)
   plot5 = ggplot(data=lansJanTempsDF) +
-    geom_boxplot(mapping=aes(y=Jan2011)) +
-    geom_boxplot(mapping=aes(y=Jan2012)) +
+    geom_boxplot(mapping=aes(x=2011, y=Jan2011)) +
+    geom_boxplot(mapping=aes(x=2012, y=Jan2012)) +
     theme_bw();
   plot(plot5);  
   
   ## Boxplot -- give a discrete (string) value to the x mapping 
   plot6 = ggplot(data=lansJanTempsDF) +
-    geom_boxplot(mapping=aes(x=colnames(lansJanTempsDF)[1], y=Jan2011)) +
-    geom_boxplot(mapping=aes(x=colnames(lansJanTempsDF)[2], y=Jan2012)) +
+    geom_boxplot(mapping=aes(x="2011", y=Jan2011)) +
+    geom_boxplot(mapping=aes(x="2012", y=Jan2012)) +
     theme_bw();
   plot(plot6);
   
@@ -117,32 +114,29 @@
   stackedDF3 = stack(lansJanTempsDF[,c(1,2,5,6)]);  
 
   ### Plotting the subsetted stacked dataframe
-  plot8 = ggplot(data=stackedDF2) +
+  plot8 = ggplot(data=stackedDF3) +
     geom_boxplot(mapping=aes(x=ind, y=values)) +
     theme_bw();
   plot(plot8);
 
-  tempData = lansJanTempsDF[,c(1,2,5,6)];
-  plot9 = ggplot( data=(tempData));  # init x mapping
-  for(i in 1:ncol(tempData))
+  ### Creating the boxplot using the original data frame and for loops 
+  plot9 = ggplot( data=(lansJanTempsDF)); 
+  for(i in c(1,2,5,6))  # cycle through the four columns we want to plot
   {
+    ## map the column names to x and the column values to y
     plot9 = plot9 + geom_boxplot(mapping=aes_(x=colnames(lansJanTempsDF)[i], 
-                                                y=tempData[,i] ))
+                                              y=lansJanTempsDF[,i] ))
   }
-  plot9 = plot9 + labs( title="January Temperature",
-                        subtitle="Lansing, MI -- 2011-2016",
-                        x = "January Days",
-                        y = "temperature (F)") +
-    theme_bw();
+  plot9 = plot9 + theme_bw();
   plot(plot9);
   
   ## Create a list of the four different data frames in this lesson:
-  listOfDF = list("origDF" = lansJanTempsDF,
-                  "stackedDF" = stackedDF,
-                  "stackDF_2_4" = stackedDF2,
-                  "stackedDF_1_2_5_6" = stackedDF3);
+  temperatureDFs = list("origDF" = lansJanTempsDF,
+                        "stackedDF" = stackedDF,
+                        "stackDF_2_4" = stackedDF2,
+                        "stackedDF_1_2_5_6" = stackedDF3);
   
   ## save the list to an rdata file to be used next lesson:
-  save(listOfDF, file = "data/DF_list.rdata");
+  save(temperatureDFs, file = "data/tempDFs.rdata");
 }
   
