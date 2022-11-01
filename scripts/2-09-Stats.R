@@ -20,8 +20,8 @@
   #### We can plot a box for two of the columns
   #### x = discrete value, y = data from column
   plot2 = ggplot(data=lansJanTempsDF) +
-    geom_boxplot(mapping=aes(x="2011", y=Jan2011)) +
-    geom_boxplot(mapping=aes(x="2012", y=Jan2012)) +
+    geom_boxplot(mapping=aes(y=Jan2011)) +
+    geom_boxplot(mapping=aes(y=Jan2012)) +
     theme_bw();
   plot(plot2);
   

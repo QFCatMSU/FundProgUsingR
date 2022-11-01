@@ -4,33 +4,19 @@
   rm(list=ls());  options(show.error.locations = TRUE);
   library(package="ggplot2");
   
-  rm(list=ls());  options(show.error.locations = TRUE);
-  library(package="ggplot2");
-  
   ### Read data from CSV file and save to a variable
   lansJanTempsDF = read.csv(file = "data/lansingJanTempsFixed.csv"); 
-  lansJanTemps2017DF = read.csv(file = "data/lansingJan2017Temps.csv"); 
   
-  ### Combine the data
-  colnames(lansJanTemps2017DF) = "Jan2017";   # only one column to name
-  lansJanTempsDF2 = cbind(lansJanTempsDF, lansJanTemps2017DF);
-  
-  ### Binding vectors of the same size together:
-  vectorA = 20:1;                        # 20 values 20, 19, 18, ..., 1
-  vectorB = seq(from=100, to=195, by=5); # 20 values: 100, 105, 110, ..., 195
-  matrixAB = cbind(vectorA, vectorB);    # matrix with 2 columns
-  
-  vectorC = seq(from=-20, to=18, by=2);  # 20 values -20, -18,..., 18
-  matrixABC = cbind(matrixAB, vectorC);  # matrix with 3 columns
-  
-  ### A Line plot of every column in the data frame
+
+  ### Create a line plot of every column in the data frame
   
   ## Since every line plot is mapped to the same x values (1-31) --
   #  We can put the x mapping in the ggplot initialization
-  plot1 = ggplot( data=(lansJanTempsDF2), 
+  plot1 = ggplot( data=(lansJanTempsDF), 
                   mapping = aes(x=1:31)) +  # init x mapping
     
-    ## We set the color for the first four lines by treating color as a subcomponent
+    ## Create a line plot component for each columns
+    ## You can set the color subcomponent for each line
     geom_line( mapping=aes(y=Jan2011),
                color = "red") +
     geom_line( mapping=aes(y=Jan2012),
@@ -39,92 +25,124 @@
                color = "orange") +
     geom_line( mapping=aes(y=Jan2014),
                color = "blue") +
-    
-    ## We put the last four lines in the legend by treating color as a mapping
-    geom_line( mapping=aes(y=Jan2015, color="2015")) +
-    geom_line( mapping=aes(y=Jan2016, color="2016")) +
-    geom_line( mapping=aes(y=Jan2017, color="2017")) +
-    
+    geom_line( mapping=aes(y=Jan2015),
+               color = "purple") +
+    geom_line( mapping=aes(y=Jan2016),
+               color = "black") +
     labs( title="January Temperature",
-          subtitle="Lansing, MI -- 2011-2017",
+          subtitle="Lansing, MI -- 2011-2016",
           x = "January Days",
           y = "temperature (F)") +
     theme_bw();
   plot(plot1);
   
-  ### Read data from CSV file and save to a variable
-  lansJanTempsDF = read.csv(file = "data/lansingJanTemps2.csv"); 
-  
-  #### Convert into matrix
-  lansJanTempsMat = as.matrix(x=lansJanTempsDF);
-
-  plot1 = ggplot(data=lansJanTempsDF) +
-    geom_boxplot(mapping=aes(x=2011, y=Jan2011)) +
-    geom_boxplot(mapping=aes(x=2012, y=Jan2012)) +
-    theme_bw();
-  plot(plot1);
+  ## A line plot that includes a legend --
+  ## Legends are included whenever you map something other than x or y
+  plot2 = ggplot( data=(lansJanTempsDF), 
+                  mapping = aes(x=1:31)) +  
     
-  #### For GGPlot we need to use the data frame
-  #### We can plot a box for two of the columns
-  #### x = discrete value, y = data from column
-  plot2 = ggplot(data=lansJanTempsDF) +
-    geom_boxplot(mapping=aes(y=Jan2011)) +
-    geom_boxplot(mapping=aes(y=Jan2012)) +
+    ## Put color into the mapping -- this mapping also puts color in the legend
+    ## But, the color of the lines is chosen by GGPlot
+    geom_line( mapping=aes(y=Jan2011, color = "Jan2011") ) +
+    geom_line( mapping=aes(y=Jan2012, color = "Jan2012") ) +
+    geom_line( mapping=aes(y=Jan2013, color = "Jan2013") ) +
+    geom_line( mapping=aes(y=Jan2014, color = "Jan2014") ) +
+    geom_line( mapping=aes(y=Jan2014, color = "Jan2015") ) +
+    geom_line( mapping=aes(y=Jan2014, color = "Jan2016") ) +
+    labs( title="January Temperature",
+          subtitle="Lansing, MI -- 2011-2016",
+          x = "January Days",
+          y = "temperature (F)") +
     theme_bw();
   plot(plot2);
   
-  stackedDF = stack(lansJanTempsDF);  # use(d) in 2-7 Extension
-   
-  #### Plotting the stacked dataframe
-  plot3 = ggplot(data=stackedDF) +
+  ## Another plotting solution -- stack the data frame
+  stackedDF = stack(lansJanTempsDF);  
+    
+  ## And, FYI, you can also unstack the data frame
+  origDF = unstack(stackedDF);   
+  
+  ## Use the stacked data frame to plot the lines
+  plot3 = ggplot( data=(stackedDF)) +  
+    # We want to repeat 1-31 for each line -- so, we need to mod the line number by 31
+    # values and ind are the columns in the stacked data frame
+    geom_line( mapping=aes(x=(1:186)%%31, y=values, color=ind) ) +
+    labs( title="January Temperature",
+          subtitle="Lansing, MI -- 2011-2016",
+          x = "January Days",
+          y = "temperature (F)") +
+    theme_bw();
+  plot(plot3);
+  
+  ## Most robust methos -- use for loops to plot each column
+  tempData = lansJanTempsDF;
+  plot4 = ggplot( data=(tempData));  # create a canvas
+  for(i in 1:ncol(tempData))         # add plots to canvas one at a time
+  {
+    # need to use aes_() instead of aes() for the mapping
+    plot4 = plot4 + geom_line( mapping=aes_(x=1:nrow(tempData), 
+                                            y=tempData[,i], 
+                                            color=colnames(tempData)[i]) )
+  }
+  # add the labels and theme to the canvas
+  plot4 = plot4 + labs( title="January Temperature",
+          subtitle="Lansing, MI -- 2011-2016",
+          x = "January Days",
+          y = "temperature (F)") +
+  theme_bw();
+  plot(plot4);
+  
+  ## Boxplots naively -- puts boxplots on top of each other (just do 2...)
+  plot5 = ggplot(data=lansJanTempsDF) +
+    geom_boxplot(mapping=aes(y=Jan2011)) +
+    geom_boxplot(mapping=aes(y=Jan2012)) +
+    theme_bw();
+  plot(plot5);  
+  
+  ## Boxplot -- give a discrete (string) value to the x mapping 
+  plot6 = ggplot(data=lansJanTempsDF) +
+    geom_boxplot(mapping=aes(x=colnames(lansJanTempsDF)[1], y=Jan2011)) +
+    geom_boxplot(mapping=aes(x=colnames(lansJanTempsDF)[2], y=Jan2012)) +
+    theme_bw();
+  plot(plot6);
+  
+  #### Plotting the stacked dataframe (all 6 columns)
+  plot7 = ggplot(data=stackedDF) +
     geom_boxplot(mapping=aes(x=ind, y=values)) +
     theme_bw();
-  plot(plot3);
-  
+  plot(plot7);    
+
+  #### Create stacked dataframe that are subsetted
   stackedDF2 = stack(lansJanTempsDF[,c(2,4)]);
-  stackedDF3 = stack(lansJanTempsDF[,c(1,2,5,6)]);
-  
-  origDF = unstack(stackedDF);     
-  
-  tTest1 = t.test(x=lansJanTempsMat[,3], y=lansJanTempsMat[,6]);
-  print(tTest1);
-  
-  tTest2 = t.test(x=lansJanTempsDF[,2], y=lansJanTempsDF[,4]);
-  print(x=tTest2);
-  
-  tVal = tTest1$statistic;
-  dfVal = tTest1$parameter;
-  pVal = tTest1$p.value;
-  
-  stdErr = tTest1$stderr;  ## What does this mean?
-  
-  
-  #### Second t-test as assignment
-  
-  Jan12_14_Anova = aov(data=stackedDF2, formula=values~ind);
-  print(summary(Jan12_14_Anova));
-  
-  stackedDF4 = stack(lansJanTempsDF[,c(3,5,6)]);
-  Jan4MonthAnova = aov(formula=values~ind, data=stackedDF4);
-  print(summary(Jan4MonthAnova));
+  stackedDF3 = stack(lansJanTempsDF[,c(1,2,5,6)]);  
 
-  residuals = residuals(Jan4MonthAnova);
+  ### Plotting the subsetted stacked dataframe
+  plot8 = ggplot(data=stackedDF2) +
+    geom_boxplot(mapping=aes(x=ind, y=values)) +
+    theme_bw();
+  plot(plot8);
 
-  plot3 = ggplot() +
-    geom_histogram(mapping=aes(x=residuals)) +
-    theme_bw();
-  plot(plot3);
-  
-  
-  plot4 = ggplot(data=lansJanTempsDF) +
-    theme_bw();
-  for(i in 1:ncol(lansJanTempsDF))
+  tempData = lansJanTempsDF[,c(1,2,5,6)];
+  plot9 = ggplot( data=(tempData));  # init x mapping
+  for(i in 1:ncol(tempData))
   {
-    xVal = paste("201", i, sep="");
-    yVal = lansJanTempsDF[,i];
-    newBox = geom_boxplot(mapping=aes_(x=xVal, y=yVal));
-    plot4 = plot4 + newBox;
+    plot9 = plot9 + geom_boxplot(mapping=aes_(x=colnames(lansJanTempsDF)[i], 
+                                                y=tempData[,i] ))
   }
-  plot(plot4);
+  plot9 = plot9 + labs( title="January Temperature",
+                        subtitle="Lansing, MI -- 2011-2016",
+                        x = "January Days",
+                        y = "temperature (F)") +
+    theme_bw();
+  plot(plot9);
+  
+  ## Create a list of the four different data frames in this lesson:
+  listOfDF = list("origDF" = lansJanTempsDF,
+                  "stackedDF" = stackedDF,
+                  "stackDF_2_4" = stackedDF2,
+                  "stackedDF_1_2_5_6" = stackedDF3);
+  
+  ## save the list to an rdata file to be used next lesson:
+  save(listOfDF, file = "data/DF_list.rdata");
 }
   
