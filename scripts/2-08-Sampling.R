@@ -76,19 +76,5 @@
                color="red") +
     theme_bw();
   plot(plot2);
- 
-  ## Create a list of the four different random vectors created in this lesson:
-  listOfTemps = list("Random_Temps" = randomTemps,
-                     "Random_Seeded_Temps" = randomTempsSeeded,
-                     "Normal_Dist1" = normalDist1,
-                     "Normal_Dist2" = normalDist2);
-  
-  #### save the information in a list to an rdata file
-  save(listOfTemps, file = "data/tempList.rdata");
-  
-  ### Load information from an rdata file -- and put in the Environment
-  ##  This line needs to be executed in a different script
-  ##  Or, clear the Environment and Run just this line
-  load("data/tempList.rdata");
 }
   
