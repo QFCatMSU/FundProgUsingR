@@ -1,63 +1,33 @@
 {
-  #### get a Boolean vector
-  
   rm(list=ls());  options(show.error.locations = TRUE);
   library(package="ggplot2");
-  
-  ### Read data from CSV file and save to a variable
-  lansJanTempsDF = read.csv(file = "data/lansingJanTemps2.csv"); 
-  
-  #### Convert into matrix
-  lansJanTempsMat = as.matrix(x=lansJanTempsDF);
 
-  plot1 = ggplot(data=lansJanTempsDF) +
-    geom_boxplot(mapping=aes(x=2011, y=Jan2011)) +
-    geom_boxplot(mapping=aes(x=2012, y=Jan2012)) +
-    theme_bw();
-  plot(plot1);
-    
-  #### For GGPlot we need to use the data frame
-  #### We can plot a box for two of the columns
-  #### x = discrete value, y = data from column
-  plot2 = ggplot(data=lansJanTempsDF) +
-    geom_boxplot(mapping=aes(y=Jan2011)) +
-    geom_boxplot(mapping=aes(y=Jan2012)) +
-    theme_bw();
-  plot(plot2);
   
-  stackedDF = stack(lansJanTempsDF);  # use(d) in 2-7 Extension
-   
-  #### Plotting the stacked dataframe
-  plot3 = ggplot(data=stackedDF) +
-    geom_boxplot(mapping=aes(x=ind, y=values)) +
-    theme_bw();
-  plot(plot3);
+  ### Get the four data frames saved to a List at the end of the last lesson
+  load(file = "data/tempDFs.rdata"); 
   
-  stackedDF2 = stack(lansJanTempsDF[,c(2,4)]);
-  stackedDF3 = stack(lansJanTempsDF[,c(1,2,5,6)]);
-  
-  origDF = unstack(stackedDF);     
-  
-  tTest1 = t.test(x=lansJanTempsMat[,3], y=lansJanTempsMat[,6]);
+  lansJanTempsDF = temperatureDFs$origDF;
+  stackedDF = temperatureDFs$stackedDF;
+  stackedDF2 = temperatureDFs$stackDF_3_6;
+  stackedDF3 = temperatureDFs$stackedDF_1_2_5_6
+
+  ## Do a t-test between the Jan2012 and Jan2014 (2nd and 4th columns) 
+  tTest1 = t.test(x=lansJanTempsDF[,"Jan2012"], y=lansJanTempsDF[,"Jan2014"]);
   print(tTest1);
   
-  tTest2 = t.test(x=lansJanTempsDF[,2], y=lansJanTempsDF[,4]);
-  print(x=tTest2);
+  ## Do a t-test between the 3rd and 6th column 
+  tTest2 = t.test(x=lansJanTempsDF[,3], y=lansJanTempsDF[,6]);
+  print(tTest2);
+
+  ### Need to use the stacked data frames to do the ANOVAS
+  ##  Do an ANOVA to compare 2013 with 2016 (the same as the last t-test)
+  Jan13_16_Anova = aov(data=stackedDF2, formula=values~ind);
+  print(Jan13_16_Anova);
+  print(summary(Jan13_16_Anova));
   
-  tVal = tTest1$statistic;
-  dfVal = tTest1$parameter;
-  pVal = tTest1$p.value;
-  
-  stdErr = tTest1$stderr;  ## What does this mean?
-  
-  
-  #### Second t-test as assignment
-  
-  Jan12_14_Anova = aov(data=stackedDF2, formula=values~ind);
-  print(summary(Jan12_14_Anova));
-  
-  stackedDF4 = stack(lansJanTempsDF[,c(3,5,6)]);
-  Jan4MonthAnova = aov(formula=values~ind, data=stackedDF4);
+  ##  Do an ANOVA to compare four years
+  Jan4MonthAnova = aov(formula=values~ind, data=stackedDF3);
+  print(Jan4MonthAnova);
   print(summary(Jan4MonthAnova));
 
   residuals = residuals(Jan4MonthAnova);
@@ -67,16 +37,19 @@
     theme_bw();
   plot(plot3);
   
+  weatherData = read.csv(file="data/Lansing2016Noaa-3.csv");
   
-  plot4 = ggplot(data=lansJanTempsDF) +
+  ### Plot a linear regression in GGPlot (did this in lesson 2-01)
+  plot1 = ggplot(data=weatherData,
+                 mapping=aes( x=avgTemp, y=relHum )) + 
+    geom_point() + 
+    geom_smooth(method="lm") +
     theme_bw();
-  for(i in 1:ncol(lansJanTempsDF))
-  {
-    xVal = paste("201", i, sep="");
-    yVal = lansJanTempsDF[,i];
-    newBox = geom_boxplot(mapping=aes_(x=xVal, y=yVal));
-    plot4 = plot4 + newBox;
-  }
-  plot(plot4);
+  plot(plot1);
+  
+  ### Calculate a linear regression
+  tempHumLM = lm( formula = weatherData$relHum ~ weatherData$avgTemp );  
+  print(tempHumLM);
+  print(summary(tempHumLM));
 }
   

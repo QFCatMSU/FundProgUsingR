@@ -62,9 +62,8 @@
   
   ## Use the stacked data frame to plot the lines
   plot3 = ggplot( data=(stackedDF)) +  
-    # We want to repeat 1-31 for each line -- so, we need to mod the line number by 31
-    # values and ind are the columns in the stacked data frame
-    geom_line( mapping=aes(x=(1:186)%%31, y=values, color=ind) ) +
+    # We want to repeat 1-31 6 times...
+    geom_line( mapping=aes(x=rep(1:31, times=6), y=values, color=ind) ) +
     labs( title="January Temperature",
           subtitle="Lansing, MI -- 2011-2016",
           x = "January Days",
@@ -110,7 +109,7 @@
   plot(plot7);    
 
   #### Create stacked dataframe that are subsetted
-  stackedDF2 = stack(lansJanTempsDF[,c(2,4)]);
+  stackedDF2 = stack(lansJanTempsDF[,c(3,6)]);
   stackedDF3 = stack(lansJanTempsDF[,c(1,2,5,6)]);  
 
   ### Plotting the subsetted stacked dataframe
@@ -134,7 +133,7 @@
   ## The format inside list() is:  "name_of_object" = object
   temperatureDFs = list("origDF" = lansJanTempsDF,
                         "stackedDF" = stackedDF,
-                        "stackDF_2_4" = stackedDF2,
+                        "stackDF_3_6" = stackedDF2,
                         "stackedDF_1_2_5_6" = stackedDF3);
   
   ## save the list to an rdata file to be used next lesson:
