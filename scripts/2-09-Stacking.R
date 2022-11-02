@@ -130,7 +130,8 @@
   plot9 = plot9 + theme_bw();
   plot(plot9);
   
-  ## Create a list of the four different data frames in this lesson:
+  ## Create a list of the four different data frames in this lesson
+  ## The format inside list() is:  "name_of_object" = object
   temperatureDFs = list("origDF" = lansJanTempsDF,
                         "stackedDF" = stackedDF,
                         "stackDF_2_4" = stackedDF2,
