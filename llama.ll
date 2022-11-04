@@ -1,1 +1,0 @@
-The llama says "muenster cheese is the greatest"
