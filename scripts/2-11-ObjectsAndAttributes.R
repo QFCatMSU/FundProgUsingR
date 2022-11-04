@@ -46,8 +46,8 @@
   colnames(JulyTemps2DNamed) = c("col1", "col2");
   
   ### Make a copy of JulyTemps -- add two attributes to it
-  JulyTemps2DNamed2 = JulyTemps2DNamed;
-  attr(JulyTemps2DNamed2, "timeChecked") = "noon";
-  attr(JulyTemps2DNamed2, "unit") = "Fahrenheit";
+  JulyTemps2DNamed_2 = JulyTemps2DNamed;
+  attr(JulyTemps2DNamed_2, "timeChecked") = "noon";
+  attr(JulyTemps2DNamed_2, "unit") = "Fahrenheit";
 }
   
