@@ -2,11 +2,10 @@
   rm(list=ls());  options(show.error.locations = TRUE);
   
   ### A numeric vector with one value
-  temperature = 80;
-  a = c(5,6,7,8,9,10);
-  
+  temperature = 80;  # a vector, temperature, with one value, 80
+
   ### A numeric vector with eight values
-  JulyTemps = c(90, 88, 86, 77,81, 83, 80, 80);
+  JulyTemps = c(90, 88, 86, 77,81, 83, 80, 80);  
   
   ### An integer vector
   intValues = as.integer(c(3,4,5));
@@ -20,7 +19,15 @@
   ### A Boolean vector given whether there was rain  
   rainyDaysInJuly = c(FALSE, FALSE, TRUE, FALSE, FALSE, TRUE, TRUE, FALSE);
 
-  ### Using a conditional statement to create a Boolean
+  ### the conditional statements in if() creates a Boolean value:
+  for(i in 1:length(JulyTemps))
+  {
+    # Output Boolean value instead of executing the if() statement
+    #  if(JulyTemps[i] > 85)
+    cat("day", i, (JulyTemps[i] > 85), "\n");
+  }     
+  
+  ### Using a conditional statement to create a Boolean vector
   hotterThan85 = (JulyTemps > 85);
   
   ### Create a copy of JulyTemps and add names to the values
@@ -42,8 +49,8 @@
   
   ### Name the rows and columns of the 2D object:
   JulyTemps2DNamed = JulyTemps2D;
-  rownames(JulyTemps2DNamed) = paste("row", 1:4, sep="");
-  colnames(JulyTemps2DNamed) = c("col1", "col2");
+  rownames(JulyTemps2DNamed) = paste("date", 1:4, sep="");
+  colnames(JulyTemps2DNamed) = c("location1", "location2");
   
   ### Make a copy of JulyTemps -- add two attributes to it
   JulyTemps2DNamed_2 = JulyTemps2DNamed;
