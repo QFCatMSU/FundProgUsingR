@@ -45,8 +45,8 @@
 
   
   #### get mean and sd of seeded random sample
-  meanRandom = mean(randomTempsSeeded);  # 28.58875
-  sdRandom = sd(randomTempsSeeded);      # ~ 10.82
+  meanRandom = mean(randomTempsSeeded);  
+  sdRandom = sd(randomTempsSeeded);      
   
   #### Plot a histogram with the mean value
   plot1 = ggplot() +
