@@ -8,7 +8,7 @@
                          stringsAsFactors = FALSE); # for people using R 3.X
   
   # create a sequence that goes from 1 to 10 by 3
-  seq1 = seq(from=1, to=10, by=3);
+  seq1 = seq(from=1, to=10, by=3); 
   
   # create a vector of values
   vec1 = c(3,4,5,6,21,45,61);

@@ -7,6 +7,15 @@
   {
     cat("Hello, World\n");
   }
+
+  helloVector = c("Ann", "Bob", "Charlie", "Dave", "Eve");
+
+  cat("---------\nGoing through each value in a vector by changing the index value:\n");
+  for(i in 1:5)
+  {
+    # i takes on the values 1 through 5 through the 5 cycles of the for loop
+    cat("Hello,", helloVector[i], "\n");
+  }
   
   cat("---------\nUsing the indexing variable as a counter:\n");
   for(i in 1:5) # repeat 5 times
@@ -65,7 +74,7 @@
   }
   
   cat("---------\nUsing a sequence to subset the values:\n");
-  for(i in 8:4)
+  for(i in c(8,2,13))
   {
     if(noonCond[i] == "Sunny")
     {

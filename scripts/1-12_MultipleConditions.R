@@ -37,7 +37,7 @@
   
   for(i in 1:numDays)
   {
-    if(noonCond[i] == "Sunny" || noonCond[i] == "Rain")
+    if(noonCond[i] == "Sunny" | noonCond[i] == "Rain")
     {
       sunnyOrRainyDays = sunnyOrRainyDays +1;   
     }
@@ -47,7 +47,7 @@
   # sunnyOrRainyDays2 = 0;
   # for(i in 1:numDays)
   # {
-  #   if(noonCond[i] == "Sunny" || "Rain")  # conditions needs to be explicit
+  #   if(noonCond[i] == "Sunny" | "Rain")  # conditions needs to be explicit
   #   {
   #     sunnyOrRainyDays2 = sunnyOrRainyDays2 +1;   
   #   }
@@ -61,8 +61,8 @@
 
   for(i in 1:numDays)
   {
-    if(noonCondMess[i] == "Sunny" || noonCondMess[i] == "sunny" || 
-       noonCondMess[i] == "sun" || noonCondMess[i] == "SUN")
+    if(noonCondMess[i] == "Sunny" | noonCondMess[i] == "sunny" | 
+       noonCondMess[i] == "sun" | noonCondMess[i] == "SUN")
     {
       sunnyDays1 = sunnyDays1 +1; # increases sunnyDays by 1
     }
@@ -73,7 +73,7 @@
   
   for(i in 1:numDays)
   {
-    if(highTemps[i] > 60 && noonCond[i] == "Sunny")
+    if(highTemps[i] > 60 & noonCond[i] == "Sunny")
     {
       goOutDay = goOutDay +1;
     }
@@ -84,7 +84,7 @@
   
   for(i in 1:numDays)
   {
-    if(highTemps[i] <= 50 && noonCond[i] != "Sunny")
+    if(highTemps[i] <= 50 & noonCond[i] != "Sunny")
     {
       stayInDay = stayInDay +1;
     }
@@ -95,22 +95,22 @@
   ### Combining the last two conditional statements, which are mutually exclusive
   for(i in 1:numDays)
   {
-    if(highTemps[i] > 60 && noonCond[i] == "Sunny")
+    if(highTemps[i] > 60 & noonCond[i] == "Sunny")
     {
       cat("day", i, " good day to go out\n");
     }
-    else if(highTemps[i] <= 50 && noonCond[i] != "Sunny")
+    else if(highTemps[i] <= 50 & noonCond[i] != "Sunny")
     {
       cat("day", i, " good day to stay in\n");     
     }
   }
   
   cat("\n------\n");
-  
+   
   ### Using AND to bound numbers on both sides
   for(i in 1:numDays)
   {
-    if(highTemps[i] >= 50 && highTemps[i] < 60)
+    if(highTemps[i] >= 50 & highTemps[i] < 60)
     {
       cat("It was ", highTemps[i], "degrees on day ", i, "\n");
     }
@@ -122,9 +122,16 @@
   precipBad = weatherData$precipBad;
   for(i in 1:numDays)
   {
-    if(precipBad[i] < 0 || precipBad[i] > 10)
+    if(precipBad[i] < 0 | precipBad[i] > 10)
     {
       cat("Day", i, "has a value of" , precipBad[i], "\n");
     }
   }
+  
+  ### Creating Boolean vector 
+  sunnyDayBool = (noonCond == "Sunny");
+  niceDayBool = (highTemps > 60 & noonCond == "Sunny");
+  precipBool = (noonCond == "Rain" | noonCond == "Snow");
+  
+
 }
