@@ -3,6 +3,7 @@
 # A function can only see the script within the function
 #  That is the function's world!
 
+
 #### Conversion functions ####
 # more efficient conversion function
 convert1 = function(tempVector, unit = "F")
@@ -36,6 +37,7 @@ convert2 = function(tempVector, unit = "F")
   }
   return(tempValue);
 }
+
 
 #### Comparison Functions #####
 # more efficient comparison function (returns end the function)

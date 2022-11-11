@@ -61,7 +61,7 @@
     if(conditionMet == TRUE)  # or, could just be if(conditionMet)
     {
       cat("\nOn day", i, "there were thunderstorms\n");
-      break; 
+      break; # comment and uncomment this
     }
   }
   
