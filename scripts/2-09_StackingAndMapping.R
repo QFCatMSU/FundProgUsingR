@@ -56,9 +56,7 @@
   
   ## Another plotting solution -- stack the data frame
   stackedDF = stack(lansJanTempsDF);  
-    
-  ## And, FYI, you can also unstack the data frame
-  origDF = unstack(stackedDF);   
+  
   
   ## Use the stacked data frame to plot the lines
   plot3 = ggplot( data=(stackedDF)) +  
@@ -87,6 +85,9 @@
           y = "temperature (F)") +
   theme_bw();
   plot(plot4);
+  
+  ## And, FYI, you can also unstack the data frame
+  origDF = unstack(stackedDF);
   
   ## Boxplots naively -- puts boxplots on top of each other (just do 2...)
   plot5 = ggplot(data=lansJanTempsDF) +
