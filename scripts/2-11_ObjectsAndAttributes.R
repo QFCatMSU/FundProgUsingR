@@ -14,7 +14,7 @@
   intValues2 = intValues + 1;
   
   ### You need to be explicit and declare 1 as an integer
-  intValues3 = intValues + as.numeric(1);
+  intValues3 = intValues + as.integer(1);
 
   ### A Boolean vector given whether there was rain  
   rainyDaysInJuly = c(FALSE, FALSE, TRUE, FALSE, FALSE, TRUE, TRUE, FALSE);
