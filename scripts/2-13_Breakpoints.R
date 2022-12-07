@@ -1,11 +1,11 @@
-{
+{ 
   rm(list=ls());  options(show.error.locations = TRUE);
-  debugSource("scripts/debugTest.r");
-
+  source("scripts/debugTest.r");
+  
   weatherData = read.csv(file = "data/lansing2016Noaa-3.csv");
   highTemps = weatherData$maxTemp;
   lowTemps = weatherData$minTemp;
-
+  
   diffTemp = highTemps - lowTemps;
   
   weatherData$diffTemp = diffTemp;
@@ -31,7 +31,7 @@
     }
     if(sunsetTimes[i] == 2000)
     {
-      NULL; 
+      NULL;
     }
   }
   
