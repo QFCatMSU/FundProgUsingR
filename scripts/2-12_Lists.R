@@ -62,7 +62,6 @@
   plot(plot1);
   
   model1 = lm(formula=weatherData$avgTemp~weatherData$relHum);    
-  print(summary(model1));
   
   #### Subsetting model1 
   intercept = model1$coefficients["(Intercept)"];
