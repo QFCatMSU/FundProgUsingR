@@ -52,6 +52,11 @@
   ### Transposing the matrix:
   lansingJanMat_T = t(lansingJanMat4);
   
+  ### An inefficient way to find the mean of the columns:
+  # meanJan2011 = mean(lansWeatherMat[ ,1]);
+  # meanJan2012 = mean(lansWeatherMat[ ,2]);
+  # ...
+  
   ### Find the mean for all columns (year)
   # vector that holds the yearly mean values
   yearlyMean = c();
