@@ -45,8 +45,8 @@
     geom_line( mapping=aes(y=Jan2012, color = "Jan2012") ) +
     geom_line( mapping=aes(y=Jan2013, color = "Jan2013") ) +
     geom_line( mapping=aes(y=Jan2014, color = "Jan2014") ) +
-    geom_line( mapping=aes(y=Jan2014, color = "Jan2015") ) +
-    geom_line( mapping=aes(y=Jan2014, color = "Jan2016") ) +
+    geom_line( mapping=aes(y=Jan2015, color = "Jan2015") ) +
+    geom_line( mapping=aes(y=Jan2016, color = "Jan2016") ) +
     labs( title="January Temperature",
           subtitle="Lansing, MI -- 2011-2016",
           x = "January Days",
