@@ -24,7 +24,7 @@
 </ul>
 <h2>Script and data for this lesson</h2>
 <p>The <a href="https://raw.githubusercontent.com/QFCatMSU/FundProgUsingR/master/scripts/2-09_StackingAndMapping.R" target="_blank" rel="noopener" title="">script for the lesson is here</a> (right-click, <em><strong>save link as... </strong></em>-- put in <em><strong>scripts </strong></em>folder).</p>
-<p><a href="../Data/LansingJanTempsFixed.csv?isCourseFile=true" target="_blank" rel="noopener">LansingJanTempsFixed.csv</a> (just left-click -- put in <em><strong>data </strong></em>folder).</p>
+<p><a href="../data/LansingJanTempsFixed.csv?isCourseFile=true" target="_blank" rel="noopener">LansingJanTempsFixed.csv</a> (just left-click -- put in <em><strong>data </strong></em>folder).</p>
 <h2>GGPlot mapping</h2>
 <p>This lesson is designed to give an overview of the many issues that occur when you are creating plots in GGPlot and some of the fixes. There is the huge topic of mapping in GGPlot that we use in this lesson, but do not have time to fully explain (we go into much more detail in our dedicated GGPlot class...).&nbsp; Mapping is how you relate data in a data frame to a visual aspect of a plot.&nbsp; We have already mapped data in a data frame to the x and y axis of a plot -- but, you can map many other visual aspects to data like size, shape, and, in this lesson, color.&nbsp; Mapping is a complicated topic and we are just scratching the surface of it in this lesson.</p>
 <h2>Reading in the data frame</h2>
@@ -42,7 +42,7 @@
 <p></p>
 <p>Each <em><strong>geom_line</strong></em> component is also customized with a <em><strong>color </strong></em>subcomponent.</p>
 <p></p>
-<p><img src="../Images/R-2-09-LinePlot.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p><img src="../images/R-2-09-LinePlot.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
 <p class="fig" id="initLinePlot">A line plot for the six temperature columns</p>
 <h2>Adding a legend</h2>
 <p>The problem with <em id="r-initLinePlot" class="ref">fig ##</em> is that the individual line plots are not labelled. We would like to add a legend to the plot that maps the color to the year and adding a legend in GGPlot is awkward.&nbsp; Generally speaking <em class="hl">GGPlot will put a legend on the plot when something is <strong>mapped </strong></em><span class="hl"></span><em class="hl">other than <strong>x</strong> </em><span class="hl">or <strong></strong></span><em class="hl"><strong>y</strong></em>.&nbsp; We are going to <em><strong>map </strong></em>color.&nbsp; To do this, we move <em><strong>color </strong></em>from being a subcomponent of the <em><strong>geom_line</strong></em> to being a mapped element of the <em><strong>geom_line</strong></em>.</p>
@@ -53,7 +53,7 @@
 <p></p>
 <p>In this plot, we moved <em><strong>color </strong></em>to the mapping of the <em><strong>geom_line</strong></em> and set <em><strong>color </strong></em>to the text we want displayed in the legend (not an actual color).&nbsp; This solution adds a legend with the text but the line colors are chosen by GGPlot.&nbsp; <em class="note">Note: There is a way to customize these color but that is beyond the scope of this class.</em></p>
 <p></p>
-<p><img src="../Images/R-2-09-Legend.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p><img src="../images/R-2-09-Legend.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
 <p class="fig">Line plots with a legend -- note that the legend text matches the <em><strong>color </strong></em>mappings</p>
 <h2>Stacking the data frame</h2>
 <p>The most common (and pretty ugly) technique used to plot multiple line plots on one canvas is to create a new data frame that has all the data you want to plot in two columns -- this process is often called <em class="hl">melting </em>or <em class="hl">stacking </em>the data frame.&nbsp;</p>
@@ -64,7 +64,7 @@
 </blockquote>
 <p></p>
 <p>The stacked data frame has the same data as the original data frame but everything is put in two columns:</p>
-<p><img src="../Images/2-09-Stacking.jpg" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p><img src="../images/2-09-Stacking.jpg" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
 <p class="fig">A stacked dataframe of the six years of temperature data put into two columns</p>
 <p></p>
 <p>The stacked data frame has <strong>186 </strong>rows (<strong>31 </strong>days *<strong> 6 </strong>years) and two columns:</p>
@@ -86,7 +86,7 @@
 <p>&nbsp; plot3 = ggplot( data=(stackedDF)) + &nbsp;<br>&nbsp; &nbsp; geom_line( mapping=aes(x=<em class="hl">rep(1:31, times=6)</em>, y=values, color=ind) ) +<br>&nbsp; &nbsp; labs( title="January Temperature",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; subtitle="Lansing, MI -- 2011-2016",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; x = "January Days",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; y = "temperature (F)") +<br>&nbsp; &nbsp; theme_bw();<br>&nbsp; plot(plot3);</p>
 </blockquote>
 <p></p>
-<p><img src="../Images/R-2-09-StackedLines.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p><img src="../images/R-2-09-StackedLines.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
 <p class="fig">Plotting using a stacked dataframe</p>
 <h2>Using for loops to plot 6 columns</h2>
 <p>I consider using for loops to be the most robust because it allows you to plot multiple column with only one command and, more importantly, maintains the integrity of the original data frame.&nbsp; It is also probably the most difficult method:</p>
@@ -97,7 +97,7 @@
 <p></p>
 <p>In this example, the <em><strong>for </strong></em>loop adds the six plot components to the <em><strong>plot4 </strong></em>canvas one at a time.&nbsp; When mapping in a <em><strong>for </strong></em>loop, you need to use the function <em><strong>aes_() </strong></em>instead of <em><strong>aes()</strong></em>.&nbsp; After the plot components are added, we then add the labels and theme to <em><strong>plot4</strong></em>.</p>
 <p></p>
-<p><img src="../Images/R-2-09-ForLoopPlot.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p><img src="../images/R-2-09-ForLoopPlot.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
 <p class="fig">Using <strong>for </strong>loops to plot 6 column -- this authors believes this is the most robust solution</p>
 <h2>Unstacking the data frame</h2>
 <p>You can take a stacked data frame and return it to original state using <em><strong>unstack()</strong></em>:</p>
@@ -106,7 +106,7 @@
 </blockquote>
 <p></p>
 <p>And <em><strong>origDF </strong></em>looks just like the original <em><strong>lansJanTempDF</strong></em></p>
-<p><img src="../Images/2-09-Unstacking.jpg" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p><img src="../images/2-09-Unstacking.jpg" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
 <p class="fig">Unstacking a dataframe return you to the original dataframe</p>
 <p></p>
 <p class="note">Note: The stacked version of a dataframe is often called <strong>long format </strong>and the original dataframe called <strong>wide format.</strong></p>
@@ -121,7 +121,7 @@
 </blockquote>
 <p></p>
 <p>This code successfully creates two boxplots but the x-axis is a bit weird:</p>
-<p><img src="../Images/2-09-Boxplot-Num-X.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p><img src="../images/2-09-Boxplot-Num-X.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
 <p class="fig">The boxes for January temperatures in 2011 and 2012</p>
 <p></p>
 <p>Because we used numbers to map the x-axis, GGPlot assumed a continuous and numeric x-axis.&nbsp; But, the<em class="hl"> x-axis in a boxplot is really a discrete axis</em> -- we are not plotting value in between 2011 and 2012.&nbsp; If we want a discrete axis, then we need to put the years in quotes (i.e., make the year a string value):</p>
@@ -130,7 +130,7 @@
 </blockquote>
 <p></p>
 <p>Now, we have a discrete x-axis:</p>
-<p><img src="../Images/2-09-Boxplot-String-X.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p><img src="../images/2-09-Boxplot-String-X.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
 <p class="fig">The same boxplots with a discrete x-axis</p>
 <h2>Box Plots using the stacked dataframe</h2>
 <p>Just like with lines plots, there is no great way to create boxes from multiple columns in a dataframe.&nbsp; We could plot all six columns by creating six <em><strong>geom_boxplot</strong></em> components, one for each year.&nbsp; But, in programming, you generally do not want to repeat code -- this about how messy this could get if there were 20 columns.</p>
@@ -143,7 +143,7 @@
 </blockquote>
 <p></p>
 <p>The x-axis of the boxplot is labelled with the names of the columns and the y-axis has the box for each year:</p>
-<p><img src="../Images/R-2-09-All-Boxes.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p><img src="../images/R-2-09-All-Boxes.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
 <p class="fig" id="allBoxes">Boxes for all six columns using the stacked data frame</p>
 <ul></ul>
 <h2 id="stackedDF">Stacking a subset of the columns</h2>
@@ -175,7 +175,7 @@
 <p>&nbsp; plot8 = ggplot(data=<em class="hl">stackedDF3</em>) +<br>&nbsp; &nbsp; geom_boxplot(mapping=aes(x=ind, y=values)) +<br>&nbsp; &nbsp; theme_bw();<br>&nbsp; plot(plot8);</p>
 </blockquote>
 <p></p>
-<p><img src="../Images/R-2-09-StackedSubsetBox.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p><img src="../images/R-2-09-StackedSubsetBox.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
 <p class="fig">Plotting boxes from a stacked dataframe that has been subsetted</p>
 <h3>Plotting a subset using for loops</h3>
 <p>Again, this author believes the most robust way to plot the subsetting data is to use for loop.&nbsp; Once again, this allows you to work with the original data frame -- there is no need to create a stacked data frame.</p>
@@ -193,7 +193,7 @@
 <li><em><strong>y </strong></em>is mapped to the subsetted column values</li>
 </ul>
 <p></p>
-<p><img src="../Images/R-2-09-ForLoopBox.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p><img src="../images/R-2-09-ForLoopBox.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
 <p class="fig">Using for loops to create a boxplot of four of the columns from the temperature data frame</p>
 <h2>Saving data frames to one object</h2>
 <p>In this lesson, we created four data frames:</p>
@@ -214,7 +214,7 @@
 <p></p>
 <p><em><strong>temperatureDFs </strong></em>appear in the <em><strong>Environment </strong></em>as a <em><strong>List </strong></em>object with four data frames inside it.&nbsp; We can view the data frames in the list by clicking on the arrow in the <em><strong>Environment </strong></em>tab or double-clicking on <em><strong>temperatureDFs</strong></em> to see it in a viewer tab:</p>
 <p></p>
-<p><img src="../Images/R-2-09-ListObject.jpg" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p><img src="../images/R-2-09-ListObject.jpg" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
 <p class="fig">The List object in the <strong>Environment </strong>and the viewer tab</p>
 <h3>Saving the List object to a file</h3>
 <p>We want to use the <em><strong>List </strong></em>object with four data frames in the next lesson.&nbsp; To do this, <em class="hl">we need to save the <strong>List </strong>to a file</em> -- a file we will open in the next lesson:</p>
@@ -228,7 +228,7 @@
 <h2>Application</h2>
 <p><em><em class="hl">If you have any questions regarding this application, feel free to</em> <em class="email">email them to the instructor here</em>.&nbsp; <em class="hl">You can attach the whole Project Folder as a<a href="01-01%20RStudio%20and%20Projects.html?ou=457124#zip" target="_blank" rel="noopener"> zipped file</a>.</em></em></p>
 <p><em></em></p>
-<p>A) Open the file&nbsp;<em><strong><a href="../Data/Lansing2016Noaa.csv?isCourseFile=true" target="_self">LansingNOAA2016.csv</a> </strong></em>and save the contents of the file to a data frame named <em><strong>weatherData</strong></em></p>
+<p>A) Open the file&nbsp;<em><strong><a href="../data/Lansing2016Noaa.csv?isCourseFile=true" target="_self">LansingNOAA2016.csv</a> </strong></em>and save the contents of the file to a data frame named <em><strong>weatherData</strong></em></p>
 <p></p>
 <p>B) Create a stacked data frame named <em><strong>stackedWD </strong></em>that only contains the three temperature columns from <em><strong>weatherData </strong></em>(<em><strong>maxTemp</strong></em>, <em><strong>avgTemp</strong></em>, and <em><strong>minTemp</strong></em>).&nbsp;</p>
 <ul>

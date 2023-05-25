@@ -24,8 +24,8 @@
 <p>The <a href="https://raw.githubusercontent.com/QFCatMSU/FundProgUsingR/master/scripts/2-03_DataTypesAndDataFrames.R" target="_blank" rel="noopener" title="">script for this lesson</a> is here (right-click, Save link as)</p>
 <p>We will be looking at two data frames in this lesson:</p>
 <ul>
-<li>The <a href="../Data/Lansing2016Noaa-2-bad.csv" target="_blank" rel="noopener">Lansing2016Noaa-2-bad.csv</a> is here (left-click)</li>
-<li>The <a href="../Data/Lansing2016Noaa-2.csv" target="_blank" rel="noopener">Lansing2016Noaa-2.csv</a> is here (left-click)</li>
+<li>The <a href="../data/Lansing2016Noaa-2-bad.csv" target="_blank" rel="noopener">Lansing2016Noaa-2-bad.csv</a> is here (left-click)</li>
+<li>The <a href="../data/Lansing2016Noaa-2.csv" target="_blank" rel="noopener">Lansing2016Noaa-2.csv</a> is here (left-click)</li>
 </ul>
 <h2>Extra columns in data frames</h2>
 <p>We are going to start this lesson by looking at a couple issues that occur when writing a data frame to a CSV file.</p>
@@ -40,11 +40,11 @@
 <p></p>
 <p>After you double-click on <em><strong>badData </strong></em>in the <em><strong>Environment </strong></em>tab, you can see there is an extra column in the data frame at the beginning which has the row numbers in it.&nbsp; This is because, by default,<em class="hl"> <strong>write.csv()</strong> will treat the row numbers as a column of data</em>.&nbsp;</p>
 <p></p>
-<p><img src="../Images/R-2-03-ExtraColumn.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p><img src="../images/R-2-03-ExtraColumn.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
 <p class="fig">An extra column containing row numbers was added to the data frame</p>
 <p></p>
 <p>This is not a big deal but each time you write to a CSV file without setting <em><strong>r</strong><strong>ow.names = FALSE</strong></em>, you are going to write another column of row numbers to the file.&nbsp; If you keep writing to a CSV file without setting <em><strong>row.names</strong></em> to <strong>FALSE</strong>, you will get something like this:</p>
-<p><img src="../Images/2-03_MultipleBadColumns.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p><img src="../images/2-03_MultipleBadColumns.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
 <p class="fig">Multiple column containing row numbers...</p>
 <h2>Adding columns with the wrong number of values</h2>
 <p>While we are messing around with a throwaway data frame, let's see what happens if you try to add/overwrite a column to the data frame that has the wrong number of values.&nbsp; In this case, the data frame has 366 rows, meaning there are 366 values in each column.</p>
@@ -91,7 +91,7 @@
 <p>[1] 1 2 3 4 5 6 1 2 3 4 5 6 1 2 3 4 ...</p>
 </blockquote>
 <p></p>
-<p><img src="../Images/R-2-03-ZColumns.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p><img src="../images/R-2-03-ZColumns.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
 <p class="fig">Adding columns with values that repeats</p>
 <h2>Manually repeating values</h2>
 <p>You can manually create a vector with repeated values using <em><strong>rep()</strong></em>, which has 2 arguments:</p>
@@ -139,7 +139,7 @@
 <p>If we look at the <em><strong>Environment </strong></em>(<em id="r-chr-num" class="ref">fig ##</em>), there are a few columns in the <em><strong>weatherData </strong></em>data frame that R categorizes as string (<em><strong>chr</strong></em>) even though they are numeric by nature.&nbsp; For instance, <em><strong>precip, snow, </strong></em>and <strong></strong><em><strong>snowDepth </strong></em>are all labelled as <em><strong>chr</strong></em> even though they have (mostly) numeric values.</p>
 <p></p>
 <p>The issue is the<em><strong> "T"</strong></em> values used in these columns to indicate a <em><strong>trace </strong></em>of precipitation (less than 0.01 inches).&nbsp; <em><strong>"T"</strong></em> is a <em><strong>chr/string</strong></em> values and, in R, <em class="hl">if any value in a vector or a column is a string then every value in the vector (or column) is treated as a string</em>.</p>
-<p><img src="../Images/R-1-14_StringPrecip.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p><img src="../images/R-1-14_StringPrecip.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
 <p class="fig" id="chrCol">The <strong>precip </strong>column is seen as a string (<strong id="chr-num">chr</strong>) column by R</p>
 <p></p>
 <p class="note">Note: You can also use the <strong></strong><em><strong>typeof() </strong></em>function to find the data type for a vector:</p>
@@ -293,7 +293,7 @@
 <p>&nbsp; weatherData$precipNum = precip3;</p>
 </blockquote>
 <p></p>
-<p><img src="../Images/R-2-03-precipnum.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p><img src="../images/R-2-03-precipnum.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
 <p class="fig">The <strong>precipNum </strong>column added to <strong>weatherData </strong>-- note the 0.005 in place of NA</p>
 <h2>Plotting rainfall values</h2>
 <p>We are going to do some basic plots with the rainfall values.&nbsp; For all of these plots we are going to plot rainfall vs. the day number (e.g., <strong>1</strong> is Jan 1, <strong>2</strong> is Jan 2, <strong>366</strong> is Dec 31).&nbsp; We will deal with dates in a later lesson.</p>
@@ -306,7 +306,7 @@
 <p></p>
 <p class="note">Note: we could have used <strong>366 </strong>instead of <strong>nrow(weatherData</strong>) but <strong>nrow(weatherData) </strong>is more robust as it can handle changes to the size of the data frame (e.g., a year that is not a leap year)</p>
 <p></p>
-<p><img src="../Images/R-2-03-ScatterplotPrecip.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p><img src="../images/R-2-03-ScatterplotPrecip.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
 <p class="fig">scatterplot of rainfall for every day</p>
 <h3>Scatterplot with chr values</h3>
 <p>GGPlot can also create a scatterplot from the precipitation values that are given in the <em><strong>precip </strong></em>column that is of type <em><strong>chr</strong></em>:</p>
@@ -316,7 +316,7 @@
 <p></p>
 <p>But, since <em><strong>precip </strong></em>contains <em><strong>chr</strong></em>/string values (not numbers), GGPlot will output every unique <em><strong>precip </strong></em>value on the y-axis and put them in "alphabetical" order -- this is why <em><strong>T</strong></em> is at the top (it is alphabetically greater than the numbers)</p>
 <p></p>
-<p><img src="../Images/R-2-03_ChrScatterplot.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p><img src="../images/R-2-03_ChrScatterplot.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
 <p class="fig">A scatterplot using character values instead of numeric</p>
 <h2>Application</h2>
 <p class=""><em class="hl">If you have any questions regarding this application, feel free to</em> <em class="email">email them to the instructor here</em>.&nbsp; <em class="hl">You can attach the whole Project Folder as a<a href="01-01%20RStudio%20and%20Projects.html?ou=457124#zip" target="_blank" rel="noopener"> zipped file</a>.</em></p>
@@ -377,7 +377,7 @@
 </blockquote>
 <p></p>
 <p>And now the color of the dots represent the temperature values in <em><strong>avgTemp</strong></em>.&nbsp; As expected, the highest temperatures occur in the middle of the plot, which represents the summer months:</p>
-<p><img src="../Images/R-2-03-ColorMap.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p><img src="../images/R-2-03-ColorMap.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
 <p class="fig">Mapping color to temperature</p>
 <p></p>
 <p><em class="note">Note: We took out the subcomponent color="red" from the previous examples (<strong id="r-colorSub" class="ref">fig ##</strong>). </em>If we had not done that then the red color would have overridden the <em><strong>color </strong></em>mapping.</p>
@@ -390,7 +390,7 @@
 </blockquote>
 <p></p>
 <p>In <em><strong>scale_color_gradientn</strong></em>, the <em><strong>colors </strong></em>argument to a vector with 3 color values.&nbsp; You can use as many color values as you want.&nbsp; The result is a scatterplot with colors that make more intuitive sense:</p>
-<p><img src="../Images/R-2-03-CustomColors.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p><img src="../images/R-2-03-CustomColors.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
 <p class="fig">Customizing colors in a mapping</p>
 <h3 class="fs">Barplot</h3>
 <p>If we want to use lines instead of points to represent the rainfall values, then we can switch to a bar plot by using <em><strong>geom_col()</strong></em> instead of <em><strong>geom_point()</strong></em>:</p>
@@ -400,6 +400,6 @@
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; color = "red") +<br>&nbsp; &nbsp; labs( title="Daily Precipitation",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; subtitle="Lansing, MI -- 2016",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; x = "Precipitation (inches)",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; y = "Number of Days") +<br>&nbsp; &nbsp; theme_bw();<br>&nbsp; plot(plot3);</p>
 </blockquote>
 <p></p>
-<p><img src="../Images/R-2-03-Barplot.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p><img src="../images/R-2-03-Barplot.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
 <p class="fig">A barplot of precipitation vs day number</p>
 </body></html>
