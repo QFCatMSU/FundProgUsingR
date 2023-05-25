@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <noscript>
+  <link rel="stylesheet" type="text/css" href="/content/DEVELOPMENT/2018/courses/DEV-belinsky-2018-BackendTest/Programming/editor.css">
+  </noscript>
+  <script src="https://cdn.jsdelivr.net/gh/QFCatMSU/OnlineClassBackEnd/module.js">
+  </script>
+</head>
+<body>
+
+<p class="previousLesson">Dataframe Modifications</p>
+<p class="nextLesson">Which Statements</p>
+<h1 class="title" id="title">2-03: Data Types and Data Frames</h1>
+<h2>Purpose</h2>
+<ul>
+<li>Manipulations of a data frames</li>
+<li>Converting a column's datatype</li>
+</ul>
+<h2>Material</h2>
+<p>Like last lesson we will fixing some typical issues of columns in a data frame and we will also be manipulating the data frame to reflect the changes</p>
+<p></p>
+<p>The <a href="https://raw.githubusercontent.com/QFCatMSU/FundProgUsingR/master/scripts/2-03_DataTypesAndDataFrames.R" target="_blank" rel="noopener" title="">script for this lesson</a> is here (right-click, Save link as)</p>
+<p>We will be looking at two data frames in this lesson:</p>
+<ul>
+<li>The <a href="../Data/Lansing2016Noaa-2-bad.csv" target="_blank" rel="noopener">Lansing2016Noaa-2-bad.csv</a> is here (left-click)</li>
+<li>The <a href="../Data/Lansing2016Noaa-2.csv" target="_blank" rel="noopener">Lansing2016Noaa-2.csv</a> is here (left-click)</li>
+</ul>
+<h2>Extra columns in data frames</h2>
+<p>We are going to start this lesson by looking at a couple issues that occur when writing a data frame to a CSV file.</p>
+<p></p>
+<p>In the last lesson we wrote to two CSV files, the first one using all default values for <em><strong>write.csv()</strong></em>:</p>
+<blockquote>
+<p>write.csv(weatherData5, file="data/Lansing2016Noaa-2-bad.csv");&nbsp; # from last lesson</p>
+</blockquote>
+<p></p>
+<p>Let's open up this file and see what happened:</p>
+<p class="code">badData = read.csv(file="data/Lansing2016NOAA-2-bad.csv",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sep=",",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; header=TRUE, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stringsAsFactors = FALSE);</p>
+<p></p>
+<p>After you double-click on <em><strong>badData </strong></em>in the <em><strong>Environment </strong></em>tab, you can see there is an extra column in the data frame at the beginning which has the row numbers in it.&nbsp; This is because, by default,<em class="hl"> <strong>write.csv()</strong> will treat the row numbers as a column of data</em>.&nbsp;</p>
+<p></p>
+<p><img src="../Images/R-2-03-ExtraColumn.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">An extra column containing row numbers was added to the data frame</p>
+<p></p>
+<p>This is not a big deal but each time you write to a CSV file without setting <em><strong>r</strong><strong>ow.names = FALSE</strong></em>, you are going to write another column of row numbers to the file.&nbsp; If you keep writing to a CSV file without setting <em><strong>row.names</strong></em> to <strong>FALSE</strong>, you will get something like this:</p>
+<p><img src="../Images/2-03_MultipleBadColumns.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">Multiple column containing row numbers...</p>
+<h2>Adding columns with the wrong number of values</h2>
+<p>While we are messing around with a throwaway data frame, let's see what happens if you try to add/overwrite a column to the data frame that has the wrong number of values.&nbsp; In this case, the data frame has 366 rows, meaning there are 366 values in each column.</p>
+<p></p>
+<p>Let's attempt to overwrite the column <em><strong>test1</strong></em> with <strong>400 </strong>values and write to a new column called<em><strong> test2</strong></em> with <strong>10 </strong>values:</p>
+<blockquote>
+<p title="Console" class="nn">badData$test1 = c(1:400);&nbsp; # 400 values: 1-400</p>
+<p title="Console" class="nn">badData$test2 = c(1:10);&nbsp;&nbsp; # 10 values: 1-10</p>
+</blockquote>
+<p></p>
+<p>The <strong><em>test1 </em></strong>line will output this error:</p>
+<blockquote>
+<p title="Console" class="nn">Error in `$&lt;-.data.frame`(`*tmp*`, test1, value = 1:400) :&nbsp;<br>&nbsp; replacement has 400 rows, data has 366</p>
+</blockquote>
+<p></p>
+<p>and, similarly, the <em><strong>test2 </strong></em>line will output this error:</p>
+<blockquote>
+<p title="Console" class="nn">Error in `$&lt;-.data.frame`(`*tmp*`, test2, value = 1:10) :&nbsp;<br>&nbsp; replacement has 10 rows, data has 366</p>
+</blockquote>
+<p></p>
+<p>Basically, R is saying that the vector you are trying to add to the data frame does not have the same number of values as the row in the data frame.</p>
+<h3>Adding column with a divisible number of values</h3>
+<p>There is one situation is which R will let you write a column to a data frame <em>even if the number of values is not the same as the number of rows </em>-- and that is when t<em class="hl">he number of values in the vector evenly divides the number of rows</em> in the data frame.&nbsp; In the case of <em><strong>weatherData </strong></em>that is any number that can evenly divide 366 (e.g., 1,2,3,6...)</p>
+<p></p>
+<p>In this case, R will repeat the values provided until 366 values is reached.</p>
+<p></p>
+<p>So, if you use one value to create a column:</p>
+<blockquote>
+<p>badData$test3 =10;</p>
+</blockquote>
+<p></p>
+<p>Then R will create a column called <em><strong>test3 </strong></em>with the value <strong>10 </strong>in every cell.</p>
+<p></p>
+<p>Or, if you use <strong>6 </strong>values (366/6 = 61):</p>
+<blockquote>
+<p>badData$test4 = c(1:6);</p>
+</blockquote>
+<p></p>
+<p>Then R will create a column called <em><strong>test4 </strong></em>that repeat the numbers <strong>1-6</strong> 61<strong> </strong>times:</p>
+<blockquote>
+<p title="Console" class="nn">&gt; badData$test3</p>
+<p>[1] 10 10 10 10 10 10 10 10 10 ...</p>
+<p>&gt; badData$test4</p>
+<p>[1] 1 2 3 4 5 6 1 2 3 4 5 6 1 2 3 4 ...</p>
+</blockquote>
+<p></p>
+<p><img src="../Images/R-2-03-ZColumns.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">Adding columns with values that repeats</p>
+<h2>Manually repeating values</h2>
+<p>You can manually create a vector with repeated values using <em><strong>rep()</strong></em>, which has 2 arguments:</p>
+<ul>
+<li>the value(s) you want to repeat</li>
+<li>the number of <em><strong>times </strong></em>you want to repeat the values</li>
+</ul>
+<p></p>
+<p>If you want to repeat the letters A through F to fill a 366 value vector:</p>
+<blockquote>
+<p>vectorAF = rep(c("A", "B", "C", "D", "E", "F"), times = 61);</p>
+</blockquote>
+<p></p>
+<p><em><strong>vectorAF </strong></em>repeats "A"-"F" 61 times.&nbsp; Let's look at the first 20 values:</p>
+<blockquote>
+<p title="Console" class="nn">&gt; vectorAF[1:20]<br>&nbsp;[1] "A" "B" "C" "D" "E" "F" "A" "B" "C" "D" "E" "F" "A" "B" "C" "D" "E" "F" "A" "B"</p>
+</blockquote>
+<p></p>
+<p>Alternatively, you can use the argument<em><strong> length.out</strong></em> to give the length of the vector.&nbsp; So, if you want to repeat the numbers 1 through 10 until you reach 366 values:</p>
+<blockquote>
+<p>vector1_10 = rep(1:10, length.out=366);</p>
+</blockquote>
+<p></p>
+<p>If you look at the last 20 values of <em><strong>vector1_10</strong></em>, you see it ends with a <strong>6</strong>:</p>
+<blockquote>
+<p title="Console" class="nn">&gt; vector1_10[345:366]</p>
+<p>&nbsp;[1] &nbsp;5 &nbsp;6 &nbsp;7 &nbsp;8 &nbsp;9 10 &nbsp;1 &nbsp;2 &nbsp;3 &nbsp;4 &nbsp;5 &nbsp;6 &nbsp;7 &nbsp;8 &nbsp;9 10 &nbsp;1 &nbsp;2 &nbsp;3 &nbsp;4 &nbsp;5 &nbsp;6</p>
+</blockquote>
+<p></p>
+<p>If you want to repeat values a certain number and then move on to another value, for instance creating a vector with the months of the years, then you can use <em><strong>rep()</strong></em> within a vector:</p>
+<blockquote>
+<p>firstThreeMonths = c(rep("Jan", 31), rep("Feb", 29), rep("Mar", 31));</p>
+</blockquote>
+<p></p>
+<p>And <em><strong>firstThreeMonth </strong></em>will have 91 values:</p>
+<blockquote>
+<p title="Console" class="nn">&gt; firstThreeMonths<br>&nbsp;[1] "Jan" "Jan" "Jan" "Jan" "Jan" "Jan" "Jan" "Jan" "Jan" "Jan" "Jan" "Jan" "Jan"<br>[14] "Jan" "Jan" "Jan" "Jan" "Jan" "Jan" "Jan" "Jan" "Jan" "Jan" "Jan" "Jan" "Jan"<br>[27] "Jan" "Jan" "Jan" "Jan" "Jan" "Feb" "Feb" "Feb" "Feb" "Feb" "Feb" "Feb" "Feb"<br>[40] "Feb" "Feb" "Feb" "Feb" "Feb" "Feb" "Feb" "Feb" "Feb" "Feb" "Feb" "Feb" "Feb"<br>[53] "Feb" "Feb" "Feb" "Feb" "Feb" "Feb" "Feb" "Feb" "Mar" "Mar" "Mar" "Mar" "Mar"<br>[66] "Mar" "Mar" "Mar" "Mar" "Mar" "Mar" "Mar" "Mar" "Mar" "Mar" "Mar" "Mar" "Mar"<br>[79] "Mar" "Mar" "Mar" "Mar" "Mar" "Mar" "Mar" "Mar" "Mar" "Mar" "Mar" "Mar" "Mar"</p>
+</blockquote>
+<h2>Numeric and character columns</h2>
+<p>Now let's read in the "good" CSV file created in the last lesson:</p>
+<blockquote>
+<p>&nbsp; weatherData = read.csv(file="data/Lansing2016Noaa-2.csv",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;sep=",",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;header=TRUE,&nbsp;<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;stringsAsFactors = FALSE);</p>
+</blockquote>
+<p></p>
+<p>If we look at the <em><strong>Environment </strong></em>(<em id="r-chr-num" class="ref">fig ##</em>), there are a few columns in the <em><strong>weatherData </strong></em>data frame that R categorizes as string (<em><strong>chr</strong></em>) even though they are numeric by nature.&nbsp; For instance, <em><strong>precip, snow, </strong></em>and <strong></strong><em><strong>snowDepth </strong></em>are all labelled as <em><strong>chr</strong></em> even though they have (mostly) numeric values.</p>
+<p></p>
+<p>The issue is the<em><strong> "T"</strong></em> values used in these columns to indicate a <em><strong>trace </strong></em>of precipitation (less than 0.01 inches).&nbsp; <em><strong>"T"</strong></em> is a <em><strong>chr/string</strong></em> values and, in R, <em class="hl">if any value in a vector or a column is a string then every value in the vector (or column) is treated as a string</em>.</p>
+<p><img src="../Images/R-1-14_StringPrecip.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig" id="chrCol">The <strong>precip </strong>column is seen as a string (<strong id="chr-num">chr</strong>) column by R</p>
+<p></p>
+<p class="note">Note: You can also use the <strong></strong><em><strong>typeof() </strong></em>function to find the data type for a vector:</p>
+<blockquote>
+<p title="Console" class="nn">&gt; typeof(weatherData$precip)<br>[1] "character"</p>
+</blockquote>
+<h3>When numbers are treated as characters</h3>
+<p>In R, <strong>"1234"</strong> is not the same as <strong>1234</strong>.&nbsp; The former is 4 characters, a "<strong>1</strong>" followed by a "<strong>2</strong>" followed by a "<strong>3</strong>", followed by a "<strong>4</strong>".&nbsp; The latter is the number <strong>1234</strong>.&nbsp; In R, you cannot perform mathematical operations on&nbsp; characters, even if they look like numbers.</p>
+<p></p>
+<p>If you try to perform mathematical operations on character, even ones that look like numbers, you will get the error: <em class="hl">non-numeric argument to binary operator</em><span>. </span><span class="hl"></span></p>
+<p></p>
+<p>We can see this in the <em><strong>Console</strong></em>:</p>
+<blockquote>
+<p title="Console" class="nn">&gt; a = 9<br>&gt; b = "7"<br>&gt; a + a<br>[1] 18<br>&gt; a + b<br>Error in a + b : non-numeric argument to binary operator<br>&gt; b + b<br>Error in b + b : non-numeric argument to binary operator</p>
+</blockquote>
+<p></p>
+<p>Let's save the <em><strong>precip </strong></em>column in <em><strong>weatherData </strong></em>to a vector called <em><strong>precip</strong></em></p>
+<blockquote>
+<p>precip = weatherData$precip;</p>
+</blockquote>
+<p></p>
+<p>A similar error will occur if you try to perform mathematical functions on <em><strong>precip</strong></em><em><strong>, </strong></em>like adding up all of the values using <em><strong>sum()</strong></em>:<strong></strong><em><strong><br></strong></em></p>
+<blockquote>
+<p title="Console" class="nn">&gt; totalPrecip = sum(precip);<br>Error in sum(precip) : invalid 'type' (character) of argument</p>
+</blockquote>
+<p title="Console" class="nn"></p>
+<p>And statistical function like <em><strong>mean() </strong></em>will generally give an answer of <em><strong>NA</strong></em>:</p>
+<blockquote>
+<p title="Console" class="nn">&gt; meanPrecip = mean(precip);<br>Warning message:<br>In mean.default(precip) : argument is not numeric or logical: returning NA</p>
+</blockquote>
+<h3>Forcing characters to become numbers</h3>
+<p>The solution is to change the <em><strong>chr </strong></em>(string) vector into a numeric vector using <em><strong>as.numeric()</strong></em>:</p>
+<p></p>
+<p>Let's use <em><strong>as.numeric()</strong></em> on the <em><strong>precip </strong></em>vector as save the results to <em><strong>precip2</strong></em>:</p>
+<blockquote>
+<p>precip2 = as.numeric(precip);</p>
+</blockquote>
+<p></p>
+<p>If we look at the <em><strong>Environment</strong></em>, we can see that <em><strong>precip2 </strong></em>is a numeric vector and the numbers no longer have quotes around them.&nbsp; But, the non-numeric "T" values were replaced with <em><strong>NA</strong></em>:</p>
+<blockquote>
+<p title="Environment" class="nn">precip: &nbsp; chr[1:366]&nbsp; "0.04" "0.00" <em class="hl">"T" "T"</em> "0.00"</p>
+<p>precip2:&nbsp; num[1:366]&nbsp; 0.04 0 <em class="hl">NA NA</em> 0</p>
+</blockquote>
+<h3>Double values are numeric...</h3>
+<p>Using <strong></strong><em><strong>typeof()</strong></em>&nbsp; to find out what type of vector <em><strong>precip2</strong></em> is:</p>
+<blockquote>
+<blockquote>
+<p title="Console" class="nn">&gt; typeof(weatherData$precip2)<br>[1] "double"</p>
+</blockquote>
+</blockquote>
+<p></p>
+<p><em class="hl">A <strong>double </strong>value is a numeric value.</em>&nbsp; <em><strong>double </strong></em>refers to how big of a numeric value the vector can hold and meant a lot more in the days when computer memory was at a premium.&nbsp;</p>
+<h2>Operations on NA values</h2>
+<p>To R, <strong>NA </strong>means that the value is <strong>N</strong>ot <strong>A</strong>vailable.&nbsp; <strong>NA </strong>is technically an error as <strong>NA </strong>indicates the value should exist but does not.&nbsp; A similar value, <strong>NULL</strong>, says that the value is not supposed to exist, so there is no error.<span style="color: #4a8f00;"><br></span></p>
+<p></p>
+<p>If you try to perform mathematical or statistical operation on a vector that has numeric <strong>NA </strong>values, R will tell you the answer is <strong>NA</strong>, or <em><strong>NA_Real,</strong></em> which is just R's way of telling you that the answer would be a real number if the <em><strong>NA </strong></em>values existed.</p>
+<p></p>
+<blockquote>
+<p>meanPrecip = mean(precip2);</p>
+<p>totalPrecip = sum(precip2);</p>
+</blockquote>
+<p></p>
+<blockquote>
+<p title="Environment" class="nn">&nbsp; meanPrecip: NA_Real</p>
+<p title="Environment" class="nn">&nbsp; totalPrecip: NA_Real</p>
+</blockquote>
+<h3>Finding the number of NA values</h3>
+<p><em><strong>is.na(precip2)</strong></em> will go through each value in <em><strong>precip2 </strong></em>and create a <em><strong>TRUE/FALS</strong><strong>E</strong></em> vector with <strong>366 </strong>values:</p>
+<blockquote>
+<p title="Console" class="nn">&gt; is.na(precip2)<br>&nbsp; [1] FALSE FALSE &nbsp;TRUE &nbsp;TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE &nbsp;</p>
+<p>&nbsp;[14] TRUE FALSE &nbsp;TRUE&nbsp; TRUE FALSE &nbsp;TRUE &nbsp;TRUE FALSE &nbsp;TRUE &nbsp;TRUE FALSE FALSE FALSE</p>
+<p>&nbsp;...</p>
+</blockquote>
+<p></p>
+<p>The <em><strong>TRUE </strong></em>values represent <em><strong>NA </strong></em>values.&nbsp; We can count the <em><strong>TRUE </strong></em>values using <em><strong>sum()</strong></em>:</p>
+<blockquote>
+<p title="Console" class="nn">&gt; sum(is.na(precip2))<br>[1] 60</p>
+</blockquote>
+<p></p>
+<p>So, there are<strong> 60</strong><em> <strong>NA </strong></em>values in <em><strong>precip2.</strong></em></p>
+<h3>Removing NA values</h3>
+<p>You can get around the <strong>NA </strong>issues by instructing R to remove the <strong>NA </strong>values from the calculation by setting the <strong>NA </strong>removal argument <em><strong>na.rm</strong></em> to <strong>TRUE</strong>:</p>
+<blockquote>
+<p>meanPrecip2 = mean(precip2, na.rm = TRUE);</p>
+<p>totalPrecip2 = sum(precip2, na.rm = TRUE);</p>
+</blockquote>
+<p></p>
+<p>Without the <em><strong>NA </strong></em>values in the vector, the results are:</p>
+<blockquote>
+<p title="Environment" class="nn">&nbsp; meanPrecip2: 0.1144...</p>
+<p title="Environment" class="nn">&nbsp; totalPrecip2: 35.01</p>
+</blockquote>
+<p></p>
+<p class="note">Note: most mathematical and statistical functions include the argument<strong></strong><em><strong> na.rm</strong></em></p>
+<h3>Replacing the NA values</h3>
+<p>Using the argument <em><strong>na.rm=TRUE</strong></em> assumes that the <em><strong>NA </strong></em>values should be ignored.&nbsp; However, that is not true in this case -- the <strong>NA </strong>values are the old "T" values, which<strong> </strong>represented a trace or rain.&nbsp; We need to keep these values in the vector.&nbsp; Since a <em><strong>trace </strong></em>of precipitation is defined as less than <strong>0.01</strong> inches of precipitation -- so we will go halfway and change all <em><strong>NA </strong></em>values to <strong>0.005</strong><em>:</em></p>
+<p><em></em></p>
+<p>We will first make another copy of <em><strong>precip</strong></em>:</p>
+<blockquote>
+<p>&nbsp; precip3 = precip2; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; # make another copy of precip</p>
+</blockquote>
+<p></p>
+<p>And then cycle through all the values in <em><strong>precip3</strong></em>, checking for <em><strong>NA </strong></em>values and changing them to<strong> 0.005</strong>:</p>
+<blockquote>
+<p>&nbsp; for(i in 1:length(precip3)) # go through every value in precip<br>&nbsp; {<br>&nbsp; &nbsp; if(is.na(precip3[i])) &nbsp;&nbsp;&nbsp; # if the value is NA<br>&nbsp; &nbsp; {<br>&nbsp; &nbsp; &nbsp; precip[i] = 0.005;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # change it to 0.005<br>&nbsp; &nbsp; }<br>&nbsp; }</p>
+</blockquote>
+<p></p>
+<p>And we can see that <em><strong>precip3 now </strong></em>has <strong>0.005</strong> in place of <strong>NA</strong>:</p>
+<blockquote>
+<p title="Environment" class="nn">precip3 &nbsp; num [1:366] 0.04 0.00 <em class="hl">0.005 0.005</em> 0.00...</p>
+</blockquote>
+<h3>Reserved Words in R</h3>
+<p><em><strong>NA</strong></em> is a <em class="hl">reserved word</em> in R.&nbsp; This means you cannot create a variable named <em><strong>NA </strong></em>in R:</p>
+<blockquote>
+<p title="Console" class="nn">&gt; NA = 2<br>Error in NA = 2 : invalid (do_set) left-hand side to assignment</p>
+</blockquote>
+<p></p>
+<p><em><strong>NA </strong></em>is not the same as the string value "N" followed by "A", so this <em><strong>if </strong></em>statement will not work:</p>
+<blockquote>
+<p>if(precip3[i] == "NA")&nbsp; # checking for the characters "N" and "A"</p>
+</blockquote>
+<p></p>
+<p>And <em><strong>NA </strong></em>is not a variable name in R, so this &nbsp;<em><strong>if </strong></em>statement does not work:</p>
+<blockquote>
+<p>if(precip3[i] == NA)&nbsp;&nbsp;&nbsp; # checking for the variable named NA</p>
+</blockquote>
+<p></p>
+<p>Instead, we must use the function <em><strong>is.na()</strong></em> to check for <strong>NA </strong>values:</p>
+<blockquote>
+<p>if(is.na(precip3[i])) &nbsp; # checking if precip[i] is an NA value</p>
+</blockquote>
+<p></p>
+<p class="note">Note: There are many other reserved words in R like <em><strong>NULL</strong></em>, <em><strong>TRUE</strong></em>, <em><strong>FALSE</strong></em>, <em><strong>for</strong></em>, <em><strong>if</strong></em>, <em><strong>else</strong></em>, <em><strong>function</strong></em>...</p>
+<h3>Mathematical operations on the new vector</h3>
+<p>Now when we find the mean and the sum of the <em><strong>precip3 </strong></em>vector with <strong>0.005</strong> in place of <strong>NA</strong>, we see values that reflect the fact that 60 days had a trace of rain:</p>
+<blockquote>
+<p>meanPrecip3 = mean(precip3);</p>
+<p>totalPrecip3 = sum(precip3);</p>
+</blockquote>
+<p></p>
+<p>The mean precipitation was lowered a bit because we added 60 days that had trace precipitation to the calculation -- this also increased the total precipitation a bit:</p>
+<blockquote>
+<p title="Environment" class="nn">meanPrecip2: &nbsp; 0.1144...</p>
+<p title="Environment" class="nn">totalPrecip2:&nbsp; 35.01</p>
+<p title="Environment" class="nn">meanPrecip3:&nbsp;&nbsp; 0.0964...</p>
+<p title="Environment" class="nn">totalPrecip3:&nbsp; 35.31...</p>
+</blockquote>
+<h3>Adding the numeric precip column</h3>
+<p>We will add the numeric <em><strong>precip3 </strong></em>column to <em><strong>weatherData </strong></em>and call the new column <em><strong>precipNum</strong></em>:</p>
+<blockquote>
+<p>&nbsp; weatherData$precipNum = precip3;</p>
+</blockquote>
+<p></p>
+<p><img src="../Images/R-2-03-precipnum.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">The <strong>precipNum </strong>column added to <strong>weatherData </strong>-- note the 0.005 in place of NA</p>
+<h2>Plotting rainfall values</h2>
+<p>We are going to do some basic plots with the rainfall values.&nbsp; For all of these plots we are going to plot rainfall vs. the day number (e.g., <strong>1</strong> is Jan 1, <strong>2</strong> is Jan 2, <strong>366</strong> is Dec 31).&nbsp; We will deal with dates in a later lesson.</p>
+<h3>A scatterplot</h3>
+<p>The first plot will be a scatterplot with rainfall (<em><strong>precipNum</strong></em>) on the y-axis and day number on the x-axis.&nbsp; Since day number is just the row number, we will map the y-axis to a sequence from <em><strong>1</strong></em> to the number of rows in <em><strong>weatherData </strong></em>(i.e., <strong>366</strong>)</p>
+<p></p>
+<blockquote>
+<p>&nbsp; plot1 = ggplot(data=weatherData ) +<br>&nbsp; &nbsp; geom_point( mapping=aes(x=<em class="hl">1:</em><em class="hl">nrow(weatherData)</em>, &nbsp;# 1:366<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; y=precipNum),<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; color = "red") +<br>&nbsp; &nbsp; labs( title="Daily Precipitation",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; subtitle="Lansing, MI -- 2016",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; x = "Day Number",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; y = "Precipitation (inches)") +<br>&nbsp; &nbsp; theme_bw();<br>&nbsp; plot(plot1);</p>
+</blockquote>
+<p></p>
+<p class="note">Note: we could have used <strong>366 </strong>instead of <strong>nrow(weatherData</strong>) but <strong>nrow(weatherData) </strong>is more robust as it can handle changes to the size of the data frame (e.g., a year that is not a leap year)</p>
+<p></p>
+<p><img src="../Images/R-2-03-ScatterplotPrecip.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">scatterplot of rainfall for every day</p>
+<h3>Scatterplot with chr values</h3>
+<p>GGPlot can also create a scatterplot from the precipitation values that are given in the <em><strong>precip </strong></em>column that is of type <em><strong>chr</strong></em>:</p>
+<blockquote>
+<p id="colorSub">&nbsp; plot2 = ggplot(data=weatherData ) +<br>&nbsp; &nbsp; geom_point( mapping=aes(x=1:nrow(weatherData), &nbsp;<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; y=<em class="hl">precip</em>), &nbsp;# chr values<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; color = "red") +<br>&nbsp; &nbsp; labs( title="Daily Precipitation",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; subtitle="Lansing, MI -- 2016",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; x = "Day Number",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; y = "Precipitation (inches)") +<br>&nbsp; &nbsp; theme_bw();<br>&nbsp; plot(plot2);</p>
+</blockquote>
+<p></p>
+<p>But, since <em><strong>precip </strong></em>contains <em><strong>chr</strong></em>/string values (not numbers), GGPlot will output every unique <em><strong>precip </strong></em>value on the y-axis and put them in "alphabetical" order -- this is why <em><strong>T</strong></em> is at the top (it is alphabetically greater than the numbers)</p>
+<p></p>
+<p><img src="../Images/R-2-03_ChrScatterplot.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">A scatterplot using character values instead of numeric</p>
+<h2>Application</h2>
+<p class=""><em class="hl">If you have any questions regarding this application, feel free to</em> <em class="email">email them to the instructor here</em>.&nbsp; <em class="hl">You can attach the whole Project Folder as a<a href="01-01%20RStudio%20and%20Projects.html?ou=457124#zip" target="_blank" rel="noopener"> zipped file</a>.</em></p>
+<p></p>
+<p>Create a script file named <em><strong>app2-03.r</strong></em>.&nbsp; In the script file:</p>
+<p></p>
+<p>1) Answer the following questions in comments at the top of your script:</p>
+<ul>
+<li>In the <em><strong>weatherType </strong></em>column, there are a bunch of days without any conditions.&nbsp; If you wanted to indicate that the lack of conditions is fine would you use <em><strong>NA </strong></em>or <em><strong>NULL</strong></em>?&nbsp; Why?&nbsp;</li>
+<li>What happens when you try to sum, using <em><strong>sum()</strong></em>,&nbsp; the following two vectors?&nbsp; Why?
+<ul>
+<li>c(8, 10, 6, NULL, 4)</li>
+<li>c(8, 10, 6, NA, 4)</li>
+</ul>
+</li>
+</ul>
+<p></p>
+<p>2) Find the total amount of snow was for the year and save it to the variable named <em><strong>snowTotal</strong></em></p>
+<ul>
+<li>the snow column also uses "T" values, but trace in this case means snowfall between 0 and 0.5 inches</li>
+</ul>
+<p></p>
+<p>3) Find the average snow depth for the year and save it to the variable <em><strong>snowDepthAvg</strong></em></p>
+<p></p>
+<p>4) Create a vector with <strong>366</strong> values<strong> </strong>called <em><strong>seasons </strong></em>and add the vector to a column in the <em><strong>weatherData </strong></em>called <em><strong>season</strong></em></p>
+<ul>
+<li>March 21 June 21, and September 21 are approximate dates for the transition of the season -- it is OK for this application to be off by a few days</li>
+<li>But, you need to deal with the fact that the beginning of the year and end of the year are winter days</li>
+</ul>
+<p></p>
+<p>5) Create a vector call <em><strong>daysOfTheWeek </strong></em>(Sun-Mon-Tues-Wed) and add it to the <em><strong>weatherData </strong></em>column</p>
+<ul>
+<li class="note">Note: January 1, 2016 was a Friday</li>
+</ul>
+<p></p>
+<p>6) Create a scatterplot with relative humidity on the y-axis and (numeric) precipitation on the x-axis.&nbsp;</p>
+<ul>
+<li>Color the points blue and add appropriate labels and titles</li>
+</ul>
+<ul></ul>
+<h3>&nbsp;Questions to answer</h3>
+<p>Answer the following in comments inside your application script:</p>
+<ol>
+<li>What was your level of comfort with the lesson/application?</li>
+<li>What areas of the lesson/application confused or still confuses you?</li>
+<li>What are some things you would like to know more about that is related to, but not covered in, this lesson?</li>
+</ol>
+<p></p>
+<p><span style="font-size: 16px; color: #6900a0;"><strong>#### Under here is material that will go in another lesson ####</strong></span></p>
+<h2>A scatterplot with a third mapping</h2>
+<p><em><strong>x </strong></em>and<em><strong> y</strong></em> are calling mappings in R.&nbsp; In the scatterplots above <em><strong>x</strong></em> is mapped to row numbers (1-366) and <em><strong>y</strong></em> is mapped to a precipitation column.</p>
+<p></p>
+<p>We can map more than just the axes in a plot.&nbsp; We can map other physical properties of the plot like color, shape, and size to other columns in the data frame.&nbsp;</p>
+<p></p>
+<p>In this case, we will add the mapping of <em><strong>color </strong></em>to the <em><strong>avgTemp </strong></em>column:</p>
+<blockquote>
+<p>&nbsp; ## Mapping color to the temperature<br>&nbsp; plot3 = ggplot(data=weatherData ) +<br>&nbsp; &nbsp; geom_point( mapping=aes(x=1:nrow(weatherData),<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; y=precipNum,<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <em class="hl" id="colorArg">color=avgTemp</em>)) +<br>&nbsp; &nbsp; labs( title="Daily Precipitation",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; subtitle="Lansing, MI -- 2016",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; x = "Day Number",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; y = "Precipitation (inches)") +<br>&nbsp; &nbsp; theme_bw();<br>&nbsp; plot(plot3);</p>
+</blockquote>
+<p></p>
+<p>And now the color of the dots represent the temperature values in <em><strong>avgTemp</strong></em>.&nbsp; As expected, the highest temperatures occur in the middle of the plot, which represents the summer months:</p>
+<p><img src="../Images/R-2-03-ColorMap.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">Mapping color to temperature</p>
+<p></p>
+<p><em class="note">Note: We took out the subcomponent color="red" from the previous examples (<strong id="r-colorSub" class="ref">fig ##</strong>). </em>If we had not done that then the red color would have overridden the <em><strong>color </strong></em>mapping.</p>
+<h3>Customizing the colors</h3>
+<p>R's default choice of colors does not have great contrast nor represents the data very well.&nbsp; We can customize the color using a scale component called <em><strong>scale_color_gradientn</strong></em>.&nbsp;</p>
+<p></p>
+<p>We will talk more about <em><strong>scale </strong></em>components in a later lesson but the name of the <em><strong>scale </strong></em>component basically says what it does. &nbsp;<em><strong>scale_color_gradientn</strong></em> will customize the <em><strong>color </strong></em>mapping using a <em><strong>gradient </strong></em>with <em><strong>n </strong></em>number of values:</p>
+<blockquote>
+<p>&nbsp; ## Customizing the color of the temperature mapping<br>&nbsp; plot4 = ggplot(data=weatherData ) +<br>&nbsp; &nbsp; geom_point( mapping=aes(x=1:nrow(weatherData),<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; y=precipNum,<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; color=avgTemp)) +<br>&nbsp; &nbsp; <em class="hl">scale_color_gradientn(colors = c("blue", "green", "red"))</em> +<br>&nbsp; &nbsp; labs( title="Daily Precipitation",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; subtitle="Lansing, MI -- 2016",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; x = "Day Number",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; y = "Precipitation (inches)") +<br>&nbsp; &nbsp; theme_bw();<br>&nbsp; plot(plot4);</p>
+</blockquote>
+<p></p>
+<p>In <em><strong>scale_color_gradientn</strong></em>, the <em><strong>colors </strong></em>argument to a vector with 3 color values.&nbsp; You can use as many color values as you want.&nbsp; The result is a scatterplot with colors that make more intuitive sense:</p>
+<p><img src="../Images/R-2-03-CustomColors.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">Customizing colors in a mapping</p>
+<h3 class="fs">Barplot</h3>
+<p>If we want to use lines instead of points to represent the rainfall values, then we can switch to a bar plot by using <em><strong>geom_col()</strong></em> instead of <em><strong>geom_point()</strong></em>:</p>
+<p></p>
+<blockquote>
+<p>&nbsp; plot3 = ggplot(data=weatherData ) +<br>&nbsp; &nbsp; <em class="hl">geom_col</em>( mapping=aes(1:nrow(weatherData),&nbsp;<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; y=precipNum),</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; color = "red") +<br>&nbsp; &nbsp; labs( title="Daily Precipitation",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; subtitle="Lansing, MI -- 2016",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; x = "Precipitation (inches)",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; y = "Number of Days") +<br>&nbsp; &nbsp; theme_bw();<br>&nbsp; plot(plot3);</p>
+</blockquote>
+<p></p>
+<p><img src="../Images/R-2-03-Barplot.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">A barplot of precipitation vs day number</p>
+</body></html>

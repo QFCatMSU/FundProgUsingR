@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <noscript>
+  <link rel="stylesheet" type="text/css" href="/content/DEVELOPMENT/2018/courses/DEV-belinsky-2018-BackendTest/Programming/editor.css">
+  </noscript>
+  <script src="https://cdn.jsdelivr.net/gh/QFCatMSU/OnlineClassBackEnd/module.js">
+  </script>
+</head>
+<body>
+
+<p class="previousLesson">Matrices</p>
+<p class="nextLesson">Stacking and Mapping</p>
+<h1 class="title" id="title">2-08 Binding and Sampling</h1>
+<h3>To-do</h3>
+<ul>
+<li>Move 4.5 to extension and lesson in the Lists lesson- K</li>
+</ul>
+<h2>Purpose</h2>
+<ul>
+<li>Creating a uniform random sample</li>
+<li>Creating a normal sample</li>
+<li>Creating repeatable pseudo-random values</li>
+<li>Saving and loading list objects</li>
+</ul>
+<h2>Script and data for this lesson</h2>
+<p>The <a href="https://raw.githubusercontent.com/QFCatMSU/FundProgUsingR/master/scripts/2-08_BindingAndSampling.R" target="_blank" rel="noopener" title="">script for the lesson is here</a> (right-click, <em><strong>save link as... </strong></em>-- put in <em><strong>scripts </strong></em>folder).</p>
+<p><a href="../Data/LansingJanTempsFixed.csv?isCourseFile=true" target="_self">LansingJanTempsFixed.csv</a> (just left-click -- put in <em><strong>data </strong></em>folder). <em class="hl"></em></p>
+<p><a href="../Data/LansingJan2017Temps.csv" target="_blank" rel="noopener">LansingJan2017Temps.csv</a> (just left-click -- put in <em><strong>data </strong></em>folder)</p>
+<h2>Binding multiple data frames</h2>
+<p>We are going to start by opening the CSV file created in the last lesson, <em><strong>lansingJanTempsFixed.csv</strong></em> file, that contains temperatures in Fahrenheit for January 2011-2016:</p>
+<blockquote>
+<p>&nbsp; lansJanTempsDF = read.csv(file = "data/lansingJanTempsFixed.csv");&nbsp;</p>
+</blockquote>
+<p></p>
+<p>Next, we are going to add January 2017 data from <em><strong>lansingJan2017Temps.csv</strong></em>.&nbsp; First, let's read the 2017 weather data into a data frame:</p>
+<blockquote>
+<p>&nbsp; lansJanTemps2017DF = read.csv(file = "data/lansingJan2017Temps.csv");&nbsp;</p>
+</blockquote>
+<p></p>
+<p><em><strong>lansJanTems2017DF </strong></em>is a data frame with one column (named <em><strong>x</strong></em>) -- <em><strong>x</strong></em> has 31 temperature values (in Fahrenheit), one for each day in January 2017.&nbsp; If we click on the arrow to the left of&nbsp;<em><strong> lansJanTemps2017DF </strong></em>in the <em><strong>Environment</strong></em>, it looks like this:</p>
+<blockquote>
+<p title="Environment" class="nn">🞃 lansJanTemps2017DF&nbsp;&nbsp;&nbsp;&nbsp; 31 obs. of 1 variable</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; $ x: int 42 44 37 35 15 15 ...</p>
+</blockquote>
+<p></p>
+<p>Let's first change the column name from <em><strong>x</strong></em> to <em><strong>Jan2017</strong></em>:</p>
+<blockquote>
+<p>colnames(lansJanTemps2017DF) = "Jan2017";&nbsp;&nbsp; # there is only one column to name</p>
+</blockquote>
+<p></p>
+<p>And then bind the 2017 data to the 2011-2016 data frame using<em><strong> cbind()</strong></em>.&nbsp; We will save the binded data to a new data frame, <em><strong>lansJanTempDF2</strong></em>:</p>
+<blockquote>
+<p>&nbsp; lansJanTempsDF2 = cbind(lansJanTempsDF, lansJanTemps2017DF);</p>
+</blockquote>
+<p></p>
+<p><em><strong>cbind() </strong></em>stands for column bind and it will bind two data frames together by their columns.&nbsp; <em><strong>cbind() </strong></em>also will bind columns together between two matrices, or bind columns between a matrix and a data frame.&nbsp; The only caveat is that the <em class="hl">columns need to be the same size</em>.&nbsp; In this example, the columns all have 31 rows:</p>
+<p></p>
+<p><img src="../Images/R-2-08-Matrix.jpg" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">The January temperature matrix in Fahrenheit -- with 7 years of temperatures</p>
+<h3>Binding vectors</h3>
+<p>You can also use <em><strong>cbind()</strong></em> to bind two vectors together -- as long as they are the same size.&nbsp; The result will be a matrix with two columns:</p>
+<blockquote>
+<p>vectorA = 20:1;&nbsp;&nbsp; # 20 values 20, 19, 18, ..., 1</p>
+<p>vectorB = seq(from=100, to =195,&nbsp; by=5);&nbsp; # 20 values: 100, 105, 110, ..., 195</p>
+<p>matrixAB = cbind(vectorA, vectorB);&nbsp; # 2 columns with 20 values in each</p>
+</blockquote>
+<p></p>
+<p>or bind a vector to a data frame/matrix.&nbsp; Again, the only caveat is that the number of values in the vectors are the same as the number of rows in the data frame/matrix:</p>
+<blockquote>
+<p>vectorC = seq(from=-20, to=18,&nbsp; by=2);&nbsp; # 20 values: -20, -18, ..., 18</p>
+<p>matrixABC&nbsp; = cbind(matrixAB, vectorC);&nbsp; # 3 columns with 20 values in each</p>
+</blockquote>
+<p></p>
+<p><em><strong>matrixABC </strong></em>contains three columns named <em><strong>vectorA</strong></em>, <em><strong>vectorB</strong></em>, and <em><strong>vectorC</strong></em>:</p>
+<blockquote>
+<p title="Console" class="nn">&gt; matrixABC<br>&nbsp; &nbsp; &nbsp; vectorA vectorB vectorC<br>&nbsp;[1,] &nbsp; &nbsp; &nbsp;20 &nbsp; &nbsp; 100 &nbsp; &nbsp; -20<br>&nbsp;[2,] &nbsp; &nbsp; &nbsp;19 &nbsp; &nbsp; 105 &nbsp; &nbsp; -18<br>&nbsp;[3,] &nbsp; &nbsp; &nbsp;18 &nbsp; &nbsp; 110 &nbsp; &nbsp; -16<br>&nbsp;[4,] &nbsp; &nbsp; &nbsp;17 &nbsp; &nbsp; 115 &nbsp; &nbsp; -14<br>&nbsp;[5,] &nbsp; &nbsp; &nbsp;16 &nbsp; &nbsp; 120 &nbsp; &nbsp; -12<br>&nbsp;[6,] &nbsp; &nbsp; &nbsp;15 &nbsp; &nbsp; 125 &nbsp; &nbsp; -10<br>&nbsp;[7,] &nbsp; &nbsp; &nbsp;14 &nbsp; &nbsp; 130 &nbsp; &nbsp; &nbsp;-8<br>&nbsp;[8,] &nbsp; &nbsp; &nbsp;13 &nbsp; &nbsp; 135 &nbsp; &nbsp; &nbsp;-6<br>&nbsp;[9,] &nbsp; &nbsp; &nbsp;12 &nbsp; &nbsp; 140 &nbsp; &nbsp; &nbsp;-4<br>[10,] &nbsp; &nbsp; &nbsp;11 &nbsp; &nbsp; 145 &nbsp; &nbsp; &nbsp;-2<br>[11,] &nbsp; &nbsp; &nbsp;10 &nbsp; &nbsp; 150 &nbsp; &nbsp; &nbsp; 0<br>[12,] &nbsp; &nbsp; &nbsp; 9 &nbsp; &nbsp; 155 &nbsp; &nbsp; &nbsp; 2<br>[13,] &nbsp; &nbsp; &nbsp; 8 &nbsp; &nbsp; 160 &nbsp; &nbsp; &nbsp; 4<br>[14,] &nbsp; &nbsp; &nbsp; 7 &nbsp; &nbsp; 165 &nbsp; &nbsp; &nbsp; 6<br>[15,] &nbsp; &nbsp; &nbsp; 6 &nbsp; &nbsp; 170 &nbsp; &nbsp; &nbsp; 8<br>[16,] &nbsp; &nbsp; &nbsp; 5 &nbsp; &nbsp; 175 &nbsp; &nbsp; &nbsp;10<br>[17,] &nbsp; &nbsp; &nbsp; 4 &nbsp; &nbsp; 180 &nbsp; &nbsp; &nbsp;12<br>[18,] &nbsp; &nbsp; &nbsp; 3 &nbsp; &nbsp; 185 &nbsp; &nbsp; &nbsp;14<br>[19,] &nbsp; &nbsp; &nbsp; 2 &nbsp; &nbsp; 190 &nbsp; &nbsp; &nbsp;16<br>[20,] &nbsp; &nbsp; &nbsp; 1 &nbsp; &nbsp; 195 &nbsp; &nbsp; &nbsp;18</p>
+</blockquote>
+<h2>Random values in programming</h2>
+<p><span>We are going to pick random values from our temperature data frame but, </span><em class="hl">in programming there is no such thing as a truly random value</em>.&nbsp; There has to be some calculation that&nbsp; determines the random number -- the calculations are just so complex that they seem random.&nbsp; As we will see later, these calculations can be manipulated (or, <em class="hl">seeded</em>) so you get the same "random" numbers every time you <em><strong>Source </strong></em>your script.&nbsp; This is very helpful when you are sharing and documenting your results.</p>
+<p></p>
+<p>For now, we are going to use unseeded calculations, which means that this part of the script will produce different results each time it is executed.&nbsp; The following line enforces the unseeded random calculations:</p>
+<blockquote>
+<p>&nbsp; set.seed(seed=NULL); &nbsp;# remove seed value</p>
+</blockquote>
+<h3>sample of numbers</h3>
+<p>We can use the<strong> </strong><em><strong>sample()</strong></em> function to get a random sample from a set of observations.&nbsp;&nbsp; In our first example, the "observations" will just be a vector of values from 1 to 10: <em><strong>1:10</strong></em>.</p>
+<p><em><strong></strong></em></p>
+<p><em><strong>sample()</strong></em> has three arguments:</p>
+<ul>
+<li><em><strong>x:</strong></em> the observations we are taking a random sample from (in this case, a sequence vector)</li>
+<li><em><strong>size</strong></em>: the number of samples we will take.</li>
+<li><em><strong>replace</strong></em>: whether we allow for an observation to be sampled multiple times (<em><strong>replace=TRUE</strong></em> means we allow an observation to be sampled more than once)</li>
+</ul>
+<p></p>
+<p>In the following code, the arguments for <em><strong>sample()</strong></em> are set so that:</p>
+<ul>
+<li>The data set we are using is the sequence 1-10:&nbsp;<em><strong> 1:10</strong></em></li>
+<li>We are taking eight random samples: <em><strong>size</strong></em>=<strong>8</strong></li>
+<li>We allow repeat observations (<em><strong>replace=TRUE</strong></em>) in <em><strong>randomSample1</strong></em> but not in <em><strong>randomSample2 </strong></em>(<strong></strong><em><strong>replace=FALSE</strong></em>)<strong></strong><em><strong>.&nbsp; </strong></em>
+<ul></ul>
+</li>
+</ul>
+<p></p>
+<blockquote>randomSample1 = sample( 1:10, size=8, replace=TRUE);<br>randomSample2 = sample( 1:10, size=8, replace=FALSE);</blockquote>
+<p></p>
+<p>In <em class="ref" id="r-sample">Fig.##</em>, <em><strong>randomSample1</strong> </em>has two observations that were repeated<strong> 5</strong> and<strong> 9</strong>), whereas <em><strong>randomSample2</strong> </em>has no repeated observations.&nbsp; <em class="hl">Running the script again will produce different observations </em>but <em><strong>randomSample2</strong> </em>will always have eight unique observations because <em><strong>replace=FALSE</strong></em>.</p>
+<p>&nbsp;</p>
+<p class="note">Note: you can get repeat values if<strong> replace=FALSE</strong><em> because </em>there can be multiple observations with the same value -- you just cannot get repeat observations.</p>
+<p></p>
+<p><img src="../Images/R-2-08-Sampling.jpg" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig" id="sample">Random sampling of a vector with replacement and without replacement</p>
+<p></p>
+<p>You will get an error if the argument <em><strong>size</strong> </em>is greater than the population size and <em><strong>replace=FALSE:&nbsp; </strong></em></p>
+<blockquote># randomSample3 = sample( c(1:10), size=12, replace=FALSE);&nbsp; # will cause error randomSample4 = sample( c(1:10), size=12, replace=TRUE);&nbsp;&nbsp; # will work</blockquote>
+<p></p>
+<p>This is because you cannot take <strong>12 </strong><em class="hl">unique</em> samples from a population whose size is <strong>10 </strong>(<em><strong>replace=FALSE</strong></em>), but you can take <strong>12 </strong>samples from a population whose size is <strong>10 </strong>(<em><strong>replace=TRUE</strong></em>) -- there will be at least two observations that are repeated.&nbsp; In this case, observations 2 and 3 are repeated twice, observation 6 is repeated 3 times, and observations 4, 5, and 7 were never picked:</p>
+<blockquote>
+<p title="Console" class="nn">&gt; randomSample4<br>&nbsp;[1] &nbsp;6 &nbsp;6 &nbsp;9 &nbsp;3 &nbsp;2 &nbsp;6 &nbsp;9 10 &nbsp;8 &nbsp;3 &nbsp;1 &nbsp;2</p>
+</blockquote>
+<h3>Randomly sampling the temperature values</h3>
+<p>In the previous examples we were sampling values from a vector. A <em class="hl">matrix is a two-dimensional vector</em> so we can just as easily sample values from a matrix.&nbsp; Let's first convert the data frame <em><strong>lansJanTempsDF2 </strong></em>into a matrix:</p>
+<blockquote>
+<p>&nbsp; lansJanTempsMat = as.matrix(x=lansJanTempsDF2);</p>
+</blockquote>
+<p></p>
+<p>And then randomly sample 80 values from the matrix:</p>
+<blockquote>
+<p>&nbsp; randomTemps = sample(lansJanTempsMat, size=80, replace=TRUE);</p>
+</blockquote>
+<p></p>
+<p>The 80 samples will be different each time you <em><strong>Source </strong></em>your script...</p>
+<blockquote>
+<p title="Environment" class="nn">&gt; randomTemps<br>&nbsp;[1] 13 55 13 14 24 16 35 21 24 37 34 30 16 44 29 35 29 37 16 35 18 35 32 27 16<br>[26] 55 26 26 40 26 25 29 48 23 26 35 19 30 23 45 38 42 42 18 42 19 45 32 13 37<br>[51] 30 11 30 33 30 22 29 32 44 14 23 38 41 43 27 22 22 37 37 31 44 21 25 34 21<br>[76] 40 29 55 42 29</p>
+</blockquote>
+<h3>Setting the seed value</h3>
+<p>Every time your script is executed, a new "random" set of observations, called <em class="hl">pseudo-random</em>, is produced using a complex algorithm that seems random to humans.&nbsp; However, you often want to replicate your results meaning you want the same random values to occur each time you source the code.&nbsp;</p>
+<p></p>
+<p>To replicate your results (i.e., get the same "random" values), you use <em><strong>set.seed()</strong></em> and pass in a number:</p>
+<blockquote>
+<p>&nbsp; set.seed(seed=12345);</p>
+</blockquote>
+<p></p>
+<p>The number is called the <em class="hl">seed number</em> -- the seed number sets the initial conditions for the algorithms that creates the pseudo-random numbers.&nbsp; This means that the pseudo-random number will be the same after the seed is set.&nbsp; If you change the seed number, then you get a different set of the same pseudo-random numbers.</p>
+<p></p>
+<p>If you want to learn more, there is a really good <a href="https://www.youtube.com/watch?v=C82JyCmtKWg" target="_blank" rel="noopener noreferrer">video on PBS Infinite Series</a> about random number generators, pseudo-random number generators, and seed numbers.&nbsp; <a href="https://www.youtube.com/watch?v=C82JyCmtKWg&amp;t=02m15s" target="_blank" rel="noopener noreferrer">The discussion on seed numbers starts at 2:15</a>.</p>
+<h3>Sampling a data vector</h3>
+<p>We will take another 80 random samples from <em><strong>lansJanTempsMat</strong> </em>allowing for repeats:</p>
+<blockquote>randomTempsSeeded = sample(x=lansJanTempsMat, size=80, replace=TRUE);</blockquote>
+<p></p>
+<p>The 80 sampled values from the <em><strong>lansJanTempsMat</strong> </em>matrix:</p>
+<blockquote>
+<p title="Console" class="nn">&gt; randomTempsSeeded<br>&nbsp;[1] 38.0 23.0 29.0 25.0 30.0 34.0 23.0 19.0 13.0 44.0 34.0 32.0<br>[13] 29.0 31.0 19.0 44.0 16.0 55.0 32.0 19.0 29.0 27.0 23.0 25.0<br>[25] 26.0 15.0 44.0 29.0 35.0 32.0 32.0 43.0 19.0 25.0 29.0 55.0<br>[37] 29.0 48.0 17.0 32.0 &nbsp;2.1 34.0 27.0 21.0 26.0 44.0 53.0 39.0<br>[49] 32.0 29.0 16.0 26.0 30.0 43.0 29.0 35.0 27.0 42.0 32.0 41.0<br>[61] 32.0 47.0 15.0 56.0 26.0 25.0 38.0 17.0 25.0 27.0 32.0 27.0<br>[73] 14.0 29.0 32.0 25.0 13.0 32.0 35.0 21.0</p>
+</blockquote>
+<p></p>
+<p>And let's find the mean and standard deviation of the sample, which we will use later in the lesson:</p>
+<blockquote>
+<p>&nbsp; meanRandom = mean(randomSampleSeeded);&nbsp; <br>&nbsp; sdRandom = sd(randomSampleSeeded); &nbsp; &nbsp;&nbsp;</p>
+</blockquote>
+<p></p>
+<blockquote>
+<p title="Environment" class="nn">meanRandom:&nbsp; 29.98875</p>
+<p>sdRandom:&nbsp;&nbsp;&nbsp; 10.485...</p>
+</blockquote>
+<p></p>
+<p>Since the random values were seeded, <em><strong class="hl">randomSampleSeeded </strong></em><em class="hl">will be the same values every time you <strong>Source </strong>the script</em>.&nbsp; If you change the seed number (from <strong>12345</strong> to anything else), then you will get another set of the same "random" values every time you <em><strong>Source </strong></em>your script.</p>
+<p></p>
+<p>For instance, if we change the seed number from <strong>12345 </strong>to <strong>54321 </strong>then you will get these values every time for <em><strong>randomTempsSeeded</strong></em>:</p>
+<blockquote>
+<p title="Console" class="nn">&gt; randomTempsSeeded<br>&nbsp;[1] 38.0 23.0 29.0 25.0 30.0 34.0 23.0 19.0 13.0 44.0 34.0 32.0 29.0 31.0 19.0<br>[16] 44.0 16.0 55.0 32.0 19.0 29.0 27.0 23.0 25.0 26.0 15.0 44.0 29.0 35.0 32.0<br>[31] 32.0 43.0 19.0 25.0 29.0 55.0 29.0 48.0 17.0 32.0 &nbsp;2.1 34.0 27.0 21.0 26.0<br>[46] 44.0 53.0 39.0 32.0 29.0 16.0 26.0 30.0 43.0 29.0 35.0 27.0 42.0 32.0 41.0<br>[61] 32.0 47.0 15.0 56.0 26.0 25.0 38.0 17.0 25.0 27.0 32.0 27.0 14.0 29.0 32.0<br>[76] 25.0 13.0 32.0 35.0 21.0</p>
+</blockquote>
+<h3>Sampling from a data frame &lt;make an extension instead?&gt;</h3>
+<p>When you sample from a matrix, <em><strong>sample() </strong></em>sees each value in the matrix as an observation.</p>
+<p>When you sample from a data frame, <em><strong>sample()</strong></em> sees each column as an observation.</p>
+<p></p>
+<p>This means that <em><strong>sample()</strong></em> will choose random columns from a data frame -- not random values</p>
+<p></p>
+<p>If you try to sample 80 values from the data frame <em><strong>lansJanTempsDF2</strong></em> without replacement:</p>
+<blockquote>
+<p title="Console" class="nn">&gt; sample(lansJanTempsDF2, size=80, replace=FALSE)</p>
+</blockquote>
+<p>You will get an error because there are only 7 columns in <em><strong>lansJanTempsDF2 </strong></em>and you are asking for 80 values without replacement.</p>
+<p></p>
+<p>If you try to sample 80 values from the data frame <em><strong>lansJanTempsDF2</strong></em>, with replacement:</p>
+<blockquote>
+<p title="Console" class="nn">&gt; sample(lansJanTempsDF2, size=80, replace=TRUE)</p>
+</blockquote>
+<p>You will get the original 7 columns randomly repeated 80 times.</p>
+<h2>A last note about seed numbers</h2>
+<p>A seed number is the input to a very complex formula that generates seemingly random number.&nbsp; Each time the formula executes (i.e., each time you ask R to pick a random number), a new number is generated that will be as the input for the complex formula the next time a random number is requested.</p>
+<p></p>
+<p>When you pick a seed number using <em><strong>set.seed()</strong></em>, you are generating a list of numbers that just looks random.&nbsp; When you choose a different seed number, you are generating a different list of consistent numbers that just look random.</p>
+<p></p>
+<p>When you set the seed to <em><strong>NULL</strong></em>, R still uses the same formula to generate "random" number, but it seeds the formula with another "random" number.&nbsp; You need to set the seed to <em><strong>NULL </strong></em>if you want different random numbers every time you execute your script.</p>
+<p></p>
+<p>The rules get more complicated if you pick random numbers without using <em><strong>set.seed()</strong></em> in your script -- you will get a situation in between setting seed to <em><strong>NULL</strong></em> and picking a seed number.&nbsp;</p>
+<h2>A Histogram in GGplot</h2>
+<p>We can visualize the 80 sampled values using a histogram and add a vertical line to repreent the mean value.</p>
+<p></p>
+<p>The mean value, <em><strong>mean(randomTempsSeeded)</strong></em>, is<strong> </strong>very close to<strong> 30</strong>.</p>
+<blockquote>
+<p title="Console" class="nn">&gt; mean(randomTempsSeeded)<br>[1] 29.98875</p>
+</blockquote>
+<p></p>
+<p>The ggplot component that creates a histogram is <em><strong>geom_histogram</strong></em> and you only need to map the x value for a histogram (the y-axis in a histogram is the count).&nbsp; The vertical line is created using the component: <em><strong>geom_vline</strong></em> where x (<em><strong>xintercept</strong></em>) is set to the mean value:</p>
+<blockquote>
+<p>&nbsp; #### Plot a histogram with the mean value<br>&nbsp; plot1 = ggplot() +<br>&nbsp; &nbsp; geom_histogram(mapping=aes(x=randomTempsSeeded),<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;fill="gray50",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;color="blue") +<br>&nbsp; &nbsp; geom_vline(xintercept = mean(randomTempsSeeded),<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;color="red") +<br>&nbsp; &nbsp; theme_bw();<br>&nbsp; plot(plot1);</p>
+</blockquote>
+<p></p>
+<p class="note">Note: in a <em><strong>geom_histogram</strong></em> (and many other plot objects in GGPlot), <em><strong>fill </strong></em>is the background color whereas <em><strong>color </strong></em>is the outline color.</p>
+<p></p>
+<p><img src="../Images/R-2-08-Histogram-Temps.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig" id="sample-temp">Histogram of the 80 sampled values from the January temperature matrix</p>
+<p></p>
+<p>You will get this warning when plotting a histogram:<em class="hl"> `stat_bin()` using `bins = 30`. Pick better value with `binwidth`</em>.&nbsp; This warning is kind of GGPlot bug -- GGPlot does not like it's own default of using 30 bins in a histogram.&nbsp; You can change it if you want, but there is no need.</p>
+<h2>Sampling from a normal distribution</h2>
+<p><em><strong>sample()</strong></em> creates a random sample where each observation has the same chance of being picked (i.e., uniform probability). If we want to create a random set of observations that comes from a normal distribution with a specified mean and standard deviation, we use the function<em><strong> rnorm()</strong></em>.&nbsp;<em><strong></strong></em></p>
+<p></p>
+<p><em><strong>rnorm()</strong></em> has 3 arguments:</p>
+<ul>
+<li><em><strong>n</strong></em>: the number of observations to sample</li>
+<li><em><strong>mean</strong></em>: the mean of the distribution we are sampling from</li>
+<li><em><strong>sd</strong></em>: the standard deviation of the distribution we are sampling from</li>
+</ul>
+<p></p>
+<p>The following code samples <strong>200</strong> observations from a normal distribution with a mean of <strong>20</strong> and a standard deviation of <strong>4</strong>:</p>
+<blockquote>normalDist1 = rnorm(n=200, mean=20, sd=2);</blockquote>
+<p class="note">note: the sampled valued are weighted but they are still random</p>
+<p></p>
+<p>Looking at the first 20 random values, we can see their values are centered around 20:</p>
+<blockquote>
+<p title="Console" class="nn">&gt; normalDist1[1:20]<br>&nbsp;[1] 19.99109 18.17063 21.53481 21.20402 20.78958 21.00338 23.53383<br>&nbsp;[8] 19.72381 18.93655 18.74356 22.54336 18.14803 17.84504 19.18242<br>[15] 16.70889 20.53722 23.31189 16.91820 19.35975 17.85754</p>
+</blockquote>
+<h3>Plot a normals distribution</h3>
+<p>We can also create a normal distribution using the mean and standard deviation from the sampled temperature values (<em id="r-sample-temp" class="ref">fig ##</em>):</p>
+<blockquote>&nbsp; normalDist2 = rnorm(n=200,&nbsp;<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; mean=mean(randomTempsSeeded),&nbsp;<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; sd=sd(randomTempsSeeded));</blockquote>
+<p></p>
+<p>In the code above, we generated 200 temperature observations from a normal distribution based on the mean and standard deviation of <em><strong>lansJanTempsMat.&nbsp; </strong></em>The data generated are saved in the vector <em><strong>normalDist2</strong></em>.<strong><br></strong></p>
+<p></p>
+<p>Then we use a histogram to make a visual representation of <em><strong>normalTemp</strong>&nbsp; </em>and, to the histogram, we add a vertical line at the mean value of the samples, <em><strong>mean(normalDist2)</strong></em>:</p>
+<blockquote>
+<p>&nbsp; plot2 = ggplot() +<br>&nbsp; &nbsp; geom_histogram(mapping=aes(x=normalDist2),<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;fill="gray50",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;color="blue") +<br>&nbsp; &nbsp; geom_vline(xintercept = mean(normalDist2),<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;color="red") +<br>&nbsp; &nbsp; theme_bw();<br>&nbsp; plot(plot2);</p>
+</blockquote>
+<p></p>
+<p>The result is a histogram that looks like a bell diagram -- and would look more so if you increased the sample size.</p>
+<p><img src="../Images/R-2-08-Normal.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">Histogram of the normal distribution created using <strong>rnorm()</strong></p>
+<h2>Application</h2>
+<p><em></em><em><em class="hl">If you have any questions regarding this application, feel free to</em> <em class="email">email them to the instructor here</em>.&nbsp; <em class="hl">You can attach the whole Project Folder as a<a href="01-01%20RStudio%20and%20Projects.html?ou=457124#zip" target="_blank" rel="noopener"> zipped file</a>.</em></em></p>
+<p></p>
+<p>A) In comments, answer the following:</p>
+<ul>
+<li>What is the minimum number of <em class="hl">unique observations</em> you can get from this code?&nbsp; Explain your answer.
+<ul>
+<li>
+<blockquote>sample(1:10, size=8, replace=TRUE)</blockquote>
+</li>
+</ul>
+</li>
+<li>If you move the code <em><strong>set.seed(12345)</strong></em> to the top of the script:
+<ul>
+<li>Will you get the same values for <em><strong>randomSample1</strong></em>?&nbsp; (test it!)</li>
+<li>Why or why not?</li>
+</ul>
+</li>
+</ul>
+<p></p>
+<p>B) Get 50 non-repeating samples from the even numbers between 100 and 999</p>
+<ul>
+<li>You probably need to use the <a href="1-04_VectorsAndDataFrames.html#seq_function" target="_blank" rel="noopener">sequence function</a></li>
+</ul>
+<p></p>
+<p>C) Get 50 samples that can repeat from the odd numbers&nbsp; between 100 and 199</p>
+<p></p>
+<p>D) Using the row binding function <em><strong>rbind()</strong></em>, bind two more rows to <em><strong>lansJanTempsMat </strong></em>(this is sort of like adding a 32<sup>nd</sup> and 33<sup>rd</sup> day to January)</p>
+<ul>
+<li>the vectors you bind need to have the same number of values as columns in <em><strong>lansJanTempMat</strong></em></li>
+</ul>
+<p></p>
+<p>E) Using <em><strong>set.seed(seed=1</strong><strong>0</strong><strong>) </strong></em>and <em><strong>rnorm(</strong><strong>)</strong></em>:</p>
+<ul>
+<li>create a vector that has <em class="hl">these exact 20 observations</em>. &nbsp;</li>
+<li>the <em><strong>mean </strong></em>and <em><strong>sd </strong></em>used to in <em><strong>rnorm() </strong></em>to create these observations<strong></strong><em><strong> </strong></em>were both whole numbers.</li>
+</ul>
+<blockquote>
+<p title="Console" class="nn">&gt; normExample<br>&nbsp;[1] 12.056239 11.447242 &nbsp;7.886008 10.202497 12.883635 13.169383 &nbsp;8.375771<br>&nbsp;[8] 10.908972 &nbsp;7.119982 11.230565 15.305339 14.267345 11.285299 14.962334<br>[15] 14.224170 12.268042 &nbsp;9.135168 11.414549 14.776564 13.448936</p>
+</blockquote>
+<p></p>
+<p><em class="hl">Save you script file as <strong>app2-08.r</strong>&nbsp; in the <strong>scripts</strong> folder of your RStudio Project for the class.</em><em class="hl"></em></p>
+<h3>Questions to answer</h3>
+<p>Answer the following in comments inside your application script:</p>
+<ol style="list-style-type: number;">
+<li>What was your level of comfort with the lesson/application?</li>
+<li>What areas of the lesson/application confused or still confuses you?</li>
+<li>What are some things you would like to know more about that is related to, but not covered in, this lesson?</li>
+</ol>
+</body></html>

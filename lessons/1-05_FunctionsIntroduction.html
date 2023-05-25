@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head>
+  <meta charset="UTF-8">
+  <noscript>
+  <link rel="stylesheet" type="text/css" href="/content/DEVELOPMENT/2018/courses/DEV-belinsky-2018-BackendTest/Programming/editor.css">
+  </noscript>
+  <script src="https://cdn.jsdelivr.net/gh/QFCatMSU/OnlineClassBackEnd/module.js">
+  </script>
+</head><body><p class="previousLesson">Vectors and Data Frames</p>
+<p class="nextLesson">Run and Source</p>
+<h1 class="title">1-05: Functions Introduction</h1>
+<h3>Changes...</h3>
+<ul>
+<li>Add Trap to median() about how you do not want to do this (because R will think you are passing in 6 separate arguments):
+<ul>
+<li>medianVal1 = median(3,4,6,2,7,3);</li>
+</ul>
+</li>
+</ul>
+<h2>Purpose</h2>
+<p>Explain how functions works and how to use the <em><strong>Help </strong></em>tab in RStudio.&nbsp; The presentation of functions in R is inconsistent but it is very useful to understand how to read a function help page.</p>
+<h3>Files</h3>
+<p>The&nbsp;<a href="https://raw.githubusercontent.com/QFCatMSU/FundProgUsingR/master/scripts/1-05_FunctionsIntroduction.R" target="_blank" rel="noopener" title="">script for the lesson is here</a></p>
+<ul>
+<li><em class="hl">right-click on the link</em> and choose <em><strong>Save link as...</strong></em></li>
+<li>Save to the <em><strong>scripts </strong></em>folder in your Class Project</li>
+</ul>
+<p>The data used in this lesson, <a href="../Scripts/twoWeekWeatherData.csv" target="_self">twoWeekWeatherData.csv</a></p>
+<ul>
+<li><em class="hl">left-click the link</em> and save to the <em><strong>data </strong></em>folder in your Class Project<em id="r-open-excel" class="ref"></em></li>
+</ul>
+<ul></ul>
+<h2>Functions</h2>
+<p>In the last lesson we used two functions in R:</p>
+<ul>
+<li><em><strong>read.csv(): </strong></em>open up a CSV file and read in the data</li>
+<li><em><strong>seq()</strong></em>: create a configurable sequence of numbers</li>
+</ul>
+<p></p>
+<p>Functions are standalone scripts designed to do some repeatable operations.&nbsp; A function almost always takes input and sends a response.</p>
+<p></p>
+<p>In the case of <em><strong>read.csv() </strong></em>from last lesson:</p>
+<p></p>
+<p class="code">&nbsp; weatherData = read.csv(file="data/twoWeekWeatherData.csv", # path to file</p>
+<p class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sep=",",&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # values are separated by commas</p>
+<p class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; header=TRUE,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # there is a header row</p>
+<p class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stringsAsFactors = FALSE); # for people using R 3.X</p>
+<p class="fig" id="weatherdata">Calling <strong>read.csv() </strong>to get data from<strong> twoWeekWeatherData.csv</strong> and save it to <strong>weatherData</strong></p>
+<p></p>
+<p>The input is the values for<em><strong> f</strong><strong>ile, sep, header</strong></em>, and <em><strong>stringsAsFactors</strong></em>.</p>
+<p>The response is the data from the CSV file and this data gets saved to the variable <em><strong>weatherData</strong></em>.</p>
+<p></p>
+<p>In the case of <em><strong>seq()</strong></em>:</p>
+<p class="code">seq1 = seq(from=1, to=10, by=3);</p>
+<p></p>
+<p>The input is the values for<em><strong> from, to, and by</strong></em><em><strong></strong></em>.</p>
+<p>The response is the sequence of numbers that gets saved to the variable <em><strong>seq1</strong></em>.</p>
+<h2>Arguments</h2>
+<p>In programming, the values you pass into a function(e.g., <em><strong>file, sep, header</strong></em>, and <em><strong>stringAsFactors</strong></em>) are called <em class="hl">arguments </em>of the function.&nbsp; Arguments are added to the function call to tweak the operation of the function -- sort of like the knobs and dials for a function.</p>
+<p></p>
+<p>Most of the programming world uses the term <em class="hl">parameters </em>instead of <em class="hl">arguments</em>.&nbsp; I tend to like parameters better as I think it better indicates the fact that these values are properties of the function.&nbsp; But, R is a programming language for statisticians and <em><strong>arguments </strong></em>is a mathematical term so R chose to go with <em><strong>arguments</strong></em>.</p>
+<h2>A simpler function: median()</h2>
+<p>Let's take a step back and look at a simpler function, <em><strong>median()</strong></em>, which takes a vector and finds the median value in the vector.</p>
+<p></p>
+<p>To use <em><strong>median()</strong></em> we need a vector with numeric values in it:</p>
+<blockquote>
+<p>vec1 = c(3,4,5,6,21,45,61);</p>
+</blockquote>
+<p></p>
+<p>And then we pass <em><strong>vec1 </strong></em>in as an argument to the <em><strong>median() </strong></em>function:</p>
+<blockquote>
+<p>medianVal1 = median(vec1);</p>
+</blockquote>
+<p></p>
+<p>And the <em><strong>Environment </strong></em>says that the returned values, saved to <em><strong>medianVal1 </strong></em>is <strong>6</strong></p>
+<blockquote>
+<p title="Environment" class="nn">medianVal1:&nbsp;&nbsp; 6</p>
+</blockquote>
+<h3>Help for median()</h3>
+<p>Now let's use RStudio's <em><strong>Help </strong></em>tab to go behind-the-scenes of <em><strong>median()</strong></em>.&nbsp; RStudio <em><strong>Help </strong></em>tab is a useful resource for finding out more information on functions.&nbsp;</p>
+<p></p>
+<p>If we type <em><strong>median </strong></em>in the search bar we get this:</p>
+<p><img src="../Images/R-1-04b_median.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">The median function in the Help tab in RStudio</p>
+<p></p>
+<p>The Help page shows that <em><strong>median()</strong></em> has two arguments:</p>
+<ul>
+<li><em><strong>x</strong></em>: the vector that you want to find the median for</li>
+<li><em><strong>na.rm</strong></em>: a TRUE/FALSE value that determines how to handle NA values in the vector
+<ul>
+<li><strong>NA </strong>means Not Available -- usually indicating a problem with the data</li>
+</ul>
+</li>
+</ul>
+<p></p>
+<p class="note">Note: the ( ... ) can be ignored -- it is basically R saying that this function can be expanded with more arguments</p>
+<h3>Skipping argument names</h3>
+<p>When we called <em><strong>median()</strong></em>, we did not include any argument names:</p>
+<blockquote>
+<p>medianVal1 = median(vec1);</p>
+</blockquote>
+<p></p>
+<p>However, since <em><strong>x</strong></em> is the first argument in <em><strong>median()</strong></em>, it is assumed that the first value is meant to be for <em><strong>x</strong></em>.</p>
+<p></p>
+<p>So, this is an equivalent call to <em><strong>median()</strong></em> that more explicitly says that the <em><strong>vec1 </strong></em>is the value for <em><strong>x</strong></em>:</p>
+<blockquote>
+<p>medianVal1b = median(x=vec1);</p>
+</blockquote>
+<p></p>
+<blockquote>
+<p title="Environment" class="nn">medianVal1:&nbsp;&nbsp; 6</p>
+<p>medianVal1b:&nbsp; 6</p>
+</blockquote>
+<h3>Default argument values</h3>
+<p>The other argument in <em><strong>median()</strong></em>, <em><strong>na.rm</strong></em>, already has a value: <em><strong>FALSE</strong></em> .&nbsp;&nbsp; This means that <em class="hl">you do not have to supply a value for the argument <strong>na.rm</strong></em> when you call the function.&nbsp; You only need to supply a value if you want to change <em><strong>na.rm</strong></em> from <strong>FALSE</strong>.</p>
+<p></p>
+<p>Our first example did not have an <strong>NA </strong>values, let's create a vector with an <strong>NA </strong>value in it:<em class="note"><br></em></p>
+<blockquote>
+<p>vec2 = c(3,4,5,NA,6,21,45,61);</p>
+</blockquote>
+<p></p>
+<p>And then use that as an argument for <em><strong>median()</strong></em>:</p>
+<blockquote>
+<p>medianVal2 = median(x=vec2);</p>
+</blockquote>
+<p></p>
+<p>This time the median value is <strong>NA </strong>because the median value for any vector that has an <strong>NA </strong>value is <strong>NA</strong> (essentially saying that median cannot be determined)</p>
+<blockquote>
+<p title="Environment" class="nn">medianVal2:&nbsp;&nbsp; NA_real_</p>
+</blockquote>
+<p class="note">note: NA_real_ means an NA value that R thinks should be a real number</p>
+<h3>Dealing with the NA</h3>
+<p><em><strong>na.rm</strong></em> is the argument that determines whether <strong>NA </strong>values are removed from the vector -- and the default value is <strong>FALSE</strong>, meaning <strong>NA </strong>values are not removed.&nbsp;</p>
+<p></p>
+<p>Let's set <em><strong>na.rm</strong></em> to <strong>TRUE </strong>so the <strong>NA </strong>values are removed before finding the median:</p>
+<blockquote>
+<p>medianVal2b = median(x=vec2, na.rm=TRUE);</p>
+</blockquote>
+<p></p>
+<p>Now, we get the same median value as before:</p>
+<blockquote>
+<p title="Environment" class="nn">medianVal2b:&nbsp;&nbsp; 6</p>
+</blockquote>
+<h3>Alternate ways to call median()</h3>
+<p>Argument names (e.g., <em><strong>x</strong></em> and<em><strong> na.rm</strong></em>) are not needed if you put values in the correct order. All of these calls functionally do the same thing as the above <em><strong>median()</strong></em> call:</p>
+<blockquote>
+<p>medianVal2c = median(vec2, TRUE);</p>
+<p>medianVal2d = median(vec2, na.rm=TRUE);</p>
+<p>medianVal2e = median(na.rm=TRUE, x=vec2);&nbsp; # can reverse arguments if you name them</p>
+<p>medianVal2f = median(x=vec2, TRUE);</p>
+</blockquote>
+<p></p>
+<p>My general recommendation is to always use argument names when calling a function.&nbsp; This makes your code easier to read and you don't have to worry about the order of the arguments.&nbsp; This is especially important when you are dealing with more complicated functions that have lots of arguments (e.g., plotting functions).</p>
+<h2>Help seq()</h2>
+<p>Unfortunately, the <em><strong>Help </strong></em>for functions can contain many abstractions and extraneous information. Throughout this course, we will open up the <em><strong>Help </strong></em>menu for new functions to get you more familiar with the abstractions.&nbsp;</p>
+<p></p>
+<p>Let's look at the function <em><strong>seq()</strong></em>:</p>
+<p><img src="../Images/R-1-04b_seq.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">The Help page for the seq() function</p>
+<p></p>
+<p>When you see <em><strong>Default S3 Method</strong></em>, that is most likely the version of the function you care about.&nbsp; <em><strong>S3</strong></em> means<strong> S</strong> version <strong>3</strong>, <em><strong>S</strong></em> (which probably stood for Stat) is a programming language developed in the 1970s and was the predecessor to R (yeah, that sounds a bit backward...)</p>
+<p></p>
+<p>In this case, R is using the old S <em><strong>seq()</strong></em> function without any modifications.</p>
+<h3>The default functionality</h3>
+<p><em><strong>seq()</strong></em> has 5 arguments: <em><strong>from, to, by, length.out, </strong></em>and <strong></strong><em><strong>along.with</strong></em>.</p>
+<p></p>
+<p>All 5 arguments have default values, so technically, you can call <em><strong>seq()</strong></em> without any arguments.&nbsp; But then <em><strong>seq()</strong></em> returns <em><strong>1</strong></em> (because <em><strong>from=1</strong></em> and<em><strong> to=1</strong></em>).</p>
+<p></p>
+<blockquote>
+<p>seq1 = seq();</p>
+</blockquote>
+<p></p>
+<blockquote>
+<p title="Environment" class="nn">seq1:&nbsp;&nbsp;&nbsp; 1</p>
+</blockquote>
+<p></p>
+<p>But that is kind of pointless!</p>
+<h3>The arguments for seq()</h3>
+<p><em></em>We have already used <em><strong>from</strong></em>, <em><strong>by</strong></em>, and <em><strong>to </strong></em>and we can see from the <em><strong>Help </strong></em>page that <em><strong>from </strong></em>and <em><strong>to </strong></em>default to 1 if you give them no value.</p>
+<p></p>
+<p>The formula for <strong>by </strong>is confusing, poorly presented, and it's conditional on <strong>length.out</strong> being given a value. The default value for <strong>by </strong>is <strong>-1</strong> or <strong>1</strong> if <strong>length.out</strong> is not given -- this fact is not documented in the <strong>Help </strong>page.&nbsp;</p>
+<p></p>
+<p><em><strong>length.out</strong></em> allows you to set the number of values in the sequence -- it is set to <em><strong>NULL</strong></em>, which basically says that the number of values will be determined using <em><strong>from</strong></em>, <em><strong>to</strong></em>, and <em><strong>by</strong></em>.</p>
+<p></p>
+<p>If you set <em><strong>length.out</strong></em> to a value, then you can only use 2 of these 3 arguments: <em><strong>from</strong></em>, <em><strong>to</strong></em>, and <em><strong>by</strong></em>.&nbsp; I will let you think of why that is true.</p>
+<p></p>
+<p>An example of using <em><strong>length.out</strong></em>:</p>
+<blockquote>
+<p>seq2 = seq(from=1, to=10, length.out=5);</p>
+</blockquote>
+<p></p>
+<p>Then you get 5 evenly spaced number starting with 1 and ending with 10</p>
+<blockquote>
+<p title="Environment" class="nn">seq2:&nbsp;&nbsp; num[1:5] 1 3.25 5.5 7.75 10</p>
+</blockquote>
+<p></p>
+<p><em><strong>along.with</strong></em> is a more complicated argument that I will not cover here.</p>
+<h2>read.csv() expanded</h2>
+<p>When you go to the <em><strong>Help </strong></em>page for <em><strong>read.csv()</strong></em> , you are actually taken to the <em><strong>Help </strong></em>page for <em><strong>read.table()</strong></em>. This is because <em><strong>read.csv()</strong> </em>is a version of the function <em><strong>read.table()</strong></em>.&nbsp; In other words, <em><strong>read.csv()</strong></em> is <em><strong>read.table()</strong> </em>with different default values for the arguments (underlined in <em id="r-readcsv" class="ref">Fig.##</em>).&nbsp;&nbsp;</p>
+<p></p>
+<p>For instance, the default value for <em><strong>sep </strong></em>(the separator) is a space in <em><strong>read.table()</strong></em> and a comma in<em><strong> read.csv()</strong></em>.&nbsp; <em class="note">Note: some of the default arguments (e.g., <strong>quote</strong>, <strong>dec</strong>) in <strong>read.csv()</strong> are the same as in <strong>read.table().</strong></em></p>
+<p></p>
+<p><img src="../Images/R-1-04_ReadCsv_Help.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig" id="readcsv">Using the Help tab in RStudio to look up functions</p>
+<h3>read.csv arguments</h3>
+<p>When you call <em><strong>read.csv()</strong></em>, you can use any of the argument from <em><strong>read.table()</strong></em>.</p>
+<p></p>
+<p>And there are a lot of arguments in <em><strong>read.table(). </strong></em>The majority of these arguments rarely need to be changed from their default value.</p>
+<p></p>
+<p>Most of the arguments in <em><strong>read.table()</strong></em> look cryptic and you will probably never have to use them. A couple that are easier to understand:</p>
+<ul>
+<li><em><strong>decimal</strong></em>: the character that represents a decimal in the decimal number.&nbsp; You might need to change this to a comma ( , ) if you get data from Europe</li>
+<li><em><strong>comment.char</strong></em>: the character after which everything on the line is a comment (i.e., not data)
+<ul>
+<li>notice that<em><strong> read.csv()</strong></em> has no <em><strong>comment.char</strong> </em>whereas <em><strong>read.table()</strong> </em>uses ( <strong>#</strong> ) as the default <em><strong>comment.char</strong></em></li>
+</ul>
+</li>
+</ul>
+<h3>Required arguments and default arguments</h3>
+<p><em><strong>file</strong> </em>is the only argument not set equal to anything in <em><strong>read.table() </strong></em>/ <em><strong>read.csv()</strong></em>.&nbsp; This is because <em><strong>file</strong> </em>must be supplied by the user -- <em class="hl"><strong>file</strong> is the only required argument.</em>&nbsp; This should make sense as there is no point in calling <em><strong>read.table() </strong></em>/ <em><strong>read.csv() </strong></em>without any data.</p>
+<p><em><strong></strong></em></p>
+<p>Every other argument in <em><strong>read.table() </strong></em>/ <em><strong>read.csv() </strong></em>has a default value-- this means you can execute the function without using any argument except <em><strong>file</strong></em>.</p>
+<p></p>
+<p>In fact, if you are using R version 4 then the following code will produce the same results as <em id="r-weatherdata" class="ref">the earlier <strong>read.csv()</strong> call in Fig.##</em>:</p>
+<p class="code">weatherData2 = read.csv(file = "data/twoWeekWeatherData.csv");</p>
+<p></p>
+<p>If you look in the <em><strong>Environment</strong> </em>tab the values for <em><strong>weatherData</strong> </em>and <em><strong>weatherData2</strong> </em>are exactly the same.<em class="hl"></em></p>
+<p></p>
+<p><img src="../Images/R-1-04b_readcsv_default.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig" id="expanded">Expanding weatherData and weatherData2 in the Environment tab</p>
+<h3>The other arguments (aside from <em><strong>file</strong></em>)</h3>
+<p>In my original call to <em><strong>read.csv()</strong></em>, the arguments <em><strong>sep=","</strong> </em>and <em><strong>header=TRUE</strong> </em>are functionally not changing anything because I have them set to the same value as their default.&nbsp; But, these arguments are changed often enough that it is nice to have them quickly at hand when copying <em><strong>read.csv()</strong></em> from one script to another.</p>
+<p></p>
+<p><em><strong>stringsAsFactors</strong> </em>tells R to treat any string columns as <em><strong>factors</strong></em>.<em> </em>A <em class="hl">factor </em>categorizes a vector into all of the unique values in the vector -- each unique value is called a level.&nbsp; For instance a column that gives wind speed values in terms of <em><strong>low</strong></em>, <em><strong>medium</strong></em>, and <em><strong>high </strong></em>could be considered a column with 3 factor levels.&nbsp; Or, you can have a wind speed direction column with 4 factor levels: <em><strong>north, east, west</strong></em>, and <em><strong>south</strong></em>. &nbsp; I do not spend much time in the class on factors because the use of factors as a variable type use has declined quite a bit.&nbsp; For now, if you are using R version 4 and want to see how people using R version 3 see <strong>weatherData</strong> then execute this code:</p>
+<blockquote>
+<p>&nbsp;weatherData3 = read.csv(file="data/twoWeekWeatherData.csv",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; sep=",",&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp; header=TRUE,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; stringsAsFactors = <em class="hl">TRUE</em>); # this is the default for R v.3</p>
+</blockquote>
+<h2>Application</h2>
+<p>Create a script file named <em><strong>app1-05.r</strong></em>.&nbsp; In the script file:</p>
+<p>1. Create this sequence: <em><strong>13, 9, 5, 1, -3, -7, -11 </strong></em>using <em><strong>seq()</strong></em>.</p>
+<p></p>
+<p>Now, come up with two more ways to produce the same sequence using <em><strong>seq(),</strong></em> but changing the arguments you use.&nbsp;</p>
+<p></p>
+<p>2. Explain, in comments, why you get an error if you try to use all four arguments (<em><strong>from, by, to, length.out</strong></em>)</p>
+<p></p>
+<p>3. Find the log (base 3) of this vector: <strong>c(0.111111, 3, 27, 81)</strong> using the <em><strong>log()</strong></em> function</p>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>Use the <em><strong>Help </strong></em>tab to find out more about the <em><strong>log()</strong></em> function</li>
+<li>The answer is: -2, 1, 3, 4 (so you can check)</li>
+</ul>
+</li>
+</ul>
+<p>Save the script as <em><strong>app1-05.r </strong></em>in your <em><strong>scripts </strong></em>folder and <em class="email">email your Project Folder to the instructor</em>.</p>
+<p></p>
+<p><span>4. Properly read in <a href="../Data/twoWeekWeatherData_Comma.csv?isCourseFile=true" target="_self">this CSV file</a> of the same two week weather data but:</span></p>
+<ul>
+<li><span>commas are used in place of decimals in precipitation column</span></li>
+<li><span>spaces are used to separate variables (instead of commas)</span></li>
+</ul>
+<p>Save the data to a dataframe name <em><strong>WD_Comma</strong></em></p>
+<p></p>
+<p>5. In comments, answer: How many factors levels does the <em><strong>noonCondition </strong></em>column have?&nbsp; How about the <em><strong>date </strong></em>column?</p>
+<p></p>
+<p class=""><a href="1-01_Setup_and_RStudio_Projects.html#zip" target="_blank" rel="noopener">Instructions for zipping the Project Folder are here.</a></p>
+<p></p>
+<p class=""><em class="hl">If you have any questions regarding this application, feel free to</em> <em class="email">email them to the instructor here</em>.</p>
+<h3>Questions to answer</h3>
+<p>Answer the following in comments inside your application script:</p>
+<ol>
+<li>What was your level of comfort with the lesson/application?</li>
+<li>What areas of the lesson/application confused or still confuse you?</li>
+<li>What are some things you would like to know more about that are related to, but not covered in, this lesson?</li>
+</ol>
+<p></p></body></html>

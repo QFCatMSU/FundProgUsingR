@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <noscript>
+  <link rel="stylesheet" type="text/css" href="/content/DEVELOPMENT/2018/courses/DEV-belinsky-2018-BackendTest/Programming/editor.css">
+  </noscript>
+  <script src="https://cdn.jsdelivr.net/gh/QFCatMSU/OnlineClassBackEnd/module.js">
+  </script>
+</head>
+<body>
+
+<p class="previousLesson">GGPlot Introduction</p>
+<p class="nextLesson">Data Types and Dataframes</p>
+<h1 class="title" id="title">2-02: Dataframe Modifications</h1>
+<h3>To-do</h3>
+<h2>Purpose</h2>
+<ul>
+<li>Using string manipulations on columns within a data frame</li>
+<li>Add, remove, and reorder columns in a data frame</li>
+</ul>
+<h2>Material</h2>
+<p>The <a href="https://raw.githubusercontent.com/QFCatMSU/FundProgUsingR/master/scripts/2-02_DataframeModifications.R" target="_blank" rel="noopener" title="">script for this lesson</a> is here (right-click, Save link as)</p>
+<p>The <a href="../Scripts/Lansing2016Noaa.csv" target="_self">Lansing2016Noaa.csv</a> is here (left-click)</p>
+<h2>A larger data frame</h2>
+<p>For this lesson we are going to use weather data for Lansing, Michigan for all of 2016.&nbsp; The weather data comes from NCDC/NOAA.</p>
+<p></p>
+<p>To open the data:</p>
+<p class="code">weatherData = read.csv(file="data/Lansing2016NOAA.csv",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sep=",",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; header=TRUE, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stringsAsFactors = FALSE);</p>
+<p></p>
+<p>In the <em><strong>Environment</strong></em>, you can see that <em><strong>weatherData</strong> </em>consists of 366 observations (366 days -- it was a Leap Year) of 23 variables.&nbsp; In other words there are 23 different weather variables in the data (columns) for each of the 366 days (rows).</p>
+<p></p>
+<p class="code nn" title="Environment">weatherData: &nbsp;&nbsp;&nbsp;&nbsp; 366 obs. of 23 variables</p>
+<p></p>
+<p>If we double-click on <em><strong>weatherData </strong></em>in the <em><strong>Environment</strong></em>, we can look at the data frame in the file viewer section of RStudio:</p>
+<p><img src="../Images/R-1-14_ViewDataFrame.png" alt="" style="max-width: 100%;" data-d2l-editor-default-img-style="true" class="fs"></p>
+<p class="fig">Viewing the weatherData data frame in the main section</p>
+<h2>String manipulations</h2>
+<p>There is extra information in the values of the <em><strong>dateTime </strong></em>column (column 1) that is not needed.&nbsp; We really only need the two-digit month and day, which is the <em class="hl">6th through the 10th characters</em> of each <em><strong>dateTime</strong> </em>value:</p>
+<ul>
+<li>2016-<strong class="hl">01-02</strong>T00:00:00</li>
+<li>2016-<strong class="hl">01-14</strong>T00:00:00</li>
+<li>2016-<strong class="hl">01-26</strong>T00:00:00</li>
+</ul>
+<h3>Substrings</h3>
+<p>We can use the function <em><strong>substr()</strong> </em>to subset, or pull out, a portion of the string's value.</p>
+<p><img src="../Images/R-1-14_Substr.png" alt="" style="max-width: 100%;" data-d2l-editor-default-img-style="true" class="fs"></p>
+<p class="fig">The substr() function</p>
+<p></p>
+<p class="note">note: <strong>substr()</strong> and <strong>substring()</strong> are very similar -- and both would work in this example</p>
+<p><em><strong></strong></em></p>
+<p><em><strong>substr()</strong> </em>has three arguments that we need to assign value to:</p>
+<ul>
+<li><em><strong>x</strong></em>: the values that we want to subset (the <em><strong>dateTime </strong></em>column)</li>
+<li><em><strong>start</strong></em>: the position we want the substring to start at (the 6<sup>th</sup> character)</li>
+<li><em><strong>stop</strong></em>: the position that we want the substring to end at (the 10<sup>th</sup> character)</li>
+</ul>
+<p></p>
+<p class="code">dateOnly = substr(x=weatherData$dateTime, start=6, stop=10);</p>
+<p></p>
+<p>This removes the year at the beginning and the time stamp at the end of all the values and saves the results to <em><strong>dateOnly</strong></em>.</p>
+<p></p>
+<p>We can look at the first six values of <em><strong>dateOnly</strong> </em>in the Console using <em><strong>head()</strong></em>&nbsp; and the last 6 values using <em><strong>tail()</strong></em>:</p>
+<p class="code nn" title="Console">&gt; head(dateOnly)</p>
+<p class="code">[1] "01-01" "01-02" "01-03" "01-04" "01-05" "01-06"</p>
+<p class="code">&gt; tail(dateOnly)<br>[1] "12-26" "12-27" "12-28" "12-29" "12-30" "12-31"</p>
+<p>Based on the 12 dates, we can see we have just the 2-digit month and date.</p>
+<h3>Pasting values</h3>
+<p>Let's say we actually want the year in the column, but we want it at the end.&nbsp;</p>
+<p>In other words, we want the format to be <strong>MM-DD-YYYY</strong>:</p>
+<ul>
+<li><strong>01-02-2016</strong></li>
+<li><strong>01-14-2016</strong></li>
+<li><strong>01-26-2016</strong></li>
+</ul>
+<p><strong></strong></p>
+<p>You can use <em><strong>paste()</strong></em> to add (or, concatenate) string values together.&nbsp;</p>
+<p><img src="../Images/R-1-14_Paste.png" alt="" style="max-width: 100%;" data-d2l-editor-default-img-style="true" class="fs"></p>
+<p class="fig">The paste() function -- with ... as the first "argument"</p>
+<h3>three dots ( ... ) and arguments</h3>
+<p>In the <em><strong>Help</strong> </em>tab that the first argument in <em><strong>paste()</strong></em> is three dots ( ... ).&nbsp; The three dots means that <em><strong>paste()</strong></em> will take <em class="hl">any number of objects of any type </em>and try to paste them together.&nbsp;</p>
+<p></p>
+<p>The three dots represents sort of a <em class="hl">pseudo-argument</em>, meaning that for this function, <em class="hl">any argument that does not have a name</em> will be assigned to the three dots (i.e., unnamed arguments are objects to be pasted).&nbsp;</p>
+<p></p>
+<p>This means that<em class="hl"> you have to use argument names for everything else</em> (e.g., <em><strong>sep</strong></em>, <em><strong>collapse</strong></em>).&nbsp; If you do not use the argument name, then <em><strong>paste() </strong></em>will assume the object is to be pasted.</p>
+<h3>Using paste()</h3>
+<p>In this case we want to paste two objects: the <em><strong>dateOnly</strong> </em>vector and the string<strong> "-2016"</strong> with no separator:</p>
+<p class="code">dateYear = paste(dateOnly, "-2016", sep="");</p>
+<p></p>
+<p>Looking at the first ten values in <em><strong>dateYear</strong> </em>in the <em><strong>Console</strong></em>:</p>
+<p class="code nn" title="Console">&gt; dateYear[1:10]<br>[1] "01-01-2016" "01-02-2016" "01-03-2016" "01-04-2016" "01-05-2016"<br>[6] "01-06-2016" "01-07-2016" "01-08-2016" "01-09-2016" "01-10-2016"</p>
+<h4>The <em><strong>sep&nbsp;</strong></em>argument</h4>
+<p>If you do not put the <em><strong>sep </strong></em>argument in, then <em><strong>sep </strong></em>defaults to one space, meaning an extra space between each object in the <em><strong>paste() </strong></em>-- in this case, the date and year:&nbsp;</p>
+<blockquote>
+<p>dateYearMistake = paste(dateOnly, "-2016"); &nbsp; &nbsp; # sep default to " "</p>
+</blockquote>
+<p></p>
+<p>The results have a space after the date:</p>
+<blockquote>
+<p title="Console" class="nn">&gt; dateYearMistake</p>
+<p>01-02 -2016</p>
+<p>01-14 -2016</p>
+<p>01-26 -2016</p>
+</blockquote>
+<p></p>
+<p>In general, it is best to set <em><strong>sep=""</strong></em> (i.e., to nothing) -- this gives you more control of the output.&nbsp;</p>
+<h2>Rounding numbers</h2>
+<p>We have a column, <em><strong>windSpeed</strong></em>, where there are more decimal places than necessary.</p>
+<p></p>
+<p>Looking at the first ten values in the vector we can see three decimal places are used:</p>
+<p class="code nn" title="Console">&gt; weatherData$windSpeed[1:10]<br>[1] 15.539 14.614 9.986 7.742 7.586<br>[6] 7.601 4.823 6.720 7.294 17.758</p>
+<p></p>
+<p>One decimal place is probably enough in this case and we can round the values using the <em><strong>round()</strong></em> function:</p>
+<p><img src="../Images/R-1-14_Round.png" alt="" style="max-width: 100%;" data-d2l-editor-default-img-style="true" class="fs"></p>
+<p class="fig">The <strong>round() </strong>function</p>
+<p></p>
+<p><em><strong>round()</strong></em> has two arguments:</p>
+<ul>
+<li><em><strong>x</strong></em>: the values to round</li>
+<li><em><strong>digits</strong></em>: decimal places to round to</li>
+</ul>
+<h3>Using round()</h3>
+<p>Let's round <em><strong>windSpeed</strong> </em>to one decimal place and save it to the vector <em><strong>windSpeedRounded</strong></em>:</p>
+<p class="code">windSpeedRounded = round(weatherData$windSpeed, digits=1);</p>
+<p></p>
+<p>And look at 10 values in <em><strong>windSpeedRounded</strong> </em>to make sure it worked (this time I'll look at values 40-49):</p>
+<blockquote>
+<p title="Console" class="nn">&gt; windSpeedRounded[40:49]<br>[1] 12.9 13.8 8.9 14.5 9.5 8.1 6.9 3.8 5.9<br>[10] 10.7</p>
+</blockquote>
+<p class="fig">Values rounded to 1 decimal</p>
+<p></p>
+<p>In the <em><strong>Console</strong></em>, we are looking at values 40-49 in <em><strong>windSpeedRounded </strong></em>but the output only has ten values -- the&nbsp; [1] and the [10] reflect the index value of the output (the 10 values in windSpeedRounded[40:49].&nbsp; <em id="r-indexOutput" class="ref">Extension: index values in output</em></p>
+<h2>Adding vectors to the data frame</h2>
+<p>We have created two new vectors: <em><strong>dateYear </strong></em>and <em><strong>windSpeedRounded</strong></em>, and we want add them both to the <em><strong>weatherData </strong></em>data frame.&nbsp; There are two ways to add a vector to a data frame:</p>
+<ul>
+<li>add a new column</li>
+<li>overwrite an existing column.</li>
+</ul>
+<p></p>
+<p>First, we will make a copy of <em><strong>weatherData </strong></em>called <em><strong>weatherData2</strong></em>.&nbsp; We will be creating multiple copies of <em><strong>weatherData </strong></em>so that we can see the progress of the data frames in the <em><strong>Environment</strong></em> tab.&nbsp; You could just manipulate the original <em><strong>weatherData </strong></em>data frame.</p>
+<p></p>
+<blockquote>
+<p># copy the original data frame</p>
+<p>weatherData2 = weatherData;</p>
+</blockquote>
+<h3 id="dateTimeColumn">Adding a new column</h3>
+<p>Let's add the <em><strong>dateYear </strong></em>vector to the data frame to a column called <em><strong>dateYear</strong></em>:</p>
+<blockquote>
+<p>&nbsp; weatherData2$dateYear = dateYear;</p>
+</blockquote>
+<p></p>
+<p>Since there was no <em><strong>dateYear </strong></em>column in <em><strong>weatherData2</strong></em>, the above code added a column called <em><strong>dateYear </strong></em>to the end of the data frame and populated it with the values in the vector <em><strong>dateYear</strong></em>.&nbsp; <em class="note">Note that <strong>weatherData2 </strong>now has one more column (<strong>24</strong>) than <strong>weatherData</strong> (<strong>23</strong>).</em>&nbsp; Double-click on <em><strong>weatherData2 </strong></em>in the <em><strong>Environment </strong></em>tab and scroll to the end to see the new <em><strong>dateYear </strong></em>column:</p>
+<p></p>
+<p><img src="../Images/R-2-01-AddColumn.jpg" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">A column was added to the end of the weatherData2 data frame</p>
+<h3>Overwriting a column</h3>
+<p>When you use a column name that does not currently exist (e.g., <em><strong>dateYear</strong></em>), R will create a new column with that name.&nbsp; If you use a column name that already exists (e.g., <em><strong>windSpeed</strong></em>), then R will overwrite the column with the values in the vector.</p>
+<p></p>
+<p>We are going to put the <em><strong>windSpeedRounded </strong></em>vector in the <em><strong>weatherData2 </strong></em>data frame, but this time we are going to overwrite the <em><strong>windSpeed </strong></em>column:</p>
+<blockquote>
+<p>&nbsp; weatherData2$windSpeed = windSpeedRounded;</p>
+</blockquote>
+<p></p>
+<p>Now the values in the <em><strong>windSpeed </strong></em>column reflect the rounded values from <em><strong>windSpeedRounded </strong></em>and there are still 24 columns:</p>
+<p><img src="../Images/R-2-01-OverwriteColumn.jpg" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">the <strong>windSpeed </strong>column was overwritten with the values from the <strong>windSpeedRounded </strong>vector</p>
+<h2>Deleting columns from a data frame</h2>
+<p>The easiest way to delete a column from a data frame is just to set the column to <strong>NULL</strong>.&nbsp;</p>
+<p></p>
+<p>We will again create another copy of <em><strong>weatherData</strong></em>:</p>
+<blockquote>
+<p>weatherData3 = weatherData2;</p>
+</blockquote>
+<p></p>
+<p>Now we will remove the <em><strong>dateTime </strong></em>column&nbsp; from <em><strong>weatherData3 </strong></em>by setting it to <strong>NULL</strong>:</p>
+<blockquote>
+<p>weatherData3$dateTime = NULL;&nbsp;</p>
+</blockquote>
+<p></p>
+<p>The <em><strong>dateTime </strong></em>column, which was the first column in the data frame, has now been removed and the number of columns has dropped by 1:</p>
+<p><img src="../Images/R-2-01-RemoveColumn.jpg" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">The <strong>dateTime </strong>column was removed from <strong>weatherData3</strong></p>
+<h3>Alternate ways to delete columns</h3>
+<p>You can also use the <em><strong>within()</strong></em> function to remove columns.&nbsp;</p>
+<p></p>
+<p>Using <em><strong>within() </strong></em>to remove the <em><strong>dateTime </strong></em>column:</p>
+<blockquote>
+<p># Within weatherData, remove the column dateTime</p>
+<p># weatherData3 = within(weatherData, rm(dateTime));&nbsp;&nbsp;</p>
+</blockquote>
+<p></p>
+<p>The advantage to this method, is that <em class="hl">you can delete multiple columns</em> at a time:</p>
+<blockquote>
+<p>&nbsp; # weatherData3 = within(weatherData, rm(maxTemp, minTemp, avgTemp));</p>
+</blockquote>
+<h2>Moving columns</h2>
+<p>We will make another copy of <em><strong>weatherData </strong></em>here:</p>
+<blockquote>
+<p>weatherData4 = weatherData3;</p>
+</blockquote>
+<p></p>
+<p>There is no great way to move data frame columns around in R because you cannot just say "move column X to position Y".&nbsp; Instead, <em class="hl">you need to recreate the whole column order of the data frame</em> to reflect the new position of every column -- taking care to include every column.</p>
+<p></p>
+<p>So, let's say we want to move the <em><strong>dateYear </strong></em>column we created earlier (<em id="r-dateTimeColumn" class="ref">sect ##</em>) from the end of the data frame to the beginning.&nbsp; We essentially need to recreate the 23 columns starting with <em><strong>dateYear</strong></em> first and then have the other 22 columns follow <em><strong>dateYear</strong></em>.</p>
+<h3>using sequences to create the column order</h3>
+<p>Luckily, we do not have to write out all 23 column names because we are allowed to use sequences to refer to multiple columns:</p>
+<blockquote>
+<p>&nbsp; # Move the last column (dateYear) to the beginning:<br>&nbsp; weatherData4 = subset(weatherData2, select=c(dateYear, <em class="hl">maxTemp:windSusDir</em>));</p>
+</blockquote>
+<p></p>
+<p>( : ) is the sequence operator and it says to take all the columns in between (and inclusive of) <em><strong>maxTemp </strong></em>and <em><strong>windSusDir</strong></em>.&nbsp; Since <em><strong>maxTemp </strong></em>was the first column and <em><strong>windSusDir </strong></em>was the second to last column (the last being <em><strong>dateYear</strong></em>), this basically says all other columns except <em><strong>dateYear</strong></em>.</p>
+<p></p>
+<p>So, <em><strong>select=c(dateYear, maxTemp:windSusDir))</strong></em> says to order the columns with <em><strong>dateYear </strong></em>first and every other column after that.</p>
+<p></p>
+<p><img src="../Images/R-2-01-MoveColumn.jpg" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">the <strong>dateYear </strong>column moves from the end to the beginning</p>
+<h3>A more complex moving example</h3>
+<p>We will create one last data frame:</p>
+<blockquote>
+<p>&nbsp; weatherData5 = weatherData4;</p>
+</blockquote>
+<p></p>
+<p>It is trickier to move columns in the middle because you need to keep track of all the other columns.&nbsp;</p>
+<p></p>
+<p>Let's says we want to move <em><strong>heatDays </strong></em>and <em><strong>coolDays </strong></em>right after <em><strong>tempDept.&nbsp; </strong></em>These are all columns in the middle of the data frame so you need to break the columns up more to order them the way you want.</p>
+<p></p>
+<p>Moving <em><strong>heatDays </strong></em>and <em><strong>coolDays </strong></em>after <em><strong>tempDept </strong></em>creates 4 separate column sequences (<em id="r-colSeq" class="ref">fig ##</em>):</p>
+<ol>
+<li><strong>dateYear:tempDept</strong></li>
+<li><strong>heatDays:coolDays</strong></li>
+<li><strong>relHum:wetBulbTemp</strong></li>
+<li><strong>sunrise:windSusDir</strong></li>
+</ol>
+<p></p>
+<p><img src="../Images/R-2-01-MoveMiddleColumns.jpg" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig" id="colSeq">The four column sequences when moving columns in the middle of the data frame</p>
+<h3>Multiple column sequences</h3>
+<p>The column sequences above get used in the <em><strong>select </strong></em>argument:</p>
+<blockquote>
+<p>&nbsp; weatherData5 = subset(weatherData5, select=c(dateYear:tempDept,&nbsp;<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; heatDays:coolDays,</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; relHum:wetBulbTemp,<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; sunrise:windSusDir));</p>
+</blockquote>
+<p></p>
+<p>And now we have the reordered columns:</p>
+<p><img src="../Images/R-2-01-MoveMiddleColumns2.jpg" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">After the middle columns were moved</p>
+<h2>Saving the data frame to a CSV file</h2>
+<p>We are going to use the <em><strong>weatherData4 </strong></em>data frame in the next lesson, so let's save it to a CSV file.</p>
+<p></p>
+<p>Quite often, people just call <em><strong>write.csv()</strong></em>, pass in the data frame and the file name to save it to:</p>
+<blockquote>
+<p>&nbsp; write.csv(weatherData5, file="data/Lansing2016Noaa-2-bad.csv"); &nbsp;</p>
+</blockquote>
+<p></p>
+<p>The above code will add an extra column populated by the row numbers.&nbsp; This is because, by default, <em><strong>write.csv()</strong></em> assumes the row numbers are row names.</p>
+<p></p>
+<p>To stop <em><strong>write.csv()</strong></em> from assuming the row numbers are row names, we need to set the argument <em><strong>row.names</strong></em> to <strong>FALSE</strong>:</p>
+<blockquote>
+<p>&nbsp; write.csv(weatherData5, file="data/Lansing2016Noaa-2.csv",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; row.names = FALSE); &nbsp;</p>
+</blockquote>
+<p></p>
+<p>In the next lesson, we will open both of these CSV files and look at the difference.</p>
+<h2>Application</h2>
+<p class=""><em class="hl">If you have any questions regarding this application, feel free to</em> <em class="email">email them to the instructor here</em>.&nbsp; <em class="hl">You can attach the whole Project Folder as a<a href="01-01%20RStudio%20and%20Projects.html?ou=457124#zip" target="_blank" rel="noopener"> zipped file</a>.</em></p>
+<p></p>
+<p>Create a script file named <em><strong>app2-02.r</strong></em>.&nbsp; In the script file:</p>
+<p>A) Save the data from <em><strong>Lansing2016NOAA.csv</strong><strong> </strong></em>to a data frame named <em><strong>weatherData_app</strong></em>.</p>
+<p></p>
+<p>B) Reorder <em><strong>weatherData_app </strong></em>to put all five of the wind columns immediately after the temperature columns.</p>
+<p></p>
+<p>C) Remove the <em><strong>heatDays </strong></em>and <em><strong>coolDays </strong></em>columns from <em><strong>weatherData_app</strong></em></p>
+<p></p>
+<p>D) Using substrings, create a <em><strong>dateTimeNew </strong></em>vector that has the dates in this format: <em class="hl">2-digit date, 2-digit month, 2-digit year.</em></p>
+<ul>
+<li>So, <em><strong>April, 20th 2016</strong></em> would be <em><strong>20-04-16</strong></em></li>
+<li>Save <em><strong>dateTimeNew </strong></em>to a column in <em><strong>weatherData_app</strong></em> <em><strong></strong></em></li>
+<li>Move <em><strong>dateTimeNew </strong></em>to the second column in <em><strong>weatherData_app </strong></em>(do not remove the original <em><strong>dateTime </strong></em>column)</li>
+</ul>
+<p></p>
+<p>E) Change <em><strong>tempDept </strong></em>in <strong></strong><em><strong>weatherData_app </strong></em>to 2 significant digits -- do not use<strong><em> round() </em></strong></p>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>The function for significant digits can be found in the <em><strong>Help </strong></em>for<em><strong> round()</strong></em></li>
+<li>You are overwriting the <em><strong>tempDept </strong></em>column</li>
+</ul>
+</li>
+</ul>
+<h3>Questions to answer</h3>
+<p>Answer the following in comments inside your application script:</p>
+<ol>
+<li>What was your level of comfort with the lesson/application?</li>
+<li>What areas of the lesson/application confused or still confuses you?</li>
+<li>What are some things you would like to know more about that is related to, but not covered in, this lesson?</li>
+</ol>
+<h2 id="indexOutput" class="extension">Extension: Index values in output</h2>
+<p>Let's take a closer look at how the index values work in the Console output.</p>
+<p></p>
+<p>We are going to take a subset of the vector <em><strong>dateYear</strong></em> that goes backwards and only gives at every sixth value.</p>
+<p>So, the subset will go: Dec 31, Dec 25, Dec 19, Dec 13...</p>
+<p></p>
+<p>First, let's create the sequence:</p>
+<ul>
+<li>start at the last value (from = 366)</li>
+<li>ends at the first value (to = 1)</li>
+<li>moves bacwards 6 values each time (by = -6)</li>
+</ul>
+<p></p>
+<blockquote>
+<p title="Console" class="nn">&gt; seq(from=366, to=1, by=-6)<br>&nbsp;[1] 366 360 354 348 342 336 330 324 318 312 306 300 294 288 282 276 270<br>[18] 264 258 252 246 240 234 228 222 216 210 204 198 192 186 180 174 168<br>[35] 162 156 150 144 138 132 126 120 114 108 102 &nbsp;96 &nbsp;90 &nbsp;84 &nbsp;78 &nbsp;72 &nbsp;66<br>[52] &nbsp;60 &nbsp;54 &nbsp;48 &nbsp;42 &nbsp;36 &nbsp;30 &nbsp;24 &nbsp;18 &nbsp;12 &nbsp; 6</p>
+</blockquote>
+<p></p>
+<p>The output has 61 values (366 / 6 = 61).&nbsp; The first value is 366, the 18<sup>th</sup> value is 264, the 52<sup>nd</sup> value is 60, and the 61<sup>st</sup> value is 6.</p>
+<p></p>
+<p>When we use the sequence to subset dateYear, we also get 61 values, representing the 61 dates on the 61 rows indexed:</p>
+<blockquote>
+<p title="Console" class="nn">&gt; dateYear[seq(from=366, to=1, by=-6)]<br>&nbsp;[1] "12-31-2016" "12-25-2016" "12-19-2016" "12-13-2016" "12-07-2016" "12-01-2016"<br>&nbsp;[7] "11-25-2016" "11-19-2016" "11-13-2016" "11-07-2016" "11-01-2016" "10-26-2016"<br>[13] "10-20-2016" "10-14-2016" "10-08-2016" "10-02-2016" "09-26-2016" "09-20-2016"<br>[19] "09-14-2016" "09-08-2016" "09-02-2016" "08-27-2016" "08-21-2016" "08-15-2016"<br>[25] "08-09-2016" "08-03-2016" "07-28-2016" "07-22-2016" "07-16-2016" "07-10-2016"<br>[31] "07-04-2016" "06-28-2016" "06-22-2016" "06-16-2016" "06-10-2016" "06-04-2016"<br>[37] "05-29-2016" "05-23-2016" "05-17-2016" "05-11-2016" "05-05-2016" "04-29-2016"<br>[43] "04-23-2016" "04-17-2016" "04-11-2016" "04-05-2016" "03-30-2016" "03-24-2016"<br>[49] "03-18-2016" "03-12-2016" "03-06-2016" "02-29-2016" "02-23-2016" "02-17-2016"<br>[55] "02-11-2016" "02-05-2016" "01-30-2016" "01-24-2016" "01-18-2016" "01-12-2016"<br>[61] "01-06-2016"</p>
+</blockquote>
+<p></p>
+<p>Again, the index values in square brackets is just given you the index value of the first value on the row.&nbsp; So, 12-31 is the first value, 12-01 is the 5<sup>th</sup> value, 11-25 is the 7<sup>th</sup> value, and 01-06 is the 61<sup>st</sup> value.</p>
+<p></p>
+</body></html>

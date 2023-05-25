@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <noscript>
+  <link rel="stylesheet" type="text/css" href="/content/DEVELOPMENT/2018/courses/DEV-belinsky-2018-BackendTest/Programming/editor.css">
+  </noscript>
+  <script src="https://cdn.jsdelivr.net/gh/QFCatMSU/OnlineClassBackEnd/module.js">
+  </script>
+</head>
+<body>
+
+<p class="previousLesson">Objects and Attributes</p>
+<p class="nextLesson">Breakpoints</p>
+<h1 class="title" id="title">2-12 Lists</h1>
+<h3>To-do</h3>
+<h2>Purpose</h2>
+<ul>
+<li>Creating you own List</li>
+<li>Subsetting a List</li>
+<li>Reading a List return from plots and models</li>
+</ul>
+<h2>Script for this lesson</h2>
+<p>The <a href="https://raw.githubusercontent.com/QFCatMSU/FundProgUsingR/master/scripts/2-12_Lists.R" target="_blank" rel="noopener" title="">script for the lesson is here</a> (right-click, <em><strong>save link as... </strong></em>-- put in <em><strong>scripts </strong></em>folder).</p>
+<p>The<a href="../Data/Lansing2016Noaa.csv?isCourseFile=true" target="_self"> data used for this lesson and the application</a> is here</p>
+<h2>Objects in R</h2>
+<p>As mentioned in last lesson, there are 2 types of objects (i.e., variables) in R:</p>
+<ul>
+<li>Atomic vector (often just called vectors): objects that hold values of the same type (e.g., numeric, string, logical)</li>
+<li>Lists: objects that hold other objects (and those objects include Lists)</li>
+</ul>
+<p></p>
+<p>The relationship between Atomic Vectors and Lists is analogous to the relationship between folders and files on your computer.&nbsp; Files, like atomic vector, hold information, or data.&nbsp; Folders, like Lists, are containers for other folders and files.&nbsp;</p>
+<p></p>
+<p>Last lesson we talked mostly about atomic vectors. This lesson we will talk mostly about lists. As you will see in this lesson, Lists create a tree-like structure for your data.&nbsp; At the end of the tree is the Atomic Vectors</p>
+<h2>Lists</h2>
+<p>A List is an object that holds other (usually related) objects. When you create a plot or perform a statistical test, the results are often stored as Lists as we will see later in the lesson.</p>
+<p></p>
+<p>We will create our own List with three objects in it.</p>
+<p></p>
+<p>The three objects will be:</p>
+<ul>
+<li>a character vector called <em><strong>someAnimals</strong></em></li>
+<li>a 2x3 matrix consisting of a sequence of six numbers called <em><strong>someNumbers</strong></em></li>
+<li>the <em><strong>weatherData </strong></em>dataframe from previous lessons</li>
+</ul>
+<p></p>
+<blockquote>
+<p>someAnimals = c("llama", "guanaco", "alpaca", "goat");<br>someNumbers = matrix(nrow=2, ncol=3, seq(from=30, to=4, length.out=6))</p>
+<p>weatherData = read.csv(file="data/Lansing2016NOAA.csv");</p>
+</blockquote>
+<h3>Lists in the Environment tab</h3>
+<p>Notice that, in the Environment, <em><strong>weatherData </strong></em>has an arrow to expand it whereas <em><strong>someAnimals </strong></em>and <em><strong>someNumbers </strong></em>contains all of their information in one line.&nbsp; It is this expand arrow that indicates an object is a List (whereas the other objects are atomic vectors).&nbsp; <em><strong>weatherData</strong></em> is a specialized List where all the objects inside are vectors of the same length (i.e., a data frame):</p>
+<p><img src="../Images/R-2-11-ListExpandArrow.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">The expand arrow in the Environment indicates that the object is a List (i.e., holds other objects)</p>
+<h3>Creating the new List</h3>
+<p>We can create a List with the three objects above using the <em><strong>list()</strong></em> function:</p>
+<blockquote>
+<p>listAtOnce = list(someAnimals, someNumbers, weatherData);</p>
+</blockquote>
+<p></p>
+<p>This will add <em><strong>listAtOnce </strong></em>to the <em><strong>Environment</strong></em>.&nbsp; From there we double-click on it to see it in a <em><strong>Viewer </strong></em>tab.&nbsp; The <em><strong>Viewer </strong></em>tab offers a more helpful and informative view of the List.&nbsp;</p>
+<p></p>
+<p>A couple things to notice about <em><strong>listAtOnce </strong></em>in the <em><strong>Viewer </strong></em>tab:</p>
+<ul>
+<li>The objects inside the List do not have names -- instead they only have numbers.&nbsp; <em class="hl">Objects do not retain their names when put in to a List</em>.</li>
+<li>The third object<strong> [[3]]</strong>, the dataframe, has an expand arrow.&nbsp; The arrow indicates that this object is also a List --<strong>&nbsp; [[1]] </strong>and <strong>[[2]] </strong>are atomic vectors.</li>
+</ul>
+<p><img src="../Images/R-2-11-ListInViewer.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig" id="noNameObjects">The List inside a Viewer tab</p>
+<p></p>
+<p class="note">Note: When looking at the List in the Viewer, the objects with expand arrows are functionally similar to folders, those without arrows are functionally similar to files</p>
+<h3>Including names for the objects</h3>
+<p>If we want the objects inside the List to have names, then we have to specify the names while creating the List.&nbsp; You do that by setting a name equal to the object when calling<em><strong> list()</strong></em>:</p>
+<blockquote>
+<p>&nbsp; listAtOnce2 = list(animals = someAnimals,<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;numbers = someNumbers,&nbsp;<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;weather = weatherData);</p>
+</blockquote>
+<p></p>
+<p>This makes <em><strong>animals</strong></em>, <em><strong>numbers</strong></em>, and <em><strong>weather </strong></em>the names of the objects <em><strong>someAnimal</strong></em>, <em><strong>someNumbers</strong></em>, and <strong>weatherData </strong><em class="hl">inside the List</em>.&nbsp; You can choose any name, including the same as the original objects:</p>
+<p><img src="../Images/R-2-11-ListWithNames.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig" id="listNames">Adding names to the objects inside the List</p>
+<p class="note"></p>
+<p class="note">Note: names inside Lists, like variables, should follow programming naming conventions -- but this is not enforced in R.</p>
+<h2>Creating a dynamic List</h2>
+<p>In the previous example, all the objects put in the List were put in at once.&nbsp; What often happens is that data is generated and gets dynamically added to a List, so the objects are put in the List separately.&nbsp; We are going to create a List equivalent to <em><strong>listAtOnce </strong></em>except the three object will be put in one at a time.</p>
+<p></p>
+<p>First we create a List with nothing in it (i.e., an empty list):</p>
+<blockquote>
+<p>listDynamic = list();</p>
+</blockquote>
+<p></p>
+<blockquote>
+<p title="Environment" class="nn">listDynamic:&nbsp; List of 0</p>
+</blockquote>
+<h3>Appending to the List</h3>
+<p>Then add the object <em><strong>someAnimals </strong></em>to the List.&nbsp;</p>
+<blockquote>
+<p>listDynamic2 &nbsp;= append(listDynamic, someAnimals);&nbsp;</p>
+</blockquote>
+<p></p>
+<p>Somewhat unintuitively, <em><strong>append()</strong></em> does not append the object <em><strong>someAnimals </strong></em>to the List.&nbsp; Instead, <em><strong>append()</strong></em> appends each value within <em><strong>someAnimals </strong></em>to the List -- making each value a separate object.&nbsp; Now you have a List with 4 string vectors (each with 1 value) ....<span style="color: #ba4700;"> </span>this is not what we want.</p>
+<p><img src="../Images/R-2-11-IncorrectAppend.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">Appending an object one value at a time...</p>
+<h3>Appending whole objects</h3>
+<p>The solution is also a bit unintutive.&nbsp; We want is to append <em><strong>someAnimals </strong></em>to the List as vector and, to do this, we need to wrap <em><strong>someAnimals </strong></em>inside its own List:</p>
+<blockquote>
+<p>listDynamic3 = append(listDynamic, list(someAnimals));</p>
+</blockquote>
+<p></p>
+<p>And, if we want the object to have a name inside the List, then we need to provide the name -- just like<em id="r-listNames" class="ref"> fig ##</em>:</p>
+<blockquote>
+<p>listDynamic4 = append(listDynamic, list(animal = someAnimals));</p>
+</blockquote>
+<p></p>
+<p><em><strong>listDynamic3 </strong></em>and <em><strong>listDynamic4 </strong></em>both now have a vector with four character values, the latter has that vector named:</p>
+<p><img src="../Images/R-2-11-AppendedLists.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">Lists with appended objects</p>
+<h3>Appending multiple objects</h3>
+<p>We will now append <em><strong>someNumber </strong></em>and <em><strong>weatherData </strong></em>using <em><strong>append()</strong></em>:</p>
+<blockquote>
+<p>listDynamic5 = append(listDynamic4, list(numbers=someNumbers));<br>listDynamic5 = append(listDynamic5, list(weather=weatherData));</p>
+</blockquote>
+<p></p>
+<p>And see that <em><strong>listDynamic5 </strong></em>is a List with three objects in it: <em><strong>animals</strong></em>, <em><strong>numbers</strong></em>, and <em><strong>weather </strong></em>-- just like <em><strong>listAtOnce2</strong></em> (<em id="r-listNames" class="ref">fig ##</em>).</p>
+<p><img src="../Images/R-2-11-FinishedAppendedList.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">Lists after the three objects were appended and named</p>
+<h2>Subsetting within a List</h2>
+<p>The RStudio <em><strong>Viewer </strong></em>tab for Lists has a nice feature where it will shows you how to subset an object inside a List when you click on it.&nbsp; In <em><strong>listDynamic5 </strong></em>List, when you click on <em><strong>avgTemp </strong></em>in the <em><strong>weather </strong></em>dataframe -- and at the bottom of the tab, RStudio shows the code to subset <em><strong>avgTemp</strong></em>:</p>
+<blockquote>
+<p>listDynamic5[["weather"]][["avgTemp"]]</p>
+</blockquote>
+<p></p>
+<p>If you click the document icon with an arrow on the right-side, RStudio will put the above code in the <em><strong>Console</strong></em> where you click <em><strong>Enter </strong></em>to execute it:<em><br></em></p>
+<p><img src="../Images/R-2-11-SubsetInViewer.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig" id="listViewer">Opening an object within a List from the Viewer tab</p>
+<h3>Subsetting with $ and [[&nbsp; ]]</h3>
+<p>Every object in the List Viewer with a value under <em><strong>Name </strong></em>in <em id="r-listViewer" class="ref">fig ##&nbsp;</em>can be accessed with both the <strong>$</strong> and<strong> [[ ]]</strong> subset operators -- RStudio always uses <strong>[[ ]]</strong>.</p>
+<p></p>
+<p>Here are two ways to subset the <em><strong>animal </strong></em>object inside <em><strong>listDynamic5 </strong></em>-- the results are saved to <em><strong>anim1 </strong></em>and <em><strong>anim2</strong></em>:</p>
+<blockquote>
+<p>anim1 = listDynamic5[["animal"]];</p>
+<p>anim2 = listDynamic5$animal;</p>
+</blockquote>
+<p></p>
+<p>The <em><strong>string </strong></em>(chr) vectors <em><strong>anim1 </strong></em>and <em><strong>anim2 </strong></em>have the same values as the original <em><strong>someAnimals </strong></em>vector:</p>
+<blockquote>
+<p title="Environment" class="nn">anim1:&nbsp; &nbsp; &nbsp;&nbsp; chr [1:4] "llama" "guanaco" ...</p>
+<p>anim2: &nbsp; &nbsp; &nbsp; chr [1:4] "llama" "guanaco" ...</p>
+<p>someAnimals: chr [1:4] "llama" "guanaco" ...</p>
+</blockquote>
+<p></p>
+<p>Here are three ways to subset the <em><strong>dewPoint </strong></em>vector within <em><strong>weather</strong></em>, which is within <em><strong>listDynamic5</strong></em>:&nbsp;</p>
+<blockquote>
+<p>dewPoint1 = listDynamic5$weather$dewPoint;</p>
+<p>dewPoint2 = listDynamic5[["weather"]][["dewPoint"]];</p>
+<p>dewPoint3 = listDynamic5[["weather"]]$dewPoint;</p>
+</blockquote>
+<p></p>
+<p>Again, all three saved values are identical to the original <em><strong>weatherData$dewPoint</strong></em>:</p>
+<blockquote>
+<p title="Environment" class="nn">dewPoint1:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 20 22 20 13 10 16 ...</p>
+<p>dewPoint2:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 20 22 20 13 10 16 ...</p>
+<p>dewPoint3:&nbsp; &nbsp; &nbsp;&nbsp; 20 22 20 13 10 16 ...</p>
+<p><span title="" id=""><span id="" title="Environment">🞃</span></span> weatherData:&nbsp; 366 obs. of 23 variables</p>
+<p>&nbsp; &nbsp; $ dewPoint:&nbsp;&nbsp;&nbsp; 20 22 20 13 10 16...</p>
+</blockquote>
+<p></p>
+<p><strong>$</strong> and<strong> [[ ]]</strong> are equivalent operators when you are working with named objects within a List.&nbsp; <strong>$</strong> is more convenient to use because it involves less typing and RStudio will give you suggestions.</p>
+<h3>Numeric subsetting (only with [[ ]])</h3>
+<p>Objects within a Lists can also be accessed by their numeric order using<strong> [[ ]]</strong>:</p>
+<blockquote>
+<p>anim3 = listDynamic5[[1]];</p>
+<p>dewPoint4 = listDynamic5[[3]][[7]];</p>
+</blockquote>
+<p></p>
+<p>But, you cannot use the <strong>$</strong> operator to subset by number:</p>
+<blockquote>
+<p># anim3 = listDynamic5$1;&nbsp;&nbsp; # will cause an error</p>
+</blockquote>
+<p></p>
+<p>So, if the object inside a List does not have a name, as in <em><strong>listAtOnce</strong></em> (<em id="r-noNameObjects" class="ref">fig ##</em>), then you have to use<strong> [[ ]] </strong>to subset the unnamed object by numeric placement.</p>
+<h3>The [ ] subset operator</h3>
+<p>You can use <strong>[ ] </strong>to subset the List, but instead of getting the object, you will get a List with the object in it:</p>
+<blockquote>anim4 = listDynamic5["animal"];</blockquote>
+<p></p>
+<p>In the <em><strong>Environment</strong></em>, we can see that&nbsp; <em><strong>anim1</strong></em>, <em><strong>anim2</strong></em>, and <em><strong>anim3 </strong></em>(subsetted with either <strong>[[ ]]</strong> or<strong> $</strong>) are all character vectors with 4 values.&nbsp; But, <em><strong>anim4 </strong></em>(subsetted with <strong>[ ]</strong>)<strong></strong><em><strong> </strong></em>is a List with a character vector that has 4 values:</p>
+<blockquote>
+<p title="Environment" class="nn">anim1:&nbsp;&nbsp; chr [1:4] "llama" "guanaco" ...</p>
+<p title="Environment" class="nn">anim2:&nbsp;&nbsp; chr [1:4] "llama" "guanaco" ...</p>
+<p title="Environment" class="nn">anim3:&nbsp;&nbsp; chr [1:4] "llama" "guanaco" ...</p>
+<p title="Environment" class="nn"></p>
+<p title="Environment" class="nn"><span title="" id=""><span id="" title="Environment">🞃</span></span> anim4:&nbsp;&nbsp; List of 1</p>
+<p>&nbsp;&nbsp; $ animal: chr [1:4] "llama" "guanaco" ...</p>
+</blockquote>
+<p class="fig">The difference between using [[ ]] or $ vs [ ] for subsetting objects within a List</p>
+<p></p>
+<p>This is not very useful so<strong> [ ] </strong>is rarely used to subset a List.&nbsp; <strong>[ ]</strong> is mostly used to subset atomic vectors.</p>
+<h2>Returned List from functions</h2>
+<p>We are going to move from creating our own Lists to looking at Lists that are returned when you call certain functions, specifically <em><strong>ggplot()</strong></em> and <em><strong>lm()</strong></em>.&nbsp;</p>
+<p></p>
+<p>First, we will copy the scatterplot and linear regression of humidity vs. temperature from lesson 2-1 and save the results, which will be a List, to <em><strong>plot1</strong></em>:</p>
+<blockquote>
+<p>&nbsp; <em class="hl">plot1 </em>= ggplot( data=weatherData ) +<br>&nbsp; &nbsp; geom_point( mapping=aes(x=avgTemp, y=relHum) ) +<br>&nbsp; &nbsp; geom_smooth( mapping=aes(x=avgTemp, y=relHum),&nbsp;<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;method="lm" ) +<br>&nbsp; &nbsp; labs( title="Humidity vs Temperature",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; subtitle="Lansing, MI -- 2016",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; x = "Average Temperatures (Fahrenheit)",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; y = "Relative Humidity") +<br>&nbsp; &nbsp; scale_x_continuous( breaks = seq(from=10, to=80, by=10) ) +<br>&nbsp; &nbsp; theme_bw() +<br>&nbsp; &nbsp; theme( axis.text.x=element_text(angle=90, vjust=0.5) );<br>&nbsp; plot(plot1);</p>
+</blockquote>
+<p></p>
+<p><img src="../Images/R-2-04-LinearRegression.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig" id="plot">Scatterplot of humidity vs. temperature with a linear regression</p>
+<p></p>
+<p>We can also create a linear regression model of humidity vs temperature using <em><strong>lm() </strong></em>and save the results to a list named <em><strong>model1</strong></em>:</p>
+<blockquote>
+<p><em class="hl">model1 </em>= lm(formula=weatherData$avgTemp~weatherData$relHum); &nbsp; &nbsp;</p>
+</blockquote>
+<p></p>
+<p>We can look at a summary of the model using <em><strong>print(summary(model1))</strong></em>:</p>
+<blockquote>
+<p title="Console" class="nn">&gt; &nbsp; print(summary(model1));</p>
+<p>Call:<br>lm(formula = weatherData$avgTemp ~ weatherData$relHum)</p>
+<p>Residuals:<br>&nbsp; &nbsp; Min &nbsp; &nbsp; &nbsp;1Q &nbsp;Median &nbsp; &nbsp; &nbsp;3Q &nbsp; &nbsp; Max&nbsp;<br>-44.213 -14.424 &nbsp;-0.213 &nbsp;15.479 &nbsp;36.461&nbsp;</p>
+<p>Coefficients:<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Estimate Std. Error t value Pr(&gt;|t|) &nbsp; &nbsp;<br>(Intercept) &nbsp; &nbsp; &nbsp; &nbsp;77.27006 &nbsp; &nbsp;6.07644 &nbsp;12.716 &nbsp;&lt; 2e-16 ***<br>weatherData$relHum -0.38696 &nbsp; &nbsp;0.08722 &nbsp;-4.437 1.21e-05 ***<br>---<br>Signif. codes: &nbsp;<br>0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</p>
+<p>Residual standard error: 18.59 on 364 degrees of freedom<br>Multiple R-squared: &nbsp;0.0513, &nbsp; &nbsp;Adjusted R-squared: &nbsp;0.04869&nbsp;<br>F-statistic: 19.68 on 1 and 364 DF, &nbsp;p-value: 1.213e-05</p>
+</blockquote>
+<p class="fig" id="summary">Summary of a model of a linear regression</p>
+<p></p>
+<p>Both the <em><strong>plot1 </strong></em>and <em><strong>model1 </strong></em>are List objects and the information for the plot and summary of the linear model are either in the List, or calculated from values in the List.</p>
+<h3>The returned List: linear model</h3>
+<p>The plot (<em id="r-plot" class="ref">fig ##</em>) and the summary (<em id="r-summary" class="ref">fig ##</em>) above are both ways of getting at the data that comes back from the corresponding functions calls <em><strong>ggplot()</strong></em> and <em><strong>lm()</strong></em>.&nbsp; But, both of these calls also return a List that contains a lot of information.</p>
+<p></p>
+<p>Let's first look at <em><strong>model1</strong></em>, which is the List returned from the <em><strong>lm()</strong></em> call:</p>
+<p><img src="../Images/R-2-11-modelList.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">The List returned from a lm() call</p>
+<h3>Subsetting the linear model List</h3>
+<p><em><strong>model1 </strong></em>has information that is inside the summary, for instance the estimate for the intercept is at:</p>
+<blockquote>
+<p title="Console" class="nn">&gt; model1$coefficients["(Intercept)"]<br>(Intercept)&nbsp;<br>&nbsp; &nbsp;77.27006&nbsp;</p>
+</blockquote>
+<p class="note">Note: <strong>(Intercept)</strong> does not follow good programming naming practices!</p>
+<p></p>
+<p>We need to use <strong>[&nbsp; ] </strong>to subset <em><strong>coefficients </strong></em>because <em><strong>coefficients </strong></em>is an atomic vector.&nbsp; <em class="note">Note: Subsetting operators are a bit inconsistent in R and it is just something you need to get used to.</em></p>
+<p></p>
+<p>We can also subset the first ten <em><strong>residuals </strong></em>from <em><strong>model1</strong></em>:</p>
+<blockquote>
+<p title="Console" class="nn">&gt; model1$residuals[1:10]<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 1 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 2 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 3 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 4 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 5&nbsp;<br>-21.8609230 -17.7957344 -22.7305458 -30.0869984 -32.5696589&nbsp;<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 6 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 7 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 8 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 9 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;10&nbsp;<br>-24.8914326 -19.4392818 -12.3130738 &nbsp;-0.1216773 -20.0869984&nbsp;</p>
+</blockquote>
+<p></p>
+<p>Or, subset every twentieth value in <em><strong>fitted.values</strong></em>:</p>
+<blockquote>
+<p title="Console" class="nn">&gt; model1$fitted.values[seq(from=1, to=366, by=20)]<br>&nbsp; &nbsp; &nbsp; &nbsp;1 &nbsp; &nbsp; &nbsp; 21 &nbsp; &nbsp; &nbsp; 41 &nbsp; &nbsp; &nbsp; 61 &nbsp; &nbsp; &nbsp; 81 &nbsp; &nbsp; &nbsp;101 &nbsp; &nbsp; &nbsp;121 &nbsp; &nbsp; &nbsp;141&nbsp;<br>47.86092 45.92611 52.11751 44.76522 57.53498 46.31307 49.02181 57.92194&nbsp;<br>&nbsp; &nbsp; &nbsp;161 &nbsp; &nbsp; &nbsp;181 &nbsp; &nbsp; &nbsp;201 &nbsp; &nbsp; &nbsp;221 &nbsp; &nbsp; &nbsp;241 &nbsp; &nbsp; &nbsp;261 &nbsp; &nbsp; &nbsp;281 &nbsp; &nbsp; &nbsp;301&nbsp;<br>54.43928 57.53498 54.82624 55.21321 47.47396 45.15219 50.56966 43.60434&nbsp;<br>&nbsp; &nbsp; &nbsp;321 &nbsp; &nbsp; &nbsp;341 &nbsp; &nbsp; &nbsp;361&nbsp;<br>48.24789 46.31307 46.70004&nbsp;</p>
+</blockquote>
+<p></p>
+<p>There are also a lot of other, more obscure, values in the List object which we will not go through.&nbsp; The point is that there is a lot of information inside the List and that information can be extracted using subset operators.</p>
+<h3>New variables types</h3>
+<p>If you look through <em><strong>model1</strong></em>, you will find three new variable types: <em><strong>language</strong></em>, <em><strong>symbol</strong></em>, and <em><strong>formula</strong></em>.&nbsp; These variables types are used by R programmers to store the code that created the List -- this is not something you will need to deal with at this level.</p>
+<p></p>
+<p><img src="../Images/R-2-11-OtherVariableTypes.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">Some of the less common variable types appear in this List</p>
+<h3>Return list: plot1</h3>
+<p>The List returned when <em><strong>ggplot()</strong></em> is called is far more complex than the one returned with <em><strong>lm()</strong></em>.&nbsp; Inside the <em><strong>ggplot() </strong></em>List are many embedded Lists that contain everything required to make the plot, including all the data used in the plot and the styling.&nbsp;</p>
+<p></p>
+<p>There is a also a new object type called <em><strong>environment</strong></em>, which is sort of a modern version of a List.&nbsp; The name is confusing because it is structurally related to, but not the same thing as, the <em><strong>Environment </strong></em>tab in RStudio.&nbsp; This is not something we will explore in this class -- just know that an <em><strong>environment </strong></em>object, like Lists, holds other objects and is also analogous to folders on your computer.</p>
+<p></p>
+<p><img src="../Images/R-2-11-EnvVariable.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">The List generated by <strong>ggplot()</strong> contains <strong>environment </strong>objects</p>
+<h3>Changing values in the plot List</h3>
+<p>We can both extract values from a List and change the values.&nbsp; In this case, we can make changes to the plot by changing values within the List.</p>
+<p></p>
+<p>Let's first make a copy of the plot and makes changes on the copy:</p>
+<blockquote>
+<p>plot2 = plot1;</p>
+</blockquote>
+<p></p>
+<p>The changes we will make are:</p>
+<ol>
+<li>change the text color to red</li>
+<li>change the x-axis label to use the degree symbol instead of "degree"
+<ul>
+<li><em><strong>\u00B0</strong></em> means get the <a href="https://en.wikipedia.org/wiki/List_of_Unicode_characters#Latin-1_Supplement" target="_blank" rel="noopener">Unicode character</a> designated <strong>00B0 </strong>(which is a degree symbol)</li>
+</ul>
+</li>
+<li>change the axis lines to dashed lines</li>
+<li>increase the size of the axis lines</li>
+</ol>
+<blockquote>
+<p>plot2$theme$text$colour = "red";<br>plot2$labels$x = "Average Temperature (\u00B0 F)";&nbsp; <br>plot2$theme$line$linetype = 2;<br>plot2$theme$line$size = 0.8;</p>
+</blockquote>
+<p></p>
+<p>And plot the results</p>
+<blockquote>
+<p>plot(plot2);</p>
+</blockquote>
+<p></p>
+<p><img src="../Images/R-2-11-PlotChanges.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">The plot after changes were made to the List</p>
+<p></p>
+<p>Of course, all of these changes can be made within the <em><strong>ggplot()</strong></em> function call, which is most likely what you would want to do.&nbsp; But, the List object contains everything that went into making the plot so it can be modified to tweak the plot.</p>
+<h2>Application</h2>
+<p><em><em class="hl">If you have any questions regarding this application, feel free to</em> <em class="email">email them to the instructor here</em>.&nbsp; <em class="hl">You can attach the whole Project Folder as a<a href="01-01%20RStudio%20and%20Projects.html?ou=457124#zip" target="_blank" rel="noopener"> zipped file</a>.</em></em></p>
+<p><em></em></p>
+<p>A) Why is it better to use subset objects by name instead of position numbers?</p>
+<ul>
+<li>Save the answer to a 1-character vector</li>
+<li>Add the <em><strong>name </strong></em>"comment" to the value</li>
+</ul>
+<p>&nbsp;</p>
+<p>B) Using <em><strong>weatherData</strong></em>, create a linear model of dewpoint vs temperature</p>
+<ul>
+<li>Save the model to a List named <em><strong>linearModel1</strong></em></li>
+</ul>
+<p></p>
+<p>C) Using only values in <em><strong>linearModel1</strong></em>, find and save:</p>
+<ul>
+<li>the slope and the intercept</li>
+<li>the last 10 effects values</li>
+<li>the first 10 values from the original temperature vector</li>
+<li>the most extreme residual value (i.e., furthest from 0 -- could be positive or negative)</li>
+</ul>
+<p></p>
+<p>D) Using the data from<em><strong> Lansing2016Noaa.csv</strong></em>, create a scatterplot of dewpoint vs average temperature</p>
+<ul>
+<li>include a linear regression of dewpoint vs. average temperature</li>
+<li>save the plot information to a List named <em><strong>scatterPlot1</strong></em></li>
+</ul>
+<p></p>
+<p>E) Make a copy of <em><strong>scatterPlot1 </strong></em>and make 1 text change and 2 style changes to the copy</p>
+<ul>
+<li>do not make the same changes that were made in the lesson</li>
+</ul>
+<p></p>
+<p>F) Subset an object in the GGPlot list that is at least 6 levels deep. (bonus... subset one that is 7 levels deep)</p>
+<ul>
+<li>save the object to a variable named <em><strong>ggplotObj</strong></em></li>
+</ul>
+<p></p>
+<p>G) Create one List named <em><strong>app2_12_List</strong></em> that contains the objects from parts A-F in this application</p>
+<p></p>
+<p><em>Save you script file as&nbsp;<strong>app2-12.r</strong> in the&nbsp;<strong>scripts</strong>&nbsp;folder of your RStudio Project for the class.</em></p>
+</body></html>

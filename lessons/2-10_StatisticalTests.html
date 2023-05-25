@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <noscript>
+  <link rel="stylesheet" type="text/css" href="/content/DEVELOPMENT/2018/courses/DEV-belinsky-2018-BackendTest/Programming/editor.css">
+  </noscript>
+  <script src="https://cdn.jsdelivr.net/gh/QFCatMSU/OnlineClassBackEnd/module.js">
+  </script>
+</head>
+<body>
+
+<p class="previousLesson">Stacking and Mapping</p>
+<p class="nextLesson">Objects and Attributes</p>
+<h1 class="title" id="title">2-10 Statistical Tests</h1>
+<h3>to-do</h3>
+<h2>Purpose</h2>
+<ul>
+<li>Opening , and using data from, rdata files</li>
+<li>Use t-tests and ANOVAS</li>
+<li>demonstrate subsetting methods</li>
+<li>plot and calculate a linear regresion</li>
+</ul>
+<h2>Script and data for this lesson</h2>
+<p>The <a href="https://raw.githubusercontent.com/QFCatMSU/FundProgUsingR/master/scripts/2-10_StatisticalTests.R" target="_blank" rel="noopener" title="">script for the lesson is here</a> (right-click, <em><strong>save link as... </strong></em>-- put in <em><strong>scripts </strong></em>folder).</p>
+<p>The List file created in the last lesson: <a href="../Data/tempDFs.rdata?isCourseFile=true" target="_blank" rel="noopener">tempDFs.rdata</a> &nbsp;(just left-click -- put in <em><strong>data </strong></em>folder).</p>
+<h2>Reading in the rdata file (List from last lesson)</h2>
+<p>In previous lesson, we opened up a CSV file and saved the data to a data frame using <em><strong>read.csv()</strong></em>.&nbsp; In this lesson, we are going to use some of the data frames created in the last lesson -- data frames that were saved to a <em><strong>rdata </strong></em>file in the <em><strong>data </strong></em>folder of our project.</p>
+<p></p>
+<p>From last lesson:</p>
+<blockquote>
+<p># save(temperatureDFs, file = "data/tempDFs.rdata");</p>
+</blockquote>
+<p></p>
+<p>Now, let's open up the file using <em><strong>load()</strong></em>:</p>
+<blockquote>
+<p>load(file = "data/tempDFs.rdata");&nbsp;</p>
+</blockquote>
+<p></p>
+<p>Inside the <em><strong>rdata </strong></em>file is a List object, <em><strong>temperatureDFs</strong></em>,&nbsp; with four data frames.&nbsp; In the next couple lessons, we will be dealing a lot more with navigating and creating <em><strong>List </strong></em>objects.&nbsp; For now, a <em><strong>List </strong></em>object is a container for other object (like data frames). &nbsp;&nbsp; <em><strong>load()</strong></em> takes the <em><strong></strong></em>objects from the <em><strong>rdata </strong></em>file&nbsp; and puts in the <em><strong>Environment</strong></em>:</p>
+<p><img src="../Images/R-2-10-LoadRData.jpg" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">The <strong>List </strong>object from the <strong>rdata </strong>file -- it is a carbon copy of the <strong>List </strong>object from last lesson</p>
+<h3>Extracting the data frames</h3>
+<p>The data frames inside the List can be extracted just like a column can be extracted from a data frame.&nbsp; Let's extract the four data frame using the ( $ ) subset operator:</p>
+<blockquote>
+<p>&nbsp; lansJanTempsDF = temperatureDFs$origDF;<br>&nbsp; stackedDF = temperatureDFs$stackedDF;<br>&nbsp; stackedDF2 = temperatureDFs$stackDF_3_6;<br>&nbsp; stackedDF3 = temperatureDFs$stackedDF_1_2_5_6;</p>
+</blockquote>
+<p></p>
+<p>This put the data frames directly in the <em><strong>Environment</strong></em>:</p>
+<blockquote title="Environment" class="nn">⮞ lansJanTempsDF:&nbsp;&nbsp; 31 obs. of 6 variables<br>⮞ stackedDF: &nbsp; &nbsp; &nbsp;&nbsp; 186 obs. of 2 variables<br>⮞ stackedDF2:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 62 obs. of 2 variables<br>⮞ stackedDF3: &nbsp; &nbsp; &nbsp; 124 obs. of 2 variables</blockquote>
+<h2>t-tests</h2>
+<p>In the last lesson, we created line plot and box plot to display the temperature data.&nbsp; Let's be more formal about analyzing the data and do a <em class="hl">two-sample t-test.</em>&nbsp; In statistics, a two-sample t-test is used to determine if there is evidence that the means from two groups of values are different.&nbsp; In this case, we are asking if the columns (years) in the matrix, are statistically different.&nbsp;</p>
+<p></p>
+<p><img src="../Images/R-2-09-All-Boxes.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig" id="boxplot">Boxplot of temperature data from last lesson</p>
+<h3>first t-test on columns that do not look similar</h3>
+<p>We are going to compare the means from January 2012 (column<strong> 2</strong>) and January 2014 (column <strong>4</strong>). -- two columns that, based on <em id="r-boxplot" class="ref">fig ##</em>, do not look similar at all.&nbsp; To perform a t-test between these two years, we call the function <em><strong>t.test()</strong></em> and use the arguments <em><strong>x</strong></em> and <em><strong>y</strong></em>.&nbsp; <em><strong>x</strong></em> and <em><strong>y</strong></em> are set to the two columns we are comparing using the subset operator ( <em><strong>$</strong></em> ).</p>
+<p class="code">tTest1 = t.test(x=lansJanTempsDF$Jan2012, y=lansJanTempsDF$Jan2014);</p>
+<p></p>
+<p>In the <em><strong>Environment </strong></em>tab, <em><strong>tTest1</strong> </em>is labelled as a "List of 10".&nbsp; We will dig more into this later.&nbsp; For now, we can get a helpful summary using the function <em><strong>print()</strong></em> and passing it the results of the t-test:<strong></strong><em><strong></strong></em></p>
+<p class="code">print(tTest1);</p>
+<p></p>
+<blockquote title="Console" class="nn">
+<p title="Console" class="nn">&gt; &nbsp; print(tTest1);</p>
+<p></p>
+<p>&nbsp; &nbsp; Welch Two Sample t-test</p>
+<p></p>
+<p>data: &nbsp;lansJanTempsDF$Jan2012 and lansJanTempsDF$Jan2014<br>t = 4.7784, df = 59.561, p-value = <em class="hl">1.195e-05</em><br>alternative hypothesis: true difference in means is not equal to 0<br>95 percent confidence interval:<br>&nbsp; <em class="hl">7.212138 17.600765</em><br>sample estimates:<br>mean of x mean of y&nbsp;<br><em class="hl">&nbsp;35.77419 &nbsp;23.36774&nbsp;</em></p>
+</blockquote>
+<p class="fig">Printing the summary of the t-test in the <strong>Console </strong>tab</p>
+<p></p>
+<p>In the summary of the t-test it is stated that</p>
+<ol>
+<li>The mean of <em><strong>x</strong></em> (Jan 2012) is <strong>35.77419</strong> and the mean of <em><strong>y</strong></em> (Jan 2014) is <strong>23.36774</strong></li>
+<li>If the "experiment" could be repeated, we would expect to see a difference of this size between the means<strong> 0.001195%</strong> of the time (from the p-value of <strong>1.195e-05</strong> or <strong>0.00001195</strong>)</li>
+<li>We are 95% sure that the means of <em><strong>x</strong></em> and <em><strong>y</strong></em> have a difference between <strong>7.212138</strong> and <strong>17.600765</strong>
+<ul>
+<li>So, <strong>0</strong>, or no difference is <em><strong>not </strong></em>within our confidence interval<em></em><em></em></li>
+</ul>
+</li>
+<li>In this case, we would reject the null hypothesis that the means of <em><strong>x</strong></em> and <em><strong>y</strong></em> are equal -- in other words, January 2012 and 2014 temperatures <em><strong>are</strong></em> statistically different.</li>
+</ol>
+<h3>second t-test on columns that do look similar</h3>
+<p>We will do a second t-test between years that do look as similar in <em id="r-boxplot" class="ref">fig ##</em> -- 2013 (column <strong>3</strong>) and 2016 (column <strong>6</strong>):</p>
+<blockquote>
+<p>tTest2 = t.test(x=lansJanTempsDF[,3], y=lansJanTempsDF[,6]);</p>
+</blockquote>
+<p></p>
+<p>And, let's summarize the results of the t-test in the <em><strong>Console </strong></em>tab:</p>
+<blockquote>
+<p title="Console" class="nn">&gt; &nbsp; print(tTest2);</p>
+<p></p>
+<p>&nbsp; &nbsp; Welch Two Sample t-test</p>
+<p></p>
+<p>data: &nbsp;lansJanTempsDF[, 3] and lansJanTempsDF[, 6]<br>t = 0.88083, df = 53.993, p-value = <em class="hl">0.3823</em><br>alternative hypothesis: true difference in means is not equal to 0<br>95 percent confidence interval:<br><em class="hl">&nbsp;-3.087414 &nbsp;7.926124</em><br>sample estimates:<br>mean of x mean of y&nbsp;<br><em class="hl">&nbsp;34.16129 &nbsp;31.74194&nbsp;</em></p>
+</blockquote>
+<p class="fig">Printing the summary of the second t-test in the <strong>Console </strong>tab</p>
+<p></p>
+<p>In the summary of the t-test it is stated that</p>
+<ol>
+<li>The mean of <em><strong>x</strong></em> (Jan 2013) is <strong>34.16129</strong> and the mean of <em><strong>y</strong></em> (Jan 2016) is<strong> 31.74194 </strong><em><br></em></li>
+<li>If the "experiment" could be repeated, we would expect to see a difference of this size between the means<strong> 38.23%</strong> of the time (from the p-value of <strong>0.3823</strong><strong></strong>)</li>
+<li>We are 95% sure that the means of <em><strong>x</strong></em> and <em><strong>y</strong></em> have a difference between <strong>-3.087414</strong> and <strong>7.926124</strong>
+<ul>
+<li>So, <strong>0</strong>, or no difference <em><strong>is within</strong></em> our confidence interval<em></em><em></em></li>
+</ul>
+</li>
+<li>In this case, we would <em><strong>not reject </strong></em>the null hypothesis that the means of <em><strong>x</strong></em> and <em><strong>y</strong></em> are equal -- in other words, January 2013 and 2016 temperatures <em><strong>are</strong></em> statistically similar.</li>
+</ol>
+<h3>Alternate ways to subset columns in a Data Frame</h3>
+<p>For <em><strong>tTest1 </strong></em>an <em><strong>tTest2</strong></em>, we used 2 different methods for subsetting a column in a dataframe.&nbsp; <em class="hl">There are actually seven ways to subset a column in a dataframe</em>.&nbsp;</p>
+<p></p>
+<p>This is because there are four different operators that you can use to subset a dataframe and for three of the operators you can use numbers or names:</p>
+<ul>
+<li><em><strong>$: </strong></em>dollar sign operator (<em class="note">note: this is the only operator where you cannot use a number</em>)</li>
+<li><em><strong>[ ,</strong> <strong>]</strong></em>: row/column operator (<em class="note">note: this is the only subset operator one that works for a matrix</em>)</li>
+<li><em><strong>[ ] </strong></em>: single bracket operator</li>
+<li><em><strong>[[ ]]: </strong></em> double bracket operator</li>
+</ul>
+<p></p>
+<p><em class="hl">&nbsp;All seven subsets below will produce the same results:</em></p>
+<p><em></em></p>
+<p>1) The row-column operator <em><strong>[ , ]</strong></em> using column numbers (also works on a matrix):</p>
+<blockquote>
+<p>tTest2a = t.test(x=lansJanTempsDF[,2], y=lansJanTempsDF[,4]);</p>
+</blockquote>
+<p></p>
+<p>2) The row-column operator <em><strong>[ , ] </strong></em>using column names (also works on a matrix):</p>
+<blockquote>
+<p>tTest2b = t.test(x=lansJanTempsDF[,"Jan2012"], y=lansJanTempsDF[,"Jan2014"]);</p>
+</blockquote>
+<p></p>
+<p>3) The single bracket operator <em><strong>[&nbsp; ]</strong></em> using column numbers:</p>
+<blockquote>
+<p>tTest2c = t.test(x=lansJanTempsDF[2], y=lansJanTempsDF[4]);</p>
+</blockquote>
+<p></p>
+<p>4) The single bracket operator <em><strong>[&nbsp; ]</strong></em> using column names:</p>
+<blockquote>
+<p>tTest2d = t.test(x=lansJanTempsDF["Jan2012"], y=lansJanTempsDF["Jan2014"]);</p>
+</blockquote>
+<p></p>
+<p>5) The double bracket operator <em><strong>[[&nbsp; ]]</strong></em> using column numbers:</p>
+<blockquote>
+<p>tTest2e = t.test(x=lansJanTempsDF[[2]], y=lansJanTempsDF[[4]]);</p>
+</blockquote>
+<p></p>
+<p>6) The double bracket operator <em><strong>[[&nbsp; ]]</strong></em> using column names:</p>
+<blockquote>
+<p>tTest2f = t.test(x=lansJanTempsDF[["Jan2012"]], y=lansJanTempsDF[["Jan2014"]]);</p>
+</blockquote>
+<p></p>
+<p>7) The dollar sign operator <em><strong>$</strong></em> using column names (you cannot use <em><strong>$</strong></em> with column numbers):</p>
+<blockquote>
+<p>tTest2g = t.test(x=lansJanTempsDF$Jan2012, y=lansJanTempsDF$Jan2014;</p>
+</blockquote>
+<p id="subset7" class="fig">The seven different ways to subset a dataframe</p>
+<h3>Summary of subset operators</h3>
+<p>The operators in general (and in order of this author preference):</p>
+<ul>
+<li>The <em><strong>$</strong></em> operator is the most convenient because it requires the least code and RStudio will give you suggestions</li>
+<li>The <em><strong>[ , ]</strong></em> operator is the most explicit because it shows the two-dimensionality of the dataframe -- and allows you to subset the rows along with the columns -- this is the best choice if you are subsetting rows and columns at the same time</li>
+<li>The <em><strong>[[&nbsp; ]]&nbsp;</strong></em> operator is best used for more complex object like <em><strong>Lists</strong></em> -- I generally avoid these when using data frames</li>
+<li>The <em><strong>[&nbsp; ] </strong></em>operator does a different kind of subsetting than the other three operators -- this will be explored in the next lesson but this author would argue that it is the least useful operator</li>
+</ul>
+<h2>ANOVAs</h2>
+<p>ANOVAs are similar to t-tests except they generally are used to test the means from three or more groups of data, whereas a t-test can only test the means from two groups.&nbsp; For comparison, we are going to start by using an ANOVA on 2 groups (Jan2013 and Jan2016).&nbsp;</p>
+<p></p>
+<p>ANOVAs are functionally similar to a t-test but R requires that the data be structured differently.&nbsp; In R, the ANOVA function<em><strong> aov() </strong></em>cannot compare values from different columns like <em><strong>t.test()</strong></em>.&nbsp; Instead <em><strong>aov()</strong></em> compares values within a column <em class="hl">grouped by a second column</em>.&nbsp;</p>
+<p></p>
+<p>In other words, to perform an ANOVA using <em><strong>aov()</strong></em>, <em class="hl">you need to use a stacked dataframe </em>and we will use the stacked dataframes created in the last lesson and loaded in from the <em><strong>rdata</strong></em> file<em id="r-stackedDF" class="ref"></em>.</p>
+<p></p>
+<p class="note">Note: the reason why <strong>aov()</strong> requires a stacked data frame is largely a legacy issue</p>
+<h3>Performing an ANOVA</h3>
+<p>We will perform an ANOVA on&nbsp;<em><strong>stackedDF2</strong></em>, which contains data from <em><strong>Jan2013 </strong></em>and <em><strong>Jan2016 </strong></em>only,<strong></strong><em><strong> </strong></em>to check whether the temperatures from the 2 months are likely to be from the same distribution.&nbsp;</p>
+<p></p>
+<p>To perform an Anova using <em><strong>aov()</strong></em> you need two arguments:</p>
+<ul>
+<li><em><strong>data</strong></em>: the (stacked) dataframe that contains the data
+<ul>
+<li>in this case: the stacked dataframe <em><strong>stackedDF2</strong></em></li>
+</ul>
+</li>
+<li><em><strong>formula</strong></em>: the columns used for the ANOVA in the form: <em><strong>all_</strong><strong><em>v</em>alues~grouping</strong></em>
+<ul>
+<li><em><strong>all_values </strong></em>comes from the <em><strong>values </strong></em>column and the <em><strong>grouping </strong></em>comes from the <em><strong>ind </strong></em>column (<em class="note">note: this is similar to an </em><span class="note"><strong>x, y</strong></span><em class="note"> mapping GGPlot except that it is y~x</em>)</li>
+</ul>
+</li>
+</ul>
+<p class="code">&nbsp; Jan13_16_Anova = aov(data=stackedDF2, formula=values~ind);</p>
+<p></p>
+<p>To get the results of the ANOVA you need to <em><strong>print </strong></em>the <em><strong>summary </strong></em>of the Anova:</p>
+<blockquote>
+<p>print(summary(Jan13_16_Anova);</p>
+</blockquote>
+<p></p>
+<p>Doing this in the <em><strong>Console </strong></em>tab, we get:</p>
+<blockquote>
+<p title="Console" class="nn">&gt; &nbsp; print(summary(Jan13_16_Anova));<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Df Sum Sq Mean Sq F value Pr(&gt;F)<br>ind &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;1 &nbsp; &nbsp; 91 &nbsp; 90.73 &nbsp; 0.776 &nbsp;<em class="hl">0.382</em><br>Residuals &nbsp; 60 &nbsp; 7016 &nbsp;116.94&nbsp;</p>
+</blockquote>
+<p class="fig">ANOVA of the temperatures from 2012 and 2014</p>
+<p></p>
+<p>The results of the ANOVA show the probability that the temperatures come from the same distribution is <em><strong>0.382</strong></em> (<em><strong>38.2%</strong></em>).&nbsp; This, as expected, is the very close to the same probability (<strong>0.3823</strong>) that we got from doing the t-test between <strong>2013 </strong>and <strong>2016</strong> and means we do not reject the NULL hypothesis that the groups come from the same distribution.</p>
+<h3>A Second ANOVA &lt;make into application&gt;</h3>
+<p>We are going to perform a second ANOVA on the 4 years (2011, 2012, 2015,and 2016) in <em><strong>stackedDF3 </strong></em>created in last lesson.</p>
+<p></p>
+<p>The Anova call looks almost the same:</p>
+<p class="code">&nbsp; Jan4MonthAnova = aov(data=stackedDF3, formula=values~ind);</p>
+<p></p>
+<p>Summarizing the ANOVA in the <em><strong>Console </strong></em>tab:</p>
+<blockquote>
+<p title="Console" class="nn">&gt; &nbsp; print(summary(Jan4MonthAnova));<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Df Sum Sq Mean Sq F value &nbsp; Pr(&gt;F) &nbsp; &nbsp;<br>ind &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 3 &nbsp; 1923 &nbsp; 641.0 &nbsp; 8.617 <em class="hl">3.17e-05</em> ***<br>Residuals &nbsp; 120 &nbsp; 8926 &nbsp; &nbsp;74.4 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<br>---<br>Signif. codes: &nbsp;0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</p>
+</blockquote>
+<p></p>
+<p>The results of the ANOVA show that the probability of the four sets of January temperatures coming from the same distribution is <strong>3.17e-05</strong>, or <strong>0.00317%</strong>. In this case, we reject the NULL hypothesis that the groups come from the same distribution.</p>
+<h3>Histogram on the residuals</h3>
+<p>Lastly, we can perform a histogram on the residuals of the ANOVA to show the we have not violated normality assumptions.</p>
+<p></p>
+<p>The <em><strong>residuals()</strong></em> function gets the 124 residuals from <em><strong>Jan4MonthAnova:&nbsp;</strong></em></p>
+<blockquote>
+<p title="Environment" class="nn">residuals:&nbsp;&nbsp; Named num [1:124] 28.387 -0.613 7.387 6.387 ...</p>
+</blockquote>
+<p></p>
+<p>We can then plot the <em><strong>residuals </strong></em>vector in a histogram by mapping the vector to <em><strong>x</strong></em> (the y-axis is count as does not get mapped):</p>
+<p class="code">&nbsp; residuals = residuals(Jan4MonthAnova);</p>
+<blockquote>
+<p>&nbsp; plot1 = ggplot() +<br>&nbsp; &nbsp; geom_histogram(mapping=aes(x=residuals)) +<br>&nbsp; &nbsp; theme_bw();<br>&nbsp; plot(plot1);</p>
+</blockquote>
+<p></p>
+<p>... and this histogram looks fairly normal so we probably did not violated the normality assumption.</p>
+<p></p>
+<p><img src="../Images/R-2-09-Residuals.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">Histogram of the residuals from the second ANOVA</p>
+<h2>Linear Regression</h2>
+<p>For linear regressions, we will be using the data from the bigger data set found in LAnsing2016Noaa-3.csv:</p>
+<blockquote>
+<p>&nbsp; weatherData = read.csv(file="data/Lansing2016Noaa-3.csv");</p>
+</blockquote>
+<p></p>
+<p>In the GGPlot introductory lesson (2-01), we did a scatterplot of humidity vs. temperature using a <em><strong>geom_point</strong></em> component and added a linear regression using <em><strong>geom_smooth</strong></em>.</p>
+<p></p>
+<blockquote>
+<p>&nbsp; plot1 = ggplot(data=weatherData) +&nbsp;<br>&nbsp; &nbsp; <em class="hl">geom_point</em>(&nbsp;mapping=aes( x=avgTemp, y=relHum ) ) +&nbsp;<br>&nbsp; &nbsp; <em class="hl">geom_smooth</em>(&nbsp;mapping=aes( x=avgTemp, y=relHum ),</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; method="lm" ) +</p>
+<p><span title="" id="">&nbsp;&nbsp;&nbsp; labs( title="Humidity vs Temperature",<br></span><span title="" id="">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; subtitle="Lansing, MI -- 2016",<br></span><span title="" id="">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; x = "Average Temperatures (Fahrenheit)",<br></span><span title="" id="">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; y = "Relative Humidity") +</span>&nbsp;<br>&nbsp; &nbsp; theme_bw();<br>&nbsp; plot(plot1);</p>
+</blockquote>
+<p></p>
+<p>The plot looks like this:</p>
+<p><img src="../Images/R-2-10-LinearRegression.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig" id="linRegPlot">Scatterplot of humidity vs. temperature with a linear regression</p>
+<p></p>
+<h3>Calculate a linear regression</h3>
+<p>We can also more formalize the calculation of the humidity vs. temperature linear regression using<em><strong> lm()</strong></em>.&nbsp;</p>
+<p>The argument we need to set for <em><strong>lm()</strong></em> is <em><strong>formula </strong></em>and <em><strong>formula </strong></em>is in this form: <em><strong>y ~ x</strong></em></p>
+<p></p>
+<p>So, <em><strong>y</strong></em> is the humidity column and <em><strong>x</strong></em> is the temperature column:</p>
+<blockquote>
+<p>&nbsp; tempHumLM = lm( formula = weatherData$relHum ~ weatherData$avgTemp );&nbsp;</p>
+</blockquote>
+<p></p>
+<p>We can<em><strong> print()</strong></em> the results to the <em><strong>Console </strong></em>and see the intercept is about <strong>75 </strong>and the slope is about <strong>-0.13</strong>:</p>
+<blockquote title="Console" class="nn">
+<p title="Console" class="nn">&gt; &nbsp; print(tempHumLM);</p>
+<p></p>
+<p>Call:</p>
+<p>lm(formula = weatherData$relHum ~ weatherData$avgTemp)</p>
+<p>Coefficients:<br>&nbsp; &nbsp; &nbsp; &nbsp; (Intercept) &nbsp;weatherData$avgTemp &nbsp;<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <em class="hl">75.4863</em> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<em class="hl">-0.1326</em>&nbsp;</p>
+</blockquote>
+<p>The results seem to match the linear regression in the plot (<em id="r-linRegPlot" class="ref">fig ##</em>) .</p>
+<p></p>
+<p>We can get a lot more information using <em><strong>print(summary())</strong></em>:</p>
+<blockquote title="Console" class="nn">
+<p title="Console" class="nn">&gt; &nbsp; print(summary(tempHumLM));</p>
+<p></p>
+<p>Call:<br>lm(formula = weatherData$relHum ~ weatherData$avgTemp)</p>
+<p></p>
+<p>Residuals:<br>&nbsp; &nbsp; &nbsp;Min &nbsp; &nbsp; &nbsp; 1Q &nbsp; Median &nbsp; &nbsp; &nbsp; 3Q &nbsp; &nbsp; &nbsp;Max&nbsp;<br>-30.0624 &nbsp;-7.5984 &nbsp; 0.3051 &nbsp; 8.2171 &nbsp;25.8165&nbsp;</p>
+<p></p>
+<p>Coefficients:<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Estimate Std. Error t value Pr(&gt;|t|) &nbsp; &nbsp;<br>(Intercept) &nbsp; &nbsp; &nbsp; &nbsp; <em class="hl">75.48632</em> &nbsp; &nbsp;1.61703 &nbsp;46.682 &nbsp;&lt; 2e-16 ***<br>weatherData$avgTemp <em class="hl">-0.13257</em> &nbsp; &nbsp;0.02988 &nbsp;-4.437 1.21e-05 ***<br>---<br>Signif. codes: &nbsp;0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</p>
+<p></p>
+<p>Residual standard error: 10.88 on 364 degrees of freedom<br>Multiple R-squared: &nbsp;<em class="hl">0.0513</em>, &nbsp; &nbsp;Adjusted R-squared: &nbsp;0.04869&nbsp;<br>F-statistic: 19.68 on 1 and 364 DF, &nbsp;p-value: <em class="hl">1.213e-05</em></p>
+</blockquote>
+<p></p>
+<p>The slope and intercept are also in this summary.&nbsp; The R-squared value tells us that temperature explains about <em><strong>5.13%</strong></em> (0.0513) of the variance in humidity and the p-value of <em><strong>1.21e-05</strong></em> (0.0000121) says we reject the NULL hypothesis that temperature is not a predictor of humidity.&nbsp; In other words, changes in temperature can predict some change in humidity.&nbsp;</p>
+<h2>Application</h2>
+<p><em><em class="hl">If you have any questions regarding this application, feel free to</em> <em class="email">email them to the instructor here</em>.&nbsp; <em class="hl">You can attach the whole Project Folder as a<a href="01-01%20RStudio%20and%20Projects.html?ou=457124#zip" target="_blank" rel="noopener"> zipped file</a>.</em></em></p>
+<p></p>
+<p>1) In the application, use at learn four different methods of subsetting a data frame from <em id="r-subset7" class="ref">fig ##</em>.</p>
+<p></p>
+<p>2) Based on the boxplot of all 6 years (<em id="r-boxplot" class="ref">fig ##</em>),&nbsp; try to figure which three years would most likely come form the same distribution (i.e., the ANOVA would not reject the NULL hypothesis.</p>
+<ul>
+<li>create a stacked frame with just these three years</li>
+<li>perform an ANOVA on the three years</li>
+<li>print the result to the <em><strong>Console</strong></em></li>
+</ul>
+<p></p>
+<p>3) Using t-tests, find which year's January temperatures is most statistically similar to the temperatures from January 2014 (other than itself!).&nbsp;</p>
+<p></p>
+<p>4) Perform four linear models:</p>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li><em><strong>stnPressure </strong></em>vs.<strong></strong><em><strong> </strong></em><em><strong>windSpeed</strong></em>,</li>
+<li><em><strong>stnPressure </strong></em>vs.<strong></strong><em><strong> precipNum</strong></em></li>
+<li><em><strong>stnPressure </strong></em>vs. <em><strong>avgTemp</strong></em></li>
+<li><em><strong>stnPressure </strong></em>vs. <em><strong>relHum</strong></em></li>
+</ul>
+</li>
+<li>For only the linear model that shows the most correlation of the four:
+<ul>
+<li>print to the <em><strong>Console </strong></em>and, in comments, explain the summary of the linear model</li>
+<li>create a scatterplot of the two variables</li>
+<li>place a regression line on the scatterplot</li>
+<li>create a histogram of the residuals</li>
+</ul>
+</li>
+</ul>
+<p></p>
+<p><em>Save you script file as&nbsp;<strong>app2-10.r</strong> in the&nbsp;<strong>scripts</strong>&nbsp;folder of your RStudio Project for the class.</em></p>
+<h3>Questions to answer</h3>
+<p>Answer the following in comments inside your application script:</p>
+<ol style="list-style-type: number;">
+<li>What was your level of comfort with the lesson/application?</li>
+<li>What areas of the lesson/application confused or still confuses you?</li>
+<li>What are some things you would like to know more about that is related to, but not covered in, this lesson?</li>
+</ol>
+</body></html>

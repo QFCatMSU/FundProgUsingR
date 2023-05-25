@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <noscript>
+  <link rel="stylesheet" type="text/css" href="/content/DEVELOPMENT/2018/courses/DEV-belinsky-2018-BackendTest/Programming/editor.css">
+  </noscript>
+  <script src="https://cdn.jsdelivr.net/gh/QFCatMSU/OnlineClassBackEnd/module.js">
+  </script>
+</head>
+<body>
+
+<p class="previousLesson">Mathematical Operations</p>
+<p class="nextLesson">Functions Introduction</p>
+<h1 class="title">1-04: Vectors and Data Frames</h1>
+<h3>Changes...</h3>
+<h2>Purpose</h2>
+<ul>
+<li>Introducing <a href="1-03_Mathematical_Operations.html#blah" target="_blank" rel="noopener">vectors</a></li>
+<li>Opening a CSV file and saving data to a data frame</li>
+<li>Pulling columns from a data frame</li>
+<li>Pulling individual values from a column</li>
+<li>Pulling multiple values for a column</li>
+</ul>
+<p></p>
+<p>If you have any questions about the material in this lesson or your Class Project <em class="email">feel free to email them to the instructor here</em>.</p>
+<h3 id="files">Files for this lesson</h3>
+<p>From this point on, most lessons will have scripts and/or data file to download.&nbsp; The downloads will in this section:</p>
+<p></p>
+<p>The <a href="https://raw.githubusercontent.com/QFCatMSU/FundProgUsingR/master/scripts/1-04_VectorsAndDataFrames.R" target="_blank" rel="noopener" title="">script for this lesson is here</a></p>
+<ul>
+<li><em class="hl">right-click on the link</em> and choose <em><strong>Save link as...</strong></em></li>
+<li>Save to the <em><strong>scripts </strong></em>folder in your Class Project</li>
+</ul>
+<p>The data used in this lesson, <a href="../Scripts/twoWeekWeatherData.csv" target="_self">twoWeekWeatherData.csv</a></p>
+<ul>
+<li><em class="hl">left-click the link</em> and save to the <em><strong>data </strong></em>folder in your Class Project</li>
+<li><em id="r-open-excel" class="ref">Do not open the CSV file in Excel</em></li>
+</ul>
+<h2>Standalone scripts vs. scripts within a Project</h2>
+<p>In the last two lessons, everything we did was contained to one script file -- no outside file was needed.&nbsp; The scripts in those lessons were standalone scripts and could be executed inside or outside your RStudio Project with the same results.</p>
+<p></p>
+<p>Standalone scripts are rare and are generally only created for testing purposes.&nbsp;</p>
+<p></p>
+<p>The script for this lesson will not execute correctly if it is treated as a standalone script (i.e., it is executed outside of the RStudio Project).&nbsp; <em class="hl">This is because the file looks for a data file and it needs to know where to look for it.</em></p>
+<h3>Set Working Directory (a cautionary statement)</h3>
+<p>Many people still treat all R scripts as standalone scripts (i.e., they do not use RStudio Project). This causes all sorts of problems when script file look for other files.&nbsp; The way to get around this is to set the Working Directories using <em><strong>setwd()</strong></em>.&nbsp; This is a mess because Working Directories change when file are moved between computers or even within a computer.&nbsp; <em class="hl">Scripts that set working directories are much harder to share and maintain</em>.&nbsp; This author strongly suggests that you use RStudio Projects and avoid the working directory mess.</p>
+<h2>Vector Variables</h2>
+<p>Vector variables, or <em><strong class="hl">vector </strong></em>for short, are <em class="hl">variables that hold multiple related values.</em>&nbsp; For instance if we have temperature values for 5 days, we could create 5 variables and assign each one a temperature value:</p>
+<blockquote>
+<p>tempHigh1 = 65;</p>
+<p>tempHigh2 = 57;</p>
+<p>tempHigh3 = 61;</p>
+<p>tempHigh4 = 64;</p>
+<p>tempHigh5 = 59;</p>
+</blockquote>
+<p></p>
+<p>And, in the last lesson's application, we averaged the 5 values like this:</p>
+<blockquote>
+<p>tempAvg = (tempHigh1 + tempHigh2 + tempHigh3 +</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; tempHigh4 + tempHigh5) / 5;</p>
+</blockquote>
+<h3>Grouping values</h3>
+<p>But, in programming we want to group related values together.&nbsp; So, instead of creating 5 different variables, <em class="hl">we create one vector that has 5 values</em>:</p>
+<blockquote>
+<p>tempHigh = c(65, 57, 61, 64, 59);</p>
+</blockquote>
+<p></p>
+<p>One of the main reasons to create a vector is that <em class="hl">the values in the vector are all associated</em> and we can perform mathematical operations on the whole vector.&nbsp; For instance, we might have temperatures in Fahrenheit and want to convert all the temperature to Celsius:</p>
+<blockquote>
+<p>tempHighCel = (5/9) * (tempHigh - 32)</p>
+</blockquote>
+<p></p>
+<p>Or, we can use one of R's many, many statistical functions, <em><strong>mean()</strong></em>, on the vector:</p>
+<blockquote>
+<p>tempMean = mean(tempHigh);&nbsp;</p>
+</blockquote>
+<p></p>
+<p>We can see in the <em><strong>Environment </strong></em>that <em><strong>tempHighCel </strong></em>has 5 converted temperatures and that <em><strong>tempMean </strong></em>is the same as <em><strong>tempAvg </strong></em>above:</p>
+<blockquote>
+<p title="Environment" class="nn">tempAvg: &nbsp; &nbsp; 61.2</p>
+<p>tempHigh:&nbsp;&nbsp;&nbsp; num [1:5] 65 57 61 64 59</p>
+<p>tempHighCel: num [1:5] 18.3 139 16.1 17.5 15</p>
+<p>tempMean:&nbsp;&nbsp;&nbsp; 61.2</p>
+</blockquote>
+<p></p>
+<p><em id="r-stats" class="ref">Extension: statistical functions and vectors</em></p>
+<h3>Indexing values in a vector</h3>
+<p>Putting values into vectors also allows us to associated values between vectors.&nbsp; If we have a vector of high temperature values, then we could also have a vector of low temperature values.</p>
+<blockquote>
+<p>tempLow = c(45, 40, 55, 37, 42);</p>
+</blockquote>
+<p></p>
+<p>We can directly subtract <em><strong>tempLow </strong></em>values from <em><strong>tempHigh </strong></em>to get the difference in temperature for all values:</p>
+<blockquote>
+<p>tempDiff = tempHigh - tempLow;</p>
+</blockquote>
+<p></p>
+<p>We can index individual values.&nbsp; You could think of the vector as 5 days.&nbsp; And if you want, you can find the change in temperature for any day using the index 1 through 5:</p>
+<blockquote>
+<p>tempDiff_3 = tempHigh[3] - tempLow[3];</p>
+<p>tempDiff_5 = tempHigh[5] - tempLow[5];</p>
+</blockquote>
+<p></p>
+<p>The <em><strong>Environment </strong></em>shows:</p>
+<blockquote>
+<p title="Environment" class="nn">tempHigh:&nbsp;&nbsp; num [1:5] 65 57 61 64 59</p>
+<p>tempLow:&nbsp;&nbsp;&nbsp; num [1:5] 45 40 55 37 42</p>
+<p>tempDiff:&nbsp;&nbsp; num [1:5] 20 17 6 27 17</p>
+<p>tempDiff_3: 6</p>
+<p>tempDiff_5: 17</p>
+</blockquote>
+<h3>Vectors and columns in a data frame</h3>
+<p><em class="hl">Data frames are essentially made up of vectors </em><span>that all have the same length</span>.&nbsp; The vectors are the columns in the data frame and the number of values in the vector is determined by the number of rows in the data frame.&nbsp; In <em id="r-dataframe" class="ref">Fig.##</em> there is a weather data frame (that we will use in later lessons) and each column has a measured daily weather value (e.g., <em><strong>minTemp</strong></em>, <em><strong>maxTemp</strong></em>).&nbsp; The row gives all the measured weather values for a specific day (e.g., row 1 is Jan 1, row 2 is Jan 2).</p>
+<p></p>
+<p><img src="../Images/R-1-04_DataFrame_In%20_RStudio.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig" id="dataframe">A data frame viewed in RStudio with 23 variables (i.e., the 23 columns, which are vector variables)</p>
+<h2>CSV files</h2>
+<p>In the first couple of lessons we were using data from inside the script but most of the data you will use will come from outside the script -- often from a data frame. The data frames themselves often come from a CSV file. CSV stands for Comma Separated Values, meaning that the values in the file are separated by commas.&nbsp;</p>
+<p></p>
+<p class="note">Note: CSV is really just a text file that can be read in any text editor and CSV file do not have to use commas as separators.</p>
+<p></p>
+<p>Let's look at a small data set we downloaded in <em id="r-files" class="ref">section ##</em> called <em><strong>twoWeekWeatherData.csv</strong></em>, which contains two weeks of weather data from Lansing, Michigan.&nbsp;</p>
+<h3>Opening a CSV file</h3>
+<p>CSV files are often opened by default in Excel and this can problematic:</p>
+<p><em id="r-open-excel" class="ref">Trap: Opening CSV files in Excel</em></p>
+<p><em></em></p>
+<p><em class="hl">CSV files are just text files</em> and CSV files can be opened in any text editor (e.g., notepad, notepad++, textEdit).&nbsp;</p>
+<p></p>
+<p><em class="hl">RStudio is a text editor </em>so we can open&nbsp; <em><strong>twoWeekWeatherData.csv</strong></em> in RStudio by <em class="hl">either</em>:</p>
+<ul>
+<li>Clicking <em><strong>File -&gt; Open File...</strong></em> and navigate to <em><strong>twoWeekWeatherData.csv</strong></em> and press <em><strong>OK</strong></em>.</li>
+<li>Using the <em><strong>Files</strong> </em>tab: go to your <em><strong>data</strong> </em>folder, click on <em><strong>twoWeekWeatherData.csv</strong></em>, choose<em id="r-csv_file" class="ref"><strong> View File </strong>(fig.##)<strong><br></strong></em></li>
+</ul>
+<p></p>
+<p><img src="../Images/R-1-04-CSVFileinRStudio.png" alt="" style="max-width: 100%;" data-d2l-editor-default-img-style="true" class="fs"></p>
+<p class="fig" id="csv_file">The twoWeekWeatherData.csv file opened in RStudio</p>
+<p></p>
+<p>The CSV file has 15 lines (rows).&nbsp; The first row contains the 5 column headers and the other 14 rows contain the 5 values for each date -- all separated by a comma.</p>
+<h3>Reading in a CSV file</h3>
+<p>We can see that the CSV file has a header row and each row has five values representing: <em><strong>date</strong></em>, <em><strong>highTemp</strong></em>, <em><strong>lowTemp</strong></em>, <em><strong>precipitation, noonCondition</strong></em>.</p>
+<p></p>
+<p>To use the data in a script we need to read the data into a script file -- and for that we will use the <em><strong>read.csv()</strong></em> function.</p>
+<p></p>
+<p class="code">{<br>&nbsp; rm(list=ls()); # cleans out the Environment every time the code is executed<br>&nbsp; options(show.error.locations = TRUE); # show the line number of errors in Console<br><br>&nbsp; weatherData = read.csv(file="data/twoWeekWeatherData.csv", # path to file<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sep=",",&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # values are separated by commas<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; header=TRUE,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # there is a header row<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stringsAsFactors = FALSE); # for people using R 3.X</p>
+<p class="code">}</p>
+<p></p>
+<p><em><strong>read.csv()</strong></em> reads in the data from the CSV file -- and saves the data to a variable called <em><strong>weatherData</strong></em>.</p>
+<p></p>
+<p><em><strong>weatherData </strong></em>is a <em class="hl">data frame variable</em> and it appears in the <em><strong>Environment</strong> </em>tab under <em><strong>Data</strong> </em>as <em class="hl">14 obs. of 5 variables</em>. (i.e., 14 rows and 5 columns), which matches what we saw in the CSV file (<em id="r-csv_file" class="ref">Fig.##</em>).&nbsp;</p>
+<ul>
+<li>Double-clicking on <em><strong>weatherData</strong></em> opens the data frame in the <em><strong>File Viewer</strong> </em>window.&nbsp; This is a convenient way to visualize the data frame.</li>
+<li>Clicking on the blue arrow to the left of <em><strong>weatherData </strong></em>provides information about each of the columns</li>
+</ul>
+<p></p>
+<p><img src="../Images/R-1-04-TwoWeekWeather.png" alt="" style="max-width: 100%;" data-d2l-editor-default-img-style="true" class="fs"></p>
+<p class="fig" id="viewer">Viewing the data frame in the File Viewer</p>
+<h3>Column value type</h3>
+<p>In the <em><strong>Environment</strong></em>, when you click on the arrow next to the left of <em><strong>weatherData </strong></em>you see some information about the columns in the data frame.&nbsp; The first piece of information is the name of the column (i.e., the header -- <em><strong>date</strong></em>, <em><strong>highTemp</strong></em>, etc.).&nbsp; The second is the type of value the column contains.&nbsp;</p>
+<p></p>
+<p>In <em><strong>weatherData </strong></em>there are three types of values:</p>
+<ol>
+<li><em><strong>int </strong></em>(<em><strong></strong></em>e.g., <em><strong>highTemp </strong></em>and <em><strong>lowTemp</strong></em>): <em class="hl">integer </em>-- or non-decimal numbers</li>
+<li><em><strong>num </strong></em>(e.g., <em><strong>precipitation</strong></em>): <em class="hl">numeric</em>, or numbers with decimals</li>
+<li><em><strong>chr</strong></em>: (e.g, <em><strong>noonCoondition</strong></em>) this stands for <em class="hl">character</em>, and <em class="hl">character </em>is really short for <em class="hl">string of characters</em>, and this in turn is typically shortened to <em class="hl">string</em>.&nbsp; Whatever you call it, it is the catch-all category for values R cannot recognize as anything else.&nbsp;</li>
+</ol>
+<p></p>
+<p><em class="note">Note: the <strong>date </strong>column has date values but it is not formatted properly so R does not recognize it as a Date -- something we will cover later.<br></em></p>
+<h2>Functions and arguments</h2>
+<p><em><strong>read.csv()</strong></em> is a function that tells R to open a file and treat it like a CSV file. A function is a set of code separate from your main script that performs a common task (e.g., plotting values, finding a standard deviation, reading in a file). <em id="r-readcsv" class="ref"></em></p>
+<p></p>
+<p>There is a lot going on in our first line of code and that is because there are a lot of options, called <em class="hl">arguments</em>, when opening up a CSV file!&nbsp; We will talk a little bit about these arguments here and save the rest of the discussion for the next lesson.</p>
+<p></p>
+<p>Inside the function <em><strong>read.csv()</strong></em>, I included four arguments (<em><strong>file, sep, header,</strong></em> and <strong></strong><em><strong>stringsAsFactors</strong></em>).&nbsp; <em class="hl">Arguments are like the knobs and dials for a function</em>.&nbsp; The function reads in a CSV file and the arguments tweak how the file is read.</p>
+<h3>file</h3>
+<p><em><em><strong>file = "data/</strong></em><strong>twoWeekWeatherData</strong><strong>.csv"</strong></em> means that the script opens the file called <strong>twoWeekWeatherData</strong><em><strong>.csv</strong></em> located in the <em><strong>data</strong> </em>folder of your RStudio Project</p>
+<p></p>
+<p><em class="hl">This only works if you are in the RStudio Project</em> because the RStudio Project sets the Working Directory to your Project Folder.</p>
+<p></p>
+<p>If you execute the script file outside your RStudio Project, you will get <em class="hl">cannot open file</em> error because the script does not know where to start looking for the CSV file.</p>
+<p></p>
+<p><img src="../Images/R-1-04-OutSideRSP.png" alt="" style="max-width: 100%;" data-d2l-editor-default-img-style="true" class="fs"></p>
+<p class="fig" 5="">You get a <strong>cannot open file</strong> error if you try to execute the script outside of your RStudio Project</p>
+<h3>sep</h3>
+<p><em><strong>sep = ","</strong></em> means that the values in the file are separated by commas.&nbsp; This is not always true -- even for CSV files.</p>
+<p></p>
+<p>The most common alternate separator values are spaces ( <em><strong>sep = " "</strong></em> ) and dots ( <em><strong>sep = "." </strong></em>)<strong></strong><em><strong><br></strong></em></p>
+<h3>header</h3>
+<p><em><strong>header = TRUE</strong></em> means the first row contains header information. In this case the header information is the column names (<strong>date</strong>, <strong>highTemp</strong>, <strong>lowTemp</strong>, and <strong>precipitation</strong>)</p>
+<p></p>
+<p><em><strong>header=FALSE</strong></em> would mean that the first row contains data (i.e., there are no column names).&nbsp; If you set <em><strong>header=FALSE</strong></em> in this example then R will think that the column names are the first data point.&nbsp; So, you will have 15 values in each vector and the first value will not make sense.</p>
+<h3>stringAsFactors <strong></strong><em><strong><br></strong></em></h3>
+<p><em><strong>stringAsFactors = FALSE</strong></em>: the main reason to include this is because of a change between R versions 3 and 4.&nbsp; This line ensures that the code will run the same in both versions.&nbsp; In the next lesson we will talk about the difference between <em><strong>strings</strong> </em>and <em><strong>factors </strong></em>and the changes that R made between versions 3 and 4.</p>
+<h2>Getting data</h2>
+<p>We now have a data frame with weather information stored in a variable called <em><strong>weatherData</strong></em>.&nbsp; But, we usually do not want to deal with the whole data frame at once.&nbsp; So, our next trick will be to extract parts of the data from the data frame.&nbsp; We might want to work with one column in the data frame (e.g., <em><strong>highTemp</strong> </em>or <em><strong>precipitation</strong></em>).&nbsp; We can see all the columns in the data frame by expanding the data frame in the <em><strong>Environment</strong></em> or looking at the headers in the<em><strong> File Viewer</strong></em> (both views are in <em class="ref" id="r-viewer">fig ##</em>).&nbsp;</p>
+<h3>Pulling out a column</h3>
+<p>Columns in a data frame are vectors (i.e., a variable with multiple values) and we can save the columns to a vector.&nbsp; We can access the columns from a data frame using the <em><strong>$</strong></em> operator.</p>
+<p></p>
+<p>We start with <em><strong>weatherData</strong> </em>and, use the dollar sign operator ( <em><strong>$</strong></em> ) to access the <em><strong>highTemp </strong></em>column, and save the results to the vector called <em><strong>highTemps</strong></em>:</p>
+<p class="code">highTemps = weatherData$highTemp;</p>
+<p></p>
+<p>In the <strong><em>Environment</em></strong> square brackets (<strong><em> </em>[ ]</strong> ) indicates the variable is a vector.&nbsp; <em><strong>highTemps</strong> </em>appears in the <em><strong>Environment</strong> </em>as a <strong><em class="hl"><span class="hl">vector</span></em></strong>.&nbsp; <em><strong>highTemps</strong> </em>has 14 ( <em><strong>[1:14]</strong> </em>) integer (<em><strong>int</strong></em>) values, representing the temperature for each of the 14 days.&nbsp;&nbsp;</p>
+<p><img src="../Images/R-1-04-HighTemps.png" alt="" style="max-width: 100%;" data-d2l-editor-default-img-style="true" class="fs"></p>
+<p class="fig" id="highTemps">The <strong>highTemps</strong> vector variable in the Environment tab</p>
+<h3 class="" id="methods">Pulling out (subsetting) individual values</h3>
+<p>Perhaps we want just one value -- specifically, we want to know the high temperature on April 2 (the seventh day in <em><strong>weatherData</strong></em>).</p>
+<p></p>
+<p>There are multiple ways to access that individual value.&nbsp; I will present three, but for the rest of this lesson, we are going to use the first method.</p>
+<p></p>
+<p>We could subset using the subset operator ( <strong>[ ]</strong> ) the 7<sup>th</sup> value from <em><strong>highTemps</strong></em>:</p>
+<p class="code">highTempDay7a = highTemps[7];</p>
+<p></p>
+<p>We could go back to the original data frame (<em><strong>weatherData</strong></em>) and subset the 7<sup>th</sup> value from the column <em><strong>highTemp</strong></em>:</p>
+<p class="code">highTempDay7b = weatherData$highTemp[7];</p>
+<p></p>
+<p>Or, we can use a row/column (e.g., X/Y) operation on <em><strong>weatherData</strong> </em>to get the value:</p>
+<p class="code">highTempDay7c = weatherData[7, "highTemp"];&nbsp; # think of this as [X,Y] notation</p>
+<p></p>
+<p>The last method is functionally the same as the previous two -- but the X,Y notation has an advantage when dealing with more complex subsetting situations (e.g., subsetting multiple rows and columns), which will be discussed in a future lesson.<em><strong></strong></em></p>
+<h3>The Environment and the L value</h3>
+<p>I will be referring quite often to the <em><strong>Environment</strong> </em>tab.&nbsp; Instead of taking a screenshot of the <em><strong>Environment</strong> </em>tab (which is hard to maintain), I will display the variables I am focused on like this:</p>
+<p></p>
+<p class="code" title="Environment">highTemp7a:&nbsp; 60L</p>
+<p class="code" title="Environment">highTemp7b:&nbsp; 60L</p>
+<p class="code" title="Environment">highTemp7c:&nbsp; 60L</p>
+<p class="fig">The Environment tab shows that highTemp137a,b, and c are all equal to 60L</p>
+<p></p>
+<p><em><strong>highTemp7a</strong></em>, <em><strong>highTemp7b</strong></em>, and <em><strong>highTemp7c</strong> </em>all show that the high temperature on the 7<sup>th</sup> day is <strong>60</strong>.&nbsp;</p>
+<p></p>
+<p>The<strong> L</strong> is something you can ignore -- it indicates that the number is an <em><strong>long</strong></em> integer, whichis an integer.</p>
+<p>If you want to know more go to <em class="ref" id="r-integer">Extension: Long and Short Integers.</em></p>
+<h2>Pulling out multiple values</h2>
+<p>We have pulled out a column from a data frame and we have pulled out individual values.&nbsp; In this section, we will show different ways to pull out multiple values with:</p>
+<ol>
+<li>An index vector created using <em><strong>c()</strong></em></li>
+<li>A regular (or, simple) sequence using the colon ( : ) operator</li>
+<li>A more complex sequence using the <em><strong>seq() </strong></em>function</li>
+</ol>
+<h3>Using a numeric vector to pull multiple values</h3>
+<p><em><strong>highTemps</strong> </em>is a vector with <strong>14 </strong>values and each of these values can be accessed by their numeric placement:</p>
+<p class="code">val_01 = highTemps[1];</p>
+<p class="code">val_05 = highTemps[5];</p>
+<p class="code">val_12 = highTemps[12];</p>
+<p></p>
+<p>Or, we might want to combine the temperatures from these three days into one variable.&nbsp; <em><strong>c() </strong></em>creates a vector of the three values (1, 5, and 12) and that vector is used to subset <em><strong>highTemps</strong></em>:</p>
+<p class="code">valComb = highTemps[c(1,5,12)];&nbsp; # a vector with 3 values</p>
+<p></p>
+<p><em><strong>valComb</strong> </em>is a vector with 3 values, the high temperature for days <strong>1</strong>, <strong>5</strong>, and <strong>12</strong>:<strong>&nbsp; </strong></p>
+<p class="code" title="Environment">val_01:&nbsp; &nbsp; 57L</p>
+<p class="code">val_05:&nbsp;&nbsp;&nbsp; 39L</p>
+<p class="code">val_12:&nbsp;&nbsp;&nbsp; 54L</p>
+<p class="code">valComb:&nbsp;&nbsp; int [1:3] 57 39 54</p>
+<p class="fig">The three values we pulled from <strong>highTemps</strong> individually saved and combined (<strong>valComb</strong>)</p>
+<h3>Pulling out consecutive values</h3>
+<p>If we want to get the high temperature for consecutive days, we can use the simple sequencing (<strong> :</strong> ) operator -- simple refers to the fact that we are sequencing by 1:</p>
+<p class="code">consecVals = highTemps[3:11];&nbsp; # same as highTemps[c(3,4,5,6,7,8,9,10,11)]</p>
+<p></p>
+<p><em><strong>consecVals</strong> </em>is a vector with 9 values -- the high temperatures from days <strong>3</strong> through <strong>11</strong>.&nbsp; <em class="note">Note: <strong>9</strong> values, not (11-3=) <strong>8 </strong>-- we include both the 3 and the 11.</em></p>
+<p></p>
+<p>The ( : ) operator also works in reverse</p>
+<p class="code">consecValsRev = highTemps[11:3];</p>
+<p></p>
+<p><em><strong>consecValsRev</strong> </em>is a vector with 9 values -- the high temperatures from days <strong>11</strong> <em class="hl">down to</em> <strong>3</strong>.</p>
+<p></p>
+<p class="code" title="Environment">consecVals:&nbsp;&nbsp;&nbsp;&nbsp; int [1:9] 54 40 39 ...</p>
+<p class="code">consecValsRev:&nbsp; int [1:9] 39 44 55 ...</p>
+<p class="fig">int [1:9] means 9 values are in each vector -- the first few values are shown</p>
+<h3>Using the Console to view values in a vector</h3>
+<p>The <em><strong>Environment</strong> </em>tab is good for quickly looking at values, but it only shows a few values from each vector.&nbsp; If you want to see all the values then you can use the <em><strong>Console</strong> </em>tab (bottom-left corner).&nbsp; In the <em><strong>Console</strong> </em>tab, type in the variable you want to see and press <em><strong>Enter</strong></em>:</p>
+<p></p>
+<p><img src="../Images/R-1-04-Console.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig" id="consec">Using the Console tab to view variables</p>
+<p></p>
+<p>These two values, <em><strong>consecVals </strong></em>and <em><strong>consecValRev</strong></em>, are shown in the <em><strong>Console</strong> </em>window in the <em class="ref" id="r-consec">figure ##</em> image.</p>
+<h3>Using a sequence to get values</h3>
+<p>We can use the <em><strong>seq()</strong></em> to create a more complex sequence to subset a vector.</p>
+<p></p>
+<p>This is a two step process:</p>
+<ol>
+<li>Create a sequence.&nbsp;</li>
+<li>Use the sequence to subset the vector.&nbsp;</li>
+</ol>
+<h4 id="seq_function">Creating a sequence</h4>
+<p><em><strong>seq()</strong></em> is a function with three arguments:</p>
+<ul>
+<li><em><strong>from</strong></em>: the starting point</li>
+<li><em><strong>to</strong></em>: the ending point</li>
+<li><em><strong>by</strong></em>: the iteration</li>
+</ul>
+<p></p>
+<p>We can create a sequence that lists every other number from 1-14</p>
+<blockquote>
+<p>seq1 =&nbsp;seq(from=1, to=14, by=2);</p>
+</blockquote>
+<p></p>
+<p>We can reverse the sequence by switching the <em><strong>to </strong></em>and <em><strong>from </strong></em>and inverting the <em><strong>by</strong></em></p>
+<blockquote>
+<p>seq2 = seq(from=14, to=1, by=-2);</p>
+</blockquote>
+<p></p>
+<p>We can get every 3rd number for the first 10 numbers:</p>
+<blockquote>
+<p>seq3 = seq(from=1, to=10, by=3);</p>
+</blockquote>
+<p></p>
+<p>The 3 sequences we created are just vectors of numbers:</p>
+<blockquote>
+<p title="Environment" class="nn">seq1:&nbsp;&nbsp; 1 3 5 7 9 11 13</p>
+<p>seq2:&nbsp;&nbsp; 14 12 10 8 6 4 2</p>
+<p>seq3:&nbsp;&nbsp; 1 4 7 10</p>
+</blockquote>
+<h4>Using the sequences as indexes</h4>
+<p>We can use the 3 sequences above as index vectors to index the <em><strong>highTemps </strong></em>vector:</p>
+<p>Get <em class="hl">every other</em> high temperature:</p>
+<p class="code">highTempSeq1 = highTemps[seq1];</p>
+<p></p>
+<p>Get every other high temperature<em class="hl"> in reverse</em>:</p>
+<p class="code">highTempSeq2 = highTemps[seq2];</p>
+<p></p>
+<p>Get <em class="hl">every 3rd </em>high temperature value in the first 10 values:</p>
+<p class="code">highTempSeq3 = highTemps[seq3];</p>
+<p></p>
+<p></p>
+<p class="code" title="Environment">highTempSeq1:&nbsp; int [1:7] 57 54 39 60 ...</p>
+<p class="code">highTempSeq2:&nbsp; int [1:7] 75 54 44 53 ...</p>
+<p class="code">highTempSeq3:&nbsp; int [1:4] 57 40 60 44</p>
+<p class="fig">There are 7 values in the first two sequences and 4 in the third</p>
+<h4>Combining the above 2 steps</h4>
+<p>You can combine the above two steps in 1 command.&nbsp;</p>
+<p></p>
+<p>The following command will give you the same high temperature values:</p>
+<blockquote>
+<p>highTempSeq1b = highTemps[seq(from=1, to=14, by=2)]; &nbsp;<br>highTempSeq2b = highTemps[seq(from=14, to=1, by=-2)]; &nbsp;<br>highTempSeq3b = highTemps[seq(from=1, to=10, by=3)];</p>
+</blockquote>
+<p></p>
+<blockquote>
+<p class="code" title="Environment">highTempSeq1<em class="hl">b</em>:&nbsp; int [1:7] 57 54 39 60 ...</p>
+<p class="code">highTempSeq2<em class="hl">b</em>:&nbsp; int [1:7] 75 54 44 53 ...</p>
+<p class="code">highTempSeq3<em class="hl">b</em>:&nbsp; int [1:4] 57 40 60 44</p>
+</blockquote>
+<p></p>
+<p>While it might seem like combining steps is a good idea because it reduces the amount of code, this needs to be balanced with the fact that combining code makes it harder to read.&nbsp; One of the big problems I see when looking at people's code is that they cram too much code into one command and it becomes really difficult to debug if anything goes wrong.&nbsp; If you are going to err on one side then this author recommends you err on the side of breaking up code rather than combining it.&nbsp;</p>
+<p></p>
+<p id="r-square-round" class="ref">Extension: square brackets vs. round brackets</p>
+<h2 class="" id="app">Application</h2>
+<p>A) Create a file named<em><strong> app1-04.r</strong></em> in your <em><strong>scripts</strong> </em>folder inside your RStudio Project and save the information from <em><strong>twoWeekWeatherData.csv</strong></em> to a variable named <em><strong>weatherData</strong> </em>(just like in this lesson).</p>
+<p></p>
+<p>B) Sequencing</p>
+<p><span style="text-decoration: underline;"></span>Use the <em><strong>seq()</strong></em> function to create this sequence: (13, 9, 5, 1, -3, -7).&nbsp;</p>
+<p><em class="note">Note: this sequence could not be used to index a vector because it mixes positive and negative numbers.&nbsp; <br></em></p>
+<p></p>
+<p>C) Subsetting:</p>
+<ol>
+<li>Pull out two columns <em><strong>precipitation </strong></em>and <em><strong>lowTemps</strong> </em>from <strong>weatherData </strong>and save each to a variable</li>
+<li>Save the 4<sup>th</sup> value of <em><strong>precipitation </strong></em>to a variable<br>
+<ul>
+<li>Repeat the previous step for the other two methods given in <em class="ref" id="r-methods">section ##</em></li>
+</ul>
+</li>
+<li>Save the 9<sup>th</sup>, 12<sup>th</sup>, 5<sup>th</sup>, and 1<sup>st</sup> values of <em><strong>lowTemps </strong></em>to one variable (in that order)</li>
+<li>Create a variable that holds the <em><strong>precipitation </strong></em>for the last 5 days (of the 14 days).</li>
+<li>Create a variable that holds the <em><strong>lowTemp</strong> </em>for the days 12 down to 6.</li>
+<li>Create a variable that holds the first 3 days and last 3 days of <em><strong>precipitation </strong></em><em><strong></strong></em></li>
+</ol>
+<p></p>
+<p>D) Negative subsetting:</p>
+<p>Subset <em><strong>precipitation </strong></em>using the sequence <strong>c(-1,-3,-5)</strong><em>.&nbsp;</em> Explain in comments what happened.</p>
+<p></p>
+<p>E) Vector Math:</p>
+<p>&nbsp; Convert the precipitation column from inches to centimeters (2.54cm = 1in).</p>
+<p></p>
+<p>F) Opening Data Frames:</p>
+<ol>
+<li>Save the file <a href="../Scripts/DowJones1980_2012.csv" target="_self">DowJones1980_2012.csv</a> <em> </em>to the <em><strong>data</strong> </em>folder in your RStudio Project
+<ul>
+<li>To save: right-click on link<strong></strong> and choose <strong></strong><em><strong>Save link as...</strong></em></li>
+</ul>
+</li>
+<li>Using <em><strong>read.csv()</strong></em>, save the data in <em><strong>DowJones1980_2012.csv</strong></em> to a data frame named <em><strong>dowJonesData</strong></em>
+<ul>
+<li>&nbsp;there is no header in this file and the separator is a space<em><strong></strong></em></li>
+</ul>
+</li>
+<li>Plot the data using the line: <em><strong>plot(dowJonesData$V2)</strong></em>
+<ul>
+<li>If you opened the file correctly the plot will be in the Plots tab and look like this:</li>
+</ul>
+</li>
+</ol>
+<p style="padding-left: 30px;"><em><img src="../Images/R-1-04-Plot.png" alt="" style="max-width: 100%;" data-d2l-editor-default-img-style="true" class="fs"></em></p>
+<p class="fig" style="padding-left: 30px;"><em>Plot of the Dow Jones data</em></p>
+<p><em></em></p>
+<p><br>Save the script as&nbsp;<em><strong>app1-04.r </strong></em>in your&nbsp;<em><strong>scripts&nbsp;</strong></em>folder and&nbsp;<em>email your Project Folder to the instructor</em>.</p>
+<p></p>
+<p><a rel="noopener" target="_blank" href="1-01_Setup_and_RStudio_Projects.html?ou=1247781#zip">Instructions for zipping the Project Folder are here.</a></p>
+<p></p>
+<p><em>If you have any questions regarding this application, feel free to</em>&nbsp;<em>email them to the instructor here</em>.</p>
+<h3>Questions to answer</h3>
+<p>Answer the following in comments inside your application script:</p>
+<ol>
+<li>What was your level of comfort with the lesson/application?</li>
+<li>What areas of the lesson/application confused or still confuses you?</li>
+<li>What are some things you would like to know more about that is related to, but not covered in, this lesson?</li>
+</ol>
+<h2 id="open-excel" class="trap">Trap: Opening CSV files in Excel</h2>
+<p>If you have Excel on your computer, then it is probable that Excel is the default program for opening CSV files.&nbsp; So, double-clicking on a CSV file will probably open it in Excel.&nbsp; The danger with opening CSV files in Excel is that Excel will sometimes reformat the data (especially date and money columns) and then give a message saying how the data needs to be saved to be preserved.&nbsp; <em class="hl">Do not save the file -- it will change the format of your data.</em>&nbsp; If you are editing a CSV file in Excel then I would save the results to a test file first to make sure Excel did not do anything untoward.</p>
+<p></p>
+<p><img src="../Images/R-1-04_Excel.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">Opening a CSV file in Excel -- the possible data loss warning is not something you want to heed</p>
+<p></p>
+<h2 class="extension" id="integer">Extension: Long and Short Integers</h2>
+<p><em><strong>L</strong></em> stands for <em><strong>Long integer</strong></em> -- <em><strong>long</strong> </em>meaning that this variable can hold a number larger than 256.&nbsp; In the old days, when space on computers was VERY expensive, programmers would save space by having a <em><strong>short integer</strong></em> and <em><strong>long integer</strong> </em>designation.&nbsp; So, if a programmer knew a number was small, they would assign it to a <em><strong>short integer</strong></em> to take up less space on the computer.&nbsp; Since temperatures in Lansing are generally going to be less than 256 (unless you are using the Kelvin system), it is safe to assign temperatures to short integers.&nbsp;</p>
+<p></p>
+<p>Nowadays, space is so cheap that we rarely care that we are using a tiny bit more memory than we need -- so <em><strong>L</strong></em> has become mostly a relic of the past.</p>
+<h2 id="stats" class="extension">Statistical functions on vectors</h2>
+<p>One huge advantage to using vectors is that most statistical function take vectors.&nbsp; So, you can easily perform statistical functions on a vector:</p>
+<blockquote>
+<p>tempHigh = c(65, 57, 61, 64, 59);</p>
+<p></p>
+<p>tempMean = mean(tempHigh);</p>
+<p>tempSD = sd(tempHigh);</p>
+<p>tempVar = var(tempHigh);</p>
+</blockquote>
+<p></p>
+<p></p>
+<blockquote>
+<p title="Environment" class="nn">tempMean: &nbsp; 61.2</p>
+<p>tempSD:&nbsp;&nbsp;&nbsp;&nbsp; 3.346...</p>
+<p>tempVar:&nbsp;&nbsp;&nbsp; 11.2</p>
+</blockquote>
+<p></p>
+<p>We will be doing more with this in later lessons...</p>
+<h2 id="square-round" class="extension">Extension: Square brackets [ ] vs. Round Brackets ( )</h2>
+<p><em class="hl">Square </em>brackets are used when you are <em class="hl">subsetting</em> or indexing a variable.</p>
+<p><em class="hl">Round</em> brackets are used when you are calling a <em class="hl">function.</em></p>
+<p>… and the two types of brackets are often used in the same command</p>
+<p>&nbsp;</p>
+<blockquote>
+<p>lowTemps [seq(from=12, to=2, by=-2)]</p>
+</blockquote>
+<p>says you are going to subset <b><i>lowTemps</i></b> using the function <b><i>seq()</i></b>.&nbsp;</p>
+<p>&nbsp;</p>
+<blockquote>
+<p title="Console" class="nn">&gt; lowTemps [seq(from=12, to=2, by=-2)]<br>[1] 43 40 50 45 38 43</p>
+</blockquote>
+<p></p>
+<p><b><i>seq()</i></b> is a function and produces a vector of numbers:</p>
+<blockquote>
+<p title="Console" class="nn">&gt; seq(from=12, to=2, by=-2)</p>
+<p>[1] 12 10 8 6 4 2</p>
+</blockquote>
+<p>&nbsp;</p>
+<p><b><i>c()</i></b> is also a function – <b><i>c</i></b> stands, unintuitively, for concatenate and will also produce a vector of numbers:</p>
+<blockquote>
+<p title="Console" class="nn">&gt; c(12,10,8,6,4,2)</p>
+<p>[1] 12 10 8 6 4 2</p>
+</blockquote>
+<p></p>
+<p><em><strong>lowTemps [c(12,11,10,9,8,7,6)]</strong></em> and <em><strong>lowTemps [seq(from=12, to=2, by=-2)] </strong></em>produce the same results.</p>
+<p>&nbsp;</p>
+<p>You can also subset <b><i>lowTemps</i></b> without a function:</p>
+<blockquote>
+<p title="Console" class="nn">&gt; lowTemps[5]<br>[1] 36<br>&gt; lowTemps[4:8]<br>[1] 38 36 45 32 50</p>
+</blockquote>
+<p>Technically,<em><strong> 4:8</strong></em> still calls a sequence function in the background – but that is really getting into the weeds!</p>
+<p>&nbsp;</p>
+<p><b><i>read.csv(), ggplot(), plot(), rm(), options()</i></b> are all functions (the latter 2 are from lines 2 and 3 in all lesson scripts).&nbsp; There will be a lot more about functions in this class starting with next lesson.</p>
+<p>&nbsp;</p></body></html>

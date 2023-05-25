@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <noscript>
+  <link rel="stylesheet" type="text/css" href="/content/DEVELOPMENT/2018/courses/DEV-belinsky-2018-BackendTest/Programming/editor.css">
+  </noscript>
+  <script src="https://cdn.jsdelivr.net/gh/QFCatMSU/OnlineClassBackEnd/module.js">
+  </script>
+</head>
+<body>
+
+<p class="pl">Functions 3</p>
+<p class="nl">Dataframe Modifications</p>
+<h1 class="title" id="title">2-01: GGPlot Introduction</h1>
+<h2>Purpose</h2>
+<ul>
+<li>Create a scatterplot in GGPlot</li>
+<li>Modify the scatterplot using components</li>
+<li>Add a second plot</li>
+</ul>
+<h3>Code for the lesson</h3>
+<div id="div3.1">
+<p>The <a href="https://raw.githubusercontent.com/QFCatMSU/FundProgUsingR/master/scripts/2-01_GGPlotIntroduction.R" target="_blank" rel="noopener" title="">script for this lesson</a> is here (right-click, Save link as)</p>
+<p>The <a target="_blank" href="../Scripts/Lansing2016Noaa.csv?_&amp;d2lSessionVal=riNM5urm05oGBmMKqsu4pT2m4&amp;ou=1247781" rel="noopener">Lansing2016Noaa.csv</a> is here (left-click)</p>
+</div>
+<h2>GGPlot package</h2>
+<p>We are going to use the GGPlot2 package so we need to add the GGPlot library to the script.</p>
+<p class="code">rm(list=ls());&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # clear the Environment tab</p>
+<p class="code">options(show.error.locations = TRUE);&nbsp; # show line numbers on error</p>
+<p class="code"><em class="hl">library(package=ggplot2);</em>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # include all GGPlot2 functions</p>
+<p></p>
+<p>This line gives your script access to all of the functions in the GGPlot2 package. This package is technically the third version of GGPlot -- but no one uses the first two versions (ggplot and ggplot1) anymore.</p>
+<h2 id="components">GGPlot components and subcomponents</h2>
+<p>For many years, RBase was the main plotting tool in R and it was based somewhat on the metaphor of drawing on a transparency. GGPlot is based more on a building metaphor.</p>
+<p></p>
+<p>The full list of functions in the GGPlot package is here:</p>
+<p><a href="https://ggplot2.tidyverse.org/reference/">https://ggplot2.tidyverse.org/reference/</a></p>
+<p></p>
+<p></p>
+<p>In GGPlot, one way to think about the functions is that they are components of a plot.&nbsp; Each time you call a GGPlot function, you are either adding a component to a plot or modifying an existing component.&nbsp; <em class="hl">For this class, I refer to the functions in GGPlot as components.</em></p>
+<p><em class="hl"></em></p>
+<p>The arguments within the functions can be thought of as subcomponents of the components.</p>
+<p></p>
+<p>A helpful resource is the cheat sheets, which exists for many popular packages -- the cheat sheet for GGPlot2 is the first one on this page:</p>
+<p><a href="https://www.rstudio.com/resources/cheatsheets/">https://www.rstudio.com/resources/cheatsheets/</a></p>
+<h2>Create plot data using GGPlot</h2>
+<p>We are going to create a scatterplot in GGPlot using data from <em><strong>Lansing2016NOAA.csv</strong></em></p>
+<blockquote>
+<p><span>&nbsp; # read in CSV file and save the content to weatherData</span></p>
+<p>&nbsp; weatherData = read.csv(file="data/Lansing2016NOAA.csv");</p>
+</blockquote>
+<p></p>
+<p>The scatterplot will be average temperature <em>(<strong>avgTemp </strong>column) </em>vs. humidity (<em><strong>relHum </strong></em>column).</p>
+<p></p>
+<p>The code to create a scatterplot using GGPlot is:</p>
+<p class="code">&nbsp; #### Part 1: Create a scatterplot ####<br>&nbsp; plot1 = ggplot( data=weatherData ) +<br>&nbsp; &nbsp; geom_point( mapping=aes(x=avgTemp, y=relHum) );<br>&nbsp; plot(plot1);</p>
+<p></p>
+<p><em><strong>Source</strong> </em>the script and this plot appears:</p>
+<p><img src="/content/enforced/1459992-SS22-FW-891-001-222214723-EL-02-344/GGPlot/Lessons/../Images/GGP-1-01-scatterplot.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig" id="plot1">Our first plot using GGPlot -- note that the x and y-axis labels match the <strong>mapped </strong>name</p>
+<h3>Taking out argument names</h3>
+<p>Below, I highlight the argument names in the code (which, in GGPlot, are the subcomponents):</p>
+<p class="code">&nbsp; #### Part 1: Create a scatterplot ####<br>&nbsp; plot1 = ggplot( <em class="hl">data</em>=weatherData ) +<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; geom_point( <em class="hl">mapping</em>=aes(<em class="hl">x</em>=avgTemp, <em class="hl">y</em>=relHum) );<br>&nbsp; plot(plot1);</p>
+<p></p>
+<p>We can remove the argument name and the script will execute exactly the same (i.e., the same plot will be rendered):</p>
+<p class="code">&nbsp; #### Part 2: Same scatterplot without argument names ####<br>&nbsp; plot2 = ggplot( weatherData ) +<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; geom_point( aes(avgTemp, relHum) );<br>&nbsp; plot(plot2);</p>
+<h3>Benefits of using argument names</h3>
+<p>You will often see people not using the argument names and, for the example above, this works.&nbsp; But it only works because we only used the default arguments for each function and used the arguments in the same order as they appeared in the function.</p>
+<p></p>
+<p>In this class, <em class="hl">we will (almost always) use argument names</em> because using argument names:</p>
+<ul>
+<li>makes the code more intuitive to the reader -- and making code more intuitive should (almost always) take precedence over saving space</li>
+<li>means that you can order the arguments however you want</li>
+<li>avoids bad assumptions about the ordering of arguments and their default values</li>
+</ul>
+<p></p>
+<p>The one exception where we will not use argument names is:</p>
+<p class="code p">plot(plotData)&nbsp;&nbsp; # no argument name used here</p>
+<p>instead of</p>
+<p class="code p">plot(x=plotData) # x is the argument name</p>
+<p></p>
+<p>There are multiple functions in R and GGPlot where the argument name <em><strong>x</strong></em> is used generically as the name for the first argument in a function.&nbsp; This is not intuitive when plotting because <em><strong>x</strong></em> is also used to refer to data that goes on the x-axis.&nbsp;</p>
+<p></p>
+<p>We will use the argument name <em><strong>x</strong></em> only when <em><strong>x</strong></em> refers to an axis (<em><strong>x=avgTemp</strong></em>) but not when <em><strong>x</strong></em> is a generic first-argument name (<em><strong>x=plotData</strong></em>).</p>
+<h2>Components of a GGPlot</h2>
+<p>Let's take a more detailed look at the three lines of code that created the scatterplot.</p>
+<p></p>
+<p>The function <em><strong>ggplot() </strong></em>creates a canvas area where all the components will be drawn.&nbsp; The argument <em><strong>data </strong></em>gives the data that will be used by the components.&nbsp; The data is set to the data frame <em><strong>weatherData</strong></em>:</p>
+<p class="code">&nbsp; plot1 = <em class="hl">ggplot( data=weatherData )</em> +<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; geom_point( mapping=aes(x=avgTemp, y=relHum) );<br>&nbsp; plot(plot1);</p>
+<p></p>
+<p>Next, we add the component, <em><strong>geom_point()</strong></em>, which adds a scatterplot component (<em><strong>geom_point</strong></em>) using the <em><strong>avgTemp</strong>&nbsp;</em>and <em><strong>relHum</strong>&nbsp;</em>columns from <em><strong>weatherData</strong></em>:</p>
+<p class="code">&nbsp; plot1 = ggplot( data=weatherData ) +<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <em class="hl">geom_point( mapping=aes(x=avgTemp, y=relHum) )</em>;<br>&nbsp; plot(plot1);</p>
+<p></p>
+<p>The canvas is saved to a variable named <em><strong>plot1:</strong></em></p>
+<p class="code">&nbsp; <em class="hl">plot1 </em>= ggplot( data=weatherData ) +<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; geom_point( mapping=aes(x=avgTemp, y=relHum) );<br>&nbsp; plot(plot1);</p>
+<p class="note">note: <strong>plot1 </strong>is a <strong>List </strong>variable -- <strong>List </strong>variable will be covered in a later lesson</p>
+<p></p>
+<p>And then <em><strong>plot()</strong></em> is used to display the canvas saved in <em><strong>plot1</strong></em>:</p>
+<p class="code">&nbsp; plot1 = ggplot( data=weatherData ) +<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; geom_point( mapping=aes(x=avgTemp, y=relHum) );<br>&nbsp; <em class="hl">plot(plot1)</em>;</p>
+<h3>GGPlot components</h3>
+<p>In GGPlot, you initialize a canvas and then add components to the canvas.&nbsp; The ( <em><strong>+</strong></em> ) symbol is used to add components, and you can string multiple components together.&nbsp; In the above example, there is the canvas initialization function (<em><strong>ggplot()</strong></em>) and one component (<em><strong>geom_point()</strong></em>):</p>
+<p></p>
+<p>1) <em><strong>ggplot()</strong></em> is used to initialize a GGPlot canvas with the data from <em><strong>weatherData</strong></em>:<em><strong></strong></em></p>
+<p class="code">plotData = <em class="hl">ggplot( data=weatherData )</em> +</p>
+<p class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; geom_point( mapping=aes(x=avgTemp, y=relHum) );</p>
+<p></p>
+<p>2) <em><strong>geom_point()</strong></em> is a plotting component that creates a scatterplot <em><strong></strong></em></p>
+<p class="code">plotData = ggplot( data=weatherData ) +<em class="hl"> </em></p>
+<p class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <em class="hl">geom_point( mapping=aes(x=avgTemp, y=relHum) )</em>;</p>
+<h3>GGPlot mapping and aesthetics (aes)</h3>
+<p><em class="hl">Most plotting components in GGPlot contain a subcomponent called <strong>mapping</strong></em>.&nbsp; <em><strong>mapping</strong> </em>is used to describe the relationship between the data and the plot.&nbsp; Or, another way to put it, <em><strong>mapping</strong> </em>describes what data gets represented on the plot (in the above case, <b><i>avgTemp </i></b>and <em><strong>relHum</strong></em>) and how the data gets represented (e.g., <b><i>avgTemp </i></b>on x-axis, <b><i>relHum </i></b>on y-axis):&nbsp; <em class="hl"><br></em></p>
+<p></p>
+<p class="code">plotData = ggplot( data=weatherData ) +</p>
+<p class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; geom_point( mapping=<em class="hl">aes(x=avgTemp, y=relHum)</em> );</p>
+<p></p>
+<p>The <em><strong>mapping</strong> </em>is set to a <em class="hl">mapping element</em> called an aesthetic (<em><strong>aes</strong></em>).&nbsp; The concept of an aesthetic comes into play when we are generating legends and creating data categories, which is a topic we delve much deeper into in the GGPlot class.</p>
+<h2>Adding more components to the canvas</h2>
+<p>Let's say we want to make the three following modifications to the plot:</p>
+<ol>
+<li>add a title and change the axes labels</li>
+<li>change the numeric tick marks on the y-axis</li>
+<li>change the direction of the x-axis labels&nbsp;</li>
+</ol>
+<p></p>
+<p>To do this we will add <em class="hl">three new components</em> to the canvas:</p>
+<ol>
+<li><em><strong>labs() </strong></em>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; # label component</li>
+<li><em><strong>scale_x_continuous()</strong></em> &nbsp;&nbsp;&nbsp; # x-scaling component (there is a corresponding y-scaling component)</li>
+<li><em><strong>theme()&nbsp;</strong></em>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; # theme component</li>
+</ol>
+<p></p>
+<p>We add components using (<em><strong> +</strong> </em>) and subcomponents are the arguments within the components:<em class="note"></em></p>
+<p class="code">&nbsp; #### Part 3: Adding components to the plot ####</p>
+<p class="code">&nbsp; plot3 = ggplot( data=weatherData ) +<br>&nbsp; &nbsp; geom_point( mapping=aes(x=avgTemp, y=relHum) ) <em class="hl">+</em><br>&nbsp; &nbsp; labs( title="Humidity vs Temperature",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; subtitle="Lansing, MI -- 2016",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; x = "Average Temperatures (Fahrenheit)",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; y = "Relative Humidity") +<br>&nbsp; &nbsp; scale_x_continuous( breaks = seq(from=10, to=80, by=10) )&nbsp;<em class="hl">+</em></p>
+<p class="code">&nbsp; &nbsp; theme( axis.text.x=element_text(angle=90, vjust=0.5) );<br>&nbsp; plot(plot3);</p>
+<p></p>
+<p><em class="ref" id="r-plus">Trap: putting the ( + ) on the next line</em></p>
+<p></p>
+<p><img src="/content/enforced/1459992-SS22-FW-891-001-222214723-EL-02-344/GGPlot/Lessons/../Images/GGP-1-01-Components.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">Scatterplot with a few added components</p>
+<h3>The Components in detail</h3>
+<p class="code">&nbsp; &nbsp; labs( title="Humidity vs Temperature",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; subtitle="Lansing, MI -- 2016",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; x = "Average Temperatures (Fahrenheit)",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; y = "Relative Humidity") +</p>
+<p></p>
+<p>When we search in the <em><strong>Help</strong> </em>tab for <em><strong>labs()</strong></em> (<em class="ref" id="r-help">fig ##</em>) we see that it has many subcomponents (or arguments) that can be changed including:</p>
+<ul>
+<li><em><strong>label</strong></em>: the title</li>
+<li><em><strong>subtitle</strong></em>: a secondary title</li>
+</ul>
+<p></p>
+<p>A couple of notes about the information in the <em><strong>Help</strong></em>:</p>
+<ul>
+<li>There are many ways to add axes labels, <em><strong>labs() </strong></em>sort of merges all of these methods into one component.&nbsp; Because of this, the <em><strong>Help </strong></em>section does not explicitly show the <em><strong>x </strong></em>and <em><strong>y</strong></em> arguments (although, the examples below do).&nbsp; This is one area where the <em><strong>Help </strong></em>could do a better job reflecting the functionality of a function.</li>
+<li><em><strong>waiver()</strong></em> is the default value given by the plotting function.</li>
+</ul>
+<p><em class="note"></em></p>
+<p><img src="/content/enforced/1459992-SS22-FW-891-001-222214723-EL-02-344/GGPlot/Lessons/../Images/GGP-1-01-labs.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig" id="help">Using the <strong>Help </strong>tab in RStudio to find info about GGPlot components</p>
+<p></p>
+<p class="code nn">scale_x_continuous( breaks = seq(from=10, to=80, by=10)&nbsp;)&nbsp;</p>
+<p></p>
+<p><em><strong>scale_x_continuous()</strong></em> is the component used when you want to modify an x-axis that has continuous values. <br>There are many subcomponents (<em class="ref" id="r-scale_y">fig ##</em>) that can be changed in <em><strong>scale_x_continuous() </strong></em>and the corresponding <strong></strong><em><strong>scale_y_continuous()</strong></em>.&nbsp; We modified one subcomponent, <em><strong>breaks</strong>, </em>by setting it to a sequence from <strong>10</strong> to <strong><em>8</em>0</strong> with numeric values place at intervals of <strong>10</strong>.&nbsp;&nbsp;</p>
+<p></p>
+<p class="note">note:<strong></strong><em><strong> scale_x_discrete()</strong></em> is used to modify an x-axis with discrete values.&nbsp;&nbsp;</p>
+<p><img src="/content/enforced/1459992-SS22-FW-891-001-222214723-EL-02-344/GGPlot/Lessons/../Images/GGP-01-02-ScaleYCont.PNG" alt="" style="max-width: 100%;" data-d2l-editor-default-img-style="true" class="fs"></p>
+<p class="fig" id="scale_y">scale_x_continuous help page</p>
+<p></p>
+<p class="code nn">theme( axis.text.x=element_text(angle=90, vjust=0.5) )</p>
+<p></p>
+<p>In this example we changed one subcomponent in <em><strong>theme()</strong></em> called <em><strong>axis.text.x</strong></em> and set it to an <em><strong>element_text()</strong></em> that modifies the text by rotating it to an <em><strong>angle</strong></em> of <strong>90</strong> degrees and centering the text (<em><strong>vjust</strong><strong>=0.5</strong></em>).&nbsp; <em class="note">Note: the default for <strong>vjust is 1, </strong></em><span class="note">which means the text will be vertically justified to the bottom.&nbsp; <strong></strong></span><em class="note"><strong>vjust=0 </strong>means the text will be vertically justified to the top.</em></p>
+<p></p>
+<p>Broadly speaking, <em><strong>theme()</strong></em> is used to make modifications to the canvas (the plots and the background) that are not data related.&nbsp; <em><strong>theme()</strong> </em>is probably the most used component in GGPlot, and we could spend many lessons going through all the subcomponents of <em><strong>theme()</strong></em>.&nbsp;</p>
+<p></p>
+<p><img src="/content/enforced/1459992-SS22-FW-891-001-222214723-EL-02-344/GGPlot/Lessons/../Images/GGP-01-02-Theme.PNG" alt="" style="max-width: 100%;" data-d2l-editor-default-img-style="true" class="fs"></p>
+<p class="fig"><strong>theme()</strong> component help page (yes, there is a lot there!)</p>
+<h3>For more help with components</h3>
+<p>A good place to find more information about components in GGPlot is the <strong>Help</strong> tab in the lower-right corner of RStudio.&nbsp; The <em><strong>Help</strong> </em>tab provides information directly from <a href="https://ggplot2.tidyverse.org/reference/">https://ggplot2.tidyverse.org/reference/</a>, which is the official webpage for GGPlot. &nbsp;</p>
+<h2>Getting rid of the grey (themes)</h2>
+<p>The default GGplot theme, which uses the gray background is not one of my favorite.&nbsp; Luckily, GGPlot makes it easy to change the theme. &nbsp;<a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" target="_blank" rel="noopener">The components that do this, called complete themes, are on this page.</a> &nbsp;I will change to the black-white theme:</p>
+<p></p>
+<blockquote>
+<p>&nbsp; #### Part 4: Changing the theme ####<br>&nbsp; plot5 = ggplot( data=weatherData ) +<br>&nbsp; &nbsp; geom_point( mapping=aes(x=avgTemp, y=relHum) ) +<br>&nbsp; &nbsp; labs( title="Humidity vs Temperature",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; subtitle="Lansing, MI -- 2016",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; x = "Average Temperatures (Fahrenheit)",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; y = "Relative Humidity") +<br>&nbsp; &nbsp; scale_x_continuous( breaks = seq(from=10, to=80, by=10) ) +<br>&nbsp; &nbsp; theme_bw() +<br>&nbsp; &nbsp; theme( axis.text.x=element_text(angle=90, vjust=0.5) );<br>&nbsp; plot(plot4);</p>
+</blockquote>
+<p></p>
+<p><img src="/content/enforced/1459992-SS22-FW-891-001-222214723-EL-02-344/GGPlot/Lessons/../Images/GGP-1-01-ChangeTheme.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">Setting the GGPlot theme to black and white</p>
+<h3>Complete themes must come before theme changes</h3>
+<p><em class="hl">A complete theme (e.g., <strong>theme_bw()</strong>) overwrites the whole theme for the canvas</em>.&nbsp; This means it will overwrite any <em><strong>theme</strong></em> changes you previously made.&nbsp; In this code, <em><strong>theme_bw() </strong></em>overwrite the <em><strong>theme()</strong></em> on the line before:</p>
+<blockquote>
+<p>&nbsp; #### Part 5: Changing the theme --- oops, undoes theme ####<br>&nbsp; plot5 = ggplot( data=weatherData ) +<br>&nbsp; &nbsp; geom_point( mapping=aes(x=avgTemp, y=relHum) ) +<br>&nbsp; &nbsp; labs( title="Humidity vs Temperature",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; subtitle="Lansing, MI -- 2016",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; x = "Average Temperatures (Fahrenheit)",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; y = "Relative Humidity") +<br>&nbsp; &nbsp; scale_x_continuous( breaks = seq(from=10, to=80, by=10) ) +</p>
+<p>&nbsp;&nbsp;&nbsp; <em class="hl">theme( axis.text.x=element_text(angle=90, vjust=0.5) )</em> + <br>&nbsp; &nbsp; <em class="hl">theme_bw()</em>;&nbsp; <em class="note"># this complete theme change will remove the theme change above</em><br>&nbsp; plot(plot5);</p>
+</blockquote>
+<p></p>
+<p><img src="/content/enforced/1459992-SS22-FW-891-001-222214723-EL-02-344/GGPlot/Lessons/../Images/GGP-1-01-OverwriteTheme.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">The complete theme change removed the theme change above it (the axis labels are no longer at 90 degrees)</p>
+<h2>Adding a second plot (a linear regression)</h2>
+<p>Next, we will add a regression line to the canvas.&nbsp; This is done using the plotting component <em><strong>geom_smooth()</strong></em>.&nbsp;</p>
+<p></p>
+<p>Since <em><strong>geom_smooth()</strong></em> adds data to the plot area, we need to use the <em><strong>mapping</strong> </em>subcomponent to tell<em><strong> GGPlot</strong></em> what is being added to the plot area and how. In this case, we are mapping <em><strong>relHum</strong> </em>vs. <em><strong>avgTemp</strong></em>.</p>
+<p></p>
+<p>We also add the <em><strong>method</strong> </em>subcomponent to <em><strong>geom_smooth()</strong></em> to set the smoothing method we will use on the data.&nbsp; In this case, linear model (<em><strong>lm</strong></em>).</p>
+<blockquote>
+<p>&nbsp; #### Part 6: Adding a regression line ####<br>&nbsp; plot6 = ggplot( data=weatherData ) +<br>&nbsp; &nbsp; geom_point( mapping=aes(x=avgTemp, y=relHum) ) +<br>&nbsp; &nbsp; geom_smooth( mapping=aes(x=avgTemp, y=relHum),&nbsp;<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;method="lm" ) +<br>&nbsp; &nbsp; labs( title="Humidity vs Temperature",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; subtitle="Lansing, MI -- 2016",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; x = "Average Temperatures (Fahrenheit)",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; y = "Relative Humidity") +<br>&nbsp; &nbsp; scale_x_continuous( breaks = seq(from=10, to=80, by=10) ) +<br>&nbsp; &nbsp; theme_bw() +<br>&nbsp; &nbsp; theme( axis.text.x=element_text(angle=90, vjust=0.5) );<br>&nbsp; plot(plot6);</p>
+</blockquote>
+<p></p>
+<p><img src="../Images/R-2-04-LinearRegression.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig" id="linear-model">Adding a linear model component</p>
+<h3>Overlapping plots</h3>
+<p>When two plots overlap, as the linear model and the scatterplot do in <em id="r-linear-model" class="ref">fig ##</em>, the component that is added later to the <em><strong>ggplot() </strong></em>canvas overlaps the earlier component.&nbsp; So, in the above case, the linear model overlaps the scatterplot.&nbsp;</p>
+<p></p>
+<p>To have the scatterplot overlap the linear model, just switch the two components around:</p>
+<blockquote>
+<p>&nbsp; #### Part 7: Reversing the overlapping plots ####<br>&nbsp; plot7 = ggplot( data=weatherData ) +<br>&nbsp; &nbsp; geom_smooth( mapping=aes(x=avgTemp, y=relHum),&nbsp;<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;method="lm" ) +<br>&nbsp; &nbsp; geom_point( mapping=aes(x=avgTemp, y=relHum) ) +<br>&nbsp; &nbsp; labs( title="Humidity vs Temperature",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; subtitle="Lansing, MI -- 2016",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; x = "Average Temperatures (Fahrenheit)",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; y = "Relative Humidity") +<br>&nbsp; &nbsp; scale_x_continuous( breaks = seq(from=10, to=80, by=10) ) +<br>&nbsp; &nbsp; theme_bw() +<br>&nbsp; &nbsp; theme( axis.text.x=element_text(angle=90, vjust=0.5) );<br>&nbsp; plot(plot7);</p>
+</blockquote>
+<p></p>
+<p><img src="../Images/r-2-04-SwitchComponents.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">Switching the order of the components to change which plot is on top</p>
+<h2>Application</h2>
+<p class=""><em class="hl">If you have any questions regarding this application, feel free to</em> <em class="email">email them to the instructor here</em>.&nbsp; <em class="hl">You can attach the whole Project Folder as a<a href="01-01%20RStudio%20and%20Projects.html?ou=457124#zip" target="_blank" rel="noopener"> zipped file</a>.</em></p>
+<p></p>
+<p>A) Create a script file names <em><strong>app</strong><strong><em>2</em>-01.r </strong></em>in your RStudio Project's <em><strong>scripts </strong></em>folder</p>
+<p></p>
+<p>B) Looking at the GGPlot cheat sheet (or the GGPlot functions page) from <em id="r-components" class="ref">section ##</em>, answer the following in comments in <em><strong>app2-01.r</strong></em>:<span style="text-decoration: underline;"><strong></strong></span></p>
+<ol>
+<li>What component (function) would be used to create a text plot?</li>
+<li>What component would you use to change the breaks on the x-axis if the values were in date format?</li>
+</ol>
+<p></p>
+<p>C) Create a scatterplot in GGPlot in your script:</p>
+<ol>
+<li>Create a scatterplot of <em><strong>stnPressure </strong></em>vs <em><strong>windSpeed</strong> </em>using the data from Lansing2016NOAA.csv</li>
+<li>Add a title and labels the axes appropriately</li>
+<li>Change the plot theme to one of your choice</li>
+<li>Change the angle of the <em><strong>stnPressure </strong></em>axis labels to 45 degrees</li>
+<li>Change the <em><strong>stnPressure </strong></em>breaks to go up by 0.1</li>
+<li>Have the<strong> wind-speed </strong>axis only display three values: <strong>3, 12, 21</strong><strong></strong></li>
+<li>Add a linear regression of <em><strong>stnPressure </strong></em>vs <em><strong>windSpeed</strong></em> that appears behind the scatterplot</li>
+<li>Challenge: Use the <em><strong>limits </strong></em>argument in <em><strong>scale_x_continuous</strong></em> and <em><strong>scale_y_continuous</strong></em> to remove the top and right parts of the plot where there are only a couple points.<br>
+<ul>
+<li><em><strong>limits </strong></em>is set equal to a vector with two values -- so <em><strong>limits = c(0,100) </strong></em>would mean the axis would go from 0 to 100</li>
+</ul>
+</li>
+</ol>
+<h3>Questions to answer</h3>
+<p>Answer the following in comments inside your application script:</p>
+<ol>
+<li>What was your level of comfort with the lesson/application?</li>
+<li>What areas of the lesson/application confused or still confuses you?</li>
+<li>What are some things you would like to know more about that is related to, but not covered in, this lesson?&nbsp;</li>
+</ol>
+<h2 class="trap" id="plus">Trap: Putting the ( + ) on the next line</h2>
+<p>The ( <strong>+</strong> ) commands strings together the components of a GGPlot.&nbsp; A common mistake is to put the ( + ) at the beginning of the following line:</p>
+<p></p>
+<p class="code">source(file="scripts/reference.R"); <br>packageData = read.csv(file="data/CRANpackages.csv");<br><br>plotData = ggplot( data=packageData ) <br>&nbsp; &nbsp; + geom_point( mapping=aes(x=Date, y=Packages) ) <br>&nbsp; &nbsp; + ggtitle(label="Packages in CRAN (2001-2014)") <br>&nbsp; &nbsp; + scale_y_continuous(breaks = seq(from=0, to=6000, by=500)) <br>&nbsp;&nbsp;&nbsp; + theme(axis.text.x=element_text(angle=90, hjust=1));<br>plot(plotData);</p>
+<p></p>
+<p>This will result in an error and a surprisingly wise assessment of the problem fro the R debugger.<em class="hl"></em></p>
+<p></p>
+<p><img src="/content/enforced/1459992-SS22-FW-891-001-222214723-EL-02-344/GGPlot/Lessons/../Images/GGP-01-02-NewLineError.PNG" alt="" style="max-width: 100%;" data-d2l-editor-default-img-style="true" class="fs"></p>
+<p class="fig">Error when putting the ( + ) on the next line</p>
+<p></p>
+<p>The reason for this error is that R thinks that line 5:</p>
+<p class="code nn">plotData = ggplot( data=packageData )</p>
+<p>is a fully-formed and completed command&nbsp;</p>
+<p></p>
+<p>And R does not understand why line 6 starts a new command with a ( <strong>+</strong> )</p>
+<p class="code nn">&nbsp; + geom_point( mapping=aes(x=Date, y=Packages) )</p>
+<p></p>
+<p>A ( <strong>+</strong> ) at the end of a line tells R to append the next line to the current line.&nbsp; A ( <strong>+</strong> ) at the beginning of a line tells R to perform the mathematical operation addition.</p>
+</body></html>
