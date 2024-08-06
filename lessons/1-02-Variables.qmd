@@ -1,0 +1,487 @@
+---
+title: "1-02: Variables"
+short: "1-02"
+# special characters for highlighting code : «»
+---
+
+### Changes
+
+-   add downloadable script for lesson?
+
+-   redo images
+
+-   unexpected end of document error
+
+    -   inconsistently placed!
+
+-   situation where semicolons help detect errors
+
+-   show error lines is NOT default... it is a session variable
+
+    -   only works for object/function not found error outside of for loops and functions
+
+-   =: assigns if var , sets if argument
+
+-   \<- always assigns
+
+## Purpose
+
+-   Discuss what a programming variable is and how it compares to an algebraic variable.
+
+-   Discuss naming conventions for variables.
+
+-   Assign and reassign values to variables
+
+-   Introduce in-line comments.
+
+## Questions about the material...
+
+If you have any questions about the material in this lesson, feel free to email them to the instructor, {{< var instructor.name >}}, at {{< var instructor.email >}}.
+
+## Programming structures
+
+In all programming languages there are basically 4 main structures that cover almost every aspect of programming:
+
+1.  **Variables**: named storage area for values used in script
+
+2.  **If-Else Statements**: conditional execution of code
+
+3.  **For Loops**: execution of code a fixed number of times
+
+4.  **Functions**: storing commonly ised code
+
+ 
+
+We will go through all 4 of these in the class and in the lesson we will cover the first, Variables.
+
+## Different types of variables
+
+***Variables*** is a widely used term found in many different fields -- however the definition of variable is not consistent.  For this reason, I will always modify the term ***variable*** with the [type]{.hl}of variable (e.g., [algebraic]{.hl} variable, [experimental]{.hl} variable, [statistical]{.hl} variable) with the exception of a programming variable.  If you see the term variable without anything preceding it, then you can assume it refers to a programming variable.
+
+### Algebraic variables
+
+In Physics, we use algebraic variables to describe the relationship between physical properties.  For example, velocity can be expressed algebraically as  ***v=d/t*** where ***v***, ***d***, and ***t*** are symbols representing the physical properties of velocity, distance, and time.  The formula states that the relationship ***v=d/t*** is maintained even as the numbers change.
+
+ 
+
+In this case, ***v, d***, and ***t*** are all algebraic variables that have the following properties:
+
+1.  **Name**: ***v, d, t*** (name is synonymous with symbol)
+
+2.  **Type**: numeric (***v***, ***d***, and ***t*** are all numbers)
+
+3.  **Value**: given by situation -- the value can be known or unknown
+
+### Variables in porogramming
+
+In programming, **variables** work in a similar way. Variables in programming are named storage locations in memory that hold information.
+
+ 
+
+This information could be
+
+-   a runner's distance, time, and velocity
+
+-   the number of fish caught in a day or the name of the lake the fish were caught in
+
+-   the temperature, humidity, or wind speed
+
+ 
+
+Like algebraic variables, variables in programming have a ***name***, ***type***, and ***value***.
+
+#### Name
+
+The name corresponds to the symbol in our physics example above -- it is [how the variable is represented]{.hl} in the script.  The name is used to reference the storage location in memory that holds the information.  For our initial example, we will use the symbols (***v,d,t***) as the variable names.  Later in this lesson, I will talk about variable naming conventions.
+
+#### Value 
+
+The value is the information that is stored in the location pointed to by the name, so when ***v = 10*** , that means there is a storage location in memory named ***v,*** and in that location, there is the number ***10*** ([note: we will not worry about units]{.note}).
+
+[Trap: Constants in programming]
+
+#### Type
+
+The type describes what kind of value is being stored in memory which, in turn, tells R what kind of operations can be performed on the variable. Distance, velocity, and time all have numeric values*,* and mathematical operations can be performed on them.
+
+ 
+
+**Numeric** is one type of value a variable can have, some of the other types of values are:
+
+-   **strings** (also called **characters**): a text value (e.g., a lake name)
+
+-   **categorical**: a limited set of text values (e.g., the four seasons or the five Great Lakes)
+
+-   **Boolean**: a TRUE/FALSE statement
+
+-   **Date**: a date in day-month-year format
+
+ 
+
+We will talk more about the non-numeric variable types in future lessons, for now, we will stick with numeric variables.
+
+## Using variables in a script
+
+We are going to create a simple script that calculates velocity given distance and time. 
+
+There are three variables in this script: ***d***, ***v***, and ***t***
+
+ 
+
+The steps for making this script are:
+
+1.  Open Your RStudio Project (or create one if you do not have one)
+
+2.  Open a new script file
+
+3.  Add code to the script
+
+4.  Execute (***Source***) the code
+
+### Open your RStudio Project
+
+It would be best to use the same RStudio Project for the whole class and you can use the one you created last lesson.
+
+ 
+
+There are multiple ways to open an RStudio Project:
+
+-   Open your Project Folder in a file manager and double-click the **\*.proj** file
+
+-   In RStudio, click ***File*** -\> ***Open Project...*** -\> navigate to the Project Folder and click the **\*.proj** file
+
+-   In RStudio, click ***File*** -\> ***Recent Projects*** -\> choose the RStudio Project
+
+-   Use the Projects dropdown menu in the top-right corner of RStudio (@fig-projDropdown)
+
+![The Project dropdown menu in RStudio -- something I use all the time!](images/R-1-01_ProjectsDropdown.png){#fig-projDropdown .fs}
+
+### Open a new script
+
+Inside your RStudio Project, click on ***File -\> New File -\> R Script*** (@fig-openNewFile) .  An empty file named ***Untitled1*** will appear as a tab in the File Editor window.  Save the file as ***lesson1-02.r*** in your ***script*** folder.
+
+![Opening a new R file in RStudio](images/R-1-03-OpeningScriptFile.jpg){#fig-openNewFile .fs}
+
+### Add code to the script
+
+Copy and paste the following lines into the code window and click the ***Source*** button (or ***Code*** -\> ***Source***):
+
+\# the next two lines should be at the top of all your scripts
+
+``` r
+rm(list=ls());    # Clear out the Environment     
+  
+# create two variables: d and t and give them values
+d = 100;
+t = 20;
+# create a variable v that is calculated using d and t
+v = d/t;
+```
+
+Lines **1** cleans out the **Environment** tab each time the script is executed.  This provides you with a clean slate each time you run a script and I put this line at the top of most of my scripts.
+
+Line **1** also has an ***inline comment*** that starts with **\#**. Everything after the **\#** does not get executed and is informational.
+
+ 
+
+Lines **3** and **6** are full comment lines – again, they are there to make the script easier to understand.  You can take them out and the script will produce the same result.
+
+ 
+
+Lines **4**, **5**, and **7** are where the real action occurs and each line contains a [variable assignment]{.hl}:
+
+-   Line **4** assigns the value ***100*** to the variable named ***d***
+
+-   Line **5** assigns the value ***20*** to the variable named ***t***
+
+-   Line **7** assigns the value of the calculation ***d/t*** to the variable named ***v***.
+
+ 
+
+Lines **1, 4, 5,** and **7** all have semicolons ( ***;*** ) at the end.  The semicolon designates the end of a programming command just like the period designates the end of a sentence.  The semicolon is optional in R and is often not used, but [I highly recommend the use of semicolons]{.hl} in all of your scripts -- they make code easier to debug, help you think about the flow of your code, and are required in most programming languages.
+
+ 
+
+[Trap: Assignment vs. Equality Operations]
+
+[Extension: alternate assignment operator]
+
+### Execute your code -- the Environment tab
+
+Click ***Source*** to execute your R code ( @fig-vdtScript ).  Your RStudio window should look similar to this:
+
+![Executing (sourcing) the velocity-distance-time script](images/R-1-03-SourcevdtScript.jpg){#fig-vdtScript .fs}
+
+Notice that the **Environment** tab displays the values for the variables ***v***, ***d***, and ***t***. The ***Environment*** tab displays every variable that is in your script and is a very useful tool for both debugging and viewing the results of your script.
+
+ 
+
+Try changing the values for ***d*** and ***t*** (lines 7 and 8) and click ***Source*** again to see how the values in the **Environment** tab change.
+
+## Re-assigning values to variables
+
+Variables get their namesake from the fact that their values can change.
+
+ 
+
+In the code below:
+
+1.  ***d*** is assigned the value ***100*** in line 8
+
+2.  ***d*** to used to calculate ***v*** in line 10
+
+3.  ***d*** is assigned a new value of ***400*** in line 11
+
+ 
+
+Run the code below to see what happens
+
+``` r
+rm(list=ls());    # Clear out the Environment    
+  
+# create three variables: d, t, and v
+# give d and t values and use them to calculate v
+d = 100;   # assign d the value 100
+t = 20;
+v = d/t;   # use d to calculate v
+d = 400;   # re-assigns d to 400
+```
+
+In the **Environment** tab the value of ***v*** remains ***5*** even though ***d*** changes. 
+
+![Changing d in the script does not retroactively change v](images/R-1-03-ChangeDAfter.jpg){#fig-noRetroactiveChange .fs}
+
+The value of ***v*** remains ***5*** because line ***10*** assigns the value of ***d/t*** to ***v.*** But, as of line **8**, ***d*** is still equal to **100***. **v*** does not get updated because one of the variables used to calculate it, ***d***, changes after the calculation is made. The script runs in order, and [variables are not updated retroactively.]{.hl}
+
+ 
+
+In other words, ***v*** will remain ***5*** until it is explicitly assigned another value.
+
+ 
+
+[Trap: Assigning nonexistent variables]
+
+### Reassigning values to a variable
+
+What happens if you add the line ***v=d/t*** at the end of the script? Try the following code and click ***Source***
+
+``` r
+rm(list=ls());    # Clear out the Environment    
+  
+# create three variables: d, t, and v
+# give d and t values and use them to calculate v
+d = 100; # assign d the value 100
+t = 20;
+v = d/t; # use d to calculate v
+d = 400; # re-assigns d to 400
+v = d/t; # re-assign v using the new value of d
+```
+
+Notice that now the value of ***v*** has changed.  This is because line 11 [assigns a new value]{.hl} to ***v*** calculated using the value of ***d*** from line 10.
+
+![Assign a new value to v after assigning the new value to d](images/R-1-03-VelocityCalcAtEnd.jpg){#fig-reassignValue .fs}
+
+## In-line and whole-line comments
+
+The code in the previous script has examples of [whole-line comments]{.hl} (lines 2, 6, and 7) and [in-line comments]{.hl}(lines 8, 10, 11, and 12).  R ignores everything after the ( ***\#*** ) but still executes everything on the line before the ( ***\#*** ).  In-line comments are a nice way to give a quick description of the code on a line, whereas whole-line comments are better for more robust descriptions.
+
+## Naming variables
+
+The problem with variable names like ***v***, ***d***, and ***t*** is that they are not very descriptive.  It is good programming practice to give names that are descriptive so that people reading your code can more easily understand what is going on.  So, the first step would be to spell the names out, for example: ***velocity***, ***distance***, and ***time***.
+
+ 
+
+However, a script solving for velocity will probably be calculating multiple velocities.  Perhaps the script is calculating the velocity of both a runner and a car -- the variable names should reflect this. 
+
+### Naming Rules
+
+There are a few rules for naming a variable:
+
+1.  It must start with a letter
+
+2.  It can only contain letters, numbers, or the underscore ( **\_** )
+
+    -   note: dots ( ***.*** ) are also accepted in R but dots are not accepted in most programming languages
+
+3.  There can be no spaces in the name
+
+4.  There are system reserved words you cannot use as variable names (e.g., **if**, **else**, ***for***, **while**, **TRUE**, **FALSE**, **function**, **next**...).  We will learn what these reserved words mean in future lessons.
+
+### Naming Conventions
+
+There are two common programming conventions for variables names:
+
+1.  Capitalize the first letter of every word except the first: ***runnerVelocity***, ***runnerDistance***, ***runnerTime***
+
+2.  Put an underscore ( **\_** ) between each word:  ***runner_velocity, runner_distance, runner_time***
+
+ 
+
+[Trap: Case counts in variable names]\
+ 
+
+For all your class work, you need to use these two conventions.  I will use the first convention in most of my examples.
+
+ 
+
+[Note: R programmers often use dots in variable names: ***runner.velocity***, ***runner.distance***.  I do not recommend this as this method will not work in most other programming languages.]{.note}
+
+## Application
+
+Two runners run a 400 meter race.  The first runner takes 127 seconds, the second runner takes 140 seconds.
+
+ 
+
+Write a script that:
+
+1.  Calculates each runner's speed in meters/second
+
+2.  Calculates each runner's speed in miles/hour
+
+    -   3600 seconds = 1 hour
+
+    -   1609 meters = 1 mile
+
+So, 4 velocities in all.
+
+ 
+
+Make sure *you* [use variables for all values]{.hl} and follow proper variable naming convention.
+
+After your ***Source*** the script, make sure you can see all of the variables, with the correct answer, in the ***Environment*** tab.
+
+ 
+
+{{< include ../assets/AppInstructions.qmd >}}
+
+### Challenge
+
+Use random values for the times.  The easiest way to get a random number in R is to use the ***sample()*** function:
+
+ 
+
+Examples:
+
+``` r
+randomNum1 = sample(x=10:20, size=1);  # number between 10 and 20 (inclusive)
+randomNum2 = sample(x=-5:5, size=1);   # number between -5 and 5 (inclusive)
+```
+
+## Trap: Assignment vs. Equality Operations
+
+The equal sign ( ***=*** ) plays a different role in programming than in Algebra.
+
+ 
+
+In algebra, the equal sign is an [equality operator]{.hl} saying that the two sides are equivalent to each other.
+
+-   So, in algebra, ***v = d/t*** says that ***v*** *is* [equivalent]{.hl}*to **d*** divided by ***t***
+
+-   In this case, ***v*** will change if ***d*** or ***t*** changes
+
+ 
+
+In programming, the equals sign is an [assignment operator]{.hl} and it says that the variable on the left side will be assigned the value calculated on the right side.
+
+-   So, in programming, ***v = d/t*** says that ***v*** will be [assigned]{.hl}the calculation of  ***d*** divided by ***t***
+
+-   In this case, ***v*** will not change if ***d*** or ***t*** changes (unless ***v*** is [reassigned]{.hl}the calculation ***d/t*** after ***d*** or ***t*** changes).  The value of ***v***, once assigned, is independent of the variables used in the calculations.
+
+### Treating the equal sign as an equality operation
+
+A very common error in programming is to treat the assignment operator ( ***=***) as an equality operator.
+
+The following statements make sense in algebra as equality statements but will cause errors in R.
+
+``` r
+d/2 = 100; # d/2 is not a valid variable -- you cannot "assign" a value to "d/2"
+           #                                (d = 100*2 is valid)
+20 = t;    # '20' cannot be assigned the value of 't' (t = 20 is valid)
+d/t = v;   # d/t is not a valid variable (v = d/t is valid)
+```
+
+Put the above lines of code in your script individually.  You will notice an error message gets displayed in the **Console Window**.  The error messages are often unintuitive but they do give you a line number.
+
+ 
+
+In the following example (@fig-assignmentError), line 9 contains an error and the lines below it never gets executed:
+
+``` r
+# the next two lines should be at the top of all your scripts
+rm(list=ls());
+options(show.error.locations = TRUE);
+  
+# create three variables: d, t, and v
+# give d and t values and use them to calculate v
+d = 100;
+20 = t;   # error!
+v = d/t;
+```
+
+Notice that the execution of the script stops as soon as an error occurs -- so, in this case, line **10**, which calculates ***v***, never gets executed.
+
+![Assignment error in the R Script](images/R-1-03-Velocity-AssignError.jpg){#fig-assignmentError .fs}
+
+## Trap: Constants in programming
+
+The term [variable]{.hl} suggests that the value can be changed, and this is usually true. However, mathematical constants like ***π*** do not change, but they are still referred to as variables in programming.  In other words, there can be a storage location referred to as ***pi*** that contains the numeric value ***3.1415***. These variables are often, and confusingly, referred to as [constant variables]{.hl}.  Even more confusing, R will allow you to change the value...
+
+![Using the built in variable pi -- and then changing it](images/R-1-02-Variables-Math-PI.jpg){#fig-constantVar .fs}
+
+## Trap: Assigning nonexistent variables
+
+The first time you assign a value to a variable, a storage container is created in memory and a value is put in it.  We call this a declaration (more about declarations in Lesson 4). After a variable has been declared, it can be used in calculations and re-assigned values.  Before a variable is declared, R knows nothing about the variable.  Here is an example of using a variable before it is declared. [Note: the only change in this script was moving the line ***v=d/t*** before the declaration of ***d*** and ***t:***]{.note}
+
+``` r
+# the next two lines should be at the top of all your scripts
+rm(list=ls());                        
+options(show.error.locations = TRUE);
+  
+# create three variables: d, t, and v
+# give d and t values and use them to calculate v
+v = d/t;  # error
+d = 100; 
+t = 20;
+```
+
+![Did not assign a value to the variable named d -- error](images/R-01-02%20assignment%20error%202.PNG){#fig-noAssignError .fs}
+
+There is an error in the console window (@fig-noAssignError) that says [object 'd' not found]{.hl}. The reason for this error is that, on line 8, the script is asked to assign the calculation d/t to the variable ***v*** but **d** and **t** do not exist yet.
+
+ 
+
+Try the following code and see how the error changes. [Notice in this code ***v=d/t*** is after the declaration of ***d*** but before the declaration of ***t***.]{.note}
+
+``` r
+# the next two lines should, for now, be at the top of all your scripts
+rm(list=ls());                        
+options(show.error.locations = TRUE); 
+
+# create three variables: d, t, and v
+# give d and t values and use them to calculate v
+d = 100;
+v = d/t;  # error
+t = 20;
+```
+
+## Trap: Case counts in variable names
+
+In R, as in most scripting languages, uppercase and lowercase letters are always seen as different.  So, ***runnersTime*** and ***runnerstime*** are seen by R as two different variables.  If the case is not correct, then you will receive an [Object not found]{.hl} error just like you would if you spelled the variable name wrong.
+
+## Extension: alternate assignment operator
+
+In R, there are two assignment operators, the equal sign ( ***=*** ) and the arrow ( ***\<-*** ). 
+
+``` r
+rm(list=ls());    # Clear out the Environment  
+  
+d <- 100;   # same as d = 100
+t <- 20;    # same as t = 20
+v <- d/t;   # same = d/t
+```
+
+You will see a lot of R programs written using the arrow.  In this class, I will use the equal sign because that is the standard for most other programming languages (including JavaScript and C) and it is easier to type.  You can use either operator in your scripts in this class.
+
+ 
+
+For assigning values to a variable, ( ***\<-*** ) and ( **=** ) are functionally equivalent. There is a difference between the two operators when working with functions.

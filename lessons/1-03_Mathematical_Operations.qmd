@@ -1,0 +1,543 @@
+---
+title: "1-03: Mathematical Operations"
+short: "1-03"
+# special characters for highlighting code : «»
+---
+
+### Changes
+
+-   block equations centered or left-justified? Centered, I think
+
+-   put two lines at top of every codeblock? No
+
+    -   line number only works for function/object not existing when not inside a for loop or function
+
+## Purpose
+
+-   Perform mathematical operations, including powers, on numerical variables
+
+-   Explicit use of mathematical symbols in formulas
+
+-   Convert algebraic formulas to programming formulas
+
+-   Use parentheses to establish the order of operations for formulas
+
+## Questions about the material...
+
+If you have any questions about the material in this lesson, feel free to email them to the instructor, {{< var instructor.name >}}, at {{< var instructor.email >}}.
+
+## Putting a formula in code
+
+Once again, we will calculate ***velocity*** using ***distance*** and ***time,*** except, we will now use the full version of the ***velocity*** formula, which looks at the [changes in distance and time]{.hl} as opposed to absolute distance and time.
+
+ 
+
+The full velocity formula is (subscript ***i*** means [initial]{.hl}, subscript ***f*** means [final]{.hl}):
+
+$v=\frac{d_{f}-d_{i}}{t_{f}-t_{i}}$ (If ***t~i~*** and ***d~i~*** are zero then you get the formula we used in Lesson 1-2: ($\boldsymbol{v}=\frac{d}{t}$)
+
+ 
+
+We are going to code this formula, but there are a couple of issues:
+
+1.  fractions are "stacked" -- but in scripts, equations can only be read left to right
+
+2.  variable names have subscript characters (e.g., ***t~i~***), but subscript and superscript characters are not allowed in script
+
+### Minding your parentheses
+
+In script, everything goes left-to-right so you cannot write a fraction as you would in Algebra.  Instead, we need to be more explicit and put both both the numerator and the denominator in parentheses:
+
+$$
+v=\frac{\left(d_{f}-d_{i}\right)}{\left(t_{f}-t_{i}\right)}
+$$
+
+Then, pull out the fraction between the numerator and denominator and replace it with a division sign:
+
+$$
+v=\left(d_{f}-d_{i}\right) /\left(t_{f}-t_{i}\right)
+$$
+
+Now the formula is all on one line, but the symbols need to be replaced with valid variable names that do not have subscripts:
+
+$$
+\text { velocity }=(\text { finalDist }- \text { initDist }) /(\text { finalTime }- \text { initTime })
+$$
+
+This is now a valid line of code in R -- assuming all variables on the right have assigned values.
+
+``` r
+velocity = (finalDist - initDist) / (finalTime - initTime);
+```
+
+The line of code above says that ***velocity*** [will be assigned]{.hl} the value equal to the calculations on the right side of the equation.
+
+### Other ways to assign values
+
+In most programming languages the equal sign is used to assign values, and the equal sign always evaluates what is on the right side and assigns it to the variable on the left.  In R, there are two other ways to assign values -- using arrow signs:
+
+``` r
+«velocity <-» (finalDist - initDist) / (finalTime - initTime); # commonly used
+(finalDist - initDist) / (finalTime - initTime) «-> velocity»; # rarely used
+```
+
+The top ( **\<-** ) is the most commonly used in R and the bottom ( **-\>** ) works but is rarely used anymore.  I prefer using ( **=** ) to ( **\<-** ) because ( **=** ) is used in most programming languages whereas ( **\<-** ) is not. 
+
+ 
+
+[Note: In this case, ( **=** ) and ( **\<-** ) are functionally the same.]{.note} There are functional differences between the two when calling functions.
+
+### Variable naming error
+
+Here is the full script with a small error on the line calculating ***velocity***:
+
+``` r
+rm(list=ls());          # clean out the environment
+
+finalDistance = 100;
+initDistance = 50;
+«finaltime» = 20;       # error on this line -- misspelled variable name
+initTime = 15;
+velocity = (finalDistance - initDistance) / (finalTime - initTime);
+```
+
+Every variable on the right side of the ***velocity*** equation must be given a value beforehand --  otherwise, you will get the pesky [Object not found]{.hl} error as shown in the image below (*Fig.##*)
+
+ 
+
+\<image\>
+
+Object not found because the variable name does not exist (it is misspelled).
+
+ 
+
+[Note: **Object** is almost synonymous with **Variable** in R.]{.note}  The error is basically saying that there is no variable with that name.  Any spelling error will cause the [Object not found]{.hl} error.  In this case I "spelled" the variable name wrong by changing the case of the ***T***.  **final[t]{.hl}ime** is not the same as **final[T]{.hl}ime.**\
+ 
+
+``` r
+rm(list=ls());          # clean out the environment
+errors
+ 
+finalDistance = 100;
+initDistance = 50;
+«finalTime» = 20;
+initTime = 15;
+velocity = (finalDistance - initDistance) / (finalTime - initTime);
+```
+
+\<image\>
+
+Misspelled variable name corrected -- script now calculates **velocity**.
+
+## Powers and multiplication
+
+We will look at one more formula that relates ***kinetic energy*** to ***mass*** and ***velocity***:
+
+$$
+E_{k}=\frac{1}{2} m v^{2}
+$$
+
+There are two new issues with coding this formula:
+
+1.  the square function is a superscript -- you cannot use superscript characters in R
+
+2.  the implicit multiplication -- we know that mass (**m**) and velocity (**v**) are being multiplied, but there is no multiplication sign
+
+### Dealing with parenthesis and multiplication
+
+So let's first pull the ***one-half*** out of fraction form and into division form:
+
+$$
+E_{k}=1 / 2 m v^{2}
+$$
+
+We need to be more explicit because this formula could be misinterpreted by the reader as $E_{k}=1 /\left(2 m v^{2}\right)$, so we need to put the one-half in parenthesis:
+
+$$
+E_{k}=(1 / 2) m v^{2}
+$$
+
+Next, we will explicitly put in the multiplication symbols -- a necessity in programming:
+
+$$
+E_{k}=(1 / 2)^{*} m^{*} v^{2}
+$$
+
+[Traps: Forgetting Multiplication Symbol]
+
+ 
+
+And then change the symbols to script-friendly variable names:
+
+$$
+\text { kineticEnergy }=(1 / 2)^{*} \text { mass }^{*} \text { velocity }^{2}
+$$
+
+### Dealing with square power
+
+In R the ( \^ ) is the power operator.  So ***\^2*** means raise to the power of 2 (i.e., square):
+
+``` r
+# this formula works...
+kineticEnergy = (1/2)*mass*velocity^2;
+```
+
+While the above works correctly, it is often helpful to be explicit and add parenthesis around the value or values that are getting raised to the power:
+
+``` r
+# more explicit solution
+kineticEnergy = (1/2)*mass*(velocity)^2;
+```
+
+## The power operator ( \^ )
+
+The ( ***\^*** ) operator works for all powers including square roots, cubed roots, and mixed powers (e.g., raising to the 3/2 or 5/3).
+
+ 
+
+Let's rearrange the ***kinetic energy*** formula to solve for ***velocity***, which requires a [square root]{.hl}
+
+$$
+v=\sqrt{\frac{2 E_{k}}{m}}
+$$
+
+To put the above formula into a script form, we need to:
+
+1\) Put the numerator and denominator on one line by taking out the fraction and replacing it with a division sign.
+
+$$
+v=\sqrt{\left(2 E_{k} / m\right)}
+$$
+
+2\) Be explicit and put in multiplication symbols.
+
+$$
+v=\sqrt{\left(2^{*} E_{k} / m\right)}
+$$
+
+3\) Spell the formula out using script-friendly variable names:
+
+$$
+\text { velocity }=\sqrt{\left(2^{*} \text { kineticEnergy / mass }\right)}
+$$
+
+4\) Use the power operator ( ***\^*** ) to square root the whole formula.  Square rooting something is the same as saying [raise it to the 1/2 power]{.hl}. Since we are square rooting the whole formula, we need to put the whole formula in parenthesis.
+
+$$
+\text { velocity }=\left(2^{*} \text { kineticEnergy } / \text { mass }\right)^{1 / 2}
+$$
+
+### Coding the power
+
+So we have this in R:
+
+``` r
+rm(list=ls());          # clean out the environment
+
+kineticEnergy = 50;
+mass = 5;
+velocity = (2*kineticEnergy / mass)^1/2; # still a problem here!
+```
+
+\<image\>
+
+Incorrect answer for **velocity** because the power is missing parentheses
+
+ 
+
+### Correcting the power with parenthses
+
+The ***Environment*** tab (*Fig.##*) shows that ***v*** is, unexpectedly, ***10***.  This is because of the order-of-operations. Instead of raising the ***(2\*kineticEnergy/mass)*** to the ***1/2*** power, the above code raised ***(2\*kineticEnergy/mass)*** to the ***first (1)*** power and then divided everything by ***2***.  We need to be more explicit and put the ***1/2*** in parenthesis.
+
+``` r
+rm(list=ls());          # clean out the environment
+
+kineticEnergy = 50;
+mass = 5;
+velocity = (2*kineticEnergy / mass)^(1/2); # now we are good!
+```
+
+\<image\>
+
+Correct answer for **velocity**
+
+ 
+
+This style will work for all powers and roots:
+
+``` r
+rm(list=ls());          # clean out the environment
+
+kineticEnergy = 50;
+mass = 5;
+
+test1 = (2*kineticEnergy / mass)^(1/3);  # third root
+test2 = (2*kineticEnergy / mass)^(5);    # fifth power
+test3 = (2*kineticEnergy / mass)^(5/3);  # mixed root and power
+test4 = (2*kineticEnergy / mass)^(3.17); # decimal power
+```
+
+\<image\>
+
+Testing different powers in R
+
+## The square root function
+
+In R, you will usually see square roots done using the ***sqrt()*** function:
+
+``` r
+velocity = «sqrt»(2*kineticEnergy / mass);  # how square roots are usually done
+```
+
+***sqrt()*** works just fine but there is no equivalent for all the other types of powers and roots.  That is why I prefer to use the ( ***\^*** ) operator -- it is easy to remember and you can use it for every power and root situation -- you just need to attach the appropriate number.
+
+``` r
+velocity = (2*kineticEnergy / mass)^(1/2); # how I prefer to do them
+```
+
+## Random values
+
+In the example above (*fig \##*) we hardcoded the values for ***kineticEnergy*** and ***mass***, which just means we directly provided a values for the two variables.  We can also randomly pick values for variables using ***sample()***.
+
+ 
+
+***sample()*** requires two arguments:
+
+-   the range of numbers you want to randomly sample from
+
+-   the number of values you want to randomly sample (for now we will just do one)
+
+ 
+
+The code to pick one random number between 20 and 100 is:
+
+``` r
+randomNum1 = sample(20:100, size=1);
+```
+
+[note: 20:100 is inclusive of the numbers on both ends -- so, 20 and 100 are both possibilities meaning there are 81 possible numbers to choose randomly from]{.note}
+
+ 
+
+The code to pick a random number between -100 and -50 is:
+
+``` r
+randomNum2 = sample(-100:-50, size=1);
+```
+
+***sample()*** always returns a whole number. 
+
+### normal values
+
+***sample()*** treats every number the same.  If there are 100 numbers in the range then every number has a 1% chance of being picked.  If you want to pick a random value, but weigh the value (e.g., a normally distributed random values) then you can use ***rnorm()***.
+
+ 
+
+***rnorm()*** requires three arguments:
+
+-   the number of values you want to randomly pick (for now, we will just pick 1 at a time)
+
+-   the mean of the normal distribution you want to pick randomly from
+
+-   the standard deviation of the normal distribution
+
+ 
+
+The code to pick one random number from a normal distribution with mean 10 and standard deviation 3 is:
+
+``` r
+randomNorm1 = rnorm(n=1, mean=10, sd=3);
+```
+
+The code to pick one random number from a normal distribution with mean -7.5 and standard deviation 0.5 is:
+
+``` r
+randomNorm2 = rnorm(n=1, mean=-7.5, sd=0.5);
+```
+
+***rnorm()*** always returns a decimal number
+
+\<image\>
+
+Picking random numbers -- the random numbers will be different each time you execute the code
+
+## Application
+
+A\) Add this code as the third line in your script (right after the ***rm()*** and ***options()*** lines):
+
+``` r
+set.seed(5); 
+```
+
+The above line will make sure that you get the same "random" number every time you execute your script by creating a seed value.  Seed values are covered in a much later lesson.
+
+ 
+
+B\) Create six variables that hold length values:
+
+-   the 1st and 2nd are hardcoded: 25, 30
+
+-   the 3rd and 4th values are randomly picked between 20 and 30 (each number has an equal chance)
+
+-   the 5th and 6th values are randomly picked from a normal distribution with mean of 25 and standard deviation of 2
+
+ 
+
+C\) Calculate the (a) mean, (b) variance, and (c) standard deviation of the six values.
+
+-   [Visit this page if you need a reminder about how to calculate mean, variance, and standard deviation](http://davidmlane.com/hyperstat/A16252.html)
+
+-   you can use R functions like ***mean(), var(),*** and ***sd()*** to check these values, but I want you to manually solve these -- it is important to learn how to properly code the mathematics because you will often not have functions to do it for you.
+
+-   [Extension: Mathematical operations across multiple lines]
+
+ 
+
+D\) Make sure the 6 values, their mean, their variance, and their standard deviation appear in the ***Environment*** tab after the script is executed.
+
+ 
+
+E\) Challenge: Pick a random two-digit decimal number between 0 and 1 (e.g., 0.23, 0.89, 0.10)
+
+-   you will need to use ***sample()*** and then manipulate the number
+
+ 
+
+{{< include ../assets/AppInstructions.qmd >}}
+
+## Extension: Mathematical operations across multiple lines
+
+If you have a long mathematical formula to execute in code, there is a good chance that you will want to break the code up into multiple lines.
+
+ 
+
+To keep it simple, let's add 5 values together across multiple lines:
+
+``` r
+c = 10 + 10 + 10 +
+    10 + 10;
+```
+
+If you put the above code in you script, then you will get ***c = 50*** in the ***Environment.***
+
+ 
+
+However, this code:
+
+``` r
+d = 10 + 10 + 10
+    + 10 + 10;
+```
+
+will put ***d=30*** in the ***Environment***.
+
+ 
+
+This is because R did not know the continue the equation for d to the second line.  R treated the first line as the complete command/equation.  By putting the ( + ) at the end of the first line for ***c***, R knew it needed to continue the command to the next line.
+
+ 
+
+By the way, R does do something with the second line for ***d*** -- it prints the answer to ***Console*** if you click ***Run***:
+
+``` r
+> d = 10 + 10 + 10
+>     + 10 + 10;
+[1] 20
+```
+
+In other words:
+
+``` r
++ 10 + 10
+```
+
+is a command that evaluates to **20**
+
+## Traps: Forgetting Multiplication Symbol
+
+Let's say you are solving for kinetic energy:
+
+$$
+E_{k}=\frac{1}{2} m v^{2}
+$$
+
+And you have a value for velocity (***v***) and mass (***m***)
+
+``` r
+rm(list=ls());          # clean out the environment
+
+m = 100;
+v = 10;
+«KE = ????;    # should be: KE = (1/2)*m*v^2;»
+```
+
+If you code ***KE*** like this::
+
+``` r
+KE = 1/2*mv^2;
+```
+
+Then you will get the error: [object 'mv' not found]{.hl} in the ***Console*** tab because R does not realize you want to multiply the variables ***m*** and ***v***, it thinks you are trying to use a variable named ***mv***, but the variable ***mv*** does not exist.
+
+ 
+
+If you code ***KE*** like this::
+
+``` r
+KE = (1/2)m*v^2;  # same error arises if you do 1/2m*v^2
+```
+
+you will get the error:[unexpected symbol]{.hl}(*Fig.##*) and the ***Console*** tab will point to the ***m***
+
+\<image\>
+
+Unexpected symbol error
+
+ 
+
+In this case, R is expecting an operation after **(1/2)** that is represented by a symbol.  ***m*** is a variable, not a operation, hence the error.
+
+## Trap: Units, or lack thereof, in programming
+
+One problem that crops up quite often in programming is that none of the numbers used in calculations have units.  So we often have lines of code without any mention of units like this:
+
+``` r
+# find an average of the following three weights
+weight1 = 175;
+weight2 = 200;
+weight3 = 210;
+
+aveWeight = (weight1 + weight2 + weight3) / 3;
+```
+
+And if we add units to the number...
+
+``` r
+# find an average of the following three weights
+«weight1 = 175lb;  # causes "unexpected symbol" error»
+weight2 = 200lb;
+weight3 = 210lb;
+
+aveWeight = (weight1 + weight2 + weight3) / 3;
+```
+
+We get the error [unexpected symbol]{.hl} because R is expecting some sort of operation after the number **175** and **lb** is not a valid operation. 
+
+ 
+
+[Note: Lines 3 and 4 would also cause an unexpected symbol error but R ceases executing at the first error.]{.note}
+
+ 
+
+It is best to mention the units somewhere in the comments especially if your script is large or others are using your script.
+
+``` r
+# find an average of the following three weights («all in pounds»)
+weight1 = 175;
+weight2 = 200;
+weight3 = 210;
+
+aveWeight = (weight1 + weight2 + weight3) / 3;
+```
+
+Otherwise, you risk a situation like the [Mars Climate Orbiter](https://en.wikipedia.org/wiki/Mars_Climate_Orbiter) crash, which could have easily been avoided with proper comments.

@@ -1,0 +1,530 @@
+[
+  {
+    "objectID": "lessons/1-05_Functions_Introduction.html",
+    "href": "lessons/1-05_Functions_Introduction.html",
+    "title": "1-05: Functions Introduction",
+    "section": "",
+    "text": "Save the script as app1-05.r in your scripts folder and email your Project Folder to the instructor.\n \nInstructions for zipping the Project Folder are here.\n \nIf you have any questions regarding this application, feel free to email them to Charlie Belinsky at belinsky@msu.edu.",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "1-05: Functions Introduction"
+    ]
+  },
+  {
+    "objectID": "lessons/1-05_Functions_Introduction.html#purpose",
+    "href": "lessons/1-05_Functions_Introduction.html#purpose",
+    "title": "1-05: Functions Introduction",
+    "section": "1 Purpose",
+    "text": "1 Purpose\nExplain how functions works and how to use the Help tab in RStudio.  The presentation of functions in R is inconsistent but it is very useful to understand how to read a function help page.\n\n1.1 Files\nThe script for the lesson is here\n\n\nright-click on the link and choose Save link as…\n\nSave to the scripts folder in your Class Project\n\n\nThe data used in this lesson, twoWeekWeatherData.csv\n\n\nleft-click the link and save to the data folder in your Class Project",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "1-05: Functions Introduction"
+    ]
+  },
+  {
+    "objectID": "lessons/1-05_Functions_Introduction.html#functions",
+    "href": "lessons/1-05_Functions_Introduction.html#functions",
+    "title": "1-05: Functions Introduction",
+    "section": "2 Functions",
+    "text": "2 Functions\nIn the last lesson we used two functions in R:\n\n\nread.csv(): open up a CSV file and read in the data\n\nseq(): create a configurable sequence of numbers\n\n\nFunctions are standalone scripts designed to do some repeatable operations.  A function almost always takes input and sends a response.\nIn the case of read.csv() from last lesson:\n  weatherData = read.csv(file=“data/twoWeekWeatherData.csv”, # path to file\n                         sep=“,”,                   # values are separated by commas\n                         header=TRUE,               # there is a header row\n                         stringsAsFactors = FALSE); # for people using R 3.X\nCalling read.csv() to get data from twoWeekWeatherData.csv and save it to weatherData\nThe input is the values for file, sep, header, and stringsAsFactors.\nThe response is the data from the CSV file and this data gets saved to the variable weatherData.\nIn the case of seq():\nseq1 = seq(from=1, to=10, by=3);\nThe input is the values for from, to, and by.\nThe response is the sequence of numbers that gets saved to the variable seq1.",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "1-05: Functions Introduction"
+    ]
+  },
+  {
+    "objectID": "lessons/1-05_Functions_Introduction.html#arguments",
+    "href": "lessons/1-05_Functions_Introduction.html#arguments",
+    "title": "1-05: Functions Introduction",
+    "section": "3 Arguments",
+    "text": "3 Arguments\nIn programming, the values you pass into a function(e.g., file, sep, header, and stringAsFactors) are called arguments of the function.  Arguments are added to the function call to tweak the operation of the function – sort of like the knobs and dials for a function.\nMost of the programming world uses the term parameters instead of arguments.  I tend to like parameters better as I think it better indicates the fact that these values are properties of the function.  But, R is a programming language for statisticians and arguments is a mathematical term so R chose to go with arguments.",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "1-05: Functions Introduction"
+    ]
+  },
+  {
+    "objectID": "lessons/1-05_Functions_Introduction.html#a-simpler-function-median",
+    "href": "lessons/1-05_Functions_Introduction.html#a-simpler-function-median",
+    "title": "1-05: Functions Introduction",
+    "section": "4 A simpler function: median()",
+    "text": "4 A simpler function: median()\nLet’s take a step back and look at a simpler function, median(), which takes a vector and finds the median value in the vector.\nTo use median() we need a vector with numeric values in it:\n\nvec1 = c(3,4,5,6,21,45,61);\n\nAnd then we pass vec1 in as an argument to the median() function:\n\nmedianVal1 = median(vec1);\n\nAnd the Environment says that the returned values, saved to medianVal1 is 6\n\nmedianVal1:   6\n\n\n4.1 Help for median()\nNow let’s use RStudio’s Help tab to go behind-the-scenes of median().  RStudio Help tab is a useful resource for finding out more information on functions. \nIf we type median in the search bar we get this:\nThe median function in the Help tab in RStudio\nThe Help page shows that median() has two arguments:\n\n\nx: the vector that you want to find the median for\n\nna.rm: a TRUE/FALSE value that determines how to handle NA values in the vector\n\n\nNA means Not Available – usually indicating a problem with the data\n\n\n\n\nNote: the ( … ) can be ignored – it is basically R saying that this function can be expanded with more arguments\n\n\n4.2 Skipping argument names\nWhen we called median(), we did not include any argument names:\n\nmedianVal1 = median(vec1);\n\nHowever, since x is the first argument in median(), it is assumed that the first value is meant to be for x.\nSo, this is an equivalent call to median() that more explicitly says that the vec1 is the value for x:\n\nmedianVal1b = median(x=vec1);\n\n\nmedianVal1:   6\nmedianVal1b:  6\n\n\n\n4.3 Default argument values\nThe other argument in median(), na.rm, already has a value: FALSE .   This means that you do not have to supply a value for the argument na.rm when you call the function.  You only need to supply a value if you want to change na.rm to something other than FALSE (e.g., TRUE).\nOur first example did not have an NA values, let’s create a vector with an NA value in it:\n\n\nvec2 = c(3,4,5,NA,6,21,45,61);\n\nAnd then use that as an argument for median():\n\nmedianVal2 = median(x=vec2);\n\nThis time the median value is NA because the median value for any vector that has an NA value is NA (essentially saying that median cannot be determined)\n\nmedianVal2:   NA_real_\n\nnote: NA_real_ means an NA value that R thinks should be a real number\n\n\n4.4 Dealing with the NA\nna.rm is the argument that determines whether NA values are removed from the vector – and the default value is FALSE, meaning NA values are not removed. \nLet’s set na.rm to TRUE so the NA values are removed before finding the median:\n\nmedianVal2b = median(x=vec2, na.rm=TRUE);\n\nNow, we get the same median value as before:\n\nmedianVal2b:   6\n\n\n\n4.5 Alternate ways to call median()\nArgument names (e.g., x and na.rm) are not needed if you put values in the correct order. All of these calls functionally do the same thing as the above median() call:\n\nmedianVal2c = median(vec2, TRUE);\nmedianVal2d = median(vec2, na.rm=TRUE);\nmedianVal2e = median(na.rm=TRUE, x=vec2);  # can reverse arguments if you name them\nmedianVal2f = median(x=vec2, TRUE);\n\nMy general recommendation is to always use argument names when calling a function.  This makes your code easier to read and you don’t have to worry about the order of the arguments.  This is especially important when you are dealing with more complicated functions that have lots of arguments (e.g., plotting functions).",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "1-05: Functions Introduction"
+    ]
+  },
+  {
+    "objectID": "lessons/1-05_Functions_Introduction.html#help-seq",
+    "href": "lessons/1-05_Functions_Introduction.html#help-seq",
+    "title": "1-05: Functions Introduction",
+    "section": "5 Help seq()",
+    "text": "5 Help seq()\nUnfortunately, the Help for functions can contain many abstractions and extraneous information. Throughout this course, we will open up the Help menu for new functions to get you more familiar with the abstractions. \nLet’s look at the function seq():\nThe Help page for the seq() function\nWhen you see Default S3 Method, that is most likely the version of the function you care about.  S3 means S version 3, S is a programming language developed in the 1970s and was the predecessor to R (yeah, that sounds a bit backward…).\nseq() is an old function and the description of it \n\n5.1 The arguments and defaults\nseq() has 5 arguments: from, to, by, length.out, and along.with.  along.with is not needed and can be ignored (maybe in the past it was more useful).\nThe descriptions of the arguments in fig ## are helpful but the default argument values for seq() are misinformative:\n\n## Default S3 method\nseq(from = 1, to = 1, by = ((to - from)/(length.out - 1)),\n    length.out = NULL, along.with = NULL, …)\n\nseq() essentially is solving for this equation (that should not have been shown as the default value for by):\nby = to - fromlength.out -1{“version”:“1.1”,“math”:“&lt;math xmlns=”http://www.w3.org/1998/Math/MathML”&gt;&lt;mi&gt;b&lt;/mi&gt;&lt;mi&gt;y&lt;/mi&gt;&lt;mo&gt; &lt;/mo&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo&gt; &lt;/mo&gt;&lt;mfrac&gt;&lt;mrow&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mi&gt;o&lt;/mi&gt;&lt;mo&gt; &lt;/mo&gt;&lt;mo&gt;-&lt;/mo&gt;&lt;mo&gt; &lt;/mo&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;mi&gt;r&lt;/mi&gt;&lt;mi&gt;o&lt;/mi&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;/mrow&gt;&lt;mrow&gt;&lt;mi&gt;l&lt;/mi&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mi&gt;g&lt;/mi&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mi&gt;h&lt;/mi&gt;&lt;mo&gt;.&lt;/mo&gt;&lt;mi&gt;o&lt;/mi&gt;&lt;mi&gt;u&lt;/mi&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mo&gt; &lt;/mo&gt;&lt;mo&gt;-&lt;/mo&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;/mrow&gt;&lt;/mfrac&gt;&lt;/math&gt;“}\nThere are four variables in the equation and you have to give three of them as arguments.  seq() will rearrange the formula, calculate the unknown fourth variable, and create the sequence.\n\n\n5.2 seq() examples\nIf you set from, to, and by as we did for seq1, seq() will calculate length.out (the number of values in the sequence)\n\nseq1 = seq(from=1, to=10, by=3);   # will have 4 values\n\nand give you the sequence:\n\nseq1:   num[1:5] 1 4 7 10\n\nlength.out allows you to set the number of values in the sequence.  You can also set length.out to a value, but then you can only use 2 of these 3 arguments: from, to, and by.\nAn example of using length.out:\n\nseq2 = seq(from=1, to=10, length.out=5);\n\nThen you get 5 evenly spaced number starting with 1 and ending with 10\n\nseq2:   num[1:5] 1 3.25 5.5 7.75 10",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "1-05: Functions Introduction"
+    ]
+  },
+  {
+    "objectID": "lessons/1-05_Functions_Introduction.html#read.csv-expanded",
+    "href": "lessons/1-05_Functions_Introduction.html#read.csv-expanded",
+    "title": "1-05: Functions Introduction",
+    "section": "6 read.csv() expanded",
+    "text": "6 read.csv() expanded\nWhen you go to the Help page for read.csv() , you are actually taken to the Help page for read.table(). This is because read.csv() is a version of the function read.table().  In other words, read.csv() is read.table() with different default values for the arguments (underlined in Fig.##).  \nFor instance, the default value for sep (the separator) is a space in read.table() and a comma in read.csv().  Note: some of the default arguments (e.g., quote, dec) in read.csv() are the same as in read.table().\nUsing the Help tab in RStudio to look up functions\n\n6.1 read.csv arguments\nWhen you call read.csv(), you can use any of the argument from read.table().\nAnd there are a lot of arguments in read.table(). The majority of these arguments rarely need to be changed from their default value.\nMost of the arguments in read.table() look cryptic and you will probably never have to use them. A couple that are easier to understand:\n\n\ndecimal: the character that represents a decimal in the decimal number.  You might need to change this to a comma ( , ) if you get data from Europe\n\ncomment.char: the character after which everything on the line is a comment (i.e., not data)\n\n\nnotice that read.csv() has no comment.char whereas read.table() uses ( # ) as the default comment.char\n\n\n\n\n\n\n6.2 Required arguments and default arguments\nfile is the only argument not set equal to anything in read.table() / read.csv().  This is because file must be supplied by the user – file is the only required argument.  This should make sense as there is no point in calling read.table() / read.csv() without any data.\nEvery other argument in read.table() / read.csv() has a default value– this means you can execute the function without using any argument except file.\nIn fact, if you are using R version 4 then the following code will produce the same results as the earlier read.csv() call in Fig.##:\nweatherData2 = read.csv(file = “data/twoWeekWeatherData.csv”);\nIf you look in the Environment tab the values for weatherData and weatherData2 are exactly the same.\nExpanding weatherData and weatherData2 in the Environment tab\n\n\n6.3 The other arguments (aside from file)\nIn my original call to read.csv(), the arguments sep=“,” and header=TRUE are functionally not changing anything because I have them set to the same value as their default.  But, these arguments are changed often enough that it is nice to have them quickly at hand when copying read.csv() from one script to another.\nstringsAsFactors tells R to treat any string columns as factors.A factor categorizes a vector into all of the unique values in the vector – each unique value is called a level.  For instance a column that gives wind speed values in terms of low, medium, and high could be considered a column with 3 factor levels.  Or, you can have a wind speed direction column with 4 factor levels: north, east, west, and south.   I do not spend much time in the class on factors because the use of factors as a variable type use has declined quite a bit.  For now, if you are using R version 4 and want to see how people using R version 3 see weatherData then execute this code:\n\n weatherData3 = read.csv(file=“data/twoWeekWeatherData.csv”,\n                         sep=“,”,                 \n                         header=TRUE,             \n                         stringsAsFactors = TRUE); # this is the default for R v.3",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "1-05: Functions Introduction"
+    ]
+  },
+  {
+    "objectID": "lessons/1-05_Functions_Introduction.html#application",
+    "href": "lessons/1-05_Functions_Introduction.html#application",
+    "title": "1-05: Functions Introduction",
+    "section": "7 Application",
+    "text": "7 Application\nCreate a script file named app1-05.r.  In the script file:\n1. Create this sequence: 13, 9, 5, 1, -3, -7, -11 using seq().\nCome up with two more ways (three in all) to produce the same sequence using seq(), but changing the arguments (from, by, to, length.out). \n2. Explain, in comments, why you get an error if you try to use all four arguments (from, by, to, length.out)\n3. Find the log (base 5) of this vector: c(0.04, 0.2, 25, 125) using the log() function\n\n\n\n\nUse the Help tab to find out more about the log() function\n\nThe answer is: -2, -1, 2, 3 (so you can check)\n\nnote: the default value for base is exp(1) = e1 = e = 2.71828… (i.e., the natural logarithm)\n\n\n\n\n4. Properly read in this CSV file of the same two week weather data but:\n\n\ncommas are used in place of decimals in precipitation column\n\nspaces are used to separate variables (instead of commas)\n\n\nSave the data to a dataframe name WD_Comma\n5. In comments, answer: How many factors levels does the noonCondition column have?  How about the date column?\nSave the script as app1-05.r in your scripts folder and email your Project Folder to the instructor.\nIf you have any questions regarding this application, feel free to email them to the instructor here.\n\n7.1 Questions to answer\nAnswer the following in comments inside your application script:\n\n\nWhat was your level of comfort with the lesson/application?\n\nWhat areas of the lesson/application confused or still confuse you?\n\nWhat are some things you would like to know more about that are related to, but not covered in, this lesson?",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "1-05: Functions Introduction"
+    ]
+  },
+  {
+    "objectID": "lessons/1-03_Mathematical_Operations.html",
+    "href": "lessons/1-03_Mathematical_Operations.html",
+    "title": "1-03: Mathematical Operations",
+    "section": "",
+    "text": "block equations centered or left-justified? Centered, I think\nput two lines at top of every codeblock? No\n\nline number only works for function/object not existing when not inside a for loop or function",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "1-03: Mathematical Operations"
+    ]
+  },
+  {
+    "objectID": "lessons/1-03_Mathematical_Operations.html#purpose",
+    "href": "lessons/1-03_Mathematical_Operations.html#purpose",
+    "title": "1-03: Mathematical Operations",
+    "section": "1 Purpose",
+    "text": "1 Purpose\n\nPerform mathematical operations, including powers, on numerical variables\nExplicit use of mathematical symbols in formulas\nConvert algebraic formulas to programming formulas\nUse parentheses to establish the order of operations for formulas",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "1-03: Mathematical Operations"
+    ]
+  },
+  {
+    "objectID": "lessons/1-03_Mathematical_Operations.html#questions-about-the-material",
+    "href": "lessons/1-03_Mathematical_Operations.html#questions-about-the-material",
+    "title": "1-03: Mathematical Operations",
+    "section": "2 Questions about the material…",
+    "text": "2 Questions about the material…\nIf you have any questions about the material in this lesson, feel free to email them to the instructor, Charlie Belinsky, at belinsky@msu.edu.",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "1-03: Mathematical Operations"
+    ]
+  },
+  {
+    "objectID": "lessons/1-03_Mathematical_Operations.html#putting-a-formula-in-code",
+    "href": "lessons/1-03_Mathematical_Operations.html#putting-a-formula-in-code",
+    "title": "1-03: Mathematical Operations",
+    "section": "3 Putting a formula in code",
+    "text": "3 Putting a formula in code\nOnce again, we will calculate velocity using distance and time, except, we will now use the full version of the velocity formula, which looks at the changes in distance and time as opposed to absolute distance and time.\n \nThe full velocity formula is (subscript i means initial, subscript f means final):\n\\(v=\\frac{d_{f}-d_{i}}{t_{f}-t_{i}}\\) (If ti and di are zero then you get the formula we used in Lesson 1-2: (\\(\\boldsymbol{v}=\\frac{d}{t}\\))\n \nWe are going to code this formula, but there are a couple of issues:\n\nfractions are “stacked” – but in scripts, equations can only be read left to right\nvariable names have subscript characters (e.g., ti), but subscript and superscript characters are not allowed in script\n\n\n3.1 Minding your parentheses\nIn script, everything goes left-to-right so you cannot write a fraction as you would in Algebra.  Instead, we need to be more explicit and put both both the numerator and the denominator in parentheses:\n\\[\nv=\\frac{\\left(d_{f}-d_{i}\\right)}{\\left(t_{f}-t_{i}\\right)}\n\\]\nThen, pull out the fraction between the numerator and denominator and replace it with a division sign:\n\\[\nv=\\left(d_{f}-d_{i}\\right) /\\left(t_{f}-t_{i}\\right)\n\\]\nNow the formula is all on one line, but the symbols need to be replaced with valid variable names that do not have subscripts:\n\\[\n\\text { velocity }=(\\text { finalDist }- \\text { initDist }) /(\\text { finalTime }- \\text { initTime })\n\\]\nThis is now a valid line of code in R – assuming all variables on the right have assigned values.\nvelocity = (finalDist - initDist) / (finalTime - initTime);\nThe line of code above says that velocity will be assigned the value equal to the calculations on the right side of the equation.\n\n\n3.2 Other ways to assign values\nIn most programming languages the equal sign is used to assign values, and the equal sign always evaluates what is on the right side and assigns it to the variable on the left.  In R, there are two other ways to assign values – using arrow signs:\n«velocity &lt;-» (finalDist - initDist) / (finalTime - initTime); # commonly used\n(finalDist - initDist) / (finalTime - initTime) «-&gt; velocity»; # rarely used\nThe top ( &lt;- ) is the most commonly used in R and the bottom ( -&gt; ) works but is rarely used anymore.  I prefer using ( = ) to ( &lt;- ) because ( = ) is used in most programming languages whereas ( &lt;- ) is not. \n \nNote: In this case, ( = ) and ( &lt;- ) are functionally the same. There are functional differences between the two when calling functions.\n\n\n3.3 Variable naming error\nHere is the full script with a small error on the line calculating velocity:\nrm(list=ls());          # clean out the environment\n\nfinalDistance = 100;\ninitDistance = 50;\n«finaltime» = 20;       # error on this line -- misspelled variable name\ninitTime = 15;\nvelocity = (finalDistance - initDistance) / (finalTime - initTime);\nEvery variable on the right side of the velocity equation must be given a value beforehand –  otherwise, you will get the pesky Object not found error as shown in the image below (Fig.##)\n \n&lt;image&gt;\nObject not found because the variable name does not exist (it is misspelled).\n \nNote: Object is almost synonymous with Variable in R.  The error is basically saying that there is no variable with that name.  Any spelling error will cause the Object not found error.  In this case I “spelled” the variable name wrong by changing the case of the T.  finaltime is not the same as finalTime.\n \nrm(list=ls());          # clean out the environment\nerrors\n \nfinalDistance = 100;\ninitDistance = 50;\n«finalTime» = 20;\ninitTime = 15;\nvelocity = (finalDistance - initDistance) / (finalTime - initTime);\n&lt;image&gt;\nMisspelled variable name corrected – script now calculates velocity.",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "1-03: Mathematical Operations"
+    ]
+  },
+  {
+    "objectID": "lessons/1-03_Mathematical_Operations.html#powers-and-multiplication",
+    "href": "lessons/1-03_Mathematical_Operations.html#powers-and-multiplication",
+    "title": "1-03: Mathematical Operations",
+    "section": "4 Powers and multiplication",
+    "text": "4 Powers and multiplication\nWe will look at one more formula that relates kinetic energy to mass and velocity:\n\\[\nE_{k}=\\frac{1}{2} m v^{2}\n\\]\nThere are two new issues with coding this formula:\n\nthe square function is a superscript – you cannot use superscript characters in R\nthe implicit multiplication – we know that mass (m) and velocity (v) are being multiplied, but there is no multiplication sign\n\n\n4.1 Dealing with parenthesis and multiplication\nSo let’s first pull the one-half out of fraction form and into division form:\n\\[\nE_{k}=1 / 2 m v^{2}\n\\]\nWe need to be more explicit because this formula could be misinterpreted by the reader as \\(E_{k}=1 /\\left(2 m v^{2}\\right)\\), so we need to put the one-half in parenthesis:\n\\[\nE_{k}=(1 / 2) m v^{2}\n\\]\nNext, we will explicitly put in the multiplication symbols – a necessity in programming:\n\\[\nE_{k}=(1 / 2)^{*} m^{*} v^{2}\n\\]\nTraps: Forgetting Multiplication Symbol\n \nAnd then change the symbols to script-friendly variable names:\n\\[\n\\text { kineticEnergy }=(1 / 2)^{*} \\text { mass }^{*} \\text { velocity }^{2}\n\\]\n\n\n4.2 Dealing with square power\nIn R the ( ^ ) is the power operator.  So ^2 means raise to the power of 2 (i.e., square):\n# this formula works...\nkineticEnergy = (1/2)*mass*velocity^2;\nWhile the above works correctly, it is often helpful to be explicit and add parenthesis around the value or values that are getting raised to the power:\n# more explicit solution\nkineticEnergy = (1/2)*mass*(velocity)^2;",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "1-03: Mathematical Operations"
+    ]
+  },
+  {
+    "objectID": "lessons/1-03_Mathematical_Operations.html#the-power-operator",
+    "href": "lessons/1-03_Mathematical_Operations.html#the-power-operator",
+    "title": "1-03: Mathematical Operations",
+    "section": "5 The power operator ( ^ )",
+    "text": "5 The power operator ( ^ )\nThe ( ^ ) operator works for all powers including square roots, cubed roots, and mixed powers (e.g., raising to the 3/2 or 5/3).\n \nLet’s rearrange the kinetic energy formula to solve for velocity, which requires a square root\n\\[\nv=\\sqrt{\\frac{2 E_{k}}{m}}\n\\]\nTo put the above formula into a script form, we need to:\n1) Put the numerator and denominator on one line by taking out the fraction and replacing it with a division sign.\n\\[\nv=\\sqrt{\\left(2 E_{k} / m\\right)}\n\\]\n2) Be explicit and put in multiplication symbols.\n\\[\nv=\\sqrt{\\left(2^{*} E_{k} / m\\right)}\n\\]\n3) Spell the formula out using script-friendly variable names:\n\\[\n\\text { velocity }=\\sqrt{\\left(2^{*} \\text { kineticEnergy / mass }\\right)}\n\\]\n4) Use the power operator ( ^ ) to square root the whole formula.  Square rooting something is the same as saying raise it to the 1/2 power. Since we are square rooting the whole formula, we need to put the whole formula in parenthesis.\n\\[\n\\text { velocity }=\\left(2^{*} \\text { kineticEnergy } / \\text { mass }\\right)^{1 / 2}\n\\]\n\n5.1 Coding the power\nSo we have this in R:\nrm(list=ls());          # clean out the environment\n\nkineticEnergy = 50;\nmass = 5;\nvelocity = (2*kineticEnergy / mass)^1/2; # still a problem here!\n&lt;image&gt;\nIncorrect answer for velocity because the power is missing parentheses\n \n\n\n5.2 Correcting the power with parenthses\nThe Environment tab (Fig.##) shows that v is, unexpectedly, 10.  This is because of the order-of-operations. Instead of raising the (2*kineticEnergy/mass) to the 1/2 power, the above code raised (2*kineticEnergy/mass) to the first (1) power and then divided everything by 2.  We need to be more explicit and put the 1/2 in parenthesis.\nrm(list=ls());          # clean out the environment\n\nkineticEnergy = 50;\nmass = 5;\nvelocity = (2*kineticEnergy / mass)^(1/2); # now we are good!\n&lt;image&gt;\nCorrect answer for velocity\n \nThis style will work for all powers and roots:\nrm(list=ls());          # clean out the environment\n\nkineticEnergy = 50;\nmass = 5;\n\ntest1 = (2*kineticEnergy / mass)^(1/3);  # third root\ntest2 = (2*kineticEnergy / mass)^(5);    # fifth power\ntest3 = (2*kineticEnergy / mass)^(5/3);  # mixed root and power\ntest4 = (2*kineticEnergy / mass)^(3.17); # decimal power\n&lt;image&gt;\nTesting different powers in R",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "1-03: Mathematical Operations"
+    ]
+  },
+  {
+    "objectID": "lessons/1-03_Mathematical_Operations.html#the-square-root-function",
+    "href": "lessons/1-03_Mathematical_Operations.html#the-square-root-function",
+    "title": "1-03: Mathematical Operations",
+    "section": "6 The square root function",
+    "text": "6 The square root function\nIn R, you will usually see square roots done using the sqrt() function:\nvelocity = «sqrt»(2*kineticEnergy / mass);  # how square roots are usually done\nsqrt() works just fine but there is no equivalent for all the other types of powers and roots.  That is why I prefer to use the ( ^ ) operator – it is easy to remember and you can use it for every power and root situation – you just need to attach the appropriate number.\nvelocity = (2*kineticEnergy / mass)^(1/2); # how I prefer to do them",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "1-03: Mathematical Operations"
+    ]
+  },
+  {
+    "objectID": "lessons/1-03_Mathematical_Operations.html#random-values",
+    "href": "lessons/1-03_Mathematical_Operations.html#random-values",
+    "title": "1-03: Mathematical Operations",
+    "section": "7 Random values",
+    "text": "7 Random values\nIn the example above (fig ##) we hardcoded the values for kineticEnergy and mass, which just means we directly provided a values for the two variables.  We can also randomly pick values for variables using sample().\n \nsample() requires two arguments:\n\nthe range of numbers you want to randomly sample from\nthe number of values you want to randomly sample (for now we will just do one)\n\n \nThe code to pick one random number between 20 and 100 is:\nrandomNum1 = sample(20:100, size=1);\nnote: 20:100 is inclusive of the numbers on both ends – so, 20 and 100 are both possibilities meaning there are 81 possible numbers to choose randomly from\n \nThe code to pick a random number between -100 and -50 is:\nrandomNum2 = sample(-100:-50, size=1);\nsample() always returns a whole number. \n\n7.1 normal values\nsample() treats every number the same.  If there are 100 numbers in the range then every number has a 1% chance of being picked.  If you want to pick a random value, but weigh the value (e.g., a normally distributed random values) then you can use rnorm().\n \nrnorm() requires three arguments:\n\nthe number of values you want to randomly pick (for now, we will just pick 1 at a time)\nthe mean of the normal distribution you want to pick randomly from\nthe standard deviation of the normal distribution\n\n \nThe code to pick one random number from a normal distribution with mean 10 and standard deviation 3 is:\nrandomNorm1 = rnorm(n=1, mean=10, sd=3);\nThe code to pick one random number from a normal distribution with mean -7.5 and standard deviation 0.5 is:\nrandomNorm2 = rnorm(n=1, mean=-7.5, sd=0.5);\nrnorm() always returns a decimal number\n&lt;image&gt;\nPicking random numbers – the random numbers will be different each time you execute the code",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "1-03: Mathematical Operations"
+    ]
+  },
+  {
+    "objectID": "lessons/1-03_Mathematical_Operations.html#application",
+    "href": "lessons/1-03_Mathematical_Operations.html#application",
+    "title": "1-03: Mathematical Operations",
+    "section": "8 Application",
+    "text": "8 Application\nA) Add this code as the third line in your script (right after the rm() and options() lines):\nset.seed(5); \nThe above line will make sure that you get the same “random” number every time you execute your script by creating a seed value.  Seed values are covered in a much later lesson.\n \nB) Create six variables that hold length values:\n\nthe 1st and 2nd are hardcoded: 25, 30\nthe 3rd and 4th values are randomly picked between 20 and 30 (each number has an equal chance)\nthe 5th and 6th values are randomly picked from a normal distribution with mean of 25 and standard deviation of 2\n\n \nC) Calculate the (a) mean, (b) variance, and (c) standard deviation of the six values.\n\nVisit this page if you need a reminder about how to calculate mean, variance, and standard deviation\nyou can use R functions like mean(), var(), and sd() to check these values, but I want you to manually solve these – it is important to learn how to properly code the mathematics because you will often not have functions to do it for you.\nExtension: Mathematical operations across multiple lines\n\n \nD) Make sure the 6 values, their mean, their variance, and their standard deviation appear in the Environment tab after the script is executed.\n \nE) Challenge: Pick a random two-digit decimal number between 0 and 1 (e.g., 0.23, 0.89, 0.10)\n\nyou will need to use sample() and then manipulate the number\n\n \nSave the script as app1-03.r in your scripts folder and email your Project Folder to the instructor.\n \nInstructions for zipping the Project Folder are here.\n \nIf you have any questions regarding this application, feel free to email them to Charlie Belinsky at belinsky@msu.edu.\n\n8.1 Questions to answer\nAnswer the following in comments inside your application script:\n\nWhat was your level of comfort with the lesson/application?\nWhat areas of the lesson/application confused or still confuses you?\nWhat are some things you would like to know more about that is related to, but not covered in, this lesson?",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "1-03: Mathematical Operations"
+    ]
+  },
+  {
+    "objectID": "lessons/1-03_Mathematical_Operations.html#extension-mathematical-operations-across-multiple-lines",
+    "href": "lessons/1-03_Mathematical_Operations.html#extension-mathematical-operations-across-multiple-lines",
+    "title": "1-03: Mathematical Operations",
+    "section": "9 Extension: Mathematical operations across multiple lines",
+    "text": "9 Extension: Mathematical operations across multiple lines\nIf you have a long mathematical formula to execute in code, there is a good chance that you will want to break the code up into multiple lines.\n \nTo keep it simple, let’s add 5 values together across multiple lines:\nc = 10 + 10 + 10 +\n    10 + 10;\nIf you put the above code in you script, then you will get c = 50 in the Environment.\n \nHowever, this code:\nd = 10 + 10 + 10\n    + 10 + 10;\nwill put d=30 in the Environment.\n \nThis is because R did not know the continue the equation for d to the second line.  R treated the first line as the complete command/equation.  By putting the ( + ) at the end of the first line for c, R knew it needed to continue the command to the next line.\n \nBy the way, R does do something with the second line for d – it prints the answer to Console if you click Run:\n&gt; d = 10 + 10 + 10\n&gt;     + 10 + 10;\n[1] 20\nIn other words:\n+ 10 + 10\nis a command that evaluates to 20",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "1-03: Mathematical Operations"
+    ]
+  },
+  {
+    "objectID": "lessons/1-03_Mathematical_Operations.html#traps-forgetting-multiplication-symbol",
+    "href": "lessons/1-03_Mathematical_Operations.html#traps-forgetting-multiplication-symbol",
+    "title": "1-03: Mathematical Operations",
+    "section": "10 Traps: Forgetting Multiplication Symbol",
+    "text": "10 Traps: Forgetting Multiplication Symbol\nLet’s say you are solving for kinetic energy:\n\\[\nE_{k}=\\frac{1}{2} m v^{2}\n\\]\nAnd you have a value for velocity (v) and mass (m)\nrm(list=ls());          # clean out the environment\n\nm = 100;\nv = 10;\n«KE = ????;    # should be: KE = (1/2)*m*v^2;»\nIf you code KE like this::\nKE = 1/2*mv^2;\nThen you will get the error: object ‘mv’ not found in the Console tab because R does not realize you want to multiply the variables m and v, it thinks you are trying to use a variable named mv, but the variable mv does not exist.\n \nIf you code KE like this::\nKE = (1/2)m*v^2;  # same error arises if you do 1/2m*v^2\nyou will get the error:unexpected symbol(Fig.##) and the Console tab will point to the m\n&lt;image&gt;\nUnexpected symbol error\n \nIn this case, R is expecting an operation after (1/2) that is represented by a symbol.  m is a variable, not a operation, hence the error.",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "1-03: Mathematical Operations"
+    ]
+  },
+  {
+    "objectID": "lessons/1-03_Mathematical_Operations.html#trap-units-or-lack-thereof-in-programming",
+    "href": "lessons/1-03_Mathematical_Operations.html#trap-units-or-lack-thereof-in-programming",
+    "title": "1-03: Mathematical Operations",
+    "section": "11 Trap: Units, or lack thereof, in programming",
+    "text": "11 Trap: Units, or lack thereof, in programming\nOne problem that crops up quite often in programming is that none of the numbers used in calculations have units.  So we often have lines of code without any mention of units like this:\n# find an average of the following three weights\nweight1 = 175;\nweight2 = 200;\nweight3 = 210;\n\naveWeight = (weight1 + weight2 + weight3) / 3;\nAnd if we add units to the number…\n# find an average of the following three weights\n«weight1 = 175lb;  # causes \"unexpected symbol\" error»\nweight2 = 200lb;\nweight3 = 210lb;\n\naveWeight = (weight1 + weight2 + weight3) / 3;\nWe get the error unexpected symbol because R is expecting some sort of operation after the number 175 and lb is not a valid operation. \n \nNote: Lines 3 and 4 would also cause an unexpected symbol error but R ceases executing at the first error.\n \nIt is best to mention the units somewhere in the comments especially if your script is large or others are using your script.\n# find an average of the following three weights («all in pounds»)\nweight1 = 175;\nweight2 = 200;\nweight3 = 210;\n\naveWeight = (weight1 + weight2 + weight3) / 3;\nOtherwise, you risk a situation like the Mars Climate Orbiter crash, which could have easily been avoided with proper comments.",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "1-03: Mathematical Operations"
+    ]
+  },
+  {
+    "objectID": "lessons/1-02-Variables.html",
+    "href": "lessons/1-02-Variables.html",
+    "title": "1-02: Variables",
+    "section": "",
+    "text": "add downloadable script for lesson?\nredo images\nunexpected end of document error\n\ninconsistently placed!\n\nsituation where semicolons help detect errors\nshow error lines is NOT default… it is a session variable\n\nonly works for object/function not found error outside of for loops and functions\n\n=: assigns if var , sets if argument\n&lt;- always assigns",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "1-02: Variables"
+    ]
+  },
+  {
+    "objectID": "lessons/1-02-Variables.html#purpose",
+    "href": "lessons/1-02-Variables.html#purpose",
+    "title": "1-02: Variables",
+    "section": "1 Purpose",
+    "text": "1 Purpose\n\nDiscuss what a programming variable is and how it compares to an algebraic variable.\nDiscuss naming conventions for variables.\nAssign and reassign values to variables\nIntroduce in-line comments.",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "1-02: Variables"
+    ]
+  },
+  {
+    "objectID": "lessons/1-02-Variables.html#questions-about-the-material",
+    "href": "lessons/1-02-Variables.html#questions-about-the-material",
+    "title": "1-02: Variables",
+    "section": "2 Questions about the material…",
+    "text": "2 Questions about the material…\nIf you have any questions about the material in this lesson, feel free to email them to the instructor, Charlie Belinsky, at belinsky@msu.edu.",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "1-02: Variables"
+    ]
+  },
+  {
+    "objectID": "lessons/1-02-Variables.html#programming-structures",
+    "href": "lessons/1-02-Variables.html#programming-structures",
+    "title": "1-02: Variables",
+    "section": "3 Programming structures",
+    "text": "3 Programming structures\nIn all programming languages there are basically 4 main structures that cover almost every aspect of programming:\n\nVariables: named storage area for values used in script\nIf-Else Statements: conditional execution of code\nFor Loops: execution of code a fixed number of times\nFunctions: storing commonly ised code\n\n \nWe will go through all 4 of these in the class and in the lesson we will cover the first, Variables.",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "1-02: Variables"
+    ]
+  },
+  {
+    "objectID": "lessons/1-02-Variables.html#different-types-of-variables",
+    "href": "lessons/1-02-Variables.html#different-types-of-variables",
+    "title": "1-02: Variables",
+    "section": "4 Different types of variables",
+    "text": "4 Different types of variables\nVariables is a widely used term found in many different fields – however the definition of variable is not consistent.  For this reason, I will always modify the term variable with the typeof variable (e.g., algebraic variable, experimental variable, statistical variable) with the exception of a programming variable.  If you see the term variable without anything preceding it, then you can assume it refers to a programming variable.\n\n4.1 Algebraic variables\nIn Physics, we use algebraic variables to describe the relationship between physical properties.  For example, velocity can be expressed algebraically as  v=d/t where v, d, and t are symbols representing the physical properties of velocity, distance, and time.  The formula states that the relationship v=d/t is maintained even as the numbers change.\n \nIn this case, v, d, and t are all algebraic variables that have the following properties:\n\nName: v, d, t (name is synonymous with symbol)\nType: numeric (v, d, and t are all numbers)\nValue: given by situation – the value can be known or unknown\n\n\n\n4.2 Variables in porogramming\nIn programming, variables work in a similar way. Variables in programming are named storage locations in memory that hold information.\n \nThis information could be\n\na runner’s distance, time, and velocity\nthe number of fish caught in a day or the name of the lake the fish were caught in\nthe temperature, humidity, or wind speed\n\n \nLike algebraic variables, variables in programming have a name, type, and value.\n\n4.2.1 Name\nThe name corresponds to the symbol in our physics example above – it is how the variable is represented in the script.  The name is used to reference the storage location in memory that holds the information.  For our initial example, we will use the symbols (v,d,t) as the variable names.  Later in this lesson, I will talk about variable naming conventions.\n\n\n4.2.2 Value \nThe value is the information that is stored in the location pointed to by the name, so when v = 10 , that means there is a storage location in memory named v, and in that location, there is the number 10 (note: we will not worry about units).\nTrap: Constants in programming\n\n\n4.2.3 Type\nThe type describes what kind of value is being stored in memory which, in turn, tells R what kind of operations can be performed on the variable. Distance, velocity, and time all have numeric values, and mathematical operations can be performed on them.\n \nNumeric is one type of value a variable can have, some of the other types of values are:\n\nstrings (also called characters): a text value (e.g., a lake name)\ncategorical: a limited set of text values (e.g., the four seasons or the five Great Lakes)\nBoolean: a TRUE/FALSE statement\nDate: a date in day-month-year format\n\n \nWe will talk more about the non-numeric variable types in future lessons, for now, we will stick with numeric variables.",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "1-02: Variables"
+    ]
+  },
+  {
+    "objectID": "lessons/1-02-Variables.html#using-variables-in-a-script",
+    "href": "lessons/1-02-Variables.html#using-variables-in-a-script",
+    "title": "1-02: Variables",
+    "section": "5 Using variables in a script",
+    "text": "5 Using variables in a script\nWe are going to create a simple script that calculates velocity given distance and time. \nThere are three variables in this script: d, v, and t\n \nThe steps for making this script are:\n\nOpen Your RStudio Project (or create one if you do not have one)\nOpen a new script file\nAdd code to the script\nExecute (Source) the code\n\n\n5.1 Open your RStudio Project\nIt would be best to use the same RStudio Project for the whole class and you can use the one you created last lesson.\n \nThere are multiple ways to open an RStudio Project:\n\nOpen your Project Folder in a file manager and double-click the *.proj file\nIn RStudio, click File -&gt; Open Project… -&gt; navigate to the Project Folder and click the *.proj file\nIn RStudio, click File -&gt; Recent Projects -&gt; choose the RStudio Project\nUse the Projects dropdown menu in the top-right corner of RStudio (Figure 1)\n\n\n\n\n\n\n\nFigure 1: The Project dropdown menu in RStudio – something I use all the time!\n\n\n\n\n\n5.2 Open a new script\nInside your RStudio Project, click on File -&gt; New File -&gt; R Script (Figure 2) .  An empty file named Untitled1 will appear as a tab in the File Editor window.  Save the file as lesson1-02.r in your script folder.\n\n\n\n\n\n\nFigure 2: Opening a new R file in RStudio\n\n\n\n\n\n5.3 Add code to the script\nCopy and paste the following lines into the code window and click the Source button (or Code -&gt; Source):\n# the next two lines should be at the top of all your scripts\nrm(list=ls());    # Clear out the Environment     \n  \n# create two variables: d and t and give them values\nd = 100;\nt = 20;\n# create a variable v that is calculated using d and t\nv = d/t;\nLines 1 cleans out the Environment tab each time the script is executed.  This provides you with a clean slate each time you run a script and I put this line at the top of most of my scripts.\nLine 1 also has an inline comment that starts with #. Everything after the # does not get executed and is informational.\n \nLines 3 and 6 are full comment lines – again, they are there to make the script easier to understand.  You can take them out and the script will produce the same result.\n \nLines 4, 5, and 7 are where the real action occurs and each line contains a variable assignment:\n\nLine 4 assigns the value 100 to the variable named d\nLine 5 assigns the value 20 to the variable named t\nLine 7 assigns the value of the calculation d/t to the variable named v.\n\n \nLines 1, 4, 5, and 7 all have semicolons ( ; ) at the end.  The semicolon designates the end of a programming command just like the period designates the end of a sentence.  The semicolon is optional in R and is often not used, but I highly recommend the use of semicolons in all of your scripts – they make code easier to debug, help you think about the flow of your code, and are required in most programming languages.\n \nTrap: Assignment vs. Equality Operations\nExtension: alternate assignment operator\n\n\n5.4 Execute your code – the Environment tab\nClick Source to execute your R code ( Figure 3 ).  Your RStudio window should look similar to this:\n\n\n\n\n\n\nFigure 3: Executing (sourcing) the velocity-distance-time script\n\n\n\nNotice that the Environment tab displays the values for the variables v, d, and t. The Environment tab displays every variable that is in your script and is a very useful tool for both debugging and viewing the results of your script.\n \nTry changing the values for d and t (lines 7 and 8) and click Source again to see how the values in the Environment tab change.",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "1-02: Variables"
+    ]
+  },
+  {
+    "objectID": "lessons/1-02-Variables.html#re-assigning-values-to-variables",
+    "href": "lessons/1-02-Variables.html#re-assigning-values-to-variables",
+    "title": "1-02: Variables",
+    "section": "6 Re-assigning values to variables",
+    "text": "6 Re-assigning values to variables\nVariables get their namesake from the fact that their values can change.\n \nIn the code below:\n\nd is assigned the value 100 in line 8\nd to used to calculate v in line 10\nd is assigned a new value of 400 in line 11\n\n \nRun the code below to see what happens\nrm(list=ls());    # Clear out the Environment    \n  \n# create three variables: d, t, and v\n# give d and t values and use them to calculate v\nd = 100;   # assign d the value 100\nt = 20;\nv = d/t;   # use d to calculate v\nd = 400;   # re-assigns d to 400\nIn the Environment tab the value of v remains 5 even though d changes. \n\n\n\n\n\n\nFigure 4: Changing d in the script does not retroactively change v\n\n\n\nThe value of v remains 5 because line 10 assigns the value of d/t to v. But, as of line 8, d is still equal to 100. v does not get updated because one of the variables used to calculate it, d, changes after the calculation is made. The script runs in order, and variables are not updated retroactively.\n \nIn other words, v will remain 5 until it is explicitly assigned another value.\n \nTrap: Assigning nonexistent variables\n\n6.1 Reassigning values to a variable\nWhat happens if you add the line v=d/t at the end of the script? Try the following code and click Source\nrm(list=ls());    # Clear out the Environment    \n  \n# create three variables: d, t, and v\n# give d and t values and use them to calculate v\nd = 100; # assign d the value 100\nt = 20;\nv = d/t; # use d to calculate v\nd = 400; # re-assigns d to 400\nv = d/t; # re-assign v using the new value of d\nNotice that now the value of v has changed.  This is because line 11 assigns a new value to v calculated using the value of d from line 10.\n\n\n\n\n\n\nFigure 5: Assign a new value to v after assigning the new value to d",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "1-02: Variables"
+    ]
+  },
+  {
+    "objectID": "lessons/1-02-Variables.html#in-line-and-whole-line-comments",
+    "href": "lessons/1-02-Variables.html#in-line-and-whole-line-comments",
+    "title": "1-02: Variables",
+    "section": "7 In-line and whole-line comments",
+    "text": "7 In-line and whole-line comments\nThe code in the previous script has examples of whole-line comments (lines 2, 6, and 7) and in-line comments(lines 8, 10, 11, and 12).  R ignores everything after the ( # ) but still executes everything on the line before the ( # ).  In-line comments are a nice way to give a quick description of the code on a line, whereas whole-line comments are better for more robust descriptions.",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "1-02: Variables"
+    ]
+  },
+  {
+    "objectID": "lessons/1-02-Variables.html#naming-variables",
+    "href": "lessons/1-02-Variables.html#naming-variables",
+    "title": "1-02: Variables",
+    "section": "8 Naming variables",
+    "text": "8 Naming variables\nThe problem with variable names like v, d, and t is that they are not very descriptive.  It is good programming practice to give names that are descriptive so that people reading your code can more easily understand what is going on.  So, the first step would be to spell the names out, for example: velocity, distance, and time.\n \nHowever, a script solving for velocity will probably be calculating multiple velocities.  Perhaps the script is calculating the velocity of both a runner and a car – the variable names should reflect this. \n\n8.1 Naming Rules\nThere are a few rules for naming a variable:\n\nIt must start with a letter\nIt can only contain letters, numbers, or the underscore ( _ )\n\nnote: dots ( . ) are also accepted in R but dots are not accepted in most programming languages\n\nThere can be no spaces in the name\nThere are system reserved words you cannot use as variable names (e.g., if, else, for, while, TRUE, FALSE, function, next…).  We will learn what these reserved words mean in future lessons.\n\n\n\n8.2 Naming Conventions\nThere are two common programming conventions for variables names:\n\nCapitalize the first letter of every word except the first: runnerVelocity, runnerDistance, runnerTime\nPut an underscore ( _ ) between each word:  runner_velocity, runner_distance, runner_time\n\n \nTrap: Case counts in variable names\n \nFor all your class work, you need to use these two conventions.  I will use the first convention in most of my examples.\n \nNote: R programmers often use dots in variable names: runner.velocity, runner.distance.  I do not recommend this as this method will not work in most other programming languages.",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "1-02: Variables"
+    ]
+  },
+  {
+    "objectID": "lessons/1-02-Variables.html#application",
+    "href": "lessons/1-02-Variables.html#application",
+    "title": "1-02: Variables",
+    "section": "9 Application",
+    "text": "9 Application\nTwo runners run a 400 meter race.  The first runner takes 127 seconds, the second runner takes 140 seconds.\n \nWrite a script that:\n\nCalculates each runner’s speed in meters/second\nCalculates each runner’s speed in miles/hour\n\n3600 seconds = 1 hour\n1609 meters = 1 mile\n\n\nSo, 4 velocities in all.\n \nMake sure you use variables for all values and follow proper variable naming convention.\nAfter your Source the script, make sure you can see all of the variables, with the correct answer, in the Environment tab.\n \nSave the script as app1-02.r in your scripts folder and email your Project Folder to the instructor.\n \nInstructions for zipping the Project Folder are here.\n \nIf you have any questions regarding this application, feel free to email them to Charlie Belinsky at belinsky@msu.edu.\n\n9.1 Questions to answer\nAnswer the following in comments inside your application script:\n\nWhat was your level of comfort with the lesson/application?\nWhat areas of the lesson/application confused or still confuses you?\nWhat are some things you would like to know more about that is related to, but not covered in, this lesson?\n\n\n\n9.2 Challenge\nUse random values for the times.  The easiest way to get a random number in R is to use the sample() function:\n \nExamples:\nrandomNum1 = sample(x=10:20, size=1);  # number between 10 and 20 (inclusive)\nrandomNum2 = sample(x=-5:5, size=1);   # number between -5 and 5 (inclusive)",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "1-02: Variables"
+    ]
+  },
+  {
+    "objectID": "lessons/1-02-Variables.html#trap-assignment-vs.-equality-operations",
+    "href": "lessons/1-02-Variables.html#trap-assignment-vs.-equality-operations",
+    "title": "1-02: Variables",
+    "section": "10 Trap: Assignment vs. Equality Operations",
+    "text": "10 Trap: Assignment vs. Equality Operations\nThe equal sign ( = ) plays a different role in programming than in Algebra.\n \nIn algebra, the equal sign is an equality operator saying that the two sides are equivalent to each other.\n\nSo, in algebra, v = d/t says that v is equivalentto d divided by t\nIn this case, v will change if d or t changes\n\n \nIn programming, the equals sign is an assignment operator and it says that the variable on the left side will be assigned the value calculated on the right side.\n\nSo, in programming, v = d/t says that v will be assignedthe calculation of  d divided by t\nIn this case, v will not change if d or t changes (unless v is reassignedthe calculation d/t after d or t changes).  The value of v, once assigned, is independent of the variables used in the calculations.\n\n\n10.1 Treating the equal sign as an equality operation\nA very common error in programming is to treat the assignment operator ( =) as an equality operator.\nThe following statements make sense in algebra as equality statements but will cause errors in R.\nd/2 = 100; # d/2 is not a valid variable -- you cannot \"assign\" a value to \"d/2\"\n           #                                (d = 100*2 is valid)\n20 = t;    # '20' cannot be assigned the value of 't' (t = 20 is valid)\nd/t = v;   # d/t is not a valid variable (v = d/t is valid)\nPut the above lines of code in your script individually.  You will notice an error message gets displayed in the Console Window.  The error messages are often unintuitive but they do give you a line number.\n \nIn the following example (Figure 6), line 9 contains an error and the lines below it never gets executed:\n# the next two lines should be at the top of all your scripts\nrm(list=ls());\noptions(show.error.locations = TRUE);\n  \n# create three variables: d, t, and v\n# give d and t values and use them to calculate v\nd = 100;\n20 = t;   # error!\nv = d/t;\nNotice that the execution of the script stops as soon as an error occurs – so, in this case, line 10, which calculates v, never gets executed.\n\n\n\n\n\n\nFigure 6: Assignment error in the R Script",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "1-02: Variables"
+    ]
+  },
+  {
+    "objectID": "lessons/1-02-Variables.html#trap-constants-in-programming",
+    "href": "lessons/1-02-Variables.html#trap-constants-in-programming",
+    "title": "1-02: Variables",
+    "section": "11 Trap: Constants in programming",
+    "text": "11 Trap: Constants in programming\nThe term variable suggests that the value can be changed, and this is usually true. However, mathematical constants like π do not change, but they are still referred to as variables in programming.  In other words, there can be a storage location referred to as pi that contains the numeric value 3.1415. These variables are often, and confusingly, referred to as constant variables.  Even more confusing, R will allow you to change the value…\n\n\n\n\n\n\nFigure 7: Using the built in variable pi – and then changing it",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "1-02: Variables"
+    ]
+  },
+  {
+    "objectID": "lessons/1-02-Variables.html#trap-assigning-nonexistent-variables",
+    "href": "lessons/1-02-Variables.html#trap-assigning-nonexistent-variables",
+    "title": "1-02: Variables",
+    "section": "12 Trap: Assigning nonexistent variables",
+    "text": "12 Trap: Assigning nonexistent variables\nThe first time you assign a value to a variable, a storage container is created in memory and a value is put in it.  We call this a declaration (more about declarations in Lesson 4). After a variable has been declared, it can be used in calculations and re-assigned values.  Before a variable is declared, R knows nothing about the variable.  Here is an example of using a variable before it is declared. Note: the only change in this script was moving the line v=d/t before the declaration of d and t:\n# the next two lines should be at the top of all your scripts\nrm(list=ls());                        \noptions(show.error.locations = TRUE);\n  \n# create three variables: d, t, and v\n# give d and t values and use them to calculate v\nv = d/t;  # error\nd = 100; \nt = 20;\n\n\n\n\n\n\nFigure 8: Did not assign a value to the variable named d – error\n\n\n\nThere is an error in the console window (Figure 8) that says object ‘d’ not found. The reason for this error is that, on line 8, the script is asked to assign the calculation d/t to the variable v but d and t do not exist yet.\n \nTry the following code and see how the error changes. Notice in this code v=d/t is after the declaration of d but before the declaration of t.\n# the next two lines should, for now, be at the top of all your scripts\nrm(list=ls());                        \noptions(show.error.locations = TRUE); \n\n# create three variables: d, t, and v\n# give d and t values and use them to calculate v\nd = 100;\nv = d/t;  # error\nt = 20;",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "1-02: Variables"
+    ]
+  },
+  {
+    "objectID": "lessons/1-02-Variables.html#trap-case-counts-in-variable-names",
+    "href": "lessons/1-02-Variables.html#trap-case-counts-in-variable-names",
+    "title": "1-02: Variables",
+    "section": "13 Trap: Case counts in variable names",
+    "text": "13 Trap: Case counts in variable names\nIn R, as in most scripting languages, uppercase and lowercase letters are always seen as different.  So, runnersTime and runnerstime are seen by R as two different variables.  If the case is not correct, then you will receive an Object not found error just like you would if you spelled the variable name wrong.",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "1-02: Variables"
+    ]
+  },
+  {
+    "objectID": "lessons/1-02-Variables.html#extension-alternate-assignment-operator",
+    "href": "lessons/1-02-Variables.html#extension-alternate-assignment-operator",
+    "title": "1-02: Variables",
+    "section": "14 Extension: alternate assignment operator",
+    "text": "14 Extension: alternate assignment operator\nIn R, there are two assignment operators, the equal sign ( = ) and the arrow ( &lt;- ). \nrm(list=ls());    # Clear out the Environment  \n  \nd &lt;- 100;   # same as d = 100\nt &lt;- 20;    # same as t = 20\nv &lt;- d/t;   # same = d/t\nYou will see a lot of R programs written using the arrow.  In this class, I will use the equal sign because that is the standard for most other programming languages (including JavaScript and C) and it is easier to type.  You can use either operator in your scripts in this class.\n \nFor assigning values to a variable, ( &lt;- ) and ( = ) are functionally equivalent. There is a difference between the two operators when working with functions.",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "1-02: Variables"
+    ]
+  },
+  {
+    "objectID": "lessons/1-04_Vectors_And_Data_Frames.html",
+    "href": "lessons/1-04_Vectors_And_Data_Frames.html",
+    "title": "1-04: Vectors and Data Frames",
+    "section": "",
+    "text": "remove stringsAsFactor\nextension about why I added arguments when reading the CSV file",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "1-04: Vectors and Data Frames"
+    ]
+  },
+  {
+    "objectID": "lessons/1-04_Vectors_And_Data_Frames.html#purpose",
+    "href": "lessons/1-04_Vectors_And_Data_Frames.html#purpose",
+    "title": "1-04: Vectors and Data Frames",
+    "section": "1 Purpose",
+    "text": "1 Purpose\n\nIntroducing vectors\nOpening a CSV file and saving data to a data frame\nPulling columns from a data frame\nPulling individual values from a column\nPulling multiple values for a column\n\nIf you have any questions about the material in this lesson, feel free to email them to the instructor, Charlie Belinsky, at belinsky@msu.edu.\n\n1.1 Files for this lesson\nFrom this point on most lessons will have script and/or data files to download.\n \nThe script for this lesson is here\n\nright-click on the link and choose Save link as…\nSave to the scripts folder in your Class Project\n\n \nThe data used in this lesson, twoWeekWeatherData.csv\n\nleft-click the link and save to the data folder in your Class Project\nTrap: Opening CSV files in Excel",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "1-04: Vectors and Data Frames"
+    ]
+  },
+  {
+    "objectID": "lessons/1-04_Vectors_And_Data_Frames.html#standalone-scripts-vs.-scripts-within-a-project",
+    "href": "lessons/1-04_Vectors_And_Data_Frames.html#standalone-scripts-vs.-scripts-within-a-project",
+    "title": "1-04: Vectors and Data Frames",
+    "section": "2 Standalone scripts vs. scripts within a Project",
+    "text": "2 Standalone scripts vs. scripts within a Project\nIn the last two lessons, everything we did was contained to one script file – no outside file was needed.  The scripts in those lessons were standalone scripts and could be executed inside or outside your RStudio Project with the same results.\n \nStandalone scripts are rare and are generally only created for testing purposes.\n \nThe script for this lesson will not execute correctly if it is treated as a standalone script (i.e., it is executed outside of the RStudio Project). This is because the file looks for a data file and it needs to know where to look for it.\n\n2.1 Set Working Directory (a cautionary statement)\nMany people still treat all R scripts as standalone scripts (i.e., they do not use RStudio Project). This causes all sorts of problems when script file look for other files.  The way to get around this is to set the Working Directories using setwd().  This is a mess because Working Directories change when file are moved between computers or even within a computer.  Scripts that set working directories are much harder to share and maintain.  This author strongly suggests that you use RStudio Projects and avoid the working directory mess.",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "1-04: Vectors and Data Frames"
+    ]
+  },
+  {
+    "objectID": "lessons/1-04_Vectors_And_Data_Frames.html#vector-variables",
+    "href": "lessons/1-04_Vectors_And_Data_Frames.html#vector-variables",
+    "title": "1-04: Vectors and Data Frames",
+    "section": "3 Vector Variables",
+    "text": "3 Vector Variables\nVector variables, or vector for short, are variables that hold multiple related values.  For instance if we have temperature values for 5 days, we could create 5 variables and assign each one a temperature value:\ntempHigh1 = 65;\ntempHigh2 = 57;\ntempHigh3 = 61;\ntempHigh4 = 64;\ntempHigh5 = 59;\nAnd, in the last lesson’s application, we averaged the 5 values like this:\ntempAvg = (tempHigh1 + tempHigh2 + tempHigh3 +\n           tempHigh4 + tempHigh5) / 5;\n\n3.1 Grouping values\nBut, in programming we want to group related values together.  So, instead of creating 5 different variables, we create one vector that has 5 values:\ntempHigh = c(65, 57, 61, 64, 59);\nOne of the main reasons to create a vector is that the values in the vector are all associated and we can perform mathematical operations on the whole vector.  For instance, we might have temperatures in Fahrenheit and want to convert all the temperature to Celsius:\ntempHighCel = (5/9) * (tempHigh - 32)\nOr, we can use one of R’s many, many statistical functions, mean(), on the vector:\ntempMean = mean(tempHigh); \nWe can see in the Environment that tempHighCel has 5 converted temperatures and that tempMean is the same as tempAvg above:\ntempAvg:     61.2\ntempHigh:    num [1:5] 65 57 61 64 59\ntempHighCel: num [1:5] 18.3 139 16.1 17.5 15\ntempMean:    61.2\nExtension: Statistical functions on vectors\n\n\n3.2 Indexing values in a vector\nPutting values into vectors also allows us to associated values between vectors.  If we have a vector of high temperature values, then we could also have a vector of low temperature values.\ntempLow = c(45, 40, 55, 37, 42);\nWe can directly subtract tempLow values from tempHigh to get the difference in temperature for all values:\ntempDiff = tempHigh - tempLow;\nWe can index individual values.  You could think of the vector as 5 days.  And if you want, you can find the change in temperature for any day using the index 1 through 5:\ntempDiff_3 = tempHigh[3] - tempLow[3];\ntempDiff_5 = tempHigh[5] - tempLow[5];\nThe Environment shows:\ntempHigh:   num [1:5] 65 57 61 64 59\ntempLow:    num [1:5] 45 40 55 37 42\ntempDiff:   num [1:5] 20 17 6 27 17\ntempDiff_3: 6\ntempDiff_5: 17\n\n\n3.3 Vectors and columns in a data frame\nData frames are essentially made up of vectorsthat all have the same length.  The vectors are the columns in the data frame and the number of values in the vector is determined by the number of rows in the data frame.  In Fig.## there is a weather data frame (that we will use in later lessons) and each column has a measured daily weather value (e.g., minTemp, maxTemp).  The row gives all the measured weather values for a specific day (e.g., row 1 is Jan 1, row 2 is Jan 2).\n&lt;image&gt;\nA data frame viewed in RStudio with 23 variables (i.e., the 23 columns, which are vector variables)",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "1-04: Vectors and Data Frames"
+    ]
+  },
+  {
+    "objectID": "lessons/1-04_Vectors_And_Data_Frames.html#csv-files",
+    "href": "lessons/1-04_Vectors_And_Data_Frames.html#csv-files",
+    "title": "1-04: Vectors and Data Frames",
+    "section": "4 CSV files",
+    "text": "4 CSV files\nIn the first couple of lessons we were using data from inside the script but most of the data you will use will come from outside the script – often from a data frame. The data frames themselves often come from a CSV file. CSV stands for Comma Separated Values, meaning that the values in the file are separated by commas.\n \nNote: CSV is really just a text file that can be read in any text editor and CSV file do not have to use commas as separators.\n \nLet’s look at a small data set we downloaded in the Files for this lesson section called twoWeekWeatherData.csv, which contains two weeks of weather data from Lansing, Michigan. \n\n4.1 Opening a CSV file\nCSV files are often opened by default in Excel and this can problematic:\n\nTrap: Opening CSV files in Excel\n\nCSV files are just text files and CSV files can be opened in any text editor (e.g., notepad, notepad++, textEdit).\n \nRStudio is a text editor so we can open  twoWeekWeatherData.csv in RStudio by either:\n\nClicking File -&gt; Open File… and navigate to twoWeekWeatherData.csv and press OK.\nUsing the Files tab: go to your data folder, click on twoWeekWeatherData.csv, choose View File (fig.##)\n\n&lt;image&gt;\nThe twoWeekWeatherData.csv file opened in RStudio\n \nThe CSV file has 15 lines (rows).  The first row contains the 5 column headers and the other 14 rows contain the 5 values for each date – all separated by a comma.\n\n\n4.2 Reading in a CSV file\nWe can see that the CSV file has a header row and each row has five values representing: date, highTemp, lowTemp, precipitation, noonCondition.\n \nTo use the data in a script we need to read the data into a script file – and for that we will use the read.csv() function.\nrm(list=ls()); # cleans out the Environment \n\nweatherData = read.csv(file=\"data/twoWeekWeatherData.csv\", # path to file\n                       sep=\",\",                   # values are separated by commas\n                       header=TRUE);               # there is a header row\nread.csv() reads in the data from the CSV file – and saves the data to a variable called weatherData.\n \nweatherData is a data frame variable and it appears in the Environment tab under Data as 14 obs. of 5 variables. (i.e., 14 rows and 5 columns), which matches what we saw in the CSV file (Fig.##). \n\nDouble-clicking on weatherData opens the data frame in the File Viewer window.  This is a convenient way to visualize the data frame.\nClicking on the blue arrow to the left of weatherData provides information about each of the columns\n\n&lt;image&gt;\nViewing the data frame in the File Viewer\n\n\n4.3 Column value type\nIn the Environment, when you click on the arrow next to the left of weatherData you see some information about the columns in the data frame. The first piece of information is the name of the column (i.e., the header – date, highTemp, etc.).  The second is the type of value the column contains.\n \nIn weatherData there are three types of values:\n\nint (e.g., highTemp and lowTemp): integer – or non-decimal numbers\nnum (e.g., precipitation): numeric, or numbers with decimals\nchr: (e.g, noonCoondition) this stands for character, and character is really short for string of characters, and this in turn is typically shortened to string.  Whatever you call it, it is the catch-all category for values R cannot recognize as anything else. \n\n \nNote: the date column has date values but it is not formatted properly so R does not recognize it as a Date – something we will cover later.",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "1-04: Vectors and Data Frames"
+    ]
+  },
+  {
+    "objectID": "lessons/1-04_Vectors_And_Data_Frames.html#functions-and-arguments",
+    "href": "lessons/1-04_Vectors_And_Data_Frames.html#functions-and-arguments",
+    "title": "1-04: Vectors and Data Frames",
+    "section": "5 Functions and arguments",
+    "text": "5 Functions and arguments\nread.csv() is a function that tells R to open a file and treat it like a CSV file. A function is a set of code separate from your main script that performs a common task (e.g., plotting values, finding a standard deviation, reading in a file).\n \nThere is a lot going on in our first line of code and that is because there are a lot of options, called arguments, when opening up a CSV file!  We will talk a little bit about these arguments here and save the rest of the discussion for the next lesson.\n \nInside the function read.csv(), I included four arguments (file, sep, header, and stringsAsFactors).  Arguments are like the knobs and dials for a function.  The function reads in a CSV file and the arguments tweak how the file is read.\n\n5.1 file\nfile = “data/twoWeekWeatherData.csv” means that the script opens the file called twoWeekWeatherData.csv located in the data folder of your RStudio Project\n \nThis only works if you are in the RStudio Project because the RStudio Project sets the Working Directory to your Project Folder.\n \nIf you execute the script file outside your RStudio Project, you will get a cannot open file error because the script does not know where to start looking for the CSV file.\n&lt;image&gt;\nYou get a cannot open file error if you try to execute the script outside of your RStudio Project\n\n\n5.2 sep\nsep = “,” means that the values in the file are separated by commas.  This is not always true – even for CSV files.\n \nThe most common alternate separator values are spaces ( sep = ” “ ) and dots ( sep = “.” )\n\n\n5.3 header\nheader = TRUE means the first row contains header information. In this case the header information is the column names (date, highTemp, lowTemp, and precipitation)\n \nheader=FALSE would mean that the first row contains data (i.e., there are no column names).  If you set header=FALSE in this example then R will think that the column names are the first data point.  So, you will have 15 values in each vector and the first value will not make sense.",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "1-04: Vectors and Data Frames"
+    ]
+  },
+  {
+    "objectID": "lessons/1-04_Vectors_And_Data_Frames.html#getting-data",
+    "href": "lessons/1-04_Vectors_And_Data_Frames.html#getting-data",
+    "title": "1-04: Vectors and Data Frames",
+    "section": "6 Getting data",
+    "text": "6 Getting data\nWe now have a data frame with weather information stored in a variable called weatherData.  But, we usually do not want to deal with the whole data frame at once.  So, our next trick will be to extract parts of the data from the data frame.  We might want to work with one column in the data frame (e.g., highTemp or precipitation).  We can see all the columns in the data frame by expanding the data frame in the Environment or looking at the headers in the File Viewer (both views are in fig ##). \n\n6.1 Pulling out a column\nColumns in a data frame are vectors (i.e., a variable with multiple values) and we can save the columns to a vector.  We can access the columns from a data frame using the $ operator.\n \nWe start with weatherData and, use the dollar sign operator ( $ ) to access the highTemp column, and save the results to the vector called highTemps:\nhighTemps = weatherData$highTemp;\nIn the Environment square brackets ([ ] ) indicates the variable is a vector.  highTemps appears in the Environment as a vector.  highTemps has 14 ( [1:14] ) integer (int) values, representing the temperature for each of the 14 days. \n&lt;image&gt; \nThe highTemps vector variable in the Environment tab\n\n\n6.2 Pulling out (subsetting) individual values\nPerhaps we want just one value – specifically, we want to know the high temperature on April 2 (the seventh day in weatherData).\n \nThere are multiple ways to access that individual value.  I will present three, but for the rest of this lesson, we are going to use the first method.\n \nWe could subset using the subset operator ( [ ] ) the 7th value from highTemps:\nhighTempDay7a = highTemps[7];\nWe could go back to the original data frame (weatherData) and subset the 7th value from the column highTemp:\nhighTempDay7b = weatherData$highTemp[7];\nOr, we can use a row/column (e.g., X/Y) operation on weatherData to get the value:\nhighTempDay7c = weatherData[7, \"highTemp\"];  # think of this as [X,Y] notation\nThe last method is functionally the same as the previous two – but the X,Y notation is the most robust as it can best handle more complex subsetting situations (e.g., subsetting multiple rows and columns), which will be discussed in a future lesson.\n\n\n6.3 The Environment and the L value\nI will be referring quite often to the Environment tab.  Instead of taking a screenshot of the Environment tab (which is hard to maintain), I will display the variables I am focused on like this:\nhighTemp7a:  60L\nhighTemp7b:  60L\nhighTemp7c:  60L\n&lt;image&gt;\nThe Environment tab shows that highTemp137a,b, and c are all equal to 60L\n \nhighTemp7a, highTemp7b, and highTemp7c all show that the high temperature on the 7th day is 60.\n \nThe L is something you can ignore – it indicates that the number is an long integer, whichis an integer.\nIf you want to know more go to Extension: Long and Short Integers",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "1-04: Vectors and Data Frames"
+    ]
+  },
+  {
+    "objectID": "lessons/1-04_Vectors_And_Data_Frames.html#pulling-out-multiple-values",
+    "href": "lessons/1-04_Vectors_And_Data_Frames.html#pulling-out-multiple-values",
+    "title": "1-04: Vectors and Data Frames",
+    "section": "7 Pulling out multiple values",
+    "text": "7 Pulling out multiple values\nWe have pulled out a column from a data frame and we have pulled out individual values.  In this section, we will show different ways to pull out multiple values with:\n\nAn index vector created using c()\nA regular (or, simple) sequence using the colon ( : ) operator\nA more complex sequence using the seq() function\n\n\n7.1 Using a numeric vector to pull multiple values\nhighTemps is a vector with 14 values and each of these values can be accessed by their numeric placement:\nval_01 = highTemps[1];\nval_05 = highTemps[5];\nval_12 = highTemps[12];\nOr, we might want to combine the temperatures from these three days into one variable.  c() creates a vector of the three values (1, 5, and 12) and that vector is used to subset highTemps:\nvalComb = highTemps[c(1,5,12)];  # a vector with 3 values\nvalComb is a vector with 3 values, the high temperature for days 1, 5, and 12:\n\n\n\nval_01:    57L\nval_05:    39L\nval_12:    54L\nvalComb:   int [1:3] 57 39 54\n\n\nFigure 1: The three values we pulled from highTemps individually saved and combined (valComb)\n\n\n\n\n\n7.2 Pulling out consecutive values\nIf we want to get the high temperature for consecutive days, we can use the simple sequencing ( : ) operator – simple refers to the fact that we are sequencing by 1:\nconsecVals = highTemps[3:11];  # same as highTemps[c(3,4,5,6,7,8,9,10,11)]\nconsecVals is a vector with 9 values – the high temperatures from days 3 through 11.  Note: 9 values, not (11-3=) 8 – we include both the 3 and the 11.\n \nThe ( : ) operator also works in reverse\nconsecValsRev = highTemps[11:3];\nconsecValsRev is a vector with 9 values – the high temperatures from days 11 down to 3.\n\n\n\nconsecVals:     int [1:9] 54 40 39 ...\nconsecValsRev:  int [1:9] 39 44 55 ...\n\n\nFigure 2: int [1:9] means 9 values are in each vector – the first few values are shown\n\n\n\n\n\n7.3 Using the Console to view values in a vector\nThe Environment tab is good for quickly looking at values, but it only shows a few values from each vector.  If you want to see all the values then you can use the Console tab (bottom-left corner).  In the Console tab, type in the variable you want to see and press Enter:\n&lt;image&gt;\nUsing the Console tab to view variables\n \nThese two values, consecVals and consecValRev, are shown in the Console window in the figure ## image.\n\n\n7.4 Using a sequence to get values\nWe can use the seq() to create a more complex sequence to subset a vector.\n \nThis is a two step process:\n\nCreate a sequence. \nUse the sequence to subset the vector. \n\n\n7.4.1 Creating a sequence\nseq() is a function with three arguments:\n\nfrom: the starting point\nto: the ending point\nby: the iteration\n\n \nWe can create a sequence that lists every other number from 1-14\nseq1 = seq(from=1, to=14, by=2);\nWe can reverse the sequence by switching the to and from and inverting the by\nseq2 = seq(from=14, to=1, by=-2);\nWe can get every 3rd number for the first 10 numbers:\nseq3 = seq(from=1, to=10, by=3);\nThe 3 sequences we created are just vectors of numbers:\nseq1:   1 3 5 7 9 11 13\nseq2:   14 12 10 8 6 4 2\nseq3:   1 4 7 10\n\n\n7.4.2 Using the sequences as indexes\nWe can use the 3 sequences above as index vectors to index the highTemps vector:\n \nGet every other high temperature:\nhighTempSeq1 = highTemps[seq1];\nGet every other high temperature in reverse:\nhighTempSeq2 = highTemps[seq2];\nGet every 3rd high temperature value in the first 10 values:\nhighTempSeq3 = highTemps[seq3];\n\n\n\nhighTempSeq1:  int [1:7] 57 54 39 60 ...\nhighTempSeq2:  int [1:7] 75 54 44 53 ...\nhighTempSeq3:  int [1:4] 57 40 60 44\n\n\nFigure 3: There are 7 values in the first two sequences and 4 in the third\n\n\n\n\n\n7.4.3 Combining the above 2 steps\nYou can combine the above two steps in 1 command.\n \nThe following command will give you the same high temperature values:\nhighTempSeq1b = highTemps[seq(from=1, to=14, by=2)];  \nhighTempSeq2b = highTemps[seq(from=14, to=1, by=-2)];  \nhighTempSeq3b = highTemps[seq(from=1, to=10, by=3)];\nExtension: Square brackets [ ] vs. Round Brackets ( )\n\n\n7.4.4 Note about combining steps in R\nWhile it might seem like combining steps is a good idea because it reduces the amount of code, this needs to be balanced with the fact that combining code usually makes it harder to read.  One of the big problems I see when looking at people’s code is that they cram too much code into one command and it becomes really difficult to debug if anything goes wrong.  If you are going to err on one side then this author recommends you err on the side of breaking up code rather than combining it.",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "1-04: Vectors and Data Frames"
+    ]
+  },
+  {
+    "objectID": "lessons/1-04_Vectors_And_Data_Frames.html#application",
+    "href": "lessons/1-04_Vectors_And_Data_Frames.html#application",
+    "title": "1-04: Vectors and Data Frames",
+    "section": "8 Application",
+    "text": "8 Application\nA) Create a file named app1-04.r in your scripts folder inside your RStudio Project and save the information from twoWeekWeatherData.csv to a variable named weatherData (just like in this lesson).\n \nB) Sequencing\nUse the seq() function to create this sequence: (13, 9, 5, 1, -3, -7). \nNote: this sequence could not be used to index a vector because it mixes positive and negative numbers. \n\nC) Subsetting:\n\nPull out two columns precipitation and lowTemps from weatherData and save each to a variable\nSave the 4th value of precipitation to a variable\n\nRepeat the previous step for the other two methods given in section ##\n\nSave the 9th, 12th, 5th, and 1st values of lowTemps to one variable (in that order)\nCreate a variable that holds the precipitation for the last 5 days (of the 14 days).\nCreate a variable that holds the lowTemp for the days 12 down to 6.\nCreate a variable that holds the first 3 days and last 3 days of precipitation\n\n \nD) Negative subsetting:\nSubset precipitation using the sequence c(-1,-3,-5). Explain in comments what happened.\n \nE) Vector Math:\n\nConvert the precipitation column from inches to centimeters (2.54cm = 1in).\n\n \nF) Opening Data Frames:\n\nSave the file DowJones1980_2012.csv to the data folder in your RStudio Project\n\nTo save: right-click on link and choose Save link as…\n\nUsing read.csv(), save the data in DowJones1980_2012.csv to a data frame named dowJonesData\n\n there is no header in this file and the separator is a space\n\nPlot the data using the line: plot(dowJonesData$V2)\n\nIf you opened the file correctly the plot will be in the Plots tab and look like this:\n\n\n\n\n\n\nFigure 4: Plot of the Dow Jones data\n\n\n\n\n\n \nSave the script as app1-04.r in your scripts folder and email your Project Folder to the instructor.\n \nInstructions for zipping the Project Folder are here.\n \nIf you have any questions regarding this application, feel free to email them to Charlie Belinsky at belinsky@msu.edu.\n\n8.1 Questions to answer\nAnswer the following in comments inside your application script:\n\nWhat was your level of comfort with the lesson/application?\nWhat areas of the lesson/application confused or still confuses you?\nWhat are some things you would like to know more about that is related to, but not covered in, this lesson?",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "1-04: Vectors and Data Frames"
+    ]
+  },
+  {
+    "objectID": "lessons/1-04_Vectors_And_Data_Frames.html#trap-opening-csv-files-in-excel",
+    "href": "lessons/1-04_Vectors_And_Data_Frames.html#trap-opening-csv-files-in-excel",
+    "title": "1-04: Vectors and Data Frames",
+    "section": "9 Trap: Opening CSV files in Excel",
+    "text": "9 Trap: Opening CSV files in Excel\nIf you have Excel on your computer, then it is probable that Excel is the default program for opening CSV files.  So, double-clicking on a CSV file will probably open it in Excel.  The danger with opening CSV files in Excel is that Excel will sometimes reformat the data (especially date and money columns) and then give a message saying how the data needs to be saved to be preserved.  Do not save the file – it will change the format of your data.  If you are editing a CSV file in Excel then I would save the results to a test file first to make sure Excel did not do anything untoward.\n\n\n\n\n\n\nFigure 5: Opening a CSV file in Excel – the possible data loss warning is not something you want to heed",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "1-04: Vectors and Data Frames"
+    ]
+  },
+  {
+    "objectID": "lessons/1-04_Vectors_And_Data_Frames.html#extension-long-and-short-integers",
+    "href": "lessons/1-04_Vectors_And_Data_Frames.html#extension-long-and-short-integers",
+    "title": "1-04: Vectors and Data Frames",
+    "section": "10 Extension: Long and Short Integers",
+    "text": "10 Extension: Long and Short Integers\nL stands for Long integer – long meaning that this variable can hold a number larger than 256.  In the old days, when space on computers was VERY expensive, programmers would save space by having a short integer and long integer designation.  So, if a programmer knew a number was small, they would assign it to a short integer to take up less space on the computer.  Since temperatures in Lansing are generally going to be less than 256 (unless you are using the Kelvin system), it is safe to assign temperatures to short integers.\n \nNowadays, space is so cheap that we rarely care that we are using a tiny bit more memory than we need – so L has become mostly a relic of the past.",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "1-04: Vectors and Data Frames"
+    ]
+  },
+  {
+    "objectID": "lessons/1-04_Vectors_And_Data_Frames.html#extension-statistical-functions-on-vectors",
+    "href": "lessons/1-04_Vectors_And_Data_Frames.html#extension-statistical-functions-on-vectors",
+    "title": "1-04: Vectors and Data Frames",
+    "section": "11 Extension: Statistical functions on vectors",
+    "text": "11 Extension: Statistical functions on vectors\nOne huge advantage to using vectors is that most statistical function take vectors.  So, you can easily perform statistical functions on a vector:\ntempHigh = c(65, 57, 61, 64, 59);\n\ntempMean = mean(tempHigh);\ntempSD = sd(tempHigh);\ntempVar = var(tempHigh);\ntempMean:   61.2\ntempSD:     3.346...\ntempVar:    11.2\nWe will be doing more with this in later lessons…",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "1-04: Vectors and Data Frames"
+    ]
+  },
+  {
+    "objectID": "lessons/1-04_Vectors_And_Data_Frames.html#extension-square-brackets-vs.-round-brackets",
+    "href": "lessons/1-04_Vectors_And_Data_Frames.html#extension-square-brackets-vs.-round-brackets",
+    "title": "1-04: Vectors and Data Frames",
+    "section": "12 Extension: Square brackets [ ] vs. Round Brackets ( )",
+    "text": "12 Extension: Square brackets [ ] vs. Round Brackets ( )\nSquarebrackets are used when you are subsettingor indexing a variable.\nRoundbrackets are used when you are calling a function.\n… and the two types of brackets are often used in the same command\nlowTemps [seq(from=12, to=2, by=-2)]\nsays you are going to subset lowTemps using the function seq(). \n&gt; lowTemps [seq(from=12, to=2, by=-2)]\n[1] 43 40 50 45 38 43\nseq() is a function and produces a vector of numbers:\n&gt; seq(from=12, to=2, by=-2)\n[1] 12 10 8 6 4 2\nc() is also a function – c stands, unintuitively, for concatenate and will also produce a vector of numbers:\n&gt; c(12,10,8,6,4,2)\n[1] 12 10 8 6 4 2\nlowTemps [c(12,10,8,6,4,2)] and lowTemps [seq(from=12, to=2, by=-2)] produce the same results.\n \nYou can also subset lowTemps without calling a function:\n&gt; lowTemps[5]\n[1] 36\n&gt; lowTemps[4:8]\n[1] 38 36 45 32 50\nTechnically, 4:8 still calls a sequence function in the background – but that is really getting into the weeds!\n \nread.csv(), ggplot(), plot(), rm(), options() are all functions (the latter 2 are in the first two lines of all my lesson scripts).  There will be a lot more about functions in this class starting with next lesson.",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "1-04: Vectors and Data Frames"
+    ]
+  }
+]
