@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <noscript>
+  <link rel="stylesheet" type="text/css" href="/content/DEVELOPMENT/2018/courses/DEV-belinsky-2018-BackendTest/Programming/editor.css">
+  </noscript>
+  <script src="https://cdn.jsdelivr.net/gh/QFCatMSU/OnlineClassBackEnd/module.js">
+  </script>
+</head>
+<body>
+
+<p class="previousLesson">For Loop and State Variables</p>
+<p class="nextLesson">Functions</p>
+<h1 class="title" id="title">1-12: Multiple Conditions</h1>
+<h3>Changes</h3>
+<h2>Purpose</h2>
+<ul>
+<li>
+<p>Check for multiple conditions on variables</p>
+</li>
+</ul>
+<p></p>
+<p>If you have any questions about the material in this lesson <em class="email">feel free to email them to the instructor here</em>.</p>
+<h2>Downloads</h2>
+<p>The&nbsp;<a href="https://raw.githubusercontent.com/QFCatMSU/FundProgUsingR/master/scripts/1-12_MultipleConditions.R" target="_blank" rel="noopener" title="">script for this lesson is here</a> (right-click, <em><strong>Save File As...</strong></em>)</p>
+<p>The <a href="../sccripts/twoWeekWeatherData2.csv" target="_self">data for this script</a> (left-click to download)</p>
+<p></p>
+<p>This lesson data has two new columns in it compared to the previous lesson's data -- so 14 obs. of <em><strong>7</strong></em> variables (instead of 5).&nbsp; The new columns (<em><strong>noonCondMessy</strong> </em>and <em><strong>precipBad</strong></em>) are copies of the previous columns with some issues added that are addressed in this lesson.</p>
+<p>&nbsp;</p>
+<p><img src="../images/R-1-11_NewDataframe.png" alt="" style="max-width: 100%;" data-d2l-editor-default-img-style="true" class="fs"></p>
+<p class="fig">The new <strong>weatherData</strong> data frame with two new columns</p>
+<h2>Logical Operators: AND (&amp;, &amp;&amp;), OR (|, ||)</h2>
+<p>In this lesson we are going to learn how to combine conditional statements in<em><strong> if()</strong></em> statements using two new operators: <em><strong>AND</strong></em>, <em><strong>OR</strong></em>.&nbsp; <em><strong>AND </strong></em>is represented as one or two ampersands (<em><strong>&amp;</strong></em>, <strong></strong><em><strong>&amp;&amp;</strong></em>) and <em><strong>OR </strong></em>is represented as one or two pipe symbols (vertical lines:<strong> |</strong>,<strong> ||</strong>).&nbsp; For situations where you are checking one value at a time, the single and double operators have the same functionality.&nbsp; We will cover the other situation later in this lesson.</p>
+<p></p>
+<p>The <em><strong>AND</strong> </em>operator combines two conditional statements into one conditional statement with the rule:</p>
+<ul>
+<li>if <em class="hl">both </em>of the conditional statements are <strong>TRUE </strong>then the whole conditional statement is <strong>TRUE</strong></li>
+</ul>
+<p class="code">if (condition1 AND condition2<em>)</em></p>
+<p class="code">{</p>
+<p class="code">&nbsp;&nbsp; # Execute the code between these curly brackets</p>
+<p class="code">&nbsp;&nbsp; #&nbsp;&nbsp; if both condition1 and condition2 are TRUE</p>
+<p class="code">}</p>
+<p></p>
+<p>The <strong>OR </strong>operator combines two conditional statements into one conditional statement with the rule:</p>
+<ul>
+<li>if <em class="hl">either</em> of the conditional statements are <strong>TRUE </strong>then the whole conditional statement is <strong>TRUE</strong></li>
+</ul>
+<p class="code partial">if (condition1 OR condition2<em>)</em></p>
+<p class="code">{</p>
+<p class="code">&nbsp;&nbsp; # Execute the code between these curly brackets</p>
+<p class="code">&nbsp;&nbsp; #&nbsp;&nbsp; if either condition1 or condition2 is TRUE</p>
+<p class="code">}</p>
+<h3>Operators we have learned so far</h3>
+<p></p>
+<table style="width: 642.533px; height: 72px;">
+<tbody>
+<tr style="height: 18px;">
+<td style="width: 113.733px; height: 18px;"><strong>Operator Type</strong></td>
+<td style="width: 275.333px; height: 18px;"><strong>Purpose</strong></td>
+<td style="width: 231.467px; height: 18px;"><strong>R Symbols </strong></td>
+</tr>
+<tr style="height: 18.2667px;">
+<td style="width: 113.733px; height: 18px;"><strong>Assignment</strong></td>
+<td style="width: 275.333px; height: 18px;">assign a value to a variable</td>
+<td style="width: 231.467px; height: 18px;">=, &lt;-, -&gt;</td>
+</tr>
+<tr style="height: 18px;">
+<td style="width: 113.733px; height: 18px;"><strong>Mathematical</strong></td>
+<td style="width: 275.333px; height: 18px;">Perform a mathematical operation on a numeric value</td>
+<td style="width: 231.467px; height: 18px;">+, -, *, /, ^</td>
+</tr>
+<tr>
+<td style="width: 113.733px;"><strong>Subset <br></strong></td>
+<td style="width: 275.333px;">Subset a vector</td>
+<td style="width: 231.467px;">[ ], $</td>
+</tr>
+<tr style="height: 18px;">
+<td style="width: 113.733px; height: 18px;"><strong>Conditional <br></strong></td>
+<td style="width: 275.333px; height: 18px;">Compare two values</td>
+<td style="width: 231.467px; height: 18px;">==, !=, &gt;, &lt;, &gt;=, &lt;=</td>
+</tr>
+<tr>
+<td style="width: 113.733px;"><strong>Logical<br></strong></td>
+<td style="width: 275.333px;">Combine conditions</td>
+<td style="width: 231.467px;">&amp;, &amp;&amp;, |, ||</td>
+</tr>
+</tbody>
+</table>
+<p class="fig">All of the operators taught in the class so far</p>
+<h2>Combining conditional statements (logical operators)</h2>
+<p>In the last lesson we started by asking two questions about <em><strong>noonCond</strong> </em>that both had one condition:&nbsp;</p>
+<ol>
+<li>Is the day sunny?&nbsp;</li>
+<li>Is the day rainy?</li>
+</ol>
+<p></p>
+<div>
+<p class="code">#### From last lesson</p>
+<p class="code">sunnyDays = 0; # state variable -- will hold the count of sunny days</p>
+<p class="code">rainyDays = 0; # state variable -- will hold the count of rainy days</p>
+<p class="code"></p>
+<p class="code" title="">for(i in 1:numDays)</p>
+<p class="code">{</p>
+<p class="code">&nbsp; if(noonCond[i] == "Sunny")</p>
+<p class="code">&nbsp; {</p>
+<p class="code">&nbsp;&nbsp;&nbsp; sunnyDays = sunnyDays +1; # increases sunnyDays by 1</p>
+<p class="code">&nbsp; }</p>
+<p class="code">&nbsp; # We use else if here because we know "Sunny" and "Rain" are mutually exclusive</p>
+<p class="code">&nbsp; else if(noonCond[i] == "Rain")</p>
+<p class="code">&nbsp; {</p>
+<p class="code">&nbsp;&nbsp;&nbsp; rainyDays = rainyDays +1; # increases rainyDays by 1</p>
+<p class="code">&nbsp; }</p>
+<p class="code">}</p>
+</div>
+<p></p>
+<p>And the answer was:</p>
+<p class="code" title="Environment">sunnyDays:&nbsp;&nbsp; 6</p>
+<p class="code">rainyDays: &nbsp; 3</p>
+<h3>Using the OR operator</h3>
+<p>We can also combine the two conditional statements and ask:<em> Is the day sunny <strong>OR</strong>&nbsp; rainy?</em></p>
+<p></p>
+<p>Just replace <em><strong>OR</strong></em> with the symbol that represents <em><strong>OR</strong></em>, which is |:</p>
+<p class="code partial">&nbsp; if(noonCond[i] == "Sunny" | noonCond[i] == "Rain")</p>
+<p></p>
+<p>Put this in the script and it will count days both sunny and rainy days:</p>
+<p class="code partial">sunnyOrRainyDays = 0<br>for(i in 1:numDays)<br>{<br>&nbsp; if(noonCond[i] == "Sunny" | noonCond[i] == "Rainy")<br>&nbsp; {<br>&nbsp;&nbsp;&nbsp; sunnyOrRainyDays = sunnyOrRainyDays +1; <br>&nbsp; }<br>}</p>
+<p class="fig">Using logical operator | to test two conditions</p>
+<p></p>
+<p><em><strong>sunnyOrRainyDays</strong> </em>is the addition of sunny (6) and rainy (3) days</p>
+<p class="code nn" title="Environment">sunnyOrRainyDays&nbsp;&nbsp; 9</p>
+<h3>Conditions must be explicit</h3>
+<p>In programming we need to be explicit when using multiple conditional statement:</p>
+<p class="code partial">&nbsp; if(noonCond[i] == "Sunny" | noonCond[i] == "Rainy")</p>
+<p></p>
+<p>In English, it makes sense to ask: Is the day sunny or rainy?</p>
+<p></p>
+<p>And, naively, the code for this sentence would look like this:</p>
+<p class="code partial">&nbsp; if(noonCond[i] == "Sunny" | "Rain")</p>
+<p></p>
+<p>If you do this, you will get the error:</p>
+<p class="hl">Error in noonCond[i] == "Sunny" | "Rain" : invalid 'y' type in 'x | y'</p>
+<p class=""></p>
+<p class="">The error is telling you that "Rain" (the invalid 'y') is not a conditional statement.&nbsp; Both conditions ('x | y') must be <em class="hl">explicitly</em> written out (i.e., both must have a conditional operator with a value on both sides).</p>
+<h3>More than 2 conditions</h3>
+<p>You can also use the <em><strong>OR</strong> </em>operator to string together multiple conditional statements.&nbsp;</p>
+<p></p>
+<p>We will use the new column in our data, called <em><strong>noonCondMessy</strong> </em>in which the weather conditions are not consistently spelled -- as often happens when people are manually inputting data:</p>
+<p class="code">noonCondMess = weatherData$noonCondMessy;</p>
+<p></p>
+<p>Looking at the value in <em><strong>noonCondMess</strong> </em>show that there are multiple versions of "sunny":</p>
+<p class="code" title="Console">&gt; noonCondMess<br>[1] "clouds" "Cloudy" "sun" "rainy" " fog" "Sunny" "sunny" <br>[8] "cloudy" "Rain" "RAIN" "Snow" "SUNNY" "Sun" "sun"</p>
+<p></p>
+<p>We will use multiple <em><strong>OR</strong> </em>operators to check for four different versions of "sunny":</p>
+<p class="code">sunnyDaysMess = 0; # state variable -- will hold the count of sunny days</p>
+<p class="code"></p>
+<p class="code">for(i in 1:numDays)<br>{</p>
+<p class="code">&nbsp; # check for different spellings<br>&nbsp; if(noonCondMess[i] == "Sunny" | noonCondMess[i] == "sunny" | <br>&nbsp;&nbsp;&nbsp;&nbsp; noonCondMess[i] == "sun" | noonCondMess[i] == "SUN")<br>&nbsp; {<br>&nbsp;&nbsp;&nbsp; sunnyDaysMess = sunnyDaysMess +1; <br>&nbsp; }<br>}</p>
+<p class="fig">Using OR operator to check for multiple spellings</p>
+<p></p>
+<p>And, once again we get six:</p>
+<p class="code nn" title="Environment">sunnyDays1 &nbsp; 6</p>
+<p class="note"></p>
+<p class="">This is a brute force method! There are more robust way to check for different spelling using substrings and pattern recognition (i.e., <em><strong>subsrt()</strong></em> and<em><strong> grep()</strong></em>).</p>
+<h2>The AND operator</h2>
+<p>The <em><strong>OR</strong> </em>operator says: if one condition is <strong>TRUE </strong>then the whole condition is <strong>TRUE</strong></p>
+<p>The <em><strong>AND</strong> </em>operator says that ALL conditions need to be <strong>TRUE </strong>for the whole condition to be <strong>TRUE</strong>.</p>
+<p></p>
+<p>The <em><strong>AND</strong> </em>operator can be used to check conditions in two different weather columns.</p>
+<p></p>
+<p>For example, you might want to know which days were warmer than 60 <em><strong>AND</strong> </em>Sunny.</p>
+<p class="code">goOutDay = 0;</p>
+<p class="code"></p>
+<p class="code">for(i in 1:numDays)<br>{</p>
+<p class="code">&nbsp; if(highTemps[i] &gt; 60 &amp; noonCond[i] == "Sunny")&nbsp; <br>&nbsp; {<br>&nbsp;&nbsp;&nbsp; goOutDay = goOutDay +1;<br>&nbsp; }<br>}</p>
+<p class="fig" id="twoCond">Using AND operator to check conditions in two different columns</p>
+<p></p>
+<p>There were 2 days that were both over 60 and sunny:</p>
+<p class="code nn" title="Environment">goOutDays &nbsp; 2</p>
+<p></p>
+<p class="note">Note: day 7 is 60 degrees and sunny but not counted here because the condition is <em><strong>greater than</strong></em> (but not equal to) 60</p>
+<h3>The NOT EQUAL operator</h3>
+<p>We can reverse the conditions and check for non-sunny days that were colder than (or equal to) 50.</p>
+<p></p>
+<p>In other words we want <em><strong>highTemps </strong></em><em class="hl">&lt;=</em> 50 AND <em><strong>noonCond </strong></em><em class="hl">!=</em> "Sunny":</p>
+<p class="code">stayInDay = 0;</p>
+<p class="code"></p>
+<p class="code">for(i in 1:numDays)<br>{<br>&nbsp; if(highTemps[i] &lt;= 50 &amp; noonCond[i] != "Sunny")&nbsp; <br>&nbsp; {<br>&nbsp;&nbsp;&nbsp; stayInDay = stayInDay +1;<br>&nbsp; }<br>}</p>
+<p class="fig" id="twoCondRev">Reversing the conditional statements from the last loop</p>
+<p></p>
+<p>There were 5 days that were below (or equal to) 50 and not sunny:</p>
+<p class="code" title="Environment">stayInDays&nbsp;&nbsp; 5</p>
+<h3>Mutually exclusive if() statement</h3>
+<p>Since the two <em><strong>if()</strong> </em>statements above (<em id="r-twoCond" class="ref">fig ##</em> and <em id="r-twoCondRev" class="ref">fig ##</em>) have mutually exclusive conditions and use the exact some <em><strong>for </strong></em>loop, we can (and should) combine them into one <em><strong>if-else-if</strong></em> statement.&nbsp; The following code is functionally the same but more efficient (i.e., faster):</p>
+<p class="code">for(i in 1:numDays)<br>{<br>&nbsp; if(highTemps[i] &gt; 60 &amp; noonCond[i] == "Sunny")<br>&nbsp; {<br>&nbsp;&nbsp;&nbsp; cat("day", i, " good day to go out\n");<br>&nbsp; }</p>
+<p class="code">&nbsp; else if(highTemps[i] &lt;= 50 &amp; noonCond[i] == "Rain")<br>&nbsp; {<br>&nbsp;&nbsp;&nbsp; cat("day", i, " good day to stay in\n"); <br>&nbsp; }<br>}</p>
+<p class="fig">Checking mutually exclusive multiple conditions with an if-else-if structure</p>
+<p></p>
+<p>The 2 days that are good to go out and 5 that are not:</p>
+<p class="code" title="Console">day 2 good day to stay in<br>day 4 good day to stay in<br>day 5 good day to stay in<br>day 10 good day to stay in<br>day 11 good day to stay in<br>day 13 good day to go out<br>day 14 good day to go out</p>
+<h2>Finding Ranges of numbers</h2>
+<p>So far when we has used conditional operators on numbers that are bounded on one side but go off to infinity of the other.</p>
+<ul>
+<li><em><strong>highTemp &gt; 60</strong></em> means anything from 60 <em class="hl">up to positive infinity</em></li>
+<li><em><strong>highTemp &lt; 50</strong></em> means anything from 50 <em class="hl">down to negative infinity</em></li>
+</ul>
+<p></p>
+<p>But, we often want to limit the range we are checking to something less than infinity!</p>
+<p></p>
+<p>For instance we might want all values between 50 and 60 (in this case, we will include 50 but not 60).&nbsp;</p>
+<p></p>
+<p>In other words, we want:</p>
+<ul>
+<li>values <em><strong>greater than or equal to</strong></em> 50 (<em><strong>highTemps</strong> </em>&gt;= 50)</li>
+<li><em><strong>AND</strong> </em>values <em><strong>less than</strong></em> 60 (<em><strong>highTemps</strong> </em>&lt; 60)</li>
+</ul>
+<p></p>
+<p>In order for the value to be between 50 and 60 <em class="hl">both of the above conditional statements must be <strong>TRUE</strong></em>, so we use <em><strong>AND </strong></em>to combine the conditional statements:</p>
+<p class="code">for(i in 1:numDays)<br>{</p>
+<p class="code">&nbsp; # the number is both greater than (or equal to) 50 and less than 60<br>&nbsp; if(highTemps[i] &gt;= 50 &amp; highTemps[i] &lt; 60)<br>&nbsp; {<br>&nbsp;&nbsp;&nbsp; cat("It was ", highTemps[i], "degrees on day ", i, "\n");<br>&nbsp; }<br>}</p>
+<p class="fig">Using AND operator to limit the range to values between two numbers</p>
+<p></p>
+<p>The 7 days between 50 and 60 (includes 50 but not 60):</p>
+<p class="code" title="Console">It was 57 degrees on day 1 <br>It was 50 degrees on day 2 <br>It was 54 degrees on day 3 <br>It was 58 degrees on day 6 <br>It was 53 degrees on day 8 <br>It was 55 degrees on day 9 <br>It was 54 degrees on day 12</p>
+<h3>Values outside a range</h3>
+<p>Sometimes we want to check for values outside an expected range -- often to check for errors.&nbsp; For instance, <em><strong>precipBad</strong> </em>has some values that seem to be in error:</p>
+<p class="code">&gt; precipBad<br>[1] 0.010 0.005 0.040 1.110 0.120 0.000 <em class="hl">-0.005</em> <em class="hl">49.000</em> 0.450 0.300<br>[11] 1.130 0.004 0.000 0.000</p>
+<p></p>
+<p>Since rain is in inches, we are going to assume that any negative value (less than 0) or value above 10 is in error.&nbsp;</p>
+<p></p>
+<p>In this case we are looking for&nbsp; <em><strong>precipBad</strong></em> values that are less than 0 <em><strong>OR </strong></em>greater than 10:</p>
+<p class="code">precipBad = weatherData$precipBad;<br>for(i in 1:numDays)<br>{</p>
+<p class="code">&nbsp; # precipBad values less than 0 or greater than 10<br>&nbsp; if(precipBad[i] &lt; 0 | precipBad[i] &gt; 10)<br>&nbsp; {<br>&nbsp;&nbsp;&nbsp; cat("Day", i, "has a value of" , precipBad[i], "\n");<br>&nbsp; }<br>}</p>
+<p class="fig">Checking for values beyond the expected range</p>
+<p></p>
+<p>And we see the two days in <em><strong>precipBad</strong> </em>that are in error:</p>
+<p class="code" title="Console">Day 7 has a value of -0.005 <br>Day 8 has a value of 49</p>
+<h2>Boolean vectors</h2>
+<p>Up until this point. we have been using conditional operators to check values individually.&nbsp; We can also use conditional operators to check every value in a vector at once and create a TRUE/FALSE (Boolean) vector from the result.&nbsp; To create these vectors, <em class="hl">you have to use the single operators (&amp;, |)</em>.</p>
+<p></p>
+<p>For instance, we only might care about sunny days:</p>
+<blockquote>
+<p>sunnyDayBool = (noonCondition == "Sunny");</p>
+</blockquote>
+<p></p>
+<p>Or, whether the day was both sunny and warm:</p>
+<blockquote>
+<p>niceDayBool = (highTemps &gt; 60 &amp; noonCondition == "Sunny");</p>
+</blockquote>
+<p></p>
+<p>Or, whether the was rain or snow:</p>
+<blockquote>
+<p>precipBool = (precipitation == "Rain" | precipitation == "Snow")</p>
+</blockquote>
+<p></p>
+<p>The result for all three of these commands is a 14-value <em><strong>Boolean </strong></em>(also called <em><strong>logical</strong></em>) vector:</p>
+<blockquote>
+<p title="Environment" class="nn">sunnyDayBool&nbsp; logi [1:14] FALSE FALSE TRUE FALSE...</p>
+<p>niceDayBool&nbsp;&nbsp; logi [1:14] FALSE FALSE FALSE FALSE...</p>
+<p>precipBool&nbsp;&nbsp;&nbsp; logi [1:14] FALSE FALSE FALSE TRUE...</p>
+</blockquote>
+<p></p>
+<p>We can look at <em><strong>sunnyDayBool </strong></em>and see that the index of <strong>the </strong>TRUE values match the index of "Sunny" days in <em><strong>noonCond</strong></em>:</p>
+<blockquote>
+<p title="Console" class="nn">&gt; sunnyDayBool<br>&nbsp;[1] FALSE FALSE &nbsp;TRUE FALSE FALSE &nbsp;TRUE &nbsp;TRUE FALSE FALSE FALSE FALSE</p>
+<p title="Console" class="nn">[12] TRUE &nbsp;TRUE &nbsp;TRUE<br>&gt; noonCond<br>&nbsp;[1] "Cloudy" "Cloudy" "Sunny" &nbsp;"Rain" &nbsp; "Fog" &nbsp; &nbsp;"Sunny" &nbsp;"Sunny" &nbsp;"Cloudy"</p>
+<p title="Console" class="nn">&nbsp;[9] "Rain" &nbsp; "Rain" &nbsp; "Snow"&nbsp; "Sunny" &nbsp;"Sunny" &nbsp;"Sunny"&nbsp;</p>
+</blockquote>
+<p></p>
+<p>Or, that only the last two days were both Sunny and over 60 degrees:</p>
+<blockquote>
+<p title="Console" class="nn">&gt; niceDayBool<br>&nbsp;[1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE</p>
+<p title="Console" class="nn">[12] FALSE &nbsp;TRUE &nbsp;TRUE</p>
+</blockquote>
+<p></p>
+<p>Or, that 4 of the 14 days had some precipitation (rain or snow):</p>
+<blockquote>
+<p title="Console" class="nn">&gt; precipBool<br>&nbsp;[1] FALSE FALSE FALSE &nbsp;TRUE FALSE FALSE FALSE FALSE &nbsp;TRUE &nbsp;TRUE &nbsp;TRUE</p>
+<p>[12] FALSE FALSE FALSE</p>
+</blockquote>
+<h2 class="" id="app">Application</h2>
+<p>Save the script as&nbsp;<em><strong>app1-12.r </strong></em>in your&nbsp;<em><strong>scripts&nbsp;</strong></em>folder and<a href="/d2l/le/email/1247781/ComposePopup">&nbsp;<em>email your Project Folder to the instructor.</em></a></p>
+<p></p>
+<p><a rel="noopener" target="_blank" href="1-01_Setup_and_RStudio_Projects.html?ou=1247781#zip">Instructions for zipping the Project Folder are here.</a></p>
+<p></p>
+<p><em>If you have any questions regarding this application, feel free to</em>&nbsp;<em>email them to the instructor here</em>.</p>
+<p><br>A) Create <em class="hl">one <strong>if-else-if </strong></em>structure that checks for:</p>
+<ul>
+<li>Sunny days greater than 54</li>
+<li>Non-Sunny less than or equal to 54</li>
+<li>Sunny days less than or equal to 54</li>
+<li>Non-Sunny greater than 54</li>
+</ul>
+<p>In comments answer: Why do this as one <em><strong>if-else-if </strong></em>structure instead of 4 <em><strong>if </strong></em>statements?</p>
+<p></p>
+<p>B) Create a Boolean vector that finds all cloudy days in <em><strong>noonCondMessy</strong> </em>(note different spellings)</p>
+<p></p>
+<p>C) Create an <em><strong>if()</strong></em> that combines all rainy, cloudy, and snowy days from <em><strong>noonCondition</strong></em>.</p>
+<p></p>
+<p>D) Find which days meet<em class="hl"> all three</em> of these conditions:</p>
+<ul>
+<li><em><strong>lowTemps</strong> </em>&gt; 40</li>
+<li><em><strong>highTemps</strong> &lt;</em> 60</li>
+<li>Sunny</li>
+</ul>
+<p></p>
+<p>E) Use the following random number generator:</p>
+<p class="code">randomTemp = sample(0:100, size=1);&nbsp; # pick 1 random from 0 to 100</p>
+<p></p>
+<p>and create one <em><strong>if-else-if</strong></em> structure that outputs:</p>
+<ul>
+<li>"error" if temp is less than 20 or greater than 80</li>
+<li>"very cold" if temp is 20-30</li>
+<li>"cold" if temp is 30-45</li>
+<li>"nice" if temp is 45-60</li>
+<li>"unusually warm" if temp 60-80</li>
+</ul>
+<h3>Questions to answer</h3>
+<p>Answer the following in comments inside your application script:</p>
+<ol>
+<li>What was your level of comfort with the lesson/application?</li>
+<li>What areas of the lesson/application confused or still confuses you?</li>
+<li>What are some things you would like to know more about that is related to, but not covered in, this lesson?</li>
+</ol>
+</body></html>

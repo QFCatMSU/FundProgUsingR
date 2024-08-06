@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <noscript>
+  <link rel="stylesheet" type="text/css" href="/content/DEVELOPMENT/2018/courses/DEV-belinsky-2018-BackendTest/Programming/editor.css">
+  </noscript>
+  <script src="https://cdn.jsdelivr.net/gh/QFCatMSU/OnlineClassBackEnd/module.js">
+  </script>
+</head>
+<body>
+
+<p class="previousLesson">If-Else Statements</p>
+<p class="nextLesson">For loops and State Variables</p>
+<h1 class="title" id="title">1-10: For Loops</h1>
+<h3>Changes...</h3>
+<ul>
+<li>Talk about how for loops <em><strong>cycle </strong></em>through the values</li>
+</ul>
+<h2>Purpose</h2>
+<ul>
+<li>Show how to perform<em><strong> if-else</strong></em> statements on multiple values in a vector using <em><strong>for</strong> </em>loops</li>
+</ul>
+<h2>Questions about the material...</h2>
+<p>The&nbsp;<a href="https://raw.githubusercontent.com/QFCatMSU/FundProgUsingR/master/scripts/1-10_ForLoops.R" target="_self" title="">script for this lesson is here</a> (right-click, <em><strong>Save File As...</strong></em>)</p>
+<p>The&nbsp;<a href="../sccripts/twoWeekWeatherData.csv?_&amp;d2lSessionVal=E3dG9hOwbtH96KknXIbfYiST3&amp;ou=1247781" target="_blank" rel="noopener">data for this lesson is here</a> (just left-click)</p>
+<p></p>
+<p>If you have any questions about the material in this lesson <em class="email">feel free to email them to the instructor here</em>.</p>
+<h2>Four structures in programming</h2>
+<p>As mentioned in the second lesson on variables,&nbsp;there are basically 4 main structures that cover almost every aspect of programming:</p>
+<ol>
+<li>Variables</li>
+<li>If-Else Statements</li>
+<li>For Loops</li>
+<li>Functions</li>
+</ol>
+<p></p>
+<p>In the next three lessons we cover <em><strong>for </strong></em>loops.&nbsp; One of the main benefits of <em><strong>for </strong></em>loops (and functions) in programming is they it generalize code.&nbsp; <em><strong>for </strong></em>loops allow you to write code once and execute the code on multiple values.&nbsp; <em><strong><br></strong></em></p>
+<h2>Conditional statements on multiple values</h2>
+<p>In the last couple of lessons, we used conditional statements on values in a vector (e.g., asking about the weather conditions or the high temperatures on a specific day) and then output a message to the <em><strong>Console </strong></em>based on the results of the conditional statement.&nbsp;</p>
+<p></p>
+<p>But, when working with data, we rarely look at just one value -- usually, we are looking at a whole vector of values (e.g., 365 high temperatures for a year) and we want to perform the same conditional statement on each of the values. In this lesson and the next lesson, we will learn to use conditional statements on multiple values -- using <em><strong>for</strong> </em>loops with embedded<em><strong> if-else</strong> </em>statements.</p>
+<h2>Repeating commands</h2>
+<p>A <em><strong>for</strong> </em>loop is used whenever you want to repeat a codeblock multiple times.&nbsp; The most basic example is repeating the exact same output a certain number of times:</p>
+<p class="code">for(i in 1:5)&nbsp; # repeat 5 times</p>
+<p class="code">{</p>
+<p class="code">&nbsp; cat("Hello, World\n");</p>
+<p class="code">}</p>
+<p class="fig" id="basic">The most basic for loop -- repeating an output command multiple times</p>
+<p></p>
+<p>And the <em><strong>Console</strong> </em>tab will show 5 <em>Hellos</em>:</p>
+<p class="code nn" title="Console">Repeating the same code multiple times:</p>
+<p class="code nn" title="Console">Hello, World</p>
+<p class="code">Hello, World</p>
+<p class="code">Hello, World</p>
+<p class="code">Hello, World</p>
+<p class="code">Hello, World</p>
+<h3>The codeblock attached to the for loop</h3>
+<p>Just like <em><strong>if-else</strong></em> statements, <em><strong>for</strong> </em>loops have an attached codeblock, designated by curly brackets ( <strong>{&nbsp; }</strong> ).&nbsp; <em><strong>If-else</strong></em> statements execute the codeblock conditionally based on the conditional statement in the parentheses.&nbsp;<em class="hl"> <strong>For</strong> loops execute their codeblocks iteratively</em> based on the sequence inside the parentheses.&nbsp; In<em class="ref" id="r-basic"> fig ##</em>, the sequence is <em><strong>1:5</strong></em>, and since the sequence has 5 values, the codeblock attached will execute 5 times.&nbsp;</p>
+<h2>Repeated code on values</h2>
+<p><em class="ref" id="r-basic">Fig ##</em> repeats the exact same code 5 times. However, you rarely want to repeat the exact same code -- usually, <em class="hl">you want to repeat similar code</em>.&nbsp; For instance, you might want to say hello to 5 different people given by a vector:</p>
+<p></p>
+<blockquote>
+<p>helloVector = c("Ann", "Bob", "Charlie", "Dave", "Eve");</p>
+</blockquote>
+<p></p>
+<p>To do this we cycle through every value in the vector,&nbsp; which is <em><strong>helloVector[1], helloVector[2], helloVector[3], helloVector[4], </strong></em>and <strong></strong><em><strong>helloVector[5]</strong></em>.</p>
+<p></p>
+<p>To cycle through the values we set the variable (often called <em><strong>i</strong></em>) in the for loop to the values <strong>1</strong> through <strong>5 </strong><em class="hl">and then use that variable inside the codeblock for the for loop.</em></p>
+<blockquote>
+<p>for(i in 1:5)<br>{<br>&nbsp; # i takes on the values 1 through 5 through the 5 cycles of the for loop<br>&nbsp; cat("Hello," helloVector[i], "\n");<br>}</p>
+</blockquote>
+<p></p>
+<blockquote>
+<p title="Environment" class="nn">Hello, Ann&nbsp;<br>Hello, Bob&nbsp;<br>Hello, Charlie&nbsp;<br>Hello, Dave&nbsp;<br>Hello, Eve&nbsp;</p>
+</blockquote>
+<h2>The index variable in a for loop</h2>
+<p>The true power of the for loops lies in the <em class="hl">indexing variable</em>, which is often named <em><strong>i</strong></em>.&nbsp; <em class="note">Note: the indexing variable can be given any name -- it's just common to call it<strong> i</strong></em>.&nbsp; The indexing variable changes every time the <em><strong>for</strong> </em>loops executes so the indexing variable can be used to modify the code every time the codeblock is executed.</p>
+<h3>The index variable as a counter</h3>
+<p>Let's look at the simplest of examples -- using the indexing variable, <em><strong>i</strong></em>, as a counter:</p>
+<p class="code nn"># Using the indexing variable i as a counter<br>for(i in 1:5) # repeat 5 times<br>{<br>&nbsp; cat("The count is:", i, "\n"); <br>}</p>
+<p></p>
+<p class="">This outputs:</p>
+<p class="code" title="Console">Using the indexing variable as a counter:</p>
+<p class="code nn">The count is: 1</p>
+<p class="code">The count is: 2</p>
+<p class="code">The count is: 3</p>
+<p class="code">The count is: 4</p>
+<p class="code">The count is: 5</p>
+<h3>Taking a step back: How a for loop iterates</h3>
+<p>A for loops always consists of 3 things:</p>
+<ul>
+<li>An indexing variable:&nbsp; for(<em><strong class="hl">i</strong></em> in 1:5)&nbsp;</li>
+<li>A sequence of values: for(<em><strong>i</strong></em> in <em class="hl">1:5</em>)</li>
+<li>A codeblock to execute: between the <strong class="hl">{ }</strong></li>
+</ul>
+<p></p>
+<p>The sequence of values determines how many times the codeblock will iterate.&nbsp; If there are 12 values in the sequence, then the for loop will iterate 12 times.</p>
+<p></p>
+<p><em class="hl">For each iteration, the indexing variable is set to a different value in the sequence</em>.&nbsp; The value of the indexing variable take will go in the same order as the sequence.&nbsp;</p>
+<p></p>
+<p>So, if the sequence is <em><strong>1:5</strong></em>, then:</p>
+<ul>
+<li><em><strong> i</strong></em> will be set to <strong>1</strong> the first time the codeblock iterates</li>
+<li><em><strong>i</strong></em> will be set to <strong>2</strong> the first time the codeblock iterates</li>
+<li><em><strong>i</strong></em> will be set to <strong>3</strong> the first time the codeblock iterates</li>
+<li><em><strong>i</strong></em> will be set to <strong>4</strong> the first time the codeblock iterates</li>
+<li><em><strong>i</strong></em> will be set to <strong>5</strong> the first time the codeblock iterates<strong><em></em></strong></li>
+</ul>
+<h3>Changing the sequence</h3>
+<p>The <em><strong>for </strong></em>loop executes for every value in the sequence, and the index variable takes on the values in order. The values in the sequence do not need to start with 1.</p>
+<p></p>
+<p class="code nn"># Using a sequence that does not start with 1<br>for(i in 12:8) # 12, 11, 10, 9 ,8 (there are five values in the sequence)<br>{<br>&nbsp; cat("The count is:", i, "\n"); <br>}</p>
+<p class="fig" id="not1">Using a sequence that does not start with 1 in a for loop</p>
+<p></p>
+<p>In this case, the for loop will still execute 5 times, but <em><strong>i</strong></em> will take on values <strong>12 </strong>down to <em><strong>8</strong></em> instead of 1-5:</p>
+<p class="code nn" title="Console">Changing the sequence numbers -- length is still 5:</p>
+<p class="code">The count is: 12</p>
+<p class="code">The count is: 11</p>
+<p class="code">The count is: 10</p>
+<p class="code">The count is: 9</p>
+<p class="code">The count is: 8</p>
+<p></p>
+<p></p>
+<h3>Indexing variables and more complicated sequence</h3>
+<p>You do not have to name the index<em><strong> i</strong></em>, you can name it whatever you want.&nbsp; For instance, we will be working with weather so <em><strong>day</strong> </em>might be a more appropriate name for the indexing variable.</p>
+<p></p>
+<p>In this example we we use a more complicated sequence and change the name of the index variable to <em><strong>day</strong></em>:</p>
+<p></p>
+<p class="code">for(day in seq(from=20, to=2, by=-3))&nbsp; # 20, 17, 14, 11, 8, 5, 2 (seven values)<br>{<br>&nbsp; cat("The count is:", day, "\n"); <br>}</p>
+<p class="fig" id="sequence">Using a more complicated sequence in a for loop</p>
+<p></p>
+<p class="code nn" title="Console">Using a more complicated sequence with seven values:</p>
+<p class="code nn" title="Console">The count is: 20</p>
+<p class="code">The count is: 17</p>
+<p class="code">The count is: 14</p>
+<p class="code">The count is: 11</p>
+<p class="code">The count is: 8</p>
+<p class="code">The count is: 5</p>
+<p class="code">The count is: 2</p>
+<p></p>
+<p>So, in <em class="ref" id="r-sequence">fig ##</em>, the codeblock iterates 7 times because there are 7 values in the sequence (20, 17, 14, 11, 8, 5, and 2).&nbsp; Each time the codeblock iterates,&nbsp; <em><strong>day</strong> </em>is set to a different value in the sequence (going from the first value in the sequence to the last).</p>
+<h2>Indexing values inside a for loop</h2>
+<p>We are still using the indexing variable as a counter. The real power comes when you use the <em class="hl">indexing variable to index values</em> in a vector -- this is how we perform an<em><strong> if-else</strong></em> statement on every value in a vector.</p>
+<p></p>
+<p>Let's use the same data we have been using in the previous lessons:</p>
+<p class="code nn">### read in data from twoWeekWeatherData.csv<br>weatherData = read.csv(file="data/twoWeekWeatherData.csv", <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sep=",",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; header=TRUE, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stringsAsFactors = FALSE); <br><br>### Extract the highTemps column from the data frame -- save it to a variable<br>highTemps = weatherData$highTemp;<br>noonCond = weatherData$noonCondition;</p>
+<p></p>
+<p>Since we want to go through every value in the vector, we need to know the size of the vector.&nbsp; The easiest way to find the size of a vector is to use the function <em><strong>length()</strong></em>:</p>
+<p class="code">numDays = length(highTemps);&nbsp; # numDays is 14 (the number of values in highTemps)</p>
+<p></p>
+<p>Now let's use a <em><strong>for</strong> </em>loop to output all of the <em><strong>highTemp</strong> </em>values.&nbsp; To do this we use the indexing variable, <em><strong>day</strong></em>, <em class="hl">as the index</em> for <em><strong>highTemp</strong></em>:</p>
+<p class="code nn">for(day in 1:numDays)&nbsp; # numDays, in this case, is 14 (sequence is 1:14)<br>{<br>&nbsp; cat(highTemp[day], "\n");&nbsp; # day will take the values 1-14<br>}</p>
+<p class="fig" id="indexing">Using the indexing variable as an index for highTemp</p>
+<p></p>
+<p class="code nn" title="Console">The 14 values in the vector highTemps in order:</p>
+<p class="code">57 <br>50 <br>54 <br>40 <br>39 <br>58 <br>60 <br>53 <br>55 <br>44 <br>39 <br>54 <br>61 <br>75</p>
+<p></p>
+<p>In the following example, we use the indexing variable day as both a counter and an index for <em><strong>noonCond</strong></em>:</p>
+<p class="code nn">for(day in 1:numDays)<br>{<br>&nbsp; cat(day, ") ", noonCond[day], "\n", sep=""); <br>}</p>
+<p class="fig" id="counter-index">Using the indexing variable as both a counter and an index for noonCond</p>
+<p></p>
+<p class="code nn" title="Console">Using indexing variable as a counter and an index for noonCond:<br>1) Cloudy<br>2) Cloudy<br>3) Sunny<br>4) Rain<br>5) Fog<br>6) Sunny<br>7) Sunny<br>8) Cloudy<br>9) Rain<br>10) Rain<br>11) Snow<br>12) Sunny<br>13) Sunny<br>14) Sunny</p>
+<h3>Making code more extensible</h3>
+<p>In the code in <em class="ref" id="r-indexing">fig ##</em> and <em class="ref" id="r-counter-index">fig ##</em>,&nbsp; we already know that the number of values in the vector is <strong>14</strong> so we could just write:</p>
+<p class="code nn">for(day in 1:14)<br>{<br>&nbsp; cat(highTemp[day], "\n"); <br>}</p>
+<p></p>
+<p>But this code will only work if the data frame does not change size.&nbsp; In general, <em class="hl">you want to make your code as generic as possible</em>, which means <em class="hl">using variables instead of fixed numbers</em>. When you make your code generic, you do not have to change the code when your data changes.&nbsp; In <em class="ref" id="r-indexing">fig ##</em>, <em><strong>numDays</strong> </em>will automatically adjust to the size of the vector.</p>
+<h2>If-else within a for loop</h2>
+<p>We usually have a lot of questions that we want to ask of the values we are looking at. In other words, we want to use <em><strong>if-else</strong> </em>statements within the <em><strong>for</strong> </em>loops.&nbsp; Let's first ask if each day was sunny or not and output the answer to the <em><strong>Console</strong></em>.</p>
+<p class="code nn">for(i in 1:numDays)<br>{<br>&nbsp; if(noonCond[i] == "Sunny")<br>&nbsp; {<br>&nbsp;&nbsp;&nbsp; cat("day ", i, " was sunny\n", sep=""); <br>&nbsp; }<br>&nbsp; else<br>&nbsp; {<br>&nbsp;&nbsp;&nbsp; cat("day ", i, " was not sunny\n", sep=""); <br>&nbsp; }<br>}</p>
+<p class="fig" id="if-else-within">Using if-else statements in a for loop</p>
+<p></p>
+<p class="code nn" title="Console">Using if-else statements within a for loop:<br>day 1 was not sunny<br>day 2 was not sunny<br>day 3 was sunny<br>day 4 was not sunny<br>day 5 was not sunny<br>day 6 was sunny<br>day 7 was sunny<br>day 8 was not sunny<br>day 9 was not sunny<br>day 10 was not sunny<br>day 11 was not sunny<br>day 12 was sunny<br>day 13 was sunny<br>day 14 was sunny</p>
+<h3>Alternate ways to bracket the for loop with if-else structure</h3>
+<p>We can bracket using the previous <em><strong>for </strong></em>loop using the the other common programming method.&nbsp; The advantage to this method is that it uses less space:</p>
+<blockquote>
+<p>for(i in 1:numDays) {<br>&nbsp; if(noonCond[i] == "Sunny")&nbsp; {<br>&nbsp;&nbsp;&nbsp; cat("day ", i, " was sunny\n", sep=""); <br>&nbsp; }<br>&nbsp; else&nbsp; {<br>&nbsp;&nbsp;&nbsp; cat("day ", i, " was not sunny\n", sep=""); <br>&nbsp; }<br>}</p>
+</blockquote>
+<p></p>
+<p>Both methods work well -- the important aspect is that the <em><strong>if-else</strong></em> structure is clearly indented inside the <em><strong>for </strong></em>loop showing that the <em><strong>if-else</strong></em> structure is only executed when inside the <em><strong>for</strong></em> loop.</p>
+<h2>Checking a subset of values</h2>
+<p>We can use any type of sequence in the <em><strong>for </strong></em>loop so that we are only checking some of the values in the vector:</p>
+<p></p>
+<p class="code nn">for(i in c(8,2,13)<br>{<br>&nbsp; if(noonCond[i] == "Sunny")<br>&nbsp; {<br>&nbsp;&nbsp;&nbsp; cat("day ", i, " was sunny\n", sep=""); <br>&nbsp; }<br>&nbsp; else<br>&nbsp; {<br>&nbsp;&nbsp;&nbsp; cat("day ", i, " was not sunny\n", sep=""); <br>&nbsp; }<br>}</p>
+<p class="fig" id="if-else-within">Using the sequence to subset the values</p>
+<p></p>
+<p class="code nn" title="Console">Using a sequence to subset the values:<br>day 8 was not sunny<br>day 2 was not sunny<br>day 13 was sunny</p>
+<h2>State variables and for loops</h2>
+<p>The problem with the code in <em class="ref" id="r-if-else-within">fig ##</em> is that <em class="hl">we are often not looking for specific information about each value in a vector</em>.&nbsp; This would get quickly out of hand if there are thousands of values!&nbsp; We usually want to find out more general information -- for instance, we might want to know <em class="hl">how many days were sunny?</em></p>
+<p></p>
+<p>Finding more general information about the values in a vector requires the introduction of the last component of most <em><strong>for</strong> </em>loops: the <em>state variable</em>.&nbsp; The <em class="hl">state variable</em> is a variable that keeps a running tab of some value through each iteration of the <em><strong>for</strong> </em>loop.&nbsp;</p>
+<p></p>
+<p>Let's count the number of sunny days using a <em><strong>for</strong> </em>loop.&nbsp; To do this we need to:</p>
+<ul>
+<li>create a state variable that holds the number of sunny days</li>
+<li>have a for loop that iterates through every value in the <em><strong>noonCond</strong> </em>vector</li>
+<li>include an<em><strong> if()</strong></em> statement asking if the day is sunny</li>
+<li>have a command to increase the number of sunny days by 1 if it is sunny</li>
+</ul>
+<p></p>
+<p class="note">Note: The state variable must be declared outside of the <strong>for</strong> loop.&nbsp; Think about why this is true -- it is the first question in the Application.</p>
+<p></p>
+<p class="code nn">sunnyDays = 0; # state variable -- will hold the count of cloudy days<br>for(i in 1:numDays)<br>{<br>&nbsp; if(noonCond[i] == "Sunny")&nbsp; # was the day sunny<br>&nbsp; {<br>&nbsp;&nbsp;&nbsp; sunnyDays = sunnyDays +1;&nbsp;&nbsp; # it was -- increase sunnyDays by 1<br>&nbsp; }</p>
+<p class="code nn">&nbsp; # there is no else here -- we don't care about non-sunny days<br>}</p>
+<p class="fig" id="statevar">Using a state variable to calculate how many sunny days there was in noonCond</p>
+<p></p>
+<p>And we can look in the <em><strong>Environment</strong> </em>tab to see what the final value of <em><strong>sunnyDays</strong> </em>was:</p>
+<p class="code nn" title="Environment">sunnyDays:&nbsp;&nbsp; 6</p>
+<h3>The state variable</h3>
+<p><em><strong>sunnyDays</strong> </em>does a lot of heavy lifting in <em class="ref" id="r-statevar">fig ##</em>.&nbsp; We initially set <em><strong>sunnyDays</strong> </em>to <em><strong>0</strong></em> because <em><strong>0</strong></em> is the <em class="hl">default value</em>, or the value if the <em><strong>for </strong></em>loop cycles zero times.</p>
+<p></p>
+<p>Whenever the value in <em><strong>noonCond</strong> </em>is "Sunny" the following code is executed:</p>
+<p class="code nn">&nbsp;&nbsp;&nbsp;sunnyDays = sunnyDays +1;</p>
+<p></p>
+<p>This code works because the right side of the equation is always evaluated first.</p>
+<p></p>
+<p>So, R will first calculate: <em><strong>sunnyDays +1</strong></em></p>
+<ul>
+<li>If <em><strong>sunnyDays </strong></em>is <strong>0</strong>, then<em><strong> sunnyDays +1</strong></em> evaluates to <strong>1</strong></li>
+</ul>
+<p></p>
+<p>Then R assigns the value on the right-side to the variable on the left, which is <em><strong>sunnyDays</strong></em>.&nbsp;</p>
+<ul>
+<li><em><strong></strong></em><em><strong>sunnyDays </strong></em>is assigned the value of <strong>1</strong>.</li>
+</ul>
+<p></p>
+<p>This process adds <strong>1</strong> to <em><strong>sunnyDays </strong></em>every time (<em><strong>noonCond[i]</strong> </em>== "Sunny")</p>
+<h2 class="" id="app">Application:</h2>
+<p>If you have any questions regarding this application, feel free to <em class="email">email them to the instructor here</em>.</p>
+<p>You can attach files to the email above or send the whole Project Folder as a zipped file.&nbsp; <a href="01-01%20RStudio%20and%20Projects.html?ou=457124&amp;ou=1247781#zip" target="_blank" rel="noopener">Instructions for zipping the Project Folder are here.</a></p>
+<p></p>
+<p>1) Why must the state variable be declared outside the for loop?&nbsp; Think about what happens to the state variable every time the for loop iterates if it is declared inside the for loop.&nbsp; Put the answer in comments at the top of your script.</p>
+<p></p>
+<p>2) Create one <em><strong>for </strong></em>loop that outputs the (a) square (2nd power), cube (3rd power), and cube root (1/3<sup>rd</sup> power) for the numbers 1 through 10.</p>
+<p></p>
+<p>3) Using a <em><strong>for </strong></em>loop, find out how many days had high temperatures less than 50.</p>
+<p></p>
+<p>4) Using a <em><strong>for </strong></em>loop, find out how many even days were cloudy</p>
+<p></p>
+<p>5) Using a <em><strong>for </strong></em>loop, find out how many of the last 8 days were cloudy.</p>
+<p></p>
+<p>6) Challenge: Using <em><strong>for </strong></em>loops, find the total precipitation (i.e., add up all the <em><strong>precipitation </strong></em>values).&nbsp; Hint: you keep adding each new precipitation value to the total precipitation.</p>
+<h3>Questions to answer</h3>
+<p>Answer the following in comments inside your application script:</p>
+<ol>
+<li>What was your level of comfort with the lesson/application?</li>
+<li>What areas of the lesson/application confused or still confuses you?</li>
+<li>What are some things you would like to know more about that is related to, but not covered in, this lesson?</li>
+</ol>
+<p></p>
+<p class="hl">Save your script file as <em><strong>app1-10.r</strong>&nbsp; </em>in the <em><strong>scripts</strong> </em>folder of your RStudio Project for the class.&nbsp;</p>
+</body></html>

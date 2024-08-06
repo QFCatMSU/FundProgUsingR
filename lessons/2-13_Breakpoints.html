@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head>
+  <meta charset="UTF-8">
+  <noscript>
+  <link rel="stylesheet" type="text/css" href="/content/DEVELOPMENT/2018/courses/DEV-belinsky-2018-BackendTest/Programming/editor.css">
+  </noscript>
+  <script src="https://cdn.jsdelivr.net/gh/QFCatMSU/OnlineClassBackEnd/module.js">
+  </script>
+</head><body><p class="previousLesson">Lists</p>
+<p class="nextLesson"></p>
+<h1 class="title">2-13: Breakpoints</h1>
+<h3>To-do</h3>
+<p>Add robust example</p>
+<h2>Purpose</h2>
+<ul>
+<li></li>
+</ul>
+<h2>Material</h2>
+<p>The <a href="https://raw.githubusercontent.com/QFCatMSU/FundProgUsingR/master/scripts/2-13_Breakpoints.R" target="_blank" rel="noopener" title="">script for the lesson is here</a> (right-click, <em><strong>save link as... </strong></em>-- put in <em><strong>scripts </strong></em>folder)</p>
+<p>A <a href="https://raw.githubusercontent.com/QFCatMSU/FundProgUsingR/master/scripts/debugTest.r" target="_blank" rel="noopener" title="">second script that contains a function to debug</a> (right-click, <em><strong>save link as... </strong></em>-- put in <em><strong>scripts </strong></em>folder)</p>
+<p>The <a href="../data/Lansing2016Noaa-3.csv?isCourseFile=true" target="_blank" rel="noopener">data used for the lesson</a> is here (just left-click -- put in <em><strong>data </strong></em>folder)</p>
+<h2>Debugging your code</h2>
+<p>One of the most powerful debugging tools in any programming language, and a staple of all professional programmers, is the breakpoint.&nbsp; Breakpoints allows you to pause the execution of your script at a specific line or command.&nbsp; While paused, you can look at the <em><strong>Environment</strong></em>, enter commands in the <em><strong>Console</strong></em>, or move through your script one command at a time.&nbsp;</p>
+<p></p>
+<p>One powerful use of a breakpoint is the ability to pause your code inside a for loop exactly when a variable goes out of expected bounds -- even if the for loop is executing 1000s of millions of times.</p>
+<p></p>
+<p>In R, the implementation of breakpoints is far less robust than most programming languages. Even with this poor implementation, breakpoints are still a useful debugging tool in R -- and learning how to use breakpoints will transfer to any programming language.</p>
+<h2>Setting up a breakpoint</h2>
+<p>A breakpoint is like a pause button in the execution your script.&nbsp; In RStudio, you set a breakpoint by clicking to the left of the line number -- this is called the <em class="hl">gutter area</em>.&nbsp; A red dot representing the breakpoint appears in the gutter area.&nbsp; Clicking again will get rid of the breakpoint.</p>
+<p><img src="../images/R-2-12-SettingBreakpoint.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">Breakpoint (red dot) set on line 9 -- the left of the line is called the gutter area</p>
+<p></p>
+<p>When you <em><strong>Source </strong></em>your code, the script will execute up to,<em class="hl"> but not including</em>, the line with the breakpoint.&nbsp; Your script is now paused at the line with a breakpoint, and you are in <em class="hl">debug mode</em>, which R calls <em><strong>Browse </strong></em>mode.</p>
+<p></p>
+<p class="note">Note: A breakpoint only works when you <em><strong>Source </strong></em>your script.&nbsp; It will not work if you use <strong>Run </strong>to execute lines of code.</p>
+<h3>Debug Mode</h3>
+<p>There are 4 things in RStudio that will indicate you are in debug mode:</p>
+<ol>
+<li>A green arrow will appear at the code line the script is paused at -- the green arrow shows you the line that will be executed next</li>
+<li>Breakpoint controls will appear in the <em><strong>Console </strong></em>tab</li>
+<li>The <em><strong>Console </strong></em>will indicate it is in browse mode&nbsp; with <em><strong>&gt; Browse</strong></em>
+<ul>
+<li>The number (in this case, 2) is telling you how many levels deep you are.&nbsp; We will see this when we talk about functions.</li>
+</ul>
+</li>
+<li>A traceback window will appear at the bottom of the <em><strong>Environment </strong></em>tab
+<ul>
+<li>traceback is a more advanced debugging tool that we will not get into in this lesson</li>
+</ul>
+</li>
+</ol>
+<p></p>
+<p><img src="../images/R-2-12-DebugMode.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig" id="debugMode">Sourcing a script with a breakpoint puts it into debug mode</p>
+<h2>Using the Browse in breakpoint</h2>
+<p>In this lesson I will put breakpoint instructions in comments like this so you can follow along:</p>
+<p class="note">## In the lesson script:</p>
+<p class="note">##&nbsp;&nbsp;&nbsp; Place a breakpoint at line 9 in the lesson's script and click <strong>Source</strong></p>
+<blockquote>
+<p title="9">&nbsp; diffTemp = highTemps - lowTemps;</p>
+</blockquote>
+<p></p>
+<p>In<em id="r-debugMode" class="ref"> fig ##</em>, the script is currently paused at line 9, this means lines 1-8 has been executed.&nbsp; In the <em><strong>Environment </strong></em>you can see <em><strong>weatherData</strong></em>, <em><strong>highTemps</strong></em>, and <em><strong>lowTemps, </strong></em>which were created between lines 1-8.</p>
+<blockquote>
+<p title="Environment" class="nn">weatherData&nbsp;&nbsp; 366 obs. of 24 variables</p>
+<p>highTemps&nbsp;&nbsp;&nbsp;&nbsp; int [1:366] 29 35 33 27 29...</p>
+<p>lowTemps&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int [1:366] 24 28 25 7 8 20...</p>
+</blockquote>
+<p></p>
+<p>When in debug mode, you can enter commands in the <em><strong>Console</strong></em>.&nbsp; With these commands you can do things like view values in or execute functions on a vector:</p>
+<blockquote>
+<p title="Console" class="nn">Browse[2]&gt; highTemps[1:20]</p>
+<p>[1] 29 35 33 27 29 36 42 39 42 38 16 23 18 34 42 33 26 15 21 22</p>
+<p>Browse[2]&gt; max(highTemps)</p>
+<p>[1] 94</p>
+</blockquote>
+<p></p>
+<p>Or, you can create a new variable and add it to the <em><strong>Environment</strong></em>:</p>
+<blockquote>
+<p title="Console" class="nn">Browse[2]&gt; highTemp_C = (5/9)*(highTemps-32)</p>
+<p>Browse[2]&gt;</p>
+</blockquote>
+<p></p>
+<blockquote>
+<p title="Environment" class="nn">highTemp_C&nbsp; &nbsp;&nbsp; num [1:366] -1.667 1.667 0.556 -2.778...</p>
+</blockquote>
+<h2>Moving through code in debug (browse) mode</h2>
+<p>When your script arrives at a breakpoint (<em id="r-debugMode" class="ref">fig ##</em>) , five controls appear in the <em><strong>Console </strong></em>tab:</p>
+<p>1) <em><strong>Next</strong></em>: executes the command at the green arrow (in other languages, this is often called <em><strong>Step Over</strong></em>)</p>
+<p>2) <em><strong>Step In</strong></em>: moves into a function</p>
+<p>3) <em><strong>Step Out</strong></em>: completes a <em><strong>for </strong></em>loop or function</p>
+<p>4) <em><strong>Continue</strong></em>: unpauses the execution of the script (like hitting the Play button when a video is paused)</p>
+<p>5) <em><strong>Stop</strong></em>: quits the script (no more code is executed)</p>
+<p></p>
+<p class="note">Examples will be given for each in this lesson.</p>
+<p></p>
+<p>These buttons allow you to control the flow of you script. They are pretty universal -- you will see these same controls when you use breakpoints in other programming languages.&nbsp;</p>
+<p></p>
+<p>When in debug mode you should only use the buttons to control the flow of your script.&nbsp; In debug mode, clicking <strong></strong><em><strong></strong></em><em><strong>Source </strong></em>will cause problems with your script.<em class="hl"></em></p>
+<p></p>
+<p><img src="../images/R-2-13-BPControls.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">The five breakpoint control in debug mode</p>
+<h3>Stop</h3>
+<p>Clicking <strong></strong><em><strong>Stop </strong></em>will take R out of debug mode and end the execution of the script.&nbsp; In other words, no more commands in the script will be executed and the four components of debug mode (<em id="r-debugMode" class="ref">fig ##</em>) will go away.</p>
+<p></p>
+<p>There are situations where you need to click <em><strong>Stop </strong></em>multiple times to get out of debugger mode&nbsp;&nbsp; The most common reason is that <em><strong>Source </strong></em>was clicked while in debug mode.&nbsp; For example, if you click <em><strong>Source </strong></em>5 times in debugger mode, then you will need to click <em><strong>Stop </strong></em>5 extra times (6 in all) to escape debug mode.&nbsp;&nbsp;</p>
+<p><img src="../images/R-2-12-StopWhen%20Sourced.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">Stopping debug mode -- sometimes Stop has to be hit more than once.</p>
+<h3>Continue to next Breakpoint</h3>
+<p class="note">## In the lesson script:</p>
+<p class="note">##&nbsp;&nbsp; Add a second breakpoint on line 18 (so, now we have breakpoints at lines 9 and 18) and click <strong>Source</strong><strong><br></strong></p>
+<blockquote>
+<p title="18">&nbsp; sunsetTimes_12Hour = c();</p>
+</blockquote>
+<p>The script will pause at the first breakpoint (line 9).&nbsp; If you click <em><strong>Continue</strong></em>, the script will unpause and continue executing the script until the next breakpoint is reached on line 18 and pause there (green arrow).&nbsp; Between the first and second pause, lines 9-17 are executed and the results of these commands are in the <em><strong>Environment</strong></em>.&nbsp;</p>
+<p></p>
+<p class="note">Note: In most programming langauge you can add or remove breakpoints while in debug mode -- but you cannot do this in R<strong></strong></p>
+<p><strong></strong></p>
+<p><img src="../images/R-2-12-Continue.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">Continue takes the script to the next breakpoint (if there is another one)</p>
+<h3>Continue to end of script</h3>
+<p>After line 18 there are no more breakpoints, so if you click <em><strong>Continue </strong></em>again, the rest of the script will be executed and you will be taken out of debug mode.</p>
+<p><img src="../images/R-2-12-ContinueToEnd.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">Clicking Continue when there are no more breakpoint executes the rest of the script</p>
+<h3 id="ContinueFor">Continue if breakpoint is in for loop</h3>
+<p class="note">## In lesson script:</p>
+<p class="note">##&nbsp;&nbsp; Remove the breakpoints at lines 9 and 18</p>
+<p class="note">##&nbsp;&nbsp; Add a breakpoint at line 25 (inside the <em><strong>for </strong></em>loop)</p>
+<blockquote>
+<p title="25">&nbsp; &nbsp; sunsetTimes_12Hour[i] = convertTime(sunsetTimes[i]);</p>
+</blockquote>
+<p></p>
+<p>If you put a <strong>breakpoint inside a for loop</strong> then <em><strong>Continue </strong></em>will stop at the breakpoint <em class="hl">every cycle of the <strong>for </strong>loop.</em><span class="hl">&nbsp; </span><em class="hl"><br></em></p>
+<p><img src="../images/R-2-12-ContinueForLoop.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig"><strong>Continue </strong>clicked 20 times (note: i=20) with a breakpoint inside the for loop</p>
+<h3>Next</h3>
+<p class="note">## In lesson script:</p>
+<p class="note">##&nbsp;&nbsp; Remove breakpoint on line 25</p>
+<p class="note">##&nbsp;&nbsp; Add a breakpoint on line 15</p>
+<blockquote>
+<p title="15">&nbsp; sunsetTimes = weatherData$sunset;</p>
+</blockquote>
+<p></p>
+<p>If we <em><strong>Source </strong></em>the script, the code up until line 14 will execute and line 15 will have a green arrow in the gutter.</p>
+<p></p>
+<p>We can now execute one command at a time using <em><strong>Next</strong></em>.&nbsp;</p>
+<p></p>
+<p>Clicking <em><strong>Next </strong></em>executes the command on line 15 and moves the green arrow to the next command on line 16.&nbsp;</p>
+<p></p>
+<p>So, <em><strong>sunset_times</strong></em> is created and put in the <em><strong>Environment </strong></em>and line 16, which creates <em><strong>sunriseTimes</strong></em>, is highlighted with the green arrow..</p>
+<p><img src="../images/R-2-12-Next.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">Clicking <strong>Next </strong>executes the command at the green arrow and moves the green arrow to the next command</p>
+<h3>Multiple Commands on one line</h3>
+<p class="note">## In lesson script:</p>
+<p class="note">## &nbsp; Click <em><strong>Next </strong></em>until you get to line 21</p>
+<p></p>
+<p>Lines 15-19 have one command each but line 21 has three commands:</p>
+<blockquote>
+<p title="21">&nbsp; testCommand1=1; testCommand2=2; testCommand3=3;</p>
+</blockquote>
+<p></p>
+<p><em><strong>Next </strong></em>does not execute lines, <em class="hl"><strong>Next </strong>executes commands</em>.&nbsp; If there are multiple commands on one line then <em><strong>Next </strong></em>will execute them one at a time.</p>
+<p></p>
+<p>When there are multiple commands on a line, the debugger in RStudio will highlight the current command.</p>
+<p><img src="../images/R-2-12-MultipleCommandsOnLine.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">Only the current command is highlighted -- clicking Next moves through the commands on the line.</p>
+<h2>Debugging in a for loop</h2>
+<p class="note">## In lesson script:</p>
+<p class="note">##&nbsp;&nbsp; Click <strong>Next </strong>until you get to line 23</p>
+<p></p>
+<p>When the green arrow gets to a <em><strong>for </strong></em>loop, RStudio will highlight the whole <em><strong>for </strong></em>loop:</p>
+<p><img src="../images/R-2-12-ForLoop.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">Highlighting the whole for loop in debug mode</p>
+<p></p>
+<p>Clicking <em><strong>Next </strong></em>executes the initialization command for the <em><strong>for </strong></em>loop:</p>
+<blockquote>
+<p title="23">&nbsp; for(i in 1:length(sunsetTimes))</p>
+</blockquote>
+<p></p>
+<p>In this initialization command:</p>
+<ul>
+<li>the variable <em><strong>i</strong></em> is initialized to<strong> 1</strong></li>
+<li>a rule is given for how<em><strong> i</strong></em> changes each time the <em><strong>for </strong></em>loop cycles (<em><strong>i </strong></em>increases by <strong>1</strong>)</li>
+<li>the cycles end when<em><strong> i</strong></em> is equal to <em><strong>sunsetTime</strong></em></li>
+</ul>
+<p></p>
+<p>The initialization command of a <em><strong>for </strong></em>loop only executes once whereas everything inside the <em><strong>for </strong></em>loop will executes <em class="hl">once per cycle </em>of the <em><strong>for </strong></em>loop.</p>
+<p></p>
+<p>After the initialization command is executed, <em><strong>Next </strong></em>will move the control inside the <em><strong>for </strong></em>loop:</p>
+<p><img src="../images/R-2-12-ForLoopPostInit&#39;.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">After executing the initialization command, the green arrow moves inside the <em><strong>for </strong></em>loop</p>
+<p></p>
+<p>Continue to hit <em><strong>Next </strong></em>and debug mode will go through each command in the <em><strong>for </strong></em>loop for each cycle of the <em><strong>for </strong></em>loop</p>
+<h3>Step Out of the for loop</h3>
+<p>If you are inside a <em><strong>for </strong></em>loop and want to finish executing the whole <em><strong>for </strong></em>loop (i.e., complete every cycle of the loop), you can click <em><strong>Step Out</strong></em>.&nbsp; This will execute the rest of the <strong><em></em></strong><em><strong>for </strong></em>loop and put the control on the next command <em class="hl">as long as you have no breakpoints in the <strong>for </strong>loop</em>.&nbsp;</p>
+<p><img src="../images/R-2-12-SteopOutFor.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">Clicking Step Out will execute the rest of the for loop and move control to the next command</p>
+<p></p>
+<p class="note">Note: If you have a breakpoint inside the <strong>for </strong>loop then <em><strong>Step Out </strong></em>will just execute to the breakpoint -- similar to <em><strong>Continue </strong></em>(<em id="r-ContinueFor" class="ref">fig ##</em>).</p>
+<h3>Conditional breakpoints</h3>
+<p class="note">## In lesson script:</p>
+<p class="note">##&nbsp;&nbsp; Click <strong>Stop </strong></p>
+<p class="note">##&nbsp;&nbsp; Add breakpoint on line 30 and <strong>Source </strong>script</p>
+<p></p>
+<p>A <em><strong>for </strong></em>loop can easily run thousands or millions of times and you often only want a breakpoint on specific cycles of the <em><strong>for </strong></em>loop.&nbsp; In most programming language, you can attach a condition to the breakpoint so that the breakpoint only activates when specified.</p>
+<p></p>
+<p>In R, you need to manually code this condition.&nbsp; You can pause at a specific cycle of the <em><strong>for </strong></em>loop using an <em><strong>if </strong></em>statement:</p>
+<blockquote>
+<p title="28">if(i == 200)&nbsp;&nbsp;&nbsp;&nbsp; # NULL here?</p>
+<p>{</p>
+<p>&nbsp; NULL;&nbsp; # this line functionally does nothing</p>
+<p>}</p>
+</blockquote>
+<p></p>
+<p>The breakpoint needs to be put on the line inside the codeblock attached to the <em><strong>if </strong></em>statement. Inside the codeblock is a NULL command -- meaning it does nothing (it is only there to provide a space for the breakpoint).&nbsp;</p>
+<p></p>
+<p>With the breakpoint on line 30, the script will pause on the 200<sup>th</sup> cycle of the for loop:</p>
+<p><img src="../images/R-2-12-ConditinalBreakpoint&#39;.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">Using an <strong>if </strong>statement as a conditional breakpoint inside a <strong>for </strong>loop</p>
+<p></p>
+<p>Or, if you put a a breakpoint at line 34, you can conditionally break on some other value being used in the <em><strong>for </strong></em>loop:</p>
+<blockquote>
+<p title="32">if(sunsetTimes[i] == 2000)<br>{<br>&nbsp; NULL;&nbsp;<br>}</p>
+</blockquote>
+<p></p>
+<p>The script will pause on the 141<sup>st</sup> cycle of the <em><strong>for </strong></em>loop, which represent the day that sunset is at 8:00pm (2000 hours)</p>
+<p><img src="../images/R-2-12-ConditinalBreakpoint2.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">Conditional breakpoint based on a variable used in the <em><strong>for </strong></em>loop</p>
+<h2>If-else statements</h2>
+<p class="note">## In lesson script:</p>
+<p class="note">##&nbsp;&nbsp; Remove breakpoint on line 34</p>
+<p class="note">##&nbsp;&nbsp; Add a breakpoint on line 39</p>
+<p></p>
+<p>Similar to <em><strong>for </strong></em>loops, the code inside the parentheses of <em><strong>if-else</strong></em> statements is a command.&nbsp; The command, which is a conditional statements, outputs a Boolean (TRUE/FALSE) value that is used to determined if the codeblock gets executed.</p>
+<p></p>
+<p>When you set a breakpoint at the <em><strong>if() </strong></em>line, the whole <em><strong>if-else</strong></em> is highlighted in RStudio when the code is stopped at the line.&nbsp;</p>
+<p><img src="../images/R-2-12-IfElse.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">Debug mode when the control is at the beginning of an <strong>if-else</strong> structure</p>
+<p></p>
+<p>As you click <em><strong>Next</strong></em>, the control (green arrow) will either:</p>
+<ul>
+<li>move to the next conditional statement (if the current conditional statement was <strong>FALSE</strong>)</li>
+<li>move inside the codeblock (if the current conditional statement was <strong>TRUE</strong>)</li>
+</ul>
+<p></p>
+<p>The following lines are not executed in an <em><strong>if-else</strong></em> structure so they will be skipped over in debug mode:</p>
+<ul>
+<li>codeblocks attached to <em><strong>FALSE </strong></em>conditional statements</li>
+<li><em><strong>else </strong></em>statements that were preceded by a <strong>TRUE </strong>conditional statement<br>
+<ul>
+<li>the codeblock attached to these <em><strong>else </strong></em>statements will also not be executed</li>
+</ul>
+</li>
+</ul>
+<h2>Debugging within functions (Step In)</h2>
+<p>Inside the <em><strong>for </strong></em>loop on lines 25 and 26, we call <em><strong>convertTime </strong></em>twice.&nbsp; <em><strong>convertTime </strong></em>is a function inside the <em><strong>debugTest.R</strong></em>.&nbsp; If you click <em><strong>Next</strong></em> while on line 25, then the whole line is executed, along with the <em><strong>convertTime </strong></em>function, and control will go to the next line. &nbsp;</p>
+<p></p>
+<p>You can debug inside the <em><strong>convertTime </strong></em>function by clicking <em><strong>Step-In</strong></em> while on the lines with the function -- this will move control to the function and the whole function will be highlighted:</p>
+<p><img src="../images/R-2-12-Functions.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">After clicking Step-In on line 25, control is moved to the function</p>
+<p></p>
+<p><em><strong>Step-in</strong></em> works whether the function is inside the same script or in another script.&nbsp; However, <em><strong>Step-in</strong></em> will not work if the function is inside a package -- in R, you cannot debug script within a package.</p>
+<p></p>
+<p><em class="note">Note: when you Stepped In the function, the Browse number increase by 1 (from 2 to 3).&nbsp;</em> The Browse number of sort of a measurement of how many levels deep you are in code.&nbsp;</p>
+<h3>Executing command within the function</h3>
+<p>Once inside the function you can use the debug buttons like before. <em><strong>Next </strong></em>will execute one command at a time inside the function.&nbsp; Click <em><strong>Step Out</strong></em> to complete the whole function and return to the main script.</p>
+<h2>Other ways to add breakpoints</h2>
+<p>This lesson only goes through the fundamentals of breakpoints -- these fundamentals apply to breakpoints in just about any programming language.&nbsp; However, breakpoints are not implemented well in R -- this methods taught in the lesson will not work for adding breakpoints to script files outside of your main script (the one you <em><strong>Source</strong></em>) or functions within packages.&nbsp; Other strategies are needed to add breakpoints to these location.&nbsp;</p>
+<p></p>
+<p>The functions that can add breakpoints to external script files and packages are (in order of complexity) are:</p>
+<ul>
+<li><em><strong>browser()</strong></em></li>
+<li><em><strong>debugonce()</strong></em></li>
+<li><em><strong>debug()</strong></em></li>
+<li><em><strong>trace()</strong></em></li>
+</ul>
+<p></p>
+<p>Going through all of these would require another full lesson -- something that is, for now, outside the scope of this class.</p>
+<h2>Application</h2>
+<p><em><em class="hl">If you have any questions regarding this application, feel free to</em> <em class="email">email them to the instructor here</em>.&nbsp; <em class="hl">You can attach the whole Project Folder as a<a href="01-01%20RStudio%20and%20Projects.html?ou=457124#zip" target="_blank" rel="noopener"> zipped file</a>.</em></em></p>
+<p></p>
+<p>Save the lesson script as <em><strong>app2-13.r</strong></em> in the <em><strong>scripts </strong></em>folder of your RStudio Project for the class</p>
+<p></p>
+<p>In Comments at the end of the script answer the following questions:</p>
+<p>1) Why might it be a bad idea to put breakpoint without a condition inside a <em><strong>for </strong></em>loop?</p>
+<p>2) What happens when you try to put a breakpoint on a line with only comments?&nbsp;</p>
+<p>3) What happens if you put a breakpoint at line 45 and click <em><strong>Source</strong></em>?&nbsp; How about line 43?&nbsp; Why is there a difference?</p>
+<p>4) What happens if you put a breakpoint in the middle of the <em><strong>ggplot()</strong></em> call?&nbsp;</p>
+<p></p>
+<p>Add the following code to the script:</p>
+<p>5) Set up a conditional breakpoint within the <em><strong>for </strong></em>loop that pauses the script every 30<sup>th</sup> cycle.</p>
+<ul>
+<li>A good way to to do this involves using <a href="1-13_Functions.html#modulus" target="_blank" rel="noopener">modulus division</a></li>
+</ul>
+<p>6) Set up a conditional breakpoint within a <em><strong>for </strong></em>loop to pause the code when <em><strong>windSpeed </strong></em>is between 35 and 40mph.</p>
+<ul></ul>
+<h3>Questions to answer</h3>
+<p>Answer the following in comments inside your application script:</p>
+<ol>
+<li>What was your level of comfort with the lesson/application?</li>
+<li>What areas of the lesson/application confused or still confuses you?</li>
+<li>What are some things you would like to know more about that is related to, but not covered in, this lesson?</li>
+</ol>
+<h3>End-of-class survey</h3>
+<p><a href="https://msu.co1.qualtrics.com/jfe/form/SV_b9I3VPJ2We28Qzs?online=true&amp;sync=false&amp;class=ggplot" target="_blank" rel="noopener">Please take this short (less than 5 minutes) survey regarding this class.</a></p>
+<h2 id="issues" class="extension">Extension: Breakpoints Issues (under construction)</h2>
+<p>This section will provide examples for bugs when using breakpoints in RStudio</p>
+<h3>Modifying breakpoints in debug mode</h3>
+<p><em class="hl">Breakpoints added in debug mode will not work until the next time the script is Sourced.&nbsp;</em> You will see an outlined red dot and a message about how breakpoints will not be active.</p>
+<p><img src="../images/R-2-12-BreakPointInDebugMode.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">Adding a breakpoint on line 18 while in debug mode</p>
+<p></p>
+<p>If you remove a breakpoint in debug mode, the red dot will disappear but the breakpoint remains in effect until you exit debug mode.</p>
+<h3>Removing all breakpoints</h3>
+<ul>
+<li>Remove all breakpoints (<em><strong>Debug --&gt; Remove all...</strong></em>)
+<ul>
+<li>do this if you get an error in fbody[[i]]</li>
+<li></li>
+</ul>
+</li>
+</ul>
+<p>R can sometimes get into a weird state when you have put multiple breakpoints in.&nbsp; For instance this error</p>
+<p>Error in fBody[[i]] : no such index at level 5&nbsp; &lt;show image&gt;</p>
+<p>- green arrow not showing up</p>
+<p></p>
+<p>When that happens go through these steps in order to fix the problem:</p>
+<ol>
+<li>Remove all breakpoints by clicking <em><strong>Debug -&gt; Remove all breakpoints</strong></em></li>
+<li>Right-click anywhere in RStudio and click <em><strong>Reload</strong></em></li>
+<li>Restart the R Session: <em><strong>Session -&gt; Restart R</strong></em></li>
+</ol>
+<h3>Issues with Breakpoints in R/RStudio</h3>
+<p>Breakpoints are, unfortunately, not well implemented in R/RStudio.&nbsp; Here are a couple of the issue:</p>
+<ul>
+<li>Breakpoints will not work on lines that have (a) an inline comment and are (b) inside a <em><strong>for </strong></em>loops of <em><strong>if()</strong></em> statement</li>
+</ul>
+<p></p>
+<p>So, a breakpoint will not work on this line:</p>
+<blockquote>
+<p>if(highTemps[i] &gt; 50)</p>
+<p>{</p>
+<p>&nbsp; # put a breakpoint on the line below</p>
+<p>&nbsp; cat("highTemp greater than 50");&nbsp; # but... this comment breaks the breakpoint</p>
+<p>}</p>
+</blockquote>
+<p></p>
+<p>But will work if you take out the breakpoint</p>
+<p>So, a breakpoint will not work on this line:</p>
+<blockquote>
+<p>if(highTemps[i] &gt; 50)</p>
+<p>{</p>
+<p>&nbsp; # put a breakpoint on the line below (now it will work)</p>
+<p>&nbsp; cat("highTemp greater than 50");&nbsp;</p>
+<p>}</p>
+</blockquote></body></html>

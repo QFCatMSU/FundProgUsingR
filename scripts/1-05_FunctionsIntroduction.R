@@ -8,7 +8,7 @@
                          stringsAsFactors = FALSE); # for people using R 3.X
   
   # create a sequence that goes from 1 to 10 by 3
-  seq1 = seq(from=1, to=10, by=3); 
+  seq1 = seq(from=1, to=10, by=3);  # will have 4 values
   
   # create a vector of values
   vec1 = c(3,4,5,6,21,45,61);
@@ -33,9 +33,6 @@
   medianVal2d = median(vec2, na.rm=TRUE);
   medianVal2e = median(na.rm=TRUE, x=vec2);
   medianVal2f = median(x=vec2, TRUE);
-  
-  # Using the default arguments for seq()
-  seq1 = seq();
   
   # using length.out, forcing the number of value in the seq to be 5
   seq2 = seq(from=1, to=10, length.out=5);

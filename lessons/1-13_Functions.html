@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <noscript>
+  <link rel="stylesheet" type="text/css" href="/content/DEVELOPMENT/2018/courses/DEV-belinsky-2018-BackendTest/Programming/editor.css">
+  </noscript>
+  <script src="https://cdn.jsdelivr.net/gh/QFCatMSU/OnlineClassBackEnd/module.js">
+  </script>
+</head>
+<body>
+
+<p class="previousLesson">Multiple Conditions</p>
+<p class="nextLesson">Functions 2</p>
+<h1 class="title" id="title">1-13: Functions</h1>
+<h3>Future changes...</h3>
+<ul>
+<li>better explanation of why one return value is used</li>
+<li>reduce number of examples in 6-1</li>
+<li>mention how functions are the 4th component of programming</li>
+</ul>
+<h2>Purpose</h2>
+<ul>
+<li>Create reusable code (a function)</li>
+<li>Use arguments in functions</li>
+<li>Use return values in functions</li>
+</ul>
+<h2>Questions about the material...</h2>
+<p>If you have any questions about the material in this lesson or your Class Project <em class="email">feel free to email them to the instructor here</em>.</p>
+<p></p>
+<p>The <a href="https://raw.githubusercontent.com/QFCatMSU/FundProgUsingR/master/scripts/1-13_Functions.R" target="_blank" rel="noopener" title="">script for this lesson</a> is here (right-click, Save link as)</p>
+<p>The <a href="../sccripts/twoWeekWeatherData3.csv" target="_self">data for this lesson</a> is here (left-click)</p>
+<h2>Creating code that is repeatable and reusable</h2>
+<p>The are many times in programming where you want to repeat the same, or very similar, code.&nbsp; We have seen this done in previous lessons, using <em><strong>for</strong> </em>loops to perform the same commands on multiple values in a vector (e.g., finding which values in a temperature column are less than 50).&nbsp; But, <em><strong>for </strong></em>loops are limited to one place within one script.</p>
+<p></p>
+<p>We want to create code that can be be used multiple times across multiple scripts. For instance, we might want to repeat a conversion on various values across columns from multiple dataframes.&nbsp; <em class="hl">Function</em> are self-contained codeblocks that can be called from any script.</p>
+<p></p>
+<p>There are many functions built into R and far more in the many packages in R.&nbsp; You can also create your own functions.&nbsp; We are going to start with some statistical functions built into R.</p>
+<h3>Statistical function</h3>
+<p>R was designed as a programming language for statistics so it is no surprise that R has a lot of statistical function.&nbsp; We will look at the most basic functions:<em><strong> mean(), max(), median(), min(), </strong></em>and <strong></strong><em><strong>sd()</strong></em></p>
+<p></p>
+<p>All of these functions:</p>
+<p>1) Take a vector of numeric values as input.&nbsp; <em class="note">Note: these functions can take one value (i.e., a vector of 1) as input, but the results would be boring.</em></p>
+<p>2) Apply some operations to these values -- these operations are done behind-the-scenes</p>
+<p>3) Return the answer</p>
+<p></p>
+<p>Let's use four of R's statistical functions on the <em><strong>precipitation </strong></em>column in <em><strong>weatherData</strong>:</em></p>
+<p class="code">weatherData = read.csv(file="data/twoWeekWeatherData3.csv",&nbsp;<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; sep=",",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; header=TRUE,&nbsp;<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; stringsAsFactors = FALSE); &nbsp;<br>&nbsp;&nbsp;<br>precip = weatherData$precipitation;</p>
+<p class="code"><br>precipMean = mean(precipitation);</p>
+<p class="code">precipMax = max(precipitation);</p>
+<p class="code">precipMed = median(precipitation);</p>
+<p class="code">precipVar = sd(precipitation);</p>
+<p></p>
+<p>The results of these function calls in the <em><strong>Environment</strong></em>:</p>
+<p class="code nn">precipMax:&nbsp;&nbsp;&nbsp; 1.13</p>
+<p class="code nn" title="Console">precipMean:&nbsp;&nbsp; 0.2617</p>
+<p class="code">precipMed&nbsp; &nbsp;&nbsp; 0.025</p>
+<p class="code">precipSD &nbsp; &nbsp;&nbsp; 0.4018</p>
+<h2>Parts of a function</h2>
+<p>All functions, whether user-created or built-in to R, have the same main components: <strong>name</strong>, <strong>argument</strong>, and <strong>return value</strong>.&nbsp;</p>
+<p></p>
+<p>The components of a function, using <em><strong>median() </strong></em>as an example:</p>
+<ol>
+<li><strong>Name</strong>: this is how you call the function -- <em><strong>median()</strong></em></li>
+<li><strong>Arguments</strong>: variables used by the function that can be set by the caller<br>
+<ul>
+<li>for <em><strong>median()</strong></em>, the arguments are <em><strong>x</strong></em> and <em><strong>na.rm </strong></em>(more about this later in the lesson)</li>
+<li><em><strong> x</strong></em> is set to the <em><strong>precipitation</strong> </em>vector in this code: <em><strong>median(precipitation)</strong></em></li>
+</ul>
+</li>
+<li><strong>Return value</strong>: the output from the function (think of it as the answer)&nbsp;
+<ul>
+<li>the return value can be saved by the caller to a variable</li>
+<li>the return value is saved to <em><strong>precipMed </strong></em>in this code: <em><strong>precipMed = </strong><strong><em>m</em>edian(precipitation)</strong></em><em><strong></strong></em></li>
+</ul>
+</li>
+</ol>
+<p></p>
+<p><img src="../images/R-1-12_Median_function.png" alt="" style="max-width: 100%;" data-d2l-editor-default-img-style="true" class="fs"></p>
+<p class="fig" id="median">The median() function in the Help tab --with 2 arguments and a return value</p>
+<h3>Functions names</h3>
+<p>Functions, like variables, are named component of a script that stores information.&nbsp; The difference is that <em class="hl">variables store values</em> whereas <em class="hl">functions store codeblocks</em>.</p>
+<p></p>
+<p>The parentheses after the name indicate <em class="hl">the component is a function</em> as opposed to a variable:</p>
+<ul>
+<li><em><strong>median()</strong></em></li>
+<li><em><strong>read.csv()</strong></em></li>
+<li><em><strong>log()</strong></em></li>
+</ul>
+<p></p>
+<p>Most of the time when you call a function, including the ones above, an argument is needed inside the parentheses.</p>
+<p></p>
+<p>This is not universally true, for instance <em><strong>c()</strong></em> is often used without an argument -- <em><strong>c() </strong></em>initializes a vector without any values:</p>
+<blockquote>
+<p class="nn">vec1 = c();&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # a vector that initially has no values (an empty vector)</p>
+<p>vec2 = c(5,2,9,1);&nbsp; # a vector with four values</p>
+</blockquote>
+<h3>Arguments (inputs) of a function</h3>
+<p>If we look at <em><strong>median()</strong></em> in the <em><strong>Help </strong></em>tab (<em id="r-median" class="ref">fig ##</em>), we can see there are two arguments: <em><strong>x</strong></em> and <em><strong>na.rm</strong></em></p>
+<p class="code" title="Help">median(x, na.rm = FALSE, ...)</p>
+<p></p>
+<p>This means that <em class="hl"><strong>x</strong> and <strong>na.rm</strong> are variables used by the function</em> that can be set by the caller.&nbsp;</p>
+<p></p>
+<p><em><strong>x</strong></em> is the generic name for inputted values used by many functions in R -- not to be confused with the x-axis.</p>
+<p><em><strong>na.rm</strong></em> tells the function what to do if there are NA, or unknown, values in the input</p>
+<ul>
+<li><em><strong>na.rm = TRUE</strong></em>: remove the NAs from the vector</li>
+<li><em><strong>na.rm = FALSE</strong></em>: keep the NAs</li>
+</ul>
+<p></p>
+<p><em class="hl"><strong>na.rm</strong> already has a value assigned (<strong>FALSE</strong>).</em>&nbsp; <em><strong>FALSE </strong></em>is the <em class="hl">default value</em> -- which is the value assigned if the caller does not supply a value.</p>
+<h3>The return value of a function</h3>
+<p>In the <em><strong>Help </strong></em>section (<em id="r-median" class="ref">fig. ##</em>), the <em><strong>Value </strong></em>is the same as the return value (or output).&nbsp; In this case, <em><strong>median()</strong></em> returns a "length-one object".&nbsp; In other words, <em><strong>median()</strong></em> returns the median of the vector, which is a length-one object (i.e., one value). &nbsp;</p>
+<p class="note"></p>
+<p class="note">note: if <strong>na.rm</strong> is <strong>FALSE </strong>and there are NA values, then the median will also be NA -- you cannot solve for a median of a vector with unknown values</p>
+<h2>Function independence</h2>
+<p><em class="hl">Functions are designed to be independent of any script file.</em>&nbsp; From the script's perspective, a function requires inputs (arguments) and provides outputs (return values) -- everything else about the function, including the code inside, is unknown to the script.&nbsp;</p>
+<p></p>
+<p>The reverse is also true, from the function's perspective, the calling script provides inputs (arguments) and saves an output (return value) -- everything else about the calling script is (supposed to be) unknown to the function.</p>
+<p></p>
+<p id="r-non-independent" class="ref">Extension: functions, in R, are not as independent as they should be</p>
+<h2>A conversion function</h2>
+<p>We are going to create a simple function that converts a vector of Fahrenheit temperatures into Celsius temperatures.&nbsp;</p>
+<p></p>
+<p>The formula for this is:</p>
+<p><math title="" xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><semantics><mstyle><mi>C</mi><mo>&nbsp;</mo><mo>=</mo><mo>&nbsp;</mo><mfrac><mn>5</mn><mn>9</mn></mfrac><mo>(</mo><mi>F</mi><mo>&nbsp;</mo><mo>-</mo><mo>&nbsp;</mo><mn>32</mn><mo>)</mo></mstyle><annotation encoding="wiris">{"version":"1.1","math":"&lt;math xmlns="http://www.w3.org/1998/Math/MathML"&gt;&lt;mi&gt;C&lt;/mi&gt;&lt;mo&gt;&amp;#xA0;&lt;/mo&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo&gt;&amp;#xA0;&lt;/mo&gt;&lt;mfrac&gt;&lt;mn&gt;5&lt;/mn&gt;&lt;mn&gt;9&lt;/mn&gt;&lt;/mfrac&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mi&gt;F&lt;/mi&gt;&lt;mo&gt;&amp;#xA0;&lt;/mo&gt;&lt;mo&gt;-&lt;/mo&gt;&lt;mo&gt;&amp;#xA0;&lt;/mo&gt;&lt;mn&gt;32&lt;/mn&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;/math&gt;"}</annotation></semantics></math></p>
+<h3>Calculating the conversion</h3>
+<p>Before we create the function, let's look at some examples of conversion calculations:</p>
+<blockquote>
+<p># single value conversions:</p>
+<p>F1 = 50;&nbsp;&nbsp;&nbsp;&nbsp; C1 = (5/9)*(F1 - 32);</p>
+<p>F2 = 212; &nbsp;&nbsp; C2 = (5/9)*(F2 - 32);</p>
+</blockquote>
+<p></p>
+<blockquote>
+<p># multiple value conversion:</p>
+<p>F3 = c(0,50,100,150);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # has 4 values</p>
+<p>C3 = (5/9)*(F3 - 32);</p>
+<p>F4 = seq(from=100, to=10, by=-10);&nbsp; # has 10 values</p>
+<p>C4 = (5/9)*(F4 - 32);</p>
+</blockquote>
+<p></p>
+<blockquote>
+<p># convert column from data frame</p>
+<p>F5 = weatherData$highTemp;</p>
+<p>C5 = (5/9)*(F5 - 32);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # has 14 values</p>
+<p>F6 = weatherData$lowTemp;</p>
+<p>C6 = (5/9)*(F6 - 32);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # has 14 values</p>
+<p># the 2 lines above can be combined: &nbsp;C6 = (5/9)*(weatherData$lowTemp - 32);</p>
+</blockquote>
+<p></p>
+<p>R will perform mathematical operation across all values in a vector -- and return an answer for each value.&nbsp; R treats single values (e.g., <em><strong>F1 </strong></em>and <em><strong>F2</strong></em>) as vectors with one value:</p>
+<blockquote>
+<p title="Environment" class="nn">C1: 10</p>
+<p>C2: 100</p>
+<p>C3: num [1:4] -17.8 10 37.8 65.6</p>
+<p>C4: num [1:10] 37.8 32.2 26.7 ...</p>
+<p>C5: num [1:14] 13.89 10 12.22 ...</p>
+<p>C6: num [1:14 7.22 6.11 7.78 ...</p>
+</blockquote>
+<h3>Creating a function</h3>
+<p>Most functions have: a <strong>name</strong>, <strong>arguments</strong>, a <strong>codeblock</strong>, and a <strong>return value</strong>.&nbsp;</p>
+<p></p>
+<p>For the function below:</p>
+<ul>
+<li><strong>name</strong>: <em><strong>convertFtoC </strong></em>(we are converting Fahrenheit temperatures to Celsius)</li>
+<li><strong>argument</strong>: This is a conversion function so we need to have an argument for the values the caller want to convert -- we call the argument <em><strong>fTemp</strong></em></li>
+<li><strong>codeblock</strong>: everything between ( <strong>{</strong> ) and ( <strong>}</strong> ) -- this is the code that gets executed when the function is called</li>
+<li><strong>return value</strong>: the name of the vector containing the converted value sent back to the caller using <em><strong>return()</strong></em>: <em><strong>celTemp</strong></em></li>
+</ul>
+<p></p>
+<blockquote>
+<p># function to convert Fahrenheit temperatures to Celsius</p>
+<p>convertFtoC = function(fTemp) &nbsp; &nbsp; # argument: values given by the caller to convert</p>
+<p>{&nbsp;&nbsp;</p>
+<p>&nbsp; celTemp = (5/9) * (fTemp - 32); # the argument is used as part of the calculation</p>
+<p>&nbsp; return(celTemp);&nbsp;&nbsp; # the results of the calculation are sent back to the caller &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+<p>}</p>
+</blockquote>
+<p id="convertfunction" class="fig">Conversion function</p>
+<p></p>
+<p id="r-forloops" class="ref">Extension: Using for loops in the conversion function</p>
+<h3>Using the function</h3>
+<p>We can test the function with some of the same values as before:</p>
+<blockquote>
+<p class="nn">&nbsp; C2b = convertFtoC(fTemp=F2);<br>&nbsp; C4b = convertFtoC(fTemp=F4);<br>&nbsp; C6b = convertFtoC(fTemp=F6);</p>
+</blockquote>
+<p></p>
+<p>In the <em><strong>Environment </strong></em>we get the same answers as before:</p>
+<blockquote>
+<p class="nn">C2b: 100</p>
+<p>C4b: num [1:10] 37.8 32.2 26.7 ...</p>
+<p>C6b: num [1:14 7.22 6.11 7.78 ...</p>
+</blockquote>
+<p></p>
+<p>You do not have to use the argument names -- if a function only has one argument, it is generally OK to skip the name:</p>
+<blockquote>
+<p class="nn">&nbsp; C2c = convertFtoC(F2);<br>&nbsp; C4c = convertFtoC(F4);<br>&nbsp; C6c = convertFtoC(F6);</p>
+</blockquote>
+<h3>Missing an argument error</h3>
+<p>The function <strong><em>convertFtoC() </em></strong>requires an <em><strong>fTemp </strong></em>value.</p>
+<p></p>
+<p>If the caller does not supply an <em><strong>fTemp </strong></em><strong><em>value</em></strong>, then they will get the error <em class="hl">argument "fTemp" is missing, with no default</em>.&nbsp;</p>
+<p></p>
+<p>To see this error, type the following into the <em><strong>Console</strong></em>:</p>
+<blockquote>
+<p title="Console" class="nn">&nbsp;&gt; convertFtoC()</p>
+<p title="Console" class="nn">Error in convertFtoC() : argument "fTemp" is missing, with no default</p>
+</blockquote>
+<h2>A modulus function</h2>
+<p>We are going to create a second function that takes two numbers (e.g., two arguments) and figures out if the first number is divisible by the second (sent as the return value).&nbsp;</p>
+<h3 id="modulus">Modulus division</h3>
+<p><em><strong>%%</strong></em> is called the modulus operator, often shortened to <em><strong>mod</strong></em>.&nbsp; <em><strong>mod</strong> </em>divides the second number from the first but <em class="hl">gives only the remainder as the answer.</em></p>
+<p></p>
+<p>Let do some example of <em><strong>mod </strong></em>in the <em><strong>Console</strong></em>:</p>
+<blockquote>
+<p title="Console" class="nn">&gt; 8 %% 3</p>
+<p>[1] 2</p>
+<p>&gt; 9 %% 3</p>
+<p>[1] 0</p>
+<p>&gt; 10 %% 3</p>
+<p>[1] 1</p>
+<p>&gt; 10 %% 4</p>
+<p>[1] 2</p>
+</blockquote>
+<p></p>
+<p>Modulus is used when you are working with values that repeat regularly -- or when you want the <em><strong>n<sup>th</sup></strong></em> values.&nbsp; For instance, you might want the first value of every week from a year's worth of temperatures.&nbsp; So, in this case you are <em><strong>moding</strong></em> the index (1-366) by 7, or dividing by 7 and giving the remainder.&nbsp; By doing this, every 7th value is the same (0,1,2,3,4,5,6,0,1,2,3,4,5,6,0,1...).&nbsp; So, all <strong>0</strong> values represent Sunday, all <strong>1</strong> values represent Monday...</p>
+<h3>Creating a modulus function</h3>
+<p>Name: <em><strong>isDivisible()</strong></em></p>
+<p>Arguments: <em><strong>div1</strong> </em>and <em><strong>div2 </strong></em>(the numbers to check supplied by the caller)<strong></strong><em><strong><br></strong></em></p>
+<p>Return Value: a <em><strong>TRUE/FALSE</strong></em> (Boolean) statement</p>
+<p></p>
+<p class="code"># function to see if the first number is divisible by the second</p>
+<p class="code">isDivisible = function(div1, div2)&nbsp; # arguments given by caller</p>
+<p class="code">{</p>
+<p class="code">&nbsp; remainder = div1 %% div2;&nbsp; # calculating the modulus</p>
+<p class="code">&nbsp; if(remainder == 0)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # div2 divides div1 evenly (no remainder)</p>
+<p class="code">&nbsp; {</p>
+<p class="code">&nbsp;&nbsp;&nbsp; return(TRUE);</p>
+<p class="code">&nbsp; }&nbsp;</p>
+<p class="code">&nbsp; else&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # div2 does not divide div1 (there is a remainder)</p>
+<p class="code">&nbsp; {</p>
+<p class="code">&nbsp;&nbsp;&nbsp; return(FALSE);</p>
+<p class="code">&nbsp; }</p>
+<p class="code">}</p>
+<p class="note">note: both <strong>if </strong>and <strong>else </strong>have a return value -- it is important to made sure that a return value is always sent.</p>
+<p></p>
+<p id="r-forget-return" class="ref">Extension: forgetting return values</p>
+<p></p>
+<p>We can call the function with the two arguments and save the return value (i.e., the answer) to a variable:</p>
+<p class="code">div12_4 = isDivisible(12,4);<br>div12_5 = isDivisible(12,5);</p>
+<p></p>
+<p class="code" title="Environment">div12_4:&nbsp;&nbsp; TRUE</p>
+<p class="code">div12_5:&nbsp;&nbsp; FALSE</p>
+<p></p>
+<p>Or, just call the <em><strong>function </strong></em>in the <em><strong>Console </strong></em>(with or without argument names):</p>
+<p class="code" title="Console">&gt; isDivisible(12,4)</p>
+<p class="code">[1] TRUE</p>
+<p class="code">&gt; isDivisible(div1=12, div2=5)</p>
+<p class="code">[1] FALSE</p>
+<p></p>
+<p>Let's put a few more calls to <em><strong>isDivisible()</strong></em> in the Console using <strong>21</strong>:</p>
+<p class="code" title="Console">&gt; isDivisible(21, 5)<br>[1] FALSE<br>&gt; isDivisible(21, 7)<br>[1] TRUE<br>&gt; isDivisible(21, 3)<br>[1] TRUE<br>&gt; isDivisible(21, 12)<br>[1] FALSE</p>
+<h3>Functions need to be set before they are called</h3>
+<p>Functions, like variables, cannot be used before they are declared (i.e., in the <em><strong>Environment</strong></em>).&nbsp; When you are sourcing code, this means the function definition needs to come before the function call in the script.</p>
+<p></p>
+<p>If you have this line before the<em><strong> isDivisible()</strong></em> function:</p>
+<p class="code">div12_4 = isDivisible(12,4);</p>
+<p></p>
+<p>and <em><strong>Source </strong></em>your script, you will get the error:</p>
+<p><em class="hl">Error in isDivisible(12, 4) : could not find function "isDivisible"</em></p>
+<h2>Argument names</h2>
+<p>It is good practice to use the argument names when passing values in to a function.&nbsp;</p>
+<p class="code">div12_4a = isDivisible(div1=12, div2=4);</p>
+<p class="code">div12_5a = isDivisible(div1=12, div2=5);</p>
+<p></p>
+<p>If you use argument names then it does not matter the order of the arguments:</p>
+<p class="code">div12_4b = isDivisible(div2=4, div1=12);</p>
+<p class="code">div12_5b = isDivisible(div2=5, div1=12);</p>
+<p></p>
+<p class="code" title="Environment">div12_4a:&nbsp;&nbsp; TRUE</p>
+<p class="code">div12_4b:&nbsp;&nbsp; TRUE</p>
+<p class="code">div12_5a:&nbsp;&nbsp; FALSE</p>
+<p class="code">div12_5b:&nbsp;&nbsp; FALSE</p>
+<p></p>
+<p>Using argument names is all but required when dealing with large functions that have lots of arguments (e.g., plotting functions):</p>
+<p><img src="../images/R-1-12_Many_Paramerters.png" alt="" style="max-width: 100%;" data-d2l-editor-default-img-style="true" class="fs"></p>
+<p class="fig">A function with a decent number of arguments</p>
+<h2>Variable and function names do not matter... to R</h2>
+<p>Variable and function names are generally chosen to make it easier for the reader to understand the script.&nbsp; But R could care less what names you use.&nbsp; The following script executes the exact same calculation and returns the exact same <em><strong>TRUE/FALSE</strong></em> values as<em><strong> isDivisible()</strong></em> -- it just uses variable and function names that are not intuitive to the user.&nbsp; Do not do this in your script!</p>
+<p></p>
+<p class="code"># the same function to see if the first number is divisible by the second</p>
+<p class="code">doSomething = function(aValue, anotherValue)</p>
+<p class="code">{</p>
+<p class="code">&nbsp; theSomething = aValue %% anotherValue;</p>
+<p class="code">&nbsp; if(theSomething == 0)</p>
+<p class="code">&nbsp; {</p>
+<p class="code">&nbsp;&nbsp;&nbsp; return(TRUE);</p>
+<p class="code">&nbsp; }&nbsp;</p>
+<p class="code">&nbsp; else</p>
+<p class="code">&nbsp; {</p>
+<p class="code">&nbsp;&nbsp;&nbsp; return(FALSE);</p>
+<p class="code">&nbsp; }</p>
+<p class="code">}</p>
+<h2>Application</h2>
+<p class=""><em class="hl">If you have any questions regarding this application or your Class Project, feel free to email them to the instructor here.&nbsp;</em></p>
+<p></p>
+<p>For all functions, make sure you have code in your script that uses the function!</p>
+<p></p>
+<p>1) Use the R Base function <em><strong>sort()</strong></em> to sort all of the values in the <em><strong>precipNA </strong></em>column.&nbsp;</p>
+<p>&nbsp;&nbsp;&nbsp; Create two sorted vectors:</p>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>one that is in descending order and includes NA as the last values</li>
+<li>one that is in ascending order and does not include NA.</li>
+</ul>
+</li>
+</ul>
+<p></p>
+<p>2) Find the median of <em><strong>precipNA</strong></em> from the data frame downloaded for this lesson --<em class="note"> note that there is an <strong>NA</strong> value in the vector</em>.&nbsp; Looking at the <em><strong>median</strong> </em>function in the <em><strong>Help</strong> </em>tab, how would you change this so that median ignores the <em><strong>NA</strong> </em>values?</p>
+<p></p>
+<p>3) Create a function named <em><strong>remainder()</strong> </em>that returns the remainder of <em><strong>div1 %% div2</strong></em> instead of a <em><strong>TRUE/FALSE</strong></em> value</p>
+<p></p>
+<p>4) Create a function that converts temperatures from Celsius to Fahrenheit.&nbsp;</p>
+<p>&nbsp; &nbsp; The conversion is: &nbsp;<math title="" xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><semantics><mstyle><mi>F</mi><mo>&nbsp;</mo><mo>=</mo><mo>&nbsp;</mo><mfrac><mn>9</mn><mn>5</mn></mfrac><mi>C</mi><mo>&nbsp;</mo><mo>+</mo><mo>&nbsp;</mo><mn>32</mn></mstyle><annotation encoding="wiris">{"version":"1.1","math":"&lt;math xmlns="http://www.w3.org/1998/Math/MathML"&gt;&lt;mi&gt;F&lt;/mi&gt;&lt;mo&gt;&amp;#xA0;&lt;/mo&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo&gt;&amp;#xA0;&lt;/mo&gt;&lt;mfrac&gt;&lt;mn&gt;9&lt;/mn&gt;&lt;mn&gt;5&lt;/mn&gt;&lt;/mfrac&gt;&lt;mi&gt;C&lt;/mi&gt;&lt;mo&gt;&amp;#xA0;&lt;/mo&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;mo&gt;&amp;#xA0;&lt;/mo&gt;&lt;mn&gt;32&lt;/mn&gt;&lt;/math&gt;"}</annotation></semantics></math></p>
+<p></p>
+<p>5) Create a function that takes a number from 0 to 100 and returns a grade from A to F.&nbsp; Return an error if the number is less than 0 and return a different error if the number is greater than 100.</p>
+<p></p>
+<p class=""><em class="hl">Save you script file as <strong>app1-13.r</strong>&nbsp; in the <strong>scripts</strong> folder of your RStudio Project for the class.</em></p>
+<p class=""><a href="1-01_Setup_and_RStudio_Projects.html#zip" target="_blank" rel="noopener">Instructions for zipping the Project Folder are here.</a>&nbsp;</p>
+<h3>Questions to answer</h3>
+<p>Answer the following in comments inside your application script:</p>
+<ol>
+<li>What was your level of comfort with the lesson/application?</li>
+<li>What areas of the lesson/application confused or still confuses you?</li>
+<li>What are some things you would like to know more about that is related to, but not covered in, this lesson?</li>
+</ol>
+<h2 class="extension" id="forloops">Extension: Using a for() to iterate through vector values</h2>
+<p>The following example functionally does the same thing as <em class="ref" id="r-convertfunction">Fig.##&nbsp;</em>except with a<em><strong> for(). </strong>&nbsp;<strong> </strong></em> While it takes more code to do it this way, it also more robust because it gives more access to each value within the vector.&nbsp; With this access you do things like checking for invalid values.</p>
+<p></p>
+<blockquote>
+<p>&nbsp; convertFtoC2 = function(fTemp)<br>&nbsp; {<br>&nbsp; &nbsp; celTemp = c(); &nbsp;# create a vector for the Celsius values<br>&nbsp; &nbsp;&nbsp;<br>&nbsp; &nbsp; for(i in 1:length(fTemp)) &nbsp;# go through each value in fTemp vector<br>&nbsp; &nbsp; {&nbsp;<br>&nbsp; &nbsp; &nbsp; # convert the indexed fTemp -- save to the celTemp vector<br>&nbsp; &nbsp; &nbsp; celTemp[i] = (5/9) * (fTemp[i] - 32);&nbsp;<br>&nbsp; &nbsp; }<br>&nbsp; &nbsp; return(celTemp); &nbsp;# return the celsius temp vector to the caller<br>&nbsp; }<br>&nbsp;&nbsp;<br>&nbsp; # Test the conversion function that uses for loops<br>&nbsp; C2d = convertFtoC2(fTemp=F2);<br>&nbsp; C4d = convertFtoC2(fTemp=F4);<br>&nbsp; C6d = convertFtoC2(fTemp=F6);</p>
+</blockquote>
+<h2 id="non-independent" class="extension">Extension: function non-independence in R</h2>
+<p>In R, the script outside a function will know nothing about the function inside so this code will cause an error:</p>
+<blockquote>
+<p>a = function(b)</p>
+<p>{</p>
+<p>&nbsp; c = b+1;</p>
+<p>&nbsp; d = c *10;</p>
+<p>&nbsp; return(d)</p>
+<p>}</p>
+<p>cat(c);&nbsp; # this line will cause an error</p>
+</blockquote>
+<p></p>
+<p>The error occurs because the script cannot see inside the function -- the function exists in its own <em><strong>Environment</strong></em>.&nbsp; So, c cannot be see in the script outside the function.</p>
+<p></p>
+<p>However, in R, a function can see the <em><strong>Environment </strong></em>of the script so this code will work:</p>
+<blockquote>
+<p>a = function(b)</p>
+<p>{</p>
+<p>&nbsp; c = b+1;&nbsp;&nbsp;&nbsp; # in most programming languages this is an error</p>
+<p>&nbsp; d = c *10;</p>
+<p>&nbsp; return(d)</p>
+<p>}</p>
+<p>c = 10;&nbsp;</p>
+<p>a(b=5);</p>
+</blockquote>
+<p></p>
+<p>The function should be independent of the script so <em><strong>c</strong></em> should be unknown to the function because <em><strong>c</strong></em> is declared outside of the function.&nbsp; In most programming languages, this would be an error but not in R.&nbsp; Even though it works, it is really bad programming practice.&nbsp; Functions should always be independent of the outside script.&nbsp;</p>
+<h2 id="forget-return" class="extension">Extension: Forgetting return values</h2>
+<p>It is important to make sure that a function always returns a values.&nbsp; In most programming languages, if you do not have a return value, the function will return NULL.&nbsp; In R, the function will return the results of the last command executed -- and this can produce confusing results.</p>
+</body></html>

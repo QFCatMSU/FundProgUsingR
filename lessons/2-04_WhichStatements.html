@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <noscript>
+  <link rel="stylesheet" type="text/css" href="/content/DEVELOPMENT/2018/courses/DEV-belinsky-2018-BackendTest/Programming/editor.css">
+  </noscript>
+  <script src="https://cdn.jsdelivr.net/gh/QFCatMSU/OnlineClassBackEnd/module.js">
+  </script>
+</head>
+<body>
+
+<p class="previousLesson">Data frames and Data types</p>
+<p class="nextLesson">Which and Regular Expression</p>
+<h1 class="title" id="title">2-04 Which Statements</h1>
+<h3>To-do</h3>
+<h2>Purpose</h2>
+<ul>
+<li>create conditional statements to evaluate the values in a vector</li>
+<li>get the index of vector values that meet a condition</li>
+<li>use indexing to subset another vector</li>
+<li>plot values from a subset index</li>
+</ul>
+<h2>Script and data for this lesson</h2>
+<p>The script for this lesson <a href="https://github.com/QFCatMSU/FundProgUsingR/raw/master/scripts/2-04_WhichStatements.R" target="_blank" rel="noopener" title="">can be downloaded here</a> (right-click, <em><strong>save link as... </strong></em>-- put in <em><strong>scripts </strong></em>folder).&nbsp;</p>
+<p></p>
+<p>The data for this lesson <a href="../data/Lansing2016Noaa-3.csv" target="_blank" rel="noopener">can be download here</a> (left-click, save to <em><strong>data </strong></em>folder).</p>
+<h2>which() -- conditional statements for vectors</h2>
+<p><em><strong>which()</strong> </em>answers the question: <em class="hl">Which of the values in this vector meet a specified condition?</em></p>
+<p></p>
+<p>The answer to <em><strong>which()</strong></em> is presented as a <em class="hl">vector of index values</em> representing the values in the vector where the condition is <em><strong>TRUE</strong></em>.</p>
+<p></p>
+<p>Let's do some quick example with the following vectors:</p>
+<blockquote>
+<p>ages = c(25,47,13,59,76,33,45);<br>animalNames = c("llama", "alpaca", "goat", "llama", "guanaco");</p>
+</blockquote>
+<p></p>
+<p>We will ask four questions, using <em><strong>which()</strong></em> on the two vectors above:</p>
+<ol>
+<li>Which ages are greater than 40?</li>
+<li>Which ages are less than or equal to 33?</li>
+<li>Which animals names are equal to llama?</li>
+<li>Which animals names are not equal to llama?</li>
+</ol>
+<p></p>
+<p class="code partial">index1 = which(ages &gt; 40); &nbsp; # index of ages greater than 40<br>index2 = which(ages &lt;= 33); &nbsp;# index of ages less than or equal to 33<br>index3 = which(animalNames == "llama"); # index of animals named "llama"<br>index4 = which(animalNames != "llama"); # index of animals not named "llama"</p>
+<p></p>
+<p><em><strong>which()</strong></em> outputs a vector of indexed values that meet the condition in parentheses.&nbsp; This vector is saved to the variables<em><strong> index1, index2, index3, and index4.&nbsp; </strong></em></p>
+<h3>which() produces an index vector</h3>
+<p>The four index vectors <em class="hl">hold the index of the values that met the condition</em> -- not the values itself.</p>
+<p>The number of values in the vector that met the condition is given by the second number in brackets<strong> [1:X]</strong></p>
+<blockquote>
+<p title="Environment" class="nn">index1: int [1:4] 2 4 5 7</p>
+<p>index2: int [1:3] 1 3 6</p>
+<p>index3: int [1:2] 1 4</p>
+<p>index4: int [1:3] 2 3 5</p>
+</blockquote>
+<p></p>
+<p><em><strong>index1 </strong></em>says there were <strong>4</strong> values in <em><strong>ages </strong></em>greater than <strong>40</strong>: values 2, 4, 5, and 7 (values: 47, 59, 76, and 45)</p>
+<p><em><strong>index2 </strong></em>says there were <em><strong>3</strong></em> values in <em><strong>ages </strong></em>less than or equal to <strong>33</strong>: values 1, 3, and 6 (values: 25, 13, and 33)</p>
+<p><em><strong>index3 </strong></em>says there were <em><strong>2</strong></em> values in <em><strong>animalNames </strong></em>that were <em>equal </em>to "llama": values 1 and 4</p>
+<p><em><strong>index4 </strong></em>says there were <em><strong>3</strong></em> values in <em><strong>animalNames</strong></em> <em class="hl">not equal</em> to "llama": values&nbsp; 2,3 and 5 (alpaca, guanaco, and goat)</p>
+<p></p>
+<p><em class="ref" id="r-TFvector">Extension: The TRUE/FALSE vector</em></p>
+<h2>Using which() on numeric data</h2>
+<p>For the rest of this lesson, we are going to use the <em><strong>weatherData </strong></em>frame from last lesson.</p>
+<blockquote>
+<p>weatherData = read.csv(file="data/Lansing2016NOAA-3.csv");</p>
+</blockquote>
+<p></p>
+<p>We are going to use <em><strong>which()</strong></em> to</p>
+<ol>
+<li>find values in the precipitation columns that meet a certain condition</li>
+<li>subset other columns (e.g., <em><strong>avgTemp</strong></em>, <em><strong>relHum</strong></em>) by these values
+<ul>
+<li>in other words, find the <em><strong>avgTemp </strong></em>on days where precipitation meets a certain condition</li>
+</ul>
+</li>
+</ol>
+<h3>Finding the NA values using which()</h3>
+<p>In the last lesson we took the <em><strong>chr </strong></em>column <em><strong>precip</strong></em>, converted it to a numeric vector, and then using <em><strong>for </strong></em>loops, changed the <strong>NA </strong>values to<strong> 0.005</strong>.&nbsp;</p>
+<p></p>
+<p>We are going to repeat this process using<em><strong> which() </strong></em>statements.&nbsp;</p>
+<p></p>
+<p>First we will save the <em><strong>precip </strong></em>column in <em><strong>weatherData </strong></em>to the vector <em><strong>precip</strong></em>:</p>
+<blockquote>
+<p>precip = weatherData$precip;&nbsp;</p>
+</blockquote>
+<p></p>
+<p>Then convert the <em><strong>chr </strong></em>vector <em><strong>precip </strong></em>to a numeric vector -- and save the results to <em><strong>precip2</strong></em>:</p>
+<blockquote>
+<p>precip2 = as.numeric(precip);&nbsp;&nbsp;</p>
+</blockquote>
+<p></p>
+<p>Use <em><strong>which() </strong></em>to find which values in <em><strong>precip2 </strong></em>are <strong>NA</strong>:</p>
+<blockquote>
+<p>naValues = which(is.na(precip2));</p>
+</blockquote>
+<p></p>
+<p>In the <em><strong>Environment</strong></em>, we see there are 60 <strong>NA </strong>values in <em><strong>precip2</strong></em>, starting with values <em><strong>3, 4, 14</strong></em>... (meaning the 3<sup>rd</sup>, 4<sup>th</sup>, 14<sup>th</sup>... values in <em><strong>precip2 </strong></em>are <strong>NA</strong>)</p>
+<blockquote>
+<p title="Environment" class="nn">naValues:&nbsp; int[1:60] 3 4 14 16 17 19 20 ...</p>
+</blockquote>
+<p></p>
+<p>Create a copy of <em><strong>precip2 </strong></em>called <em><strong>precip3 </strong></em>(this is only done so we can see the progress):</p>
+<blockquote>
+<p>precip3 = precip2;</p>
+</blockquote>
+<p></p>
+<p>Set the <em><strong>precip3 </strong></em>values indexed by <em><strong>naValues </strong></em>to <em><strong>0.005 </strong></em>(change the 3<sup>rd</sup>, 4<sup>th</sup>, 14<sup>th</sup>... values in <em><strong>precip2 </strong></em>to <strong>0.005</strong>):</p>
+<blockquote>
+<p>precip3[naValues] = 0.005;</p>
+</blockquote>
+<p></p>
+<p>Like last lesson, we see the progress from a <em><strong>chr </strong></em>vector (<em><strong>precip</strong></em>) to a numeric vector with <strong>NA </strong>values (<em><strong>precip2</strong></em>) to a numeric value with <strong>NA </strong>values replaced with <strong>0.005</strong> (<em><strong>precip3</strong></em>):</p>
+<blockquote>
+<p title="Environment" class="nn">precip: &nbsp; chr[1:366]&nbsp; "0.04" "0.00" <em class="hl">"T" "T"</em> "0.00" ...</p>
+<p>precip2:&nbsp; num[1:366]&nbsp; 0.04 0 <em class="hl">NA NA</em> 0 ...</p>
+<p>precip3:&nbsp; num[1:366]&nbsp; 0.04 0 <em class="hl">0.005 0.005</em> 0 ...</p>
+</blockquote>
+<h3>Subset based on numeric conditions</h3>
+<p>We are going to subset the <em><strong>precipNum </strong></em>column in 3 ways:&nbsp;</p>
+<ol>
+<li>no precipitation (<em><strong>precipitation</strong> </em>== <strong>0.00</strong>)</li>
+<li>a lot of precipitation (<em><strong>precipitation</strong> </em>&gt; <strong>1.00</strong>).</li>
+<li>moderate precipitation (<em><strong>precipitation</strong> </em>&gt; <strong>0.25 &amp; &lt; 0.50</strong>).</li>
+</ol>
+<p></p>
+<p>First we need to create vectors that contain the index values for <em><strong>precipNum </strong></em>that correspond to the three scenarios above.&nbsp; We will use <em><strong>which() </strong></em>on the <em><strong>precipNum </strong></em>column.&nbsp; <em><strong>which() </strong></em>statements use conditional statement just like <em><strong>if </strong></em>statements.</p>
+<p class="code partial">daysNoPrecip = which(weatherData$precipNum == 0.00);&nbsp;&nbsp; # days where precip is 0</p>
+<p class="code">daysHighPrecip = which(weatherData$precipNum &gt; 1.00);&nbsp; # days where precip is &gt; 1</p>
+<p></p>
+<p class="note">Note: it is good practice to put in the decimal (<strong>1.00</strong> as opposed to <strong>1</strong>) to indicate to the reader that it is a real number that, in this situation, happens to have a value the looks like an integer.</p>
+<p></p>
+<p>The first two scenarios have one condition, the third scenario has two conditions:</p>
+<ul>
+<li><em><strong>precipNum </strong></em>&gt; 0.25 and</li>
+<li><em><strong>precipNum </strong></em>&lt; 0.50</li>
+</ul>
+<p></p>
+<p>As with <em><strong>if </strong></em>statements, each condition must be explicit:</p>
+<blockquote>
+<p># explicit condition: days where precip is &gt; 0.25 and precip &lt; 0.5</p>
+<p>daysModPrecip = which(weatherData$precipNum &gt; 0.25 &amp; weatherData$precipNum &lt; 0.5);</p>
+<p></p>
+<p># this code is not explicit and will cause an error</p>
+<p># daysModPrecip = which(weatherData$precipNum &gt; 0.25 &amp; <em>&lt;</em> 0.5);</p>
+</blockquote>
+<p></p>
+<p>We see in the <em><strong>Environment </strong></em>tab that there were:</p>
+<ul>
+<li><strong>167</strong> days without any precipitation</li>
+<li><strong>8</strong> days with precipitation more than <strong>1</strong> inch</li>
+<li><strong>18</strong> days with precipitation between <strong>0.25</strong> and <strong>0.50</strong> inches</li>
+</ul>
+<p></p>
+<blockquote>
+<p title="Environment" class="nn">daysHighPrecip: int [1:<em class="hl">8</em>]&nbsp; 73 91 225 228 229 273 290 307</p>
+<p>daysModPrecip:&nbsp; int [1:<em class="hl">18</em>]&nbsp; 33 88 119 121 123 125 168 183 ...</p>
+<p>daysNoPrecip:&nbsp;&nbsp; int [1:<em class="hl">167</em>]&nbsp; 2 5 6 7 24 30 37 38 42 49 ...</p>
+</blockquote>
+<p class="fig" id="precipIndex">Creating vector indices of days based on precipitation amounts</p>
+<h2>Subsetting other vectors</h2>
+<p>The index vectors in <em id="r-precipIndex" class="ref">fig ##</em> give the rows in <em><strong>weatherData$precipN</strong><strong>u</strong><strong>m</strong></em> that meet the given condition.&nbsp; We can use this information to subset other columns and answer questions like:</p>
+<ul>
+<li>Which dates (<em><strong>dateYear </strong></em>column) had more than 1 inch of rain?</li>
+<li>What was the average wind speed (<em><strong>windSpeed</strong></em>) for the days that had greater than 1 inch of rain?</li>
+</ul>
+<p></p>
+<blockquote>
+<p>rainyDates = weatherData$dateYear[highPrecipIndex];</p>
+<p>rainyDayWindSpeed = weatherData$windSpeed[highPrecipIndex];</p>
+</blockquote>
+<p></p>
+<p><em><strong>rainyDates </strong></em>and <em><strong>rainyDayWindSpeed </strong></em>are both vector with 8 values, the 8 values are on the same rows as the precipitations that are greater than 1 inch.</p>
+<p></p>
+<p>We see in the <em><strong>Console </strong></em>the 8 dates that had a high amount of precipitation and the average wind speed for those dates:</p>
+<blockquote>
+<p title="Console" class="nn">&gt; rainyDates<br>[1] "03-13-2016" "03-31-2016" "08-12-2016" "08-15-2016" "08-16-2016" "09-29-2016" "10-16-2016"<br>[8] "11-02-2016"<br>&gt; rainyDayWindSpeed<br>[1] &nbsp;9.2 17.3 &nbsp;6.1 &nbsp;3.8 &nbsp;9.2 12.4 &nbsp;8.1 &nbsp;4.6</p>
+</blockquote>
+<p class="fig">Printing out the subsetted rainy dates to the Console</p>
+<p></p>
+<p class="ref" id="r-data-frame-vector">Extension: Using data frame columns instead of vector</p>
+<h2>Plotting subsetted vectors</h2>
+<p>In previous lesson, we created a scatterplot by initializing a data frame in <em><strong>ggplot()</strong></em> and mapping columns to the<em><strong> x</strong></em> and <em><strong>y</strong></em> axes:</p>
+<blockquote>
+<p>&nbsp; plot1 = ggplot(<em class="hl">data=weatherData</em>) +&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # initialize data frame<br>&nbsp; &nbsp; geom_point( <em class="hl">mapping=aes(x=avgTemp, y=relHum</em>),&nbsp;&nbsp; # map the x and y axes<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; color = "blue") +<br>&nbsp; &nbsp; labs( title="Humidity vs. Temperature",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; subtitle="Lansing, 2016",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; x = "Temperature (F)",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; y = "Humidity (%)") +<br>&nbsp; &nbsp; theme_bw();<br>&nbsp; plot(plot1);</p>
+</blockquote>
+<p></p>
+<p>And we get a scatterplot of all 366 values:</p>
+<p></p>
+<p><img src="../images/R-2-04-Scatterplot.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">Scatterplot of humidity vs temperature using all values in the columns</p>
+<p></p>
+<p>In this section, we want to create a humidity (<em><strong>relHum</strong></em>) vs temperature (<em><strong>avgTemp</strong></em>) scatterplot limited to the days that meet the precipitation conditions.&nbsp;</p>
+<p></p>
+<p>In GGPlot there are two ways to do this:</p>
+<ol>
+<li>subset the <em><strong>weatherData </strong></em>data frame</li>
+<li>subset the <em><strong>x</strong></em> and <em><strong>y</strong></em> mappings</li>
+</ol>
+<h3>Subsetting the data frame</h3>
+<p>When we use this code to set up a ggplot canvas:<em><strong></strong></em></p>
+<blockquote>
+<p>ggplot(data = weatherData)</p>
+</blockquote>
+<p>We are saying that the plots added to the canvas are going to use data from the <em><strong>weatherData </strong></em>data frame.<strong></strong><em><strong><br></strong></em></p>
+<p></p>
+<p>In this case, we do not want to use all of the rows from the data frame -- so, we want to set up the ggplot canvas with a data frame that is a subset of <em><strong>weatherData</strong></em></p>
+<p></p>
+<p>We can create a subset of <em><strong>weatherData </strong></em>using the index vector <em><strong>daysHighPrecip</strong></em>.&nbsp; In other words, we create a data frame that only has the rows from <em><strong>weatherData </strong></em>given by <em><strong>daysHighPrecip</strong></em>.</p>
+<p></p>
+<p>To subset rows in a data frame:</p>
+<blockquote>
+<p>subset1 = weatherData[1:10,];&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # subset rows 1-10, all columns</p>
+<p>subset2 = weatherData[daysHighPrecip,]&nbsp; # subset rows given by daysHighPrecip</p>
+</blockquote>
+<p></p>
+<p><em><strong>subset1 </strong></em>has the first 10 rows of <em><strong>weatherData</strong></em>:</p>
+<p><img src="../images/R-2-04-SubsetDF1.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig"><strong>subset1 </strong>is a data frame that has the first 10 rows of <strong>weatherData</strong></p>
+<p></p>
+<p><em><strong>subset2 </strong></em>is <strong>8</strong> rows from <em><strong>weatherData </strong></em>given by the<strong> 8</strong> index values in <em><strong>daysHighPrecip </strong></em>(73, 91, 225..).</p>
+<p><img src="../images/R-2-04-SubsetDF2.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">Subsetting the <strong>weatherData </strong>data frame by rows</p>
+<h3>Using a subset dataframe in ggplot</h3>
+<p>To plot the data from the 8 rows with precipitation greater than one inch, we can initialize<em><strong> ggplot()</strong></em> with the subsetted data frame, <em><strong>subset2</strong></em><em><strong>.</strong></em></p>
+<blockquote>
+<p>&nbsp; plot2 = ggplot(data=<em class="hl">subset2</em>) +&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # initialize the cvanvas with subset2<em class="hl"></em><br>&nbsp; &nbsp; geom_point( mapping=aes(x=<em class="hl">avgTemp</em>, y=<em class="hl">relHum</em>), # avgTemp and relHum from subset2<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; color = "blue") +<br>&nbsp; &nbsp; labs( title="Humidity vs. Temperature",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; subtitle="Precipiation greater than 1 inch",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; x = "Temperature (F)",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; y = "Humidity (%)") +<br>&nbsp; &nbsp; theme_bw();<br>&nbsp; plot(plot2);</p>
+</blockquote>
+<p class="note">note: Mappings within plot components will always search the columns in the data frame that was initialized with the canvas</p>
+<p></p>
+<p>The data frame only has 8 rows, we will just get the 8 points representing the 8 days of high precipitation:</p>
+<p></p>
+<p><img src="../images/R-2-04-SubsetPlot.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig" id="subsetPlot">Plot of subsetted humidity and temperature values</p>
+<h3>Subset the mappings</h3>
+<p>The second way to plot the data is to:</p>
+<ul>
+<li><em class="hl">not initialize</em> the ggplot canvas area with a data frame&nbsp; (use <em><strong>ggplot()</strong></em>)</li>
+<li>directly map the subset vectors -- in this case, <em><strong>avgTemp </strong></em>and <em><strong>relHum</strong></em>.&nbsp;</li>
+</ul>
+<p></p>
+<p>If we subset <em><strong>relHum </strong></em>and <em><strong>avgTemp </strong></em>with the <em><strong>daysHighPrecip </strong></em>vector, then we get the 8 humidity and temperatures values that correspond to the 8 days with high precipitation:</p>
+<blockquote>
+<p title="Console" class="nn">&gt; weatherData$relHum[daysHighPrecip]<br>[1] 85 85 82 78 77 90 88 83<br>&gt; weatherData$avgTemp[daysHighPrecip]<br>[1] 46 53 82 72 76 58 65 58</p>
+</blockquote>
+<p></p>
+<p>If we subset the mapping the we can leave out the data frame initialization in <em><strong>ggplot()</strong></em><strong> </strong> and add the subsetted vectors to the mappings:</p>
+<blockquote>
+<p id="standalone">&nbsp; plot3 = ggplot() +&nbsp;&nbsp;&nbsp; <em class="hl"># no data frame was initialized for the ggplot canvas</em><br>&nbsp; &nbsp; geom_point( mapping=aes(<em class="hl">x=weatherData$avgTemp[daysHighPrecip]</em>,&nbsp;&nbsp; <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <em class="hl">y=weatherData$relHum[daysHighPrecip])</em>) +<br>&nbsp; &nbsp; labs( title="Humidity vs. Temperature",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; subtitle="Precipitation greater than 1 inch",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; x = "Temperature (F)",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; y = "Humidity (%)") +<br>&nbsp; &nbsp; theme_bw();<br>&nbsp; plot(plot3);</p>
+</blockquote>
+<p>This code will produce the exact same plot as above (<em id="r-subsetPlot" class="ref">fig ##</em>).&nbsp;</p>
+<p></p>
+<p class="hl">Warning: You will get an error if you mix the two method (initializing the canvas with a data frame and mapping subsetted vector).</p>
+<h3>Manually entering values in mappings</h3>
+<p>When you do not initialize a data frame in <em><strong>ggplot()</strong></em>, then you are manually entering vectors in the mappings.&nbsp; To be explicit about this fact, we could just put in vector values:</p>
+<blockquote>
+<p>&nbsp; plot4 = ggplot() +<br>&nbsp; &nbsp; geom_point( mapping=aes(x=c(46,53,82,72,76,58,65,58),<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; y=c(85,85,82,78,77,90,88,83)),<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; color = "blue") +<br>&nbsp; &nbsp; labs( title="Humidity vs. Temperature",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; subtitle="Precipiation greater than 1 inch",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; x = "Temperature (F)",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; y = "Humidity (%)") +<br>&nbsp; &nbsp; theme_bw();<br>&nbsp; plot(plot4);</p>
+</blockquote>
+<p>This code will, again, produce the exact same plot as above (<em id="r-subsetPlot" class="ref">fig ##</em>).&nbsp;&nbsp;</p>
+<h2>Application</h2>
+<p class=""><em class="hl">If you have any questions regarding this application, feel free to</em> <em class="email">email them to the instructor here</em>.&nbsp; <em class="hl">You can attach the whole Project Folder as a<a href="01-01%20RStudio%20and%20Projects.html?ou=457124#zip" target="_blank" rel="noopener"> zipped file</a>.</em></p>
+<p class=""><em class="hl"></em></p>
+<ol>
+<li>Find dates that had snow (so, snow &gt; 0)
+<ul>
+<li>snow like precip, uses <strong>T</strong> values</li>
+</ul>
+</li>
+<li>Find dates that had more than a trace of rain</li>
+<li>Find the dates that had winds between 30 and 40 mph
+<ul>
+<li>Plot a rain vs temperature scatterplot for these dates</li>
+</ul>
+</li>
+<li>Find the number of days the humidity was high (greater than 80%) and for these days output to the <em><strong>Console</strong></em>:
+<ul>
+<li>the date</li>
+<li>the amount of precipitation</li>
+<li>the maximum wind speed</li>
+</ul>
+</li>
+</ol>
+<p></p>
+<p class=""><em class="hl">Save you script file as <strong>app2-04.r</strong>&nbsp; in the <strong>scripts</strong> folder of your RStudio Project for the class.</em></p>
+<h3>Questions to answer</h3>
+<p>Answer the following in comments inside your application script:</p>
+<ol style="list-style-type: number;">
+<li>What was your level of comfort with the lesson/application?</li>
+<li>What areas of the lesson/application confused or still confuses you?</li>
+<li>What are some things you would like to know more about that is related to, but not covered in, this lesson?</li>
+</ol>
+<h2 class="extension" id="data-frame-vector">Extension: Data frame columns instead of vectors</h2>
+<p>The line of code:</p>
+<p class="code p">humidity = lansing2016Weather[,"humidity"];</p>
+<p>saves all the values from the column "humidity" in the data frame <em><strong>lansing2016Weather</strong></em> to the vector <em><strong>humidity</strong></em>.</p>
+<p></p>
+<p>We then could use <em><strong>humidity</strong> </em>to find which days had high humidity</p>
+<p class="code p">highHumidity = which(humidity &gt; 80);&nbsp; # days with high humidity</p>
+<p></p>
+<p>But we could do the exact same thing with the column from the data frame</p>
+<p class="code p">highHumidity = which(lansing2016Weather[,"humidity"] &gt; 80);</p>
+<p></p>
+<p>While we can use both <em><strong>humidity</strong> </em>and <em><strong>lansing2016Weather[,"humidity"] </strong></em>in the <em><strong>which()</strong></em>, there are two advantages to using <em><strong>humidity</strong></em></p>
+<ol>
+<li>The code is easier to read</li>
+<li>We can modify <em><strong>humidity</strong> </em>without modifying the data frame, <em><strong>lansing2016Weather</strong></em></li>
+</ol>
+<h2 class="extension" id="TFvector">Extension: The TRUE/FALSE vector</h2>
+<p>Let's take another look at the<em><strong> which()</strong></em> code:</p>
+<p class="code p">ages = c(2,7,3,9,6,3,5);<br>animals = c("llama", "alpaca", "goat", "llama", "guanaco");<br><br>index1 = which(ages &gt; 4);&nbsp; # holds index of ages greater than 4<br>index2 = which(ages &lt; 4);&nbsp; # holds index of ages less than 4<br><br>index3 = which(animals == "llama"); # holds index of animals that are "llama"<br>index4 = which(animals != "llama"); # holds index of animals that are not "llama"</p>
+<p></p>
+<p>There is an in between step that we skipped over here.&nbsp; Each <em><strong>which()</strong> </em>has a conditional statement inside.&nbsp; That conditional statement gets evaluated by R first, and then <em><strong>which()</strong></em> is performed on the answer to the conditional statement.&nbsp; Using the Console Window, let's look at how the conditional statement get evaluated by R:</p>
+<p></p>
+<p><img src="../images/R-03-07%20TF%20Vector.PNG" alt="" class="fs"></p>
+<p class="fig" id="tfvector">Looking at TRUE/FALSE vectors for conditional statements on a vector</p>
+<p></p>
+<p>Each conditional statement produces a vector that has the same length as the number of values in the vector (<em class="ref" id="r-tfvector">Fig.##</em>).&nbsp; The vector has only two vales: <strong>TRUE</strong> and <strong>FALSE</strong>.&nbsp; The <strong>TRUE</strong> and <strong>FALSE</strong> values match the index of the values in the original index.</p>
+<p></p>
+<p>So if:</p>
+<p class="code p">ages = c(2,7,3,9,6,3,5);</p>
+<p>then:</p>
+<p><em><strong>(ages </strong></em><strong>&gt; 4)</strong>&nbsp; is evaluated as:&nbsp; <strong>c(FALSE, TRUE, FALSE, TRUE, TRUE, FALSE, TRUE)</strong></p>
+<p></p>
+<p>This indicates that the <strong>2<sup>nd</sup></strong>,<strong> 4<sup>th</sup></strong>, <strong>5<sup>th</sup></strong>, and <strong>7<sup>th</sup> </strong>values of the vector <em><strong>ages</strong> </em>are greater than <strong>4</strong></p>
+<p></p>
+<p><em><strong>which()</strong> </em>takes the <strong>TRUE/FALSE</strong> index and outputs the indices of the <em><strong>TRUE</strong> </em>values</p>
+<p class="code p">which(ages &gt; 4);&nbsp;&nbsp; # This evaluates to c(2, 4, 5, 7)</p>
+</body></html>

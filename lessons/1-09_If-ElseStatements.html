@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <noscript>
+  <link rel="stylesheet" type="text/css" href="/content/DEVELOPMENT/2018/courses/DEV-belinsky-2018-BackendTest/Programming/editor.css">
+  </noscript>
+  <script src="https://cdn.jsdelivr.net/gh/QFCatMSU/OnlineClassBackEnd/module.js">
+  </script>
+</head>
+<body>
+
+<p class="previousLesson">Conditional Operations</p>
+<p class="nextLesson">For Loops</p>
+<h1 class="title" id="title">1-09: If-Else Statements</h1>
+<h3>Issues</h3>
+<p>-Come up with a recommendation for using <em><strong>Run</strong> </em>on an <em><strong>if-else</strong> </em>statement structured using the standard programming method</p>
+<h2>Purpose</h2>
+<ul>
+<li>Create condition statements that control flow for either TRUE or FALSE conditions using an if-else structure</li>
+<li>perform multiple conditional statements on one variable using an if-else-if structure</li>
+<li>create error conditions in an if-else-if structure with an else statement</li>
+</ul>
+<h2>Questions about the material...</h2>
+<p>The <a href="https://raw.githubusercontent.com/QFCatMSU/FundProgUsingR/master/scripts/1-09_If-ElseStatements.R" title="">script for this lesson is here</a> (right-click, <em><strong>Save File As...</strong></em>)</p>
+<p>The&nbsp;<a href="../sccripts/twoWeekWeatherData.csv?_&amp;d2lSessionVal=E3dG9hOwbtH96KknXIbfYiST3&amp;ou=1247781" target="_blank" rel="noopener">data for this lesson is here</a> (just left-click)</p>
+<p></p>
+<p>If you have any questions about the material in this lesson <em class="email">feel free to email them to the instructor here</em>.</p>
+<h2>Dealing with FALSE conditions</h2>
+<p>In the last lesson we looked at execution of the<em><strong> if()</strong></em> statement and how it changes the flow of a script.&nbsp; The code is conditionally executed based on a conditional statement inside the parenthesis <em><strong></strong></em> of the<em><strong> if()</strong></em>.&nbsp; The codeblock attached to the<em><strong> if()</strong></em> using curly brackets&nbsp; ( <em><strong>{ }</strong></em> ) was executed only if the conditional statement is <em><strong>TRUE</strong></em>.&nbsp;</p>
+<p></p>
+<blockquote>
+<p>randomNum = sample(1:100, size=1);</p>
+<p></p>
+<p>if(randomNum &gt; 50)&nbsp; # execute the attached codeblock if TRUE</p>
+<p>{</p>
+<p>&nbsp; cat("You win");</p>
+<p>}</p>
+</blockquote>
+<h3 id="r-keywords">Else and FALSE conditions</h3>
+<p>Many times when you are programming you want to execute something when the condition (e.g., temperature &gt; 50) is <strong>TRUE </strong>and when the condition is <strong>FALSE</strong>.&nbsp; You execute a codeblock on a <strong>FALSE </strong>condition by using an <em><strong>if-else</strong></em> statement.</p>
+<p></p>
+<blockquote>
+<p>randomNum2 = sample(1:100, size=1);</p>
+<p></p>
+<p>if(randomNum2 &gt; 50)&nbsp; # execute the attached codeblock if TRUE</p>
+<p>{</p>
+<p>&nbsp; cat("You win");</p>
+<p>}</p>
+<p>else # execute this codeblock if FALSE</p>
+<p>{</p>
+<p>&nbsp; cat("You lose");</p>
+<p>}</p>
+</blockquote>
+<p class="fig" id="pref">This author's preference for structuring an if-else statement</p>
+<p></p>
+<p>If the condition is <em><strong>TRUE</strong></em>, the codeblock in the curly brackets ( <em><strong>{&nbsp; }</strong></em> ) attached to the <em><strong>if()</strong></em> gets executed.</p>
+<p>If the condition is <em><strong>FALSE</strong></em>, the codeblock in the curly brackets attached to the <em><strong>else</strong> </em>gets executed.</p>
+<p></p>
+<p><span class="note">Note: Like <strong>if() </strong>statements, <strong>if-else</strong> statements are often used within <strong>for </strong>loops to check multiple values at once (e.g., all values in a column of a data frame) -- we will be getting to that in the next lesson.</span></p>
+<h3>Alternate bracket placement</h3>
+<p>The curly bracket placement in <em class="ref" id="r-pref">fig ##</em> is my preference and is a programming standard.&nbsp; The following curly bracket placement is also considered a programming standard and can also be used for this class:</p>
+<blockquote>
+<p>if(randomNum2 &gt; 50) {&nbsp;</p>
+<p>&nbsp; cat("You win");</p>
+<p>}</p>
+<p>else {</p>
+<p>&nbsp; cat("You lose");</p>
+<p>}</p>
+</blockquote>
+<p class="fig" id="alternate">An alternate method for structuring an if-else statement</p>
+<p></p>
+<p><span class="ref" id="r-skip-brackets">Trap: Skipping brackets</span></p>
+<h3 id="bug">Curly bracket in R and a bug</h3>
+<p>However, when you see an R script you often see people write their <em><strong>if-else</strong></em> statements like this:</p>
+<blockquote>
+<p>if(randomNum2 &gt; 50) {&nbsp;</p>
+<p>&nbsp; cat("You win");</p>
+<p>} else {&nbsp;</p>
+<p>&nbsp; cat("You lose");</p>
+<p>}</p>
+</blockquote>
+<p class="fig">The common way in R to structure an if-else statement</p>
+<p></p>
+<p>This is not a standard programming practice and the reason you often see it written this way has to do with a bug in R that can cause an <em class="hl">unexpected else</em> error if the brackets are placed as they are in <em class="ref" id="r-pref">fig ##</em> or <em class="ref" id="r-alternate">fig ##</em>.</p>
+<p></p>
+<p><img src="../images/R-1-07_bug-if-else.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">Unexpected else error that occurs when if-else statements are structured using the standard programming method</p>
+<p></p>
+<p>One fix is to use the standard R way of placing brackets in <em><strong>if-else</strong></em> statements.</p>
+<p><img src="../images/R-1-07_bug-fix-bad.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">The usual placement of brackets for if-else statements in R</p>
+<p></p>
+<p>However, you can use the standard method for placing curly brackets as long as the <em><strong>if-else</strong></em> statement is encapsulated within another set of curly brackets.&nbsp; <em class="hl">This is the reason I put curly brackets at the beginning and end of my script</em> -- it allows the use of standard curly bracket placement for <em><strong>if-else</strong></em> statements.</p>
+<p><img src="../images/R-1-07_bug-fix-good.png" alt="" data-d2l-editor-default-img-style="true" style="max-width: 100%;" class="fs"></p>
+<p class="fig">Putting curly brackets around the whole script also fixes the error.</p>
+<p></p>
+<p class="hl">Run will still not work on lines 7-14 because Run does not see the curly brackets at the beginning and end.</p>
+<h2>If-else statements and conditional operators</h2>
+<p>To the script -- like last lesson, we:</p>
+<ul>
+<li>read in the data from <em><strong>twoWeekWeatherData.csv</strong></em></li>
+<li>save the <em><strong>highTemp </strong></em>and <em><strong>noonCondition </strong></em>column to a vector</li>
+</ul>
+<p></p>
+<blockquote>
+<p class="code" title="">&nbsp; ### read in data from twoWeekWeatherData.csv</p>
+<p class="code">&nbsp; weatherData = read.csv(file="data/twoWeekWeatherData.csv",&nbsp;</p>
+<p class="code">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;sep=",",</p>
+<p class="code">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;header=TRUE,&nbsp;</p>
+<p class="code">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;stringsAsFactors = FALSE); &nbsp;</p>
+<p class="code">&nbsp;&nbsp;</p>
+<p class="code">&nbsp; ### Extract the highTemps column from the data frame -- save it to a variable</p>
+<p class="code">&nbsp; highTemps = weatherData$highTemp;</p>
+<p class="code">&nbsp; noonCond = weatherData$noonCondition;</p>
+</blockquote>
+<p>&nbsp;</p>
+<p>This time, the script gives a response for both <em><strong>TRUE</strong> </em>conditions and <em><strong>FALSE</strong> </em>conditions:</p>
+<blockquote>
+<p>&nbsp; if(highTemps[3] &gt; 50)<br>&nbsp; {<br>&nbsp; &nbsp; cat(" &nbsp;high temp 3 is greater than 50\n");<br>&nbsp; }<br>&nbsp; else<br>&nbsp; {<br>&nbsp; &nbsp; cat(" &nbsp;high temp 3 is not greater than 50\n");<br>&nbsp; }<br>&nbsp; if(highTemps[4] &gt; 50)<br>&nbsp; {<br>&nbsp; &nbsp; cat(" &nbsp;high temp 4 is greater than 50\n");<br>&nbsp; }&nbsp;<br>&nbsp; else<br>&nbsp; {<br>&nbsp; &nbsp; cat(" &nbsp;high temp 4 is not greater than 50\n");<br>&nbsp; }<br>&nbsp; if(highTemps[5] &gt; 50)<br>&nbsp; {<br>&nbsp; &nbsp; cat(" &nbsp;high temp 5 is greater than 50\n");<br>&nbsp; }<br>&nbsp; else<br>&nbsp; {<br>&nbsp; &nbsp; cat(" &nbsp;high temp 5 is not greater than 50\n");<br>&nbsp; }</p>
+</blockquote>
+<p></p>
+<p>Now the script outputs information for all three <em><strong>highTemp </strong></em>values, two of which were less than <strong>50</strong></p>
+<blockquote>
+<p class="nn" title="Console">Checking highTemps 3, 4, and 5 to see which are &gt; 50:<br>&nbsp; high temp 3 is greater than 50<br>&nbsp; high temp 4 is not greater than 50<br>&nbsp; high temp 5 is not greater than 50</p>
+</blockquote>
+<p class="fig">If-else output when checking three highTemp values to see if they are greater than 50</p>
+<h3>If the curly brackets at the beginning and end of script are removed</h3>
+<p>Just reiterating that the curly brackets at the beginning and end of script serve only one purpose -- allowing the use of proper formatting techniques when scripting an <em><strong>if-else </strong></em>statement.</p>
+<p></p>
+<p>If you remove the curly brackets at the top and bottom of the script and <em><strong>Source </strong></em>the script, you will get an <em class="hl">unexpected 'else'</em> error:</p>
+<blockquote>
+<p class="nn" title="Console">&gt; source("FundProgUsingR/scripts/1-08_If-Else.R")<br>Error in source("FundProgUsingR/scripts/1-08_If-Else.R") :&nbsp;<br>&nbsp; FundProgUsingR/scripts/1-08_If-Else.R:21:3: <em class="hl">unexpected 'else'</em><br>20: &nbsp; }<br>21: &nbsp; else<br>&nbsp; &nbsp; &nbsp; ^</p>
+</blockquote>
+<p class="fig">The unexpected 'else' error when you do not put curly bracket at the top and bottom of your script.</p>
+<h2>If-Else statements using strings</h2>
+<p>Conditional operators can also be used to compare two string values.&nbsp; Usually, we are using <em><strong>==</strong></em> or <em><strong>!=</strong></em> to compare string values.&nbsp; So, the <em><strong>else </strong></em>statement is the opposite condition:</p>
+<blockquote>
+<p>&nbsp; if(noonCond[2] == "Cloudy") &nbsp;# noonCond[2] is "Cloudy"<br>&nbsp; {<br>&nbsp; &nbsp; cat(" &nbsp;Day was Cloudy\n");<br>&nbsp; }<br>&nbsp; else # noonCond[2] is not "Cloudy"<br>&nbsp; {<br>&nbsp; &nbsp; cat(" &nbsp;Day was not Cloudy\n");<br>&nbsp; }</p>
+<p><br>&nbsp; if(noonCond[3] != "Sunny") &nbsp; # noonCond[3] is not "Sunny"<br>&nbsp; {<br>&nbsp; &nbsp; cat(" &nbsp;Day was not Sunny\n")<br>&nbsp; }<br>&nbsp; else # noonCond[3] is "Sunny"<br>&nbsp; {<br>&nbsp; &nbsp; cat(" &nbsp;Day was Sunny\n")<br>&nbsp; }</p>
+</blockquote>
+<p class="fig" id="if-else-strings">Using if-else statements on strings</p>
+<p></p>
+<p>Day 2 was cloudy (the <em><strong>if </strong></em>condition) and day 3 was sunny (the <em><strong>else </strong></em>condition)</p>
+<p></p>
+<blockquote>
+<p class="nn" title="Console">Check to see the noon condition on the day 2:<br>&nbsp; Day was Cloudy<br>&nbsp; Day was Sunny</p>
+</blockquote>
+<h3>If-else vs. if() statements</h3>
+<p>You could just write the code in <em class="ref" id="r-if-else-strings">fig ##</em> using only <em><strong>if </strong></em>statements and the code would output the same messages:</p>
+<blockquote>
+<p>&nbsp; if(noonCond[2] == "Cloudy") &nbsp;# noonCond[2] is "Cloudy"<br>&nbsp; {<br>&nbsp; &nbsp; cat(" &nbsp;Day was Cloudy\n");<br>&nbsp; }<br>&nbsp; if(noonCond[2] != "Cloudy")&nbsp; # noonCond[2] != "Cloudy"<br>&nbsp; {<br>&nbsp; &nbsp; cat(" &nbsp;Day was not Cloudy\n");<br>&nbsp; }</p>
+<p><br>&nbsp; if(noonCond[3] != "Sunny") &nbsp; # noonCond[3] is not "Sunny"<br>&nbsp; {<br>&nbsp; &nbsp; cat(" &nbsp;Day was not Sunny\n")<br>&nbsp; }<br>&nbsp; if(noonCond[3] == "Sunny") &nbsp; # noonCond[3] is "Sunny"<br>&nbsp; {<br>&nbsp; &nbsp; cat(" &nbsp;Day was Sunny\n")<br>&nbsp; }</p>
+</blockquote>
+<p class="fig">The inefficient way to check opposite conditions -- using only <strong>if() </strong>statements</p>
+<p class=""></p>
+<p class="">But there are two problems with the code above:</p>
+<ul>
+<li>You are executing code that you know does not need to be executed.&nbsp; <em><strong>Sunny </strong></em>and <em><strong>Not Sunny </strong></em>are mutually exclusive -- there is no need for the script to check both<strong></strong>.&nbsp; This extra check adds a little bit to the script's execution time -- this can make a difference if you are checking 100,000 values in a data frame!</li>
+<li>An<em><strong> if-else</strong></em> statement is easier to debug than two individual <em><strong>if()</strong></em> statements because you only need to debug one conditional statement -- as opposed to two</li>
+</ul>
+<h2>Adding in more conditions: If-Else-If Structures</h2>
+<p>We are limited to two outcomes when using<em><strong> if-else</strong></em> structures: (a) the<em><strong> if()</strong></em> condition is <em><strong>TRUE</strong> </em>or (b) The <em><strong>if()</strong></em> condition is <em><strong>FALSE</strong></em>.&nbsp; However, the examples above contain situations that could easily have more than two possible condition.&nbsp; For instance, the <em><strong>noonCondition </strong></em>can be "Sunny", "Cloudy", or "Rain" -- and we can check for all three in an <em><strong>if-else-if </strong></em>structure</p>
+<p></p>
+<p>With an <em><strong>if-else-if</strong></em> structure you can check as many <em class="hl">mutually exclusive situations </em>as you want.&nbsp; And <em><strong>if-else</strong><strong>-i</strong><strong>f</strong></em> structures are efficient because they will only execute the code that is needed to determine which of the <em><strong>if-else-if</strong></em> conditions are <strong>TRUE</strong>.</p>
+<blockquote>
+<p>&nbsp; if(noonCond[4] == "Cloudy") &nbsp; &nbsp; &nbsp; # 1st check: the day is cloudy<br>&nbsp; {<br>&nbsp; &nbsp; cat(" &nbsp;Day 4 was cloudy\n");<br>&nbsp; }<br>&nbsp; else if(noonCond[4] == "Sunny") &nbsp; # 2nd check: the day is sunny<br>&nbsp; {<br>&nbsp; &nbsp; cat(" &nbsp;Day 4 was sunny\n");&nbsp;<br>&nbsp; }<br>&nbsp; else if(noonCond[4] == "Rain") &nbsp; # 3rd check: the day is rainy<br>&nbsp; {<br>&nbsp; &nbsp; cat(" &nbsp;Day 4 was rainy\n");&nbsp;<br>&nbsp; }</p>
+</blockquote>
+<p class="fig" id="if-else-if">Check multiple conditions using an if-else-if structure</p>
+<p></p>
+<blockquote>
+<p class="nn" title="Console">Checking day 4 against multiple conditions:<br>&nbsp; Day 4 was rainy</p>
+</blockquote>
+<h3>The efficiency of if-else-if structures</h3>
+<p>In <em class="ref" id="r-if-else-if">fig ##</em> if we replaced day 4 with day 2, which was "Cloudy", then only the first condition<em><strong></strong></em> (<em><strong>noonCond[4] == "Cloudy"</strong></em>) gets checked.&nbsp; Because "Cloudy" is <strong>TRUE </strong>there is no need to check "Sunny" and "Rain".&nbsp; If there are thousands of values to check (e.g., you put the <em><strong>if-else</strong></em> structure in a <em><strong>for </strong></em>loop -- next lesson) then a lot of computation time is saved by not checking conditions that cannot be <strong>TRUE</strong>.</p>
+<h2>The error or everything else condition</h2>
+<p>We usually want to execute something for values we have not prepared for.&nbsp; For instance, a phone system might have menu options numbered<strong> 1</strong> through<strong> 5</strong><strong></strong>.&nbsp; In the user presses<strong> 7</strong>, the system will usually have a message saying something like "sorry, <strong>7</strong> is not an option".</p>
+<p></p>
+<p>The problem with the script above is that it does nothing if condition for the day is not checked in the <em><strong>if-else-if</strong></em> structure. In an <em><strong>if-else-if</strong></em> structure you cannot anticipate every condition that somebody will input into a dataframe -- let alone all of the errant spellings.&nbsp; Instead, we create what is often referred to as an <em><span class="hl">error condition, </span></em>meaning we set up a codeblock that gets executed if none of the conditions in the <em><strong>if-else-if</strong> </em>structure are <em><strong>TRUE</strong></em>.&nbsp; This error codeblock gets attached to the <em><strong>else</strong> </em>statement.<span style="color: #990000;"> </span></p>
+<p></p>
+<blockquote>
+<p>&nbsp; if(noonCond[5] == "Cloudy") &nbsp; &nbsp; &nbsp; # 1st check: the day is cloudy<br>&nbsp; {<br>&nbsp; &nbsp; cat(" &nbsp;Day 5 was cloudy\n");<br>&nbsp; }<br>&nbsp; else if(noonCond[5] == "Sunny") &nbsp; # 2nd check: the day is sunny<br>&nbsp; {<br>&nbsp; &nbsp; cat(" &nbsp;Day 5 was sunny\n");&nbsp;<br>&nbsp; }<br>&nbsp; else if(noonCond[5] == "Rain") &nbsp; &nbsp;# 3rd check: the day is rainy<br>&nbsp; {<br>&nbsp; &nbsp; cat(" &nbsp;Day 5 was rainy\n");&nbsp;<br>&nbsp; }<br>&nbsp; else &nbsp;# none of the above are TRUE so output some error message<br>&nbsp; {<br>&nbsp; &nbsp; cat(" &nbsp;The condition for day 5,", noonCond[5], ", is invalid\n");&nbsp;<br>&nbsp; }</p>
+</blockquote>
+<p class="fig">Adding an error condition to the if-else-if structure</p>
+<p><span style="color: #000000;"></span></p>
+<p><span style="color: #000000;">Since we have an <em><strong>else </strong></em>statement at the end, there is guaranteed to be a response from the script no matter what <em><strong>noonCond </strong></em>is:</span></p>
+<blockquote>
+<p class="nn" title="Console">Checking day 5 against multiple conditions:<br>&nbsp; The condition for day 5, Fog, is invalid</p>
+</blockquote>
+<h3>Error statement help in debugging</h3>
+<p>Adding the error statement also helps you debug your code.&nbsp; In this case, the error statement tells you that some value does not meet any of the conditions (in this case, day <strong>5 </strong>had <strong>Fog</strong>) and you can use the codeblock attached to the <em><strong>else </strong></em>statement to provide useful information about what went wrong -- and perhaps suggest a fix.</p>
+<h2>Creating number ranges using if-else structures</h2>
+<p>Another use for <em><strong>if-else-if </strong></em>structures is to create number ranges.&nbsp; The following code categorizes the <em><strong>highTemp</strong></em> by temperature range.</p>
+<p></p>
+<p class="code">&nbsp; if(highTemps[3] &gt; 70) &nbsp; &nbsp; &nbsp;# check for anything above 70<br>&nbsp; {<br>&nbsp; &nbsp; cat(" &nbsp;That is hot for April!");&nbsp;<br>&nbsp; }<br>&nbsp; else if(highTemps[3] &gt; 60) # check for temps 61-70<br>&nbsp; {<br>&nbsp; &nbsp; cat(" &nbsp;That is warm for April!"); &nbsp;&nbsp;<br>&nbsp; }<br>&nbsp; else if(highTemps[3] &gt; 50) # check for temps 51-60<br>&nbsp; {<br>&nbsp; &nbsp; cat(" &nbsp;That temperature is about right for April!"); &nbsp;&nbsp;<br>&nbsp; }<br>&nbsp; else if(highTemps[3] &gt; 40) # check for temps 41-50<br>&nbsp; {<br>&nbsp; &nbsp; cat(" &nbsp;That is a little cold for April!"); &nbsp;&nbsp;<br>&nbsp; }<br>&nbsp; else # temperatures 40 and below<br>&nbsp; {<br>&nbsp; &nbsp; cat(" &nbsp;That is unusually cold for April!"); &nbsp;&nbsp;<br>&nbsp; }</p>
+<p class="fig" id="range">Create number ranges with an if-else-if structure</p>
+<p></p>
+<blockquote>
+<p class="nn" title="Console">Checking temperature of day 3:<br>&nbsp; That temperature is about right for April!</p>
+</blockquote>
+<h3>If-Else-If statements are mutually exclusive</h3>
+<p><em><span class="hl">An <strong>if-else-if</strong> structure ends as soon as a condition is determined to be <strong>TRUE</strong>.&nbsp; </span></em><span class="">This means</span><em class="hl"><span style="color: #990000;"> </span>at most</em> one codeblock in an <em><strong>if-else-if</strong></em> structure gets executed.&nbsp; In the above example (<em class="ref" id="r-range">Fig. ##</em>), if the temperature is 75 (i.e., day 14), the first condition (<em><strong>highTemps[14] &gt; 70</strong></em>) is <em><strong>TRUE</strong> </em>and "That is hot for April" is output.&nbsp;<em class="hl"> The <strong>if-else-if</strong>&nbsp; ends here and none of the other conditions are checked.</em></p>
+<p></p>
+<p><em class="note">The second condition (<strong>highTemp[14] &gt; 60</strong>) would, if checked, also be <strong>TRUE</strong>.&nbsp;</em> But this condition does not get checked because a condition above was already <strong>TRUE </strong>-- the <em><strong>if-else-if </strong></em>structure is done executing.</p>
+<p></p>
+<p>Again, in an <em><strong>if-else-if</strong> </em>structure, only the codeblock attached to the first <em><strong>TRUE</strong> </em>conditional statement gets executed<em><strong></strong>.&nbsp; </em>If none of the conditional statements are <em><strong>TRUE</strong> </em>then the codeblock attached to&nbsp; the <em><strong>else </strong></em>statement at the end is executed.</p>
+<h2 class="app">Application</h2>
+<p class="hl">If you have any questions regarding this application, feel free to <em class="email">email them to the instructor here</em>.</p>
+<p class="">You can attach files to the email above or send the whole Project Folder as a zipped file.&nbsp; <a href="01-01%20RStudio%20and%20Projects.html?ou=457124#zip" target="_blank" rel="noopener">Instructions for zipping the Project Folder are here.</a></p>
+<p class=""></p>
+<p class="">A) If you highlight lines 12-21 of the lesson script and press <em><strong>Run</strong></em>, you get the error <em class="hl">Error: unexpected 'else' in " &nbsp;else"</em>.&nbsp; In comment explain why you get this error.&nbsp; The error is similar to what happens in <em id="r-bug" class="ref">section ##</em>.</p>
+<p class=""></p>
+<p>B) The following line randomly picks a letter from the vector and saves it to <em><strong>grade</strong></em>:</p>
+<blockquote>&nbsp; grade = sample(c("A", "B", "C", "D", "E"), size=1);</blockquote>
+<p></p>
+<p>Use the above line&nbsp;</p>
+<p>&nbsp;&nbsp;&nbsp; 1) Have the script output the score range for the grade (A is 90-100, B is 80-90...)</p>
+<p>&nbsp;&nbsp;&nbsp; 2) Have the script output an error message if <em><strong>grade </strong></em>is anything except A,B,C,D,E (add more letters to the <em><strong>grade </strong></em>vector to test this out)</p>
+<p></p>
+<p class="">C) The following line creates a random number between <strong>-30</strong> and <strong>120 </strong>and saves it to the variable <em><strong>temperature</strong></em>:</p>
+<blockquote>
+<p>&nbsp; temperature = sample(-30:120, size=1);</p>
+</blockquote>
+<p></p>
+<p>&nbsp;&nbsp;&nbsp; 1) Use the above line and have the script output:</p>
+<ul>
+<ul>
+<ul>
+<li>"cold" if the temperature is between -20 and 30 (exclusive of -20 and 30)</li>
+<li>"warm" if the temperature is between 30 and 60 (inclusive of 30, exclusive of 60)</li>
+<li>"hot" if the temperature is between 60 and 100 (inclusive of 60 and inclusive of 100)</li>
+<li>"invalid value" if the temperature is below -20 or above 100</li>
+<li><span class="hl">hint: do the if-else-if structure strictly in ascending order or strictly in descending order -- like the grades example above.&nbsp; This mean splitting the "invalid" category into two conditions (less than -20 and greater then 100)<br></span></li>
+</ul>
+</ul>
+</ul>
+<p>&nbsp;&nbsp; 2) Challenge: In the same script -- change the output if the user enters a "border" value (in this case: 30 or 60)</p>
+<ul>
+<ul>
+<ul>
+<li>for 30 output: "cold-ish"</li>
+<li>for 60 output: "hot-ish"</li>
+</ul>
+</ul>
+</ul>
+<p></p>
+<p>D) Repeat parts C, D, and E from the application in last lesson (1-08: Conditional Operations) using <em><strong>if-else</strong></em> statements.&nbsp; <em class="hl">Note: there are a few different ways to do this.</em></p>
+<h3>Questions to answer</h3>
+<p>Answer the following in comments inside your application script:</p>
+<ol>
+<li>What was your level of comfort with the lesson/application?</li>
+<li>What areas of the lesson/application confused or still confuses you?</li>
+<li>What are some things you would like to know more about that is related to, but not covered in, this lesson?</li>
+</ol>
+<p></p>
+<p class="hl">Save you script file as <em><strong>app1-09.r</strong>&nbsp; </em>in the <em><strong>scripts</strong> </em>folder of your RStudio Project for the class.&nbsp;</p>
+<h2 class="trap" id="keywords">Trap: TRUE and FALSE are keywords, T and F are not</h2>
+<p>The terms <em><strong>TRUE</strong> </em>and <em><strong>FALSE</strong> </em>are reserved <span style="color: #990000;"><em class="hl">keywords</em> </span>in R -- this means that <em><strong>TRUE</strong> and</em> <em><strong>FALSE </strong></em>are predefined and<em><strong> </strong></em>cannot be used as variable names in R.&nbsp;</p>
+<p></p>
+<p id="rstudio_console_output" tabindex="0">If you try to assign a value to a "variable" named TRUE or FALSE, you will get an "<em class="hl">invalid (do_set) left-hand side to assignment</em>" error (<em class="ref" id="r-keyword">Fig.##</em>).&nbsp; This is the same error you get if you try to assign a value to a number (i.e., 10 = "a").</p>
+<p tabindex="0"></p>
+<p tabindex="0"><img src="../images/R-01-08%20keyword%20assignment%20error.PNG" alt="" class="fs"></p>
+<p class="fig" id="keyword" tabindex="0">Assigning a value to a keyword causes an error.</p>
+<p tabindex="0"></p>
+<p>You will often see R scripts that use <em><strong>T</strong></em> and <em><strong>F</strong></em> as shortcuts for <em><strong>TRUE</strong> </em>and <em><strong>FALSE</strong></em>.&nbsp; R accepts <em><strong>T</strong></em> and <em><strong>F</strong></em> as shortcuts for <em><strong>TRUE</strong> </em>and <strong><em>FALSE&nbsp;</em><em><span class="hl">but T and F are not keywords.</span></em></strong>&nbsp; This means that someone can assign a value to <em><strong>T</strong></em> or <em><strong>F </strong></em>that overrides the default <em><strong>TRUE/FALSE</strong></em> values. If this happens, using <em><strong>T</strong></em> or <em><strong>F</strong></em> as shortcuts for <em><strong>TRUE</strong> </em>or <em><strong>FALSE</strong> </em>would produce unexpected results.&nbsp; It is best to stick with the reserved (and protected) keywords <em><strong>TRUE</strong> </em>and <em><strong>FALSE</strong></em>.</p>
+<h2 class="extension" id="brackets-code">Extension: brackets and code blocks</h2>
+<p>A codeblock enclosed by curly brackets <em><strong>{ }</strong> </em>usually follows an <em><strong>if()</strong></em> statement.&nbsp; The brackets designate the start and end of the code block and R does not care how the brackets are placed in code -- as long as the order is correct.</p>
+<p></p>
+<p>The following four code-blocks all execute exactly the same in R:</p>
+<p class="code">rm(list=ls());&nbsp; options(show.error.locations = TRUE)</p>
+<p class="code"></p>
+<p class="code">yourAge = readline("How old are you? ")</p>
+<p class="code"></p>
+<p class="code">if(yourAge &lt; 20)</p>
+<p class="code">{</p>
+<p class="code">&nbsp;&nbsp;&nbsp; cat("You have your whole life ahead of you!!");</p>
+<p class="code">}</p>
+<p></p>
+<p class="code">rm(list=ls());&nbsp; options(show.error.locations = TRUE)</p>
+<p class="code"></p>
+<p class="code">yourAge = readline("How old are you? ")</p>
+<p class="code"></p>
+<p class="code">if(yourAge &lt; 20){</p>
+<p class="code">&nbsp;&nbsp;&nbsp; cat("You have your whole life ahead of you!!");</p>
+<p class="code">}</p>
+<p></p>
+<p class="code">rm(list=ls());&nbsp; options(show.error.locations = TRUE)</p>
+<p class="code"></p>
+<p class="code">yourAge = readline("How old are you? ")</p>
+<p class="code">&nbsp;</p>
+<p class="code">if(yourAge &lt; 20){ cat("You have your whole life ahead of you!!"); }</p>
+<p></p>
+<p class="code">rm(list=ls());&nbsp; options(show.error.locations = TRUE)</p>
+<p class="code"></p>
+<p class="code">yourAge = readline("How old are you? ")</p>
+<p class="code">&nbsp;</p>
+<p class="code">if(yourAge &lt; 20)</p>
+<p class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {</p>
+<p class="code">cat("You have your whole life ahead of you!!"); &nbsp;&nbsp;&nbsp; }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+<p></p>
+<p>All the above code blocks are valid.&nbsp; R just looks for a start and end bracket and executes everything in between -- it completely ignores the spaces in between.&nbsp; The decision on where to place the brackets has to do with coding standards and user view ability.&nbsp; The first two code blocks above are the most commonly accepted standards and your code should use one of these two methods.</p>
+<h2 class="extension" id="skip-brackets">Extension: Skipping brackets in if-else structures</h2>
+<p>You will often see <em><strong>if-else</strong> </em>statements with no curly brackets.&nbsp; This only works if<em><span class="hl"> there is only a single code statement</span> </em>attached to the<em><strong> if()</strong> </em>or the <em><strong>else</strong></em>.</p>
+<p></p>
+<p class="code">rm(list=ls());&nbsp;&nbsp; options(show.error.locations = TRUE);</p>
+<p class="code"></p>
+<p class="code">favAnimal = readline("What is your favorite animal? ");</p>
+<p class="code">&nbsp;</p>
+<p class="code">if(favAnimal == "Llama")</p>
+<p class="code">&nbsp; cat("You are wise beyond your years");</p>
+<p class="code">else</p>
+<p class="code">&nbsp; cat("You still have a lot of room for growth");</p>
+<p></p>
+<p>The code above is functionally equivalent to the code below</p>
+<p></p>
+<p class="code">rm(list=ls());&nbsp;&nbsp; options(show.error.locations = TRUE);</p>
+<p class="code"></p>
+<p class="code">favAnimal = readline("What is your favorite animal? ");</p>
+<p class="code">&nbsp;</p>
+<p class="code">if(favAnimal == "Llama")</p>
+<p class="code">{</p>
+<p class="code">&nbsp;&nbsp; cat("You are wise beyond your years");</p>
+<p class="code">}</p>
+<p class="code">else</p>
+<p class="code">{</p>
+<p class="code">&nbsp;&nbsp; cat("You still have a lot of room for growth");</p>
+<p class="code">}</p>
+<p></p>
+<p>The only advantage to not using curly brackets is that it takes up less space.&nbsp; I recommend that you include curly brackets even if there is only one line of code in the codeblock -- it is more explicit and you avoid accidentally adding additional lines and forgetting the brackets.</p>
+<p></p>
+<p>The code below will give an <em><span class="hl">"unexpected 'else'"</span> </em>error.&nbsp; This is because R believes that the<em><strong> if()</strong></em> structure ends right after the first <em><strong>cat()</strong></em> on line 7 because there are no curly brackets attached to the <em><strong>if().&nbsp; </strong></em>This means the <em><strong>else</strong> </em>statement is completely detached from the <em><strong>if()</strong></em>, which is an error.</p>
+<p class="code bx">rm(list=ls());&nbsp;&nbsp; options(show.error.locations = TRUE);</p>
+<p class="code"></p>
+<p class="code">favAnimal = readline("What is your favorite animal? ")</p>
+<p class="code">&nbsp;</p>
+<p class="code">if(favAnimal == "Llama")</p>
+<p class="code">&nbsp;&nbsp; cat("You are wise beyond your years\n");</p>
+<p class="code">&nbsp;&nbsp; cat("No doubt about that.");&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # this line is NOT attached to the if()</p>
+<p class="code">else</p>
+<p class="code">&nbsp;&nbsp; cat("You still have a lot of room for growth");</p>
+<p></p>
+<p><img src="../images/R-01-08%20Unexpected%20else.PNG" alt="" class="fs"></p>
+<p class="fig">Unexpected <strong>else</strong> error caused by not using curly brackets in <strong>if-else</strong> structures.</p>
+<h2 class="trap" id="else-condition">Trap: Else never has an attached condition</h2>
+<p>A common mistake for people new to scripting is to treat <em><strong>else</strong> </em>like an <em><strong>if()</strong> </em>or an <em><strong>else if()</strong></em> and attach a condition to it.&nbsp; In the script below, the code attached to the <em><strong>else</strong> </em>statement is supposed to be executed if all other conditional statements in the<em><strong> if-else-if</strong></em> structure fail, which is when the score is less than 60.</p>
+<p></p>
+<p class="code">rm(list=ls());&nbsp; options(show.error.locations = TRUE);</p>
+<p class="code">&nbsp;</p>
+<p class="code">score = readline("Enter your score: ")&nbsp;</p>
+<p class="code">score = as.numeric(score);</p>
+<p class="code">&nbsp;</p>
+<p class="code">if(score &gt; 90)&nbsp;</p>
+<p class="code">{</p>
+<p class="code">&nbsp;&nbsp; cat("A");</p>
+<p class="code">}</p>
+<p class="code">else if(score &gt; 80) # score between 80-90</p>
+<p class="code">{</p>
+<p class="code">&nbsp;&nbsp; cat("B");</p>
+<p class="code">}</p>
+<p class="code">else if(score &gt; 70) # score between 70-80</p>
+<p class="code">{&nbsp;</p>
+<p class="code">&nbsp;&nbsp; cat("C");</p>
+<p class="code">}</p>
+<p class="code">else if(score &gt; 60) # score between 60-70</p>
+<p class="code">{&nbsp;</p>
+<p class="code">&nbsp;&nbsp; cat("D");</p>
+<p class="code">}</p>
+<p class="code">else (score &lt;= 60)&nbsp; # will cause an error</p>
+<p class="code">{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+<p class="code">&nbsp;&nbsp; cat("E");</p>
+<p class="code">}</p>
+<p></p>
+<p>The script seems to work at first.&nbsp; If you type in a value below 60 then "E" will be the output.&nbsp; However, if you type in 75 the output is&nbsp; "CE".&nbsp; If you type in 95&nbsp; the output is "AE". In fact, "E" will be part of the output no matter what you type in.</p>
+<p></p>
+<p><img src="../images/R-01-08%20Else%20with%20condition.PNG" alt="" class="flexSize"></p>
+<p class="fig">Putting a condition on an <strong>else</strong> -- causes an error</p>
+<p></p>
+<p>Essentially, you have detached the codeblock</p>
+<p class="code">{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+<p class="code">&nbsp;&nbsp; cat("E");</p>
+<p class="code">}</p>
+<p>from the <em><strong>else</strong> </em>statement and, because of this, <em><strong>cat("E")</strong></em> will execute every time the script is executed.</p>
+<p></p>
+<p></p>
+<p>The proper way to code the else is as follows:</p>
+<p class="code">rm(list=ls());&nbsp;&nbsp; options(show.error.locations = TRUE);</p>
+<p class="code">&nbsp;</p>
+<p class="code">score = readline("Enter your score: ");</p>
+<p class="code">score = as.numeric(score);</p>
+<p class="code">&nbsp;</p>
+<p class="code">if(score &gt; 90)&nbsp;</p>
+<p class="code">{</p>
+<p class="code">&nbsp;&nbsp; cat("A");</p>
+<p class="code">}</p>
+<p class="code">else if(score &gt; 80) # score between 80-90</p>
+<p class="code">{</p>
+<p class="code">&nbsp;&nbsp; cat("B");</p>
+<p class="code">}</p>
+<p class="code">else if(score &gt; 70) # score between 70-80</p>
+<p class="code">{&nbsp;</p>
+<p class="code">&nbsp;&nbsp; cat("C");</p>
+<p class="code">}</p>
+<p class="code">else if(score &gt; 60) # score between 60-70</p>
+<p class="code">{&nbsp;</p>
+<p class="code">&nbsp;&nbsp; cat("D");</p>
+<p class="code">}</p>
+<p class="code">else&nbsp; # all other conditions failed</p>
+<p class="code">{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+<p class="code">&nbsp;&nbsp; cat("E")</p>
+<p class="code">}</p>
+<p>Now the <em><strong>else</strong> </em>will execute only when all other conditions fail.&nbsp; In other words, it will execute when <em><strong>score</strong> </em>is less than or equal to <em><strong>60</strong></em></p>
+</body></html>
