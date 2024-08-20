@@ -6,15 +6,9 @@ short: "1-05"
 
 ### Changes...
 
-{{< include ../assets/AppInstructions.qmd >}}
-
 -   Add Trap to median() about how you do not want to do this (because R will think you are passing in 6 separate arguments):
 
-    -   
-
     -   medianVal1 = median(3,4,6,2,7,3);
-
-    -   
 
 ``` r
 tempHigh = c(65, 57, 61, 64, 59);
@@ -26,61 +20,51 @@ Explain how functions works and how to use the ***Help*** tab in RStudio.  The 
 
 ### Files
 
-The [script for the lesson is here](https://raw.githubusercontent.com/QFCatMSU/FundProgUsingR/master/scripts/1-05_FunctionsIntroduction.R)
+The [script for the lesson is here](../scripts/1-05_FunctionsIntroduction.R)
 
--   
+-   Save the linked script file to the ***scripts*** folder in your Class Project
 
--   *right-click on the link* and choose ***Save link as...***
+The data used in this lesson, [twoWeekWeatherData.csv](../data/twoWeekWeatherData.csv)
 
--   
-
--   Save to the ***scripts*** folder in your Class Project
-
--   
-
-The data used in this lesson, [twoWeekWeatherData.csv](/content/DEVELOPMENT/2020/courses/DEV-belinsky-2020-ProgrammingFundamentalsUsingR/R/Lessons/../Scripts/twoWeekWeatherData.csv)
-
--   
-
--   *left-click the link* and save to the ***data*** folder in your Class Project
-
--   
+-   Save the linked data file to the ***data*** folder in your Class Project
 
 ## Functions
 
 In the last lesson we used two functions in R:
 
--   
-
 -   ***read.csv():*** open up a CSV file and read in the data
-
--   
 
 -   ***seq()***: create a configurable sequence of numbers
 
--   
+ 
 
 Functions are standalone scripts designed to do some repeatable operations.  A function almost always takes input and sends a response.
 
+ 
+
 In the case of ***read.csv()*** from last lesson:
 
-  weatherData = read.csv(file="data/twoWeekWeatherData.csv", \# path to file
-
-                         sep=",",                   \# values are separated by commas
-
-                         header=TRUE,               \# there is a header row
-
-                         stringsAsFactors = FALSE); \# for people using R 3.X
+::: {#fig-readFunction}
+``` r
+  weatherData = read.csv(file="data/twoWeekWeatherData.csv", # path to file
+                         sep=",",                   # values are separated by commas
+                         header=TRUE);              # there is a header row
+```
 
 Calling **read.csv()** to get data from **twoWeekWeatherData.csv** and save it to **weatherData**
+:::
 
 The input is the values for ***file, sep, header***, and ***stringsAsFactors***.
 
 The response is the data from the CSV file and this data gets saved to the variable ***weatherData***.
 
+ 
+
 In the case of ***seq()***:
 
+``` r
 seq1 = seq(from=1, to=10, by=3);
+```
 
 The input is the values for ***from, to, and by***.
 
@@ -88,140 +72,173 @@ The response is the sequence of numbers that gets saved to the variable ***seq1*
 
 ## Arguments
 
-In programming, the values you pass into a function(e.g., ***file, sep, header***, and ***stringAsFactors***) are called *arguments* of the function.  Arguments are added to the function call to tweak the operation of the function -- sort of like the knobs and dials for a function.
+In programming, the values you pass into a function(e.g., ***file, sep, header***, and ***stringAsFactors***) are called [arguments]{.hl}of the function.  Arguments are added to the function call to tweak the operation of the function -- sort of like the knobs and dials for a function.
 
-Most of the programming world uses the term *parameters* instead of *arguments*.  I tend to like parameters better as I think it better indicates the fact that these values are properties of the function.  But, R is a programming language for statisticians and ***arguments*** is a mathematical term so R chose to go with ***arguments***.
+ 
+
+The majority of the programming world uses the term [parameters]{.hl}instead of [arguments]{.hl}.  I tend to like ***parameters*** better as I think it better indicates the fact that these values are properties of the function.  But, R is a programming language for statisticians and ***arguments*** is a mathematical term so R chose to go with ***arguments***.
 
 ## A simpler function: median()
 
 Let's take a step back and look at a simpler function, ***median()***, which takes a vector and finds the median value in the vector.
 
+ 
+
 To use ***median()*** we need a vector with numeric values in it:
 
-> vec1 = c(3,4,5,6,21,45,61);
+``` r
+vec1 = c(3,4,5,6,21,45,61);
+```
 
 And then we pass ***vec1*** in as an argument to the ***median()*** function:
 
-> medianVal1 = median(vec1);
+``` r
+medianVal1 = median(vec1);
+```
 
 And the ***Environment*** says that the returned values, saved to ***medianVal1*** is **6**
 
-> medianVal1:   6
+``` {.r tab="Environment"}
+medianVal1:   6
+```
 
 ### Help for median()
 
-Now let's use RStudio's ***Help*** tab to go behind-the-scenes of ***median()***.  RStudio ***Help*** tab is a useful resource for finding out more information on functions. 
+Now let's use RStudio's ***Help*** tab to go behind-the-scenes of ***median()***.  RStudio ***Help*** tab is a useful resource for finding out more information on functions.
+
+ 
 
 If we type ***median*** in the search bar we get this:
 
-The median function in the Help tab in RStudio
+![The median function in the Help tab in RStudio](images/R-1-04b_median.png){#fig-median .fs}
+
+ 
 
 The Help page shows that ***median()*** has two arguments:
 
--   
-
 -   ***x***: the vector that you want to find the median for
-
--   
 
 -   ***na.rm***: a TRUE/FALSE value that determines how to handle NA values in the vector
 
-    -   
-
     -   **NA** means Not Available -- usually indicating a problem with the data
 
-    -   
+ 
 
--   
-
-Note: the ( ... ) can be ignored -- it is basically R saying that this function can be expanded with more arguments
+[Note: the ( ... ) can be ignored -- it is basically R saying that this function can be expanded with more arguments]{.note}
 
 ### Skipping argument names
 
 When we called ***median()***, we did not include any argument names:
 
-> medianVal1 = median(vec1);
+``` r
+medianVal1 = median(vec1);
+```
 
 However, since ***x*** is the first argument in ***median()***, it is assumed that the first value is meant to be for ***x***.
 
+ 
+
 So, this is an equivalent call to ***median()*** that more explicitly says that the ***vec1*** is the value for ***x***:
 
-> medianVal1b = median(x=vec1);
+``` r
+medianVal1b = median(x=vec1);
+```
 
-> medianVal1:   6
->
-> medianVal1b:  6
+``` {.r tab="Environment"}
+medianVal1:   6
+medianVal1b:  6
+```
 
 ### Default argument values
 
-The other argument in ***median()***, ***na.rm***, already has a value: ***FALSE*** .   This means that *you do not have to supply a value for the argument **na.rm*** when you call the function.  You only need to supply a value if you want to change ***na.rm*** to something other than **FALSE** (e.g., **TRUE**).
+The other argument in ***median()***, ***na.rm***, already has a value: ***FALSE*** .   This means that [you do not have to supply a value for the argument]{.hl} ***na.rm*** when you call the function.  You only need to supply a value if you want to change ***na.rm*** to something other than **FALSE** (e.g., **TRUE**).
 
-Our first example did not have an **NA** values, let's create a vector with an **NA** value in it:*\
-*
+ 
 
-> vec2 = c(3,4,5,NA,6,21,45,61);
+Our first example did not have an **NA** values, let's create a vector with an **NA** value in it:
+
+``` r
+vec2 = c(3,4,5,NA,6,21,45,61);
+```
 
 And then use that as an argument for ***median()***:
 
-> medianVal2 = median(x=vec2);
+``` r
+medianVal2 = median(x=vec2);
+```
 
 This time the median value is **NA** because the median value for any vector that has an **NA** value is **NA** (essentially saying that median cannot be determined)
 
-> medianVal2:   NA_real\_
+``` {.r tab="Environment"}
+medianVal2:   NA_real_
+```
 
-note: NA_real\_ means an NA value that R thinks should be a real number
+[note: NA_real\_ means an NA value that R thinks should be a real number]{.note}
 
 ### Dealing with the NA
 
-***na.rm*** is the argument that determines whether **NA** values are removed from the vector -- and the default value is **FALSE**, meaning **NA** values are not removed. 
+***na.rm*** is the argument that determines whether **NA** values are removed from the vector -- and the default value is **FALSE**, meaning **NA** values are not removed.
+
+ 
 
 Let's set ***na.rm*** to **TRUE** so the **NA** values are removed before finding the median:
 
-> medianVal2b = median(x=vec2, na.rm=TRUE);
+``` r
+medianVal2b = median(x=vec2, na.rm=TRUE);
+```
 
 Now, we get the same median value as before:
 
-> medianVal2b:   6
+``` {.r tab="Environment"}
+medianVal2b:   6
+```
 
 ### Alternate ways to call median()
 
 Argument names (e.g., ***x*** and ***na.rm***) are not needed if you put values in the correct order. All of these calls functionally do the same thing as the above ***median()*** call:
 
-> medianVal2c = median(vec2, TRUE);
->
-> medianVal2d = median(vec2, na.rm=TRUE);
->
-> medianVal2e = median(na.rm=TRUE, x=vec2);  \# can reverse arguments if you name them
->
-> medianVal2f = median(x=vec2, TRUE);
+``` r
+medianVal2c = median(vec2, TRUE);
+medianVal2d = median(vec2, na.rm=TRUE);
+medianVal2e = median(na.rm=TRUE, x=vec2);  # can reverse arguments if you name them
+medianVal2f = median(x=vec2, TRUE);
+```
 
 My general recommendation is to always use argument names when calling a function.  This makes your code easier to read and you don't have to worry about the order of the arguments.  This is especially important when you are dealing with more complicated functions that have lots of arguments (e.g., plotting functions).
 
 ## Help seq()
 
-Unfortunately, the ***Help*** for functions can contain many abstractions and extraneous information. Throughout this course, we will open up the ***Help*** menu for new functions to get you more familiar with the abstractions. 
+Unfortunately, the ***Help*** for functions can contain many abstractions and extraneous information. Throughout this course, we will open up the ***Help*** menu for new functions to get you more familiar with the abstractions.
+
+ 
 
 Let's look at the function ***seq()***:
 
-The Help page for the seq() function
+![The Help page for the seq() function](images/R-1-04b_seq.png){#fig-seq .fs}
+
+ 
 
 When you see ***Default S3 Method***, that is most likely the version of the function you care about.  ***S3*** means **S** version **3**, ***S*** is a programming language developed in the 1970s and was the predecessor to R (yeah, that sounds a bit backward...).
-
-seq() is an old function and the description of it 
 
 ### The arguments and defaults
 
 ***seq()*** has 5 arguments: ***from, to, by, length.out,*** and ***along.with***.  ***along.with*** is not needed and can be ignored (maybe in the past it was more useful).
 
-The descriptions of the arguments in *fig \##* are helpful but the default argument values for ***seq()*** are misinformative:
+ 
 
-> \## Default S3 method\
-> seq(from = *1*, to = *1*, by = *((to - from)/(length.out - 1))*,\
->     length.out = *NULL*, along.with = *NULL*, ...)
+The descriptions of the arguments in @fig-seq are helpful but the default argument values for ***seq()*** are misinformative:
 
-***seq()*** essentially is solving for this equation (that should not have been shown as the default value for ***by***):
+``` r
+## Default S3 method
+seq(from = 1, to = 1, by = ((to - from)/(length.out - 1)),
+    length.out = NULL, along.with = NULL, ...)
+```
 
-by = to - fromlength.out -1{"version":"1.1","math":"\<math xmlns="http://www.w3.org/1998/Math/MathML"\>\<mi\>b\</mi\>\<mi\>y\</mi\>\<mo\> \</mo\>\<mo\>=\</mo\>\<mo\> \</mo\>\<mfrac\>\<mrow\>\<mi\>t\</mi\>\<mi\>o\</mi\>\<mo\> \</mo\>\<mo\>-\</mo\>\<mo\> \</mo\>\<mi\>f\</mi\>\<mi\>r\</mi\>\<mi\>o\</mi\>\<mi\>m\</mi\>\</mrow\>\<mrow\>\<mi\>l\</mi\>\<mi\>e\</mi\>\<mi\>n\</mi\>\<mi\>g\</mi\>\<mi\>t\</mi\>\<mi\>h\</mi\>\<mo\>.\</mo\>\<mi\>o\</mi\>\<mi\>u\</mi\>\<mi\>t\</mi\>\<mo\> \</mo\>\<mo\>-\</mo\>\<mn\>1\</mn\>\</mrow\>\</mfrac\>\</math\>"}
+***seq()*** essentially is solving for this equation:
+
+$$
+by=\frac{\text{ to }-\text{ from }}{\text{ length.out }-1}
+$$
 
 There are four variables in the equation and you have to give three of them as arguments.  ***seq()*** will rearrange the formula, calculate the unknown fourth variable, and create the sequence.
 
@@ -229,65 +246,79 @@ There are four variables in the equation and you have to give three of them as a
 
 If you set ***from***, ***to***, and ***by*** as we did for ***seq1,*** ***seq()*** will calculate ***length.out*** (the number of values in the sequence)
 
-> seq1 = seq(from=1, to=10, by=3);   \# will have 4 values
+``` r
+seq1 = seq(from=1, to=10, by=3);   # will have 4 values
+```
 
 and give you the sequence:
 
-> seq1:   num\[1:5\] 1 4 7 10
+``` {.r tab="Environment"}
+seq1: num[1:5] 1 4 7 10
+```
 
 ***length.out*** allows you to set the number of values in the sequence.  You can also set ***length.out*** to a value, but then you can only use 2 of these 3 arguments: ***from***, ***to***, and ***by***.
 
+ 
+
 An example of using ***length.out***:
 
-> seq2 = seq(from=1, to=10, length.out=5);
+``` r
+seq2 = seq(from=1, to=10, length.out=5);
+```
 
 Then you get 5 evenly spaced number starting with 1 and ending with 10
 
-> seq2:   num\[1:5\] 1 3.25 5.5 7.75 10
+``` {.r tab="Environment"}
+seq2:   num[1:5] 1 3.25 5.5 7.75 10
+```
 
 ## read.csv() expanded
 
-When you go to the ***Help*** page for ***read.csv()*** , you are actually taken to the ***Help*** page for ***read.table()***. This is because ***read.csv()*** is a version of the function ***read.table()***.  In other words, ***read.csv()*** is ***read.table()*** with different default values for the arguments (underlined in *Fig.##*).  
+When you go to the ***Help*** page for ***read.csv()*** , you are actually taken to the ***Help*** page for ***read.table()***. This is because ***read.csv()*** is a version of the function ***read.table()***.  In other words, ***read.csv()*** is ***read.table()*** with different default values for the arguments (underlined in *Fig.##*).
 
-For instance, the default value for ***sep*** (the separator) is a space in ***read.table()*** and a comma in ***read.csv()***.  *Note: some of the default arguments (e.g., **quote**, **dec**) in **read.csv()** are the same as in **read.table().***
+ 
 
-Using the Help tab in RStudio to look up functions
+For instance, the default value for ***sep*** (the separator) is a space in ***read.table()*** and a comma in ***read.csv()***.  [Note: some of the default arguments (e.g., **quote**, **dec**) in **read.csv()** are the same as in **read.table().**]{.note}
+
+![Using the Help tab in RStudio to look up functions](images/R-1-04_ReadCsv_Help.png){#fig-readcsv .fs}
 
 ### read.csv arguments
 
 When you call ***read.csv()***, you can use any of the argument from ***read.table()***.
 
+ 
+
 And there are a lot of arguments in ***read.table().*** The majority of these arguments rarely need to be changed from their default value.
+
+ 
 
 Most of the arguments in ***read.table()*** look cryptic and you will probably never have to use them. A couple that are easier to understand:
 
--   
-
 -   ***decimal***: the character that represents a decimal in the decimal number.  You might need to change this to a comma ( , ) if you get data from Europe
-
--   
 
 -   ***comment.char***: the character after which everything on the line is a comment (i.e., not data)
 
-    -   
-
     -   notice that ***read.csv()*** has no ***comment.char*** whereas ***read.table()*** uses ( **\#** ) as the default ***comment.char***
-
-    -   
-
--   
 
 ### Required arguments and default arguments
 
-***file*** is the only argument not set equal to anything in ***read.table()*** / ***read.csv()***.  This is because ***file*** must be supplied by the user -- ***file** is the only required argument.*  This should make sense as there is no point in calling ***read.table()*** / ***read.csv()*** without any data.
+***file*** is the only argument not set equal to anything in ***read.table()*** / ***read.csv()***.  This is because ***file*** must be supplied by the user --[**file** is the only required argument]{.hl}*.*  This should make sense as there is no point in calling ***read.table()*** / ***read.csv()*** without any data.
+
+ 
 
 Every other argument in ***read.table()*** / ***read.csv()*** has a default value-- this means you can execute the function without using any argument except ***file***.
 
-In fact, if you are using R version 4 then the following code will produce the same results as *the earlier **read.csv()** call in Fig.##*:
+ 
 
+In fact, the following code will produce the same results as *the earlier **read.csv()** call in Fig.##*:
+
+``` r
 weatherData2 = read.csv(file = "data/twoWeekWeatherData.csv");
+```
 
 If you look in the ***Environment*** tab the values for ***weatherData*** and ***weatherData2*** are exactly the same.
+
+\<image\>
 
 Expanding weatherData and weatherData2 in the Environment tab
 
@@ -295,79 +326,50 @@ Expanding weatherData and weatherData2 in the Environment tab
 
 In my original call to ***read.csv()***, the arguments ***sep=","*** and ***header=TRUE*** are functionally not changing anything because I have them set to the same value as their default.  But, these arguments are changed often enough that it is nice to have them quickly at hand when copying ***read.csv()*** from one script to another.
 
-***stringsAsFactors*** tells R to treat any string columns as ***factors***.A *factor* categorizes a vector into all of the unique values in the vector -- each unique value is called a level.  For instance a column that gives wind speed values in terms of ***low***, ***medium***, and ***high*** could be considered a column with 3 factor levels.  Or, you can have a wind speed direction column with 4 factor levels: ***north, east, west***, and ***south***.   I do not spend much time in the class on factors because the use of factors as a variable type use has declined quite a bit.  For now, if you are using R version 4 and want to see how people using R version 3 see **weatherData** then execute this code:
+ 
 
->  weatherData3 = read.csv(file="data/twoWeekWeatherData.csv",\
->                          sep=",",                 \
->                          header=TRUE,             \
->                          stringsAsFactors = *TRUE*); \# this is the default for R v.3
+\<explain more about **sep** and **header**\>
+
+``` r
+ weatherData3 = read.csv(file="data/twoWeekWeatherData.csv",
+                         sep=",",                 
+                         header=TRUE);
+```
 
 ## Application
 
-Create a script file named ***app1-05.r***.  In the script file:
-
 1\. Create this sequence: ***13, 9, 5, 1, -3, -7, -11*** using ***seq()***.
 
-Come up with two more ways (three in all) to produce the same sequence using ***seq(),*** but changing the arguments (***from, by, to, length.out***). 
+-   Come up with two more ways (three in all) to produce the same sequence using ***seq(),*** but changing the arguments (***from, by, to, length.out***). 
+
+ 
 
 2\. Explain, in comments, why you get an error if you try to use all four arguments (***from, by, to, length.out***)
 
+ 
+
 3\. Find the log (base 5) of this vector: **c(0.04, 0.2, 25, 125)** using the ***log()*** function
 
--   
+-   Use the ***Help*** tab to find out more about the ***log()*** function
 
--   
+-   The answer is: **-2, -1, 2, 3** (so you can check)
 
-    -   
+-   [note: the default value for ***base*** is **exp(1)** = e^1^ = e = 2.71828... (i.e., the natural logarithm)]{.note}
 
-    -   Use the ***Help*** tab to find out more about the ***log()*** function
+ 
 
-    -   
-
-    -   The answer is: **-2, -1, 2, 3** (so you can check)
-
-    -   
-
-    -   note: the default value for ***base*** is **exp(1)** = e^1^ = e = 2.71828... (i.e., the natural logarithm)
-
-    -   
-
--   
-
-4\. Properly read in [this CSV file](/content/DEVELOPMENT/2020/courses/DEV-belinsky-2020-ProgrammingFundamentalsUsingR/R/Lessons/../Data/twoWeekWeatherData_Comma.csv?isCourseFile=true) of the same two week weather data but:
-
--   
+4\. Properly read in [this CSV file](../data/twoWeekWeatherData_Comma.csv) of the same two week weather data but:
 
 -   commas are used in place of decimals in precipitation column
 
--   
-
 -   spaces are used to separate variables (instead of commas)
-
--   
 
 Save the data to a dataframe name ***WD_Comma***
 
+ 
+
 5\. In comments, answer: How many factors levels does the ***noonCondition*** column have?  How about the ***date*** column?
 
-Save the script as ***app1-05.r*** in your ***scripts*** folder and *email your Project Folder to the instructor*.
+ 
 
-*If you have any questions regarding this application, feel free to* *email them to the instructor here*.
-
-### Questions to answer
-
-Answer the following in comments inside your application script:
-
-1.  
-
-2.  What was your level of comfort with the lesson/application?
-
-3.  
-
-4.  What areas of the lesson/application confused or still confuse you?
-
-5.  
-
-6.  What are some things you would like to know more about that are related to, but not covered in, this lesson?
-
-7.  
+{{< include ../assets/AppInstructions.qmd >}}

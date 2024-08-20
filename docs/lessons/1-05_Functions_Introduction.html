@@ -105,6 +105,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="https://qfcatmsu.github.io/assets/quarto/qfc_styles.js"></script>
  
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="https://qfcatmsu.github.io/assets/quarto/qfc_styles.css">
 </head>
@@ -171,6 +200,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">1-05: Functions Introduction</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-06_Run_and_Source.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-06: Run and Source</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-07_Outputs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-07: Outputs</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -180,7 +221,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#changes" id="toc-changes" class="nav-link active" data-scroll-target="#changes"><span class="header-section-number">0.1</span> Changes…</a></li>
-  <li><a href="#questions-to-answer" id="toc-questions-to-answer" class="nav-link" data-scroll-target="#questions-to-answer"><span class="header-section-number">0.2</span> Questions to answer</a></li>
   <li><a href="#purpose" id="toc-purpose" class="nav-link" data-scroll-target="#purpose"><span class="header-section-number">1</span> Purpose</a>
   <ul class="collapse">
   <li><a href="#files" id="toc-files" class="nav-link" data-scroll-target="#files"><span class="header-section-number">1.1</span> Files</a></li>
@@ -208,7 +248,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#application" id="toc-application" class="nav-link" data-scroll-target="#application"><span class="header-section-number">7</span> Application</a>
   <ul class="collapse">
-  <li><a href="#questions-to-answer-1" id="toc-questions-to-answer-1" class="nav-link" data-scroll-target="#questions-to-answer-1"><span class="header-section-number">7.1</span> Questions to answer</a></li>
+  <li><a href="#questions-to-answer" id="toc-questions-to-answer" class="nav-link" data-scroll-target="#questions-to-answer"><span class="header-section-number">7.1</span> Questions to answer</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -241,26 +281,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="changes" class="level3" data-number="0.1">
 <h3 data-number="0.1" class="anchored" data-anchor-id="changes"><span class="header-section-number">0.1</span> Changes…</h3>
-<p>Save the script as&nbsp;<strong><em>app1-05.r</em></strong> in your&nbsp;<strong><em>scripts</em></strong> folder and&nbsp;<em>email your Project Folder to the instructor</em>.</p>
-<p>&nbsp;</p>
-<p><a href="..\content/DEVELOPMENT/2020/courses/DEV-belinsky-2020-ProgrammingFundamentalsUsingR/R/Lessons/1-01_Setup_and_RStudio_Projects.html?ou=1247781#zip">Instructions for zipping the Project Folder are here.</a></p>
-<p>&nbsp;</p>
-<p>If you have any questions regarding this application, feel free to email them to Charlie Belinsky at belinsky@msu.edu.</p>
-</section>
-<section id="questions-to-answer" class="level3" data-number="0.2">
-<h3 data-number="0.2" class="anchored" data-anchor-id="questions-to-answer"><span class="header-section-number">0.2</span> Questions to answer</h3>
-<p>Answer the following in comments inside your application script:</p>
-<ol type="1">
-<li><p>What was your level of comfort with the lesson/application?</p></li>
-<li><p>What areas of the lesson/application confused or still confuses you?</p></li>
-<li><p>What are some things you would like to know more about that is related to, but not covered in, this lesson?</p></li>
-</ol>
 <ul>
 <li><p>Add Trap to median() about how you do not want to do this (because R will think you are passing in 6 separate arguments):</p>
 <ul>
-<li></li>
-<li><p>medianVal1 = median(3,4,6,2,7,3);</p></li>
-<li></li>
+<li>medianVal1 = median(3,4,6,2,7,3);</li>
 </ul></li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>tempHigh <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">65</span>, <span class="dv">57</span>, <span class="dv">61</span>, <span class="dv">64</span>, <span class="dv">59</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -270,19 +294,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Explain how functions works and how to use the <strong><em>Help</em></strong> tab in RStudio.&nbsp; The presentation of functions in R is inconsistent but it is very useful to understand how to read a function help page.</p>
 <section id="files" class="level3" data-number="1.1">
 <h3 data-number="1.1" class="anchored" data-anchor-id="files"><span class="header-section-number">1.1</span> Files</h3>
-<p>The&nbsp;<a href="https://raw.githubusercontent.com/QFCatMSU/FundProgUsingR/master/scripts/1-05_FunctionsIntroduction.R">script for the lesson is here</a></p>
+<p>The&nbsp;<a href="../scripts/1-05_FunctionsIntroduction.R">script for the lesson is here</a></p>
 <ul>
-<li></li>
-<li><p><em>right-click on the link</em> and choose <strong><em>Save link as…</em></strong></p></li>
-<li></li>
-<li><p>Save to the <strong><em>scripts</em></strong> folder in your Class Project</p></li>
-<li></li>
+<li>Save the linked script file to the <strong><em>scripts</em></strong> folder in your Class Project</li>
 </ul>
-<p>The data used in this lesson, <a href="..\content/DEVELOPMENT/2020/courses/DEV-belinsky-2020-ProgrammingFundamentalsUsingR/R/Lessons/../Scripts/twoWeekWeatherData.csv">twoWeekWeatherData.csv</a></p>
+<p>The data used in this lesson, <a href="../data/twoWeekWeatherData.csv">twoWeekWeatherData.csv</a></p>
 <ul>
-<li></li>
-<li><p><em>left-click the link</em> and save to the <strong><em>data</em></strong> folder in your Class Project</p></li>
-<li></li>
+<li>Save the linked data file to the <strong><em>data</em></strong> folder in your Class Project</li>
 </ul>
 </section>
 </section>
@@ -290,252 +308,252 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="2" class="anchored" data-anchor-id="functions"><span class="header-section-number">2</span> Functions</h2>
 <p>In the last lesson we used two functions in R:</p>
 <ul>
-<li></li>
 <li><p><strong><em>read.csv():</em></strong> open up a CSV file and read in the data</p></li>
-<li></li>
 <li><p><strong><em>seq()</em></strong>: create a configurable sequence of numbers</p></li>
-<li></li>
 </ul>
+<p>&nbsp;</p>
 <p>Functions are standalone scripts designed to do some repeatable operations.&nbsp; A function almost always takes input and sends a response.</p>
+<p>&nbsp;</p>
 <p>In the case of <strong><em>read.csv()</em></strong> from last lesson:</p>
-<p>&nbsp; weatherData = read.csv(file=“data/twoWeekWeatherData.csv”, # path to file</p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sep=“,”,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # values are separated by commas</p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; header=TRUE,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # there is a header row</p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stringsAsFactors = FALSE); # for people using R 3.X</p>
-<p>Calling <strong>read.csv()</strong> to get data from <strong>twoWeekWeatherData.csv</strong> and save it to <strong>weatherData</strong></p>
+<div id="fig-readFunction" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-readFunction-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="fig-readFunction"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="fig-readFunction-1"><a href="#fig-readFunction-1" aria-hidden="true" tabindex="-1"></a>  weatherData <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="at">file=</span><span class="st">"data/twoWeekWeatherData.csv"</span>, <span class="co"># path to file</span></span>
+<span id="fig-readFunction-2"><a href="#fig-readFunction-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">sep=</span><span class="st">","</span>,                   <span class="co"># values are separated by commas</span></span>
+<span id="fig-readFunction-3"><a href="#fig-readFunction-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">header=</span><span class="cn">TRUE</span>);              <span class="co"># there is a header row</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-readFunction-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Calling <strong>read.csv()</strong> to get data from <strong>twoWeekWeatherData.csv</strong> and save it to <strong>weatherData</strong>
+</figcaption>
+</figure>
+</div>
 <p>The input is the values for <strong><em>file, sep, header</em></strong>, and <strong><em>stringsAsFactors</em></strong>.</p>
 <p>The response is the data from the CSV file and this data gets saved to the variable <strong><em>weatherData</em></strong>.</p>
+<p>&nbsp;</p>
 <p>In the case of <strong><em>seq()</em></strong>:</p>
-<p>seq1 = seq(from=1, to=10, by=3);</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>seq1 <span class="ot">=</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">1</span>, <span class="at">to=</span><span class="dv">10</span>, <span class="at">by=</span><span class="dv">3</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The input is the values for <strong><em>from, to, and by</em></strong>.</p>
 <p>The response is the sequence of numbers that gets saved to the variable <strong><em>seq1</em></strong>.</p>
 </section>
 <section id="arguments" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="arguments"><span class="header-section-number">3</span> Arguments</h2>
-<p>In programming, the values you pass into a function(e.g., <strong><em>file, sep, header</em></strong>, and <strong><em>stringAsFactors</em></strong>) are called <em>arguments</em> of the function.&nbsp; Arguments are added to the function call to tweak the operation of the function – sort of like the knobs and dials for a function.</p>
-<p>Most of the programming world uses the term <em>parameters</em> instead of <em>arguments</em>.&nbsp; I tend to like parameters better as I think it better indicates the fact that these values are properties of the function.&nbsp; But, R is a programming language for statisticians and <strong><em>arguments</em></strong> is a mathematical term so R chose to go with <strong><em>arguments</em></strong>.</p>
+<p>In programming, the values you pass into a function(e.g., <strong><em>file, sep, header</em></strong>, and <strong><em>stringAsFactors</em></strong>) are called <span class="hl">arguments</span>of the function.&nbsp; Arguments are added to the function call to tweak the operation of the function – sort of like the knobs and dials for a function.</p>
+<p>&nbsp;</p>
+<p>The majority of the programming world uses the term <span class="hl">parameters</span>instead of <span class="hl">arguments</span>.&nbsp; I tend to like <strong><em>parameters</em></strong> better as I think it better indicates the fact that these values are properties of the function.&nbsp; But, R is a programming language for statisticians and <strong><em>arguments</em></strong> is a mathematical term so R chose to go with <strong><em>arguments</em></strong>.</p>
 </section>
 <section id="a-simpler-function-median" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="a-simpler-function-median"><span class="header-section-number">4</span> A simpler function: median()</h2>
 <p>Let’s take a step back and look at a simpler function, <strong><em>median()</em></strong>, which takes a vector and finds the median value in the vector.</p>
+<p>&nbsp;</p>
 <p>To use <strong><em>median()</em></strong> we need a vector with numeric values in it:</p>
-<blockquote class="blockquote">
-<p>vec1 = c(3,4,5,6,21,45,61);</p>
-</blockquote>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>vec1 <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">21</span>,<span class="dv">45</span>,<span class="dv">61</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>And then we pass <strong><em>vec1</em></strong> in as an argument to the <strong><em>median()</em></strong> function:</p>
-<blockquote class="blockquote">
-<p>medianVal1 = median(vec1);</p>
-</blockquote>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>medianVal1 <span class="ot">=</span> <span class="fu">median</span>(vec1);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>And the <strong><em>Environment</em></strong> says that the returned values, saved to <strong><em>medianVal1</em></strong> is <strong>6</strong></p>
-<blockquote class="blockquote">
-<p>medianVal1:&nbsp;&nbsp; 6</p>
-</blockquote>
+<div class="sourceCode" id="cb5" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>medianVal1<span class="sc">:</span>   <span class="dv">6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <section id="help-for-median" class="level3" data-number="4.1">
 <h3 data-number="4.1" class="anchored" data-anchor-id="help-for-median"><span class="header-section-number">4.1</span> Help for median()</h3>
-<p>Now let’s use RStudio’s <strong><em>Help</em></strong> tab to go behind-the-scenes of <strong><em>median()</em></strong>.&nbsp; RStudio <strong><em>Help</em></strong> tab is a useful resource for finding out more information on functions.&nbsp;</p>
+<p>Now let’s use RStudio’s <strong><em>Help</em></strong> tab to go behind-the-scenes of <strong><em>median()</em></strong>.&nbsp; RStudio <strong><em>Help</em></strong> tab is a useful resource for finding out more information on functions.</p>
+<p>&nbsp;</p>
 <p>If we type <strong><em>median</em></strong> in the search bar we get this:</p>
-<p>The median function in the Help tab in RStudio</p>
+<div id="fig-median" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-median-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-1-04b_median.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-median-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: The median function in the Help tab in RStudio
+</figcaption>
+</figure>
+</div>
+<p>&nbsp;</p>
 <p>The Help page shows that <strong><em>median()</em></strong> has two arguments:</p>
 <ul>
-<li></li>
 <li><p><strong><em>x</em></strong>: the vector that you want to find the median for</p></li>
-<li></li>
 <li><p><strong><em>na.rm</em></strong>: a TRUE/FALSE value that determines how to handle NA values in the vector</p>
 <ul>
-<li></li>
-<li><p><strong>NA</strong> means Not Available – usually indicating a problem with the data</p></li>
-<li></li>
+<li><strong>NA</strong> means Not Available – usually indicating a problem with the data</li>
 </ul></li>
-<li></li>
 </ul>
-<p>Note: the ( … ) can be ignored – it is basically R saying that this function can be expanded with more arguments</p>
+<p>&nbsp;</p>
+<p><span class="note">Note: the ( … ) can be ignored – it is basically R saying that this function can be expanded with more arguments</span></p>
 </section>
 <section id="skipping-argument-names" class="level3" data-number="4.2">
 <h3 data-number="4.2" class="anchored" data-anchor-id="skipping-argument-names"><span class="header-section-number">4.2</span> Skipping argument names</h3>
 <p>When we called <strong><em>median()</em></strong>, we did not include any argument names:</p>
-<blockquote class="blockquote">
-<p>medianVal1 = median(vec1);</p>
-</blockquote>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>medianVal1 <span class="ot">=</span> <span class="fu">median</span>(vec1);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>However, since <strong><em>x</em></strong> is the first argument in <strong><em>median()</em></strong>, it is assumed that the first value is meant to be for <strong><em>x</em></strong>.</p>
+<p>&nbsp;</p>
 <p>So, this is an equivalent call to <strong><em>median()</em></strong> that more explicitly says that the <strong><em>vec1</em></strong> is the value for <strong><em>x</em></strong>:</p>
-<blockquote class="blockquote">
-<p>medianVal1b = median(x=vec1);</p>
-</blockquote>
-<blockquote class="blockquote">
-<p>medianVal1:&nbsp;&nbsp; 6</p>
-<p>medianVal1b:&nbsp; 6</p>
-</blockquote>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>medianVal1b <span class="ot">=</span> <span class="fu">median</span>(<span class="at">x=</span>vec1);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>medianVal1<span class="sc">:</span>   <span class="dv">6</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>medianVal1b<span class="sc">:</span>  <span class="dv">6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="default-argument-values" class="level3" data-number="4.3">
 <h3 data-number="4.3" class="anchored" data-anchor-id="default-argument-values"><span class="header-section-number">4.3</span> Default argument values</h3>
-<p>The other argument in <strong><em>median()</em></strong>, <strong><em>na.rm</em></strong>, already has a value: <strong><em>FALSE</em></strong> .&nbsp;&nbsp; This means that <em>you do not have to supply a value for the argument <strong>na.rm</strong></em> when you call the function.&nbsp; You only need to supply a value if you want to change <strong><em>na.rm</em></strong> to something other than <strong>FALSE</strong> (e.g., <strong>TRUE</strong>).</p>
-<p>Our first example did not have an <strong>NA</strong> values, let’s create a vector with an <strong>NA</strong> value in it:<em><br>
-</em></p>
-<blockquote class="blockquote">
-<p>vec2 = c(3,4,5,NA,6,21,45,61);</p>
-</blockquote>
+<p>The other argument in <strong><em>median()</em></strong>, <strong><em>na.rm</em></strong>, already has a value: <strong><em>FALSE</em></strong> .&nbsp;&nbsp; This means that <span class="hl">you do not have to supply a value for the argument</span> <strong><em>na.rm</em></strong> when you call the function.&nbsp; You only need to supply a value if you want to change <strong><em>na.rm</em></strong> to something other than <strong>FALSE</strong> (e.g., <strong>TRUE</strong>).</p>
+<p>&nbsp;</p>
+<p>Our first example did not have an <strong>NA</strong> values, let’s create a vector with an <strong>NA</strong> value in it:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>vec2 <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="cn">NA</span>,<span class="dv">6</span>,<span class="dv">21</span>,<span class="dv">45</span>,<span class="dv">61</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>And then use that as an argument for <strong><em>median()</em></strong>:</p>
-<blockquote class="blockquote">
-<p>medianVal2 = median(x=vec2);</p>
-</blockquote>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>medianVal2 <span class="ot">=</span> <span class="fu">median</span>(<span class="at">x=</span>vec2);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This time the median value is <strong>NA</strong> because the median value for any vector that has an <strong>NA</strong> value is <strong>NA</strong> (essentially saying that median cannot be determined)</p>
-<blockquote class="blockquote">
-<p>medianVal2:&nbsp;&nbsp; NA_real_</p>
-</blockquote>
-<p>note: NA_real_ means an NA value that R thinks should be a real number</p>
+<div class="sourceCode" id="cb11" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>medianVal2<span class="sc">:</span>   <span class="cn">NA_real_</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><span class="note">note: NA_real_ means an NA value that R thinks should be a real number</span></p>
 </section>
 <section id="dealing-with-the-na" class="level3" data-number="4.4">
 <h3 data-number="4.4" class="anchored" data-anchor-id="dealing-with-the-na"><span class="header-section-number">4.4</span> Dealing with the NA</h3>
-<p><strong><em>na.rm</em></strong> is the argument that determines whether <strong>NA</strong> values are removed from the vector – and the default value is <strong>FALSE</strong>, meaning <strong>NA</strong> values are not removed.&nbsp;</p>
+<p><strong><em>na.rm</em></strong> is the argument that determines whether <strong>NA</strong> values are removed from the vector – and the default value is <strong>FALSE</strong>, meaning <strong>NA</strong> values are not removed.</p>
+<p>&nbsp;</p>
 <p>Let’s set <strong><em>na.rm</em></strong> to <strong>TRUE</strong> so the <strong>NA</strong> values are removed before finding the median:</p>
-<blockquote class="blockquote">
-<p>medianVal2b = median(x=vec2, na.rm=TRUE);</p>
-</blockquote>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>medianVal2b <span class="ot">=</span> <span class="fu">median</span>(<span class="at">x=</span>vec2, <span class="at">na.rm=</span><span class="cn">TRUE</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Now, we get the same median value as before:</p>
-<blockquote class="blockquote">
-<p>medianVal2b:&nbsp;&nbsp; 6</p>
-</blockquote>
+<div class="sourceCode" id="cb13" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>medianVal2b<span class="sc">:</span>   <span class="dv">6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="alternate-ways-to-call-median" class="level3" data-number="4.5">
 <h3 data-number="4.5" class="anchored" data-anchor-id="alternate-ways-to-call-median"><span class="header-section-number">4.5</span> Alternate ways to call median()</h3>
 <p>Argument names (e.g., <strong><em>x</em></strong> and <strong><em>na.rm</em></strong>) are not needed if you put values in the correct order. All of these calls functionally do the same thing as the above <strong><em>median()</em></strong> call:</p>
-<blockquote class="blockquote">
-<p>medianVal2c = median(vec2, TRUE);</p>
-<p>medianVal2d = median(vec2, na.rm=TRUE);</p>
-<p>medianVal2e = median(na.rm=TRUE, x=vec2);&nbsp; # can reverse arguments if you name them</p>
-<p>medianVal2f = median(x=vec2, TRUE);</p>
-</blockquote>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>medianVal2c <span class="ot">=</span> <span class="fu">median</span>(vec2, <span class="cn">TRUE</span>);</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>medianVal2d <span class="ot">=</span> <span class="fu">median</span>(vec2, <span class="at">na.rm=</span><span class="cn">TRUE</span>);</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>medianVal2e <span class="ot">=</span> <span class="fu">median</span>(<span class="at">na.rm=</span><span class="cn">TRUE</span>, <span class="at">x=</span>vec2);  <span class="co"># can reverse arguments if you name them</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>medianVal2f <span class="ot">=</span> <span class="fu">median</span>(<span class="at">x=</span>vec2, <span class="cn">TRUE</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>My general recommendation is to always use argument names when calling a function.&nbsp; This makes your code easier to read and you don’t have to worry about the order of the arguments.&nbsp; This is especially important when you are dealing with more complicated functions that have lots of arguments (e.g., plotting functions).</p>
 </section>
 </section>
 <section id="help-seq" class="level2" data-number="5">
 <h2 data-number="5" class="anchored" data-anchor-id="help-seq"><span class="header-section-number">5</span> Help seq()</h2>
-<p>Unfortunately, the <strong><em>Help</em></strong> for functions can contain many abstractions and extraneous information. Throughout this course, we will open up the <strong><em>Help</em></strong> menu for new functions to get you more familiar with the abstractions.&nbsp;</p>
+<p>Unfortunately, the <strong><em>Help</em></strong> for functions can contain many abstractions and extraneous information. Throughout this course, we will open up the <strong><em>Help</em></strong> menu for new functions to get you more familiar with the abstractions.</p>
+<p>&nbsp;</p>
 <p>Let’s look at the function <strong><em>seq()</em></strong>:</p>
-<p>The Help page for the seq() function</p>
+<div id="fig-seq" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-seq-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-1-04b_seq.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-seq-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: The Help page for the seq() function
+</figcaption>
+</figure>
+</div>
+<p>&nbsp;</p>
 <p>When you see <strong><em>Default S3 Method</em></strong>, that is most likely the version of the function you care about.&nbsp; <strong><em>S3</em></strong> means <strong>S</strong> version <strong>3</strong>, <strong><em>S</em></strong> is a programming language developed in the 1970s and was the predecessor to R (yeah, that sounds a bit backward…).</p>
-<p>seq() is an old function and the description of it&nbsp;</p>
 <section id="the-arguments-and-defaults" class="level3" data-number="5.1">
 <h3 data-number="5.1" class="anchored" data-anchor-id="the-arguments-and-defaults"><span class="header-section-number">5.1</span> The arguments and defaults</h3>
 <p><strong><em>seq()</em></strong> has 5 arguments: <strong><em>from, to, by, length.out,</em></strong> and <strong><em>along.with</em></strong>.&nbsp; <strong><em>along.with</em></strong> is not needed and can be ignored (maybe in the past it was more useful).</p>
-<p>The descriptions of the arguments in <em>fig ##</em> are helpful but the default argument values for <strong><em>seq()</em></strong> are misinformative:</p>
-<blockquote class="blockquote">
-<p>## Default S3 method<br>
-seq(from = <em>1</em>, to = <em>1</em>, by = <em>((to - from)/(length.out - 1))</em>,<br>
-&nbsp;&nbsp;&nbsp; length.out = <em>NULL</em>, along.with = <em>NULL</em>, …)</p>
-</blockquote>
-<p><strong><em>seq()</em></strong> essentially is solving for this equation (that should not have been shown as the default value for <strong><em>by</em></strong>):</p>
-<p>by&nbsp;=&nbsp;to&nbsp;-&nbsp;fromlength.out&nbsp;-1{“version”:“1.1”,“math”:“&lt;math xmlns=”http://www.w3.org/1998/Math/MathML”&gt;&lt;mi&gt;b&lt;/mi&gt;&lt;mi&gt;y&lt;/mi&gt;&lt;mo&gt;&nbsp;&lt;/mo&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo&gt;&nbsp;&lt;/mo&gt;&lt;mfrac&gt;&lt;mrow&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mi&gt;o&lt;/mi&gt;&lt;mo&gt;&nbsp;&lt;/mo&gt;&lt;mo&gt;-&lt;/mo&gt;&lt;mo&gt;&nbsp;&lt;/mo&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;mi&gt;r&lt;/mi&gt;&lt;mi&gt;o&lt;/mi&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;/mrow&gt;&lt;mrow&gt;&lt;mi&gt;l&lt;/mi&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mi&gt;g&lt;/mi&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mi&gt;h&lt;/mi&gt;&lt;mo&gt;.&lt;/mo&gt;&lt;mi&gt;o&lt;/mi&gt;&lt;mi&gt;u&lt;/mi&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mo&gt;&nbsp;&lt;/mo&gt;&lt;mo&gt;-&lt;/mo&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;/mrow&gt;&lt;/mfrac&gt;&lt;/math&gt;“}</p>
+<p>&nbsp;</p>
+<p>The descriptions of the arguments in <a href="#fig-seq" class="quarto-xref">Figure&nbsp;3</a> are helpful but the default argument values for <strong><em>seq()</em></strong> are misinformative:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Default S3 method</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">1</span>, <span class="at">to =</span> <span class="dv">1</span>, <span class="at">by =</span> ((to <span class="sc">-</span> from)<span class="sc">/</span>(length.out <span class="sc">-</span> <span class="dv">1</span>)),</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">length.out =</span> <span class="cn">NULL</span>, <span class="at">along.with =</span> <span class="cn">NULL</span>, ...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong><em>seq()</em></strong> essentially is solving for this equation:</p>
+<p><span class="math display">\[
+by=\frac{\text{ to }-\text{ from }}{\text{ length.out }-1}
+\]</span></p>
 <p>There are four variables in the equation and you have to give three of them as arguments.&nbsp; <strong><em>seq()</em></strong> will rearrange the formula, calculate the unknown fourth variable, and create the sequence.</p>
 </section>
 <section id="seq-examples" class="level3" data-number="5.2">
 <h3 data-number="5.2" class="anchored" data-anchor-id="seq-examples"><span class="header-section-number">5.2</span> <strong>seq()</strong> examples</h3>
 <p>If you set <strong><em>from</em></strong>, <strong><em>to</em></strong>, and <strong><em>by</em></strong> as we did for <strong><em>seq1,</em></strong> <strong><em>seq()</em></strong> will calculate <strong><em>length.out</em></strong> (the number of values in the sequence)</p>
-<blockquote class="blockquote">
-<p>seq1 = seq(from=1, to=10, by=3); &nbsp; # will have 4 values</p>
-</blockquote>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>seq1 <span class="ot">=</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">1</span>, <span class="at">to=</span><span class="dv">10</span>, <span class="at">by=</span><span class="dv">3</span>);   <span class="co"># will have 4 values</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>and give you the sequence:</p>
-<blockquote class="blockquote">
-<p>seq1:&nbsp;&nbsp; num[1:5] 1 4 7 10</p>
-</blockquote>
+<div class="sourceCode" id="cb17" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>seq1<span class="sc">:</span> num[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="dv">1</span> <span class="dv">4</span> <span class="dv">7</span> <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><strong><em>length.out</em></strong> allows you to set the number of values in the sequence.&nbsp; You can also set <strong><em>length.out</em></strong> to a value, but then you can only use 2 of these 3 arguments: <strong><em>from</em></strong>, <strong><em>to</em></strong>, and <strong><em>by</em></strong>.</p>
+<p>&nbsp;</p>
 <p>An example of using <strong><em>length.out</em></strong>:</p>
-<blockquote class="blockquote">
-<p>seq2 = seq(from=1, to=10, length.out=5);</p>
-</blockquote>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>seq2 <span class="ot">=</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">1</span>, <span class="at">to=</span><span class="dv">10</span>, <span class="at">length.out=</span><span class="dv">5</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Then you get 5 evenly spaced number starting with 1 and ending with 10</p>
-<blockquote class="blockquote">
-<p>seq2:&nbsp;&nbsp; num[1:5] 1 3.25 5.5 7.75 10</p>
-</blockquote>
+<div class="sourceCode" id="cb19" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>seq2<span class="sc">:</span>   num[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="dv">1</span> <span class="fl">3.25</span> <span class="fl">5.5</span> <span class="fl">7.75</span> <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
 <section id="read.csv-expanded" class="level2" data-number="6">
 <h2 data-number="6" class="anchored" data-anchor-id="read.csv-expanded"><span class="header-section-number">6</span> read.csv() expanded</h2>
-<p>When you go to the <strong><em>Help</em></strong> page for <strong><em>read.csv()</em></strong> , you are actually taken to the <strong><em>Help</em></strong> page for <strong><em>read.table()</em></strong>. This is because <strong><em>read.csv()</em></strong> is a version of the function <strong><em>read.table()</em></strong>.&nbsp; In other words, <strong><em>read.csv()</em></strong> is <strong><em>read.table()</em></strong> with different default values for the arguments (underlined in <em>Fig.##</em>).&nbsp;&nbsp;</p>
-<p>For instance, the default value for <strong><em>sep</em></strong> (the separator) is a space in <strong><em>read.table()</em></strong> and a comma in <strong><em>read.csv()</em></strong>.&nbsp; <em>Note: some of the default arguments (e.g., <strong>quote</strong>, <strong>dec</strong>) in <strong>read.csv()</strong> are the same as in <strong>read.table().</strong></em></p>
-<p>Using the Help tab in RStudio to look up functions</p>
+<p>When you go to the <strong><em>Help</em></strong> page for <strong><em>read.csv()</em></strong> , you are actually taken to the <strong><em>Help</em></strong> page for <strong><em>read.table()</em></strong>. This is because <strong><em>read.csv()</em></strong> is a version of the function <strong><em>read.table()</em></strong>.&nbsp; In other words, <strong><em>read.csv()</em></strong> is <strong><em>read.table()</em></strong> with different default values for the arguments (underlined in <em>Fig.##</em>).</p>
+<p>&nbsp;</p>
+<p>For instance, the default value for <strong><em>sep</em></strong> (the separator) is a space in <strong><em>read.table()</em></strong> and a comma in <strong><em>read.csv()</em></strong>.&nbsp; <span class="note">Note: some of the default arguments (e.g., <strong>quote</strong>, <strong>dec</strong>) in <strong>read.csv()</strong> are the same as in <strong>read.table().</strong></span></p>
+<div id="fig-readcsv" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-readcsv-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-1-04_ReadCsv_Help.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-readcsv-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Using the Help tab in RStudio to look up functions
+</figcaption>
+</figure>
+</div>
 <section id="read.csv-arguments" class="level3" data-number="6.1">
 <h3 data-number="6.1" class="anchored" data-anchor-id="read.csv-arguments"><span class="header-section-number">6.1</span> read.csv arguments</h3>
 <p>When you call <strong><em>read.csv()</em></strong>, you can use any of the argument from <strong><em>read.table()</em></strong>.</p>
+<p>&nbsp;</p>
 <p>And there are a lot of arguments in <strong><em>read.table().</em></strong> The majority of these arguments rarely need to be changed from their default value.</p>
+<p>&nbsp;</p>
 <p>Most of the arguments in <strong><em>read.table()</em></strong> look cryptic and you will probably never have to use them. A couple that are easier to understand:</p>
 <ul>
-<li></li>
 <li><p><strong><em>decimal</em></strong>: the character that represents a decimal in the decimal number.&nbsp; You might need to change this to a comma ( , ) if you get data from Europe</p></li>
-<li></li>
 <li><p><strong><em>comment.char</em></strong>: the character after which everything on the line is a comment (i.e., not data)</p>
 <ul>
-<li></li>
-<li><p>notice that <strong><em>read.csv()</em></strong> has no <strong><em>comment.char</em></strong> whereas <strong><em>read.table()</em></strong> uses ( <strong>#</strong> ) as the default <strong><em>comment.char</em></strong></p></li>
-<li></li>
+<li>notice that <strong><em>read.csv()</em></strong> has no <strong><em>comment.char</em></strong> whereas <strong><em>read.table()</em></strong> uses ( <strong>#</strong> ) as the default <strong><em>comment.char</em></strong></li>
 </ul></li>
-<li></li>
 </ul>
 </section>
 <section id="required-arguments-and-default-arguments" class="level3" data-number="6.2">
 <h3 data-number="6.2" class="anchored" data-anchor-id="required-arguments-and-default-arguments"><span class="header-section-number">6.2</span> Required arguments and default arguments</h3>
-<p><strong><em>file</em></strong> is the only argument not set equal to anything in <strong><em>read.table()</em></strong> / <strong><em>read.csv()</em></strong>.&nbsp; This is because <strong><em>file</em></strong> must be supplied by the user – <em><strong>file</strong> is the only required argument.</em>&nbsp; This should make sense as there is no point in calling <strong><em>read.table()</em></strong> / <strong><em>read.csv()</em></strong> without any data.</p>
+<p><strong><em>file</em></strong> is the only argument not set equal to anything in <strong><em>read.table()</em></strong> / <strong><em>read.csv()</em></strong>.&nbsp; This is because <strong><em>file</em></strong> must be supplied by the user –<span class="hl"><strong>file</strong> is the only required argument</span><em>.</em>&nbsp; This should make sense as there is no point in calling <strong><em>read.table()</em></strong> / <strong><em>read.csv()</em></strong> without any data.</p>
+<p>&nbsp;</p>
 <p>Every other argument in <strong><em>read.table()</em></strong> / <strong><em>read.csv()</em></strong> has a default value– this means you can execute the function without using any argument except <strong><em>file</em></strong>.</p>
-<p>In fact, if you are using R version 4 then the following code will produce the same results as <em>the earlier <strong>read.csv()</strong> call in Fig.##</em>:</p>
-<p>weatherData2 = read.csv(file = “data/twoWeekWeatherData.csv”);</p>
+<p>&nbsp;</p>
+<p>In fact, the following code will produce the same results as <em>the earlier <strong>read.csv()</strong> call in Fig.##</em>:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>weatherData2 <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">"data/twoWeekWeatherData.csv"</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>If you look in the <strong><em>Environment</em></strong> tab the values for <strong><em>weatherData</em></strong> and <strong><em>weatherData2</em></strong> are exactly the same.</p>
+<p>&lt;image&gt;</p>
 <p>Expanding weatherData and weatherData2 in the Environment tab</p>
 </section>
 <section id="the-other-arguments-aside-from-file" class="level3" data-number="6.3">
 <h3 data-number="6.3" class="anchored" data-anchor-id="the-other-arguments-aside-from-file"><span class="header-section-number">6.3</span> The other arguments (aside from <strong><em>file</em></strong>)</h3>
 <p>In my original call to <strong><em>read.csv()</em></strong>, the arguments <strong><em>sep=“,”</em></strong> and <strong><em>header=TRUE</em></strong> are functionally not changing anything because I have them set to the same value as their default.&nbsp; But, these arguments are changed often enough that it is nice to have them quickly at hand when copying <strong><em>read.csv()</em></strong> from one script to another.</p>
-<p><strong><em>stringsAsFactors</em></strong> tells R to treat any string columns as <strong><em>factors</em></strong>.A <em>factor</em> categorizes a vector into all of the unique values in the vector – each unique value is called a level.&nbsp; For instance a column that gives wind speed values in terms of <strong><em>low</em></strong>, <strong><em>medium</em></strong>, and <strong><em>high</em></strong> could be considered a column with 3 factor levels.&nbsp; Or, you can have a wind speed direction column with 4 factor levels: <strong><em>north, east, west</em></strong>, and <strong><em>south</em></strong>. &nbsp; I do not spend much time in the class on factors because the use of factors as a variable type use has declined quite a bit.&nbsp; For now, if you are using R version 4 and want to see how people using R version 3 see <strong>weatherData</strong> then execute this code:</p>
-<blockquote class="blockquote">
-<p>&nbsp;weatherData3 = read.csv(file=“data/twoWeekWeatherData.csv”,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; sep=“,”,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp; header=TRUE,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; stringsAsFactors = <em>TRUE</em>); # this is the default for R v.3</p>
-</blockquote>
+<p>&nbsp;</p>
+<p>&lt;explain more about <strong>sep</strong> and <strong>header</strong>&gt;</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a> weatherData3 <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="at">file=</span><span class="st">"data/twoWeekWeatherData.csv"</span>,</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">sep=</span><span class="st">","</span>,                 </span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">header=</span><span class="cn">TRUE</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
 <section id="application" class="level2" data-number="7">
 <h2 data-number="7" class="anchored" data-anchor-id="application"><span class="header-section-number">7</span> Application</h2>
-<p>Create a script file named <strong><em>app1-05.r</em></strong>.&nbsp; In the script file:</p>
 <p>1. Create this sequence: <strong><em>13, 9, 5, 1, -3, -7, -11</em></strong> using <strong><em>seq()</em></strong>.</p>
-<p>Come up with two more ways (three in all) to produce the same sequence using&nbsp;<strong><em>seq(),</em></strong> but changing the arguments (<strong><em>from, by, to, length.out</em></strong>).&nbsp;</p>
+<ul>
+<li>Come up with two more ways (three in all) to produce the same sequence using&nbsp;<strong><em>seq(),</em></strong> but changing the arguments (<strong><em>from, by, to, length.out</em></strong>).&nbsp;</li>
+</ul>
+<p>&nbsp;</p>
 <p>2. Explain, in comments, why you get an error if you try to use all four arguments (<strong><em>from, by, to, length.out</em></strong>)</p>
+<p>&nbsp;</p>
 <p>3. Find the log (base 5) of this vector: <strong>c(0.04, 0.2, 25, 125)</strong> using the <strong><em>log()</em></strong> function</p>
 <ul>
-<li></li>
-<li><ul>
-<li></li>
 <li><p>Use the <strong><em>Help</em></strong> tab to find out more about the <strong><em>log()</em></strong> function</p></li>
-<li></li>
 <li><p>The answer is: <strong>-2, -1, 2, 3</strong> (so you can check)</p></li>
-<li></li>
-<li><p>note: the default value for <strong><em>base</em></strong> is <strong>exp(1)</strong> = e<sup>1</sup> = e = 2.71828… (i.e., the natural logarithm)</p></li>
-<li></li>
-</ul></li>
-<li></li>
+<li><p><span class="note">note: the default value for <strong><em>base</em></strong> is <strong>exp(1)</strong> = e<sup>1</sup> = e = 2.71828… (i.e., the natural logarithm)</span></p></li>
 </ul>
-<p>4. Properly read in <a href="..\content/DEVELOPMENT/2020/courses/DEV-belinsky-2020-ProgrammingFundamentalsUsingR/R/Lessons/../Data/twoWeekWeatherData_Comma.csv?isCourseFile=true">this CSV file</a> of the same two week weather data but:</p>
+<p>&nbsp;</p>
+<p>4. Properly read in <a href="../data/twoWeekWeatherData_Comma.csv">this CSV file</a> of the same two week weather data but:</p>
 <ul>
-<li></li>
 <li><p>commas are used in place of decimals in precipitation column</p></li>
-<li></li>
 <li><p>spaces are used to separate variables (instead of commas)</p></li>
-<li></li>
 </ul>
 <p>Save the data to a dataframe name <strong><em>WD_Comma</em></strong></p>
+<p>&nbsp;</p>
 <p>5. In comments, answer: How many factors levels does the <strong><em>noonCondition</em></strong> column have?&nbsp; How about the <strong><em>date</em></strong> column?</p>
-<p>Save the script as&nbsp;<strong><em>app1-05.r</em></strong> in your <strong><em>scripts</em></strong> folder and <em>email your Project Folder to the instructor</em>.</p>
-<p><em>If you have any questions regarding this application, feel free to</em> <em>email them to the instructor here</em>.</p>
-<section id="questions-to-answer-1" class="level3" data-number="7.1">
-<h3 data-number="7.1" class="anchored" data-anchor-id="questions-to-answer-1"><span class="header-section-number">7.1</span> Questions to answer</h3>
+<p>&nbsp;</p>
+<p>Save the script as&nbsp;<strong><em>app1-05.r</em></strong> in your&nbsp;<strong><em>scripts</em></strong> folder and&nbsp; email your Project Folder to Charlie Belinsky at belinsky@msu.edu.</p>
+<p>&nbsp;</p>
+<p><a href="..\content/DEVELOPMENT/2020/courses/DEV-belinsky-2020-ProgrammingFundamentalsUsingR/R/Lessons/1-01_Setup_and_RStudio_Projects.html?ou=1247781#zip">Instructions for zipping the Project Folder are here.</a></p>
+<p>&nbsp;</p>
+<p>If you have any questions regarding this application, feel free to email them to Charlie Belinsky at belinsky@msu.edu.</p>
+<section id="questions-to-answer" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="questions-to-answer"><span class="header-section-number">7.1</span> Questions to answer</h3>
 <p>Answer the following in comments inside your application script:</p>
 <ol type="1">
-<li></li>
 <li><p>What was your level of comfort with the lesson/application?</p></li>
-<li></li>
-<li><p>What areas of the lesson/application confused or still confuse you?</p></li>
-<li></li>
-<li><p>What are some things you would like to know more about that are related to, but not covered in, this lesson?</p></li>
-<li></li>
+<li><p>What areas of the lesson/application confused or still confuses you?</p></li>
+<li><p>What are some things you would like to know more about that is related to, but not covered in, this lesson?</p></li>
 </ol>
 
 

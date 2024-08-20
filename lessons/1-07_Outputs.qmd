@@ -1,0 +1,455 @@
+---
+title: "1-07: Outputs"
+short: "1-07"
+# special characters for highlighting code : «»
+---
+
+### Changes...
+
+-   give an example of an index vector with manual values (lesson 1-4 section 7)
+
+## Purpose
+
+-   Output variables to the Console Window
+
+-   Output messages to the Console Window
+
+-   Output vectors, sequences, and mathematical operations
+
+-   Output special characters to the Console Window, including a line feed
+
+-   Output mixed message and variable statements to the Console Window
+
+### Files for the lesson
+
+The files for this lesson:
+
+-   Script: [you can download the script here](../scripts/1-07_Outputs.R)
+
+-   Data: [download the data file here](../data/twoWeekWeatherData.csv)
+
+## Output to console
+
+The ***Console*** tab has many uses and one of them is to output messages from a script -- the messages can contain text, variable, or some combination of the two.  Outputting messages to the ***Console*** can be done using the function ***cat()***, which stands for ***concatenate***. This is R's way of saying that ***cat()*** will concatenate (combine) variables and values to create an output.
+
+ 
+
+[Extension: cat() vs print()](#extension-cat-vs-print)
+
+### Output a message
+
+We will first use ***cat()*** to output a text message to the ***Console*** tab -- to do this we need to put the message in quotes:
+
+``` r
+cat("Hello");
+```
+
+::: {#fig-textOutput}
+``` {.r tab="Console"}
+Hello
+```
+
+Outputting a text message in the Console tab
+:::
+
+If you do not use quotes (***" "***), R will think you are referring to a variable.  For instance, the line ***cat(Hello)*** gives you the [Object not found]{.hl} error because R thinks this is a reference to a variable named ***Hello*** -- and, in this case, there is no variable named ***Hello***. 
+
+``` r
+cat(Hello); # Will cause an «object not found» error
+```
+
+::: {#fig-varError}
+``` {.r tab="Console"}
+Error in cat(Hello) : object Hello not found
+```
+
+An error that occurs if you try to output a variable (object) that does not exist in your script.
+:::
+
+[Note: If there is a variable named ***Hello*** in your script, then ***cat(Hello);*** will output the value of the variable ***Hello***.]{.note}
+
+### Output multiple messages
+
+You can add as many ***cat()*** statements to your script as you like and they will be displayed sequentially in the ***Console*** tab:
+
+``` r
+cat("Hello, World.");
+cat("How are you?");
+cat("I am fine.");
+```
+
+::: {#fig-outputMsg}
+``` {.r tab="Console"}
+Hello World. How are you? I am fine.
+```
+
+Output message without spacing
+:::
+
+### The line feed: \\n
+
+But there is a problem here -- R puts no spacing in between the lines (*Fig.##*).  This is typical behavior of programming languages -- they do not add line feeds (e.g., enter or return) unless the script specifically requests that a line feed is added.
+
+ 
+
+The instruction to add a line feed is to put ***\\n*** inside the quotes ( ***"  "*** ):
+
+``` r
+cat("Hello, World.\n");
+cat("How are you?\n");
+cat("I am\n fine.\n");
+```
+
+::: {#fig-lineFeed}
+``` {.r tab="Console"}
+Hello, World
+How are you?
+I am
+ fine.
+```
+
+Message with line feeds
+:::
+
+In @fig-lineFeed we have our text on multiple lines.  Notice that the ***\\n*** does not get printed to the screen.  [**\\n** is an instruction inside the message to add a line feed, sometimes called a **n**ewline character]{.hl}*,* and needs to be put inside the quotes.
+
+ 
+
+***\\n*** can be put anywhere in a quote.  In the above code there is a ***\\n*** put in between "am" and "fine", hence the line feed between the two words.  The exact same message as @fig-lineFeed can be output to the Console Window using only one ***cat()*** statement with multiple ***\\n***:
+
+``` r
+cat("Hello, World.\nHow are you?\nI am\n fine?\n");
+```
+
+::: {#fig-multOutput}
+``` {.r tab="Console"}
+Hello, World
+How are you?
+I am
+ fine.
+```
+
+Using one **cat()** statement with multiple **\\n** to output multiple lines of text
+:::
+
+## Escape character: backslash ( \\ )
+
+The backslash in programming is used in a string as an [escape character]{.hl}*.* This means that the character after the backslash is treated in some special manner -- similar to the way the **Shift**, **Control,** or **Alt** keys on your keyboard change the meaning of the character that is pressed with them.
+
+ 
+
+Backslash can be used to
+
+-   put in a control like a line feed ( ***\\n*** ) or a tab ( ***\\t*** )
+
+-   print a character that has a functional meaning like a double quote ( ***\\"*** ) or a backslash ( ***\\\\*** )-- in other words, treat the double quote as a character for output, not as the start or end of a string
+
+-   use Unicode to print our characters not on the keyboard using Unicode.  Here is a [link to a partial list of Unicode characters](https://www.rapidtables.com/code/text/unicode-characters.html).  Use the Escape sequence given on the page.  [Note: [according to Wikipedia](https://en.wikipedia.org/wiki/List_of_Unicode_characters), there are around 150,000 Unicode characters -- and just recently Unicode has added lots of emojis.]{.note}
+
+ 
+
+``` r
+cat("\tAnd the boy said, \"Hello\" \n");
+cat("Send a backslash \\ to the Console\n")
+cat("Some Unicode characters: \u00C5 \u0A94 \u0115\n");
+```
+
+::: {#fig-backslash}
+``` {.r tab="Environment"}
+    And the boy said, "Hello" 
+Send a backslash \ to the Console
+Some Unicode characters: Å ઔ ĕ
+```
+
+Using backslash ( **\\** ) to output special characters.
+:::
+
+## Output messages with variables
+
+Let's output data from the ***twoWeekWeatherData.csv*** file to the ***Console*** tab.
+
+ 
+
+First we will read in the file, like we did last lesson:
+
+``` r
+  weatherData = read.csv(file="data/twoWeekWeatherData.csv", # path to file
+                         sep=",",                   # values are separated by commas
+                         header=TRUE);              # there is a header row
+                        
+```
+
+And then save the ***highTemp*** and ***lowTemp*** columns to their own variable:
+
+``` r
+highTemps = weatherData$highTemp;
+lowTemps = weatherData$lowTemp;
+```
+
+We can directly output the whole temperature vector values along with a line feed:
+
+``` r
+cat(lowTemps);  # prints the variable lowTemps in the Console
+cat("\n");      # adds a line feed -- so the next message goes to the next line
+```
+
+::: {#fig-vector}
+``` {.r tab="Console"}
+45 43 46 38 36 45 32 50 48 40 36 43 45 63
+```
+
+Output the 12 values in the lowTemps variable
+:::
+
+### Combine text and variables in one command
+
+We can combine content (e.g., variables and text) in one ***cat()*** command by using comma to separate the different types of content:
+
+``` r
+cat("The low temps are:", lowTemps, "\n");
+```
+
+::: {#fig-textAndVar}
+``` {.r tab="Console"}
+The low temperatures are: 45 43 46 38 36 45 32 50 48 40 36 43 45 63
+```
+
+Combining a text message and variables in one output
+:::
+
+[Trap: Misplacing (or forgetting) quotes]
+
+## Output indexed values
+
+We can output a single value from a vector by indexing it:
+
+``` r
+cat(lowTemps[4], "\n");     # 4th value in lowTemps
+```
+
+Or, output a more robust message about the 4th day:
+
+``` r
+cat("On the 4th day the high temperature was", highTemps[4], "and the low temperature was", lowTemps[4], "\n");
+```
+
+::: {#fig-multipleMessages}
+``` {.r tab="Console"}
+On the 4th day the high temperature was 40 and the low temperature was 38
+```
+
+Combining multiple text messages and variables in an output
+:::
+
+Or, even do math on the values:
+
+``` r
+cat("On the 4th day the difference in temperature was", 
+      highTemps[4] - lowTemps[4], "degrees\n"); 
+```
+
+``` {.r tab="Console"}
+On the 4th day the difference in temperature was 2 degrees
+```
+
+## Output multiple values
+
+We can use ***c()*** to index multiple values within a vector:
+
+``` r
+cat(lowTemps[c(4, 8, 3, 11)], "\n");  # 4th, 8th, 3rd, and 11th values in lowTemps
+```
+
+``` {.r tab="Console"}
+38 50 46 36 
+```
+
+Or, we can use the sequencing operators to output multiple values in a vector:
+
+``` r
+  cat(lowTemps[5:9], "\n");   # simple sequence: 5th through 9th value
+  cat(lowTemps[seq(from=1, by=2, to=10)], "\n"); # Values 1,3,5,7,9
+```
+
+::: {#fig-seqOutput}
+``` {.r tab="Console"}
+36 45 32 50 48
+45 46 36 32 48
+```
+
+Output of sequenced values in lowTemps
+:::
+
+And add messages to the above output:
+
+``` {.r tab="Console"}
+  cat("Day 5-9 temperature:",lowTemps[5:9], "\n");  
+  cat("Temp on odd days:", lowTemps[seq(from=1, by=2, to=10)], "\n");
+```
+
+::: {#fig-contiguous}
+``` {.r tab="Console"}
+Day 5-9 temperature: 36 45 32 50 48 
+Temp on odd days: 45 46 36 32 48 
+```
+
+Outputting contiguous values in lowTemps using the sequencing operator.
+:::
+
+***cat()*** commands can go across multiple lines -- this one ***cat()*** is functionally the same as the above ***cat()***:
+
+``` r
+  cat("Day 5-9 temperature:", lowTemps[5:9], "\n", 
+      "Temp on odd days:", lowTemps[seq(from=1, by=2, to=10)], "\n");
+```
+
+::: {#fig-seq}
+``` {.r tab="Console"}
+Day 5-9 temperature: 36 45 32 50 48 
+Temp on odd days: 45 46 36 32 48 
+```
+
+Outputting the values of lowTemps using seq()
+:::
+
+## The concatenate, cat(), function
+
+We have used ***cat()*** many times in this script to output variable and text to the ***Console*** but we really have not talked about ***cat()*** itself.
+
+ 
+
+Let's search for cat in the search bar of the Help tab:
+
+![Information about the cat() function in the Help tab.](images/R-01-06 Cat function.PNG){#fig-catHelp .fs}
+
+The first part of ***cat()*** is the three dots "**...**".  When the 3 dots are at the beginning of a function, the three dots say that [**cat()** will accept any number of objects ]{.hl}as inputs.  The objects can be text in quotes, string variables, numeric variables, or other objects we have not discussed yet like Dates.
+
+ 
+
+[Note: the three dots in ***cat()*** has a different meaning from the three dots in ***read.csv()***.]{.note}  When three dots are at the first argument of a function (e.g., ***cat()***) it means that any number of inputs are accepted.  When the three dots are elsewhere (e.g., ***read.csv()***) it means the function can be extended.
+
+ 
+
+After the three dots, ***cat()*** has **5** arguments: ***file***, ***sep***, ***fill***, ***labels***, and ***append.*** These all have default values (e.g., file="", sep=" ")
+
+### The sep argument
+
+Arguments are used to modify the behavior of a function.  [**sep** changes how the different components of the output are separated ]{.hl}-- the default is to use 1 space.  We are going to change the ***sep*** argument.
+
+ 
+
+Let's take the code from above and add the ***sep*** argument to ***cat()*** and give ***sep*** the value " \*\* ":
+
+``` r
+  cat("Day 5-9 temperature:", lowTemps[5:9], "\n", 
+      "Temp on odd days:", lowTemps[seq(from=1, by=2, to=10)], "\n",
+      sep = " ** ");
+```
+
+And you will notice that the different components in ***cat()*** are separated by " \*\* ".
+
+::: {#fig-sepArgument}
+``` {.r tab="Console"}
+Day 5-9 temperature: ** 36 ** 45 ** 32 ** 50 ** 48 ** 
+ ** Temp on odd days: ** 45 ** 46 ** 36 ** 32 ** 48 ** 
+```
+
+Using the **sep** argument in **cat()**
+:::
+
+[Note: The most common way people use **sep** is to set **sep=""** ]{.note}-- in other words, set ***sep*** to nothing so nothing is added to the output.
+
+ 
+
+[Trap: Misplacing (or forgetting) quotes]
+
+### The **file** argument
+
+By default, ***cat()*** will output to the ***Console***. But, you could have ***cat()*** output to a file by using the ***file*** argument.  The ***file*** argument in ***cat()*** works just like the ***file*** argument in ***read.csv()*** with one exception:  if the file does not exist yet then R will create the file.
+
+ 
+
+So, this line:
+
+``` r
+cat("Hi", file="hello.txt");
+```
+
+creates a file called ***hello.txt*** in your Project Folder and add the text ***hi*** to the file.
+
+## Application
+
+A. Line 50 in the script [script downloaded for this lesson](../scripts/1-07_Outputs.R "script from this lesson") is beyond 85 characters, break the line up so that it functions the same but does not go over 85 characters.
+
+ 
+
+B.  Using ***cat()***, output to the ***Console***:
+
+-   the date of the 11th day and the amount of precipitation on that day
+
+-   the difference in precipitation between the 3rd and 4th day
+
+-   every 3rd days precipitation
+
+-   the precipitation for days 12, 9, 4 -- using a index vector created with ***c()***
+
+-   Challenge: output the total precipitation for the first 10 days
+
+Make sure you use newlines (***\\n***) to make the output readable.
+
+ 
+
+C. Using ***cat()***, output the data from part B to a file named ***output.txt*** in your ***data*** folder (instead of the ***Console***)
+
+-   Use the ***file*** argument in ***cat()***-- the ***file*** format is the same as the ***file*** format in ***read.csv()***
+
+ 
+
+D. Challenge: Using ***cat()***, append your name and three different Unicode characters to the text in the ***output.txt*** file created in part C.  Hint: look at the arguments in ***cat()*** -- you need to change one of them.\
+ 
+
+{{< include ../assets/AppInstructions.qmd >}}
+
+## Extension: cat() vs print() {#extension-cat-vs-print}
+
+The two main functions used to output to the ***Console*** are ***cat()*** and ***print()***.   ***print()*** does a lot more formatting of the output.  You would use ***print()*** when you want to display the results of a statistical test, which often has a complicated format.  ***cat()*** does very little formatting on its own – ***cat()*** lets the programmer control the output.  You would use this when you want to output text and some simple data – or, where you really want control of the output format.
+
+## Trap: Misplacing (or forgetting) quotes
+
+It is easy to accidentally forget a quote, add a quote, or simply move a quote to a place it does not belong. The following code has a missing quote on line 8 right after "*The values are...*
+
+``` r
+rm(list=ls());  options(show.error.locations = TRUE);
+
+distance = 100;
+time = 50;
+velocity = distance/time;
+
+cat("The values are..., "\nDistance: ", distance, "\ntime: ",
+    time, "\nvelocity: ", velocity);
+```
+
+The execution of the code causes an [Unexpected Symbol]{.hl} error that is not too helpful; however, RStudio has a built-in feature to help you find misplaced quotes -- the color scheme.  The quoted text is in a different color than other parts of the code.  For example, in the XCode color scheme -- text in quotes is colored red.
+
+ 
+
+\<image\>
+
+Missing quote
+
+(*Fig. \##*) shows that, right after "The value are... , the variables are all treated as if they are in quotes and the messages are outside the quotes. Since one quote was missing, the error propagated and assumed characters to be variables/numbers and variables/numbers to be characters.
+
+ 
+
+We will add the missing quote to line 8:
+
+``` r
+cat("The values are...", "\nDistance: ", distance, "\ntime: ",
+    time, "\nvelocity: ", velocity);
+```
+
+Now the correct components of the output are colored red and the script executes without an error:\\
+
+\<image\>
+
+Missing quote added
