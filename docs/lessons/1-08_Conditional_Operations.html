@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>1-08: Conditional Operations</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-2486e1f0a3ee9ee1fc393803a1361cdb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-0815817224b54744edbb51fc66bd26dc.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link rel="shortcut icon" href="https://qfcatmsu.github.io/assets/quarto/qfc_icon.png">
+<script>mod=true; menuCollapse=true;</script>
+<script src="https://qfcatmsu.github.io/assets/quarto/qfc_styles.js"></script>
+ 
+
+
+<link rel="stylesheet" href="https://qfcatmsu.github.io/assets/quarto/qfc_styles.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+          <h1 class="quarto-secondary-nav-title">1-08: Conditional Operations</h1>
+        </a>     
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text"><b>Fundamentals of Programming class</b></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-02-Variables.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-02: Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-03_Mathematical_Operations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-03: Mathematical Operations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-04_Vectors_And_Data_Frames.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-04: Vectors and Data Frames</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-05_Functions_Introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-05: Functions Introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-06_Run_and_Source.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-06: Run and Source</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-07_Outputs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-07: Outputs</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-08_Conditional_Operations.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">1-08: Conditional Operations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-09_If_Else_Statements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-09: Conditional Operations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-10_For_Loops.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-10: For Loops</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-11_For_Loops_and_State_Varibles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-11: For Loops and State Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-12_MultipleConditions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-12: Multiple Conditions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-13_Functions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-13: Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-14_Functions2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-14: Functions 2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-15_Functions3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-15: Functions 3</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title"><b>Lesson Content</b></h2>
+   
+  <ul>
+  <li><a href="#purpose" id="toc-purpose" class="nav-link active" data-scroll-target="#purpose"><span class="header-section-number">1</span> Purpose</a></li>
+  <li><a href="#material" id="toc-material" class="nav-link" data-scroll-target="#material"><span class="header-section-number">2</span> Material</a></li>
+  <li><a href="#four-structures-in-programming" id="toc-four-structures-in-programming" class="nav-link" data-scroll-target="#four-structures-in-programming"><span class="header-section-number">3</span> Four structures in programming</a></li>
+  <li><a href="#non-linear-scripts" id="toc-non-linear-scripts" class="nav-link" data-scroll-target="#non-linear-scripts"><span class="header-section-number">4</span> Non-linear scripts</a></li>
+  <li><a href="#questions-and-statements" id="toc-questions-and-statements" class="nav-link" data-scroll-target="#questions-and-statements"><span class="header-section-number">5</span> Questions and Statements</a>
+  <ul class="collapse">
+  <li><a href="#structure-of-an-if-statement" id="toc-structure-of-an-if-statement" class="nav-link" data-scroll-target="#structure-of-an-if-statement"><span class="header-section-number">5.1</span> Structure of an if() statement</a></li>
+  <li><a href="#alternate-codeblock-format" id="toc-alternate-codeblock-format" class="nav-link" data-scroll-target="#alternate-codeblock-format"><span class="header-section-number">5.2</span> Alternate codeblock format</a></li>
+  </ul></li>
+  <li><a href="#if-statements" id="toc-if-statements" class="nav-link" data-scroll-target="#if-statements"><span class="header-section-number">6</span> If() statements</a>
+  <ul class="collapse">
+  <li><a href="#conditional-operators-in-r" id="toc-conditional-operators-in-r" class="nav-link" data-scroll-target="#conditional-operators-in-r"><span class="header-section-number">6.1</span> Conditional Operators in R</a></li>
+  </ul></li>
+  <li><a href="#using-if-statements" id="toc-using-if-statements" class="nav-link" data-scroll-target="#using-if-statements"><span class="header-section-number">7</span> Using if() statements</a>
+  <ul class="collapse">
+  <li><a href="#using-all-6-conditional-operators" id="toc-using-all-6-conditional-operators" class="nav-link" data-scroll-target="#using-all-6-conditional-operators"><span class="header-section-number">7.1</span> Using all 6 conditional operators</a></li>
+  </ul></li>
+  <li><a href="#conditional-operators-with-charactersstrings" id="toc-conditional-operators-with-charactersstrings" class="nav-link" data-scroll-target="#conditional-operators-with-charactersstrings"><span class="header-section-number">8</span> Conditional Operators with characters/strings</a>
+  <ul class="collapse">
+  <li><a href="#quotes-around-numeric-and-string-values" id="toc-quotes-around-numeric-and-string-values" class="nav-link" data-scroll-target="#quotes-around-numeric-and-string-values"><span class="header-section-number">8.1</span> Quotes around numeric and string values</a></li>
+  <li><a href="#case-counts-with-strings" id="toc-case-counts-with-strings" class="nav-link" data-scroll-target="#case-counts-with-strings"><span class="header-section-number">8.2</span> Case counts with strings</a></li>
+  </ul></li>
+  <li><a href="#checking-other-columns" id="toc-checking-other-columns" class="nav-link" data-scroll-target="#checking-other-columns"><span class="header-section-number">9</span> Checking other columns</a></li>
+  <li><a href="#if-within-if" id="toc-if-within-if" class="nav-link" data-scroll-target="#if-within-if"><span class="header-section-number">10</span> if() within if()</a></li>
+  <li><a href="#application" id="toc-application" class="nav-link" data-scroll-target="#application"><span class="header-section-number">11</span> Application</a>
+  <ul class="collapse">
+  <li><a href="#questions-to-answer" id="toc-questions-to-answer" class="nav-link" data-scroll-target="#questions-to-answer"><span class="header-section-number">11.1</span> Questions to answer</a></li>
+  </ul></li>
+  <li><a href="#extension-curly-bracket-placement" id="toc-extension-curly-bracket-placement" class="nav-link" data-scroll-target="#extension-curly-bracket-placement"><span class="header-section-number">12</span> Extension: Curly bracket placement</a></li>
+  <li><a href="#extension-removing-curly-brackets-in-if-statements" id="toc-extension-removing-curly-brackets-in-if-statements" class="nav-link" data-scroll-target="#extension-removing-curly-brackets-in-if-statements"><span class="header-section-number">13</span> Extension: Removing curly brackets in if() statements</a></li>
+  <li><a href="#extension-greater-than-and-less-than-on-strings" id="toc-extension-greater-than-and-less-than-on-strings" class="nav-link" data-scroll-target="#extension-greater-than-and-less-than-on-strings"><span class="header-section-number">14</span> Extension: Greater than and less than on strings</a></li>
+  <li><a href="#extension-numbers-as-characters" id="toc-extension-numbers-as-characters" class="nav-link" data-scroll-target="#extension-numbers-as-characters"><span class="header-section-number">15</span> Extension: Numbers as Characters</a></li>
+  <li><a href="#extension-checking-all-values-in-a-vector-for-loops" id="toc-extension-checking-all-values-in-a-vector-for-loops" class="nav-link" data-scroll-target="#extension-checking-all-values-in-a-vector-for-loops"><span class="header-section-number">16</span> Extension: Checking all values in a vector (for loops)</a></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content column-page-right" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">1-08: Conditional Operations</h1>
+</div>
+
+
+
+<div class="quarto-title-meta column-page-right">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="purpose" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="purpose"><span class="header-section-number">1</span> Purpose</h2>
+<ul>
+<li><p>Creating “decision points” in a script using if-statements</p></li>
+<li><p>Introduce the six different conditional operators</p></li>
+<li><p>Code conditional statements on strings and numbers</p></li>
+</ul>
+</section>
+<section id="material" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="material"><span class="header-section-number">2</span> Material</h2>
+<p>The files for this lesson:</p>
+<ul>
+<li><p>Script:&nbsp;<a href="../scripts/1-08_ConditionalOperations.R">you can download the script here</a></p></li>
+<li><p>Data: <a href="../data/twoWeekWeatherData.csv">download the data file here</a></p></li>
+</ul>
+<p>&nbsp;</p>
+<p>If you have any questions about the material in this lesson, feel free to email them to the instructor, Charlie Belinsky, at belinsky@msu.edu.</p>
+</section>
+<section id="four-structures-in-programming" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="four-structures-in-programming"><span class="header-section-number">3</span> Four structures in programming</h2>
+<p>As mentioned in the second lesson on variables,&nbsp;there are basically 4 main structures that cover almost every aspect of programming:</p>
+<ol type="1">
+<li><p>Variables</p></li>
+<li><p>If-Else Statements</p></li>
+<li><p>For Loops</p></li>
+<li><p>Functions</p></li>
+</ol>
+<p>&nbsp;</p>
+<p>In the next three lessons we cover <strong><em>If-Else</em></strong> statements</p>
+</section>
+<section id="non-linear-scripts" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="non-linear-scripts"><span class="header-section-number">4</span> Non-linear scripts</h2>
+<p>So far all of our scripts have been linear – in other words, the execution of the script goes line-by-line, or command-by-command, until the end of the script.&nbsp; However, most scripts do not work like this – most scripts have multiple points where the execution of code is:</p>
+<ul>
+<li><p>moved to another location (i.e., <strong><em>functions</em></strong> – future lesson)</p></li>
+<li><p>done multiple times (i.e., <strong><em>for</em></strong> loops – future lesson)</p></li>
+<li><p>dependent on some condition (i.e., <strong><em>if-else</em></strong> statements – this and next lesson)</p></li>
+</ul>
+<p>&nbsp;</p>
+<p>And you will often find combinations of the above.&nbsp; When dealing with data frames, <strong><em>if-else</em></strong> statements are often found within <strong><em>for</em></strong> loops.&nbsp; For example, a <strong><em>for</em></strong> loop goes through every value in a temperature column and an embedded <strong><em>if-else</em></strong> statement executes code if the temperature is above a certain amount.</p>
+<p>&nbsp;</p>
+<p>For the next couple of lessons we are just going to focus on <strong><em>if-else</em></strong> statements.&nbsp; After that, we will introduce <strong><em>for</em></strong> loops with embedded <strong><em>if-else</em></strong> statements.</p>
+</section>
+<section id="questions-and-statements" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="questions-and-statements"><span class="header-section-number">5</span> Questions and Statements</h2>
+<p>The <strong><em>if()</em></strong> statement can <span class="hl">almost</span>be thought of as a question with a <strong>yes/no</strong> answer:</p>
+<ul>
+<li><p><em>Is the fish’s weight below 100 grams?</em>&nbsp; (yes/no)</p></li>
+<li><p><em>Is the first runner’s speed greater than the second runner’s speed?</em> (yes/no)</p></li>
+<li><p><em>Is the location Silver Lake?</em> (yes/no)</p></li>
+<li><p><em>Is the temperature less than or equal to 30?</em>&nbsp;(yes/no)</p></li>
+</ul>
+<p>&nbsp;</p>
+<p>Except, instead of questions with <strong>yes/no</strong> answer,<span class="hl"><strong>if()</strong> contains statements with <strong>TRUE/FALSE</strong> conditions</span>:</p>
+<ul>
+<li><p><em>The fish’s weight is below 100 grams.</em> (TRUE/FALSE)</p></li>
+<li><p><em>The first runner’s speed is greater than the second runner’s speed.</em> (TRUE/FALSE)</p></li>
+<li><p><em>The location is Silver Lake.</em> (TRUE/FALSE)</p></li>
+<li><p><em>The temperature is less than or equal to 30.</em> (TRUE/FALSE)</p></li>
+</ul>
+<section id="structure-of-an-if-statement" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="structure-of-an-if-statement"><span class="header-section-number">5.1</span> Structure of an if() statement</h3>
+<p>The basic structure of an <strong><em>if()</em></strong> statement is:</p>
+<div id="fig-ifStructure" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ifStructure-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="fig-ifStructure"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="fig-ifStructure-1"><a href="#fig-ifStructure-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (some conditional statement goes here)</span>
+<span id="fig-ifStructure-2"><a href="#fig-ifStructure-2" aria-hidden="true" tabindex="-1"></a>{ </span>
+<span id="fig-ifStructure-3"><a href="#fig-ifStructure-3" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Execute the code in this codeblock</span></span>
+<span id="fig-ifStructure-4"><a href="#fig-ifStructure-4" aria-hidden="true" tabindex="-1"></a>   <span class="co"># if the conditional statement is TRUE.</span></span>
+<span id="fig-ifStructure-5"><a href="#fig-ifStructure-5" aria-hidden="true" tabindex="-1"></a>   <span class="co"># note: All command within the codeblock are indented</span></span>
+<span id="fig-ifStructure-6"><a href="#fig-ifStructure-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="fig-ifStructure-7"><a href="#fig-ifStructure-7" aria-hidden="true" tabindex="-1"></a><span class="co"># next lesson we will cover what happens if the conditional statement is FALSE.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ifStructure-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Structure of an if() statement
+</figcaption>
+</figure>
+</div>
+<p>Inside the curly brackets ( <strong><em>{&nbsp; }</em></strong> ) attached to the <strong><em>if()</em></strong> is a <em>codeblock</em> that gets executed if the statement is <strong>TRUE</strong>.&nbsp; If the statement is <strong>FALSE</strong>,&nbsp; the codeblock is ignored.</p>
+<p>&nbsp;</p>
+<p>Let’s do a simple example where a random number is picked and an <strong><em>if()</em></strong> statement checks the random number:</p>
+<p>randomTemp = sample(30:80, size=1);&nbsp; # pick a random number between 30 and 80</p>
+<div id="fig-ifExample" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ifExample-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="fig-ifExample"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="fig-ifExample-1"><a href="#fig-ifExample-1" aria-hidden="true" tabindex="-1"></a>randomTemp <span class="ot">=</span> <span class="fu">sample</span>(<span class="dv">30</span><span class="sc">:</span><span class="dv">80</span>, <span class="at">size=</span><span class="dv">1</span>);  <span class="co"># pick a random number between 30 and 80</span></span>
+<span id="fig-ifExample-2"><a href="#fig-ifExample-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="fig-ifExample-3"><a href="#fig-ifExample-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (randomTemp <span class="sc">&gt;</span> <span class="dv">50</span>)</span>
+<span id="fig-ifExample-4"><a href="#fig-ifExample-4" aria-hidden="true" tabindex="-1"></a>{ </span>
+<span id="fig-ifExample-5"><a href="#fig-ifExample-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"The temperature is"</span>, randomTemp);</span>
+<span id="fig-ifExample-6"><a href="#fig-ifExample-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"warm enough to go outside</span><span class="sc">\n</span><span class="st">"</span>);</span>
+<span id="fig-ifExample-7"><a href="#fig-ifExample-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="fig-ifExample-8"><a href="#fig-ifExample-8" aria-hidden="true" tabindex="-1"></a><span class="co"># next lesson we will cover what happens if the conditional statement is FALSE.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ifExample-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: An example of an if() statement
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="alternate-codeblock-format" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="alternate-codeblock-format"><span class="header-section-number">5.2</span> Alternate codeblock format</h3>
+<p>The curly brackets ( <strong>{&nbsp; }</strong> ) designate the beginning and the end of the codeblock.&nbsp; There are many ways to space the curly brackets but only two methods that are generally accepted in the programming world:</p>
+<ul>
+<li><p><a href="#fig-ifExample" class="quarto-xref">Figure&nbsp;2</a> where the curly brackets are on their own line and lined up at the same level as the <strong><em>if()</em></strong> and all code inside is indented</p></li>
+<li><p><a href="#fig-ifAlt" class="quarto-xref">Figure&nbsp;3</a> where the start bracket is on the same line as the <strong><em>if()</em></strong> statement – everything else is the same as the first example</p></li>
+</ul>
+<div id="fig-ifAlt" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ifAlt-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="fig-ifAlt"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="fig-ifAlt-1"><a href="#fig-ifAlt-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (randomTemp <span class="sc">&gt;</span> <span class="dv">50</span>)  { </span>
+<span id="fig-ifAlt-2"><a href="#fig-ifAlt-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"The temperature is"</span>, randomTemp);</span>
+<span id="fig-ifAlt-3"><a href="#fig-ifAlt-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"warm enough to go outside</span><span class="sc">\n</span><span class="st">"</span>);</span>
+<span id="fig-ifAlt-4"><a href="#fig-ifAlt-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="fig-ifAlt-5"><a href="#fig-ifAlt-5" aria-hidden="true" tabindex="-1"></a><span class="co"># next lesson we will cover what happens if the conditional statement is FALSE.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ifAlt-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Alternate structure of an if() statement
+</figcaption>
+</figure>
+</div>
+<p>I prefer the first method because it makes it easier to visualize the hierarchy of the codeblocks in your script. <span class="hl">You are required to use one of these two methods in this class.</span></p>
+<p>&nbsp;</p>
+<p><a href="#extension-curly-bracket-placement">Extension: Curly bracket placement</a></p>
+</section>
+</section>
+<section id="if-statements" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="if-statements"><span class="header-section-number">6</span> If() statements</h2>
+<p>The conditional statement inside the parentheses of the <strong><em>if()</em></strong> contains at least two values being compared with a conditional operation:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>( fishWeight «<span class="sc">&lt;</span>» <span class="dv">100</span> )                <span class="co"># is greater than</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>( runner1Speed «<span class="sc">&gt;</span>» runner2Speed)      <span class="co"># is less than</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>( location «<span class="sc">==</span>» <span class="st">"Silver Lake"</span> )       <span class="co"># is equal to</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>( temperature «<span class="sc">&lt;=</span>» <span class="dv">30</span> )               <span class="co"># is less than or equal to</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>&nbsp;</p>
+<p>A<span class="hl">conditional operator</span>does two things:</p>
+<p>1) It compares the two values on both sides of the operator.&nbsp;</p>
+<p>2) It outputs either <strong><em>TRUE</em></strong> or <strong><em>FALSE</em></strong> based on results of the comparison.</p>
+<p><span class="note">Note: TRUE/ FALSE statements are often called <strong>Boolean</strong> statements</span></p>
+<section id="conditional-operators-in-r" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="conditional-operators-in-r"><span class="header-section-number">6.1</span> Conditional Operators in R</h3>
+<p>There are six conditional operators in programming:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Operator</th>
+<th>Meaning</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>==</td>
+<td>equal to</td>
+<td>Easily confused with the assignment operator, <strong>=</strong></td>
+</tr>
+<tr class="even">
+<td>!=</td>
+<td>not equal to</td>
+<td>Reverses the logic of <strong>==</strong></td>
+</tr>
+<tr class="odd">
+<td>&gt;=</td>
+<td>greater than or equal to</td>
+<td>&gt;=, &lt;=, &gt;, and &lt; operators are usually used to compare two numeric values.</td>
+</tr>
+<tr class="even">
+<td>&lt;=</td>
+<td>less than or equal to</td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If used with string values the operators will sort using Unicode value,</td>
+</tr>
+<tr class="odd">
+<td>&gt;</td>
+<td>greater then (only)</td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;which is similar to alphabetical relationships.</td>
+</tr>
+<tr class="even">
+<td>&lt;</td>
+<td>less than (only)</td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;More Info: <a href="#extension-greater-than-and-less-than-on-strings">Extension: Greater than and less than on strings</a></td>
+</tr>
+</tbody>
+</table>
+<p>Putting the conditional operator in:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>( fishWeight «<span class="sc">&lt;</span>» <span class="dv">100</span> )</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># code that gets executed if fishWeight &lt; 100</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>( runner1Speed «<span class="sc">&gt;</span>» runner2Speed )</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># code that gets executed if runner1Speed &gt; runner2Speed</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>( location «<span class="sc">==</span>» <span class="st">"Silver Lake"</span> )</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># code that gets executed if location == "Silver Lake"</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>( temperature «<span class="sc">&lt;=</span>» <span class="dv">30</span>)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># code that gets executed if temperature &lt;= 30</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><span class="note">Note: Conditional Operators exclusively compare two values (e.g., <strong>location</strong> == “Silver Lake”).</span>&nbsp; In a future lesson, we will learn how to deal with more complex conditions (e.g., how to check if <strong><em>location</em></strong> is “Silver Lake” or “Round Lake”).</p>
+</section>
+</section>
+<section id="using-if-statements" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="using-if-statements"><span class="header-section-number">7</span> Using if() statements</h2>
+<p>To set up the script to use <strong><em>if()</em></strong> statements we will:</p>
+<ul>
+<li><p>read in the data from <strong><em>twoWeekWeatherData.csv</em></strong></p></li>
+<li><p>save the <strong><em>highTemp</em></strong> and <strong><em>noonCondition</em></strong> column to a vector</p></li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>());  <span class="co"># cleans out the Environment every time the code is executed</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">options</span>(<span class="at">show.error.locations =</span> <span class="cn">TRUE</span>);  <span class="co"># show the line # of errors in the Console</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="do">### read in data from twoWeekWeatherData.csv</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  weatherData <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="at">file=</span><span class="st">"data/twoWeekWeatherData.csv"</span>, </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>                         <span class="at">sep=</span><span class="st">","</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>                         <span class="at">header=</span><span class="cn">TRUE</span>, </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>                         <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>);  </span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="do">### Extract the highTemps column from the data frame -- save it to a variable</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  highTemps <span class="ot">=</span> weatherData<span class="sc">$</span>highTemp;</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  noonCond <span class="ot">=</span> weatherData<span class="sc">$</span>noonCondition;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Our first example will check three value in <strong><em>highTemps</em></strong> (3<sup>rd</sup>, 4<sup>th</sup>, and 5<sup>th</sup>) and see which of them are greater than <strong>50</strong>.&nbsp;</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"---------</span><span class="sc">\n</span><span class="st">Checking highTemps 3, 4, and 5 to see which are &gt; 50:</span><span class="sc">\n</span><span class="st">"</span>);</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(highTemps[<span class="dv">3</span>] <span class="sc">&gt;</span> <span class="dv">50</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"  high temp 3 is greater than 50</span><span class="sc">\n</span><span class="st">"</span>);</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(highTemps[<span class="dv">4</span>] <span class="sc">&gt;</span> <span class="dv">50</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"  high temp 4 is greater than 50</span><span class="sc">\n</span><span class="st">"</span>);</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>} </span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(highTemps[<span class="dv">5</span>] <span class="sc">&gt;</span> <span class="dv">50</span>)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"  high temp 5 is greater than 50</span><span class="sc">\n</span><span class="st">"</span>);</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Only the <strong><em>cat()</em></strong> in the first codeblock (<strong><em>highTemps[3] &gt; 50</em></strong>) was executed because <strong><em>highTemps[3]</em></strong> was the only value greater than <strong>50</strong>. The other two codeblocks were ignored. In a later lesson we will show how to check multiple values at once using <strong><em>for()</em></strong>.</p>
+<div class="sourceCode" id="cb5" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>Checking highTemps <span class="dv">3</span>, <span class="dv">4</span>, and <span class="dv">5</span> to see which are <span class="sc">&gt;</span> <span class="dv">50</span><span class="sc">:</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  high temp <span class="dv">3</span> is greater than <span class="dv">50</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a href="#extension-removing-curly-brackets-in-if-statements">Extension: Removing curly brackets in if() statements</a></p>
+<p><a href="#extension-checking-all-values-in-a-vector-for-loops">Extension: Checking all values in a vector (for loops)</a></p>
+<section id="using-all-6-conditional-operators" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="using-all-6-conditional-operators"><span class="header-section-number">7.1</span> Using all 6 conditional operators</h3>
+<p>The above example used ( <strong><em>&gt;</em></strong> ) to compare the values in <strong><em>highTemps</em></strong> to the value <strong><em>50.</em></strong></p>
+<p>&nbsp;</p>
+<p>Let’s use all six conditional operator to compare <strong><em>highTemp[2]</em></strong>, which is <strong>50</strong><em>,</em> to the value <strong>50</strong><em>:</em></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">---------</span><span class="sc">\n</span><span class="st">Checking high temp 2 using all 6 conditional operators:</span><span class="sc">\n</span><span class="st">"</span>);</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(highTemps[<span class="dv">2</span>] <span class="sc">&gt;=</span> <span class="dv">50</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"  high temp is greater than or equal to 50</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(highTemps[<span class="dv">2</span>] <span class="sc">&lt;=</span> <span class="dv">50</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"  high temp is less than or equal to 50</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(highTemps[<span class="dv">2</span>] <span class="sc">&gt;</span> <span class="dv">50</span>)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"  high temp is greater than 50</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(highTemps[<span class="dv">2</span>] <span class="sc">&lt;</span> <span class="dv">50</span>)</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"  high temp is less than 50</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(highTemps[<span class="dv">2</span>] <span class="sc">==</span> <span class="dv">50</span>)</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"  high temp is equal to 50</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(highTemps[<span class="dv">2</span>] <span class="sc">!=</span> <span class="dv">50</span>)</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"  high temp is not equal to 50</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>  }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In the <strong><em>Console,</em></strong> we see that <strong><em>highTemps[2]</em></strong> was <strong>&gt;=</strong>, <strong>&lt;=</strong>, and <strong>==</strong> <strong>50</strong>:</p>
+<div class="sourceCode" id="cb7" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Checking high temp <span class="dv">2</span> using all <span class="dv">6</span> conditional operators<span class="sc">:</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  high temp is greater than or equal to <span class="dv">50</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  high temp is less than or equal to <span class="dv">50</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  high temp is equal to <span class="dv">50</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="conditional-operators-with-charactersstrings" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="conditional-operators-with-charactersstrings"><span class="header-section-number">8</span> Conditional Operators with characters/strings</h2>
+<p>We can use all same six conditional operators to compare characters/strings – but only ( <strong>==</strong> ) and ( <strong>!=</strong> ) are commonly used.&nbsp; <a href="#extension-greater-than-and-less-than-on-strings">Extension: Greater than and less than on strings</a></p>
+<p>&nbsp;</p>
+<p>We are going to use conditional operators on the values in the <strong><em>noonCondition</em></strong> vector.&nbsp; The <strong><em>noonCondition</em></strong> vector consists of character values, or, as they are more commonly called, <span class="hl">string values</span> (labelled <strong><em>chr</em></strong> in the <strong><em>Environment</em></strong> tab).&nbsp; Since the value is a <strong><em>string/chr</em></strong>, we want to compare it to a value in quotes</p>
+<p>&nbsp;</p>
+<p>The following code will check the second value in <strong><em>noonCond</em></strong> using the <em>equal</em> ( <strong><em>==</em></strong> ) condition and the <em>not equal to</em> ( !<strong><em>=</em></strong> ) condition:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">---------</span><span class="sc">\n</span><span class="st">Check to see the noon condition on the day 2:</span><span class="sc">\n</span><span class="st">"</span>);</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># checking the second noonCond, which is "Cloudy"</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(noonCond[<span class="dv">2</span>] <span class="sc">==</span> <span class="st">"Cloudy"</span>)  <span class="co"># noonCond[2] is "Cloudy"</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"  Day was cloudy</span><span class="sc">\n</span><span class="st">"</span>);</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(noonCond[<span class="dv">2</span>] <span class="sc">!=</span> <span class="st">"Sunny"</span>)   <span class="co"># noonCond[2] is not "Sunny"</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"  Day was not Sunny</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In the <strong><em>Console,</em></strong> we see that <strong><em>noonCond[2]</em></strong> was equal to “Cloudy” and not equal to “Sunny”:</p>
+<div class="sourceCode" id="cb9" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>Check to see the noon condition on the day <span class="dv">2</span><span class="sc">:</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  Day was Cloudy</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  Day was not Sunny</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="quotes-around-numeric-and-string-values" class="level3" data-number="8.1">
+<h3 data-number="8.1" class="anchored" data-anchor-id="quotes-around-numeric-and-string-values"><span class="header-section-number">8.1</span> Quotes around numeric and string values</h3>
+<p>When we compared a numeric value within a vector to a number we do not use quotes:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(highTemps[<span class="dv">2</span>] <span class="sc">&gt;=</span> <span class="dv">50</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>But, when we compare a string/character value within a vector to a string we need quotes around the latter:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(noonCond[<span class="dv">2</span>] <span class="sc">==</span> <span class="st">"Cloudy"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If we do not use quotes then R thinks there is some variable named Cloudy and you will get an <span class="hl">object ‘Cloudy’ not found</span> error:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(noonCond[<span class="dv">2</span>] <span class="sc">==</span> Cloudy)  <span class="co"># error because there is no variable (Object) named Cloudy</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Remember that, in R, a variable name can only start with a letter, underscore, or a dot.&nbsp; So, a number is unambiguously not a variable.</p>
+<p>&nbsp;</p>
+<p>However, you can put quotes around a number:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(highTemps[<span class="dv">2</span>] <span class="sc">&gt;=</span> <span class="st">"50"</span>)  <span class="co"># this will often give a wrong answer...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This change the number 50 to the character “5” followed by the character “0”.&nbsp; Coincidentally, the <strong><em>if()</em></strong> statement above is also TRUE, but for the wrong reason.&nbsp; <a href="#extension-numbers-as-characters">Extension: Numbers as Characters</a></p>
+</section>
+<section id="case-counts-with-strings" class="level3" data-number="8.2">
+<h3 data-number="8.2" class="anchored" data-anchor-id="case-counts-with-strings"><span class="header-section-number">8.2</span> Case counts with strings</h3>
+<p>When comparing two strings, <span class="hl">any difference between the two strings means they are not equal</span> (so, == would be FALSE and != would be TRUE).&nbsp; This includes capital and lowercase letters.</p>
+<p>&nbsp;</p>
+<p><strong><em>noonCond[2]</em></strong> is “Cloudy” but “Cloudy” is not the same as “cloudy”:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">---------</span><span class="sc">\n</span><span class="st">Checking same condition but changed 'Cloudy' to 'cloudy':</span><span class="sc">\n</span><span class="st">"</span>);</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(noonCond[<span class="dv">2</span>] <span class="sc">==</span> <span class="st">"cloudy"</span>)   <span class="co"># This will be FALSE because of the lowercase c</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"  Day was cloudy</span><span class="sc">\n</span><span class="st">"</span>);</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(noonCond[<span class="dv">2</span>] <span class="sc">!=</span> <span class="st">"cloudy"</span>)   <span class="co"># This will be TRUE</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"  Day was NOT cloudy</span><span class="sc">\n</span><span class="st">"</span>); </span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>And in the Console we see that “Cloudy” does not equal “cloudy”:</p>
+<div class="sourceCode" id="cb15" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>Checking same condition but changed <span class="st">'Cloudy'</span> to <span class="st">'cloudy'</span><span class="sc">:</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  Day was NOT cloudy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="checking-other-columns" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="checking-other-columns"><span class="header-section-number">9</span> Checking other columns</h2>
+<p>Many times, when we are checking values within a data frame, we want to know more about other values within that row.&nbsp; In the case of the <strong><em>weatherData</em></strong> data frame, these are the weather readings that occurred on the same day:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">---------</span><span class="sc">\n</span><span class="st">Outputting information from another column:</span><span class="sc">\n</span><span class="st">"</span>);</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(noonCond[<span class="dv">2</span>] <span class="sc">==</span> <span class="st">"Cloudy"</span>)   <span class="co"># checking if they are equal</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"  Day was Cloudy"</span>);</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">" and the high temperature that day was"</span>, highTemps[<span class="dv">2</span>], <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>);</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb17" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>Outputting information from another column<span class="sc">:</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  Day was Cloudy and the high temperature that day was <span class="dv">50</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="if-within-if" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="if-within-if"><span class="header-section-number">10</span> if() within if()</h2>
+<p>We often want to check multiple conditions and one way to do this is to embed an <strong><em>if()</em></strong> statement within an <strong><em>if()</em></strong> statement.</p>
+<p>&nbsp;</p>
+<p>For instance, if the condition is cloudy, we might also want to check the temperature for that day:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(noonCond[<span class="dv">2</span>] <span class="sc">==</span> <span class="st">"Cloudy"</span>)   <span class="co"># checking if they are equal</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># the following if statement are only checked if conditions are cloudy</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>( highTemps[<span class="dv">2</span>] <span class="sc">&gt;</span> <span class="dv">60</span> )</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"Still nice enough to go out!"</span>);</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>( highTemps[<span class="dv">2</span>] <span class="sc">&lt;</span> <span class="dv">60</span> )</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"Best to stay indoors"</span>);</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The two inner <strong><em>if()</em></strong> statements (checking <strong><em>highTemps</em></strong>) are only checked if the outer <strong><em>if()</em></strong> statement (checking <strong><em>noonCond</em></strong>) is <strong><em>TRUE</em></strong>.</p>
+</section>
+<section id="application" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="application"><span class="header-section-number">11</span> Application</h2>
+<p><span class="hl">All of the following code should be in one script file.</span></p>
+<p>A) Using <strong><em>if()</em></strong>, find which of the first five days had at least 1 inch of rain.&nbsp; For those days, output to the <strong><em>Console</em></strong> the high and low temperature.</p>
+<p><span class="note">Note: this is an inefficient way to do the problem – the more efficient way is for loops, which we will do in a couple lessons.</span></p>
+<p>&nbsp;</p>
+<p>B) Using <strong><em>if(),</em></strong> find which of the last five days had a low temperature that was 40 degrees or less.&nbsp; For those days output <strong><em>date</em></strong> to the <strong><em>Console</em></strong>. <em><br>
+</em></p>
+<p>C) Use <strong><em>sample()</em></strong> to pick a random temperature from <strong>40-80</strong> (make sure you save the value to a variable)</p>
+<p>&nbsp;</p>
+<p>D) Use <strong><em>sample()</em></strong> to pick a random weather condition from these four choices: “Cloudy”, “Sunny”, “Rainy”, “Foggy”</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="at">x=</span><span class="fu">c</span>(<span class="st">'a'</span>, <span class="st">'b'</span>, <span class="st">'c'</span>), <span class="at">size=</span><span class="dv">1</span>) <span class="co"># randomly picks a, b, or c</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>E) Using <strong><em>if()</em></strong> with embedded <strong><em>if()</em></strong> output a single message to the <strong><em>Console</em></strong> for each of these four scenarios:</p>
+<ol type="1">
+<li><p>random temperature (part C) is <strong>more than or equal to 60</strong> and the weather condition (part D) <strong>is sunny</strong></p></li>
+<li><p>random temperature (part C) is <strong>less than 60</strong> and the weather condition (part D) <strong>is sunny</strong></p></li>
+<li><p>random temperature (part C) is <strong>more than or equal to 60</strong> and the weather condition (part D) <strong>is not sunny</strong></p></li>
+<li><p>random temperature (part C) is <strong>less than 60</strong> and the weather condition (part D) <strong>is not sunny</strong></p></li>
+</ol>
+<p>&nbsp;</p>
+<p>The four scenario are mutually exclusive (do not overlap each other) and complete (cover every possible scenario).&nbsp;</p>
+<p><span class="hl">If you do this right, then exactly one of the four messages will appear every time you run your script.</span></p>
+<p>&nbsp;</p>
+<p>Save the script as&nbsp;<strong><em>app</em></strong>1-08<strong><em>.r</em></strong> in your&nbsp;<strong><em>scripts</em></strong> folder and&nbsp; email your Project Folder to Charlie Belinsky at belinsky@msu.edu.</p>
+<p>&nbsp;</p>
+<p><a href="..\content/DEVELOPMENT/2020/courses/DEV-belinsky-2020-ProgrammingFundamentalsUsingR/R/Lessons/1-01_Setup_and_RStudio_Projects.html?ou=1247781#zip">Instructions for zipping the Project Folder are here.</a></p>
+<p>&nbsp;</p>
+<p>If you have any questions regarding this application, feel free to email them to Charlie Belinsky at belinsky@msu.edu.</p>
+<section id="questions-to-answer" class="level3" data-number="11.1">
+<h3 data-number="11.1" class="anchored" data-anchor-id="questions-to-answer"><span class="header-section-number">11.1</span> Questions to answer</h3>
+<p>Answer the following in comments inside your application script:</p>
+<ol type="1">
+<li><p>What was your level of comfort with the lesson/application?</p></li>
+<li><p>What areas of the lesson/application confused or still confuses you?</p></li>
+<li><p>What are some things you would like to know more about that is related to, but not covered in, this lesson?</p></li>
+</ol>
+</section>
+</section>
+<section id="extension-curly-bracket-placement" class="level2" data-number="12">
+<h2 data-number="12" class="anchored" data-anchor-id="extension-curly-bracket-placement"><span class="header-section-number">12</span> Extension: Curly bracket placement</h2>
+<p>The curly brackets attached to a <strong><em>if()</em></strong> statement are used to encapsulate the codeblock and, functionally, all the curly brackets have to do is begin and end the codeblock – so there are many ways you could place the curly brackets.</p>
+<p>&nbsp;</p>
+<p>Here are three bad ways that work:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (randomTemp <span class="sc">&gt;</span> <span class="dv">50</span>) { <span class="fu">cat</span>(<span class="st">"The temperature is"</span>, randomTemp);</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"warm enough to go outside</span><span class="sc">\n</span><span class="st">"</span>);  }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (randomTemp <span class="sc">&gt;</span> <span class="dv">50</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>      { </span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"The temperature is"</span>, randomTemp);</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"warm enough to go outside</span><span class="sc">\n</span><span class="st">"</span>);</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>      }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (randomTemp <span class="sc">&gt;</span> <span class="dv">50</span>)             {</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"The temperature is"</span>, randomTemp);</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"warm enough to go outside</span><span class="sc">\n</span><span class="st">"</span>);     }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The three <strong><em>if()</em></strong> statement above would all execute correctly because the codeblock is in between the curly brackets.&nbsp; But, in programming there are standards to how curly brackets get placed.&nbsp; Here are the two main standards – and you need to use one of these two in this class:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># standard 1</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (randomTemp <span class="sc">&gt;</span> <span class="dv">50</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>{ </span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"The temperature is"</span>, randomTemp);</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"warm enough to go outside</span><span class="sc">\n</span><span class="st">"</span>);</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="co"># standard 2</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (randomTemp <span class="sc">&gt;</span> <span class="dv">50</span>)  { </span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"The temperature is"</span>, randomTemp);</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"warm enough to go outside</span><span class="sc">\n</span><span class="st">"</span>);</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In both these standards, the commands inside the codeblock are also indented – this is to make it easier the code that is attached to the <strong><em>if()</em></strong> statement.&nbsp;</p>
+</section>
+<section id="extension-removing-curly-brackets-in-if-statements" class="level2" data-number="13">
+<h2 data-number="13" class="anchored" data-anchor-id="extension-removing-curly-brackets-in-if-statements"><span class="header-section-number">13</span> Extension: Removing curly brackets in if() statements</h2>
+<p>If there is only one command in a codeblock as in the 3 <strong><em>if()</em></strong> statements below:&nbsp;</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(highTemps[<span class="dv">3</span>] <span class="sc">&gt;</span> <span class="dv">50</span>)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"  high temp 3 is greater than 50</span><span class="sc">\n</span><span class="st">"</span>);</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(highTemps[<span class="dv">4</span>] <span class="sc">&gt;</span> <span class="dv">50</span>)</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"  high temp 4 is greater than 50</span><span class="sc">\n</span><span class="st">"</span>);</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>} </span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(highTemps[<span class="dv">5</span>] <span class="sc">&gt;</span> <span class="dv">50</span>)</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"  high temp 5 is greater than 50</span><span class="sc">\n</span><span class="st">"</span>);</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Then you can take out the curly brackets and the code below will execute exactly the same:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(highTemps[<span class="dv">3</span>] <span class="sc">&gt;</span> <span class="dv">50</span>)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"  high temp 3 is greater than 50</span><span class="sc">\n</span><span class="st">"</span>);</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(highTemps[<span class="dv">4</span>] <span class="sc">&gt;</span> <span class="dv">50</span>)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"  high temp 4 is greater than 50</span><span class="sc">\n</span><span class="st">"</span>);</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(highTemps[<span class="dv">5</span>] <span class="sc">&gt;</span> <span class="dv">50</span>)</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"  high temp 5 is greater than 50</span><span class="sc">\n</span><span class="st">"</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>But, that is only because<span class="hl">there is only one command</span>attached to each <strong><em>if()</em></strong> statement.&nbsp; The curly brackets are needed if there is more than one command:</p>
+</section>
+<section id="extension-greater-than-and-less-than-on-strings" class="level2" data-number="14">
+<h2 data-number="14" class="anchored" data-anchor-id="extension-greater-than-and-less-than-on-strings"><span class="header-section-number">14</span> Extension: Greater than and less than on strings</h2>
+<p>Greater than and less than conditional operator do work on strings.&nbsp; If the strings only have letters from the English alphabet, then &gt; and &lt; will do an alphabetical comparison between the values.&nbsp; In this case, &gt; mean further in the alphabet.&nbsp; So, “C” &gt; “B”, “D” &gt; “C”…</p>
+<div class="sourceCode" id="cb26" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="st">"Frank"</span> <span class="sc">&gt;</span> <span class="st">"Charlie"</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="cn">TRUE</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="st">"Bob"</span> <span class="sc">&gt;</span> <span class="st">"Charlie"</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="cn">FALSE</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="st">"Bob"</span> <span class="sc">&gt;</span> <span class="st">"Barb"</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="cn">TRUE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you use characters that are not in the English alphabet then R will look at the <a href="https://en.wikipedia.org/wiki/List_of_Unicode_characters">Unicode character code</a>.&nbsp; Unicode character codes are unique numbers assigned to every imaginable character.&nbsp; The English letters start at 65 in the Unicode chart.&nbsp; The main use for Unicode character codes is that they allow someone to use and output characters that are not on your keyboard like the <strong><em>ζ</em></strong> , which is character number 950.&nbsp;</p>
+<p>Even though <strong>&gt;</strong> and <strong>&lt;</strong> works on all characters, it has limited usefulness.</p>
+</section>
+<section id="extension-numbers-as-characters" class="level2" data-number="15">
+<h2 data-number="15" class="anchored" data-anchor-id="extension-numbers-as-characters"><span class="header-section-number">15</span> Extension: Numbers as Characters</h2>
+<p>A common problem in R is that variables that look like numbers can really be a string/character.</p>
+<p>&nbsp;</p>
+<p>If you add these variables to your script:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>num1 <span class="ot">=</span> <span class="dv">50</span>;</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>num2 <span class="ot">=</span> <span class="st">"50"</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Then <strong><em>num1</em></strong> is an integer but <strong><em>num2</em></strong> is a string/character.</p>
+<p>In other words, <strong><em>num1</em></strong> is 50 <strong><em>and num2</em></strong> is the character “5” followed by the character “0”.</p>
+<p>&nbsp;</p>
+<p>This means the mathematical and conditional operators will not work on <strong><em>num2</em></strong> as you would expect:</p>
+<div id="fig-condOperators" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-condOperators-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="fig-condOperators" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="fig-condOperators-1"><a href="#fig-condOperators-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> num2 <span class="sc">&gt;</span> <span class="dv">30</span></span>
+<span id="fig-condOperators-2"><a href="#fig-condOperators-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="cn">TRUE</span></span>
+<span id="fig-condOperators-3"><a href="#fig-condOperators-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> num2 <span class="sc">&gt;</span> <span class="dv">70</span></span>
+<span id="fig-condOperators-4"><a href="#fig-condOperators-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="cn">FALSE</span></span>
+<span id="fig-condOperators-5"><a href="#fig-condOperators-5" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> num2 <span class="sc">&gt;</span> <span class="dv">300</span></span>
+<span id="fig-condOperators-6"><a href="#fig-condOperators-6" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="cn">TRUE</span></span>
+<span id="fig-condOperators-7"><a href="#fig-condOperators-7" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> num2 <span class="sc">&gt;</span> <span class="dv">7</span></span>
+<span id="fig-condOperators-8"><a href="#fig-condOperators-8" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="cn">FALSE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-condOperators-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Conditional operators on numbers that are really string/characters: num2 = “50”
+</figcaption>
+</figure>
+</div>
+<p>Since <strong><em>num2</em></strong> is “50”, the first two seem correct, “50” is greater than 30 and not greater than 70.&nbsp;</p>
+<p>But adding or taking away “0” does not change the result of the conditional operator so “50” is still greater than 300 and not greater than 7.</p>
+<p>&nbsp;</p>
+<p>This happens because R does not think of “50” as a number but as two characters, a “5” and a “0”.&nbsp; And since R sees “50” as two character, R will also convert the other number into characters.&nbsp; So, this is what R is really doing:</p>
+<div id="fig-CondOp_strings" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-CondOp_strings-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="fig-CondOp_strings"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="fig-CondOp_strings-1"><a href="#fig-CondOp_strings-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> num2 <span class="sc">&gt;</span> <span class="st">"30"</span></span>
+<span id="fig-CondOp_strings-2"><a href="#fig-CondOp_strings-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="cn">TRUE</span></span>
+<span id="fig-CondOp_strings-3"><a href="#fig-CondOp_strings-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> num2 <span class="sc">&gt;</span> <span class="st">"70"</span></span>
+<span id="fig-CondOp_strings-4"><a href="#fig-CondOp_strings-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="cn">FALSE</span></span>
+<span id="fig-CondOp_strings-5"><a href="#fig-CondOp_strings-5" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> num2 <span class="sc">&gt;</span> <span class="st">"300"</span></span>
+<span id="fig-CondOp_strings-6"><a href="#fig-CondOp_strings-6" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="cn">TRUE</span></span>
+<span id="fig-CondOp_strings-7"><a href="#fig-CondOp_strings-7" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> num2 <span class="sc">&gt;</span> <span class="st">"7"</span></span>
+<span id="fig-CondOp_strings-8"><a href="#fig-CondOp_strings-8" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="cn">FALSE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-CondOp_strings-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: Conditional operators on strings that have numbers in them
+</figcaption>
+</figure>
+</div>
+<p>R is making an alphabetical comparison or the numbers and alphabetic comparisons go right to left.&nbsp; R sees “5” as greater than “3” and not greater than “7”.&nbsp; This is the same as saying that R see “Frank” as greater than “Charlie” and not greater than “Harry”.</p>
+<p>&nbsp;</p>
+<p>When doing an alphabetical comparison, if the first character is different then you do not need to look beyond the first character when doing a conditional operator.</p>
+</section>
+<section id="extension-checking-all-values-in-a-vector-for-loops" class="level2" data-number="16">
+<h2 data-number="16" class="anchored" data-anchor-id="extension-checking-all-values-in-a-vector-for-loops"><span class="header-section-number">16</span> Extension: Checking all values in a vector (for loops)</h2>
+<p>This is a preview of things to come.&nbsp; Obviously, it is a pain to code an <strong><em>if()</em></strong> statement for every value in a vector – especially if there are hundreds or thousands of values.&nbsp; For this reason <strong><em>if()</em></strong> statements are often found embedded within <strong><em>for</em></strong> loops.&nbsp; The <strong><em>for</em></strong> loop’s job is to iterate through a set of values with just one line:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This for loop will execute 14 times with i=1:14</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">14</span>) </span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># only one if() is needed to check all 14 values in the vector</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(highTemps[i] <span class="sc">&gt;</span> <span class="dv">50</span>)</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"  high temp"</span>, i, <span class="st">"is greater than 50</span><span class="sc">\n</span><span class="st">"</span>);</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>And the <strong><em>if()</em></strong> statement does the check on all 14 values:</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

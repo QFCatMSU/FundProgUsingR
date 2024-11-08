@@ -7,6 +7,7 @@ short: "1-07"
 ### Changes...
 
 -   give an example of an index vector with manual values (lesson 1-4 section 7)
+-   print()/sink() extension
 
 ## Purpose
 
@@ -27,6 +28,10 @@ The files for this lesson:
 -   Script: [you can download the script here](../scripts/1-07_Outputs.R)
 
 -   Data: [download the data file here](../data/twoWeekWeatherData.csv)
+
+ 
+
+If you have any questions about the material in this lesson, feel free to email them to the instructor, {{< var instructor.name >}}, at {{< var instructor.email >}}.
 
 ## Output to console
 
@@ -217,7 +222,7 @@ The low temperatures are: 45 43 46 38 36 45 32 50 48 40 36 43 45 63
 Combining a text message and variables in one output
 :::
 
-[Trap: Misplacing (or forgetting) quotes]
+[Trap: Misplacing (or forgetting) quotes](#trap-misplacing-or-forgetting-quotes)
 
 ## Output indexed values
 
@@ -320,9 +325,9 @@ We have used ***cat()*** many times in this script to output variable and text t
 
 Let's search for cat in the search bar of the Help tab:
 
-![Information about the cat() function in the Help tab.](images/R-01-06 Cat function.PNG){#fig-catHelp .fs}
+![Information about the cat() function in the Help tab.](images/R-01-06%20Cat%20function.PNG){#fig-catHelp .fs}
 
-The first part of ***cat()*** is the three dots "**...**".  When the 3 dots are at the beginning of a function, the three dots say that [**cat()** will accept any number of objects ]{.hl}as inputs.  The objects can be text in quotes, string variables, numeric variables, or other objects we have not discussed yet like Dates.
+The first part of ***cat()*** is the three dots "**...**".  When the 3 dots are at the beginning of a function, the three dots say that [**cat()** will accept any number of objects]{.hl}as inputs.  The objects can be text in quotes, string variables, numeric variables, or other objects we have not discussed yet like Dates.
 
  
 
@@ -334,7 +339,7 @@ After the three dots, ***cat()*** has **5** arguments: ***file***, ***sep***, **
 
 ### The sep argument
 
-Arguments are used to modify the behavior of a function.  [**sep** changes how the different components of the output are separated ]{.hl}-- the default is to use 1 space.  We are going to change the ***sep*** argument.
+Arguments are used to modify the behavior of a function.  [**sep** changes how the different components of the output are separated]{.hl}-- the default is to use 1 space.  We are going to change the ***sep*** argument.
 
  
 
@@ -357,11 +362,11 @@ Day 5-9 temperature: ** 36 ** 45 ** 32 ** 50 ** 48 **
 Using the **sep** argument in **cat()**
 :::
 
-[Note: The most common way people use **sep** is to set **sep=""** ]{.note}-- in other words, set ***sep*** to nothing so nothing is added to the output.
+[Note: The most common way people use **sep** is to set **sep=""**]{.note}-- in other words, set ***sep*** to nothing so nothing is added to the output.
 
  
 
-[Trap: Misplacing (or forgetting) quotes]
+[Trap: Misplacing (or forgetting) quotes](#trap-misplacing-or-forgetting-quotes)
 
 ### The **file** argument
 
@@ -408,13 +413,13 @@ C. Using ***cat()***, output the data from part B to a file named ***output.txt*
 D. Challenge: Using ***cat()***, append your name and three different Unicode characters to the text in the ***output.txt*** file created in part C.  Hint: look at the arguments in ***cat()*** -- you need to change one of them.\
  
 
-{{< include ../assets/AppInstructions.qmd >}}
+{{< include ../assets/_AppInstructions.qmd >}}
 
 ## Extension: cat() vs print() {#extension-cat-vs-print}
 
 The two main functions used to output to the ***Console*** are ***cat()*** and ***print()***.   ***print()*** does a lot more formatting of the output.  You would use ***print()*** when you want to display the results of a statistical test, which often has a complicated format.  ***cat()*** does very little formatting on its own – ***cat()*** lets the programmer control the output.  You would use this when you want to output text and some simple data – or, where you really want control of the output format.
 
-## Trap: Misplacing (or forgetting) quotes
+## Trap: Misplacing (or forgetting) quotes {#trap-misplacing-or-forgetting-quotes}
 
 It is easy to accidentally forget a quote, add a quote, or simply move a quote to a place it does not belong. The following code has a missing quote on line 8 right after "*The values are...*
 
@@ -453,3 +458,18 @@ Now the correct components of the output are colored red and the script executes
 \<image\>
 
 Missing quote added
+
+## Extension: print() sink()
+
+***\
+sink()*** tells R to send content to a file instead of the Console.  
+
+***print()*** is used here because it handles the formatting you want far better than ***cat()***
+
+Using the following  lines:
+
+```         
+sink(file="data/output2.txt") # send content to data/output2.txt print(weatherData)            # send weatherData to file sink(file=NULL)               # stop sending content to file (goes back to Console)
+```
+
+(I think I will add this as an extension to the lesson)

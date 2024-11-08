@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>1-13: Functions</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-2486e1f0a3ee9ee1fc393803a1361cdb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-0815817224b54744edbb51fc66bd26dc.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link rel="shortcut icon" href="https://qfcatmsu.github.io/assets/quarto/qfc_icon.png">
+<script>mod=true; menuCollapse=true;</script>
+<script src="https://qfcatmsu.github.io/assets/quarto/qfc_styles.js"></script>
+ 
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="https://qfcatmsu.github.io/assets/quarto/qfc_styles.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+          <h1 class="quarto-secondary-nav-title">1-13: Functions</h1>
+        </a>     
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text"><b>Fundamentals of Programming class</b></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-02-Variables.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-02: Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-03_Mathematical_Operations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-03: Mathematical Operations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-04_Vectors_And_Data_Frames.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-04: Vectors and Data Frames</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-05_Functions_Introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-05: Functions Introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-06_Run_and_Source.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-06: Run and Source</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-07_Outputs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-07: Outputs</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-08_Conditional_Operations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-08: Conditional Operations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-09_If_Else_Statements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-09: Conditional Operations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-10_For_Loops.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-10: For Loops</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-11_For_Loops_and_State_Varibles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-11: For Loops and State Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-12_MultipleConditions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-12: Multiple Conditions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-13_Functions.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">1-13: Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-14_Functions2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-14: Functions 2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-15_Functions3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-15: Functions 3</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title"><b>Lesson Content</b></h2>
+   
+  <ul>
+  <li><a href="#future-changes" id="toc-future-changes" class="nav-link active" data-scroll-target="#future-changes"><span class="header-section-number">0.1</span> Future changes…</a></li>
+  <li><a href="#purpose" id="toc-purpose" class="nav-link" data-scroll-target="#purpose"><span class="header-section-number">1</span> Purpose</a></li>
+  <li><a href="#questions-about-the-material" id="toc-questions-about-the-material" class="nav-link" data-scroll-target="#questions-about-the-material"><span class="header-section-number">2</span> Questions about the material…</a></li>
+  <li><a href="#creating-code-that-is-repeatable-and-reusable" id="toc-creating-code-that-is-repeatable-and-reusable" class="nav-link" data-scroll-target="#creating-code-that-is-repeatable-and-reusable"><span class="header-section-number">3</span> Creating code that is repeatable and reusable</a>
+  <ul class="collapse">
+  <li><a href="#statistical-function" id="toc-statistical-function" class="nav-link" data-scroll-target="#statistical-function"><span class="header-section-number">3.1</span> Statistical function</a></li>
+  </ul></li>
+  <li><a href="#parts-of-a-function" id="toc-parts-of-a-function" class="nav-link" data-scroll-target="#parts-of-a-function"><span class="header-section-number">4</span> Parts of a function</a>
+  <ul class="collapse">
+  <li><a href="#functions-names" id="toc-functions-names" class="nav-link" data-scroll-target="#functions-names"><span class="header-section-number">4.1</span> Functions names</a></li>
+  <li><a href="#arguments-inputs-of-a-function" id="toc-arguments-inputs-of-a-function" class="nav-link" data-scroll-target="#arguments-inputs-of-a-function"><span class="header-section-number">4.2</span> Arguments (inputs) of a function</a></li>
+  <li><a href="#the-return-value-of-a-function" id="toc-the-return-value-of-a-function" class="nav-link" data-scroll-target="#the-return-value-of-a-function"><span class="header-section-number">4.3</span> The return value of a function</a></li>
+  </ul></li>
+  <li><a href="#function-independence" id="toc-function-independence" class="nav-link" data-scroll-target="#function-independence"><span class="header-section-number">5</span> Function independence</a></li>
+  <li><a href="#a-conversion-function" id="toc-a-conversion-function" class="nav-link" data-scroll-target="#a-conversion-function"><span class="header-section-number">6</span> A conversion function</a>
+  <ul class="collapse">
+  <li><a href="#calculating-the-conversion" id="toc-calculating-the-conversion" class="nav-link" data-scroll-target="#calculating-the-conversion"><span class="header-section-number">6.1</span> Calculating the conversion</a></li>
+  <li><a href="#creating-a-function" id="toc-creating-a-function" class="nav-link" data-scroll-target="#creating-a-function"><span class="header-section-number">6.2</span> Creating a function</a></li>
+  <li><a href="#using-the-function" id="toc-using-the-function" class="nav-link" data-scroll-target="#using-the-function"><span class="header-section-number">6.3</span> Using the function</a></li>
+  <li><a href="#missing-an-argument-error" id="toc-missing-an-argument-error" class="nav-link" data-scroll-target="#missing-an-argument-error"><span class="header-section-number">6.4</span> Missing an argument error</a></li>
+  </ul></li>
+  <li><a href="#a-modulus-function" id="toc-a-modulus-function" class="nav-link" data-scroll-target="#a-modulus-function"><span class="header-section-number">7</span> A modulus function</a>
+  <ul class="collapse">
+  <li><a href="#modulus-division" id="toc-modulus-division" class="nav-link" data-scroll-target="#modulus-division"><span class="header-section-number">7.1</span> Modulus division</a></li>
+  <li><a href="#creating-a-modulus-function" id="toc-creating-a-modulus-function" class="nav-link" data-scroll-target="#creating-a-modulus-function"><span class="header-section-number">7.2</span> Creating a modulus function</a></li>
+  <li><a href="#functions-need-to-be-set-before-they-are-called" id="toc-functions-need-to-be-set-before-they-are-called" class="nav-link" data-scroll-target="#functions-need-to-be-set-before-they-are-called"><span class="header-section-number">7.3</span> Functions need to be set before they are called</a></li>
+  </ul></li>
+  <li><a href="#argument-names" id="toc-argument-names" class="nav-link" data-scroll-target="#argument-names"><span class="header-section-number">8</span> Argument names</a></li>
+  <li><a href="#variable-and-function-names-do-not-matter-to-r" id="toc-variable-and-function-names-do-not-matter-to-r" class="nav-link" data-scroll-target="#variable-and-function-names-do-not-matter-to-r"><span class="header-section-number">9</span> Variable and function names do not matter… to R</a></li>
+  <li><a href="#application" id="toc-application" class="nav-link" data-scroll-target="#application"><span class="header-section-number">10</span> Application</a>
+  <ul class="collapse">
+  <li><a href="#questions-to-answer" id="toc-questions-to-answer" class="nav-link" data-scroll-target="#questions-to-answer"><span class="header-section-number">10.1</span> Questions to answer</a></li>
+  </ul></li>
+  <li><a href="#extension-using-a-for-to-cycle-through-vector-values" id="toc-extension-using-a-for-to-cycle-through-vector-values" class="nav-link" data-scroll-target="#extension-using-a-for-to-cycle-through-vector-values"><span class="header-section-number">11</span> Extension: Using a for() to cycle through vector values</a></li>
+  <li><a href="#extension-function-non-independence-in-r" id="toc-extension-function-non-independence-in-r" class="nav-link" data-scroll-target="#extension-function-non-independence-in-r"><span class="header-section-number">12</span> Extension: function non-independence in R</a></li>
+  <li><a href="#extension-forgetting-return-values" id="toc-extension-forgetting-return-values" class="nav-link" data-scroll-target="#extension-forgetting-return-values"><span class="header-section-number">13</span> Extension: Forgetting return values</a></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content column-page-right" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">1-13: Functions</h1>
+</div>
+
+
+
+<div class="quarto-title-meta column-page-right">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="future-changes" class="level3" data-number="0.1">
+<h3 data-number="0.1" class="anchored" data-anchor-id="future-changes"><span class="header-section-number">0.1</span> Future changes…</h3>
+<ul>
+<li><p>better explanation of why one return value is used</p></li>
+<li><p>reduce number of examples in 6-1</p></li>
+<li><p>mention how functions are the 4th component of programming</p></li>
+</ul>
+</section>
+<section id="purpose" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="purpose"><span class="header-section-number">1</span> Purpose</h2>
+<ul>
+<li><p>Create reusable code (a function)</p></li>
+<li><p>Use arguments in functions</p></li>
+<li><p>Use return values in functions</p></li>
+</ul>
+</section>
+<section id="questions-about-the-material" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="questions-about-the-material"><span class="header-section-number">2</span> Questions about the material…</h2>
+<p>The files for this lesson:</p>
+<ul>
+<li><p>Script:&nbsp;<a href="../scripts/1-13_Functions.R">you can download the script here</a></p></li>
+<li><p>Data: <a href="../data/twoWeekWeatherData3.csv">download the data file here</a></p></li>
+</ul>
+<p>&nbsp;</p>
+<p>If you have any questions about the material in this lesson, feel free to email them to the instructor, Charlie Belinsky, at belinsky@msu.edu.</p>
+</section>
+<section id="creating-code-that-is-repeatable-and-reusable" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="creating-code-that-is-repeatable-and-reusable"><span class="header-section-number">3</span> Creating code that is repeatable and reusable</h2>
+<p>The are many times in programming where you want to repeat the same, or very similar, code.&nbsp; We have seen this done in previous lessons, using <strong><em>for</em></strong> loops to perform the same commands on multiple values in a vector (e.g., finding which values in a temperature column are less than 50).&nbsp; But, <strong><em>for</em></strong> loops are limited to one place within one script.</p>
+<p>&nbsp;</p>
+<p>We want to create code that can be be used multiple times across multiple scripts. For instance, we might want to repeat a conversion on various values across columns from multiple dataframes.&nbsp; <span class="hl">Function</span> are self-contained codeblocks that can be called from any script.</p>
+<p>&nbsp;</p>
+<p>There are many functions built into R and far more in the many packages in R.&nbsp; You can also create your own functions.&nbsp; We are going to start with some statistical functions built into R.</p>
+<section id="statistical-function" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="statistical-function"><span class="header-section-number">3.1</span> Statistical function</h3>
+<p>R was designed as a programming language for statistics so it is no surprise that R has a lot of statistical function.&nbsp; We will look at the most basic functions: <strong><em>mean(), max(), median(), min(),</em></strong> and <strong><em>sd().</em></strong></p>
+<p>&nbsp;</p>
+<p>All of these functions:</p>
+<ol type="1">
+<li><p>Take a vector of numeric values as input.&nbsp; <span class="note">Note: these functions can, technically, take one value (i.e., a vector of 1) as input, but the results would be boring.</span></p></li>
+<li><p>Apply some operations to these values – these operations are done behind-the-scenes</p></li>
+<li><p>Return the answer</p></li>
+</ol>
+<p>&nbsp;</p>
+<p>Let’s use four of R’s statistical functions on the <strong><em>precipitation</em></strong> column in <em><strong>weatherData</strong>:</em></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>weatherData <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="at">file=</span><span class="st">"data/twoWeekWeatherData3.csv"</span>, </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">sep=</span><span class="st">","</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">header=</span><span class="cn">TRUE</span>, </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>);  </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>precip <span class="ot">=</span> weatherData<span class="sc">$</span>precipitation;</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>precipMean <span class="ot">=</span> <span class="fu">mean</span>(precipitation);</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>precipMax <span class="ot">=</span> <span class="fu">max</span>(precipitation);</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>precipMed <span class="ot">=</span> <span class="fu">median</span>(precipitation);</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>precipVar <span class="ot">=</span> <span class="fu">sd</span>(precipitation);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The results of these function calls in the <strong><em>Environment</em></strong>:</p>
+<div class="sourceCode" id="cb2" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>precipMax<span class="sc">:</span>    <span class="fl">1.13</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>precipMean<span class="sc">:</span>   <span class="fl">0.2617</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>precipMed     <span class="fl">0.025</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>precipSD      <span class="fl">0.4018</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="parts-of-a-function" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="parts-of-a-function"><span class="header-section-number">4</span> Parts of a function</h2>
+<p>All functions, whether user-created or built-in to R, have the same main components: <strong>name</strong>, <strong>argument</strong>, and <strong>return value</strong>.&nbsp;</p>
+<p>The components of a function, using <strong><em>median()</em></strong> as an example:</p>
+<ol type="1">
+<li><p><strong>Name</strong>: this is how you call the function – <strong><em>median()</em></strong></p></li>
+<li><p><strong>Arguments</strong>: variables used by the function that can be set by the caller</p></li>
+</ol>
+<pre><code>-    for ***median()***, the arguments are ***x*** and ***na.rm*** (more about this later in the lesson)
+
+-    ***x*** is set to the ***precipitation*** vector in this code: ***median(precipitation)***</code></pre>
+<ol start="3" type="1">
+<li><strong>Return value</strong>: the output from the function (think of it as the answer)&nbsp;</li>
+</ol>
+<pre><code>-    the return value can be saved by the caller to a variable
+
+-    the return value is saved to ***precipMed*** in this code: ***precipMed = median(precipitation)***</code></pre>
+<div id="fig-median-help" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-median-help-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-1-12_Median_function.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-median-help-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: The median() function in the Help tab –with 2 arguments and a return value
+</figcaption>
+</figure>
+</div>
+<section id="functions-names" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="functions-names"><span class="header-section-number">4.1</span> Functions names</h3>
+<p>Functions, like variables, are named component of a script that stores information.&nbsp; The difference is that <span class="hl">variables store values</span> whereas <span class="hl">functions store codeblocks</span>.</p>
+<p>&nbsp;</p>
+<p>The parentheses after the name indicate <span class="hl">the component is a function</span> as opposed to a variable:</p>
+<ul>
+<li><p><strong><em>median()</em></strong></p></li>
+<li><p><strong><em>read.csv()</em></strong></p></li>
+<li><p><strong><em>log()</em></strong></p></li>
+</ul>
+<p>&nbsp;</p>
+<p>Most of the time when you call a function, including the ones above, an argument is needed inside the parentheses.</p>
+<p>&nbsp;</p>
+<p>This is not universally true, for instance <strong><em>c()</em></strong> is often used without an argument – <strong><em>c()</em></strong> initializes a vector without any values:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>vec1 <span class="ot">=</span> <span class="fu">c</span>();         <span class="co"># a vector that initially has no values (an empty vector)</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>vec2 <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">9</span>,<span class="dv">1</span>);  <span class="co"># a vector with four values</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="arguments-inputs-of-a-function" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="arguments-inputs-of-a-function"><span class="header-section-number">4.2</span> Arguments (inputs) of a function</h3>
+<p>If we look at <strong><em>median()</em></strong> in the <strong><em>Help</em></strong> tab (<a href="#fig-median-help" class="quarto-xref">Figure&nbsp;1</a>), we can see there are two arguments: <strong><em>x</em></strong> and <strong><em>na.rm</em></strong></p>
+<div class="sourceCode" id="cb6" data-tab="Help"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(x, <span class="at">na.rm =</span> <span class="cn">FALSE</span>, ...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This means that <em><strong>x</strong> and <strong>na.rm</strong> are variables used by the function</em> that can be set by the caller.</p>
+<p>&nbsp;</p>
+<p><strong><em>x</em></strong> is the generic name for inputted values used by many functions in R – not to be confused with the x-axis.</p>
+<p><strong><em>na.rm</em></strong> tells the function what to do if there are NA, or unknown, values in the input</p>
+<ul>
+<li><p><strong><em>na.rm = TRUE</em></strong>: remove the NAs from the vector</p></li>
+<li><p><strong><em>na.rm = FALSE</em></strong>: keep the NAs</p></li>
+</ul>
+<p>&nbsp;</p>
+<p><span class="hl"><strong>na.rm</strong> already has a value assigned (<strong>FALSE</strong>)</span><em>.</em>&nbsp; <strong><em>FALSE</em></strong> is the <span class="hl">default value</span> – which is the value assigned if the caller does not supply a value.</p>
+</section>
+<section id="the-return-value-of-a-function" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="the-return-value-of-a-function"><span class="header-section-number">4.3</span> The return value of a function</h3>
+<p>In the <strong><em>Help</em></strong> section (<a href="#fig-median-help" class="quarto-xref">Figure&nbsp;1</a>), the <strong><em>Value</em></strong> is the same as the return value (or output).&nbsp; In this case, <strong><em>median()</em></strong> returns a “length-one object”.&nbsp; In other words, <strong><em>median()</em></strong> returns the median of the vector, which is a length-one object (i.e., one value).</p>
+<p>&nbsp;</p>
+<p><span class="note">note: if <strong>na.rm</strong> is <strong>FALSE</strong> and there are NA values, then the median will also be NA – you cannot solve for a median of a vector with unknown values</span></p>
+</section>
+</section>
+<section id="function-independence" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="function-independence"><span class="header-section-number">5</span> Function independence</h2>
+<p><span class="hl">Functions are designed to be independent of any script file.</span>&nbsp; From the script’s perspective, a function requires inputs (arguments) and provides outputs (return values) – everything else about the function, including the code inside, is unknown to the script.</p>
+<p>&nbsp;</p>
+<p>The reverse is also true, from the function’s perspective, the calling script provides inputs (arguments) and saves an output (return value) – everything else about the calling script is (supposed to be) unknown to the function.</p>
+<p>&nbsp;</p>
+<p><a href="#extension-function-non-independence-in-r">Extension: function non-independence in R</a></p>
+</section>
+<section id="a-conversion-function" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="a-conversion-function"><span class="header-section-number">6</span> A conversion function</h2>
+<p>We are going to create a simple function that converts a vector of Fahrenheit temperatures into Celsius temperatures.</p>
+<p>&nbsp;</p>
+<p>The formula for this is:</p>
+<p><span class="math display">\[
+C=\frac{5}{9}(F-32)
+\]</span></p>
+<section id="calculating-the-conversion" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="calculating-the-conversion"><span class="header-section-number">6.1</span> Calculating the conversion</h3>
+<p>Before we create the function, let’s look at some examples of conversion calculations:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># single value conversions:</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>F1 <span class="ot">=</span> <span class="dv">50</span>;     C1 <span class="ot">=</span> (<span class="dv">5</span><span class="sc">/</span><span class="dv">9</span>)<span class="sc">*</span>(F1 <span class="sc">-</span> <span class="dv">32</span>);</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>F2 <span class="ot">=</span> <span class="dv">212</span>;    C2 <span class="ot">=</span> (<span class="dv">5</span><span class="sc">/</span><span class="dv">9</span>)<span class="sc">*</span>(F2 <span class="sc">-</span> <span class="dv">32</span>); </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># multiple value conversion:</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>F3 <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">50</span>,<span class="dv">100</span>,<span class="dv">150</span>);               <span class="co"># has 4 values</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>C3 <span class="ot">=</span> (<span class="dv">5</span><span class="sc">/</span><span class="dv">9</span>)<span class="sc">*</span>(F3 <span class="sc">-</span> <span class="dv">32</span>);</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>F4 <span class="ot">=</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">100</span>, <span class="at">to=</span><span class="dv">10</span>, <span class="at">by=</span><span class="sc">-</span><span class="dv">10</span>);  <span class="co"># has 10 values</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>C4 <span class="ot">=</span> (<span class="dv">5</span><span class="sc">/</span><span class="dv">9</span>)<span class="sc">*</span>(F4 <span class="sc">-</span> <span class="dv">32</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># convert column from data frame</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>F5 <span class="ot">=</span> weatherData<span class="sc">$</span>highTemp;</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>C5 <span class="ot">=</span> (<span class="dv">5</span><span class="sc">/</span><span class="dv">9</span>)<span class="sc">*</span>(F5 <span class="sc">-</span> <span class="dv">32</span>);      <span class="co"># has 14 values</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>F6 <span class="ot">=</span> weatherData<span class="sc">$</span>lowTemp;</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>C6 <span class="ot">=</span> (<span class="dv">5</span><span class="sc">/</span><span class="dv">9</span>)<span class="sc">*</span>(F6 <span class="sc">-</span> <span class="dv">32</span>);      <span class="co"># has 14 values</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># the 2 lines above can be combined:  C6 = (5/9)*(weatherData$lowTemp - 32);</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>R will perform mathematical operation across all values in a vector – and return an answer for each value.&nbsp; R treats single values (e.g., <strong><em>F1</em></strong> and <strong><em>F2</em></strong>) as vectors with one value:</p>
+<div class="sourceCode" id="cb10" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>C1<span class="sc">:</span> <span class="dv">10</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>C2<span class="sc">:</span> <span class="dv">100</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>C3<span class="sc">:</span> num [<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="sc">-</span><span class="fl">17.8</span> <span class="dv">10</span> <span class="fl">37.8</span> <span class="fl">65.6</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>C4<span class="sc">:</span> num [<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>] <span class="fl">37.8</span> <span class="fl">32.2</span> <span class="fl">26.7</span> ...</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>C5<span class="sc">:</span> num [<span class="dv">1</span><span class="sc">:</span><span class="dv">14</span>] <span class="fl">13.89</span> <span class="dv">10</span> <span class="fl">12.22</span> ...</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>C6<span class="sc">:</span> num [<span class="dv">1</span><span class="sc">:</span><span class="dv">14</span> <span class="fl">7.22</span> <span class="fl">6.11</span> <span class="fl">7.78</span> ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="creating-a-function" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="creating-a-function"><span class="header-section-number">6.2</span> Creating a function</h3>
+<p>Most functions have: a <strong>name</strong>, <strong>arguments</strong>, a <strong>codeblock</strong>, and a <strong>return value</strong>.</p>
+<p>&nbsp;</p>
+<p>For the function below:</p>
+<ul>
+<li><p><strong>name</strong>: <strong><em>convertFtoC</em></strong> (we are converting Fahrenheit temperatures to Celsius)</p></li>
+<li><p><strong>argument</strong>: This is a conversion function so we need to have an argument for the values the caller want to convert – we call the argument <strong><em>fTemp</em></strong></p></li>
+<li><p><strong>codeblock</strong>: everything between ( <strong>{</strong> ) and ( <strong>}</strong> ) – this is the code that gets executed when the function is called</p></li>
+<li><p><strong>return value</strong>: the name of the vector containing the converted value sent back to the caller using <strong><em>return()</em></strong>: <strong><em>celTemp</em></strong></p></li>
+</ul>
+<div id="fig-conversionFunction" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-conversionFunction-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="fig-conversionFunction"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="fig-conversionFunction-1"><a href="#fig-conversionFunction-1" aria-hidden="true" tabindex="-1"></a><span class="co"># function to convert Fahrenheit temperatures to Celsius</span></span>
+<span id="fig-conversionFunction-2"><a href="#fig-conversionFunction-2" aria-hidden="true" tabindex="-1"></a>convertFtoC <span class="ot">=</span> <span class="cf">function</span>(fTemp)     <span class="co"># argument: values given by the caller to convert</span></span>
+<span id="fig-conversionFunction-3"><a href="#fig-conversionFunction-3" aria-hidden="true" tabindex="-1"></a>{  </span>
+<span id="fig-conversionFunction-4"><a href="#fig-conversionFunction-4" aria-hidden="true" tabindex="-1"></a>  celTemp <span class="ot">=</span> (<span class="dv">5</span><span class="sc">/</span><span class="dv">9</span>) <span class="sc">*</span> (fTemp <span class="sc">-</span> <span class="dv">32</span>); <span class="co"># the argument is used as part of the calculation</span></span>
+<span id="fig-conversionFunction-5"><a href="#fig-conversionFunction-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(celTemp);   <span class="co"># the results of the calculation are sent back to the caller           </span></span>
+<span id="fig-conversionFunction-6"><a href="#fig-conversionFunction-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-conversionFunction-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Conversion function
+</figcaption>
+</figure>
+</div>
+<p><a href="#extension-using-a-for-to-cycle-through-vector-values">Extension: Using a for() to cycle through vector values</a></p>
+</section>
+<section id="using-the-function" class="level3" data-number="6.3">
+<h3 data-number="6.3" class="anchored" data-anchor-id="using-the-function"><span class="header-section-number">6.3</span> Using the function</h3>
+<p>We can test the function with some of the same values as before:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>  C2b <span class="ot">=</span> <span class="fu">convertFtoC</span>(<span class="at">fTemp=</span>F2);</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  C4b <span class="ot">=</span> <span class="fu">convertFtoC</span>(<span class="at">fTemp=</span>F4);</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  C6b <span class="ot">=</span> <span class="fu">convertFtoC</span>(<span class="at">fTemp=</span>F6);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In the <strong><em>Environment</em></strong> we get the same answers as before:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>C2b<span class="sc">:</span> <span class="dv">100</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>C4b<span class="sc">:</span> num [<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>] <span class="fl">37.8</span> <span class="fl">32.2</span> <span class="fl">26.7</span> ...</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>C6b<span class="sc">:</span> num [<span class="dv">1</span><span class="sc">:</span><span class="dv">14</span> <span class="fl">7.22</span> <span class="fl">6.11</span> <span class="fl">7.78</span> ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You do not have to use the argument names – if a function only has one argument, it is generally OK to skip the name:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>  C2c <span class="ot">=</span> <span class="fu">convertFtoC</span>(F2);</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  C4c <span class="ot">=</span> <span class="fu">convertFtoC</span>(F4);</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  C6c <span class="ot">=</span> <span class="fu">convertFtoC</span>(F6);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="missing-an-argument-error" class="level3" data-number="6.4">
+<h3 data-number="6.4" class="anchored" data-anchor-id="missing-an-argument-error"><span class="header-section-number">6.4</span> Missing an argument error</h3>
+<p>The function <strong><em>convertFtoC()</em></strong> requires an <strong><em>fTemp</em></strong> value.</p>
+<p>&nbsp;</p>
+<p>If the caller does not supply an <strong><em>fTemp value</em></strong>, then they will get the error <span class="hl">argument “fTemp” is missing, with no default</span>.</p>
+<p>&nbsp;</p>
+<p>To see this error, type the following into the <strong><em>Console</em></strong>:</p>
+<div class="sourceCode" id="cb14" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a> <span class="sc">&gt;</span> <span class="fu">convertFtoC</span>()</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> <span class="fu">convertFtoC</span>() <span class="sc">:</span> argument <span class="st">"fTemp"</span> is missing, with no default</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="a-modulus-function" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="a-modulus-function"><span class="header-section-number">7</span> A modulus function</h2>
+<p>We are going to create a second function that takes two numbers (e.g., two arguments) and figures out if the first number is divisible by the second (sent as the return value).&nbsp;</p>
+<section id="modulus-division" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="modulus-division"><span class="header-section-number">7.1</span> Modulus division</h3>
+<p><strong><em>%%</em></strong> is called the modulus operator, often shortened to <strong><em>mod</em></strong>.&nbsp; <strong><em>mod</em></strong> divides the second number from the first but <span class="hl">gives only the remainder as the answer</span><em>.</em></p>
+<p>&nbsp;</p>
+<p>Let do some example of <strong><em>mod</em></strong> in the <strong><em>Console</em></strong>:</p>
+<div class="sourceCode" id="cb15" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="dv">8</span> <span class="sc">%%</span> <span class="dv">3</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">2</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="dv">9</span> <span class="sc">%%</span> <span class="dv">3</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">0</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="dv">10</span> <span class="sc">%%</span> <span class="dv">3</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">1</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="dv">10</span> <span class="sc">%%</span> <span class="dv">4</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Modulus is used when you are working with values that repeat regularly – or when you want the <strong><em>n<sup>th</sup></em></strong> values.&nbsp; For instance, you might want the first value of every week from a year’s worth of temperatures.&nbsp; So, in this case you are <strong><em>moding</em></strong> the index (1-366) by 7, or dividing by 7 and giving the remainder.&nbsp; By doing this, every 7th value is the same (0,1,2,3,4,5,6,0,1,2,3,4,5,6,0,1…).&nbsp; So, all <strong>0</strong> values represent Sunday, all <strong>1</strong> values represent Monday…</p>
+</section>
+<section id="creating-a-modulus-function" class="level3" data-number="7.2">
+<h3 data-number="7.2" class="anchored" data-anchor-id="creating-a-modulus-function"><span class="header-section-number">7.2</span> Creating a modulus function</h3>
+<p>Name: <strong><em>isDivisible()</em></strong></p>
+<p>Arguments: <strong><em>div1</em></strong> and <strong><em>div2</em></strong> (the numbers to check supplied by the caller)</p>
+<p>Return Value: a <strong><em>TRUE/FALSE</em></strong> (Boolean) statement</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># function to see if the first number is divisible by the second</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>isDivisible <span class="ot">=</span> <span class="cf">function</span>(div1, div2)  <span class="co"># arguments given by caller</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  remainder <span class="ot">=</span> div1 <span class="sc">%%</span> div2;  <span class="co"># calculating the modulus</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(remainder <span class="sc">==</span> <span class="dv">0</span>)         <span class="co"># div2 divides div1 evenly (no remainder)</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="cn">TRUE</span>);</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  } </span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span>                       <span class="co"># div2 does not divide div1 (there is a remainder)</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="cn">FALSE</span>);</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><span class="note">note: both <strong>if</strong> and <strong>else</strong> have a return value – it is important to made sure that a return value is always sent.</span></p>
+<p>&nbsp;</p>
+<p><a href="#extension-forgetting-return-values">Extension: forgetting return values</a></p>
+<p>&nbsp;</p>
+<p>We can call the function with the two arguments and save the return value (i.e., the answer) to a variable:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>div12_4 <span class="ot">=</span> <span class="fu">isDivisible</span>(<span class="dv">12</span>,<span class="dv">4</span>);</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>div12_5 <span class="ot">=</span> <span class="fu">isDivisible</span>(<span class="dv">12</span>,<span class="dv">5</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb18" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>div12_4<span class="sc">:</span>   <span class="cn">TRUE</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>div12_5<span class="sc">:</span>   <span class="cn">FALSE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Or, just call the <strong><em>function</em></strong> in the <strong><em>Console</em></strong> (with or without argument names):</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">isDivisible</span>(<span class="dv">12</span>,<span class="dv">4</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="cn">TRUE</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">isDivisible</span>(<span class="at">div1=</span><span class="dv">12</span>, <span class="at">div2=</span><span class="dv">5</span>)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="cn">FALSE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Let’s put a few more calls to <strong><em>isDivisible()</em></strong> in the Console using <strong>21</strong>:</p>
+<div class="sourceCode" id="cb20" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">isDivisible</span>(<span class="dv">21</span>, <span class="dv">5</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="cn">FALSE</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">isDivisible</span>(<span class="dv">21</span>, <span class="dv">7</span>)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="cn">TRUE</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">isDivisible</span>(<span class="dv">21</span>, <span class="dv">3</span>)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="cn">TRUE</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">isDivisible</span>(<span class="dv">21</span>, <span class="dv">12</span>)</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="cn">FALSE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="functions-need-to-be-set-before-they-are-called" class="level3" data-number="7.3">
+<h3 data-number="7.3" class="anchored" data-anchor-id="functions-need-to-be-set-before-they-are-called"><span class="header-section-number">7.3</span> Functions need to be set before they are called</h3>
+<p>Functions, like variables, cannot be used before they are declared (i.e., in the <strong><em>Environment</em></strong>).&nbsp; When you are sourcing code, this means the function definition needs to come before the function call in the script.</p>
+<p>&nbsp;</p>
+<p>If you have this line before the <strong><em>isDivisible()</em></strong> function:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>div12_4 <span class="ot">=</span> <span class="fu">isDivisible</span>(<span class="dv">12</span>,<span class="dv">4</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>and <strong><em>Source</em></strong> your script, you will get the error:</p>
+<p><span class="hl">Error in isDivisible(12, 4) : could not find function “isDivisible”</span></p>
+</section>
+</section>
+<section id="argument-names" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="argument-names"><span class="header-section-number">8</span> Argument names</h2>
+<p>It is good practice to use the argument names when passing values in to a function.&nbsp;</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>div12_4a <span class="ot">=</span> <span class="fu">isDivisible</span>(<span class="at">div1=</span><span class="dv">12</span>, <span class="at">div2=</span><span class="dv">4</span>);</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>div12_5a <span class="ot">=</span> <span class="fu">isDivisible</span>(<span class="at">div1=</span><span class="dv">12</span>, <span class="at">div2=</span><span class="dv">5</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you use argument names then it does not matter the order of the arguments:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>div12_4b <span class="ot">=</span> <span class="fu">isDivisible</span>(<span class="at">div2=</span><span class="dv">4</span>, <span class="at">div1=</span><span class="dv">12</span>);</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>div12_5b <span class="ot">=</span> <span class="fu">isDivisible</span>(<span class="at">div2=</span><span class="dv">5</span>, <span class="at">div1=</span><span class="dv">12</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb24" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>div12_4a<span class="sc">:</span>   <span class="cn">TRUE</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>div12_4b<span class="sc">:</span>   <span class="cn">TRUE</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>div12_5a<span class="sc">:</span>   <span class="cn">FALSE</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>div12_5b<span class="sc">:</span>   <span class="cn">FALSE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Using argument names is all but required when dealing with large functions that have lots of arguments (e.g., plotting functions):</p>
+<div id="fig-many-argument-function" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-many-argument-function-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-1-12_Many_Paramerters.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-many-argument-function-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: A function with a decent number of arguments
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="variable-and-function-names-do-not-matter-to-r" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="variable-and-function-names-do-not-matter-to-r"><span class="header-section-number">9</span> Variable and function names do not matter… to R</h2>
+<p>Variable and function names are generally chosen to make it easier for the reader to understand the script.&nbsp; But R could care less what names you use.&nbsp; The following script executes the exact same calculation and returns the exact same <strong><em>TRUE/FALSE</em></strong> values as <strong><em>isDivisible()</em></strong> – it just uses variable and function names that are not intuitive to the user.&nbsp; Do not do this in your script!</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># the same function to see if the first number is divisible by the second</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>doSomething <span class="ot">=</span> <span class="cf">function</span>(aValue, anotherValue)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  theSomething <span class="ot">=</span> aValue <span class="sc">%%</span> anotherValue;</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(theSomething <span class="sc">==</span> <span class="dv">0</span>)</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="cn">TRUE</span>);</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  } </span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="cn">FALSE</span>);</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="application" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="application"><span class="header-section-number">10</span> Application</h2>
+<p>For all functions, <span class="hl">make sure you have code in your script that uses the function</span>!</p>
+<p>&nbsp;</p>
+<p>1) Use the R Base function <strong><em>sort()</em></strong> to sort all of the values in the <strong><em>precipNA</em></strong> column.&nbsp;</p>
+<p>Create two sorted vectors:</p>
+<ul>
+<li><p>one that is in descending order and includes NA as the last values</p></li>
+<li><p>one that is in ascending order and does not include NA.</p></li>
+</ul>
+<p>&nbsp;</p>
+<p>2) Find the median of <strong><em>precipNA</em></strong> from the data frame downloaded for this lesson –<span class="note">note that there is an <strong>NA</strong> value in the vector</span>.&nbsp; Looking at the <strong><em>median</em></strong> function in the <strong><em>Help</em></strong> tab, how would you change this so that median ignores the <strong><em>NA</em></strong> values?</p>
+<p>&nbsp;</p>
+<p>3) Create a function named <strong><em>remainder()</em></strong> that returns the remainder of <strong><em>div1 %% div2</em></strong> instead of a <strong><em>TRUE/FALSE</em></strong> value</p>
+<p>&nbsp;</p>
+<p>4) Create a function that converts temperatures from Celsius to Fahrenheit.&nbsp;</p>
+<p>The conversion is: <span class="math inline">\(F=\frac{9}{5} C+32\)</span></p>
+<p>&nbsp;</p>
+<p>5) Create a function that takes a number from 0 to 100 and returns a grade from A to F.&nbsp; Return an error if the number is less than 0 and return a different error if the number is greater than 100.</p>
+<p>Save the script as&nbsp;<strong><em>app</em></strong>1-13<strong><em>.r</em></strong> in your&nbsp;<strong><em>scripts</em></strong> folder and&nbsp; email your Project Folder to Charlie Belinsky at belinsky@msu.edu.</p>
+<p>&nbsp;</p>
+<p><a href="..\content/DEVELOPMENT/2020/courses/DEV-belinsky-2020-ProgrammingFundamentalsUsingR/R/Lessons/1-01_Setup_and_RStudio_Projects.html?ou=1247781#zip">Instructions for zipping the Project Folder are here.</a></p>
+<p>&nbsp;</p>
+<p>If you have any questions regarding this application, feel free to email them to Charlie Belinsky at belinsky@msu.edu.</p>
+<section id="questions-to-answer" class="level3" data-number="10.1">
+<h3 data-number="10.1" class="anchored" data-anchor-id="questions-to-answer"><span class="header-section-number">10.1</span> Questions to answer</h3>
+<p>Answer the following in comments inside your application script:</p>
+<ol type="1">
+<li><p>What was your level of comfort with the lesson/application?</p></li>
+<li><p>What areas of the lesson/application confused or still confuses you?</p></li>
+<li><p>What are some things you would like to know more about that is related to, but not covered in, this lesson?</p></li>
+</ol>
+</section>
+</section>
+<section id="extension-using-a-for-to-cycle-through-vector-values" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="extension-using-a-for-to-cycle-through-vector-values"><span class="header-section-number">11</span> Extension: Using a for() to cycle through vector values</h2>
+<p>The following example functionally does the same thing as <a href="#fig-conversionFunction" class="quarto-xref">Figure&nbsp;2</a> except with a <strong><em>for().</em></strong> While it takes more code to do it this way, it also more robust because it gives more access to each value within the vector.&nbsp; With this access you do things like checking for invalid values.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>  convertFtoC2 <span class="ot">=</span> <span class="cf">function</span>(fTemp)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    celTemp <span class="ot">=</span> <span class="fu">c</span>();  <span class="co"># create a vector for the Celsius values</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(fTemp))  <span class="co"># go through each value in fTemp vector</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>    { </span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>      <span class="co"># convert the indexed fTemp -- save to the celTemp vector</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>      celTemp[i] <span class="ot">=</span> (<span class="dv">5</span><span class="sc">/</span><span class="dv">9</span>) <span class="sc">*</span> (fTemp[i] <span class="sc">-</span> <span class="dv">32</span>); </span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(celTemp);  <span class="co"># return the celsius temp vector to the caller</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Test the conversion function that uses for loops</span></span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>  C2d <span class="ot">=</span> <span class="fu">convertFtoC2</span>(<span class="at">fTemp=</span>F2);</span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>  C4d <span class="ot">=</span> <span class="fu">convertFtoC2</span>(<span class="at">fTemp=</span>F4);</span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>  C6d <span class="ot">=</span> <span class="fu">convertFtoC2</span>(<span class="at">fTemp=</span>F6);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="extension-function-non-independence-in-r" class="level2" data-number="12">
+<h2 data-number="12" class="anchored" data-anchor-id="extension-function-non-independence-in-r"><span class="header-section-number">12</span> Extension: function non-independence in R</h2>
+<p>In R, the script outside a function will know nothing about the function inside so this code will cause an error:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">=</span> <span class="cf">function</span>(b)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  c <span class="ot">=</span> b<span class="sc">+</span><span class="dv">1</span>;</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  d <span class="ot">=</span> c <span class="sc">*</span><span class="dv">10</span>;</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(d)</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(c);  <span class="co"># this line will cause an error</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The error occurs because the script cannot see inside the function – the function exists in its own <strong><em>Environment</em></strong>.&nbsp; So, c cannot be see in the script outside the function.</p>
+<p>&nbsp;</p>
+<p>However, in R, a function can see the <strong><em>Environment</em></strong> of the script so this code will work:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">=</span> <span class="cf">function</span>(b)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  c <span class="ot">=</span> b<span class="sc">+</span><span class="dv">1</span>;    <span class="co"># in most programming languages this is an error</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  d <span class="ot">=</span> c <span class="sc">*</span><span class="dv">10</span>;</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(d)</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>c <span class="ot">=</span> <span class="dv">10</span>; </span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="fu">a</span>(<span class="at">b=</span><span class="dv">5</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The function should be independent of the script so <strong><em>c</em></strong> should be unknown to the function because <strong><em>c</em></strong> is declared outside of the function.&nbsp; In most programming languages, this would be an error but not in R.&nbsp; Even though it works, it is really bad programming practice.&nbsp; Functions should always be independent of the outside script.&nbsp;</p>
+</section>
+<section id="extension-forgetting-return-values" class="level2" data-number="13">
+<h2 data-number="13" class="anchored" data-anchor-id="extension-forgetting-return-values"><span class="header-section-number">13</span> Extension: Forgetting return values</h2>
+<p>It is important to make sure that a function always returns a values.&nbsp; In most programming languages, if you do not have a return value, the function will return NULL.&nbsp; In R, the function will return the results of the last command executed – and this can produce confusing results.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>1-09: Conditional Operations</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-2486e1f0a3ee9ee1fc393803a1361cdb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-0815817224b54744edbb51fc66bd26dc.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link rel="shortcut icon" href="https://qfcatmsu.github.io/assets/quarto/qfc_icon.png">
+<script>mod=true; menuCollapse=true;</script>
+<script src="https://qfcatmsu.github.io/assets/quarto/qfc_styles.js"></script>
+ 
+
+
+<link rel="stylesheet" href="https://qfcatmsu.github.io/assets/quarto/qfc_styles.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+          <h1 class="quarto-secondary-nav-title">1-09: Conditional Operations</h1>
+        </a>     
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text"><b>Fundamentals of Programming class</b></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-02-Variables.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-02: Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-03_Mathematical_Operations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-03: Mathematical Operations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-04_Vectors_And_Data_Frames.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-04: Vectors and Data Frames</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-05_Functions_Introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-05: Functions Introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-06_Run_and_Source.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-06: Run and Source</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-07_Outputs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-07: Outputs</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-08_Conditional_Operations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-08: Conditional Operations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-09_If_Else_Statements.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">1-09: Conditional Operations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-10_For_Loops.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-10: For Loops</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-11_For_Loops_and_State_Varibles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-11: For Loops and State Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-12_MultipleConditions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-12: Multiple Conditions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-13_Functions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-13: Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-14_Functions2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-14: Functions 2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-15_Functions3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-15: Functions 3</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title"><b>Lesson Content</b></h2>
+   
+  <ul>
+  <li><a href="#issues" id="toc-issues" class="nav-link active" data-scroll-target="#issues"><span class="header-section-number">0.1</span> Issues</a></li>
+  <li><a href="#purpose" id="toc-purpose" class="nav-link" data-scroll-target="#purpose"><span class="header-section-number">1</span> Purpose</a></li>
+  <li><a href="#questions-about-the-material" id="toc-questions-about-the-material" class="nav-link" data-scroll-target="#questions-about-the-material"><span class="header-section-number">2</span> Questions about the material…</a></li>
+  <li><a href="#dealing-with-false-conditions" id="toc-dealing-with-false-conditions" class="nav-link" data-scroll-target="#dealing-with-false-conditions"><span class="header-section-number">3</span> Dealing with FALSE conditions</a>
+  <ul class="collapse">
+  <li><a href="#else-and-false-conditions" id="toc-else-and-false-conditions" class="nav-link" data-scroll-target="#else-and-false-conditions"><span class="header-section-number">3.1</span> Else and FALSE conditions</a></li>
+  <li><a href="#alternate-bracket-placement" id="toc-alternate-bracket-placement" class="nav-link" data-scroll-target="#alternate-bracket-placement"><span class="header-section-number">3.2</span> Alternate bracket placement</a></li>
+  <li><a href="#curly-bracket-in-r-and-a-bug" id="toc-curly-bracket-in-r-and-a-bug" class="nav-link" data-scroll-target="#curly-bracket-in-r-and-a-bug"><span class="header-section-number">3.3</span> Curly bracket in R and a bug</a></li>
+  </ul></li>
+  <li><a href="#if-else-statements-and-conditional-operators" id="toc-if-else-statements-and-conditional-operators" class="nav-link" data-scroll-target="#if-else-statements-and-conditional-operators"><span class="header-section-number">4</span> If-else statements and conditional operators</a>
+  <ul class="collapse">
+  <li><a href="#if-the-curly-brackets-at-the-beginning-and-end-of-script-are-removed" id="toc-if-the-curly-brackets-at-the-beginning-and-end-of-script-are-removed" class="nav-link" data-scroll-target="#if-the-curly-brackets-at-the-beginning-and-end-of-script-are-removed"><span class="header-section-number">4.1</span> If the curly brackets at the beginning and end of script are removed</a></li>
+  </ul></li>
+  <li><a href="#if-else-statements-using-strings" id="toc-if-else-statements-using-strings" class="nav-link" data-scroll-target="#if-else-statements-using-strings"><span class="header-section-number">5</span> If-Else statements using strings</a>
+  <ul class="collapse">
+  <li><a href="#if-else-vs.-if-statements" id="toc-if-else-vs.-if-statements" class="nav-link" data-scroll-target="#if-else-vs.-if-statements"><span class="header-section-number">5.1</span> If-else vs.&nbsp;if() statements</a></li>
+  </ul></li>
+  <li><a href="#adding-in-more-conditions-if-else-if-structures" id="toc-adding-in-more-conditions-if-else-if-structures" class="nav-link" data-scroll-target="#adding-in-more-conditions-if-else-if-structures"><span class="header-section-number">6</span> Adding in more conditions: If-Else-If Structures</a>
+  <ul class="collapse">
+  <li><a href="#the-efficiency-of-if-else-if-structures" id="toc-the-efficiency-of-if-else-if-structures" class="nav-link" data-scroll-target="#the-efficiency-of-if-else-if-structures"><span class="header-section-number">6.1</span> The efficiency of if-else-if structures</a></li>
+  </ul></li>
+  <li><a href="#the-error-or-everything-else-condition" id="toc-the-error-or-everything-else-condition" class="nav-link" data-scroll-target="#the-error-or-everything-else-condition"><span class="header-section-number">7</span> The error or everything else condition</a>
+  <ul class="collapse">
+  <li><a href="#error-statement-help-in-debugging" id="toc-error-statement-help-in-debugging" class="nav-link" data-scroll-target="#error-statement-help-in-debugging"><span class="header-section-number">7.1</span> Error statement help in debugging</a></li>
+  </ul></li>
+  <li><a href="#creating-number-ranges-using-if-else-structures" id="toc-creating-number-ranges-using-if-else-structures" class="nav-link" data-scroll-target="#creating-number-ranges-using-if-else-structures"><span class="header-section-number">8</span> Creating number ranges using if-else structures</a>
+  <ul class="collapse">
+  <li><a href="#if-else-if-statements-are-mutually-exclusive" id="toc-if-else-if-statements-are-mutually-exclusive" class="nav-link" data-scroll-target="#if-else-if-statements-are-mutually-exclusive"><span class="header-section-number">8.1</span> If-Else-If statements are mutually exclusive</a></li>
+  </ul></li>
+  <li><a href="#application" id="toc-application" class="nav-link" data-scroll-target="#application"><span class="header-section-number">9</span> Application</a>
+  <ul class="collapse">
+  <li><a href="#questions-to-answer" id="toc-questions-to-answer" class="nav-link" data-scroll-target="#questions-to-answer"><span class="header-section-number">9.1</span> Questions to answer</a></li>
+  </ul></li>
+  <li><a href="#trap-true-and-false-are-keywords-t-and-f-are-not" id="toc-trap-true-and-false-are-keywords-t-and-f-are-not" class="nav-link" data-scroll-target="#trap-true-and-false-are-keywords-t-and-f-are-not"><span class="header-section-number">10</span> Trap: TRUE and FALSE are keywords, T and F are not</a></li>
+  <li><a href="#extension-brackets-and-code-blocks" id="toc-extension-brackets-and-code-blocks" class="nav-link" data-scroll-target="#extension-brackets-and-code-blocks"><span class="header-section-number">11</span> Extension: brackets and code blocks</a></li>
+  <li><a href="#extension-skipping-brackets-in-if-else-structures" id="toc-extension-skipping-brackets-in-if-else-structures" class="nav-link" data-scroll-target="#extension-skipping-brackets-in-if-else-structures"><span class="header-section-number">12</span> Extension: Skipping brackets in if-else structures</a></li>
+  <li><a href="#trap-else-never-has-an-attached-condition" id="toc-trap-else-never-has-an-attached-condition" class="nav-link" data-scroll-target="#trap-else-never-has-an-attached-condition"><span class="header-section-number">13</span> Trap: Else never has an attached condition</a></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content column-page-right" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">1-09: Conditional Operations</h1>
+</div>
+
+
+
+<div class="quarto-title-meta column-page-right">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="issues" class="level3" data-number="0.1">
+<h3 data-number="0.1" class="anchored" data-anchor-id="issues"><span class="header-section-number">0.1</span> Issues</h3>
+<p>Change style of if-else statements so that begin and end brackets are not needed</p>
+</section>
+<section id="purpose" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="purpose"><span class="header-section-number">1</span> Purpose</h2>
+<ul>
+<li><p>Create condition statements that control flow for either <strong>TRUE</strong> or <strong>FALSE</strong> conditions using an <strong><em>if-else</em></strong> structure</p></li>
+<li><p>perform multiple conditional statements on one variable using an <strong><em>if-else-if</em></strong> structure</p></li>
+<li><p>create error conditions in an <strong><em>if-else-if</em></strong> structure with an else statement</p></li>
+</ul>
+</section>
+<section id="questions-about-the-material" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="questions-about-the-material"><span class="header-section-number">2</span> Questions about the material…</h2>
+<p>The files for this lesson:</p>
+<ul>
+<li><p>Script:&nbsp;<a href="../scripts/1-09_If-ElseStatements.R">you can download the script here</a></p></li>
+<li><p>Data: <a href="../data/twoWeekWeatherData.csv">download the data file here</a></p></li>
+</ul>
+<p>&nbsp;</p>
+<p>If you have any questions about the material in this lesson, feel free to email them to the instructor, Charlie Belinsky, at belinsky@msu.edu.</p>
+</section>
+<section id="dealing-with-false-conditions" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="dealing-with-false-conditions"><span class="header-section-number">3</span> Dealing with FALSE conditions</h2>
+<p>In the last lesson we looked at execution of the <strong><em>if()</em></strong> statement and how it changes the flow of a script.&nbsp; The code is conditionally executed based on a conditional statement inside the parenthesis of the <strong><em>if()</em></strong>.&nbsp; The codeblock attached to the <strong><em>if()</em></strong> using curly brackets&nbsp; ( <strong><em>{ }</em></strong> ) was executed only if the conditional statement is <strong><em>TRUE</em></strong>.&nbsp;</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>randomNum <span class="ot">=</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="at">size=</span><span class="dv">1</span>);</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(randomNum <span class="sc">&gt;</span> <span class="dv">50</span>)  <span class="co"># execute the attached codeblock if TRUE</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"You win"</span>);</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="else-and-false-conditions" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="else-and-false-conditions"><span class="header-section-number">3.1</span> Else and FALSE conditions</h3>
+<p>Many times when you are programming you want to execute something when the condition (e.g., temperature &gt; 50) is <strong>TRUE</strong> and when the condition is <strong>FALSE</strong>.&nbsp; You execute a codeblock on a <strong>FALSE</strong> condition by using an <strong><em>if-else</em></strong> statement.</p>
+<div id="fig-structure" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-structure-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="fig-structure"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="fig-structure-1"><a href="#fig-structure-1" aria-hidden="true" tabindex="-1"></a>randomNum2 <span class="ot">=</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="at">size=</span><span class="dv">1</span>);</span>
+<span id="fig-structure-2"><a href="#fig-structure-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="fig-structure-3"><a href="#fig-structure-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(randomNum2 <span class="sc">&gt;</span> <span class="dv">50</span>)  <span class="co"># execute the attached codeblock if TRUE</span></span>
+<span id="fig-structure-4"><a href="#fig-structure-4" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="fig-structure-5"><a href="#fig-structure-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"You win"</span>);</span>
+<span id="fig-structure-6"><a href="#fig-structure-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="fig-structure-7"><a href="#fig-structure-7" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span> <span class="co"># execute this codeblock if FALSE</span></span>
+<span id="fig-structure-8"><a href="#fig-structure-8" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="fig-structure-9"><a href="#fig-structure-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"You lose"</span>);</span>
+<span id="fig-structure-10"><a href="#fig-structure-10" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-structure-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: This author’s preference for structuring an if-else statement
+</figcaption>
+</figure>
+</div>
+<ul>
+<li><p>If the condition is <strong><em>TRUE</em></strong>, the codeblock in the curly brackets ( <strong><em>{&nbsp; }</em></strong> ) attached to the <strong><em>if()</em></strong> gets executed.</p></li>
+<li><p>If the condition is <strong><em>FALSE</em></strong>, the codeblock in the curly brackets attached to the <strong><em>else</em></strong> gets executed.</p></li>
+</ul>
+<p>&nbsp;</p>
+<p><span class="note">Note: Like <strong>if()</strong> statements, <strong>if-else</strong> statements are often used within <strong>for</strong> loops to check multiple values at once (e.g., all values in a column of a data frame) – we will be getting to that in the next lesson.</span></p>
+</section>
+<section id="alternate-bracket-placement" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="alternate-bracket-placement"><span class="header-section-number">3.2</span> Alternate bracket placement</h3>
+<p>The curly bracket placement in <a href="#fig-structure" class="quarto-xref">Figure&nbsp;1</a> is my preference and is a programming standard.&nbsp; The following curly bracket placement is also considered a programming standard and can also be used for this class:</p>
+<div id="fig-altStructure" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-altStructure-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="fig-altStructure"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="fig-altStructure-1"><a href="#fig-altStructure-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(randomNum2 <span class="sc">&gt;</span> <span class="dv">50</span>) { </span>
+<span id="fig-altStructure-2"><a href="#fig-altStructure-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"You win"</span>);</span>
+<span id="fig-altStructure-3"><a href="#fig-altStructure-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="fig-altStructure-4"><a href="#fig-altStructure-4" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span> {</span>
+<span id="fig-altStructure-5"><a href="#fig-altStructure-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"You lose"</span>);</span>
+<span id="fig-altStructure-6"><a href="#fig-altStructure-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-altStructure-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: An alternate method for structuring an if-else statement
+</figcaption>
+</figure>
+</div>
+<p><a href="#extension-skipping-brackets-in-if-else-structures">Extension: Skipping brackets in if-else structures</a></p>
+</section>
+<section id="curly-bracket-in-r-and-a-bug" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="curly-bracket-in-r-and-a-bug"><span class="header-section-number">3.3</span> Curly bracket in R and a bug</h3>
+<p>However, when you see an R script you often see people write their <strong><em>if-else</em></strong> statements like this:</p>
+<div id="fig-commonStructure" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-commonStructure-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="fig-commonStructure"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="fig-commonStructure-1"><a href="#fig-commonStructure-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(randomNum2 <span class="sc">&gt;</span> <span class="dv">50</span>) { </span>
+<span id="fig-commonStructure-2"><a href="#fig-commonStructure-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"You win"</span>);</span>
+<span id="fig-commonStructure-3"><a href="#fig-commonStructure-3" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> { </span>
+<span id="fig-commonStructure-4"><a href="#fig-commonStructure-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"You lose"</span>);</span>
+<span id="fig-commonStructure-5"><a href="#fig-commonStructure-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-commonStructure-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: The common way in R to structure an if-else statement
+</figcaption>
+</figure>
+</div>
+<p>This is not a standard programming practice and the reason you often see it written this way has to do with a bug in R that can cause an <span class="hl">unexpected else</span> error if the brackets are placed as they are in <a href="#fig-structure" class="quarto-xref">Figure&nbsp;1</a> or <a href="#fig-altStructure" class="quarto-xref">Figure&nbsp;2</a> .</p>
+<p>&nbsp;</p>
+<div id="fig-error-If-Else" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-error-If-Else-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-1-07_bug-if-else.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-error-If-Else-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Unexpected else error that occurs when if-else statements are structured using the standard programming method
+</figcaption>
+</figure>
+</div>
+<p>One fix is to use the standard R way of placing brackets in <strong><em>if-else</em></strong> statements.</p>
+<div id="fig-usualBrackets" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-usualBrackets-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/clipboard-110490218.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-usualBrackets-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: The usual placement of brackets for if-else statements in R
+</figcaption>
+</figure>
+</div>
+<p>However, you can use the standard method for placing curly brackets as long as the <strong><em>if-else</em></strong> statement is encapsulated within another set of curly brackets.&nbsp; <span class="hl">This is the reason I put curly brackets at the beginning and end of my script</span> – it allows the use of standard curly bracket placement for <strong><em>if-else</em></strong> statements.</p>
+<div id="fig-bracketFix" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-bracketFix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-1-07_bug-fix-good.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bracketFix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: Putting curly brackets around the whole script also fixes the error.
+</figcaption>
+</figure>
+</div>
+<p><span class="hl">Run will still not work on lines 7-14 because Run does not see the curly brackets at the beginning and end.</span></p>
+</section>
+</section>
+<section id="if-else-statements-and-conditional-operators" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="if-else-statements-and-conditional-operators"><span class="header-section-number">4</span> If-else statements and conditional operators</h2>
+<p>To the script – like last lesson, we:</p>
+<ul>
+<li><p>read in the data from <strong><em>twoWeekWeatherData.csv</em></strong></p></li>
+<li><p>save the <strong><em>highTemp</em></strong> and <strong><em>noonCondition</em></strong> column to a vector</p></li>
+</ul>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>  <span class="do">### read in data from twoWeekWeatherData.csv</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  weatherData <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="at">file=</span><span class="st">"data/twoWeekWeatherData.csv"</span>, </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">sep=</span><span class="st">","</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">header=</span><span class="cn">TRUE</span>, </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>                         <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>);  </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="do">### Extract the highTemps column from the data frame -- save it to a variable</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  highTemps <span class="ot">=</span> weatherData<span class="sc">$</span>highTemp;</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  noonCond <span class="ot">=</span> weatherData<span class="sc">$</span>noonCondition;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This time, the script gives a response for both <strong><em>TRUE</em></strong> conditions and <strong><em>FALSE</em></strong> conditions:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(highTemps[<span class="dv">3</span>] <span class="sc">&gt;</span> <span class="dv">50</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"  high temp 3 is greater than 50</span><span class="sc">\n</span><span class="st">"</span>);</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"  high temp 3 is not greater than 50</span><span class="sc">\n</span><span class="st">"</span>);</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(highTemps[<span class="dv">4</span>] <span class="sc">&gt;</span> <span class="dv">50</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"  high temp 4 is greater than 50</span><span class="sc">\n</span><span class="st">"</span>);</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  } </span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"  high temp 4 is not greater than 50</span><span class="sc">\n</span><span class="st">"</span>);</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(highTemps[<span class="dv">5</span>] <span class="sc">&gt;</span> <span class="dv">50</span>)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"  high temp 5 is greater than 50</span><span class="sc">\n</span><span class="st">"</span>);</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"  high temp 5 is not greater than 50</span><span class="sc">\n</span><span class="st">"</span>);</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>  }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now the script outputs information for all three <strong><em>highTemp</em></strong> values, two of which were less than <strong>50</strong></p>
+<div id="fig-if-else-output" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-if-else-output-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="fig-if-else-output" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="fig-if-else-output-1"><a href="#fig-if-else-output-1" aria-hidden="true" tabindex="-1"></a>Checking highTemps <span class="dv">3</span>, <span class="dv">4</span>, and <span class="dv">5</span> to see which are <span class="sc">&gt;</span> <span class="dv">50</span><span class="sc">:</span></span>
+<span id="fig-if-else-output-2"><a href="#fig-if-else-output-2" aria-hidden="true" tabindex="-1"></a>  high temp <span class="dv">3</span> is greater than <span class="dv">50</span></span>
+<span id="fig-if-else-output-3"><a href="#fig-if-else-output-3" aria-hidden="true" tabindex="-1"></a>  high temp <span class="dv">4</span> is not greater than <span class="dv">50</span></span>
+<span id="fig-if-else-output-4"><a href="#fig-if-else-output-4" aria-hidden="true" tabindex="-1"></a>  high temp <span class="dv">5</span> is not greater than <span class="dv">50</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-if-else-output-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7: If-else output when checking three highTemp values to see if they are greater than 50
+</figcaption>
+</figure>
+</div>
+<section id="if-the-curly-brackets-at-the-beginning-and-end-of-script-are-removed" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="if-the-curly-brackets-at-the-beginning-and-end-of-script-are-removed"><span class="header-section-number">4.1</span> If the curly brackets at the beginning and end of script are removed</h3>
+<p>Just reiterating that the curly brackets at the beginning and end of script serve only one purpose – allowing the use of proper formatting techniques when scripting an <strong><em>if-else</em></strong> statement.</p>
+<p>&nbsp;</p>
+<p>If you remove the curly brackets at the top and bottom of the script and <strong><em>Source</em></strong> the script, you will get an <span class="hl">unexpected ‘else’</span> error:</p>
+<div id="fig-unexpectedElseError" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-unexpectedElseError-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="fig-unexpectedElseError" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="fig-unexpectedElseError-1"><a href="#fig-unexpectedElseError-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">source</span>(<span class="st">"FundProgUsingR/scripts/1-08_If-Else.R"</span>)</span>
+<span id="fig-unexpectedElseError-2"><a href="#fig-unexpectedElseError-2" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> <span class="fu">source</span>(<span class="st">"FundProgUsingR/scripts/1-08_If-Else.R"</span>) <span class="sc">:</span> </span>
+<span id="fig-unexpectedElseError-3"><a href="#fig-unexpectedElseError-3" aria-hidden="true" tabindex="-1"></a>  FundProgUsingR<span class="sc">/</span>scripts<span class="sc">/</span><span class="dv">1-08</span>_If<span class="sc">-</span>Else.R<span class="sc">:</span><span class="dv">21</span><span class="sc">:</span><span class="dv">3</span><span class="sc">:</span> «unexpected <span class="st">'else'</span>»</span>
+<span id="fig-unexpectedElseError-4"><a href="#fig-unexpectedElseError-4" aria-hidden="true" tabindex="-1"></a><span class="dv">20</span><span class="sc">:</span>   <span class="er">}</span></span>
+<span id="fig-unexpectedElseError-5"><a href="#fig-unexpectedElseError-5" aria-hidden="true" tabindex="-1"></a><span class="dv">21</span><span class="sc">:</span>   <span class="cf">else</span></span>
+<span id="fig-unexpectedElseError-6"><a href="#fig-unexpectedElseError-6" aria-hidden="true" tabindex="-1"></a>      <span class="sc">^</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-unexpectedElseError-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8: The unexpected ‘else’ error when you do not put curly bracket at the top and bottom of your script.
+</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="if-else-statements-using-strings" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="if-else-statements-using-strings"><span class="header-section-number">5</span> If-Else statements using strings</h2>
+<p>Conditional operators can also be used to compare two string values.&nbsp; Usually, we are using <strong><em>==</em></strong> or <strong><em>!=</em></strong> to compare string values.&nbsp; So, the <strong><em>else</em></strong> statement is the opposite condition:</p>
+<div id="fig-if-else-strings" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-if-else-strings-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="fig-if-else-strings"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="fig-if-else-strings-1"><a href="#fig-if-else-strings-1" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(noonCond[<span class="dv">2</span>] <span class="sc">==</span> <span class="st">"Cloudy"</span>)  <span class="co"># noonCond[2] is "Cloudy"</span></span>
+<span id="fig-if-else-strings-2"><a href="#fig-if-else-strings-2" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="fig-if-else-strings-3"><a href="#fig-if-else-strings-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"  Day was Cloudy</span><span class="sc">\n</span><span class="st">"</span>);</span>
+<span id="fig-if-else-strings-4"><a href="#fig-if-else-strings-4" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="fig-if-else-strings-5"><a href="#fig-if-else-strings-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span> <span class="co"># noonCond[2] is not "Cloudy"</span></span>
+<span id="fig-if-else-strings-6"><a href="#fig-if-else-strings-6" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="fig-if-else-strings-7"><a href="#fig-if-else-strings-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"  Day was not Cloudy</span><span class="sc">\n</span><span class="st">"</span>);</span>
+<span id="fig-if-else-strings-8"><a href="#fig-if-else-strings-8" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="fig-if-else-strings-9"><a href="#fig-if-else-strings-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="fig-if-else-strings-10"><a href="#fig-if-else-strings-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(noonCond[<span class="dv">3</span>] <span class="sc">!=</span> <span class="st">"Sunny"</span>)   <span class="co"># noonCond[3] is not "Sunny"</span></span>
+<span id="fig-if-else-strings-11"><a href="#fig-if-else-strings-11" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="fig-if-else-strings-12"><a href="#fig-if-else-strings-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"  Day was not Sunny</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="fig-if-else-strings-13"><a href="#fig-if-else-strings-13" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="fig-if-else-strings-14"><a href="#fig-if-else-strings-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span> <span class="co"># noonCond[3] is "Sunny"</span></span>
+<span id="fig-if-else-strings-15"><a href="#fig-if-else-strings-15" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="fig-if-else-strings-16"><a href="#fig-if-else-strings-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"  Day was Sunny</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="fig-if-else-strings-17"><a href="#fig-if-else-strings-17" aria-hidden="true" tabindex="-1"></a>  }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-if-else-strings-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9: Using if-else statements on strings
+</figcaption>
+</figure>
+</div>
+<p>Day 2 was cloudy (the <strong><em>if</em></strong> condition) and day 3 was sunny (the <strong><em>else</em></strong> condition)</p>
+<div class="sourceCode" id="cb4" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Check to see the noon condition on the day <span class="dv">2</span><span class="sc">:</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  Day was Cloudy</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  Day was Sunny</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="if-else-vs.-if-statements" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="if-else-vs.-if-statements"><span class="header-section-number">5.1</span> If-else vs.&nbsp;if() statements</h3>
+<p>You could just write the code in <a href="#fig-if-else-strings" class="quarto-xref">Figure&nbsp;9</a> using only <strong><em>if</em></strong> statements and the code would output the same messages:</p>
+<div id="fig-inefficientCheck" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-inefficientCheck-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="fig-inefficientCheck"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="fig-inefficientCheck-1"><a href="#fig-inefficientCheck-1" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(noonCond[<span class="dv">2</span>] <span class="sc">==</span> <span class="st">"Cloudy"</span>)  <span class="co"># noonCond[2] is "Cloudy"</span></span>
+<span id="fig-inefficientCheck-2"><a href="#fig-inefficientCheck-2" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="fig-inefficientCheck-3"><a href="#fig-inefficientCheck-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"  Day was Cloudy</span><span class="sc">\n</span><span class="st">"</span>);</span>
+<span id="fig-inefficientCheck-4"><a href="#fig-inefficientCheck-4" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="fig-inefficientCheck-5"><a href="#fig-inefficientCheck-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(noonCond[<span class="dv">2</span>] <span class="sc">!=</span> <span class="st">"Cloudy"</span>)  <span class="co"># noonCond[2] != "Cloudy"</span></span>
+<span id="fig-inefficientCheck-6"><a href="#fig-inefficientCheck-6" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="fig-inefficientCheck-7"><a href="#fig-inefficientCheck-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"  Day was not Cloudy</span><span class="sc">\n</span><span class="st">"</span>);</span>
+<span id="fig-inefficientCheck-8"><a href="#fig-inefficientCheck-8" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="fig-inefficientCheck-9"><a href="#fig-inefficientCheck-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="fig-inefficientCheck-10"><a href="#fig-inefficientCheck-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(noonCond[<span class="dv">3</span>] <span class="sc">!=</span> <span class="st">"Sunny"</span>)   <span class="co"># noonCond[3] is not "Sunny"</span></span>
+<span id="fig-inefficientCheck-11"><a href="#fig-inefficientCheck-11" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="fig-inefficientCheck-12"><a href="#fig-inefficientCheck-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"  Day was not Sunny</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="fig-inefficientCheck-13"><a href="#fig-inefficientCheck-13" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="fig-inefficientCheck-14"><a href="#fig-inefficientCheck-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(noonCond[<span class="dv">3</span>] <span class="sc">==</span> <span class="st">"Sunny"</span>)   <span class="co"># noonCond[3] is "Sunny"</span></span>
+<span id="fig-inefficientCheck-15"><a href="#fig-inefficientCheck-15" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="fig-inefficientCheck-16"><a href="#fig-inefficientCheck-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"  Day was Sunny</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="fig-inefficientCheck-17"><a href="#fig-inefficientCheck-17" aria-hidden="true" tabindex="-1"></a>  }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-inefficientCheck-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10: The inefficient way to check opposite conditions – using only <strong>if()</strong> statements
+</figcaption>
+</figure>
+</div>
+<p>But there are two problems with the code above:</p>
+<ul>
+<li><p>You are executing code that you know does not need to be executed.&nbsp; <strong><em>Sunny</em></strong> and <strong><em>Not Sunny</em></strong> are mutually exclusive – there is no need for the script to check both.&nbsp; This extra check adds a little bit to the script’s execution time – this can make a difference if you are checking 100,000 values in a data frame!</p></li>
+<li><p>An <strong><em>if-else</em></strong> statement is easier to debug than two individual <strong><em>if()</em></strong> statements because you only need to debug one conditional statement – as opposed to two</p></li>
+</ul>
+</section>
+</section>
+<section id="adding-in-more-conditions-if-else-if-structures" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="adding-in-more-conditions-if-else-if-structures"><span class="header-section-number">6</span> Adding in more conditions: If-Else-If Structures</h2>
+<p>We are limited to two outcomes when using <strong><em>if-else</em></strong> structures: (a) the <strong><em>if()</em></strong> condition is <strong><em>TRUE</em></strong> or (b) The <strong><em>if()</em></strong> condition is <strong><em>FALSE</em></strong>.&nbsp; However, the examples above contain situations that could easily have more than two possible condition.&nbsp; For instance, the <strong><em>noonCondition</em></strong> can be “Sunny”, “Cloudy”, or “Rain” – and we can check for all three in an <strong><em>if-else-if</em></strong> structure.</p>
+<p>&nbsp;</p>
+<p>With an <strong><em>if-else-if</em></strong> structure you can check as many <em>mutually exclusive situations</em> as you want.&nbsp; And <strong><em>if-else-if</em></strong> structures are efficient because they will only execute the code that is needed to determine which of the <strong><em>if-else-if</em></strong> conditions are <strong>TRUE</strong>.</p>
+<div id="fig-multConditions" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-multConditions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="fig-multConditions"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="fig-multConditions-1"><a href="#fig-multConditions-1" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(noonCond[<span class="dv">4</span>] <span class="sc">==</span> <span class="st">"Cloudy"</span>)       <span class="co"># 1st check: the day is cloudy</span></span>
+<span id="fig-multConditions-2"><a href="#fig-multConditions-2" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="fig-multConditions-3"><a href="#fig-multConditions-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"  Day 4 was cloudy</span><span class="sc">\n</span><span class="st">"</span>);</span>
+<span id="fig-multConditions-4"><a href="#fig-multConditions-4" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="fig-multConditions-5"><a href="#fig-multConditions-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span> <span class="cf">if</span>(noonCond[<span class="dv">4</span>] <span class="sc">==</span> <span class="st">"Sunny"</span>)   <span class="co"># 2nd check: the day is sunny</span></span>
+<span id="fig-multConditions-6"><a href="#fig-multConditions-6" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="fig-multConditions-7"><a href="#fig-multConditions-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"  Day 4 was sunny</span><span class="sc">\n</span><span class="st">"</span>); </span>
+<span id="fig-multConditions-8"><a href="#fig-multConditions-8" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="fig-multConditions-9"><a href="#fig-multConditions-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span> <span class="cf">if</span>(noonCond[<span class="dv">4</span>] <span class="sc">==</span> <span class="st">"Rain"</span>)   <span class="co"># 3rd check: the day is rainy</span></span>
+<span id="fig-multConditions-10"><a href="#fig-multConditions-10" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="fig-multConditions-11"><a href="#fig-multConditions-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"  Day 4 was rainy</span><span class="sc">\n</span><span class="st">"</span>); </span>
+<span id="fig-multConditions-12"><a href="#fig-multConditions-12" aria-hidden="true" tabindex="-1"></a>  }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-multConditions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11: Check multiple conditions using an if-else-if structure
+</figcaption>
+</figure>
+</div>
+<div class="sourceCode" id="cb5" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>Checking day <span class="dv">4</span> against multiple conditions<span class="sc">:</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  Day <span class="dv">4</span> was rainy </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="the-efficiency-of-if-else-if-structures" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="the-efficiency-of-if-else-if-structures"><span class="header-section-number">6.1</span> The efficiency of if-else-if structures</h3>
+<p>In <a href="#fig-multConditions" class="quarto-xref">Figure&nbsp;11</a>, if we replaced day 4 with day 2, which was “Cloudy”, then only the first condition (<strong><em>noonCond[4] == “Cloudy”</em></strong>) gets checked.&nbsp; Because “Cloudy” is <strong>TRUE</strong> there is no need to check “Sunny” and “Rain”.&nbsp; If there are thousands of values to check (e.g., you put the <strong><em>if-else</em></strong> structure in a <strong><em>for</em></strong> loop – next lesson) then a lot of computation time is saved by not checking conditions that cannot be <strong>TRUE</strong>.</p>
+</section>
+</section>
+<section id="the-error-or-everything-else-condition" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="the-error-or-everything-else-condition"><span class="header-section-number">7</span> The error or everything else condition</h2>
+<p>We usually want to execute something for values we have not prepared for.&nbsp; For instance, a phone system might have menu options numbered <strong>1</strong> through <strong>5</strong>.&nbsp; In the user presses <strong>7</strong>, the system will usually have a message saying something like “sorry, <strong>7</strong> is not an option”.</p>
+<p>&nbsp;</p>
+<p>The problem with the script above is that it does nothing if condition for the day is not checked in the <strong><em>if-else-if</em></strong> structure. In an <strong><em>if-else-if</em></strong> structure you cannot anticipate every condition that somebody will input into a dataframe – let alone all of the errant spellings.&nbsp; Instead, we create what is often referred to as an <span class="hl">error condition</span><em>,</em> meaning we set up a codeblock that gets executed if none of the conditions in the <strong><em>if-else-if</em></strong> structure are <strong><em>TRUE</em></strong>.&nbsp; This error codeblock gets attached to the <strong><em>else</em></strong> statement.</p>
+<div id="fig-errorCondition" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-errorCondition-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="fig-errorCondition"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="fig-errorCondition-1"><a href="#fig-errorCondition-1" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(noonCond[<span class="dv">5</span>] <span class="sc">==</span> <span class="st">"Cloudy"</span>)       <span class="co"># 1st check: the day is cloudy</span></span>
+<span id="fig-errorCondition-2"><a href="#fig-errorCondition-2" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="fig-errorCondition-3"><a href="#fig-errorCondition-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"  Day 5 was cloudy</span><span class="sc">\n</span><span class="st">"</span>);</span>
+<span id="fig-errorCondition-4"><a href="#fig-errorCondition-4" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="fig-errorCondition-5"><a href="#fig-errorCondition-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span> <span class="cf">if</span>(noonCond[<span class="dv">5</span>] <span class="sc">==</span> <span class="st">"Sunny"</span>)   <span class="co"># 2nd check: the day is sunny</span></span>
+<span id="fig-errorCondition-6"><a href="#fig-errorCondition-6" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="fig-errorCondition-7"><a href="#fig-errorCondition-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"  Day 5 was sunny</span><span class="sc">\n</span><span class="st">"</span>); </span>
+<span id="fig-errorCondition-8"><a href="#fig-errorCondition-8" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="fig-errorCondition-9"><a href="#fig-errorCondition-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span> <span class="cf">if</span>(noonCond[<span class="dv">5</span>] <span class="sc">==</span> <span class="st">"Rain"</span>)    <span class="co"># 3rd check: the day is rainy</span></span>
+<span id="fig-errorCondition-10"><a href="#fig-errorCondition-10" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="fig-errorCondition-11"><a href="#fig-errorCondition-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"  Day 5 was rainy</span><span class="sc">\n</span><span class="st">"</span>); </span>
+<span id="fig-errorCondition-12"><a href="#fig-errorCondition-12" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="fig-errorCondition-13"><a href="#fig-errorCondition-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span>  <span class="co"># none of the above are TRUE so output some error message</span></span>
+<span id="fig-errorCondition-14"><a href="#fig-errorCondition-14" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="fig-errorCondition-15"><a href="#fig-errorCondition-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"  The condition for day 5,"</span>, noonCond[<span class="dv">5</span>], <span class="st">", is invalid</span><span class="sc">\n</span><span class="st">"</span>); </span>
+<span id="fig-errorCondition-16"><a href="#fig-errorCondition-16" aria-hidden="true" tabindex="-1"></a>  }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-errorCondition-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12: Adding an error condition to the if-else-if structure
+</figcaption>
+</figure>
+</div>
+<p>Since we have an <strong><em>else</em></strong> statement at the end, there is guaranteed to be a response from the script no matter what <strong><em>noonCond</em></strong> is:</p>
+<div class="sourceCode" id="cb6" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Checking day <span class="dv">5</span> against multiple conditions<span class="sc">:</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  The condition <span class="cf">for</span> day <span class="dv">5</span>, Fog, is invalid</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="error-statement-help-in-debugging" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="error-statement-help-in-debugging"><span class="header-section-number">7.1</span> Error statement help in debugging</h3>
+<p>Adding the error statement also helps you debug your code.&nbsp; In this case, the error statement tells you that some value does not meet any of the conditions (in this case, day <strong>5</strong> had <strong>Fog</strong>) and you can use the codeblock attached to the <strong><em>else</em></strong> statement to provide useful information about what went wrong – and perhaps suggest a fix.</p>
+</section>
+</section>
+<section id="creating-number-ranges-using-if-else-structures" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="creating-number-ranges-using-if-else-structures"><span class="header-section-number">8</span> Creating number ranges using if-else structures</h2>
+<p>Another use for <strong><em>if-else-if</em></strong> structures is to create number ranges.&nbsp; The following code categorizes the <strong><em>highTemp</em></strong> by temperature range.</p>
+<div id="fig-numberRanges" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-numberRanges-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="fig-numberRanges"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="fig-numberRanges-1"><a href="#fig-numberRanges-1" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(highTemps[<span class="dv">3</span>] <span class="sc">&gt;</span> <span class="dv">70</span>)      <span class="co"># check for anything above 70</span></span>
+<span id="fig-numberRanges-2"><a href="#fig-numberRanges-2" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="fig-numberRanges-3"><a href="#fig-numberRanges-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"  That is hot for April!"</span>); </span>
+<span id="fig-numberRanges-4"><a href="#fig-numberRanges-4" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="fig-numberRanges-5"><a href="#fig-numberRanges-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span> <span class="cf">if</span>(highTemps[<span class="dv">3</span>] <span class="sc">&gt;</span> <span class="dv">60</span>) <span class="co"># check for temps 61-70</span></span>
+<span id="fig-numberRanges-6"><a href="#fig-numberRanges-6" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="fig-numberRanges-7"><a href="#fig-numberRanges-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"  That is warm for April!"</span>);   </span>
+<span id="fig-numberRanges-8"><a href="#fig-numberRanges-8" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="fig-numberRanges-9"><a href="#fig-numberRanges-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span> <span class="cf">if</span>(highTemps[<span class="dv">3</span>] <span class="sc">&gt;</span> <span class="dv">50</span>) <span class="co"># check for temps 51-60</span></span>
+<span id="fig-numberRanges-10"><a href="#fig-numberRanges-10" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="fig-numberRanges-11"><a href="#fig-numberRanges-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"  That temperature is about right for April!"</span>);   </span>
+<span id="fig-numberRanges-12"><a href="#fig-numberRanges-12" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="fig-numberRanges-13"><a href="#fig-numberRanges-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span> <span class="cf">if</span>(highTemps[<span class="dv">3</span>] <span class="sc">&gt;</span> <span class="dv">40</span>) <span class="co"># check for temps 41-50</span></span>
+<span id="fig-numberRanges-14"><a href="#fig-numberRanges-14" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="fig-numberRanges-15"><a href="#fig-numberRanges-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"  That is a little cold for April!"</span>);   </span>
+<span id="fig-numberRanges-16"><a href="#fig-numberRanges-16" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="fig-numberRanges-17"><a href="#fig-numberRanges-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span> <span class="co"># temperatures 40 and below</span></span>
+<span id="fig-numberRanges-18"><a href="#fig-numberRanges-18" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="fig-numberRanges-19"><a href="#fig-numberRanges-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"  That is unusually cold for April!"</span>);   </span>
+<span id="fig-numberRanges-20"><a href="#fig-numberRanges-20" aria-hidden="true" tabindex="-1"></a>  }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-numberRanges-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;13: Create number ranges with an if-else-if structure
+</figcaption>
+</figure>
+</div>
+<pre data-tab="Console"><code>Checking temperature of day 3:
+  That temperature is about right for April!</code></pre>
+<section id="if-else-if-statements-are-mutually-exclusive" class="level3" data-number="8.1">
+<h3 data-number="8.1" class="anchored" data-anchor-id="if-else-if-statements-are-mutually-exclusive"><span class="header-section-number">8.1</span> If-Else-If statements are mutually exclusive</h3>
+<p><span class="hl">An <strong>if-else-if</strong> structure ends as soon as a condition is determined to be <strong>TRUE</strong>.</span>This meansat most one codeblock in an <strong><em>if-else-if</em></strong> structure gets executed.&nbsp; In the above example (<a href="#fig-numberRanges" class="quarto-xref">Figure&nbsp;13</a>), if the temperature is 75 (i.e., day 14), the first condition (<strong><em>highTemps[14] &gt; 70</em></strong>) is <strong><em>TRUE</em></strong> and “That is hot for April” is output.&nbsp;<span class="hl">The <strong>if-else-if</strong>&nbsp; ends here and none of the other conditions are checked.</span></p>
+<p>&nbsp;</p>
+<p>The second condition (<strong>highTemp[14] &gt; 60</strong>) would, if checked, also be <strong>TRUE</strong>. But this condition does not get checked because a condition above was already <strong>TRUE</strong> – the <strong><em>if-else-if</em></strong> structure is done executing.</p>
+<p>&nbsp;</p>
+<p>Again, in an <strong><em>if-else-if</em></strong> structure, only the codeblock attached to the first <strong><em>TRUE</em></strong> conditional statement gets executed<em>.</em> If none of the conditional statements are <strong><em>TRUE</em></strong> then the codeblock attached to&nbsp; the <strong><em>else</em></strong> statement at the end is executed.</p>
+</section>
+</section>
+<section id="application" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="application"><span class="header-section-number">9</span> Application</h2>
+<p>A) If you highlight lines 12-21 of the lesson script and press <strong><em>Run</em></strong>, you get the error <span class="hl">Error: unexpected ‘else’ in ” &nbsp;else”.&nbsp;</span> In comment explain why you get this error.&nbsp; The error is similar to what happens in <a href="#curly-bracket-in-r-and-a-bug">Curly bracket in R and a bug</a>.</p>
+<p>&nbsp;</p>
+<p>B) The following line randomly picks a letter from the vector and saves it to <strong><em>grade</em></strong>:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>  grade <span class="ot">=</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"D"</span>, <span class="st">"E"</span>), <span class="at">size=</span><span class="dv">1</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Use the above line&nbsp;</p>
+<ol type="1">
+<li><p>Have the scriptoutput the score range for the grade (A is 90-100, B is 80-90…)</p></li>
+<li><p>Have the script output an error message if <strong><em>grade</em></strong> is anything except A,B,C,D,E (add more letters to the <strong><em>grade</em></strong> vector to test this out)</p></li>
+</ol>
+<p>&nbsp;</p>
+<p>C) The following line creates a random number between <strong>-30</strong> and <strong>120</strong> and saves it to the variable <strong><em>temperature</em></strong>:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>  temperature <span class="ot">=</span> <span class="fu">sample</span>(<span class="sc">-</span><span class="dv">30</span><span class="sc">:</span><span class="dv">120</span>, <span class="at">size=</span><span class="dv">1</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol type="1">
+<li>Use the above line and have the script output:</li>
+</ol>
+<ul>
+<li><p>“cold” if the temperature is between -20 and 30 (exclusive of -20 and 30)</p></li>
+<li><p>“warm” if the temperature is between 30 and 60 (inclusive of 30, exclusive of 60)</p></li>
+<li><p>“hot” if the temperature is between 60 and 100 (inclusive of 60 and inclusive of 100)</p></li>
+<li><p>“invalid value” if the temperature is below -20 or above 100</p></li>
+<li><p>hint: <span class="hl">do the if-else-if structure strictly in ascending order or strictly in descending order</span> – like the grades example above.&nbsp; This mean splitting the “invalid” category into two conditions (less than -20 and greater then 100)<br>
+</p></li>
+</ul>
+<ol start="2" type="1">
+<li>Challenge: In the same script – change the output if the user enters a “border” value (in this case: 30 or 60)</li>
+</ol>
+<ul>
+<li>for 30 output: “cold-ish”</li>
+<li>for 60 output: “hot-ish”</li>
+</ul>
+<p>&nbsp;</p>
+<p>D) Repeat parts C, D, and E from the application in last lesson (1-08: Conditional Operations) using <strong><em>if-else</em></strong> statements.&nbsp;<span class="note">Note: there are a few different ways to do this.</span></p>
+<p>Save the script as&nbsp;<strong><em>app</em></strong>1-09<strong><em>.r</em></strong> in your&nbsp;<strong><em>scripts</em></strong> folder and&nbsp; email your Project Folder to Charlie Belinsky at belinsky@msu.edu.</p>
+<p>&nbsp;</p>
+<p><a href="..\content/DEVELOPMENT/2020/courses/DEV-belinsky-2020-ProgrammingFundamentalsUsingR/R/Lessons/1-01_Setup_and_RStudio_Projects.html?ou=1247781#zip">Instructions for zipping the Project Folder are here.</a></p>
+<p>&nbsp;</p>
+<p>If you have any questions regarding this application, feel free to email them to Charlie Belinsky at belinsky@msu.edu.</p>
+<section id="questions-to-answer" class="level3" data-number="9.1">
+<h3 data-number="9.1" class="anchored" data-anchor-id="questions-to-answer"><span class="header-section-number">9.1</span> Questions to answer</h3>
+<p>Answer the following in comments inside your application script:</p>
+<ol type="1">
+<li><p>What was your level of comfort with the lesson/application?</p></li>
+<li><p>What areas of the lesson/application confused or still confuses you?</p></li>
+<li><p>What are some things you would like to know more about that is related to, but not covered in, this lesson?</p></li>
+</ol>
+</section>
+</section>
+<section id="trap-true-and-false-are-keywords-t-and-f-are-not" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="trap-true-and-false-are-keywords-t-and-f-are-not"><span class="header-section-number">10</span> Trap: TRUE and FALSE are keywords, T and F are not</h2>
+<p>The terms <strong><em>TRUE</em></strong> and <strong><em>FALSE</em></strong> are reserved <em>keywords</em> in R – this means that <em><strong>TRUE</strong> and</em> <strong><em>FALSE</em></strong> are predefined and cannot be used as variable names in R.</p>
+<p>&nbsp;</p>
+<p>If you try to assign a value to a “variable” named TRUE or FALSE, you will get an “<span class="hl">invalid (do_set) left-hand side to assignment</span>” error (<em>Fig.##</em>).&nbsp; This is the same error you get if you try to assign a value to a number (i.e., 10 = “a”).</p>
+<div id="fig-valueToKeyword" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-valueToKeyword-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-01-08 keyword assignment error.PNG" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-valueToKeyword-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;14: Assigning a value to a keyword causes an error.
+</figcaption>
+</figure>
+</div>
+<p>You will often see R scripts that use <strong><em>T</em></strong> and <strong><em>F</em></strong> as shortcuts for <strong><em>TRUE</em></strong> and <strong><em>FALSE</em></strong>.&nbsp; R accepts <strong><em>T</em></strong> and <strong><em>F</em></strong> as shortcuts for <strong><em>TRUE</em></strong> and <strong><em>FALSE</em></strong><span class="hl">&nbsp;but T and F are not keywords</span><strong><em>.</em></strong>&nbsp; This means that someone can assign a value to <strong><em>T</em></strong> or <strong><em>F</em></strong> that overrides the default <strong><em>TRUE/FALSE</em></strong> values. If this happens, using <strong><em>T</em></strong> or <strong><em>F</em></strong> as shortcuts for <strong><em>TRUE</em></strong> or <strong><em>FALSE</em></strong> would produce unexpected results.&nbsp; It is best to stick with the reserved (and protected) keywords <strong><em>TRUE</em></strong> and <strong><em>FALSE</em></strong>.</p>
+</section>
+<section id="extension-brackets-and-code-blocks" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="extension-brackets-and-code-blocks"><span class="header-section-number">11</span> Extension: brackets and code blocks</h2>
+<p>A codeblock enclosed by curly brackets <strong><em>{ }</em></strong> usually follows an <strong><em>if()</em></strong> statement.&nbsp; The brackets designate the start and end of the code block and R does not care how the brackets are placed in code – as long as the order is correct.</p>
+<p>&nbsp;</p>
+<p>The following four code-blocks all execute exactly the same in R:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>());  <span class="fu">options</span>(<span class="at">show.error.locations =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>yourAge <span class="ot">=</span> <span class="fu">readline</span>(<span class="st">"How old are you? "</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(yourAge <span class="sc">&lt;</span> <span class="dv">20</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"You have your whole life ahead of you!!"</span>);</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>());  <span class="fu">options</span>(<span class="at">show.error.locations =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>yourAge <span class="ot">=</span> <span class="fu">readline</span>(<span class="st">"How old are you? "</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(yourAge <span class="sc">&lt;</span> <span class="dv">20</span>){</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"You have your whole life ahead of you!!"</span>);</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>());  <span class="fu">options</span>(<span class="at">show.error.locations =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>yourAge <span class="ot">=</span> <span class="fu">readline</span>(<span class="st">"How old are you? "</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(yourAge <span class="sc">&lt;</span> <span class="dv">20</span>){ <span class="fu">cat</span>(<span class="st">"You have your whole life ahead of you!!"</span>); }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>());  <span class="fu">options</span>(<span class="at">show.error.locations =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>yourAge <span class="ot">=</span> <span class="fu">readline</span>(<span class="st">"How old are you? "</span>)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(yourAge <span class="sc">&lt;</span> <span class="dv">20</span>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>                                           {</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"You have your whole life ahead of you!!"</span>);     }                                            </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>All the above code blocks are valid.&nbsp; R just looks for a start and end bracket and executes everything in between – it completely ignores the spaces in between.&nbsp; The decision on where to place the brackets has to do with coding standards and user view ability.&nbsp; The first two code blocks above are the most commonly accepted standards and your code should use one of these two methods.</p>
+</section>
+<section id="extension-skipping-brackets-in-if-else-structures" class="level2" data-number="12">
+<h2 data-number="12" class="anchored" data-anchor-id="extension-skipping-brackets-in-if-else-structures"><span class="header-section-number">12</span> Extension: Skipping brackets in if-else structures</h2>
+<p>You will often see <strong><em>if-else</em></strong> statements with no curly brackets.&nbsp; This only works if <span class="hl">there is only a single code command</span>attached to the <strong><em>if()</em></strong> or the <strong><em>else</em></strong>.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>());   <span class="fu">options</span>(<span class="at">show.error.locations =</span> <span class="cn">TRUE</span>);</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>favAnimal <span class="ot">=</span> <span class="fu">readline</span>(<span class="st">"What is your favorite animal? "</span>);</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(favAnimal <span class="sc">==</span> <span class="st">"Llama"</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"You are wise beyond your years"</span>);</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"You still have a lot of room for growth"</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The code above is functionally equivalent to the code below</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>());   <span class="fu">options</span>(<span class="at">show.error.locations =</span> <span class="cn">TRUE</span>);</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>favAnimal <span class="ot">=</span> <span class="fu">readline</span>(<span class="st">"What is your favorite animal? "</span>);</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(favAnimal <span class="sc">==</span> <span class="st">"Llama"</span>)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>   <span class="fu">cat</span>(<span class="st">"You are wise beyond your years"</span>);</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>   <span class="fu">cat</span>(<span class="st">"You still have a lot of room for growth"</span>);</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The only advantage to not using curly brackets is that it takes up less space.&nbsp; I recommend that you include curly brackets even if there is only one line of code in the codeblock – it is more explicit and you avoid accidentally adding additional lines and forgetting the brackets.</p>
+<p>&nbsp;</p>
+<p>The code below will give an <span class="hl">“unexpected ‘else’”</span> error.&nbsp; This is because R believes that the <strong><em>if()</em></strong> structure ends right after the first <strong><em>cat()</em></strong> on line 7 because there are no curly brackets attached to the <strong><em>if().</em></strong> This means the <strong><em>else</em></strong> statement is completely detached from the <strong><em>if()</em></strong>, which is an error.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>());   <span class="fu">options</span>(<span class="at">show.error.locations =</span> <span class="cn">TRUE</span>);</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>favAnimal <span class="ot">=</span> <span class="fu">readline</span>(<span class="st">"What is your favorite animal? "</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>   </span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(favAnimal <span class="sc">==</span> <span class="st">"Llama"</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>   <span class="fu">cat</span>(<span class="st">"You are wise beyond your years</span><span class="sc">\n</span><span class="st">"</span>);</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>   <span class="fu">cat</span>(<span class="st">"No doubt about that."</span>);       <span class="co"># this line is NOT attached to the if()</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>   <span class="fu">cat</span>(<span class="st">"You still have a lot of room for growth"</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-unexpectedElse" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-unexpectedElse-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-01-08 Unexpected else.PNG" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-unexpectedElse-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15: Unexpected else error caused by not using curly brackets in if-else structures.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="trap-else-never-has-an-attached-condition" class="level2" data-number="13">
+<h2 data-number="13" class="anchored" data-anchor-id="trap-else-never-has-an-attached-condition"><span class="header-section-number">13</span> Trap: Else never has an attached condition</h2>
+<p>A common mistake for people new to scripting is to treat <strong><em>else</em></strong> like an <strong><em>if()</em></strong> or an <strong><em>else if()</em></strong> and attach a condition to it.&nbsp; In the script below, the code attached to the <strong><em>else</em></strong> statement is supposed to be executed if all other conditional statements in the <strong><em>if-else-if</em></strong> structure fail, which is when the score is less than 60.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>());  <span class="fu">options</span>(<span class="at">show.error.locations =</span> <span class="cn">TRUE</span>);</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>score <span class="ot">=</span> <span class="fu">readline</span>(<span class="st">"Enter your score: "</span>) </span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>score <span class="ot">=</span> <span class="fu">as.numeric</span>(score);</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(score <span class="sc">&gt;</span> <span class="dv">90</span>) </span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>   <span class="fu">cat</span>(<span class="st">"A"</span>);</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span> <span class="cf">if</span>(score <span class="sc">&gt;</span> <span class="dv">80</span>) <span class="co"># score between 80-90</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>   <span class="fu">cat</span>(<span class="st">"B"</span>);</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span> <span class="cf">if</span>(score <span class="sc">&gt;</span> <span class="dv">70</span>) <span class="co"># score between 70-80</span></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>{ </span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>   <span class="fu">cat</span>(<span class="st">"C"</span>);</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span> <span class="cf">if</span>(score <span class="sc">&gt;</span> <span class="dv">60</span>) <span class="co"># score between 60-70</span></span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>{ </span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>   <span class="fu">cat</span>(<span class="st">"D"</span>);</span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span> (score <span class="sc">&lt;=</span> <span class="dv">60</span>)  <span class="co"># will cause an error</span></span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>{                 </span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>   <span class="fu">cat</span>(<span class="st">"E"</span>);</span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The script seems to work at first.&nbsp; If you type in a value below 60 then “E” will be the output.&nbsp; However, if you type in 75 the output is&nbsp; “CE”.&nbsp; If you type in 95&nbsp; the output is “AE”. In fact,<span class="hl">“E” will be part of the output no matter what you type in</span>.</p>
+<div id="fig-ElseWithCondition" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ElseWithCondition-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-01-08 Else with condition.PNG" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ElseWithCondition-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;16: Putting a condition on an else – causes an error
+</figcaption>
+</figure>
+</div>
+<p>Essentially, you have detached the codeblock</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>{                 </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">cat</span>(<span class="st">"E"</span>);</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>from the <strong><em>else</em></strong> statement and, because of this, <strong><em>cat(“E”)</em></strong> will execute every time the script is executed.</p>
+<p>&nbsp;</p>
+<p>The proper way to code the else is as follows:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>());   <span class="fu">options</span>(<span class="at">show.error.locations =</span> <span class="cn">TRUE</span>);</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>score <span class="ot">=</span> <span class="fu">readline</span>(<span class="st">"Enter your score: "</span>);</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>score <span class="ot">=</span> <span class="fu">as.numeric</span>(score);</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(score <span class="sc">&gt;</span> <span class="dv">90</span>) </span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>   <span class="fu">cat</span>(<span class="st">"A"</span>);</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span> <span class="cf">if</span>(score <span class="sc">&gt;</span> <span class="dv">80</span>) <span class="co"># score between 80-90</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>   <span class="fu">cat</span>(<span class="st">"B"</span>);</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span> <span class="cf">if</span>(score <span class="sc">&gt;</span> <span class="dv">70</span>) <span class="co"># score between 70-80</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>{ </span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>   <span class="fu">cat</span>(<span class="st">"C"</span>);</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span> <span class="cf">if</span>(score <span class="sc">&gt;</span> <span class="dv">60</span>) <span class="co"># score between 60-70</span></span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>{ </span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>   <span class="fu">cat</span>(<span class="st">"D"</span>);</span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>  <span class="co"># all other conditions failed</span></span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>{                 </span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>   <span class="fu">cat</span>(<span class="st">"E"</span>)</span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now the <strong><em>else</em></strong> will execute only when all other conditions fail.&nbsp; In other words, it will execute when <strong><em>score</em></strong> is less than or equal to <strong><em>60</em></strong></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

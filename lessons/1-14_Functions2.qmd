@@ -1,0 +1,746 @@
+---
+title: "1-14: Functions 2"
+short: "1-14"
+# special characters for highlighting code : «»
+---
+
+### Changes
+
+-   set up an example before describing the counter function
+-   consistency with & and &&
+
+## Purpose
+
+-   create a separate file to hold functions
+
+-   arguments in functions
+
+-   Use return values in functions
+
+## Questions about the material...
+
+The files for this lesson:
+
+-   Script: [you can download the script here](../scripts/1-14_Functions2.R)
+
+-   Second Script: [a second script containing functions can be downloaded here](../scripts/toolbox.R)
+
+-   Data: [download the data file here](../data/twoWeekWeatherData3.csv)
+
+ 
+
+If you have any questions about the material in this lesson, feel free to email them to the instructor, {{< var instructor.name >}}, at {{< var instructor.email >}}.
+
+## Functions are independent of script files
+
+Last lesson we used built-in R statistical functions (e.g., ***mean()***, ***median()***) and we created our own functions (e.g., ***isDivisible()***).  The statistical functions exists outside your script files and can be called from any script but ***isDivisible()*** only exists inside your script file.  In this lesson we will be creating more functions and making them available to any script file -- just like R's statistical functions.
+
+## Creating an external file for functions
+
+Functions are like tools in that they are called upon to perform some common task.  Since these tasks are going to be used by many other script files, it is useful to create a separate script that only contains functions.
+
+ 
+
+We are going to create a script that holds only functions, called ***toolbox.r***, and start by adding ***isDivisible()*** to it.
+
+ 
+
+To do this:
+
+1\) In RStudio, create a new script file
+
+2\) Copy and paste the ***isDivisible()*** function (below) to the new script file
+
+3\) Save the file as  ***toolbox.r*** inside the ***scripts*** folder.
+
+::: {#fig-function-toolbox}
+``` r
+# see if the first number is divisible by the second
+isDivisible = function(div1, div2)
+{
+  remainder = div1 %% div2;
+  if(remainder == 0)
+  {
+    return(TRUE);
+  }
+  else
+  {
+    return (FALSE);
+  }
+}
+```
+
+Putting a function inside the toolbox.r script
+:::
+
+Functions are like variables except they store codeblock instead of values.  If we click ***Source*** on ***toolbox.r*** the script does nothing except list the ***isDivisible()*** function (along with its arguments) in the ***Environment*** tab.  Once a function has been loaded into the ***Environment***, it can be called upon by the script.
+
+![Adding isDivisible() to a functions script called toolbox.r](images/R-1-13_toolbox.png){#fig-add-function-isdivisible .fs}
+
+ 
+
+[Warning: Do not include **rm(list=ls())** in a functions script.]{.hl} This would clear the ***Environment*** of the calling script.
+
+## Using the functions
+
+We want any script file in our RStudio Project to be able to use the ***isDivisible()*** function that is included in ***toolbox.r***.  To do this, we need the outside script to include the function script, ***toolbox.r***.  We can do this using the ***source()*** function and the argument is the location and name of the script file you want to include.
+
+ 
+
+This code tells R to execute (Source) everything in the ***toolbox.r*** file (which is in the ***scripts*** folder) -- so, ***toolbox.r***, and everything in it, is now part of your script and put into the ***Environment***:
+
+``` r
+source(file = "scripts/toolbox.r");  # load script with isDivisible() function
+```
+
+If you click ***Run*** on the line of code that ***source()*** is on then you will see ***isDivisible()*** appear in the ***Environment*** tab.
+
+ 
+
+[Extension: The many arguments in source()](#extension-the-many-arguments-in-source)
+
+### Using functions from other scripts
+
+Since everything inside ***toolbox.r*** is now part of this new script, we can call ***isDivisible()*** [as if it existed in our script]{.hl}.  The script below is from last lesson and will produce the same results in this script. 
+
+``` r
+## from last lesson
+div12_4 = isDivisible(12,4);
+div12_5 = isDivisible(12,5);
+
+# better to put in argument names:
+div12_4a = isDivisible(div1=12, div2=4);
+div12_5a = isDivisible(div1=12, div2=5);
+
+# the order does not matter when you use argument names:
+div12_4b = isDivisible(div2=4, div1=12);
+div12_5b = isDivisible(div2=5, div1=12);
+```
+
+![Calling isDivisible() from a separate script](images/R-1-13_Use_toolbox.png){#fig-call-function-sep-script .fs}
+
+### Common errors when reading other script files
+
+When calling another script file from your script you need to make sure the:
+
+-   script name is spelled right
+
+-   folder(s) names are spelled right
+
+-   folder path is correct
+
+ 
+
+If any of these are wrong then R will give you a *"*[Cannot open the connection]{.hl}*"* error when you ***Source*** the code.
+
+ 
+
+You will also get this error if you [open your script file outside your RStudio Project]{.hl}.  This is because the Working Directory has not been set to your Project Folder and the folder path (***scripts/***) to ***toolbox.r*** is wrong.
+
+![Error calling the toolbox.r file because we are not in the RStudio Project](images/R-1-13_connection_error.png){#fig-error-call-outside-proj .fs}
+
+## Adding to our toolbox: the counter function
+
+Now we will add a new counter function to ***toolbox.r***.
+
+ 
+
+***counter()*** will
+
+-   count up all the values in a vector that meet a user-specified condition
+
+-   return that count to the caller
+
+ 
+
+So ***counter()***, when completed,will be able to do things like:
+
+-   count all temperature values equal to 60 in the ***lowTemp*** vector
+
+-   count all precipitation values greater than zero in the ***precip*** vector
+
+-   count all values less than 50 in the ***highTemp*** vector
+
+### Adding counter() to toolbox.r
+
+In our first version of this function, ***counter()*** will count the number of values [in a vector]{.hl} that are greater than *a comparison value*.
+
+ 
+
+This means there are *two arguments* for ***counter()***:
+
+1\) ***vector***: the numeric vector to be searched through
+
+2\) ***compareVal***: the value used for comparison when determining whether each of the elements meets the condition.
+
+ 
+
+So, in ***toolbox.r***,  we will create a function called ***counter()*** that takes two arguments from the caller:
+
+``` r
+counter = function(vector, compareVal)  
+{
+
+}
+```
+
+Remember that ***vector*** and ***compareVal*** are arguments whose [values get assigned by the caller]{.hl}.
+
+### Going through each value in the vector
+
+The first thing we want the function to do is to go through all the values in the vector that the caller supplied.
+
+ 
+
+To do that we need to:
+
+1.  find the number of values in the vector using ***length()***
+
+2.  create a ***for()*** that cycles through each value in the vector
+
+``` r
+counter = function(vector, compareVal)
+{
+  vecLength = length(vector);  # get the length of the vector
+  for(val in 1:vecLength)      # go through each value in vector
+  {
+    # counting script will go here
+  }
+}
+```
+
+We get the length of the vector in line 3 by using the ***length()*** function:
+
+``` r
+vecLength = length(vector);
+```
+
+and we use the length to give the number of cycles in the sequence ***1:vecLength***: 
+
+``` r
+for(val in 1:vecLength)
+```
+
+[Note: ***val*** will change each cycle of the ***for()*** going from **1** to ***vecLength.***]{.note}
+
+### Checking each value
+
+The ***for()*** will cycle through each value in the vector value, using ***val*** as the index.  Now we need to check each vector value against ***compareVal***.
+
+ 
+
+Inside the ***for()***, we check each indexed value to see if it is greater than the value given by the caller:
+
+``` r
+counter = function(vector, compareVal)
+{
+  vecLength = length(vector);  # get the length of the vector
+  for(val in 1:vecLength)      # go through each value in vector
+  {
+    # check if the vector value is greater than the compareVal
+    «if(vector[val] > compareVal)»
+    {
+      # add one to the count
+    }
+  }
+}
+```
+
+### Creating a count value
+
+Now we need a way to capture how many times the value from the vector was greater than the one supplied by the caller.
+
+ 
+
+So we need a[state variable]{.hl} that will hold the count -- we will call it ***countVal*** and initially assign ***countVal*** the value of **0**.
+
+``` r
+countVal = 0;
+```
+
+[Note: If there are no values in the vector or if no values in the vector are greater than the ***compareVal***, ***counter()*** will return ***0*** to the caller.]{.note}
+
+ 
+
+***countVal*** is increased by one each time the following conditional statement is ***TRUE***:
+
+``` r
+if(vector[val] > compareVal)
+```
+
+Increasing ***countVal*** by one is the same as saying *"assign the value **(countVal** + 1) to **countVal**":*
+
+``` r
+countVal = countVal + 1;  # intermediate states for countVal
+```
+
+Putting all the code together:
+
+``` r
+counter = function(vector, compareVal)
+{
+  vecLength = length(vector);  # get the length of the vector
+  «countVal = 0;»                # initialize the count to 0
+  for(val in 1:vecLength)      # go through each value in vector
+  {
+    # check if the vector value is greater than the compareVal
+    if(vector[val] > compareVal)
+    {
+      «countVal = countVal + 1;» # add one to the count
+    }
+  }
+}
+```
+
+### Returning the count to the user
+
+The last step is to return the final state of ***countVal*** to the caller using the ***return()*** function. 
+
+``` r
+counter = function(vector, compareVal)
+{
+  vecLength = length(vector);  # get the length of the vector
+  countVal = 0;                # initialize the count to 0
+  for(val in 1:vecLength)      # go through each value in vector
+  {
+    if(vector[val] > compareVal)
+    {
+      countVal = countVal + 1; # add one to the count
+    }
+  }
+  «return(countVal);»  # return the count value to the caller
+}
+```
+
+\[Extension: Using which() instead of for() and if()\]
+
+ 
+
+The [return value]{.hl}is the function's output for your inputs (i.e., the arguments).  This is like doing a mathematical operation in the ***Console*** -- you call a function (in this case, multiplication), with two arguments (**5** and **7**), and the output is the return value from the function (**35**).
+
+``` {.r tab="Console"}
+> 5*7
+[1] 35
+```
+
+## toolbox.r code
+
+Your ***toolbox.r*** file should look like this:
+
+``` r
+# see if the first number is divisible by the second
+isDivisible = function(div1, div2)
+{
+  remainder = div1 %% div2;
+  if(remainder == 0)
+  {
+    return(TRUE);
+  }
+  else
+  {
+    return (FALSE);
+  }
+}
+
+counter = function(vector, compareVal)
+{
+  vecLength = length(vector);  # get the length of the vector
+  countVal = 0;                # initialize the count to 0
+  for(val in 1:vecLength)      # go through each value in vector
+  {
+    if(vector[val] > compareVal)
+    {
+      countVal = countVal + 1; # add one to the count
+    }
+  }
+  «return(countVal);»  # return the count value to the caller
+}
+```
+
+## Calling the function
+
+Now we have the ***counter()*** function in ***toolbox.r*** and we have included,using ***source()***,  ***toolbox.r*** in our script, we can use ***counter()***.
+
+ 
+
+The following script makes 3 calls to ***counter()*** and assigns the return value to a variable (***count1***, ***count2***, and ***count3***):
+
+``` r
+weatherData = read.csv("data/twoWeekWeatherData.csv");
+highTemps = weatherData$highTemp;
+lowTemps = weatherData$lowTemp;
+
+count1 = counter(vector = highTemps, compareVal = 45);
+count2 = counter(vector = highTemps, compareVal = 55);
+count3 = counter(lowTemps, 40);
+```
+
+In the ***Environment***, you can see that:
+
+-   the number of ***highTemp*** values greater than 45 is ***10*** (***count1***)
+
+-   the number of ***highTemp*** values greater than 55 is ***5*** (***count2***)
+
+-   the number of ***lowTemp*** values greater than 40 is ***9*** (***count3***)
+
+``` {.r tag="Environment"}
+count1     10
+count2      5
+count3      9
+```
+
+[Note: you can be explicit and use the argument names in the function call (e.g., **count1, count2**) or just put the values in the call (e.g., **count3**).]{.note}  If you just put in the values, make sure you put them in the right order.  In my opinion it is best to use argument names, they make the code more readable and easier to debug.
+
+ 
+
+[Trap: Putting arguments values in the wrong order]
+
+## Allowing for more conditional operators
+
+As of right now, ***counter()*** only uses the greater than ( ***\>*** ) conditional operator when comparing the vector values to another value.  We want to make the ***counter()*** more robust by allowing the user to choose other conditional operators.
+
+ 
+
+For the next example we will create a new function called ***counter2()*** and give it the ability to compare vector values with a comparison value using one of three conditional operators: greater than (**\>**), less than (**\<**), or equal to (**==**).
+
+ 
+
+To do this, [we need a third argument in ***counter2()***]{.hl}, which we will call ***conditionalOp*** and we will set the default value for ***conditionalOp*** to greater than (**\>**).  So, if the caller does not assign a value to ***conditionalOp*** then the default value will be "\>".
+
+``` r
+counter2 = function(vector, compareVal, conditionalOp=">")
+```
+
+### if-else-if to check for the operation
+
+The code will allow for three values to be assigned to the argument ***conditionOp***: "\>",  "\<", and "==".
+
+ 
+
+This means the script needs to check for each possible ***conditionOp*** using an ***if-else-if*** structure.
+
+ 
+
+But we also need to determine if the value meets the condition -- this is given by ***conditionOp***.
+
+ 
+
+The three multiple-conditions situations that need to be checked are:
+
+1.  if ***conditionalOp*** is "\>" ***and*** the vector's *value is greater than* ***compareVal***
+
+2.  else if ***conditionalOp*** is "\<" ***and*** the vector's *value is less than* ***compareVal***
+
+3.  else if ***conditionalOp*** is "==" ***and*** the vector's *value is equal to **compareVal***
+
+ 
+
+Putting the code together (in the **toolbox.r** file):
+
+``` r
+counter2 = function(vector, compareVal, conditionalOp=">")
+{
+  vecLength = length(vector);  # get the length of the vector
+  countVal = 0;                # initialize the count to 0
+  for(val in 1:vecLength)      # go through each value in vector
+  {
+    if(«conditionalOp == ">"» & vector[val] «>» compareVal)
+    {
+      countVal = countVal + 1; # add one to the count
+    }
+    else if(«conditionalOp == "<"» & vector[val] «<» compareVal)
+    {
+      countVal = countVal + 1; # add one to the count
+    }
+    else if(«conditionalOp ==» "==" & vector[val] «==» compareVal)
+    {
+      countVal = countVal + 1; # add one to the count
+    }
+  }
+  return(countVal);    # return the count value to the caller
+}
+```
+
+[Extension: Checking for invalid values]
+
+## Calling the updated function
+
+[Make sure you save your functions script before sourcing it.]{.hl}***\
+***
+
+The first test will be to make sure ***counter2()*** can repeat what ***counter()*** did, which it can because the default value for ***conditionalOp*** is ***\>***:
+
+``` r
+count1a = counter2(vector = highTemps, compareVal = 45);
+count2a = counter2(vector = highTemps, compareVal = 55);
+count3a = counter2(lowTemps, 40);
+```
+
+And we see we get the same values using ***counter2()*** as we got with ***counter()***:
+
+``` {.r tab="Environment"}
+count1     10
+count1a    10
+count2      5
+count2a     5
+count3      9
+count3a     9
+```
+
+### Using the conditionalOp argument
+
+Now let's assign values to the ***conditionalOp*** arguments:
+
+``` r
+count4 = counter2(vector = lowTemps, compareVal = 40, conditionalOp = "<");
+count5 = counter2(vector = highTemps, compareVal = 54, conditionalOp = "==");
+count6 = counter2(lowTemps, 38, "==");
+count7 = counter2(highTemps, 60, ">");
+```
+
+-   ***count4*** and ***count5*** explicitly assign values to the three arguments (***vector***, ***compareVal***, and ***conditionalOp***)
+
+-   ***count6*** and ***count7*** pass in the values without the argument name (so, they need to be in order)
+
+``` {.r tab="Environment"}
+count4     4
+count5     2
+count6     1
+count7     2
+```
+
+## When to add default values to arguments
+
+There is no hard and fast rule for when you should have a default value in the argument -- it is more of an art than a science.
+
+ 
+
+The situations which has obvious rules are:
+
+-   Do not use a default value for data points (e.g., ***vector*** in ***counter2()***).  You are just guessing data points that are going to be wrong.
+
+-   Use a default value when you know a value represents the most commonly used option. So, use ***conditionalOp="\>"*** if you know that "\>" will be used more than any of the other options.
+
+ 
+
+Every other situation falls in the gray area between the two ends:
+
+-   You could set the ***compareVal*** to default value of **0**.  It is a reasonable value-- arguably the most reasonable value out of the infinite options.  However, it is unlikely to be the value the caller will want to use.
+
+-   If you are unsure which option for ***conditionalOp*** will be most used, you still can set it to a default value.  It is reasonable to use a default value for an argument that has a smallish number of possible options.
+
+## Application
+
+Most of the work in this application will be done in your ***toolbox.r*** script, but [you need to call and test the functions in ***toolbox.r*** from you ***app1-14.r*** script]{.hl}.
+
+ 
+
+1\) Create a script named ***app1-14.r*** in your ***scripts*** folder.  In that script file, call the ***toolbox.r*** script.
+
+ 
+
+2\) extend the ***counter2()*** function in ***toolbox.r*** to include three more conditions:
+
+-   greater than or equal to (\>=)
+
+-   less than or equal to (\<=)
+
+-   not equal to (!=)
+
+Test the 3 new conditions in ***app1-14.r***
+
+ 
+
+3\) Add an error condition to ***counter2()*** if the caller gives an invalid conditional operator value.
+
+Test the error condition in ***app1-14.r***
+
+ 
+
+4\) Create a function in ***toolbox.r*** that checks to see if [at least one value]{.hl} in a vector is (a) greater than, (b) equal, or (c) less than a given value.
+
+ 
+
+So, just like ***counter2()***, this new function will take in three arguments:
+
+-   vector with numeric data
+
+-   conditional operator (==, \<, or \>)
+
+-   comparison value
+
+But, the function will only return ***TRUE*** or ***FALSE***
+
+-   ***TRUE*** if any value in the vector meets the condition
+
+-   ***FALSE*** if no values in the vector meet the condition
+
+Make sure to test the function from your ***app1-14.r*** script.
+
+ 
+
+5\) Create a function in ***toolbox.r*** that calculates the Mean Square Error (MSE) of a vector (V) of numeric values.
+
+$$
+M S E=\frac{1}{n} \sum_{i=1}^{n}\left(V_{i}-\operatorname{mean}(V)\right)^{2}
+$$
+
+A good middle step for this problem is to calculate the mean of the vector using a ***for*** loop (i.e., add all the vector values using a ***for*** loop and then divide by the length of the vector).
+
+### Tips for question 4
+
+-   ***n*** is the same as the length of the vector
+
+-   Use the ***mean()*** function to find the mean of the vector.
+
+-   Create a state variable that hold the total value
+
+-   Use a ***for*** loop to cycle through each value in the vector.  For each value you want to calculate $\left(V_{i}-\operatorname{mean}(V)\right)^{2}$ and add that to the total value
+
+-   After you get the total, divide it by the length of the vector
+
+ 
+
+**Example** If you have:
+
+``` r
+vec = c(8, 11, 9, 4);
+```
+
+then the ***mean(vec) = 8*** and
+
+$$
+M S E=\frac{(8-8)^{2}+(11-8)^{2}+(9-8)^{2}+(4-8)^{2}}{4}=6.5
+$$
+
+{{< include ../assets/_AppInstructions.qmd >}}
+
+## Extension: The many arguments in source() {#extension-the-many-arguments-in-source}
+
+When you look at ***source()*** in the ***Help*** tab, you can see that ***source()*** has many arguments.  If you look more carefully, you can see that all the arguments except two has a default value (***file*** and ***exprs***).   The first without a default value is ***file***, which makes sense because there is no way ***source()*** could, by default, guess what file you are calling -- a default value would most likely cause a file-not-found error.
+
+ 
+
+***exprs*** is complicated but it is an alternative to ***file*** and is ignored if ***file*** has a value.
+
+ 
+
+The rest of the arguments can be used to tweak the way ***source()*** operates but they are rarely used.  You can look underneath for a description of all of the arguments -- and what the default value means.
+
+![The source() function with its many arguments -- all but file has a default value](images/R-1-13_Source.png){#fig-source-in-help .fs}
+
+Default values allow you to add arguments to a function, making the function more flexible, without increasing the complexity for the user.  The average user can ignore everything except ***file*** whereas the advanced user has many more dials that they can tweak.
+
+## Extension: Checking for invalid values
+
+One situation that can occur when checking for conditional operators is that the caller provided an invalid operator.
+
+ 
+
+Let's say we have the situation:
+
+1.  the valid operators are: **\<, \>, ==**
+
+2.  the caller gave the operator: **\@**
+
+ 
+
+First, we want to create a conditional statement that checks to see if the operator is invalid.  There are two ways to do this.  The first is to check to see if the operator is valid and invert the conditional statement using the ( **!** ) operator:
+
+``` r
+if( «!(»conditionalOp == ">" | conditionalOp == "<" | conditionalOp != "=="«)» )
+{
+  cat("Sorry, ", conditionalOp, " is not a valid operator");
+}
+```
+
+The conditional statement first checks the inner parentheses.  The ***or*** operator ( **\|** ) means inner parentheses will be ***TRUE*** if ***conditionalOp*** is any of the three operators given.  The ***not*** operator ( **!** ) inverts that condition to **FALSE**.  This means the code attached to the ***if()*** will be executed only if ***conditionalOp*** is ***not*** any of the three.
+
+ 
+
+There is a second way we can write the conditional statement using the ***and*** operator ( **&** ):
+
+``` r
+if(conditionalOp «!=» ">" «&» conditionalOp «!=» "<" & conditionalOp «!=» "==")
+{
+  cat("Sorry, ", conditionalOp, " is not a valid operator");
+}
+```
+
+The ***&*** operator says that all three conditions must be ***TRUE*** in order for the conditional statement to be ***TRUE***.  The three conditions all involve the ***not equal to*** operator.  So, the conditional statement is ***TRUE*** if ***conditionalOpis not equal*** to all the three operators given.
+
+ 
+
+In mathematical parlance, the two conditional statements above are [contrapositives]{.hl}.  In other words, two operations were reversed and the result stays the same.
+
+ 
+
+We will often first check for invalid values in an ***if-else*** structure.  This is because there is no point in making any of the other check if the ***conditionOp*** is not valid.
+
+``` r
+counter = function(vector, compareVal, conditionalOp=">")
+{
+  vecLength = length(vector);  # get the length of the vector
+  countVal = 0;                # initialize the count to 0
+  for(val in 1:vecLength)      # go through each value in vector
+  {
+    «if(conditionalOp != ">" && conditionalOp != "<" && conditionalOp != "==")»
+    {
+      cat("Sorry, ", conditionalOp, " is not a valid operator");
+    }
+    else if(conditionalOp == ">" && vector[val] > compareVal)
+    {
+      countVal = countVal + 1; # add one to the count
+    }
+    else if(conditionalOp == "<" && vector[val] < compareVal)
+    {
+      countVal = countVal + 1; # add one to the count
+    }
+    else if(conditionalOp == "==" && vector[val] == compareVal)
+    {
+      countVal = countVal + 1; # add one to the count
+    }
+  }
+  return(countVal);    # return the count value to the caller
+}
+```
+
+## Trap: Putting arguments values in the wrong order
+
+``` r
+rm(list=ls()); options(show.error.locations = TRUE);
+source("scripts/toolbox.r");   # load functions from toolbox.r file
+
+weatherData = read.csv("data/LansingWeather3.csv");
+highTempData = weatherData[ ,"highTemp"];
+lowTempData = weatherData[ ,"lowTemp"];
+
+count1 = counter(vector = highTempData, compareVal = 50);
+count2 = counter(vector = highTempData, compareVal = 60);
+count3 = counter(«40, lowTempData»);  # problem here!
+```
+
+Unfortunately, executing this script causes no errors.  ***counter()*** happily tries to compare what it thinks is the one-value vector (***40***) to the value of ***lowTempData***.  And the answer it gets for ***count3*** is ***0***.  This is because ***counter()*** can only use one comparison value -- so it uses the first value in the ***lowTempData***, which is ***45***.  **40** is not greater than **45**, so the answer is **0**.  If the first value in ***lowTempData*** is less than **40**, then ***count3*** will be **1**.
+
+ 
+
+Either way, this is not what you want.  So, be careful when you don't use names to keep the argument values ordered correctly -- or be safe and use argument names.
+
+## Extension: Using ***which()*** instead of for() and if()
+
+***which()*** is essentially a ***for()*** loop and an ***if()*** statement wrapped into one command.  In this case, ***which()*** cycles through all values in the ***vector*** and performs a conditional operation on each to see if they are greater than the ***compareVal***.
+
+ 
+
+***gtVals*** is a vector that contains all the indexes that met the condition.  So, if ***vector*** values 3, 5, 7, and 9 were greater than the ***compareVal***, ***gtVal*** would be ***c(3,5,7,9)***.  The length of ***gtVal*** would be **4**.
+
+``` r
+counter = function(vector, compareVal)
+{
+  # gives the index for all values in the vector that meet the condition
+  gtVals = which(vector > compareVal); 
+
+  # returns the length, or number of values, that met the condition
+  return(length(gtVals)); 
+}
+```

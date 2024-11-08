@@ -1,0 +1,525 @@
+---
+title: "1-12: Multiple Conditions"
+short: "1-12"
+# special characters for highlighting code : «»
+---
+
+### Changes
+
+-   Choose & or && (have notes about this in OneDrive)
+
+## Purpose
+
+-   Check for multiple conditions on variables
+
+## Questions about the material...
+
+The files for this lesson:
+
+-   Script: [you can download the script here](../scripts/1-12_MultipleConditions.R)
+
+-   Data: [download the data file here](../data/twoWeekWeatherData2.csv)
+
+ 
+
+This lesson data has two new columns in it compared to the previous lesson's data -- so 14 obs. of ***7*** variables (instead of 5).  The new columns (***noonCondMessy*** and ***precipBad***) are copies of the previous columns with some issues added that are addressed in this lesson.
+
+![The new weatherData data frame with two new columns](images/R-1-11_NewDataframe.png){#fig-newDataframe .fs}
+
+ 
+
+If you have any questions about the material in this lesson, feel free to email them to the instructor, {{< var instructor.name >}}, at {{< var instructor.email >}}.
+
+## Logical Operators: AND (&, &&), OR (\|, \|\|)
+
+In this lesson we are going to learn how to combine conditional statements in ***if()*** statements using two new operators: ***AND***, ***OR***.  ***AND*** is represented as one or two ampersands (***&***, ***&&***) and ***OR*** is represented as one or two pipe symbols (vertical lines: **\|**, **\|\|**).  For situations where you are checking one value at a time, the single and double operators have the same functionality.  We will cover the other situation later in this lesson.
+
+ 
+
+The ***AND*** operator combines two conditional statements into one conditional statement with the rule:
+
+-   if [both]{.hl}of the conditional statements are **TRUE** then the whole conditional statement is **TRUE**
+
+``` r
+if (condition1 AND condition2)
+{
+   # Execute the code between these curly brackets
+   #   if both condition1 and condition2 are TRUE
+}
+```
+
+The **OR** operator combines two conditional statements into one conditional statement with the rule:
+
+-   if [either]{.hl}of the conditional statements are **TRUE** then the whole conditional statement is **TRUE**
+
+``` r
+if (condition1 OR condition2)
+{
+   # Execute the code between these curly brackets
+   #   if either condition1 or condition2 is TRUE
+}
+```
+
+### Operators we have learned so far
+
+| Operator Type | Purpose | R Symbols |
+|----|----|----|
+| Assignment | assign a value to a variable | =, \<-, -\> |
+| Mathematical | Perform a mathematical operation on a numeric value | +, -, \*, /, \^ |
+| Subset | Subset a vector | \[ \], \$ |
+| Conditional | Compare two values | ==, !=, \>, \<, \>=, \<= |
+| Logical | Combine conditions | &, &&, \|, \|\| |
+
+: All of the operators taught in the class so far {#tbl-operators}
+
+## Combining conditional statements (logical operators)
+
+In the last lesson we started by asking two questions about ***noonCond*** that both had one condition: 
+
+1.  Is the day sunny? 
+
+2.  Is the day rainy?
+
+``` r
+#### From last lesson
+sunnyDays = 0; # state variable -- will hold the count of sunny days
+rainyDays = 0; # state variable -- will hold the count of rainy days
+
+for(i in 1:numDays)
+{
+  if(noonCond[i] == "Sunny")
+  {
+    sunnyDays = sunnyDays +1; # increases sunnyDays by 1
+  }
+  # We use else if here because we know "Sunny" and "Rain" are mutually exclusive
+  else if(noonCond[i] == "Rain")
+  {
+    rainyDays = rainyDays +1; # increases rainyDays by 1
+  }
+}
+```
+
+And the answer was:
+
+``` {.r tab="Environment"}
+sunnyDays:   6
+rainyDays:   3
+```
+
+### Using the OR operator
+
+We can also combine the two conditional statements and ask: *Is the day sunny **OR**  rainy?*
+
+ 
+
+Just replace ***OR*** with the symbol that represents ***OR***, which is \|:
+
+``` r
+  if(noonCond[i] == "Sunny" | noonCond[i] == "Rain")
+```
+
+Put this in the script and it will count days both sunny and rainy days:
+
+::: {#fig-or-twoCondition}
+``` r
+sunnyOrRainyDays = 0
+for(i in 1:numDays)
+{
+  if(noonCond[i] == "Sunny" | noonCond[i] == "Rainy")
+  {
+    sunnyOrRainyDays = sunnyOrRainyDays +1;
+  }
+}
+```
+
+Using logical operator \| to test two conditions
+:::
+
+***sunnyOrRainyDays*** is the addition of sunny (6) and rainy (3) days
+
+``` {.r tab="Environment"}
+sunnyOrRainyDays:   9
+```
+
+### Conditions must be explicit
+
+In programming we need to be explicit when using multiple conditional statement:
+
+``` r
+  if(noonCond[i] == "Sunny" | noonCond[i] == "Rainy")
+```
+
+In English, it makes sense to ask: Is the day sunny or rainy?
+
+ 
+
+And, naively, the code for this sentence would look like this:
+
+``` r
+  if(noonCond[i] == "Sunny" | "Rain")
+```
+
+If you do this, you will get the error:
+
+[Error in noonCond\[i\] == "Sunny" \| "Rain" : invalid 'y' type in 'x \| y']{.hl}
+
+ 
+
+The error is telling you that "Rain" (the invalid 'y') is not a conditional statement.  Both conditions ('x \| y') must be [explicitly]{.hl} written out (i.e., both must have a conditional operator with a value on both sides).
+
+### More than 2 conditions
+
+You can also use the ***OR*** operator to string together multiple conditional statements.
+
+ 
+
+We will use the new column in our data, called ***noonCondMessy*** in which the weather conditions are not consistently spelled -- as often happens when people are manually inputting data:
+
+``` r
+noonCondMess = weatherData$noonCondMessy;
+```
+
+Looking at the value in ***noonCondMess*** show that there are multiple versions of "sunny":
+
+``` {.r tab="Console"}
+> noonCondMess
+[1] "clouds" "Cloudy" "sun" "rainy" " fog" "Sunny" "sunny"
+[8] "cloudy" "Rain" "RAIN" "Snow" "SUNNY" "Sun" "sun"
+```
+
+We will use multiple ***OR*** operators to check for four different versions of "sunny":
+
+::: {#fig-or-mult-spellings}
+``` r
+sunnyDaysMess = 0; # state variable -- will hold the count of sunny days
+
+for(i in 1:numDays)
+{
+  # check for different spellings
+  if(noonCondMess[i] == "Sunny" | noonCondMess[i] == "sunny" |
+     noonCondMess[i] == "sun" | noonCondMess[i] == "SUN")
+  {
+    sunnyDaysMess = sunnyDaysMess +1;
+  }
+}
+```
+
+Using OR operator to check for multiple spellings
+:::
+
+And, once again we get six:
+
+``` {.r tab="Environment"}
+sunnyDays1:  6
+```
+
+This is a brute force method! There are more robust way to check for different spelling using substrings and pattern recognition (i.e., ***substr()*** and ***grep()***).
+
+## The AND operator
+
+The ***OR*** operator says: if one condition is **TRUE** then the whole condition is **TRUE**
+
+The ***AND*** operator says that ALL conditions need to be **TRUE** for the whole condition to be **TRUE**.
+
+ 
+
+The ***AND*** operator can be used to check conditions in two different weather columns.
+
+ 
+
+For example, you might want to know which days were warmer than 60 ***AND*** Sunny.
+
+::: {#fig-and-op-two-columns}
+``` r
+goOutDay = 0;
+
+for(i in 1:numDays)
+{
+  if(highTemps[i] > 60 & noonCond[i] == "Sunny") 
+  {
+    goOutDay = goOutDay +1;
+  }
+}
+```
+
+Using AND operator to check conditions in two different columns
+:::
+
+There were 2 days that were both over 60 and sunny:
+
+``` {.r tab="Environment"}
+goOutDays:   2
+```
+
+[Note: day 7 is 60 degrees and sunny but not counted here because the condition is ***greater than*** (but not equal to) 60]{.note}
+
+### The NOT EQUAL operator
+
+We can reverse the conditions and check for non-sunny days that were colder than (or equal to) 50.
+
+ 
+
+In other words we want ***highTemps*** [\<=]{.hl} 50 [AND]{.hl} ***noonCond*** [!=]{.hl} "Sunny":
+
+::: {#fig-reverse-cond-statement}
+``` r
+stayInDay = 0;
+
+for(i in 1:numDays)
+{
+  if(highTemps[i] <= 50 & noonCond[i] != "Sunny") 
+  {
+    stayInDay = stayInDay +1;
+  }
+}
+```
+
+Reversing the conditional statements from the last loop
+:::
+
+There were 5 days that were below (or equal to) 50 and not sunny:
+
+``` {.r tab="Environment"}
+stayInDays:    5
+```
+
+### Mutually exclusive if() statement
+
+Since the two ***if()*** statements above (@fig-and-op-two-columns and @fig-reverse-cond-statement) have mutually exclusive conditions and use the exact some ***for*** loop, we can (and should) combine them into one ***if-else-if*** statement.  The following code is functionally the same but more efficient (i.e., faster):
+
+::: {#fig-mutually-exclusive-mult-cond}
+``` r
+for(i in 1:numDays)
+{
+  if(highTemps[i] > 60 & noonCond[i] == "Sunny")
+  {
+    cat("day", i, " good day to go out\n");
+  }
+  else if(highTemps[i] <= 50 & noonCond[i] == "Rain")
+  {
+    cat("day", i, " good day to stay in\n");
+  }
+}
+```
+
+Checking mutually exclusive multiple conditions with an if-else-if structure
+:::
+
+The 2 days that are good to go out and 5 that are not:
+
+``` {.r tab="Console"}
+day 2 good day to stay in
+day 4 good day to stay in
+day 5 good day to stay in
+day 10 good day to stay in
+day 11 good day to stay in
+day 13 good day to go out
+day 14 good day to go out
+```
+
+## Finding Ranges of numbers
+
+So far when we has used conditional operators on numbers that are bounded on one side but go off to infinity of the other.
+
+-   ***highTemp \> 60*** means anything from 60 [up to positive infinity]{.hl}
+
+-   ***highTemp \< 50*** means anything from 50 [down to negative infinity]{.hl}
+
+ 
+
+But, we often want to limit the range we are checking to something less than infinity!
+
+ 
+
+For instance we might want all values between 50 and 60 (in this case, we will include 50 but not 60).
+
+ 
+
+In other words, we want:
+
+-   values ***greater than or equal to*** 50 (***highTemps*** \>= 50)
+
+-   ***AND*** values ***less than*** 60 (***highTemps*** \< 60)
+
+ 
+
+In order for the value to be between 50 and 60 [both of the above conditional statements must be **TRUE**]{.hl}, so we use ***AND*** to combine the conditional statements:
+
+::: {#fig-and-limit-range}
+``` r
+for(i in 1:numDays)
+{
+  # the number is both greater than (or equal to) 50 and less than 60
+  if(highTemps[i] >= 50 & highTemps[i] < 60)
+  {
+    cat("It was ", highTemps[i], "degrees on day ", i, "\n");
+  }
+}
+```
+
+Using AND operator to limit the range to values between two numbers
+:::
+
+The 7 days between 50 and 60 (includes 50 but not 60):
+
+``` {.r tab="Console"}
+It was 57 degrees on day 1
+It was 50 degrees on day 2
+It was 54 degrees on day 3
+It was 58 degrees on day 6
+It was 53 degrees on day 8
+It was 55 degrees on day 9
+It was 54 degrees on day 12
+```
+
+### Values outside a range
+
+Sometimes we want to check for values outside an expected range -- often to check for errors.  For instance, ***precipBad*** has some values that seem to be in error:
+
+``` r
+> precipBad
+[1] 0.010 0.005 0.040 1.110 0.120 0.000 «-0.005» «49.000» 0.450 0.300
+[11] 1.130 0.004 0.000 0.000
+```
+
+Since rain is in inches, we are going to assume that any negative value (less than 0) or value above 10 is in error.
+
+ 
+
+In this case we are looking for  ***precipBad*** values that are less than 0 ***OR*** greater than 10:
+
+::: {#fig-values-beyond-range}
+``` r
+precipBad = weatherData$precipBad;
+for(i in 1:numDays)
+{
+  # precipBad values less than 0 or greater than 10
+  if(precipBad[i] < 0 | precipBad[i] > 10)
+  {
+    cat("Day", i, "has a value of" , precipBad[i], "\n");
+  }
+}
+```
+
+Checking for values beyond the expected range
+:::
+
+And we see the two days in ***precipBad*** that are in error:
+
+``` {.r tab="Console"}
+Day 7 has a value of -0.005
+Day 8 has a value of 49
+```
+
+## Boolean vectors
+
+Up until this point. we have been using conditional operators to check values individually.  We can also use conditional operators to check every value in a vector at once and create a TRUE/FALSE (Boolean) vector from the result.  To create these vectors, [you have to use the single operators (&, \|).]{.hl}
+
+ 
+
+For instance, we only might care about sunny days:
+
+``` r
+sunnyDayBool = (noonCondition == "Sunny");
+```
+
+Or, whether the day was both sunny and warm:
+
+``` r
+niceDayBool = (highTemps > 60 & noonCondition == "Sunny");
+```
+
+Or, whether the was rain or snow:
+
+``` r
+precipBool = (precipitation == "Rain" | precipitation == "Snow")
+```
+
+The result for all three of these commands is a 14-value ***Boolean*** (also called ***logical***) vector:
+
+``` {.r tab="Environment"}
+sunnyDayBool  logi [1:14] FALSE FALSE TRUE FALSE...
+niceDayBool   logi [1:14] FALSE FALSE FALSE FALSE...
+precipBool    logi [1:14] FALSE FALSE FALSE TRUE...
+```
+
+We can look at ***sunnyDayBool*** and see that the index of **the** TRUE values match the index of "Sunny" days in ***noonCond***:
+
+``` {.r tab="Console"}
+> sunnyDayBool
+ [1] FALSE FALSE  TRUE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE
+[12] TRUE  TRUE  TRUE
+> noonCond
+ [1] "Cloudy" "Cloudy" "Sunny"  "Rain"   "Fog"    "Sunny"  "Sunny"  "Cloudy"
+ [9] "Rain"   "Rain"   "Snow"  "Sunny"  "Sunny"  "Sunny" 
+```
+
+Or, that only the last two days were both Sunny and over 60 degrees:
+
+``` {.r tab="Console"}
+> niceDayBool
+ [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[12] FALSE  TRUE  TRUE
+```
+
+Or, that 4 of the 14 days had some precipitation (rain or snow):
+
+``` {.r tab="Console"}
+> precipBool
+ [1] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE
+[12] FALSE FALSE FALSE
+```
+
+## Application
+
+A\) Create *one* [**if-else-if**]{.hl} structure that checks for:
+
+-   Sunny days greater than 54
+
+-   Non-Sunny less than or equal to 54
+
+-   Sunny days less than or equal to 54
+
+-   Non-Sunny greater than 54
+
+In comments answer: Why do this as one ***if-else-if*** structure instead of 4 separate ***if*** statements? Give a specific example of where 4 separate ***if*** statement would not be ideal.
+
+ 
+
+B\) Create a Boolean vector that finds all cloudy days in ***noonCondMessy*** (note different spellings)
+
+ 
+
+C\) Create an ***if()*** that combines all rainy, cloudy, and snowy days from ***noonCondition***.
+
+ 
+
+D\) Find which days meet [all three]{.hl} of these conditions:
+
+-   ***lowTemps*** \> 40
+
+-   ***highTemps** \<* 60
+
+-   Sunny
+
+ 
+
+E\) Use the following random number generator:
+
+``` r
+randomTemp = sample(0:100, size=1);  # pick 1 random from 0 to 100
+```
+
+and create one ***if-else-if*** structure that outputs:
+
+-   "error" if ***randomTemp*** is less than 20 or greater than 80
+
+-   "very cold" if ***randomTemp*** is 20-30
+
+-   "cold" if ***randomTemp*** is 30-45
+
+-   "nice" if ***randomTemp*** is 45-60
+
+-   "unusually warm" if ***randomTemp*** 60-80
+
+{{< include ../assets/_AppInstructions.qmd >}}

@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>1-11: For Loops and State Variables</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-2486e1f0a3ee9ee1fc393803a1361cdb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-0815817224b54744edbb51fc66bd26dc.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link rel="shortcut icon" href="https://qfcatmsu.github.io/assets/quarto/qfc_icon.png">
+<script>mod=true; menuCollapse=true;</script>
+<script src="https://qfcatmsu.github.io/assets/quarto/qfc_styles.js"></script>
+ 
+
+
+<link rel="stylesheet" href="https://qfcatmsu.github.io/assets/quarto/qfc_styles.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+          <h1 class="quarto-secondary-nav-title">1-11: For Loops and State Variables</h1>
+        </a>     
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text"><b>Fundamentals of Programming class</b></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-02-Variables.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-02: Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-03_Mathematical_Operations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-03: Mathematical Operations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-04_Vectors_And_Data_Frames.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-04: Vectors and Data Frames</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-05_Functions_Introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-05: Functions Introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-06_Run_and_Source.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-06: Run and Source</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-07_Outputs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-07: Outputs</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-08_Conditional_Operations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-08: Conditional Operations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-09_If_Else_Statements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-09: Conditional Operations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-10_For_Loops.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-10: For Loops</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-11_For_Loops_and_State_Varibles.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">1-11: For Loops and State Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-12_MultipleConditions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-12: Multiple Conditions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-13_Functions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-13: Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-14_Functions2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-14: Functions 2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-15_Functions3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-15: Functions 3</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title"><b>Lesson Content</b></h2>
+   
+  <ul>
+  <li><a href="#issues" id="toc-issues" class="nav-link active" data-scroll-target="#issues"><span class="header-section-number">0.1</span> Issues</a></li>
+  <li><a href="#purpose" id="toc-purpose" class="nav-link" data-scroll-target="#purpose"><span class="header-section-number">1</span> Purpose</a></li>
+  <li><a href="#questions-about-the-material" id="toc-questions-about-the-material" class="nav-link" data-scroll-target="#questions-about-the-material"><span class="header-section-number">2</span> Questions about the material…</a></li>
+  <li><a href="#for-loops-a-vital-skill" id="toc-for-loops-a-vital-skill" class="nav-link" data-scroll-target="#for-loops-a-vital-skill"><span class="header-section-number">3</span> For loops – a vital skill</a></li>
+  <li><a href="#multiple-state-variables" id="toc-multiple-state-variables" class="nav-link" data-scroll-target="#multiple-state-variables"><span class="header-section-number">4</span> Multiple state variables</a>
+  <ul class="collapse">
+  <li><a href="#the-if-else-statement" id="toc-the-if-else-statement" class="nav-link" data-scroll-target="#the-if-else-statement"><span class="header-section-number">4.1</span> The if-else statement</a></li>
+  </ul></li>
+  <li><a href="#state-variables-uses" id="toc-state-variables-uses" class="nav-link" data-scroll-target="#state-variables-uses"><span class="header-section-number">5</span> State variables uses</a>
+  <ul class="collapse">
+  <li><a href="#sequences-with-the-for-loops" id="toc-sequences-with-the-for-loops" class="nav-link" data-scroll-target="#sequences-with-the-for-loops"><span class="header-section-number">5.1</span> Sequences with the for loops</a></li>
+  </ul></li>
+  <li><a href="#state-variable-to-sum-values" id="toc-state-variable-to-sum-values" class="nav-link" data-scroll-target="#state-variable-to-sum-values"><span class="header-section-number">6</span> State variable to sum values</a></li>
+  <li><a href="#if-any-checks" id="toc-if-any-checks" class="nav-link" data-scroll-target="#if-any-checks"><span class="header-section-number">7</span> if-any checks</a>
+  <ul class="collapse">
+  <li><a href="#the-break-statement" id="toc-the-break-statement" class="nav-link" data-scroll-target="#the-break-statement"><span class="header-section-number">7.1</span> The break statement</a></li>
+  </ul></li>
+  <li><a href="#finding-the-highest-or-lowest-value" id="toc-finding-the-highest-or-lowest-value" class="nav-link" data-scroll-target="#finding-the-highest-or-lowest-value"><span class="header-section-number">8</span> Finding the highest (or lowest) value</a>
+  <ul class="collapse">
+  <li><a href="#using-browser-to-pause-your-script" id="toc-using-browser-to-pause-your-script" class="nav-link" data-scroll-target="#using-browser-to-pause-your-script"><span class="header-section-number">8.1</span> Using browser() to pause your script</a></li>
+  <li><a href="#initializing-the-state-variable" id="toc-initializing-the-state-variable" class="nav-link" data-scroll-target="#initializing-the-state-variable"><span class="header-section-number">8.2</span> Initializing the state variable</a></li>
+  </ul></li>
+  <li><a href="#application" id="toc-application" class="nav-link" data-scroll-target="#application"><span class="header-section-number">9</span> Application</a>
+  <ul class="collapse">
+  <li><a href="#questions-to-answer" id="toc-questions-to-answer" class="nav-link" data-scroll-target="#questions-to-answer"><span class="header-section-number">9.1</span> Questions to answer</a></li>
+  </ul></li>
+  <li><a href="#trap-using-t-and-f-to-represent-true-and-false-is-a-bad-idea" id="toc-trap-using-t-and-f-to-represent-true-and-false-is-a-bad-idea" class="nav-link" data-scroll-target="#trap-using-t-and-f-to-represent-true-and-false-is-a-bad-idea"><span class="header-section-number">10</span> Trap: Using T and F to represent TRUE and FALSE is a bad idea</a></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content column-page-right" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">1-11: For Loops and State Variables</h1>
+</div>
+
+
+
+<div class="quarto-title-meta column-page-right">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="issues" class="level3" data-number="0.1">
+<h3 data-number="0.1" class="anchored" data-anchor-id="issues"><span class="header-section-number">0.1</span> Issues</h3>
+</section>
+<section id="purpose" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="purpose"><span class="header-section-number">1</span> Purpose</h2>
+<ul>
+<li>Show more example of using for loops with state variables</li>
+</ul>
+</section>
+<section id="questions-about-the-material" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="questions-about-the-material"><span class="header-section-number">2</span> Questions about the material…</h2>
+<p>The files for this lesson:</p>
+<ul>
+<li><p>Script:&nbsp;<a href="../scripts/1-11_ForLoopsAndStateVariables.R">you can download the script here</a></p></li>
+<li><p>Data: <a href="../data/twoWeekWeatherData.csv">download the data file here</a></p></li>
+</ul>
+<p>&nbsp;</p>
+<p>If you have any questions about the material in this lesson, feel free to email them to the instructor, Charlie Belinsky, at belinsky@msu.edu.</p>
+</section>
+<section id="for-loops-a-vital-skill" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="for-loops-a-vital-skill"><span class="header-section-number">3</span> For loops – a vital skill</h2>
+<p>In this lesson, we will be using <strong><em>for</em></strong> loops and <strong><em>if()</em></strong> statements to do common calculations on a vector (e.g., finding the sum, finding maximum value, checking if any value meets a condition).&nbsp; There are functions for all of these calculations in R that are easier to use than a for loop.&nbsp; But, the best way to learn <strong><em>for</em></strong> loops is to use them in applications that are easy to understand.&nbsp; You are going to have many situations where you cannot rely on an R function or package – and <strong><em>for</em></strong> loops with embedded <strong><em>if-else</em></strong> statements are the best solution.</p>
+<p>&nbsp;</p>
+<p>Understanding how to effectively use <strong><em>for</em></strong> loops is perhaps the most vital skill you will learn as a programmer.</p>
+</section>
+<section id="multiple-state-variables" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="multiple-state-variables"><span class="header-section-number">4</span> Multiple state variables</h2>
+<p>We ended last lesson by introducing you to the concept of a <em>state variable</em> – this is a variable that updates information (e.g., the state of some value) as the <strong><em>for</em></strong> loops cycles.&nbsp; The state variable is always declared outside of the <strong><em>for</em></strong> loop and modified within the <strong><em>for</em></strong> loop.</p>
+<p>&nbsp;</p>
+<p><span class="note">Note: if the state variable was declared inside the for loop then it would be re-initialized every time the for loop cycles.</span></p>
+<p>&nbsp;</p>
+<p>The state variable also needs to be initialized to some default value – or the value the state variable should be if the <strong><em>for</em></strong> loop has no cycles (an empty vector).&nbsp; In the last example from last lesson, the state variable <strong><em>sunnyDays</em></strong> was initialized to <strong>0.</strong></p>
+<div id="fig-sunnyDaysWithStateVar" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sunnyDaysWithStateVar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="fig-sunnyDaysWithStateVar"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="fig-sunnyDaysWithStateVar-1"><a href="#fig-sunnyDaysWithStateVar-1" aria-hidden="true" tabindex="-1"></a>sunnyDays <span class="ot">=</span> <span class="dv">0</span>; <span class="co"># state variable -- will hold the count of sunny days</span></span>
+<span id="fig-sunnyDaysWithStateVar-2"><a href="#fig-sunnyDaysWithStateVar-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="fig-sunnyDaysWithStateVar-3"><a href="#fig-sunnyDaysWithStateVar-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>numDays)</span>
+<span id="fig-sunnyDaysWithStateVar-4"><a href="#fig-sunnyDaysWithStateVar-4" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="fig-sunnyDaysWithStateVar-5"><a href="#fig-sunnyDaysWithStateVar-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(noonCond[i] <span class="sc">==</span> <span class="st">"Sunny"</span>)  <span class="co"># was the day sunny</span></span>
+<span id="fig-sunnyDaysWithStateVar-6"><a href="#fig-sunnyDaysWithStateVar-6" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="fig-sunnyDaysWithStateVar-7"><a href="#fig-sunnyDaysWithStateVar-7" aria-hidden="true" tabindex="-1"></a>    sunnyDays <span class="ot">=</span> sunnyDays <span class="sc">+</span><span class="dv">1</span>;   <span class="co"># it was -- increase sunnyDays by 1</span></span>
+<span id="fig-sunnyDaysWithStateVar-8"><a href="#fig-sunnyDaysWithStateVar-8" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="fig-sunnyDaysWithStateVar-9"><a href="#fig-sunnyDaysWithStateVar-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># there is no else here -- we don't care about non-sunny days</span></span>
+<span id="fig-sunnyDaysWithStateVar-10"><a href="#fig-sunnyDaysWithStateVar-10" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sunnyDaysWithStateVar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Using a state variable to calculate how many sunny days there was in <strong>noonCond</strong> (from last lesson)
+</figcaption>
+</figure>
+</div>
+<p>Now, let’s expand this <strong><em>for</em></strong> loop to count for two different conditions: Sunny and Rain.&nbsp; We will now need two state variables – initializing both values to <strong>0</strong>.&nbsp;</p>
+<div id="fig-multStateVar" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-multStateVar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="fig-multStateVar"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="fig-multStateVar-1"><a href="#fig-multStateVar-1" aria-hidden="true" tabindex="-1"></a>sunnyDays <span class="ot">=</span> <span class="dv">0</span>; <span class="co"># state variable -- will hold the count of sunny days</span></span>
+<span id="fig-multStateVar-2"><a href="#fig-multStateVar-2" aria-hidden="true" tabindex="-1"></a>rainyDays <span class="ot">=</span> <span class="dv">0</span>; <span class="co"># state variable -- will hold the count of rainy days</span></span>
+<span id="fig-multStateVar-3"><a href="#fig-multStateVar-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="fig-multStateVar-4"><a href="#fig-multStateVar-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>numDays)</span>
+<span id="fig-multStateVar-5"><a href="#fig-multStateVar-5" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="fig-multStateVar-6"><a href="#fig-multStateVar-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(noonCond[i] <span class="sc">==</span> <span class="st">"Sunny"</span>)</span>
+<span id="fig-multStateVar-7"><a href="#fig-multStateVar-7" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="fig-multStateVar-8"><a href="#fig-multStateVar-8" aria-hidden="true" tabindex="-1"></a>    sunnyDays <span class="ot">=</span> sunnyDays <span class="sc">+</span><span class="dv">1</span>; <span class="co"># increases sunnyDays by 1</span></span>
+<span id="fig-multStateVar-9"><a href="#fig-multStateVar-9" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="fig-multStateVar-10"><a href="#fig-multStateVar-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># We use else if here because we know "Sunny" and "Rain" are mutually exclusive</span></span>
+<span id="fig-multStateVar-11"><a href="#fig-multStateVar-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span> <span class="cf">if</span>(noonCond[i] <span class="sc">==</span> <span class="st">"Rain"</span>)</span>
+<span id="fig-multStateVar-12"><a href="#fig-multStateVar-12" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="fig-multStateVar-13"><a href="#fig-multStateVar-13" aria-hidden="true" tabindex="-1"></a>    rainyDays <span class="ot">=</span> rainyDays <span class="sc">+</span><span class="dv">1</span>; <span class="co"># increases rainyDays by 1</span></span>
+<span id="fig-multStateVar-14"><a href="#fig-multStateVar-14" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="fig-multStateVar-15"><a href="#fig-multStateVar-15" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-multStateVar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Using multiple state variables
+</figcaption>
+</figure>
+</div>
+<p>And we can look in the <strong><em>Environment</em></strong> tab to see what the final values of <em><strong>rainyDays</strong> and <strong>sunnyDays</strong></em> were:</p>
+<div class="sourceCode" id="cb1" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>rainyDays<span class="sc">:</span>   <span class="dv">3</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>sunnyDays<span class="sc">:</span>   <span class="dv">6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You can double check the <strong><em>noonCond</em></strong> vector and see there are 6 sunny and 3 rain days.</p>
+<div class="sourceCode" id="cb2" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> noonCond</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"Cloudy"</span> <span class="st">"Cloudy"</span> <span class="st">"Sunny"</span> <span class="st">"Rain"</span> <span class="st">"Fog"</span> <span class="st">"Sunny"</span> <span class="st">"Sunny"</span> <span class="st">"Cloudy"</span> <span class="st">"Rain"</span> <span class="st">"Rain"</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">11</span>] <span class="st">"Snow"</span> <span class="st">"Sunny"</span> <span class="st">"Sunny"</span> <span class="st">"Sunny"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="the-if-else-statement" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="the-if-else-statement"><span class="header-section-number">4.1</span> The if-else statement</h3>
+<p>In <a href="#fig-multStateVar" class="quarto-xref">Figure&nbsp;2</a> we used an <strong><em>if-else</em></strong> structure to separate the two conditional statement (sunny and rainy).&nbsp; We could have just used two <strong><em>if()</em></strong> statements.&nbsp; In other words, the 8<sup>th</sup> line could have been written:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(noonCond[i] <span class="sc">==</span> <span class="st">"Rain"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>But we would be checking for <strong>Rain</strong> on days that we already know is <strong>Sunny</strong>.&nbsp; <strong><em>noonCond</em></strong> on a specific day cannot be both <strong>Sunny</strong> and <strong>Rain</strong> (i.e., they are mutually exclusive) – so the extra checks are not needed.&nbsp; The code would still work, just not be as efficient.&nbsp; But, efficiency becomes more important as the number of values in your vector increases – and efficiency means quicker execution time.</p>
+</section>
+</section>
+<section id="state-variables-uses" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="state-variables-uses"><span class="header-section-number">5</span> State variables uses</h2>
+<p>We can also use state variables on numeric value to count how many times a condition is met such as the temperature being in a certain range.&nbsp;</p>
+<p>In this case, we will look at how many time</p>
+<ul>
+<li><p>the temperature was greater than 60</p></li>
+<li><p>the temperature was less than 50.</p></li>
+</ul>
+<p>&nbsp;</p>
+<p>We are looking at two situations so we need two state variables.&nbsp; Again, we initialize the values of the state variables to <strong>0</strong> because <strong>0</strong> would be the correct answer if the conditions inside the <strong><em>if-else</em></strong> statement were <strong>FALSE</strong> for every day.</p>
+<div id="fig-mult-tempValues" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mult-tempValues-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="fig-mult-tempValues"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="fig-mult-tempValues-1"><a href="#fig-mult-tempValues-1" aria-hidden="true" tabindex="-1"></a>tempGT60 <span class="ot">=</span> <span class="dv">0</span>; <span class="co"># days with temperatures greater than 60</span></span>
+<span id="fig-mult-tempValues-2"><a href="#fig-mult-tempValues-2" aria-hidden="true" tabindex="-1"></a>tempLT50 <span class="ot">=</span> <span class="dv">0</span>; <span class="co"># days with temperatures less than 50</span></span>
+<span id="fig-mult-tempValues-3"><a href="#fig-mult-tempValues-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="fig-mult-tempValues-4"><a href="#fig-mult-tempValues-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>numDays)</span>
+<span id="fig-mult-tempValues-5"><a href="#fig-mult-tempValues-5" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="fig-mult-tempValues-6"><a href="#fig-mult-tempValues-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(highTemps[i] <span class="sc">&gt;</span> <span class="dv">60</span>)      <span class="co"># high temp more than 60</span></span>
+<span id="fig-mult-tempValues-7"><a href="#fig-mult-tempValues-7" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="fig-mult-tempValues-8"><a href="#fig-mult-tempValues-8" aria-hidden="true" tabindex="-1"></a>    tempGT60 <span class="ot">=</span> tempGT60 <span class="sc">+</span><span class="dv">1</span>;</span>
+<span id="fig-mult-tempValues-9"><a href="#fig-mult-tempValues-9" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="fig-mult-tempValues-10"><a href="#fig-mult-tempValues-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span> <span class="cf">if</span>(highTemps[i] <span class="sc">&lt;</span> <span class="dv">50</span>) <span class="co"># high temp less than 50</span></span>
+<span id="fig-mult-tempValues-11"><a href="#fig-mult-tempValues-11" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="fig-mult-tempValues-12"><a href="#fig-mult-tempValues-12" aria-hidden="true" tabindex="-1"></a>    tempLT50 <span class="ot">=</span> tempLT50 <span class="sc">+</span><span class="dv">1</span>;</span>
+<span id="fig-mult-tempValues-13"><a href="#fig-mult-tempValues-13" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="fig-mult-tempValues-14"><a href="#fig-mult-tempValues-14" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mult-tempValues-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Using multiple state variables to look at temperature values
+</figcaption>
+</figure>
+</div>
+<p>And we can look in the <strong><em>Environment</em></strong> tab to see the final values of the state variables:</p>
+<div class="sourceCode" id="cb4" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>tempGT60<span class="sc">:</span>   <span class="dv">2</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>tempLT50<span class="sc">:</span>   <span class="dv">4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Again, you can check <strong><em>highTemps</em></strong> in the <strong><em>Console</em></strong> to see this is correct:</p>
+<div class="sourceCode" id="cb5" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> highTemps</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">57</span> <span class="dv">50</span> <span class="dv">54</span> <span class="dv">40</span> <span class="dv">39</span> <span class="dv">58</span> <span class="dv">60</span> <span class="dv">53</span> <span class="dv">55</span> <span class="dv">44</span> <span class="dv">39</span> <span class="dv">54</span> <span class="dv">61</span> <span class="dv">75</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="sequences-with-the-for-loops" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="sequences-with-the-for-loops"><span class="header-section-number">5.1</span> Sequences with the for loops</h3>
+<p>Perhaps you do not want to check every day – maybe you only want to check every-other day.&nbsp; In this case you use <strong><em>seq()</em></strong> in the <strong><em>for</em></strong> loop to subset the days:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>tempGT60odd <span class="ot">=</span> <span class="dv">0</span>; <span class="co"># odd indexed days with temperatures greater than 60</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>tempLT50odd <span class="ot">=</span> <span class="dv">0</span>; <span class="co"># odd indexed days with temperatures less than 50</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> «<span class="fu">seq</span>(<span class="at">from=</span><span class="dv">1</span>, <span class="at">to=</span>numDays, <span class="at">by=</span><span class="dv">2</span>)») <span class="co"># every other day (1,3,5,7...)</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(highTemps[i] <span class="sc">&gt;</span> <span class="dv">60</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    tempGT60odd <span class="ot">=</span> tempGT60odd <span class="sc">+</span><span class="dv">1</span>;</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span> <span class="cf">if</span>(highTemps[i] <span class="sc">&lt;</span> <span class="dv">50</span>)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    tempLT50odd <span class="ot">=</span> tempLT50odd <span class="sc">+</span><span class="dv">1</span>;</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>And, again, the <strong><em>Environment</em></strong> tab will show the final values of the state variables:</p>
+<div class="sourceCode" id="cb7" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>tempGT60odd<span class="sc">:</span>   <span class="dv">1</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>tempLT50odd<span class="sc">:</span>   <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="state-variable-to-sum-values" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="state-variable-to-sum-values"><span class="header-section-number">6</span> State variable to sum values</h2>
+<p>We have used state variables as a counter – adding 1 to the state variable during each cycle of a <strong><em>for</em></strong> loop when a condition is <strong><em>TRUE</em></strong>.</p>
+<p>&nbsp;</p>
+<p>In this case we want to add up all the precipitation values to get the total precipitation.&nbsp; Again, we initialize the state variable to default value of 0, because 0 is the answer if there are no days to check. &nbsp;</p>
+<p>&nbsp;</p>
+<p>The difference is that, instead of adding 1 to the state variable, <span class="hl">we add the precipitation for that day</span>, or <strong><em>precip[i]</em></strong> where <strong><em>i</em></strong> is the index variable.</p>
+<p>&nbsp;</p>
+<p><span class="note">Note: there are no <strong>if()</strong> statements in this <strong>for</strong> loop because we are unconditionally adding every days’ precipitation to the total precipitation</span></p>
+<div id="fig-state-add-values" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-state-add-values-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="fig-state-add-values"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="fig-state-add-values-1"><a href="#fig-state-add-values-1" aria-hidden="true" tabindex="-1"></a>totalPrecip <span class="ot">=</span> <span class="dv">0</span>;</span>
+<span id="fig-state-add-values-2"><a href="#fig-state-add-values-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>numDays)</span>
+<span id="fig-state-add-values-3"><a href="#fig-state-add-values-3" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="fig-state-add-values-4"><a href="#fig-state-add-values-4" aria-hidden="true" tabindex="-1"></a>  totalPrecip <span class="ot">=</span> totalPrecip <span class="sc">+</span> precip[i];</span>
+<span id="fig-state-add-values-5"><a href="#fig-state-add-values-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-state-add-values-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Using a state variable to add values
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="if-any-checks" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="if-any-checks"><span class="header-section-number">7</span> if-any checks</h2>
+<p>This time, instead of counting the number of days that meet a condition, we are just going to see if <span class="hl">any value in the vector meets a condition</span>.</p>
+<p>&nbsp;</p>
+<p>We are going to initialize the state variable to <strong><em>FALSE</em></strong> and if any variable meets the condition, the state variable will be changed to <strong><em>TRUE</em></strong>.&nbsp; The condition we will look is whether a temperature is less than 40.</p>
+<p>&nbsp;</p>
+<p><a href="#trap-using-t-and-f-to-represent-true-and-false-is-a-bad-idea">Trap: Using T and F to represent TRUE and FALSE is a bad idea</a></p>
+<div id="fig-if-any" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-if-any-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="fig-if-any"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="fig-if-any-1"><a href="#fig-if-any-1" aria-hidden="true" tabindex="-1"></a>anyDayLT40 <span class="ot">=</span> <span class="cn">FALSE</span>;</span>
+<span id="fig-if-any-2"><a href="#fig-if-any-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="fig-if-any-3"><a href="#fig-if-any-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>numDays)</span>
+<span id="fig-if-any-4"><a href="#fig-if-any-4" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="fig-if-any-5"><a href="#fig-if-any-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(highTemps[i] <span class="sc">&lt;</span> <span class="dv">40</span>)</span>
+<span id="fig-if-any-6"><a href="#fig-if-any-6" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="fig-if-any-7"><a href="#fig-if-any-7" aria-hidden="true" tabindex="-1"></a>    anyDayLT40 <span class="ot">=</span> <span class="cn">TRUE</span>;</span>
+<span id="fig-if-any-8"><a href="#fig-if-any-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># break;    # when uncommented, this will break out of the for loop</span></span>
+<span id="fig-if-any-9"><a href="#fig-if-any-9" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="fig-if-any-10"><a href="#fig-if-any-10" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-if-any-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: Using for loops to find out if any value in a vectors meets a condition
+</figcaption>
+</figure>
+</div>
+<p>After executing the script, we see that <strong><em>anyDayLT40</em></strong> in <strong>TRUE</strong> in the <strong><em>Environment</em></strong>.&nbsp; You can easily test other scenarios by changing the <strong><em>if()</em></strong> condition.&nbsp; For example:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(highTemps[i] <span class="sc">&lt;</span> <span class="dv">30</span>)  <span class="co"># this will produce a FALSE result</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="the-break-statement" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="the-break-statement"><span class="header-section-number">7.1</span> The break statement</h3>
+<p>This <strong><em>for</em></strong> loop is inefficient because it will continue to check every temperature value even after one of them passes the condition.&nbsp; This is not necessary because we only care if at least one value meets the condition.</p>
+<p>&nbsp;</p>
+<p>If you uncomment the <strong><em>break</em></strong> line then R will break out of the <strong><em>for</em></strong> loop as soon as the condition <strong><em>highTemps[i] &lt; 40</em></strong> is <strong><em>TRUE</em></strong>.&nbsp; This does not change the final results but it does speed it up the script bit by not doing unnecessary cycles of the <strong><em>for</em></strong> loop.</p>
+</section>
+</section>
+<section id="finding-the-highest-or-lowest-value" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="finding-the-highest-or-lowest-value"><span class="header-section-number">8</span> Finding the highest (or lowest) value</h2>
+<p>For the last example we are going to find the highest temperature in a vector.&nbsp; We do this by cycling though each value in the vector <strong><em>highTemps</em></strong> and comparing it to the current highest temperature.&nbsp; If the new value is higher than the highest temperature, then we set that to be the highest temperature.</p>
+<p>&nbsp;</p>
+<p>Here is the code – we will go over it in more detail in a bit:</p>
+<div id="fig-highValue" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-highValue-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="fig-highValue"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="fig-highValue-1"><a href="#fig-highValue-1" aria-hidden="true" tabindex="-1"></a>highestTemp <span class="ot">=</span> <span class="dv">0</span>;  <span class="co"># initialize the state variable to 0</span></span>
+<span id="fig-highValue-2"><a href="#fig-highValue-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="fig-highValue-3"><a href="#fig-highValue-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>numDays)</span>
+<span id="fig-highValue-4"><a href="#fig-highValue-4" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="fig-highValue-5"><a href="#fig-highValue-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(highTemps[i] <span class="sc">&gt;</span> highestTemp) <span class="co"># is this day's value grater than the current high</span></span>
+<span id="fig-highValue-6"><a href="#fig-highValue-6" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="fig-highValue-7"><a href="#fig-highValue-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># this day's value is higher -- set highestTemp to this value</span></span>
+<span id="fig-highValue-8"><a href="#fig-highValue-8" aria-hidden="true" tabindex="-1"></a>    highestTemp <span class="ot">=</span> highTemps[i]; </span>
+<span id="fig-highValue-9"><a href="#fig-highValue-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># browser();  # uncomment to pause the script's execution at this point</span></span>
+<span id="fig-highValue-10"><a href="#fig-highValue-10" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="fig-highValue-11"><a href="#fig-highValue-11" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-highValue-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: Finding the highest value in a vector
+</figcaption>
+</figure>
+</div>
+<section id="using-browser-to-pause-your-script" class="level3" data-number="8.1">
+<h3 data-number="8.1" class="anchored" data-anchor-id="using-browser-to-pause-your-script"><span class="header-section-number">8.1</span> Using browser() to pause your script</h3>
+<p>The <strong><em>for</em></strong> loop above is going through every value in the <strong><em>highTemps</em></strong> in order.&nbsp; Each time a new high temperature is found, <strong><em>highestTemp</em></strong> is set top that value.&nbsp; So, <strong><em>highestTemp</em></strong> is going to start at 0 (the initial value), and change multiple times.</p>
+<p>&nbsp;</p>
+<p>If we put <strong><em>highTemps</em></strong> in the <strong><em>Console</em></strong>, we can see each time a new highest temperature will occur:</p>
+<div class="sourceCode" id="cb9" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> highTemps</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] «<span class="dv">57</span>» <span class="dv">50</span> <span class="dv">54</span> <span class="dv">40</span> <span class="dv">39</span> «<span class="dv">58</span>» «<span class="dv">60</span>» <span class="dv">53</span> <span class="dv">55</span> <span class="dv">44</span> <span class="dv">39</span> <span class="dv">54</span> «<span class="dv">61</span>» «<span class="dv">75</span>»</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>A new highest temperature will be discovered 5 times: 57, 58, 60, 61, and 75 (cycles 1, 6 , 7, 13, and 14).</p>
+<p>&nbsp;</p>
+<p>We can use <strong><em>browser()</em></strong> to see this, too.&nbsp; <strong><em>browser()</em></strong> is an instruction to pause the script in the middle of execution and put it in debug mode.</p>
+<p>&nbsp;</p>
+<p>If we uncomment the <strong><em>browser()</em></strong> line in <a href="#fig-highValue" class="quarto-xref">Figure&nbsp;6</a>:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>   <span class="co"># browser();  # uncomment to pause the script's execution at this point</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Then the script will pause at that line when the condition <strong><em>if(highestTemp &gt; highTemps[i])</em></strong> is <strong>TRUE</strong>, which happens 5 times (out of 14 cycles) when <strong><em>i</em></strong> = 1, 6, 7, 13, and 14.</p>
+<p>&nbsp;</p>
+<p><strong><em>browser()</em></strong> will initially pause the script when <strong><em>i</em></strong> = 1 and you can click <strong><em>Continue</em></strong> to pause the script when <strong><em>i</em></strong> = 6, 7, 13, and 14.&nbsp; For now, the only other button you should know is <strong><em>Stop</em></strong>, which ends debug mode.</p>
+<div id="fig-browser" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-browser-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-1-10-Browser.jpg" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-browser-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7: The script Sourced with browser() uncommented after Continue is clicked twice
+</figcaption>
+</figure>
+</div>
+<p>&nbsp;</p>
+<p>Debug mode is a complicated topic that will be more fully explored in a future lesson.</p>
+</section>
+<section id="initializing-the-state-variable" class="level3" data-number="8.2">
+<h3 data-number="8.2" class="anchored" data-anchor-id="initializing-the-state-variable"><span class="header-section-number">8.2</span> Initializing the state variable</h3>
+<p>I initialized the state variable, <strong><em>highestTemp</em></strong>, to <strong>0</strong> – and that works in this case because we know there are temperatures greater than 0.&nbsp; But, if all the temperatures were negative, then this would not work (I will let you answer why this would not work in the Application).</p>
+<p>&nbsp;</p>
+<p>A better solution is to set the state variable to the first value in the vector (<strong><em>highTemps[1]</em></strong>).&nbsp; This makes the first value in the <strong><em>highTemps</em></strong> vector the default answer. &nbsp;In other words, if every condition check is <strong><em>FALSE</em></strong> (i.e., no temperature is greater than the first) then the first temperature is the highest temperature.</p>
+<p>&nbsp;</p>
+<p><span class="note">Note: this means you could start the indexing variable <strong>i</strong> at 2 instead of one.&nbsp; You do not need to test the 1st value against the 1st value – there is no harm but it is a tiny bit inefficient.</span></p>
+<div id="fig-highVal" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-highVal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="fig-highVal"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="fig-highVal-1"><a href="#fig-highVal-1" aria-hidden="true" tabindex="-1"></a>highestTemp2 <span class="ot">=</span> highTemps[<span class="dv">1</span>];  <span class="co"># set the state variable to the first value in the vector</span></span>
+<span id="fig-highVal-2"><a href="#fig-highVal-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="fig-highVal-3"><a href="#fig-highVal-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>numDays) <span class="co"># could be (i in 2:numDays)</span></span>
+<span id="fig-highVal-4"><a href="#fig-highVal-4" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="fig-highVal-5"><a href="#fig-highVal-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(highTemps[i] <span class="sc">&gt;</span> highestTemp2) <span class="co"># is this day's value greater than the current high</span></span>
+<span id="fig-highVal-6"><a href="#fig-highVal-6" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="fig-highVal-7"><a href="#fig-highVal-7" aria-hidden="true" tabindex="-1"></a>    highestTemp2 <span class="ot">=</span> highTemps[i];  <span class="co"># set the state variable to the current day's value</span></span>
+<span id="fig-highVal-8"><a href="#fig-highVal-8" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="fig-highVal-9"><a href="#fig-highVal-9" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-highVal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8: Using a for loop to find the highest value in a vector
+</figcaption>
+</figure>
+</div>
+<p>Whenever you are looking for the most extreme value in a vector, it is best to set the state variable to the first value in the vector.&nbsp; By doing this, you do not have to guess what kind of values you are going to get.</p>
+</section>
+</section>
+<section id="application" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="application"><span class="header-section-number">9</span> Application</h2>
+<p>1) In comments answer: What happens if you set the state variable to 0 when trying to find the highest temperature if all temperatures are negative.</p>
+<p>&nbsp;</p>
+<p>2) Find out <strong><em>if any</em></strong> of the even days were less than 40 degrees. Hint: use <strong><em>seq()</em></strong></p>
+<ul>
+<li><p>add code to exit the for loop as soon as the condition is met</p></li>
+<li><p>add code that outputs to <strong><em>Console</em></strong> the first day that met the condition</p></li>
+</ul>
+<p>&nbsp;</p>
+<p>3) Find the mean low temperature using for loops: get the total and divide by the number</p>
+<p>&nbsp;</p>
+<p>4) In one for loop find out how many days had:</p>
+<ul>
+<li><p>1 inch or more rain</p></li>
+<li><p>between 0.1 and 1 inch of rain (not inclusive of 0.1 or 1)</p></li>
+<li><p>0.1 inches or less rain</p></li>
+</ul>
+<p>&nbsp;</p>
+<p>5) Find out the lowest low temp and output to the <strong><em>Console</em></strong> the lowest temperature and the date it occurred on.</p>
+<p>&nbsp;</p>
+<p>6) Make sure all the code above is generalizable so that it will also work with columns with any number of values (including from this <a href="..\content/DEVELOPMENT/2020/courses/DEV-belinsky-2020-ProgrammingFundamentalsUsingR/R/Lessons/../Scripts/LansingNOAA2016.csv">weather data frame</a>).&nbsp; In comments: explain how your script is generalizable.</p>
+<p>Save the script as&nbsp;<strong><em>app</em></strong>1-11<strong><em>.r</em></strong> in your&nbsp;<strong><em>scripts</em></strong> folder and&nbsp; email your Project Folder to Charlie Belinsky at belinsky@msu.edu.</p>
+<p>&nbsp;</p>
+<p><a href="..\content/DEVELOPMENT/2020/courses/DEV-belinsky-2020-ProgrammingFundamentalsUsingR/R/Lessons/1-01_Setup_and_RStudio_Projects.html?ou=1247781#zip">Instructions for zipping the Project Folder are here.</a></p>
+<p>&nbsp;</p>
+<p>If you have any questions regarding this application, feel free to email them to Charlie Belinsky at belinsky@msu.edu.</p>
+<section id="questions-to-answer" class="level3" data-number="9.1">
+<h3 data-number="9.1" class="anchored" data-anchor-id="questions-to-answer"><span class="header-section-number">9.1</span> Questions to answer</h3>
+<p>Answer the following in comments inside your application script:</p>
+<ol type="1">
+<li><p>What was your level of comfort with the lesson/application?</p></li>
+<li><p>What areas of the lesson/application confused or still confuses you?</p></li>
+<li><p>What are some things you would like to know more about that is related to, but not covered in, this lesson?</p></li>
+</ol>
+</section>
+</section>
+<section id="trap-using-t-and-f-to-represent-true-and-false-is-a-bad-idea" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="trap-using-t-and-f-to-represent-true-and-false-is-a-bad-idea"><span class="header-section-number">10</span> Trap: Using T and F to represent TRUE and FALSE is a bad idea</h2>
+<p>The terms <strong><em>TRUE</em></strong> and <strong><em>FALSE</em></strong> are reserved <span class="hl">keywords</span>in R (just like <strong><em>if, for, else</em></strong>…) – this means that <em><strong>TRUE</strong> and</em> <strong><em>FALSE</em></strong> are predefined and <span class="hl">cannot be used as variable names</span> in R.</p>
+<p>&nbsp;</p>
+<p>If you try to assign a value to a “variable” named <strong>TRUE</strong> or <strong>FALSE</strong>, you will get an <span class="hl">invalid (do_set) left-hand side to assignment</span> error (<a href="#fig-keywordError" class="quarto-xref">Figure&nbsp;9</a>).&nbsp; This is the same error you get if you try to assign a number to a number (i.e., 10 = 5).</p>
+<div id="fig-keywordError" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-keywordError-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-1-10-truefalse.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-keywordError-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9: Assigning a value to a keyword causes an error.
+</figcaption>
+</figure>
+</div>
+<p>You will often see R scripts that use <strong><em>T</em></strong> and <strong><em>F</em></strong> as shortcuts for <strong><em>TRUE</em></strong> and <strong><em>FALSE</em></strong>.&nbsp; R accepts <strong><em>T</em></strong> and <strong><em>F</em></strong> as shortcuts for <strong><em>TRUE</em></strong> and <strong><em>FALSE</em></strong> but <span class="hl">you should not use <strong>T</strong> and <strong>F</strong> to represent <strong>TRUE</strong> and <strong>FALSE</strong> because <strong>T</strong> and <strong>F</strong> are not protected keywords</span><em>.</em>&nbsp; <strong>T</strong> and <strong>F</strong> can be overwritten as shown in <a href="#fig-keywordError" class="quarto-xref">Figure&nbsp;9</a>.</p>
+<p>&nbsp;</p>
+<p>If <strong><em>T</em></strong> or <strong><em>F</em></strong> get overwritten then your code will produce unexpected results.&nbsp; It is best to stick with the reserved (and protected) keywords <strong><em>TRUE</em></strong> and <strong><em>FALSE</em></strong>.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
