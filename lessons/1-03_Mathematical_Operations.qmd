@@ -6,10 +6,6 @@ short: "1-03"
 
 ### Changes
 
--   put two lines at top of every codeblock? Yes, with explicit understanding that line number only works for function/object not existing when not inside a for loop or function
-
-    -   is a session variable.... save this info for a much later lesson (working directories??)
-
 ## Purpose
 
 -   Perform mathematical operations, including powers, on numerical variables
@@ -32,7 +28,11 @@ Once again, we will calculate ***velocity*** using ***distance*** and ***time,**
 
 The full velocity formula is (subscript ***i*** means [initial]{.hl}, subscript ***f*** means [final]{.hl}):
 
-$v=\frac{d_{f}-d_{i}}{t_{f}-t_{i}}$ (If ***t~i~*** and ***d~i~*** are zero then you get the formula we used in Lesson 1-2: ($\boldsymbol{v}=\frac{d}{t}$)
+$v=\frac{d_{f}-d_{i}}{t_{f}-t_{i}}$ .
+
+ 
+
+[Note: If ***t~i~*** and ***d~i~*** are zero then you get the formula we used in Lesson 1-2: ($\boldsymbol{v}=\frac{d}{t}$)]{.note}
 
  
 
@@ -62,17 +62,17 @@ $$
 \text { velocity }=(\text { finalDist }- \text { initDist }) /(\text { finalTime }- \text { initTime })
 $$
 
-This is now a valid line of code in R -- assuming all variables on the right have assigned values.
+This is now a valid line of code in R, assuming all four variables on the right side have assigned values.
 
 ``` r
 velocity = (finalDist - initDist) / (finalTime - initTime);
 ```
 
-The line of code above says that ***velocity*** [will be assigned]{.hl} the value equal to the calculations on the right side of the equation.
+The line of code above says that ***velocity*** [will be assigned]{.hl} the value equal to the calculations of the four variables on the right side of the equation.
 
 ### Other ways to assign values
 
-In most programming languages the equal sign is used to assign values, and the equal sign always evaluates what is on the right side and assigns it to the variable on the left.  In R, there are two other ways to assign values -- using arrow signs:
+In most programming languages the equal sign is used to assign values, and the equal sign always evaluates what is on the right side and assigns it to the variable on the left.  In R, you can use arrows to assign values:
 
 ``` r
 «velocity <-» (finalDist - initDist) / (finalTime - initTime); # commonly used
@@ -83,29 +83,33 @@ The top ( **\<-** ) is the most commonly used in R and the bottom ( **-\>** ) wo
 
  
 
-[Note: In this case, ( **=** ) and ( **\<-** ) are functionally the same.]{.note} There are functional differences between the two when calling functions.
+[Note: In this case, ( **=** ) and ( **\<-** ) are functionally the same.]{.note} There are differences between the two, which we will talk about in the lesson on functions.
 
 ### Variable naming error
 
 Here is the full script with a small error on the line calculating ***velocity***:
 
 ``` r
-rm(list=ls());          # clean out the environment
+rm(list=ls());   # Clear out environment
+options(show.error.locations = TRUE); # give line number of error*
 
 finalDistance = 100;
 initDistance = 50;
-«finaltime» = 20;       # error on this line -- misspelled variable name
+finaltime = 20;       # misspelled: use t instead of T
 initTime = 15;
-velocity = (finalDistance - initDistance) / (finalTime - initTime);
+# error will be on the line below:
+«velocity = (finalDistance - initDistance) / (finalTime - initTime)»
 ```
 
-Every variable on the right side of the ***velocity*** equation must be given a value beforehand --  otherwise, you will get the pesky [Object not found]{.hl} error as shown in the image below (*Fig.##*)
+Every variable on the right side of the ***velocity*** equation must be given a value beforehand --  otherwise, you will get the pesky [Object not found]{.hl} error as shown in the image below (@fig-naming-error)
 
  
 
-\<image\>
+![Object not found because the variable name does not exist (it is misspelled).](images/R-1-03_NamingError.png){#fig-naming-error .fs}
 
-Object not found because the variable name does not exist (it is misspelled).
+ 
+
+[Extension: The show.error.location line]
 
  
 
@@ -113,8 +117,8 @@ Object not found because the variable name does not exist (it is misspelled).
  
 
 ``` r
-rm(list=ls());          # clean out the environment
-errors
+rm(list=ls());           # clean out the environment
+options(show.error.locations = TRUE); # give line number of error*
  
 finalDistance = 100;
 initDistance = 50;
@@ -123,9 +127,7 @@ initTime = 15;
 velocity = (finalDistance - initDistance) / (finalTime - initTime);
 ```
 
-\<image\>
-
-Misspelled variable name corrected -- script now calculates **velocity**.
+![Misspelled variable name corrected -- script now calculates velocity.](images/R-1-03_Corrected_name.png){#fig-correctedSpelling .fs}
 
 ## Powers and multiplication
 
@@ -237,29 +239,23 @@ mass = 5;
 velocity = (2*kineticEnergy / mass)^1/2; # still a problem here!
 ```
 
-\<image\>
-
-Incorrect answer for **velocity** because the power is missing parentheses
-
- 
+![Incorrect answer for velocity because the power is missing parentheses](images/R-1-03_KineticFormulaIssue.png){#fig-paretheses-pwer .fs}
 
 ### Correcting the power with parenthses
 
-The ***Environment*** tab (*Fig.##*) shows that ***v*** is, unexpectedly, ***10***.  This is because of the order-of-operations. Instead of raising the ***(2\*kineticEnergy/mass)*** to the ***1/2*** power, the above code raised ***(2\*kineticEnergy/mass)*** to the ***first (1)*** power and then divided everything by ***2***.  We need to be more explicit and put the ***1/2*** in parenthesis.
+The ***Environment*** tab (@fig-paretheses-pwer) shows that ***v*** is, unexpectedly, ***10***.  This is because of the order-of-operations. Instead of raising the ***(2\*kineticEnergy/mass)*** to the ***1/2*** power, the above code raised ***(2\*kineticEnergy/mass)*** to the ***first (1)*** power and then divided everything by ***2***.  We need to be more explicit and put the ***1/2*** in parenthesis.
 
 ``` r
 rm(list=ls());          # clean out the environment
 
 kineticEnergy = 50;
 mass = 5;
-velocity = (2*kineticEnergy / mass)^(1/2); # now we are good!
+velocity = (2*kineticEnergy / mass)^«(1/2)»; # now we are good!
 ```
 
-\<image\>
+![Correct answer for velocity](images/R-1-03_CorrectedKineticFormula.png){#fig-correctedKE .fs}
 
-Correct answer for **velocity**
-
- 
+### More power and roots
 
 This style will work for all powers and roots:
 
@@ -269,15 +265,13 @@ rm(list=ls());          # clean out the environment
 kineticEnergy = 50;
 mass = 5;
 
-test1 = (2*kineticEnergy / mass)^(1/3);  # third root
-test2 = (2*kineticEnergy / mass)^(5);    # fifth power
-test3 = (2*kineticEnergy / mass)^(5/3);  # mixed root and power
-test4 = (2*kineticEnergy / mass)^(3.17); # decimal power
+test1 = (2*kineticEnergy / mass)«^(1/3)»;  # third root
+test2 = (2*kineticEnergy / mass)«^(5)»;    # fifth power
+test3 = (2*kineticEnergy / mass)«^(5/3)»;  # mixed root and power
+test4 = (2*kineticEnergy / mass)«^(3.17)»; # decimal power
 ```
 
-\<image\>
-
-Testing different powers in R
+![Testing different powers in R](images/R-1-03_mixedPowers.png){#fig-mixed-powers .fs}
 
 ## The square root function
 
@@ -295,7 +289,7 @@ velocity = (2*kineticEnergy / mass)^(1/2); # how I prefer to do them
 
 ## Random values
 
-In the example above (*fig \##*) we hardcoded the values for ***kineticEnergy*** and ***mass***, which just means we directly provided a values for the two variables.  We can also randomly pick values for variables using ***sample()***.
+In @fig-mixed-powers we hardcoded the values for ***kineticEnergy*** and ***mass***, which just means we directly provided a values for the two variables.  We can also randomly pick values for variables using ***sample()***.
 
  
 
@@ -355,13 +349,11 @@ randomNorm2 = rnorm(n=1, mean=-7.5, sd=0.5);
 
 ***rnorm()*** always returns a decimal number
 
-\<image\>
-
-Picking random numbers -- the random numbers will be different each time you execute the code
+![Picking random numbers -- the random numbers will be different each time you execute the code](images/clipboard-877561133.png){#fig-randomNumbers .fs}
 
 ## Application
 
-A\) Add this code as the third line in your script (right after the ***rm()*** lines):
+1\) Add this code right after the ***rm(list=ls())*** lines:
 
 ``` r
 set.seed(5); 
@@ -369,35 +361,33 @@ set.seed(5);
 
 The above line will make sure that you get the same "random" number every time you execute your script by creating a seed value.  Seed values are covered in a much later lesson.
 
-Challenge question: What would happen if you set the seed before calling rm()?
+ 
+
+2\) Create six variables that all hold length values:
+
+-   1st and 2nd are assigned the values: 25, 30
+
+-   3rd and 4th are randomly picked between 20 and 30 (each number has an equal chance)
+
+-   5th and 6th are randomly picked from a normal distribution with mean of 25 and standard deviation of 2
 
  
 
-B\) Create six variables that hold length values:
-
--   the 1st and 2nd are hardcoded: 25, 30
-
--   the 3rd and 4th values are randomly picked between 20 and 30 (each number has an equal chance)
-
--   the 5th and 6th values are randomly picked from a normal distribution with mean of 25 and standard deviation of 2
-
- 
-
-C\) Calculate the (a) mean, (b) variance, and (c) standard deviation of the six values.
+3\) Calculate the (a) mean, (b) variance, and (c) standard deviation of the six values.
 
 -   [Visit this page if you need a reminder about how to calculate mean, variance, and standard deviation](http://davidmlane.com/hyperstat/A16252.html)
 
--   you can use R functions like ***mean(), var(),*** and ***sd()*** to check these values, but I want you to manually solve these -- it is important to learn how to properly code the mathematics because you will often not have functions to do it for you.
+-   you can use R functions like ***mean(), var(),*** and ***sd()*** to check these values, but [I want you to manually solve these]{.hl} -- it is important to learn how to properly code the mathematics because you will often not have functions to do it for you.
 
 -   [Extension: Mathematical operations across multiple lines]
 
  
 
-D\) Make sure the 6 values, their mean, their variance, and their standard deviation appear in the ***Environment*** tab after the script is executed.
+4\) Make sure the 6 values, their mean, their variance, and their standard deviation appear in the ***Environment*** tab after the script is executed.
 
  
 
-E\) Challenge: Pick a random two-digit decimal number between 0 and 1 (e.g., 0.23, 0.89, 0.10)
+5\) Challenge: Pick a random two-digit decimal number between 0 and 1 (e.g., 0.23, 0.89, 0.10)
 
 -   you will need to use ***sample()*** and then manipulate the number
 
@@ -433,7 +423,7 @@ will put ***d=30*** in the ***Environment***.
 
  
 
-This is because R did not know the continue the equation for d to the second line.  R treated the first line as the complete command/equation.  By putting the ( + ) at the end of the first line for ***c***, R knew it needed to continue the command to the next line.
+This is because R did not know the continue the equation for ***d*** to the second line.  R treated the first line as the complete command/equation.  By putting the ( + ) at the end of the first line for ***c***, R knew it needed to continue the command to the next line.
 
  
 
@@ -477,7 +467,7 @@ If you code ***KE*** like this::
 KE = 1/2*mv^2;
 ```
 
-Then you will get the error: [object 'mv' not found]{.hl} in the ***Console*** tab because R does not realize you want to multiply the variables ***m*** and ***v***, it thinks you are trying to use a variable named ***mv***, but the variable ***mv*** does not exist.
+Then you will get the error: [object 'mv' not found]{.hl} in the ***Console*** tab because R does not realize you want to multiply the variables ***m*** and ***v***, it thinks you are trying to use a variable named ***mv***, and the variable ***mv*** does not exist.
 
  
 
@@ -487,15 +477,13 @@ If you code ***KE*** like this::
 KE = (1/2)m*v^2;  # same error arises if you do 1/2m*v^2
 ```
 
-you will get the error:[unexpected symbol]{.hl}(*Fig.##*) and the ***Console*** tab will point to the ***m***
+you will get the error: [unexpected symbol]{.hl} (@fig-unexpected-symbol) and the ***Console*** tab will point to the ***m***
 
-\<image\>
-
-Unexpected symbol error
+![Unexpected symbol error](images/clipboard-1865764449.png){#fig-unexpected-symbol .fs}
 
  
 
-In this case, R is expecting an operation after **(1/2)** that is represented by a symbol.  ***m*** is a variable, not a operation, hence the error.
+In this case, R is expecting an operation (symbol) after **(1/2)**.  ***m*** is a variable, not a operation, hence the error.
 
 ## Trap: Units, or lack thereof, in programming
 
@@ -541,3 +529,17 @@ aveWeight = (weight1 + weight2 + weight3) / 3;
 ```
 
 Otherwise, you risk a situation like the [Mars Climate Orbiter](https://en.wikipedia.org/wiki/Mars_Climate_Orbiter) crash, which could have easily been avoided with proper comments.
+
+## Extension: The show.error.location line
+
+The second line of code in @fig-naming-error tells R to provide a line number where an error occurs:
+
+``` r
+options(show.error.locations = TRUE);
+```
+
+In @fig-naming-error, in the ***Console*** tab the error includes the line number, 9, because of the line above. This seems like a great idea except that this line only works in a few limited situations. As you get into more complex code, this line will not work and R will not show you the line number for the error.
+
+ 
+
+Unfortunately, R is one of the harder programming languages to debug. We will get to some debugging strategies in later lessons. For now, you can include the ***show.error.location*** line in your code. It does not hurt – it just has limited utility.
