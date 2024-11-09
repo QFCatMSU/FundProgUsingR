@@ -6,9 +6,9 @@ short: "1-04"
 
 ### Changes...
 
--   remove stringsAsFactor
-
 -   extension about why I added arguments when reading the CSV file
+
+-   add some more images for early examples?
 
 ## Purpose
 
@@ -22,9 +22,11 @@ short: "1-04"
 
 -   Pulling multiple values for a column
 
+ 
+
 If you have any questions about the material in this lesson, feel free to email them to the instructor, {{< var instructor.name >}}, at {{< var instructor.email >}}.
 
-### Files for this lesson
+### Files for this lesson {#sec-lesson-files}
 
 From this point on most lessons will have script and/or data files to download.
 
@@ -33,12 +35,15 @@ From this point on most lessons will have script and/or data files to download.
 The [script for this lesson is here](../scripts/1-04_VectorsAndDataFrames.R)
 
 -   Save the linked script file to the ***scripts*** folder in your Class Project
+-   The script file contains the code in this lesson in the order it appears in this lesson. Source the script to see the results from this lesson.
 
  
 
 The data used in this lesson, [twoWeekWeatherData.csv](../data/twoWeekWeatherData.csv)
 
 -   Save the linked data file to the ***data*** folder in your Class Project
+
+    -   If you save the data file to the wrong folder, the script file will not be able to read it.
 
 -   [Trap: Opening CSV files in Excel]
 
@@ -52,11 +57,11 @@ Standalone scripts are rare and are generally only created for testing purposes.
 
  
 
-The script for this lesson will not execute correctly if it is treated as a standalone script (i.e., it is executed outside of the RStudio Project). [This is because the file looks for a data file and it needs to know where to look for it.]{.hl}
+The script for this lesson will not execute correctly if it is treated as a standalone script (e.g., it is executed outside of the RStudio Project). [This is because the file looks for a data file and it needs to know where to look for the data file.]{.hl}
 
 ### Set Working Directory (a cautionary statement)
 
-Many people still treat all R scripts as standalone scripts (i.e., they do not use RStudio Project). This causes all sorts of problems when script file look for other files.  The way to get around this is to set the Working Directories using ***setwd()***.  This is a mess because Working Directories change when file are moved between computers or even within a computer.  [Scripts that set working directories are much harder to share and maintain.]{.hl}  This author strongly suggests that you use RStudio Projects and avoid the working directory mess.
+Many people still treat all R scripts as standalone scripts (i.e., they do not use RStudio Project). This causes all sorts of problems when script file look for other files.  The old way to get around this is to set the Working Directories using ***setwd()***.  This is a mess because Working Directories change when file are moved between computers or even within a computer.  [Scripts that set working directories are much harder to share and maintain.]{.hl}  This author strongly suggests that you use RStudio Projects and avoid the working directory mess.
 
 ## Vector Variables
 
@@ -85,7 +90,7 @@ But, in programming we want to group related values together.  So, instead of c
 tempHigh = c(65, 57, 61, 64, 59);
 ```
 
-One of the main reasons to create a vector is that [the values in the vector are all associated]{.hl} and we can perform mathematical operations on the whole vector.  For instance, we might have temperatures in Fahrenheit and want to convert all the temperature to Celsius:
+One of the main reasons to create a vector is that [the values in the vector are all associated]{.hl} and we can perform mathematical operations on the whole vector.  For instance, the vector might consist of multiple temperatures in Fahrenheit and want to convert all the temperatures to Celsius:
 
 ``` r
 tempHighCel = (5/9) * (tempHigh - 32)
@@ -97,7 +102,7 @@ Or, we can use one of R's many, many statistical functions, ***mean()***, on the
 tempMean = mean(tempHigh); 
 ```
 
-We can see in the ***Environment*** that ***tempHighCel*** has 5 converted temperatures and that ***tempMean*** is the same as ***tempAvg*** above:
+After executing the code in this section, we can see in the ***Environment*** tab that ***tempHighCel*** has 5 converted temperatures and that ***tempMean*** is the same as ***tempAvg***:
 
 ``` {.r tab="Environment"}
 tempAvg:     61.2
@@ -105,6 +110,8 @@ tempHigh:    num [1:5] 65 57 61 64 59
 tempHighCel: num [1:5] 18.3 139 16.1 17.5 15
 tempMean:    61.2
 ```
+
+![View of temperature values in Environment](images/R-1-04-TempValue-in-Env.png){#fig-environment-view .fs}
 
 [Extension: Statistical functions on vectors]
 
@@ -132,20 +139,22 @@ tempDiff_5 = tempHigh[5] - tempLow[5];
 The ***Environment*** shows:
 
 ``` {.r tab="Environment"}
-tempHigh:   num [1:5] 65 57 61 64 59
-tempLow:    num [1:5] 45 40 55 37 42
-tempDiff:   num [1:5] 20 17 6 27 17
-tempDiff_3: 6
-tempDiff_5: 17
+tempHigh:    num [1:5] 65 57 61 64 59
+tempLow:     num [1:5] 45 40 55 37 42
+tempDiff:    num [1:5] 20 17 6 27 17
+tempDiff_3:  6
+tempDiff_5:  17
 ```
 
 ### Vectors and columns in a data frame
 
-[Data frames are essentially made up of vectors]{.hl}that all have the same length.  The vectors are the columns in the data frame and the number of values in the vector is determined by the number of rows in the data frame.  In *Fig.##* there is a weather data frame (that we will use in later lessons) and each column has a measured daily weather value (e.g., ***minTemp***, ***maxTemp***).  The row gives all the measured weather values for a specific day (e.g., row 1 is Jan 1, row 2 is Jan 2).
+[Data frames are made up of vectors]{.hl} that all have the same length.  The vectors are the columns in the data frame and the number of values in the vector is determined by the number of rows in the data frame.
 
-\<image\>
+ 
 
-A data frame viewed in RStudio with 23 variables (i.e., the 23 columns, which are vector variables)
+In @fig-weatherdataframe there is a weather data frame ([note: we are using this data frame in future lessons, not this one]{.note}) where each column has a measured daily weather value (e.g., ***minTemp***, ***maxTemp, relHum***).  Each row gives the measured weather values for a specific day (e.g., row 1 is Jan 1, row 2 is Jan 2).
+
+![A data frame viewed in RStudio with 23 variables (i.e., the 23 columns, which are vector variables)](images/clipboard-2481776937.png){#fig-weatherdataframe}
 
 ## CSV files
 
@@ -157,27 +166,25 @@ In the first couple of lessons we were using data from inside the script but mos
 
  
 
-Let's look at a small data set we downloaded in the [Files for this lesson] section called ***twoWeekWeatherData.csv***, which contains two weeks of weather data from Lansing, Michigan. 
+Let's look at a small data set we downloaded in the @sec-lesson-files section called ***twoWeekWeatherData.csv***, which contains two weeks of weather data from Lansing, Michigan. 
 
 ### Opening a CSV file
 
-CSV files are often opened by default in Excel and this can problematic:
+[Note: CSV files are often opened by default in Excel and this can problematic]{.note}: [Trap: Opening CSV files in Excel]
 
--   [Trap: Opening CSV files in Excel]
+ 
 
 [CSV files are just text files]{.hl} and CSV files can be opened in any text editor (e.g., notepad, notepad++, textEdit).
 
  
 
-[RStudio is a text editor]{.hl} so we can open  ***twoWeekWeatherData.csv*** in RStudio by *either*:
+[RStudio is also a text editor]{.hl} so we can open and edit ***twoWeekWeatherData.csv*** in RStudio by *either*:
 
 -   Clicking ***File -\> Open File...*** and navigate to ***twoWeekWeatherData.csv*** and press ***OK***.
 
--   Using the ***Files*** tab: go to your ***data*** folder, click on ***twoWeekWeatherData.csv***, choose ***View File** (fig.##)*
+-   Using the ***Files*** tab: navigate to the ***data*** folder, click on ***twoWeekWeatherData.csv***, choose ***View File*** (@fig-openCSV-RStudio)
 
-\<image\>
-
-The twoWeekWeatherData.csv file opened in RStudio
+![The twoWeekWeatherData.csv file opened in RStudio](images/R-1-04-CSVFileinRStudio.png){#fig-openCSV-RStudio .fs}
 
  
 
@@ -192,30 +199,27 @@ We can see that the CSV file has a header row and each row has five values repre
 To use the data in a script we need to read the data into a script file -- and for that we will use the ***read.csv()*** function.
 
 ``` r
-rm(list=ls()); # cleans out the Environment 
-
-weatherData = read.csv(file="data/twoWeekWeatherData.csv", # path to file
-                       sep=",",                   # values are separated by commas
-                       header=TRUE);               # there is a header row
+# Get the data from the twoWeekWeatherData CSV file
+weatherData = «read.csv»(file="data/twoWeekWeatherData.csv", 
+                       sep=",",
+                       header=TRUE);
 ```
 
 ***read.csv()*** reads in the data from the CSV file -- and saves the data to a variable called ***weatherData***.
 
  
 
-***weatherData*** is a [data frame variable]{.hl} and it appears in the ***Environment*** tab under ***Data*** as [14 obs. of 5 variables]{.hl}. (i.e., 14 rows and 5 columns), which matches what we saw in the CSV file (*Fig.##*). 
+***weatherData*** is a [data frame variable]{.hl} and it appears in the ***Environment*** tab under ***Data*** as [14 obs. of 5 variables]{.hl}. (i.e., 14 rows and 5 columns), which matches what we saw in the CSV file (@fig-openCSV-RStudio). 
 
 -   Double-clicking on ***weatherData*** opens the data frame in the ***File Viewer*** window.  This is a convenient way to visualize the data frame.
 
 -   Clicking on the blue arrow to the left of ***weatherData*** provides information about each of the columns
 
-\<image\>
-
-Viewing the data frame in the File Viewer
+![Viewing the data frame in the File Viewer](images/R-1-04-TwoWeekWeather.png){#fig-view-dataframe .fs}
 
 ### Column value type
 
-In the ***Environment***, when you click on the arrow next to the left of ***weatherData*** you see some information about the columns in the data frame. The first piece of information is the name of the column (i.e., the header -- ***date***, ***highTemp***, etc.).  The second is the type of value the column contains.
+In the ***Environment***, when you click on the arrow next to the left of ***weatherData*** (@fig-weatherdataframe) you see some information about the columns in the data frame. The first piece of information is the name of the column (i.e., the header -- ***date***, ***highTemp***, etc.).  The second is the type of value the column contains.
 
  
 
@@ -225,11 +229,11 @@ In ***weatherData*** there are three types of values:
 
 2.  ***num*** (e.g., ***precipitation***): [numeric]{.hl}, or numbers with decimals
 
-3.  ***chr***: (e.g, ***noonCoondition***) this stands for [character]{.hl}, and character is really short for [string of characters]{.hl}, and this in turn is typically shortened to *string*.  Whatever you call it, it is the catch-all category for values R cannot recognize as anything else. 
+3.  ***chr***: (e.g, ***noonCoondition***) this stands for [character]{.hl}, and character is really short for [string of characters]{.hl}, and this in turn is typically shortened to [string]{.hl}.  Whatever you call it, it is the catch-all category for values R cannot recognize as anything else. 
 
  
 
-[Note: the **date** column has date values but it is not formatted properly so R does not recognize it as a Date -- something we will cover later.]{.note}
+[Note: the **date** column has date values but it is not formatted properly so R does not recognize it as a Date -- something we will cover much later.]{.note}
 
 ## Functions and arguments
 
@@ -241,7 +245,7 @@ There is a lot going on in our first line of code and that is because there are 
 
  
 
-Inside the function ***read.csv()***, I included four arguments (***file, sep, header,*** and ***stringsAsFactors***).  [Arguments are like the knobs and dials for a function]{.hl}.  The function reads in a CSV file and the arguments tweak how the file is read.
+Inside the function ***read.csv()***, I included three arguments (***file, sep, and header***).  [Arguments are like the knobs and dials for a function]{.hl}.  The function reads in a CSV file and the arguments tweak how the file is read.
 
 ### file
 
@@ -253,11 +257,9 @@ Inside the function ***read.csv()***, I included four arguments (***file, sep, h
 
  
 
-If you execute the script file outside your RStudio Project, you will get a [cannot open file]{.hl} error because the script does not know where to start looking for the CSV file.
+If you execute the script file outside your RStudio Project (@fig-open-outside-project), you will get a [cannot open file]{.hl} error in the ***Console*** because the script does not know to find the CSV file.
 
-\<image\>
-
-You get a **cannot open file** error if you try to execute the script outside of your RStudio Project
+![You get a cannot open file error if you try to execute the script outside of your RStudio Project](images/R-1-04-OutSideRSP.png){#fig-open-outside-project .fs}
 
 ### sep
 
@@ -273,11 +275,21 @@ The most common alternate separator values are spaces ( ***sep = " "*** ) and do
 
  
 
-***header=FALSE*** would mean that the first row contains data (i.e., there are no column names).  If you set ***header=FALSE*** in this example then R will think that the column names are the first data point.  So, you will have 15 values in each vector and the first value will not make sense.
+***header = FALSE*** would mean that the first row contains data (i.e., there are no column names).  If you set ***header=FALSE*** in this example then R will think that the column names are the first data point.  So, you will have 15 values in each vector and the first value will not make sense.
+
+### Default values for arguments
+
+By default, ***read.csv()*** assumes ***sep=","*** and ***header=TRUE***. For the data in this example, ***sep*** and ***header*** are need needed and this code would work:
+
+``` r
+weatherData = read.csv(file="data/twoWeekWeatherData.csv");
+```
+
+But I like to keep ***sep*** and ***header*** in my code because you often do need to change them (e.g., you have data without a header or spaces between values instead of commas) and it is easier to deal with if you already have ***sep*** and ***header*** when copying code from one script to another.
 
 ## Getting data
 
-We now have a data frame with weather information stored in a variable called ***weatherData***.  But, we usually do not want to deal with the whole data frame at once.  So, our next trick will be to extract parts of the data from the data frame.  We might want to work with one column in the data frame (e.g., ***highTemp*** or ***precipitation***).  We can see all the columns in the data frame by expanding the data frame in the ***Environment*** or looking at the headers in the ***File Viewer*** (both views are in *fig \##*). 
+We now have a data frame with weather information stored in a variable called ***weatherData***.  But, we usually do not want to deal with the whole data frame at once.  So, our next trick will be to extract parts of the data from the data frame.  We might want to work with one column in the data frame (e.g., ***highTemp*** or ***precipitation***).  We can see all the columns in the data frame by expanding the data frame in the ***Environment*** or looking at the headers in the ***File Viewer*** (both views are in @fig-view-dataframe). 
 
 ### Pulling out a column
 
@@ -293,11 +305,9 @@ highTemps = weatherData$highTemp;
 
 In the ***Environment*** square brackets (**\[ \]** ) indicates the variable is a **vector**.  ***highTemps*** appears in the ***Environment*** as a ***vector***.  ***highTemps*** has 14 ( ***\[1:14\]*** ) integer (***int***) values, representing the temperature for each of the 14 days. 
 
-\<image\> 
+![The highTemps vector variable in the Environment tab](images/R-1-04-Vector-from-dataframe.png){#fig-high-temps .fs}
 
-The **highTemps** vector variable in the Environment tab
-
-### Pulling out (subsetting) individual values
+### Pulling out (subsetting) individual values {#sec-subsetValues}
 
 Perhaps we want just one value -- specifically, we want to know the high temperature on April 2 (the seventh day in ***weatherData***).
 
@@ -321,14 +331,14 @@ highTempDay7b = weatherData$highTemp[7];
 Or, we can use a row/column (e.g., X/Y) operation on ***weatherData*** to get the value:
 
 ``` r
-highTempDay7c = weatherData[7, "highTemp"];  # think of this as [X,Y] notation
+highTempDay7c = weatherData[7, "highTemp"];  # think of this as [X,Y] notation
 ```
 
 The last method is functionally the same as the previous two -- but [the X,Y notation is the most robust]{.hl} as it can best handle more complex subsetting situations (e.g., subsetting multiple rows and columns), which will be discussed in a future lesson.
 
 ### The Environment and the L value
 
-I will be referring quite often to the ***Environment*** tab.  Instead of taking a screenshot of the ***Environment*** tab (which is hard to maintain), I will display the variables I am focused on like this:
+I will be referring quite often to the ***Environment*** tab as it looks after the script has been sourced (as in @fig-high-temps) .  Instead of taking a screenshot of the ***Environment*** tab (which is hard to maintain), I will display the variables I am focused on like this:
 
 ``` {.r tab="Environment"}
 highTemp7a:  60L
@@ -336,19 +346,11 @@ highTemp7b:  60L
 highTemp7c:  60L
 ```
 
-\<image\>
-
-The Environment tab shows that highTemp137a,b, and c are all equal to 60L
+The ***Environment*** tab shows that ***highTemp7a***, ***highTemp7b***, and ***highTemp7c*** are all equal to **60L**
 
  
 
-***highTemp7a***, ***highTemp7b***, and ***highTemp7c*** all show that the high temperature on the 7^th^ day is **60**.
-
- 
-
-The **L** is something you can ignore -- it indicates that the number is an ***long*** integer, whichis an integer.
-
-If you want to know more go to [Extension: Long and Short Integers]
+The **L** is something you can ignore -- it indicates that the number is an ***long*** integer, which is an integer. If you want to know more go to [Extension: Long and Short Integers]
 
 ## Pulling out multiple values
 
@@ -373,7 +375,7 @@ val_12 = highTemps[12];
 Or, we might want to combine the temperatures from these three days into one variable.  ***c()*** creates a vector of the three values (1, 5, and 12) and that vector is used to subset ***highTemps***:
 
 ``` r
-valComb = highTemps[c(1,5,12)];  # a vector with 3 values
+valComb = highTemps[c(1,5,12)];  # a vector with 3 values
 ```
 
 ***valComb*** is a vector with 3 values, the high temperature for days **1**, **5**, and **12**:
@@ -394,10 +396,10 @@ The three values we pulled from **highTemps** individually saved and combined (*
 If we want to get the high temperature for consecutive days, we can use the simple sequencing ( **:** ) operator -- simple refers to the fact that we are sequencing by 1:
 
 ``` r
-consecVals = highTemps[3:11];  # same as highTemps[c(3,4,5,6,7,8,9,10,11)]
+consecVals = highTemps[3:11];  # same as highTemps[c(3,4,5,6,7,8,9,10,11)]
 ```
 
-***consecVals*** is a vector with 9 values -- the high temperatures from days **3** through **11**.  [Note: **9** values, not (11-3=) **8** -- we include both the 3 and the 11.]{.note}
+***consecVals*** is a vector with 9 values -- the high temperatures from days **3** through **11**.  [Note: **9** values, not **8** -- we include both the 3 and the 11.]{.note}
 
  
 
@@ -422,13 +424,18 @@ int \[1:9\] means 9 values are in each vector -- the first few values are shown
 
 The ***Environment*** tab is good for quickly looking at values, but it only shows a few values from each vector.  If you want to see all the values then you can use the ***Console*** tab (bottom-left corner).  In the ***Console*** tab, type in the variable you want to see and press ***Enter***:
 
-\<image\>
-
-Using the Console tab to view variables
+![Using the Console tab to view variables](images/R-1-04-Console.png){#fig-console-variables .fs}
 
  
 
-These two values, ***consecVals*** and ***consecValRev***, are shown in the ***Console*** window in the ***figure \##*** image.
+These two values, ***consecVals*** and ***consecValRev***, are shown in the ***Console*** window in @fig-console-variables. In the future I will present the Console like this:
+
+``` {.r tab="Console"}
+> consecVals 
+[1] 54 40 39 58 60 53 55 44 39 
+> consecValsRev 
+[1] 39 44 55 53 60 58 39 40 54
+```
 
 ### Using a sequence to get values
 
@@ -553,7 +560,7 @@ C\) Subsetting:
 
 2.  Save the 4^th^ value of ***precipitation*** to a variable
 
-    -   Repeat the previous step for the other two methods given in *section \##*
+    -   Repeat the previous step for the other two methods given in @sec-subsetValues
 
 3.  Save the 9^th^, 12^th^, 5^th^, and 1^st^ values of ***lowTemps*** to one variable (in that order)
 
@@ -599,7 +606,7 @@ F\) Opening Data Frames:
 
 ## Trap: Opening CSV files in Excel
 
-If you have Excel on your computer, then it is probable that Excel is the default program for opening CSV files.  So, double-clicking on a CSV file will probably open it in Excel.  The danger with opening CSV files in Excel is that Excel will sometimes reformat the data (especially date and money columns) and then give a message saying how the data needs to be saved to be preserved.  [Do not save the file -- it will change the format of your data]{.hl}*.*  If you are editing a CSV file in Excel then I would save the results to a test file first to make sure Excel did not do anything untoward.
+If you have Excel on your computer, then it is probable that Excel is the default program for opening CSV files.  This means double-clicking on a CSV file will open it in Excel.  The danger with opening CSV files in Excel is that Excel will sometimes reformat the data (especially date and money columns) and then give a message saying how the data needs to be saved to be preserved.  [Do not save the file -- it will change the format of your data]{.hl}*.*  If you are editing a CSV file in Excel then I would save the results to a test file first to make sure Excel did not do anything untoward.
 
 ![Opening a CSV file in Excel -- the possible data loss warning is not something you want to heed](images/R-1-04_Excel.png){#fig-excel .fs}
 
@@ -633,9 +640,9 @@ We will be doing more with this in later lessons...
 
 ## Extension: Square brackets \[ \] vs. Round Brackets ( ) {#extension-square-brackets-vs.-round-brackets}
 
-[Square]{.hl}brackets are used when you are [subsetting]{.hl}or indexing a variable.
+[Square]{.hl} brackets are used when you are [subsetting]{.hl} or indexing a variable.
 
-[Round]{.hl}brackets are used when you are [calling a function]{.hl}*.*
+[Round]{.hl} brackets are used when you are [calling a function]{.hl}and contain the arguments for that function.
 
 … and the two types of brackets are often used in the same command
 
@@ -677,8 +684,8 @@ You can also subset ***lowTemps*** without calling a function:
 [1] 38 36 45 32 50
 ```
 
-Technically, ***4:8*** still calls a sequence function in the background – but that is really getting into the weeds!
+Technically, ***4:8*** still calls the sequence ***seq(from=4, to=8, by=1)*** in the background – but that is really getting into the weeds!
 
  
 
-***read.csv(), ggplot(), plot(), rm(), options()*** are all functions (the latter 2 are in the first two lines of all my lesson scripts).  There will be a lot more about functions in this class starting with next lesson.
+***read.csv(), ggplot(), plot(), rm()*** are all functions.  There will be a lot more about functions in this class starting with next lesson.

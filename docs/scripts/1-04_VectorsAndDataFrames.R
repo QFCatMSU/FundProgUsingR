@@ -31,11 +31,10 @@ tempDiff_3 = tempHigh[3] - tempLow[3];
 tempDiff_5 = tempHigh[5] - tempLow[5];
 
 
-# Get the data from the twoweekWeatherData CSV file
+# Get the data from the twoWeekWeatherData CSV file
 weatherData = read.csv(file="data/twoWeekWeatherData.csv", 
                        sep=",",
-                       header=TRUE, 
-                       stringsAsFactors = FALSE);  
+                       header=TRUE);  
 
 # Extract the highTemps column from the data frame -- save it to a variable
 highTemps = weatherData$highTemp;
