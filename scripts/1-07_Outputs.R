@@ -14,7 +14,7 @@ cat("I am fine?");
 ### adding linefeeds to the output ( \n )
 cat("Hello, World.Hello, World.\n");
 cat("How are you?\n");
-cat("I am\n fine?\n");
+cat("I am\n fine?\n");  # the first \n will break up the line
 
 ### Combining message into one cat command
 cat("Hello, World.\nHow are you?\nI am\n fine?\n\n");
@@ -27,8 +27,7 @@ cat("Some Unicode characters: \u00C5 \u0A94 \u0115\n\n");
 ### read in data from  twoWeekWeatherData.csv
 weatherData = read.csv(file="data/twoWeekWeatherData.csv", 
                        sep=",",
-                       header=TRUE, 
-                       stringsAsFactors = FALSE);  
+                       header=TRUE);  
 
 ### Extract the highTemps column from the data frame -- save it to a variable
 highTemps = weatherData$highTemp;

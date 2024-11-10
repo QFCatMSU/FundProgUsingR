@@ -14,7 +14,7 @@ cat("I am fine?");
 ### adding linefeeds to the output ( \n )
 cat("Hello, World.Hello, World.\n");
 cat("How are you?\n");
-cat("I am\n fine?\n");
+cat("I am\n fine?\n");  # the first \n will break up the line
 
 ### Combining message into one cat command
 cat("Hello, World.\nHow are you?\nI am\n fine?\n\n");
