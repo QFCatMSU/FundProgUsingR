@@ -1,8 +1,9 @@
 rm(list=ls());        # clear out the Environment  
 
-weatherData = read.csv(file="data/twoWeekWeatherData.csv", # path to file
-                       sep=",",                   # values are separated by commas
-                       header=TRUE);              # there is a header row
+# path to data file (from project folder)
+weatherData = read.csv(file="data/twoWeekWeatherData.csv", 
+                       sep=",",      # values separated by comma
+                       header=TRUE); # there is a header row
 
 # create a sequence that goes from 1 to 10 by 3
 seq1 = seq(from=1, to=10, by=3);  # will have 4 values
@@ -37,8 +38,3 @@ seq2 = seq(from=1, to=10, length.out=5);
 
 # calling read.csv() with only the file argument
 weatherData2 = read.csv(file = "data/twoWeekWeatherData.csv");
-
-# weatherData3 is how people using R version 3 would see weatherData2
-weatherData3 = read.csv(file="data/twoWeekWeatherData.csv",
-                        sep=",",
-                        header=TRUE);
