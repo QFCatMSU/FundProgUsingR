@@ -6,7 +6,7 @@ cat("Hello");
 ### Multiple commands on one line
 a=3; b=7; cat("a+b=", a+b);
   
-### Outputting multiple text messages (\n means go to next line)
+### Outputting multiple text messages (\n means go to next line)                    
 cat("Hello, World.\n");
 cat("How are you?\n");
 cat("I am fine?\n");

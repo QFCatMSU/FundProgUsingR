@@ -6,11 +6,13 @@ short: "1-06"
 
 ### Changes...
 
+-   add/remove other things to set in RStudio like matching parentheses (or keep to 1st lesson)
+
 ## Purpose
 
 -   look at some of the features of R and RStudio
 
--   explore the differences between Run and Source
+-   explore the differences between ***Run*** and ***Source***
 
 ### Files for the lesson
 
@@ -28,7 +30,7 @@ If you have any questions about the material in this lesson, feel free to email 
 
 ## Output to console
 
-In the next couple of lesson we are going tomake extensive use of the ***Console*** tab, which can be used to execute code and as output for your script file.  Like the ***Environment*** tab, it is difficult to maintain images so I will use text instead.
+In the next couple of lesson we are going to make extensive use of the ***Console*** tab, which can be used to execute code and as output for your script file.  Like the ***Environment*** tab, it is difficult to maintain images so I will use text instead.
 
  
 
@@ -36,21 +38,19 @@ For example:
 
 -   open the script for this lesson in your RStudio Project
 
--   click on line **6** (i.e., put the cursor on line 6)
+-   click on line **4** (i.e., put the cursor on line 4)
 
 -   click ***Run***
 
  
 
-The output will look like this:
+The RStudio window looks like this:
 
-\<image\>
-
-Output to the Console tab after executing line 6
+![Output to the Console tab after executing line 6](images/R-1-06-OutputToConsole.png){#fig-console-output .fs}
 
  
 
-I will display the output to the ***Console*** tab like this:
+Instead of displying the RStudio image, I will display the output to the ***Console*** tab like this:
 
 ::: {#fig-consoleTab}
 ``` {.r tab="Console"}
@@ -59,7 +59,7 @@ I will display the output to the ***Console*** tab like this:
 Hello
 ```
 
-Output to the Console tab after executing line 6
+Output to the Console tab after executing line 4
 :::
 
 ## Run vs. Source
@@ -72,11 +72,11 @@ The next two lessons are more about showing off features in R and RStudio and no
 
 ### Executing one line
 
-We already have an example of using ***Run*** to execute one line in @fig-consoleTab.  When we put the cursor on line **6** and clicked ***Run***, R executed the ***cat()*** command on line **6**.  We will talk much more about ***cat()*** next lesson but ***cat()*** outputs to the ***Console*** whatever is in the parentheses.
+We already have an example of using ***Run*** to execute one line in @fig-consoleTab.  When we put the cursor on line **4** and clicked ***Run***, R executed the ***cat()*** command on line **4**.  We will talk much more about ***cat()*** next lesson but ***cat()*** outputs to the ***Console*** whatever is in the parentheses.
 
  
 
-Actually, clicking ***Run*** does not just execute the line, but everything associate with the command on the line.  When you look at the Console output, you see that lines **5** and **6** were both executed -- but line 5 was just a comment line so it does not do anything.
+Actually, clicking ***Run*** does not just execute the line, but everything associate with the command on the line.  When you look at the ***Console*** output, you see that lines **3** and **4** were both executed -- but line 3 was just a comment line so it does not do anything.
 
 ::: {#fig-commandLines}
 ``` {.r tab="Console"}
@@ -107,8 +107,8 @@ a=3; b=7; cat("a+b=", a+b);
 Clicking ***Run*** on the line will add ***a*** and ***b*** to the ***Environment***:
 
 ``` {.r tab="Environment"}
-a   3
-b   7
+a:   3
+b:   7
 ```
 
 And the addition of ***a*** and ***b*** is displayed in the ***Console***:
@@ -121,7 +121,7 @@ a+b= 10
 
 If you remove the semicolons then you will get the error: [unexpected symbol in "  a=3 b"]{.hl}
 
-Basically, R is saying the it does not understand what the symbol ***b*** means because R thinks that ***b*** is still part of the ***a=3*** command.
+Basically, R is saying the it does not understand what the symbol ***b*** means because R thinks that ***b*** is a continuation of the ***a=3*** command.
 
 ### Executing highlighted script
 
@@ -129,7 +129,7 @@ You can also highlight parts of your script and ***Run*** will executed exactly 
 
  
 
-If you highlight lines 12, 13, and 14:
+If you completely highlight lines 10, 11, and 12:
 
 ``` r
   cat("Hello, World.\n");
@@ -152,7 +152,7 @@ I am fine?
 Three commands sent to Console by clicking Run
 :::
 
-Remember, when you highlight code,[**Run** will execute exactly what you highlight]{.hl}.  In other words, R executes verbatim what you highlight.  So, if you accidentally highlight a bit of line 11 along with lines 12-13:
+When you highlight code and click ***Run***, [**Run** will execute exactly what you highlight]{.hl}.  So, if you accidentally highlight a bit of line 9 along with lines 10-12:
 
 ``` r
   ### Outputting multiple text messages «(\n means go to next line)»
@@ -168,39 +168,45 @@ Then in the ***Console*** you will get the error:
 Error: unexpected symbol in "(\n"
 ```
 
-R is trying to execute the last part of line 11 and it does not know it is part of a comment because you did not highlight the **\###** part of the line, which would have told R that this line is a comment.
+R is trying to execute the last part of line 9 and R does not know that this is supposed to be part of a comment because you did not highlight the **\###** part of the line.
+
+ 
+
+To recap, when you click ***Run*** and...:
+
+-   ...the cursor is in a line: R will execute all commands on that line.
+
+-   ...part of your code is highlighted: R will execute exactly what is highlighted
 
 ### Executing one command on multiple lines
 
-Lines 17-20 contain the command to open the ***twoWeekWeatherData.csv*** file and save the data to a data frame named ***weatherData***.
+Lines 15-17 contain the command to open the ***twoWeekWeatherData.csv*** file and save the data to a data frame named ***weatherData***.
 
 ``` r
   ### read in data from  twoWeekWeatherData.csv
   weatherData = read.csv(file="data/twoWeekWeatherData.csv", 
                          sep=",",
-                         header=TRUE, 
-                         stringsAsFactors = FALSE);
+                         header=TRUE);
 ```
 
-If we put the cursor on any line from 17 to 20 and click ***Run***, [R will execute all 4 lines]{.hl}.  When you click ***Run***, R will execute whatever command the cursor is in the middle of.  In this case, the command starts on line 17 and ends on line 20.
+If we put the cursor on any line from 15-17 and click ***Run***, [R will execute all 3 lines]{.hl}.  When you click ***Run***, R will execute whatever command the cursor is in the middle of.  In this case, the command starts on line 15 with ***weatherData =*** and ends on line 17 with ***header=TRUE);***.
 
  
 
-When we ***Run*** line **17**, the ***Console*** output shows lines 16-20 (16 is a comment) were executed -- the ( **+** ) at the beginning of the lines in the ***Console*** says that this line is a continuation of the command from the previous line.
+When we ***Run*** line **15**, the ***Console*** output shows lines 14-17 (14 is a comment) were executed -- the ( **+** ) at the beginning of the lines in the ***Console*** says that this line is a continuation of the command from the previous line.
 
 ::: {#fig-multiline}
 ``` {.r tab="Console"}
 >   ### read in data from  twoWeekWeatherData.csv
 >   weatherData = read.csv(file="data/twoWeekWeatherData.csv", 
 «+»                         sep=",",
-«+»                          header=TRUE, 
-«+»                          stringsAsFactors = FALSE);  
+«+»                          header=TRUE);
 ```
 
 Console output when executing the multi-line command to open the csv file
 :::
 
-Executing lines 16-20 means that you have a new variable named ***weatherData*** and this variable is put in the ***Environment*** tab:
+Executing lines 14-17 means that you have a new variable named ***weatherData*** and this variable is put in the ***Environment*** tab:
 
 ::: {#fig-readcsv}
 ``` {.r tab="Environment"}
@@ -212,7 +218,7 @@ The Environment tab after the read.csv() command was executed
 
 ## Entering commands directly into Console
 
-When you click ***Run*** you are sending commands to the ***Console***, but you can type commands in the ***Console*** -- and it will produce the same results.
+When you click ***Run*** you are sending commands to the ***Console***, but you can directly type commands in the ***Console*** -- and it will produce the same results.
 
  
 
@@ -230,7 +236,7 @@ A common issue for people using the ***Console*** is that they will not complete
 +
 ```
 
-A ( **+** ) appears on the next line.  The ( **+** ) means that the ***Console*** sees unfinished command and is waiting for you to finish it. [This can also happen if you highlight only a partial command in the script and press **Run**]{.hl}.  You can finish it by typing ***llo")*** in the ***Console*** but the results will still be a bit off:
+A ( **+** ) appears on the next line.  The ( **+** ) means that R sees the beginning of an unfinished command and is waiting for you to finish it. [This will also happen if you highlight only part of a command in the script and press **Run**]{.hl}.  You can finish it by typing ***llo")*** in the ***Console*** but the results will still be a bit off:
 
 ``` {.r tab="Console"}
 > cat("He
@@ -239,7 +245,7 @@ He
 llo
 ```
 
-If you see a ( ***+*** ) in the ***Console*** and have no idea what to do, [you can press the **esc** key and get out of it.]{.hl}
+If you see a ( ***+*** ) in the ***Console*** and have no idea what to do, [you can press the **esc** key to get out of it.]{.hl}
 
 ### Quick view of variables
 
@@ -250,15 +256,15 @@ Another use for the ***Console*** is to quickly view some value.  If you want t
  [1] 57 50 54 40 39 58 60 53 55 44 39 54 61 75
 ```
 
-Note: after you type **\$** in **weatherData\$**, RStudio will start offering you suggestions for which column you want. 
+[Note: after you type **\$** in **weatherData\$**, RStudio will start offering you column suggestions – a very conveinent feature when you have large dataframes.]{.note}
 
 ## Duplicating lines of code
 
-Quite often in programming, you are producing multiple lines that are very similar.  For instance, you might have multiple lines that start with a ***cat()*** command.  In RStudio you can duplicate a line by putting your cursor on the line and clicking ***Control-Shift-D*** on Windows and ***Command-Shift-D*** on a Mac.
+Quite often in programming, you are producing multiple lines that are very similar.  For instance, you might have multiple lines that start with a ***cat()*** command.  In RStudio you can duplicate a line by putting your cursor on the line and clicking ***Control-Shift-D*** (Windows) or ***Command-Shift-D*** (Mac).
 
  
 
-So, if you click ***Control/Command-Shift-D*** on line ***14***, you will get:
+If you click ***Control/Command-Shift-D*** on line ***12***, you will get:
 
 ::: {#fig-duplication}
 ``` r
@@ -308,7 +314,7 @@ Commenting multiple line by using Control/Command-Shift-C
 
 ### Uncommenting a block
 
-If all the lines highlighted already have a ( \# ) then pressing ***Control/Command-Shift-C*** will uncomment all the lines (i.e., remove a #).  Uncommenting only removed the first \# -- so if you uncomment the lines from *fig \##* then the lines will revert back to:
+If all the lines highlighted already have a ( **\#** ) then pressing ***Control/Command-Shift-C*** will uncomment all the lines (i.e., remove a #).  Uncommenting only removed the first **\#** -- so if you uncomment the lines from @fig-commentLines, then the lines will revert back to:
 
 ::: {#fig-uncommentLines}
 ``` r
@@ -323,13 +329,13 @@ Uncommenting lines -- only 1 \# is removed so the first line is still commented
 
 ## Keyboard shortcuts in RStudio
 
-You can view all the keyboard shortcuts in RStudio by clicking ***Tools -\> Keyboard Shortcuts Help***.
+***Control/Command-Shift-C*** and ***Control/Command-Shift-D*** are the RStudio shortcuts I find the most useful. You can view all the keyboard shortcuts (and there are a lot) in RStudio by clicking ***Tools -\> Keyboard Shortcuts Help***.
 
 ## Breaking up long lines of code
 
-Line 17-20 is one command stretched over multiple lines:
+Line 15-17 is one command stretched over multiple lines:
 
-Just like a period ends a sentence,[a semicolon designates the end of a statement]{.hl}.  In this case, the ***read.csv()*** statement is four lines long so the semicolon goes at the end of the forth line.  Again, [R does not enforce semicolon usage]{.note}, but it is a good idea to put them in.
+Just like a period ends a sentence,[a semicolon designates the end of a statement]{.hl}.  In this case, the ***read.csv()*** statement is three lines long so the semicolon goes at the end of the third line.  As a reminder, [R does not enforce semicolon usage]{.note}, but it is a good idea to put them in.
 
  
 
@@ -347,33 +353,31 @@ weatherData     14 obs. of 5 variables
 weatherData2    14 obs. of 5 variables
 ```
 
-But, it is much easier to read the multiple-line code.  As a general rule,[you should try to avoid horizontal scrolling of your script]{.hl}-- this makes it much harder to read.
+But, it is easier to read the multiple-line code.  As a general rule,[you should try to avoid horizontal scrolling of your script]{.hl} (anything beyond 85 characters) as this makes the script much harder to read.
 
  
 
-In R, you can break most lines of code into multiple lines with a few exceptions (one being long file-paths). You just need to be judicious about how you break up the line -- the best places to break up a line of code are after a comma or where a space occurs.
+In R, you can break most lines of code into multiple lines with a few exceptions (one exception being long file-paths). You just need to be judicious about how you break up the line -- the best places to break up a line of code are after a comma or where a space occurs.
 
 ## Putting margin lines in your script
 
 The generally accepted standard in R for the maximum number of characters in a line of code is 80.  This is not a hard-and-fast rule, but keeping your lines 85 characters or less makes it a lot easier to read your code especially on smaller monitors (e.g., laptops).  You can put a margin line at 85 characters in RStudio by clicking ***Tools -\> Global Options -\> Code.*** On the ***Display*** tab check ***Show margin*** and set ***Margin column*** to **85.** [One of the requirements of this class is that, when possible, you keep your script lines to 85 characters or less.]{.hl}
 
-![Setting the line margin in RStudio.](images/R-01-06%20Line%20Margin.PNG){#fig-lineMargin .fs}
+![setting a reminder line margin in RStudio](images/R-1-06-MarginColumn.png){#fig-line-margin .fs}
 
 Now you will see a grey vertical line at 85 characters (@fig-lineMargin) . The line is there as a guide -- you can still type beyond this line. There are times when it is not possible to keep a line to 85 characters -- the most common reason is a long file-path name because file-path names cannot be broken up.
 
-![The grey line acts as a margin guide. ](images/R-01-06%20Column%20line.PNG){#fig-greyLine .fs}
+![The grey line acts as a margin guide.](images/R-1-06-LineMargin.png){#fig-lineMargin .fs}
 
- 
-
-[Note: You can also see the cursor's character position is on in the lower-left corner (@fig-greyLine) -- in this case, character 98.]{.note}
+[Note: You can also see the cursor's character position is on in the lower-left corner of @fig-lineMargin -- in this case, line 9, character 85.]{.note}
 
 ## Application
 
-1.  Highlight lines 18 and 19 in the lesson script and click ***Run***.  In comments explain what happens and why.
+1.  Highlight lines 15 and 16 in the lesson script and click ***Run***.  In comments explain what happens and why.
 
-2.  Highlight lines 17, 18 and 19 in the lesson script and click ***Run***.  In comments explain what happens and why.
+2.  Highlight lines 16 and 17 in the lesson script and click ***Run***.  In comments explain what happens and why.
 
-3.  Combine the lines 12, 13, and 14 into one line -- don't change the ***cat()*** commands.
+3.  Combine the lines 10, 11, and 12 into one line -- don't change the ***cat()*** commands.
 
 4.  In comments answer the following questions:
 
