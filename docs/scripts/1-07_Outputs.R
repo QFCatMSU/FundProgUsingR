@@ -27,8 +27,7 @@ cat("Some Unicode characters: \u00C5 \u0A94 \u0115\n\n");
 ### read in data from  twoWeekWeatherData.csv
 weatherData = read.csv(file="data/twoWeekWeatherData.csv", 
                        sep=",",
-                       header=TRUE, 
-                       stringsAsFactors = FALSE);  
+                       header=TRUE);  
 
 ### Extract the highTemps column from the data frame -- save it to a variable
 highTemps = weatherData$highTemp;

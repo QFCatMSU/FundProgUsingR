@@ -149,6 +149,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../lessons/00-IntroductionAndSyllabus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">00: Introduction and Syllabus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../lessons/1-02-Variables.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">1-02: Variables</span></a>
   </div>
@@ -268,7 +274,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#extension-cat-vs-print" id="toc-extension-cat-vs-print" class="nav-link" data-scroll-target="#extension-cat-vs-print"><span class="header-section-number">9</span> Extension: cat() vs print()</a></li>
   <li><a href="#trap-misplacing-or-forgetting-quotes" id="toc-trap-misplacing-or-forgetting-quotes" class="nav-link" data-scroll-target="#trap-misplacing-or-forgetting-quotes"><span class="header-section-number">10</span> Trap: Misplacing (or forgetting) quotes</a></li>
-  <li><a href="#extension-print-sink" id="toc-extension-print-sink" class="nav-link" data-scroll-target="#extension-print-sink"><span class="header-section-number">11</span> Extension: print() sink()</a></li>
+  <li><a href="#extension-sending-console-info-directly-to-file" id="toc-extension-sending-console-info-directly-to-file" class="nav-link" data-scroll-target="#extension-sending-console-info-directly-to-file"><span class="header-section-number">11</span> Extension: Sending Console info directly to file</a></li>
   </ul>
 </nav>
 </nav>
@@ -300,10 +306,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="changes" class="level3" data-number="0.1">
 <h3 data-number="0.1" class="anchored" data-anchor-id="changes"><span class="header-section-number">0.1</span> Changes…</h3>
-<ul>
-<li>give an example of an index vector with manual values (lesson 1-4 section 7)</li>
-<li>print()/sink() extension</li>
-</ul>
 </section>
 <section id="purpose" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="purpose"><span class="header-section-number">1</span> Purpose</h2>
@@ -396,7 +398,7 @@ Figure&nbsp;4: Message with line feeds
 </figcaption>
 </figure>
 </div>
-<p>In <a href="#fig-lineFeed" class="quarto-xref">Figure&nbsp;4</a> we have our text on multiple lines.&nbsp; Notice that the <strong><em>\n</em></strong> does not get printed to the screen.&nbsp; <span class="hl"><strong>\n</strong> is an instruction to R to add a line feed, sometimes called a <strong>n</strong>ewline character</span><em>,</em> and \n needs to be put inside the quotes.</p>
+<p>In <a href="#fig-lineFeed" class="quarto-xref">Figure&nbsp;4</a> we have our text on multiple lines.&nbsp; Notice that the <strong><em>\n</em></strong> does not get printed to the screen.&nbsp; <span class="hl"><strong>\n</strong> is an instruction to R to add a line feed, sometimes called a <strong>n</strong>ewline character</span><em>,</em> and <strong>\n</strong> needs to be put inside the quotes.</p>
 <p>&nbsp;</p>
 <p><strong><em>\n</em></strong> can be put anywhere in a quote.&nbsp; In the above code there is a <strong><em>\n</em></strong> put in between “am” and “fine”, hence the line feed between the two words.&nbsp; The exact same message as <a href="#fig-lineFeed" class="quarto-xref">Figure&nbsp;4</a> can be output to the <strong><em>Console</em></strong> tab using only one <strong><em>cat()</em></strong> statement with multiple <strong><em>\n</em></strong>:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Hello, World.</span><span class="sc">\n</span><span class="st">How are you?</span><span class="sc">\n</span><span class="st">I am</span><span class="sc">\n</span><span class="st"> fine?</span><span class="sc">\n</span><span class="st">"</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -417,13 +419,13 @@ Figure&nbsp;5: Using one <strong>cat()</strong> statement with multiple <strong>
 </section>
 <section id="escape-character-backslash" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="escape-character-backslash"><span class="header-section-number">3</span> Escape character: backslash ( \ )</h2>
-<p>The backslash in programming is used in a string as an <span class="hl">escape character</span><em>.</em> This means that the character after the backslash is treated in some special manner – similar to the way the <strong>Shift</strong>, <strong>Control,</strong> or <strong>Alt</strong> keys on your keyboard change the meaning of the character that is pressed with them.</p>
+<p>The backslash in programming is used in a string as an <span class="hl">escape character</span><em>.</em> An escape character tells R that the next character is to be treated as a command rather than the character. This is similar to the way the <strong>Shift</strong>, <strong>Control,</strong> or <strong>Alt</strong> keys on your keyboard change the meaning of the character that is pressed with them (e.g, <strong><em>control-C</em></strong> is a command to copy).</p>
 <p>&nbsp;</p>
 <p>Backslash can be used to</p>
 <ul>
 <li><p>put in a control like a line feed ( <strong><em>\n</em></strong> ) or a tab ( <strong><em>\t</em></strong> )</p></li>
-<li><p>print a character that has a functional meaning like a double quote ( <strong><em>\“</em></strong> ) or a backslash ( <strong><em>\\</em></strong> )– in other words, treat the double quote as a character for output, not as the start or end of a string</p></li>
-<li><p>use Unicode to print our characters not on the keyboard using Unicode.&nbsp; Here is a <a href="https://www.rapidtables.com/code/text/unicode-characters.html">link to a partial list of Unicode characters</a>.&nbsp; Use the Escape sequence given on the page.&nbsp; <span class="note">Note: <a href="https://en.wikipedia.org/wiki/List_of_Unicode_characters">according to Wikipedia</a>, there are around 150,000 Unicode characters – and just recently Unicode has added lots of emojis.</span></p></li>
+<li><p>print a character that has a functional meaning like a double quote ( <strong><em>\“</em></strong> ). In other words, treat the double quote as a character for output, not as the start or end of a string. This also works if you want to output a backslash ( <strong>\\</strong> )</p></li>
+<li><p>use Unicode to print our characters not on the keyboard using Unicode.&nbsp; Here is a <a href="https://www.rapidtables.com/code/text/unicode-characters.html">link to a partial list of Unicode characters</a>.&nbsp; Use the <strong>Escape sequence</strong> given on the page.&nbsp; <span class="note">Note: <a href="https://en.wikipedia.org/wiki/List_of_Unicode_characters">according to Wikipedia</a>, there are around 150,000 Unicode characters – and just recently Unicode has added lots of emojis.</span></p></li>
 </ul>
 <p>&nbsp;</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\t</span><span class="st">And the boy said, </span><span class="sc">\"</span><span class="st">Hello</span><span class="sc">\"</span><span class="st"> </span><span class="sc">\n</span><span class="st">"</span>);</span>
@@ -447,9 +449,9 @@ Figure&nbsp;6: Using backslash ( <strong>\</strong> ) to output special characte
 <p>Let’s output data from the <strong><em>twoWeekWeatherData.csv</em></strong> file to the <strong><em>Console</em></strong> tab.</p>
 <p>&nbsp;</p>
 <p>First we will read in the file, like we did last lesson:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>  weatherData <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="at">file=</span><span class="st">"data/twoWeekWeatherData.csv"</span>, <span class="co"># path to file</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">sep=</span><span class="st">","</span>,                   <span class="co"># values are separated by commas</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">header=</span><span class="cn">TRUE</span>);              <span class="co"># there is a header row</span></span>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>  weatherData <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="at">file=</span><span class="st">"data/twoWeekWeatherData.csv"</span>, </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">sep=</span><span class="st">","</span>,                   </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">header=</span><span class="cn">TRUE</span>);</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                        </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>And then save the <strong><em>highTemp</em></strong> and <strong><em>lowTemp</em></strong> columns to their own variable:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>highTemps <span class="ot">=</span> weatherData<span class="sc">$</span>highTemp;</span>
@@ -538,7 +540,7 @@ Figure&nbsp;11: Outputting contiguous values in lowTemps using the sequencing op
 </figcaption>
 </figure>
 </div>
-<p><strong><em>cat()</em></strong> commands can go across multiple lines – this one <strong><em>cat()</em></strong> is functionally the same as the above <strong><em>cat()</em></strong>:</p>
+<p><strong><em>cat()</em></strong> commands can go across multiple lines – this one <strong><em>cat()</em></strong> is functionally the same as the above two <strong><em>cat()</em></strong>:</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Day 5-9 temperature:"</span>, lowTemps[<span class="dv">5</span><span class="sc">:</span><span class="dv">9</span>], <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>, </span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Temp on odd days:"</span>, lowTemps[<span class="fu">seq</span>(<span class="at">from=</span><span class="dv">1</span>, <span class="at">by=</span><span class="dv">2</span>, <span class="at">to=</span><span class="dv">10</span>)], <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="fig-seq" class="quarto-float quarto-figure quarto-figure-left anchored">
@@ -557,7 +559,7 @@ Figure&nbsp;12: Outputting the values of lowTemps using seq()
 <h2 data-number="7" class="anchored" data-anchor-id="the-concatenate-cat-function"><span class="header-section-number">7</span> The concatenate, cat(), function</h2>
 <p>We have used <strong><em>cat()</em></strong> many times in this script to output variable and text to the <strong><em>Console</em></strong> but we really have not talked about <strong><em>cat()</em></strong> itself.</p>
 <p>&nbsp;</p>
-<p>Let’s search for cat in the search bar of the Help tab:</p>
+<p>Let’s search for <strong>cat</strong> in the search bar of the <strong><em>Help</em></strong> tab:</p>
 <div id="fig-catHelp" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-catHelp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -568,9 +570,9 @@ Figure&nbsp;13: Information about the cat() function in the Help tab.
 </figcaption>
 </figure>
 </div>
-<p>The first part of <strong><em>cat()</em></strong> is the three dots “<strong>…</strong>”.&nbsp; When the 3 dots are at the beginning of a function, the three dots say that <span class="hl"><strong>cat()</strong> will accept any number of objects</span>as inputs.&nbsp; The objects can be text in quotes, string variables, numeric variables, or other objects we have not discussed yet like Dates.</p>
+<p>The first part of <strong><em>cat()</em></strong> is the three dots “<strong>…</strong>”.&nbsp; When the 3 dots are at the beginning of a function, the three dots say that <span class="hl"><strong>cat()</strong> will accept any number of objects</span>as inputs.&nbsp; The objects can be text in quotes, string variables, numeric variables, or other objects we have not discussed yet like <strong><em>Dates</em></strong>.</p>
 <p>&nbsp;</p>
-<p><span class="note">Note: the three dots in <strong><em>cat()</em></strong> has a different meaning from the three dots in <strong><em>read.csv()</em></strong>.</span>&nbsp; When three dots are at the first argument of a function (e.g., <strong><em>cat()</em></strong>) it means that any number of inputs are accepted.&nbsp; When the three dots are elsewhere (e.g., <strong><em>read.csv()</em></strong>) it means the function can be extended.</p>
+<p><span class="note">Note: the three dots in <strong><em>cat()</em></strong> has a different meaning from the three dots in <strong><em>read.csv()</em></strong>.</span>&nbsp; When three dots are at the first argument of a function (e.g., <strong><em>cat()</em></strong>) it means that any number of inputs are accepted.&nbsp; When the three dots are elsewhere (e.g., <strong><em>read.csv()</em></strong>) it means the function can be extended with arguments that are not on the list.</p>
 <p>&nbsp;</p>
 <p>After the three dots, <strong><em>cat()</em></strong> has <strong>5</strong> arguments: <strong><em>file</em></strong>, <strong><em>sep</em></strong>, <strong><em>fill</em></strong>, <strong><em>labels</em></strong>, and <strong><em>append.</em></strong> These all have default values (e.g., file=““, sep=” “)</p>
 <section id="the-sep-argument" class="level3" data-number="7.1">
@@ -604,28 +606,32 @@ Figure&nbsp;14: Using the <strong>sep</strong> argument in <strong>cat()</strong
 <p>So, this line:</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Hi"</span>, <span class="at">file=</span><span class="st">"hello.txt"</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>creates a file called <strong><em>hello.txt</em></strong> in your Project Folder and add the text <strong><em>hi</em></strong> to the file.</p>
+<p>&nbsp;</p>
+<p><a href="#extension-sending-console-info-directly-to-file">Extension: Sending Console info directly to file</a></p>
 </section>
 </section>
 <section id="application" class="level2" data-number="8">
 <h2 data-number="8" class="anchored" data-anchor-id="application"><span class="header-section-number">8</span> Application</h2>
-<p>A. Line 50 in the script&nbsp;<a href="../scripts/1-07_Outputs.R" title="script from this lesson">script downloaded for this lesson</a> is beyond 85 characters, break the line up so that it functions the same but does not go over 85 characters.</p>
+<p>A. Line 47 in the script&nbsp;<a href="../scripts/1-07_Outputs.R" title="script from this lesson">script downloaded for this lesson</a> is beyond 85 characters, break the line up so that it functions the same but does not go over 85 characters.</p>
 <p>&nbsp;</p>
-<p>B.&nbsp; Using <strong><em>cat()</em></strong>, output to the <strong><em>Console</em></strong>:</p>
+<p>B. In the Help for the function <strong><em>c()</em></strong>, the S3 method has 3 dots as the first argument. In comments answer: What does the three dots tell you about the <strong><em>c()</em></strong> function?</p>
+<p>&nbsp;</p>
+<p>C.&nbsp; Using one <strong><em>cat()</em></strong>, output to the <strong><em>Console</em></strong>:</p>
 <ul>
-<li><p>the date of the 11th day and the amount of precipitation on that day</p></li>
-<li><p>the difference in precipitation between the 3rd and 4th day</p></li>
+<li><p>the date of the 11th day and the amount of <strong><em>precipitation</em></strong> on that day</p></li>
+<li><p>the difference in <strong><em>precipitation</em></strong> between the 3rd and 4th day</p></li>
 <li><p>every 3rd days precipitation</p></li>
 <li><p>the precipitation for days 12, 9, 4 – using a index vector created with <strong><em>c()</em></strong></p></li>
-<li><p>Challenge: output the total precipitation for the first 10 days</p></li>
+<li><p>Challenge: output the total precipitation for the first 10 days (without using <strong><em>sum()</em></strong>, which is not something you have learned yet!)</p></li>
 </ul>
 <p>Make sure you use newlines (<strong><em>\n</em></strong>) to make the output readable.</p>
 <p>&nbsp;</p>
-<p>C. Using <strong><em>cat()</em></strong>, output the data from part B to a file named <strong><em>output.txt</em></strong> in your <strong><em>data</em></strong> folder (instead of the <strong><em>Console</em></strong>)</p>
+<p>D. Using <strong><em>cat()</em></strong>, output the data from part B to a file named <strong><em>output.txt</em></strong> in your <strong><em>data</em></strong> folder (instead of the <strong><em>Console</em></strong>)</p>
 <ul>
 <li>Use the <strong><em>file</em></strong> argument in <strong><em>cat()</em></strong>– the <strong><em>file</em></strong> format is the same as the <strong><em>file</em></strong> format in <strong><em>read.csv()</em></strong></li>
 </ul>
 <p>&nbsp;</p>
-<p>D. Challenge: Using <strong><em>cat()</em></strong>, append your name and three different Unicode characters to the text in the <strong><em>output.txt</em></strong> file created in part C.&nbsp; Hint: look at the arguments in <strong><em>cat()</em></strong> – you need to change one of them.<br>
+<p>E. Challenge: Using <strong><em>cat()</em></strong>, append your name and three different Unicode characters to the text in the <strong><em>output.txt</em></strong> file created in part C.&nbsp; Hint: look at the arguments in <strong><em>cat()</em></strong> – you need to change one of them.<br>
 &nbsp;</p>
 <p>Save the script as&nbsp;<strong><em>app</em></strong>1-07<strong><em>.r</em></strong> in your&nbsp;<strong><em>scripts</em></strong> folder and&nbsp; email your Project Folder to Charlie Belinsky at belinsky@msu.edu.</p>
 <p>&nbsp;</p>
@@ -644,7 +650,7 @@ Figure&nbsp;14: Using the <strong>sep</strong> argument in <strong>cat()</strong
 </section>
 <section id="extension-cat-vs-print" class="level2" data-number="9">
 <h2 data-number="9" class="anchored" data-anchor-id="extension-cat-vs-print"><span class="header-section-number">9</span> Extension: cat() vs print()</h2>
-<p>The two main functions used to output to the <strong><em>Console</em></strong> are <strong><em>cat()</em></strong> and <strong><em>print()</em></strong>.&nbsp;&nbsp; <strong><em>print()</em></strong> does a lot more formatting of the output.&nbsp; You would use <strong><em>print()</em></strong> when you want to display the results of a statistical test, which often has a complicated format.&nbsp; <strong><em>cat()</em></strong> does very little formatting on its own – <strong><em>cat()</em></strong> lets the programmer control the output.&nbsp; You would use this when you want to output text and some simple data – or, where you really want control of the output format.</p>
+<p>The two main functions used to output to the <strong><em>Console</em></strong> are <strong><em>cat()</em></strong> and <strong><em>print()</em></strong>.&nbsp;<span class="hl">The big difference is that <strong><em>print()</em></strong> does a lot more formatting of the output than <strong><em>cat()</em></strong>.</span>&nbsp; You would likely use <strong><em>print()</em></strong> when you want to display the results of a statistical test, which often has a complicated format.&nbsp; <strong><em>cat()</em></strong> does very little formatting on its own – <strong><em>cat()</em></strong> lets the programmer control the output.&nbsp; You would use this when you want to output text and some simple data – or, where you really want control of the output format.</p>
 </section>
 <section id="trap-misplacing-or-forgetting-quotes" class="level2" data-number="10">
 <h2 data-number="10" class="anchored" data-anchor-id="trap-misplacing-or-forgetting-quotes"><span class="header-section-number">10</span> Trap: Misplacing (or forgetting) quotes</h2>
@@ -657,27 +663,45 @@ Figure&nbsp;14: Using the <strong>sep</strong> argument in <strong>cat()</strong
 <span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"The values are..., "</span>\nDistance<span class="sc">:</span> <span class="st">", distance, "</span>\ntime<span class="sc">:</span> <span class="st">",</span></span>
 <span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="st">    time, "</span>\nvelocity<span class="sc">:</span> <span class="st">", velocity);</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The execution of the code causes an <span class="hl">Unexpected Symbol</span> error that is not too helpful; however, RStudio has a built-in feature to help you find misplaced quotes – the color scheme.&nbsp; The quoted text is in a different color than other parts of the code.&nbsp; For example, in the XCode color scheme – text in quotes is colored red.</p>
+<p>If you execute the script above, you will get the following message in the <strong><em>Console</em></strong>:</p>
+<div class="sourceCode" id="cb23" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">source</span>(<span class="st">"~/.active-rstudio-document"</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> <span class="fu">source</span>(<span class="st">"~/.active-rstudio-document"</span>) <span class="sc">:</span> </span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="er">~/</span>.active<span class="sc">-</span>rstudio<span class="sc">-</span>document<span class="sc">:</span>«<span class="dv">7</span><span class="sc">:</span><span class="dv">26</span><span class="sc">:</span> unexpected <span class="st">'</span><span class="sc">\\</span><span class="st">'</span>»</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span><span class="sc">:</span> </span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="dv">7</span><span class="sc">:</span> <span class="fu">cat</span>(<span class="st">"The values are..., "</span><span class="sc">\</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>                            <span class="sc">^</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The error is <span class="hl">unexpected ‘\\’</span> on line <strong>7</strong>, character <strong>26</strong>. R is telling you that is does not understand why the character on line 7, character 26 is a backslash ( <strong>\</strong> ). This might not be the most helpful message.</p>
 <p>&nbsp;</p>
-<p>&lt;image&gt;</p>
-<p>Missing quote</p>
-<p>(<em>Fig. ##</em>) shows that, right after “The value are… , the variables are all treated as if they are in quotes and the messages are outside the quotes. Since one quote was missing, the error propagated and assumed characters to be variables/numbers and variables/numbers to be characters.</p>
+<p>However, RStudio has a built-in feature to help you find misplaced quotes – the color scheme.&nbsp; The quoted text is in a different color than other parts of the code.&nbsp; For example, in the XCode color scheme – text in quotes is colored red.</p>
+<p>&nbsp;</p>
+<div id="fig-missing-quote" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-missing-quote-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-01-06 Missing Quote.PNG" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-missing-quote-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15: Missing quote in cat()
+</figcaption>
+</figure>
+</div>
+<p><a href="#fig-missing-quote" class="quarto-xref">Figure&nbsp;15</a> shows that, right after “The value are… , the variables are all treated as if they are in quotes and the messages are outside the quotes. Since one quote was missing, the error propagated and assumed characters to be variables/numbers and variables/numbers to be characters.</p>
 <p>&nbsp;</p>
 <p>We will add the missing quote to line 8:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"The values are..."</span>, <span class="st">"</span><span class="sc">\n</span><span class="st">Distance: "</span>, distance, <span class="st">"</span><span class="sc">\n</span><span class="st">time: "</span>,</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    time, <span class="st">"</span><span class="sc">\n</span><span class="st">velocity: "</span>, velocity);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Now the correct components of the output are colored red and the script executes without an error:\</p>
-<p>&lt;image&gt;</p>
-<p>Missing quote added</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"The values are...«"</span>», <span class="st">"</span><span class="sc">\n</span><span class="st">Distance: "</span>, distance, <span class="st">"</span><span class="sc">\n</span><span class="st">time: "</span>,</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    time, <span class="st">"</span><span class="sc">\n</span><span class="st">velocity: "</span>, velocity);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now the correct components of the output are in quotes and the script executes without an error:</p>
+<div class="sourceCode" id="cb25" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">source</span>(<span class="st">"~/.active-rstudio-document"</span>)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>The values are... </span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>Distance<span class="sc">:</span>  <span class="dv">100</span> </span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>time<span class="sc">:</span>  <span class="dv">50</span> </span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>velocity<span class="sc">:</span>  <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="extension-print-sink" class="level2" data-number="11">
-<h2 data-number="11" class="anchored" data-anchor-id="extension-print-sink"><span class="header-section-number">11</span> Extension: print() sink()</h2>
-<p><strong><em><br>
-sink()</em></strong>&nbsp;tells R to send content to a file instead of the Console.&nbsp;&nbsp;</p>
-<p><strong><em>print()</em></strong>&nbsp;is used here because it handles the formatting you want far better than <strong><em>cat()</em></strong></p>
-<p>Using the following&nbsp; lines:</p>
-<pre><code>sink(file="data/output2.txt") # send content to data/output2.txt print(weatherData)            # send weatherData to file sink(file=NULL)               # stop sending content to file (goes back to Console)</code></pre>
-<p>(I think I will add this as an extension to the lesson)</p>
+<section id="extension-sending-console-info-directly-to-file" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="extension-sending-console-info-directly-to-file"><span class="header-section-number">11</span> Extension: Sending Console info directly to file</h2>
+<p><strong><em>sink()</em></strong> is a commonly used command in R that redirects all <strong><em>Console</em></strong> output to a file. The following command will send all future <strong><em>Console</em></strong> output to the file <strong>output2.txt</strong> in the data folder.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sink</span>(<span class="at">file=</span><span class="st">"data/output2.txt"</span>) <span class="co"># send Console content to data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>By “all future output”, RStudio will send the output from all script execution (no matter the script file) to the file until you undo the command like this:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sink</span>(<span class="at">file=</span><span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 </section>
