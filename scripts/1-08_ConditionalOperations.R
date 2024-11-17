@@ -2,10 +2,11 @@ rm(list=ls());        # clear out the Environment
 
 randomTemp = sample(30:80, size=1);  # pick a random number between 30 and 80
 
-if (randomTemp > 50)
+if (randomTemp > 50)   # if randomTemp is greater than 50...
 { 
-  cat("The temperature is", randomTemp);
-  cat("warm enough to go outside\n");
+  # ...execute the commands inside this codeblock
+  cat("\nThe temperature is", randomTemp);
+  cat(" warm enough to go outside\n");
 }
 
 ### read in data from  twoWeekWeatherData.csv
@@ -73,11 +74,11 @@ if(noonCond[2] != "Sunny")   # noonCond[2] is not "Sunny"
 
 cat("\n---------\nChecking same condition but changed 'Cloudy' to 'cloudy':\n");
 
-if(noonCond[2] == "cloudy")   # This will be FALSE because of the lowercase c
+if(noonCond[2] == "cloudy")  # This is FALSE because of the lowercase c
 {
   cat("  Day was cloudy\n");
 }
-if(noonCond[2] != "cloudy")   # This will be TRUE 
+if(noonCond[2] != "cloudy")  # This is TRUE 
 {
   cat("  Day was NOT cloudy\n"); 
 }
@@ -92,7 +93,7 @@ if(noonCond[2] == "Cloudy")   # back to correct spelling of Cloudy
 
 cat("\n---------\nUsing Embedded if() statements:\n");
 
-if(noonCond[2] == "Cloudy")   # checking if they are equal
+if(noonCond[2] == "Cloudy")   # checking if the day was cloudy
 {
   # the following if statement are only checked if conditions are cloudy
   if( highTemps[2] > 60 )

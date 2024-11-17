@@ -2,9 +2,11 @@
 title: "1-08: Conditional Operations"
 short: "1-08"
 # special characters for highlighting code : «»
-filters: 
-  - list-table
 ---
+
+### To-do:
+
+-   figure out how to merge cells in tables
 
 ## Purpose
 
@@ -50,7 +52,7 @@ So far all of our scripts have been linear -- in other words, the execution of t
 
 -   done multiple times (i.e., ***for*** loops -- future lesson)
 
--   dependent on some condition (i.e., ***if-else*** statements -- this and next lesson)
+-   dependent on some condition (i.e., ***if-else*** statements -- this lesson)
 
  
 
@@ -62,7 +64,7 @@ For the next couple of lessons we are just going to focus on ***if-else*** state
 
 ## Questions and Statements
 
-The ***if()*** statement can [almost]{.hl}be thought of as a question with a **yes/no** answer:
+The ***if()*** statement can almost be thought of as a question with a **yes/no** answer:
 
 -   *Is the fish's weight below 100 grams?*  (yes/no)
 
@@ -74,7 +76,7 @@ The ***if()*** statement can [almost]{.hl}be thought of as a question with a **y
 
  
 
-Except, instead of questions with **yes/no** answer,[**if()** contains statements with **TRUE/FALSE** conditions]{.hl}:
+Except, instead of questions with **yes/no** answer, [**if()** contains statements with **TRUE/FALSE** conditions]{.hl}:
 
 -   *The fish's weight is below 100 grams.* (TRUE/FALSE)
 
@@ -90,7 +92,7 @@ The basic structure of an ***if()*** statement is:
 
 ::: {#fig-ifStructure}
 ``` r
-if (some conditional statement goes here)
+if (some conditional statement is TRUE)
 { 
    # Execute the code in this codeblock
    # if the conditional statement is TRUE.
@@ -102,20 +104,19 @@ if (some conditional statement goes here)
 Structure of an if() statement
 :::
 
-Inside the curly brackets ( ***{  }*** ) attached to the ***if()*** is a *codeblock* that gets executed if the statement is **TRUE**.  If the statement is **FALSE**,  the codeblock is ignored.
+Inside the curly brackets ( ***{  }*** ) attached to the ***if()*** is a [codeblock ]{.hl}, or a series of commands, that gets executed if the statement is **TRUE**.  If the statement is **FALSE**, the codeblock is skipped.
 
  
 
 Let's do a simple example where a random number is picked and an ***if()*** statement checks the random number:
 
-randomTemp = sample(30:80, size=1);  \# pick a random number between 30 and 80
-
 ::: {#fig-ifExample}
 ``` r
 randomTemp = sample(30:80, size=1);  # pick a random number between 30 and 80
 
-if (randomTemp > 50)
+if (randomTemp > 50)  # if randomTemp is greater than 50...
 { 
+  # ...execute the commands in this codeblock
   cat("The temperature is", randomTemp);
   cat("warm enough to go outside\n");
 }
@@ -135,7 +136,8 @@ The curly brackets ( **{  }** ) designate the beginning and the end of the code
 
 ::: {#fig-ifAlt}
 ``` r
-if (randomTemp > 50)  { 
+if (randomTemp > 50)  { # if randomTemp is greater than 50...
+  # ...execute the commands in this codeblock
   cat("The temperature is", randomTemp);
   cat("warm enough to go outside\n");
 }
@@ -145,7 +147,7 @@ if (randomTemp > 50)  {
 Alternate structure of an if() statement
 :::
 
-I prefer the first method because it makes it easier to visualize the hierarchy of the codeblocks in your script. [You are required to use one of these two methods in this class.]{.hl}
+I prefer the first method because it makes it easier for me to visualize the hierarchy of the codeblocks and easier to comment. [You are required to use one of these two methods in this class.]{.hl}
 
  
 
@@ -162,9 +164,7 @@ if( location «==» "Silver Lake" )       # is equal to
 if( temperature «<=» 30 )               # is less than or equal to
 ```
 
- 
-
-A[conditional operator]{.hl}does two things:
+A [conditional operator]{.hl} does two things:
 
 1\) It compares the two values on both sides of the operator. 
 
@@ -176,16 +176,33 @@ A[conditional operator]{.hl}does two things:
 
 There are six conditional operators in programming:
 
-| Operator | Meaning | Notes |
-|----|----|----|
-| == | equal to | Easily confused with the assignment operator, **=** |
-| != | not equal to | Reverses the logic of **==** |
-| \>= | greater than or equal to | \>=, \<=, \>, and \< operators are usually used to compare two numeric values. |
-| \<= | less than or equal to |      If used with string values the operators will sort using Unicode value, |
-| \> | greater then (only) |      which is similar to alphabetical relationships. |
-| \< | less than (only) |      More Info: [Extension: Greater than and less than on strings] |
++------------+-------------------------------------------------------+
+| Operator   | Meaning                                               |
++============+=======================================================+
+| ==         | equal to                                              |
+|            |                                                       |
+|            | (easily confused with the assignment operator, **=)** |
++------------+-------------------------------------------------------+
+| !=         | not equal to                                          |
+|            |                                                       |
+|            | (reverses the logic of **==)**                        |
++------------+-------------------------------------------------------+
+| \>=        | greater than or equal to                              |
++------------+-------------------------------------------------------+
+| \<=        | less than or equal to                                 |
++------------+-------------------------------------------------------+
+| \>         | greater then (only)                                   |
++------------+-------------------------------------------------------+
+| \<         | less than (only)                                      |
++------------+-------------------------------------------------------+
 
-Putting the conditional operator in:
+[Note: \>=, \<=, \>, and \< operators are usually used to compare two numeric values. However they can be used to compare string values. ]{.note}
+
+[Extension: Greater than and less than on strings]
+
+### Set up conditional operators
+
+The following ***if*** statements all compare two values using a conditional operator:
 
 ``` r
 if( fishWeight «<» 100 )
@@ -206,7 +223,7 @@ if( temperature «<=» 30)
 }
 ```
 
-[Note: Conditional Operators exclusively compare two values (e.g., **location** == "Silver Lake").]{.note}  In a future lesson, we will learn how to deal with more complex conditions (e.g., how to check if ***location*** is "Silver Lake" or "Round Lake").
+[Note: A single Conditional Operators compares two values (e.g., **location** == "Silver Lake").]{.note}  In a future lesson, we will learn how to deal with more complex conditions (e.g., how to check if ***location*** is "Silver Lake" ***or*** "Round Lake").
 
 ## Using if() statements
 
@@ -214,21 +231,18 @@ To set up the script to use ***if()*** statements we will:
 
 -   read in the data from ***twoWeekWeatherData.csv***
 
--   save the ***highTemp*** and ***noonCondition*** column to a vector
+-   save the ***highTemp*** and ***noonCondition*** columns to vectors
 
 ``` r
-  rm(list=ls());  # cleans out the Environment every time the code is executed
-  options(show.error.locations = TRUE);  # show the line # of errors in the Console
-
-  ### read in data from twoWeekWeatherData.csv
-  weatherData = read.csv(file="data/twoWeekWeatherData.csv", 
-                         sep=",",
-                         header=TRUE, 
-                         stringsAsFactors = FALSE);  
+### read in data from twoWeekWeatherData.csv
+weatherData = read.csv(file="data/twoWeekWeatherData.csv", 
+                       sep=",",
+                       header=TRUE, 
+                       stringsAsFactors = FALSE);  
   
-  ### Extract the highTemps column from the data frame -- save it to a variable
-  highTemps = weatherData$highTemp;
-  noonCond = weatherData$noonCondition;
+### Extract the highTemps column from the data frame -- save it to a variable
+highTemps = weatherData$highTemp;
+noonCond = weatherData$noonCondition;
 ```
 
 Our first example will check three value in ***highTemps*** (3^rd^, 4^th^, and 5^th^) and see which of them are greater than **50**. 
@@ -250,16 +264,18 @@ if(highTemps[5] > 50)
 }
 ```
 
-Only the ***cat()*** in the first codeblock (***highTemps\[3\] \> 50***) was executed because ***highTemps\[3\]*** was the only value greater than **50**. The other two codeblocks were ignored. In a later lesson we will show how to check multiple values at once using ***for()***.
+Only the ***cat()*** in the first codeblock (***highTemps\[3\] \> 50***) was executed because ***highTemps\[3\]*** was the only value greater than **50**. The second and third codeblocks were ignored.
 
 ``` {.r tab="Console"}
 Checking highTemps 3, 4, and 5 to see which are > 50:
   high temp 3 is greater than 50
 ```
 
-[Extension: Removing curly brackets in if() statements](#extension-removing-curly-brackets-in-if-statements)
+[Note: This is an efficient way to check multiple values. The more efficient way is using ***for()***. ]{.note}[Extension: Checking all values in a vector (for loops)](#extension-checking-all-values-in-a-vector-for-loops)
 
-[Extension: Checking all values in a vector (for loops)](#extension-checking-all-values-in-a-vector-for-loops)
+ 
+
+[Extension: Removing curly brackets in if() statements](#extension-removing-curly-brackets-in-if-statements)
 
 ### Using all 6 conditional operators
 
@@ -270,35 +286,35 @@ The above example used ( ***\>*** ) to compare the values in ***highTemps*** to 
 Let's use all six conditional operator to compare ***highTemp\[2\]***, which is **50***,* to the value **50***:*
 
 ``` r
-  cat("\n---------\nChecking high temp 2 using all 6 conditional operators:\n");
+cat("\n---------\nChecking high temp 2 using all 6 conditional operators:\n");
 
-  if(highTemps[2] >= 50)
-  {
-    cat("  high temp is greater than or equal to 50\n")
-  }
-  if(highTemps[2] <= 50)
-  {
-    cat("  high temp is less than or equal to 50\n")
-  }
-  if(highTemps[2] > 50)
-  {
-    cat("  high temp is greater than 50\n")
-  }
-  if(highTemps[2] < 50)
-  {
-    cat("  high temp is less than 50\n")
-  }
-  if(highTemps[2] == 50)
-  {
-    cat("  high temp is equal to 50\n")
-  }
-  if(highTemps[2] != 50)
-  {
-    cat("  high temp is not equal to 50\n")
-  }
+if(highTemps[2] >= 50)
+{
+  cat("  high temp is greater than or equal to 50\n")
+}
+if(highTemps[2] <= 50)
+{
+  cat("  high temp is less than or equal to 50\n")
+}
+if(highTemps[2] > 50)
+{
+  cat("  high temp is greater than 50\n")
+}
+if(highTemps[2] < 50)
+{
+  cat("  high temp is less than 50\n")
+}
+if(highTemps[2] == 50)
+{
+  cat("  high temp is equal to 50\n")
+}
+if(highTemps[2] != 50)
+{
+  cat("  high temp is not equal to 50\n")
+}
 ```
 
-In the ***Console,*** we see that ***highTemps\[2\]*** was **\>=**, **\<=**, and **==** **50**:
+In the ***Console,*** we see that three of the conditional statement passed because ***highTemps\[2\]*** is **\>=**, **\<=**, and **==** **50**:
 
 ``` {.r tab="Console"}
 Checking high temp 2 using all 6 conditional operators:
@@ -309,28 +325,24 @@ Checking high temp 2 using all 6 conditional operators:
 
 ## Conditional Operators with characters/strings
 
-We can use all same six conditional operators to compare characters/strings -- but only ( **==** ) and ( **!=** ) are commonly used.  [Extension: Greater than and less than on strings]
-
- 
-
-We are going to use conditional operators on the values in the ***noonCondition*** vector.  The ***noonCondition*** vector consists of character values, or, as they are more commonly called, [string values]{.hl} (labelled ***chr*** in the ***Environment*** tab).  Since the value is a ***string/chr***, we want to compare it to a value in quotes
+We are going to use conditional operators on the values in the ***noonCondition*** vector.  The ***noonCondition*** vector consists of character values, or, as they are more commonly called, [string values]{.hl} (labelled ***chr*** in the ***Environment*** tab).  Since the value is a ***string/chr***, we need to compare it to a value in quotes
 
  
 
 The following code will check the second value in ***noonCond*** using the *equal* ( ***==*** ) condition and the *not equal to* ( !***=*** ) condition:
 
 ``` r
-  cat("\n---------\nCheck to see the noon condition on the day 2:\n");
+cat("\n---------\nCheck to see the noon condition on the day 2:\n");
 
-  # checking the second noonCond, which is "Cloudy"
-  if(noonCond[2] == "Cloudy")  # noonCond[2] is "Cloudy"
-  {
-    cat("  Day was cloudy\n");
-  }
-  if(noonCond[2] != "Sunny")   # noonCond[2] is not "Sunny"
-  {
-    cat("  Day was not Sunny\n")
-  }
+# checking the second noonCond, which is "Cloudy"
+if(noonCond[2] == "Cloudy")  # noonCond[2] is "Cloudy"
+{
+  cat("  Day was cloudy\n");
+}
+if(noonCond[2] != "Sunny")   # noonCond[2] is not "Sunny"
+{
+  cat("  Day was not Sunny\n")
+}
 ```
 
 In the ***Console,*** we see that ***noonCond\[2\]*** was equal to "Cloudy" and not equal to "Sunny":
@@ -340,6 +352,8 @@ Check to see the noon condition on the day 2:
   Day was Cloudy
   Day was not Sunny
 ```
+
+We can use all same six conditional operators to compare characters/strings -- but only ( **==** ) and ( **!=** ) are commonly used.  [Extension: Greater than and less than on strings]
 
 ### Quotes around numeric and string values
 
@@ -355,13 +369,13 @@ But, when we compare a string/character value within a vector to a string we nee
 if(noonCond[2] == "Cloudy")
 ```
 
-If we do not use quotes then R thinks there is some variable named Cloudy and you will get an [object 'Cloudy' not found]{.hl} error:
+If we do not use quotes then R thinks there is some variable named ***Cloudy*** and you will get an [object 'Cloudy' not found]{.hl} error:
 
 ``` r
 if(noonCond[2] == Cloudy)  # error because there is no variable (Object) named Cloudy
 ```
 
-Remember that, in R, a variable name can only start with a letter, underscore, or a dot.  So, a number is unambiguously not a variable.
+Remember that, in R, a variable name cannot start with a number. This means that a number is unambiguously not a variable.
 
  
 
@@ -371,30 +385,30 @@ However, you can put quotes around a number:
   if(highTemps[2] >= "50")  # this will often give a wrong answer...
 ```
 
-This change the number 50 to the character "5" followed by the character "0".  Coincidentally, the ***if()*** statement above is also TRUE, but for the wrong reason.  [Extension: Numbers as Characters]
+This change the number 50 to the two characters: "5" and "0".  Coincidentally, the ***if()*** statement above is also TRUE, but for the wrong reason.  [Extension: Numbers as Characters]
 
 ### Case counts with strings
 
-When comparing two strings, [any difference between the two strings means they are not equal]{.hl} (so, == would be FALSE and != would be TRUE).  This includes capital and lowercase letters.
+When comparing two strings, [any difference between the two strings means they are not equal]{.hl} (so, **==** is **FALSE** and **!=** is **TRUE**).  This includes capital and lowercase letters.
 
  
 
 ***noonCond\[2\]*** is "Cloudy" but "Cloudy" is not the same as "cloudy":
 
 ``` r
-  cat("\n---------\nChecking same condition but changed 'Cloudy' to 'cloudy':\n");
+cat("\n---------\nChecking same condition but changed 'Cloudy' to 'cloudy':\n");
 
-  if(noonCond[2] == "cloudy")   # This will be FALSE because of the lowercase c
-  {
-    cat("  Day was cloudy\n");
-  }
-  if(noonCond[2] != "cloudy")   # This will be TRUE
-  {
-    cat("  Day was NOT cloudy\n"); 
-  }
+if(noonCond[2] == "cloudy") # This is FALSE because of the lowercase c
+{
+  cat("  Day was cloudy\n");
+}
+if(noonCond[2] != "cloudy") # This is TRUE
+{
+  cat("  Day was NOT cloudy\n"); 
+}
 ```
 
-And in the Console we see that "Cloudy" does not equal "cloudy":
+And in the ***Console*** we see that "Cloudy" does not equal "cloudy":
 
 ``` {.r tab="Console"}
 Checking same condition but changed 'Cloudy' to 'cloudy':
@@ -406,12 +420,12 @@ Checking same condition but changed 'Cloudy' to 'cloudy':
 Many times, when we are checking values within a data frame, we want to know more about other values within that row.  In the case of the ***weatherData*** data frame, these are the weather readings that occurred on the same day:
 
 ``` r
-  cat("\n---------\nOutputting information from another column:\n");
-  if(noonCond[2] == "Cloudy")   # checking if they are equal
-  {
-    cat("  Day was Cloudy");
-    cat(" and the high temperature that day was", highTemps[2], "\n");
-  }
+cat("\n---------\nOutputting information from another column:\n");
+if(noonCond[2] == "Cloudy")   # checking if the day was cloudy
+{
+  cat("  Day was Cloudy");
+  cat(" and the high temperature that day was", highTemps[2], "\n");
+}
 ```
 
 ``` {.r tab="Console"}
@@ -419,18 +433,18 @@ Outputting information from another column:
   Day was Cloudy and the high temperature that day was 50 
 ```
 
-## if() within if()
+## if() within if() {#sec-embedded-if}
 
 We often want to check multiple conditions and one way to do this is to embed an ***if()*** statement within an ***if()*** statement.
 
  
 
-For instance, if the condition is cloudy, we might also want to check the temperature for that day:
+For instance, if the condition is cloudy, we might want to make a second check on the temperature for that day:
 
 ``` r
-if(noonCond[2] == "Cloudy")   # checking if they are equal
+if(noonCond[2] == "Cloudy")   # checking if the day was cloudy
 {
-  # the following if statement are only checked if conditions are cloudy
+  # the following if statements are only checked if conditions are cloudy
   if( highTemps[2] > 60 )
   {
     cat("Still nice enough to go out!");
@@ -442,7 +456,7 @@ if(noonCond[2] == "Cloudy")   # checking if they are equal
 }
 ```
 
-The two inner ***if()*** statements (checking ***highTemps***) are only checked if the outer ***if()*** statement (checking ***noonCond***) is ***TRUE***.
+The two inner ***if()*** statements (checking ***highTemps***) are inside a codeblock that is only checked if the outer ***if()*** statement (checking ***noonCond***) is ***TRUE***.
 
 ## Application
 
@@ -467,7 +481,7 @@ D\) Use ***sample()*** to pick a random weather condition from these four choice
 sample(x=c('a', 'b', 'c'), size=1) # randomly picks a, b, or c
 ```
 
-E\) Using ***if()*** with embedded ***if()*** output a single message to the ***Console*** for each of these four scenarios:
+E\) Using ***if()*** with embedded ***if()*** (@sec-embedded-if) output a single message to the ***Console*** for each of these four scenarios:
 
 1.  random temperature (part C) is **more than or equal to 60** and the weather condition (part D) **is sunny**
 
@@ -489,32 +503,34 @@ The four scenario are mutually exclusive (do not overlap each other) and complet
 
 ## Extension: Curly bracket placement
 
-The curly brackets attached to a ***if()*** statement are used to encapsulate the codeblock and, functionally, all the curly brackets have to do is begin and end the codeblock -- so there are many ways you could place the curly brackets.
+The curly brackets attached to a ***if()*** statement are used to encapsulate the codeblock that gets executed when the conditional statement is TRUE. All the curly brackets have to do is begin and end the codeblock, so there are many ways you could place the curly brackets.
 
  
 
 Here are three bad ways that work:
 
 ``` r
-if (randomTemp > 50) { cat("The temperature is", randomTemp);
-cat("warm enough to go outside\n");  }
+if (randomTemp > 50) «{» cat("The temperature is", randomTemp);
+cat("warm enough to go outside\n");  «}»
 ```
 
 ``` r
 if (randomTemp > 50)
-      { 
+      «{» 
 cat("The temperature is", randomTemp);
 cat("warm enough to go outside\n");
-      }
+      «}»
 ```
 
 ``` r
-if (randomTemp > 50)             {
+if (randomTemp > 50)             «{»
   cat("The temperature is", randomTemp);
-  cat("warm enough to go outside\n");     }
+  cat("warm enough to go outside\n");    
+  
+                     «}»
 ```
 
-The three ***if()*** statement above would all execute correctly because the codeblock is in between the curly brackets.  But, in programming there are standards to how curly brackets get placed.  Here are the two main standards -- and you need to use one of these two in this class:
+The three ***if()*** statement above would all execute correctly because the codeblock is in between the curly brackets.  But, in programming there are standards to how curly brackets get placed.  The two main standards are below, and you need to use one of these two in this class:
 
 ``` r
 # standard 1
@@ -531,11 +547,11 @@ if (randomTemp > 50)  {
 }
 ```
 
-In both these standards, the commands inside the codeblock are also indented -- this is to make it easier the code that is attached to the ***if()*** statement. 
+In both these standards, the commands inside the codeblock are also indented -- this makes it easier to see that the code that is attached to the ***if()*** statement. 
 
 ## Extension: Removing curly brackets in if() statements {#extension-removing-curly-brackets-in-if-statements}
 
-If there is only one command in a codeblock as in the 3 ***if()*** statements below: 
+The three ***if()*** statements below have only one command in the codeblock: 
 
 ``` r
 if(highTemps[3] > 50)
@@ -552,7 +568,7 @@ if(highTemps[5] > 50)
 }
 ```
 
-Then you can take out the curly brackets and the code below will execute exactly the same:
+The curly brackets are not needed when there is only one command in a codeblock. The following code will execute correctly:
 
 ``` r
 if(highTemps[3] > 50)
@@ -563,11 +579,11 @@ if(highTemps[5] > 50)
   cat("  high temp 5 is greater than 50\n");
 ```
 
-But, that is only because[there is only one command]{.hl}attached to each ***if()*** statement.  The curly brackets are needed if there is more than one command:
+But, that is because [there is only one command]{.hl} attached to each ***if()*** statement.  The curly brackets are always needed if there is more than one command. This author would not recommend removing brackets if you are a beginning, it can lead to problems down the road.
 
 ## Extension: Greater than and less than on strings
 
-Greater than and less than conditional operator do work on strings.  If the strings only have letters from the English alphabet, then \> and \< will do an alphabetical comparison between the values.  In this case, \> mean further in the alphabet.  So, "C" \> "B", "D" \> "C"...
+Greater than and less than conditional operator do work on strings.  If the strings only have letters from the English alphabet, then **\>** and **\<** will do an alphabetical comparison between the values.  In this case, \> means "later in the alphabet".  So, "C" \> "B", "D" \> "C"...
 
 ``` {.r tab="Console"}
 > "Frank" > "Charlie"
@@ -618,13 +634,15 @@ This means the mathematical and conditional operators will not work on ***num2**
 Conditional operators on numbers that are really string/characters: num2 = "50"
 :::
 
-Since ***num2*** is "50", the first two seem correct, "50" is greater than 30 and not greater than 70. 
+Since ***num2*** is "50", the first two seem correct, "50" is greater than 30 and not greater than 70.
+
+ 
 
 But adding or taking away "0" does not change the result of the conditional operator so "50" is still greater than 300 and not greater than 7.
 
  
 
-This happens because R does not think of "50" as a number but as two characters, a "5" and a "0".  And since R sees "50" as two character, R will also convert the other number into characters.  So, this is what R is really doing:
+This happens because R does not think of "50" as a number but as two characters, a "5" and a "0".  And since R sees "50" as two character, R is making an alphabetical comparison of the "numbers":
 
 ::: {#fig-CondOp_strings}
 ``` r
@@ -641,7 +659,7 @@ This happens because R does not think of "50" as a number but as two characters,
 Conditional operators on strings that have numbers in them
 :::
 
-R is making an alphabetical comparison or the numbers and alphabetic comparisons go right to left.  R sees "5" as greater than "3" and not greater than "7".  This is the same as saying that R see "Frank" as greater than "Charlie" and not greater than "Harry".
+Alphabetic comparisons start with the leftmost character so "***F***rank" is greater than "***C***harlie" and not greater than "***H***arry". Using this logic, R sees "5" as greater than "3" and not greater than "7".  It does not matter what, or how many, "numbers" come afterwards
 
  
 
@@ -649,7 +667,7 @@ When doing an alphabetical comparison, if the first character is different then 
 
 ## Extension: Checking all values in a vector (for loops) {#extension-checking-all-values-in-a-vector-for-loops}
 
-This is a preview of things to come.  Obviously, it is a pain to code an ***if()*** statement for every value in a vector -- especially if there are hundreds or thousands of values.  For this reason ***if()*** statements are often found embedded within ***for*** loops.  The ***for*** loop's job is to iterate through a set of values with just one line:
+This is a preview of things to come.  It is a pain to code an ***if()*** statement for every value in a vector -- especially if there are hundreds or thousands of values.  For this reason ***if()*** statements are often found embedded within ***for*** loops.  The ***for*** loop's job is to cycle through a set of values with just one command:
 
 ``` r
 # This for loop will execute 14 times with i=1:14
@@ -663,4 +681,16 @@ for(i in 1:14)
 }
 ```
 
-And the ***if()*** statement does the check on all 14 values:
+And the ***if()*** statement does the check on all 14 values, with 9 of the 14 being successful:
+
+``` {.r tab="Console"}
+high temp 1 is greater than 50   
+high temp 3 is greater than 50   
+high temp 6 is greater than 50   
+high temp 7 is greater than 50  
+high temp 8 is greater than 50   
+high temp 9 is greater than 50   
+high temp 12 is greater than 50   
+high temp 13 is greater than 50   
+high temp 14 is greater than 50
+```
