@@ -31,10 +31,11 @@ cat("---------\nChecking highTemps 3, 4, and 5 to see which are > 50:\n");
 if(highTemps[3] > 50)
 {
   cat("  high temp 3 is greater than 50\n");
-} else
+} else # highTemp[3] <= 50
 {
   cat("  high temp 3 is not greater than 50\n");
 }
+
 if(highTemps[4] > 50)
 {
   cat("  high temp 4 is greater than 50\n");
@@ -42,6 +43,7 @@ if(highTemps[4] > 50)
 {
   cat("  high temp 4 is not greater than 50\n");
 }
+
 if(highTemps[5] > 50)
 {
   cat("  high temp 5 is greater than 50\n");
