@@ -6,8 +6,6 @@ short: "1-09"
 
 ### Issues
 
-Change style of if-else statements so that begin and end brackets are not needed
-
 ## Purpose
 
 -   Create condition statements that control flow for either **TRUE** or **FALSE** conditions using an ***if-else*** structure
@@ -30,7 +28,7 @@ If you have any questions about the material in this lesson, feel free to email 
 
 ## Dealing with FALSE conditions
 
-In the last lesson we looked at execution of the ***if()*** statement and how it changes the flow of a script.  if() statements contain a conditional statement inside the parenthesis and an attached codeblock surronded by curly brackets ( ***{ }*** ).  The codeblock is only executed if the conditional statement is ***TRUE***. 
+In the last lesson we looked at execution of the ***if()*** statement and how it changes the flow of a script.  ***if()*** statements contain a conditional statement inside the parenthesis and an attached codeblock surrounded by curly brackets ( ***{ }*** ).  The codeblock is only executed if the conditional statement is ***TRUE***. 
 
 ``` r
 randomNum = sample(1:100, size=1);
@@ -85,7 +83,9 @@ if(randomNum2 > 50) {
 The common way in R to structure an if-else statement
 :::
 
-I find the method in @fig-commonStructure harder to read and more challenging to add comments to than the method @fig-structure. However, for this class, you can use either method when coding if-else structures.
+I find the method in @fig-commonStructure harder to read and more challenging to add comments to than the method in @fig-structure. However, for this class, you can use either method when coding ***if-else*** structures.
+
+ 
 
 [Note: Neither method follows programming standards that you will find in almost every other language.]{.note} This is because of a bug R. More information about this is here: [Extension: Programming standards for if-else statements]
 
@@ -109,14 +109,14 @@ highTemps = weatherData$highTemp;
 noonCond = weatherData$noonCondition;
 ```
 
-This time, the script gives a response for both ***TRUE*** conditions and ***FALSE*** conditions:
+This time, the script executes a codeblock for both ***TRUE*** and ***FALSE*** conditions:
 
 ``` r
 if(highTemps[3] > 50)
 {
-  cat("  high temp 3 is greater than 50\n");
+  cat("  high temp 3 is greater than 50\n");   
 }else  # highTemp[3] <= 50
-{
+{  
   cat("  high temp 3 is not greater than 50\n");
 }
 
@@ -226,7 +226,7 @@ We are limited to two outcomes when using ***if-else*** structures: (a) the ***i
 
  
 
-With an ***if-else-if*** structure you can check as many mutually exclusive situations as you want.  And ***if-else-if*** structures are efficient because they will only execute the code until the first ***if-else-if*** conditions is **TRUE**.
+With an ***if-else-if*** structure you can check as many mutually exclusive situations as you want.  And ***if-else-if*** structures are efficient because they will only execute the code until the first ***if-else-if*** condition is **TRUE**.
 
 ::: {#fig-multConditions}
 ``` r
@@ -252,7 +252,7 @@ Checking day 4 against multiple conditions:
 
 ### The efficiency of if-else-if structures
 
-In @fig-multConditions, if we replaced day 4 with day 2, which was "Cloudy", then only the first condition (***noonCond\[4\] == "Cloudy"***) gets checked.  Because "Cloudy" is **TRUE** there is no need to check "Sunny" and "Rain".  If there are thousands of values to check (e.g., you put the ***if-else*** structure in a ***for*** loop -- next lesson) then a lot of computation time is saved by not checking conditions that cannot be **TRUE**.
+In @fig-multConditions, if we replaced day 4 with day 2, which was "Cloudy", then only the first condition (***noonCond\[4\] == "Cloudy"***) gets checked.  Because "Cloudy" is **TRUE** there is no need to check "Sunny" and "Rain".  If there are thousands of values to check (e.g., you are checking all the values in a large vector -- next lesson) then a lot of computation time is saved by not checking conditions that cannot be **TRUE**.
 
 ## The error or everything else condition
 
@@ -260,7 +260,7 @@ We usually want to execute something for values we have not prepared for.  For 
 
  
 
-The problem with the script above is that it does nothing if the condition for the day is not given anywhere in the ***if-else-if*** structure. In an ***if-else-if*** structure you cannot anticipate every condition that somebody will input into a dataframe -- let alone all of the errant spellings.  Instead, we create what is often referred to as an [error condition]{.hl}*,* meaning we set up a codeblock that gets executed if none of the conditions in the ***if-else-if*** structure are ***TRUE***.  This error codeblock gets attached to the ***else*** statement.
+The problem with the script above is that it does nothing if the condition for the day is not given anywhere in the ***if-else-if*** structure (i.e., all the conditionals are **FALSE**). In an ***if-else-if*** structure you cannot anticipate everything that somebody will input into a dataframe -- let alone all of the errant spellings.  To resolve this, we create what is often referred to as an [error condition]{.hl}*,* meaning we set up a codeblock that gets executed if none of the conditions in the ***if-else-if*** structure are ***TRUE***.  This error codeblock gets attached to the ***else*** statement.
 
 ::: {#fig-errorCondition}
 ``` r
@@ -302,20 +302,16 @@ Another use for ***if-else-if*** structures is to create number ranges.  The fo
   if(highTemps[3] > 70)      # check for anything above 70
   {
     cat("  That is hot for April!"); 
-  }
-  else if(highTemps[3] > 60) # check for temps 61-70
+  }else if(highTemps[3] > 60) # check for temps 61-70
   {
     cat("  That is warm for April!");   
-  }
-  else if(highTemps[3] > 50) # check for temps 51-60
+  }else if(highTemps[3] > 50) # check for temps 51-60
   {
     cat("  That temperature is about right for April!");   
-  }
-  else if(highTemps[3] > 40) # check for temps 41-50
+  }else if(highTemps[3] > 40) # check for temps 41-50
   {
     cat("  That is a little cold for April!");   
-  }
-  else # temperatures 40 and below
+  }else # temperatures 40 and below
   {
     cat("  That is unusually cold for April!");   
   }
@@ -343,11 +339,15 @@ Again, in an ***if-else-if*** structure, only the codeblock attached to the firs
 
 ## Application
 
-A\) If you highlight lines 12-21 of the lesson script and press ***Run***, you get the error [Error: unexpected 'else' in "  else". ]{.hl} In comment explain why you get this error.  The error is similar to what happens in [Curly bracket placement in R and a bug].
+A\) In comments answer: Why can I say that the fourth condition `else if(highTemps[3] > 40)` in @fig-numberRanges checks ***only*** for values between 41 and 50 when the condition is `highTemps[3] > 40` (i.e., 50 is not mentioned)?
 
  
 
-B\) The following line randomly picks a letter from the vector and saves it to ***grade***:
+B\) In comments answer: Why might it be easier to find errors in a dataset using ***if-else-if*** structures vs. just ***if()*** statements?
+
+ 
+
+C\) The following line randomly picks a letter from the vector and saves it to ***grade***:
 
 ``` r
   grade = sample(c("A", "B", "C", "D", "E"), size=1);
@@ -361,7 +361,7 @@ Use the above line 
 
  
 
-C\) The following line creates a random number between **-30** and **120** and saves it to the variable ***temperature***:
+D\) The following line creates a random number between **-30** and **120** and saves it to the variable ***temperature***:
 
 ``` r
   temperature = sample(-30:120, size=1);
@@ -386,17 +386,17 @@ C\) The following line creates a random number between **-30** and **120** and s
 
  
 
-D\) Repeat parts C, D, and E from the application in last lesson (1-08: Conditional Operations) using ***if-else*** statements. [Note: there are a few different ways to do this.]{.note}
+E\) Repeat parts C, D, and E from the application in last lesson ([1-08: Conditional Operations](1-08_Conditional_Operations.html#application){target="_blank"}) using ***if-else*** statements. [Note: there are a few different ways to do this.]{.note}
 
 {{< include ../assets/_AppInstructions.qmd >}}
 
 ## Trap: TRUE and FALSE are keywords, T and F are not
 
-The terms ***TRUE*** and ***FALSE*** are reserved [*keywords*]{.hl}in R -- this means that ***TRUE** and* ***FALSE*** are predefined and cannot be used as variable names in R.
+The terms ***TRUE*** and ***FALSE*** are reserved [keywords]{.hl} in R -- this means that ***TRUE** and* ***FALSE*** are predefined and cannot be used as variable names in R.
 
  
 
-If you try to assign a value to a "variable" named TRUE or FALSE, you will get an "[invalid (do_set) left-hand side to assignment]{.hl}" error (@fig-keyword-error).  This is the same error you get if you try to assign a value to a number (e.g., 10 = "a").
+If you try to assign a value to a "variable" named TRUE or FALSE, you will get an [invalid (do_set) left-hand side to assignment]{.hl} error (@fig-keyword-error).  This is the same error you get if you try to assign a value to a number (e.g., 10 = "a").
 
 ![Assigning a value to a keyword causes an error.](images/R-1-09_keyword_error.png){#fig-keyword-error .fs}
 
@@ -416,9 +416,9 @@ rm(list=ls());
 yourAge = readline("How old are you? ")
 
 if(yourAge < 20)
-{
+«{»
     cat("You have your whole life ahead of you!!");
-}
+«}»
 ```
 
 ``` r
@@ -426,9 +426,9 @@ rm(list=ls());
 
 yourAge = readline("How old are you? ")
 
-if(yourAge < 20){
+if(yourAge < 20)«{»
     cat("You have your whole life ahead of you!!");
-}
+«}»
 ```
 
 ``` r
@@ -436,7 +436,7 @@ rm(list=ls());
 
 yourAge = readline("How old are you? ")
  
-if(yourAge < 20){ cat("You have your whole life ahead of you!!"); }
+if(yourAge < 20)«{» cat("You have your whole life ahead of you!!"); «}»
 ```
 
 ``` r
@@ -445,15 +445,15 @@ rm(list=ls());
 yourAge = readline("How old are you? ")
  
 if(yourAge < 20)
-                                           {
-cat("You have your whole life ahead of you!!");     }                                            
+                                           «{»
+cat("You have your whole life ahead of you!!");     «}»                                            
 ```
 
-All the above code blocks are valid.  R just looks for a start and end bracket and executes everything in between -- it completely ignores the spaces in between.  The decision on where to place the brackets has to do with coding standards and user viewability.  The first two code blocks above are the most commonly accepted standards and your code should use one of these two methods.
+All the above code blocks are valid.  R just looks for a start and end bracket and executes everything in between -- it completely ignores the spaces in between.  The decision on where to place the brackets has to do with coding standards and viewability.  The first two code blocks above are the most commonly accepted standards and your code should use one of these two methods.
 
 ## Extension: Skipping brackets in if-else structures
 
-You will often see ***if-else*** statements with no curly brackets.  This only works if [there is only a single code command]{.hl} attached to the ***if()*** or the ***else***.
+You will often see ***if-else*** statements with no curly brackets.  This only works if [there is only one command]{.hl} attached to the ***if()*** and one command attached to the ***else***.
 
 ``` r
 rm(list=ls()); 
@@ -466,7 +466,7 @@ else
   cat("You still have a lot of room for growth");
 ```
 
-The code above is functionally equivalent to the code below
+The code above works and is functionally equivalent to the code below
 
 ``` r
 rm(list=ls());   
@@ -482,11 +482,11 @@ if(favAnimal == "Llama")
 }
 ```
 
-The only advantage to not using curly brackets is that it takes up less space.  I recommend that you include curly brackets even if there is only one line of code in the codeblock -- it is more explicit and you avoid accidentally adding additional lines and forgetting the brackets.
+The only advantage to not using curly brackets is that it takes up less space.  I recommend that you include curly brackets even if there is only one command in the codeblock -- it is more explicit and you avoid accidentally adding additional commands without the brackets.
 
  
 
-The code below will give an ["unexpected 'else'"]{.hl} error.  This is because R believes that the ***if()*** structure ends right after the first ***cat()*** on line 7 because there are no curly brackets attached to the ***if().*** This means the ***else*** statement is completely detached from the ***if()***, which is an error.
+The code below will give an [unexpected 'else']{.hl} error.  This is because R believes that the ***if()*** structure ends right after the first command, the ***cat()*** on line 7, because there are no curly brackets attached to the ***if().*** This means the ***else*** statement is completely detached from the ***if()***, so the ***else*** was unexpected.
 
 ``` r
 rm(list=ls());   options(show.error.locations = TRUE);
@@ -500,11 +500,11 @@ else
    cat("You still have a lot of room for growth");
 ```
 
-![Unexpected else error caused by not using curly brackets in if-else structures.](images/R-1-09_unexpectedElse.png)
+![Unexpected else error caused by not using curly brackets in if-else structures.](images/R-1-09_unexpectedElse.png){#fig-unexpectedElse .fs}
 
 ## Trap: Else never has an attached condition
 
-A common mistake for people new to scripting is to treat ***else*** like an ***if()*** or an ***else if()*** and attach a condition to it.  In the script below, the code attached to the ***else*** statement is supposed to be executed [if all other conditional statements in the ***if-else-if*** structure fail]{.hl}, which is when the score is less than 60.
+A common mistake for people new to programming is to treat ***else*** like an ***if()*** or an ***else if()*** and attach a condition to it.  The codeblock attached to the ***else*** statement is supposed to be executed [if all other conditional statements in the ***if-else-if*** structure fail]{.hl}, which is when the score is less than 60.
 
 ``` r
 rm(list=ls());
@@ -530,11 +530,11 @@ if(score > 90)
 }
 ```
 
-The script seems to work at first.  If you type in a value below 55 then "E" will be the output.  However, if you type in 75 the output is  "CE".  If you type in 95  the output is "AE". In fact,["E" will be part of the output no matter what you type in]{.hl}.
+The script seems to work at first.  If you type in a value below 55 then "E" will be the output.  However, if you type in 75 the output is  "CE".  If you type in 95  the output is "AE". In fact, ["E" will be part of the output no matter what you type in]{.hl}.
 
 ![Putting a condition on an else causes an error](images/R-1-09_ElseWithConditionError.png){#fig-else-condition-error .fs}
 
-What happens is that the codeblock below was detached from the ***else*** statement. Because of this, ***cat("E")*** will execute every time the script is executed..
+What happens is that the errant condition ***(score \<= 60)*** was attached to the else instead of the codeblock. Since the codeblock below was was detached from the ***else*** statement, it execute without condition (i.e., all the time).
 
 ``` r
 {                 
@@ -574,13 +574,13 @@ Now the ***else*** will execute only when all other conditions fail.  In other 
 
 ## Extension: Programming standards for if-else statements
 
-Neither @fig-structure or @fig-commonStructure is the programming standard for coding an ***if-else*** structure. The two most common methods put else on a line by itself either like this:
+Neither @fig-structure or @fig-commonStructure is the programming standard for coding an ***if-else*** structure. The two most common methods put ***else*** on a line by itself either like this:
 
 ``` r
 if(randomNum2 > 50) 
 { 
   cat("You win"); 
-} 
+}
 else 
 { 
   cat("You lose"); 
