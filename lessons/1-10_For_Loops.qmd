@@ -45,11 +45,11 @@ In the last couple of lessons, we used conditional statements on values in a vec
 
  
 
-But, when working with data, we rarely look at just one value -- usually, we are looking at a whole vector of values (e.g., 365 high temperatures for a year) and we want to perform the same conditional statement on each of the values. In this lesson and the next lesson, we will learn to use conditional statements on multiple values -- using ***for*** loops with embedded ***if-else*** statements.
+But, when working with data, we rarely look at just one value -- usually, we are looking at a vector of values (e.g., 365 high temperatures for a year) and we want to perform the same conditional statement on each of the values. In this lesson and the next lesson, we will learn to use conditional statements on multiple values -- using ***for*** loops with embedded ***if-else*** statements.
 
 ## Repeating commands
 
-A ***for*** loop is used whenever you want to repeat a codeblock multiple times.  The most basic example is repeating the exact same output a certain number of times:
+A ***for*** loop is used whenever you want to execute a codeblock multiple times.  The most basic example is repeating the exact same output a certain number of times:
 
 ::: {#fig-basicForLoop}
 ``` r
@@ -64,7 +64,7 @@ The most basic for loop -- repeating an output command multiple times
 
 And the ***Console*** tab will show 5 *Hellos*:
 
-``` {tab="Console"}
+``` {.default tab="Console"}
 Repeating the same code multiple times:
 Hello, World
 Hello, World
@@ -75,7 +75,11 @@ Hello, World
 
 ### The codeblock attached to the for loop
 
-Just like ***if-else*** statements, ***for*** loops have an attached codeblock, designated by curly brackets ( **{  }** ).  ***If-else*** statements execute the codeblock conditionally based on the conditional statement in the parentheses.  The number of times ***for loops*** execute their attached codeblocks is dependent upon the sequence inside the parentheses.  In @fig-basicForLoop, the sequence is ***1:5***, and since the sequence has 5 values, the codeblock attached will execute 5 times. 
+Just like ***if-else*** statements, ***for*** loops have an attached codeblock, designated by curly brackets ( **{  }** ).  ***If-else*** statements execute the codeblock conditionally based on the conditional statement in the parentheses and ***for*** ***loops*** executes a codeblock multiple times.  The number of times ***for loops*** execute their attached codeblocks is dependent upon the sequence inside the parentheses.  In @fig-basicForLoop, the sequence is ***1:5***, and since the sequence has 5 values, the codeblock attached will execute 5 times. 
+
+ 
+
+[Note: if the sequence was ***15:19***, which has 5 values, the attached codeblock will execute 5 times.]{.note}
 
 ## Repeated code on values
 
@@ -89,8 +93,9 @@ To do this we cycle through every value in the vector,  which is ***helloVector
 
  
 
-To cycle through the values we set the variable (often called ***i***) in the for loop to the values **1** through **5** and then use that variable inside the codeblock for the for loop*.*
+To cycle through the values we set the variable (often called ***i***) in the ***for loop*** to the values **1** through **5** and then use that variable inside the codeblock for the for loop*. **i***, in this example, indexes ***helloVector*** each type the ***for loop*** cycles.
 
+::: {#fig-indexStringValues}
 ``` r
 for(i in 1:5)
 {
@@ -98,6 +103,7 @@ for(i in 1:5)
   cat("Hello," helloVector[i], "\n");
 }
 ```
+:::
 
 ``` {.r tab="Console"}
 Hello, Ann 
@@ -109,7 +115,7 @@ Hello, Eve
 
 ## The index variable in a for loop
 
-The true power of the for loops lies in the [indexing variable]{.hl}, which is often named [***i***]{.hl}.  [Note: the indexing variable can be given any name -- it's just common to call it **i**.]{.note}  The indexing variable changes every time the ***for*** loop executes so the indexing variable can be used to modify the code every time the codeblock is executed.
+The true power of the for loops lies in the [indexing variable]{.hl}, which is often named [***i***]{.hl}.  [Note: the indexing variable can be given any name -- it's just common to call it **i**.]{.note}  The indexing variable cycles through the sequence each time the ***for*** loop executes. This means the indexing variable can be used to modify the code every time the codeblock is executed.
 
 ### The index variable as a counter
 
@@ -134,19 +140,40 @@ The count is: 4
 The count is: 5
 ```
 
+The number of times the ***for loop*** cycles is the same as the number of values in the sequence. So, we can use a different sequence of 5 values...
+
+``` r
+cat("---------\nAny sequence of 5 number cycles the for loop 5 times:\n");
+for(i in 15:19) # repeat 5 times
+{
+  cat("The count is:", i, "\n");
+}
+```
+
+...and the for loop will still cycle 5 time.
+
+``` default
+Using the indexing variable as a counter:
+The count is: 15
+The count is: 16
+The count is: 17
+The count is: 18
+The count is: 19
+```
+
 ### Taking a step back: How a for loop cycles
 
 A for loops always consists of 3 things:
 
 -   An indexing variable:  for(***i*** in 1:5) 
 
--   A sequence of values: for(***i*** in *1:5*)
+-   A sequence of values: for(i in ***1:5***)
 
--   A codeblock to execute: between the **{ }**
+-   A codeblock to execute: encapsulated by the **{ }**
 
  
 
-The sequence of values determines how many times the codeblock will cycle.  If there are 12 values in the sequence, then the for loop will cycle12 times.
+The sequence of values determines how many times the codeblock will cycle.  If there are 12 values in the sequence, then the for loop will cycle 12 times.
 
  
 
@@ -154,21 +181,21 @@ The sequence of values determines how many times the codeblock will cycle.  If 
 
  
 
-So, if the sequence is ***1:5***, then:
+So, if the sequence is **12:8** (a backwards sequence with 5 values), then:
 
--   ***i*** will be set to **1** the first time the codeblock cycles
+-   ***i*** will be set to **12** the first time the codeblock cycles
 
--   ***i*** will be set to **2** the first time the codeblock cycles
+-   ***i*** will be set to **11** the first time the codeblock cycles
 
--   ***i*** will be set to **3** the first time the codeblock cycles
+-   ***i*** will be set to **10** the first time the codeblock cycles
 
--   ***i*** will be set to **4** the first time the codeblock cycles
+-   ***i*** will be set to **9** the first time the codeblock cycles
 
--   ***i*** will be set to **5** the first time the codeblock cycles
+-   ***i*** will be set to **8** the first time the codeblock cycles
 
 ### Changing the sequence
 
-The ***for*** loop executes for every value in the sequence, and the index variable takes on the values in order. The values in the sequence do not need to start with 1.
+The ***for*** loop executes for every value in the sequence, and the index variable takes on the values in order.
 
 ::: {#fig-seqNot1}
 ``` r
@@ -182,9 +209,9 @@ for(i in 12:8) # 12, 11, 10, 9 ,8 (there are five values in the sequence)
 Using a sequence that does not start with 1 in a for loop
 :::
 
-In this case, the for loop will still execute 5 times, but ***i*** will take on values **12** down to ***8*** instead of 1-5:
+In this case, the for loop will still execute 5 times, but ***i*** will take on values **12** down to **8**:
 
-``` {tab="Console"}
+``` {.default tab="Console"}
 Changing the sequence numbers -- length is still 5:
 The count is: 12
 The count is: 11
@@ -212,7 +239,7 @@ for(day in seq(from=20, to=2, by=-3))  # 20, 17, 14, 11, 8, 5, 2 (seven values)
 Using a more complicated sequence in a for loop
 :::
 
-``` {tab="Console"}
+``` {.default tab="Console"}
 Using a more complicated sequence with seven values:
 The count is: 20
 The count is: 17
@@ -227,7 +254,7 @@ So, in @fig-seqInFor, the codeblock cycles 7 times because there are 7 values in
 
 ## Indexing values inside a for loop
 
-We are still using the indexing variable as a counter. The real power comes when you use the *indexing variable to index values* in a vector -- this is how we perform an ***if-else*** statement on every value in a vector.
+Most examples so far use the index variable as a counter. The real power comes when you use the indexing variable to index values in a vector as we did in @fig-indexStringValues. This is how we perform an ***if-else*** statement on every value in a vector.
 
  
 
@@ -237,8 +264,7 @@ Let's use the same data we have been using in the previous lessons:
 ### read in data from twoWeekWeatherData.csv
 weatherData = read.csv(file="data/twoWeekWeatherData.csv",
                        sep=",",
-                       header=TRUE,
-                       stringsAsFactors = FALSE);
+                       header=TRUE);
 
 ### Extract the highTemps column from the data frame -- save it to a variable
 highTemps = weatherData$highTemp;
@@ -264,7 +290,7 @@ for(day in 1:numDays)  # numDays, in this case, is 14 (sequence is 1:14)
 Using the indexing variable as an index for highTemp
 :::
 
-``` {tab="Console"}
+``` {.default tab="Console"}
 The 14 values in the vector highTemps in order:
 57
 50
@@ -337,8 +363,7 @@ for(i in 1:numDays)
   if(noonCond[i] == "Sunny")
   {
     cat("day ", i, " was sunny\n", sep="");
-  }
-  else
+  }else
   {
     cat("day ", i, " was not sunny\n", sep="");
   }
@@ -348,7 +373,7 @@ for(i in 1:numDays)
 Using if-else statements in a for loop
 :::
 
-``` {tab="Console"}
+``` {.default tab="Console"}
 Using if-else statements within a for loop:
 day 1 was not sunny
 day 2 was not sunny
@@ -366,36 +391,18 @@ day 13 was sunny
 day 14 was sunny
 ```
 
-### Alternate ways to bracket the for loop with if-else structure
-
-We can bracket using the previous ***for*** loop using the the other common programming method.  The advantage to this method is that it uses less space:
-
-``` r
-for(i in 1:numDays) {
-  if(noonCond[i] == "Sunny")  {
-    cat("day ", i, " was sunny\n", sep="");
-  }
-  else  {
-    cat("day ", i, " was not sunny\n", sep="");
-  }
-}
-```
-
-Both methods work well -- the important aspect is that the ***if-else*** structure is clearly indented inside the ***for*** loop showing that the ***if-else*** structure is only executed when inside the ***for*** loop.
-
 ## Checking a subset of values
 
 We can use any type of sequence in the ***for*** loop so that we are only checking some of the values in the vector:
 
 ::: {#fig-sequence-subset}
 ``` r
-for(i in c(8,2,13)
+for(i in c(8,2,13))
 {
   if(noonCond[i] == "Sunny")
   {
     cat("day ", i, " was sunny\n", sep="");
-  }
-  else
+  }else
   {
     cat("day ", i, " was not sunny\n", sep="");
   }
@@ -405,7 +412,7 @@ for(i in c(8,2,13)
 Using the sequence to subset the values
 :::
 
-``` {tab="Console"}
+``` {.default tab="Console"}
 Using a sequence to subset the values:
 day 8 was not sunny
 day 2 was not sunny
@@ -414,23 +421,23 @@ day 13 was sunny
 
 ## State variables and for loops
 
-The problem with the code in @fig-IfElse-in-For is that we are often not looking for specific information about each value in a vector.  This would get quickly out of hand if there are thousands of values!  We usually want to find out more general information -- for instance, we might want to know [how many days were sunny?]{.hl}
+The code in @fig-IfElse-in-For is displaying specific information about each value in a vector.  This would get quickly out of hand if there are thousands of values!  We usually want more general information about a vector -- for instance, we might want to know [how many days were sunny?]{.hl}
 
  
 
-Finding more general information about the values in a vector requires the introduction of the last component of most ***for*** loops: the state variable.  The [state variable]{.hl} is a variable that keeps a running tab of some value through each cycle of the ***for*** loop.
+Finding more general information about the values in a vector requires the introduction of the last component of most ***for*** loops: the state variable.  The [state variable]{.hl} is a variable that maintains a running tab of some value through each cycle of the ***for*** loop.
 
  
 
 Let's count the number of sunny days using a ***for*** loop.  To do this we need to:
 
--   create a state variable that holds the number of sunny days
+-   create a state variable that holds the number of sunny days (this will start at **0**)
 
 -   have a for loop that cycles through every value in the ***noonCond*** vector
 
 -   include an ***if()*** statement asking if the day is sunny
 
--   have a command to increase the number of sunny days by 1 if it is sunny
+-   have a command to increase the state variable by 1 if it is sunny
 
  
 
@@ -460,9 +467,17 @@ And we can look in the ***Environment*** tab to see what the final value of ***s
 sunnyDays:   6
 ```
 
+And if we look at the noonCond vector, we see there are 6 sunny days:
+
+``` {.r tab="Console"}
+> noonCond
+ [1] "Cloudy" "Cloudy" "Sunny"  "Rain"   "Fog"    "Sunny"  "Sunny"  "Cloudy"
+ [9] "Rain"   "Rain"   "Snow"   "Sunny"  "Sunny"  "Sunny"
+```
+
 ### The state variable
 
-***sunnyDays*** does a lot of heavy lifting in @fig-stateVariable.  We initially set ***sunnyDays*** to ***0*** because ***0*** is the [default value]{.hl}, or the value if the ***for*** loop cycles zero times.
+***sunnyDays*** does a lot of heavy lifting in @fig-stateVariable.  We initially set ***sunnyDays*** to ***0*** because ***0*** is the [default value]{.hl}, or the value if the condition `(noonCond[i] == "Sunny")` fails every time.
 
  
 
@@ -488,11 +503,11 @@ Then R assigns the value on the right-side to the variable on the left, which is
 
  
 
-This process adds **1** to ***sunnyDays*** every time (***noonCond\[i\]*** == "Sunny")
+If ***sunnyDays*** is **4**, then ***sunnyDays +1*** evaluates to **5**, and ***sunnyDays*** is assigned the value of **5.**
 
 ## Application:
 
-1\) Why must the state variable be declared outside the ***for*** loop as opposed to inside the ***for*** loop?  Think about what happens to the state variable every time the for loop cycles if it is declared inside the for loop.  Put the answer in comments at the top of your script.
+1\) In Comments: Why must the state variable be declared outside the ***for*** loop as opposed to inside the ***for*** loop?  Think about what happens to the state variable every time the for loop cycles if it is declared inside the for loop.  Put the answer in comments at the top of your script.
 
  
 
@@ -512,6 +527,12 @@ This process adds **1** to ***sunnyDays*** every time (***noonCond\[i\]*** == "S
 
  
 
-6\) Challenge: Using ***for*** loops, find the total precipitation (i.e., add up all the ***precipitation*** values).  Hint: you keep adding each new precipitation value to the total precipitation.
+6\) In comments: If you are using a ***for loop*** to add up all values in a vector then what value should your state variable start with? Why?
+
+ 
+
+7\) Challenge: Using ***for*** loops, find the total precipitation (i.e., add up all the ***precipitation*** values).  Hint: you keep adding each new precipitation value to the total precipitation.
+
+ 
 
 {{< include ../assets/_AppInstructions.qmd >}}
