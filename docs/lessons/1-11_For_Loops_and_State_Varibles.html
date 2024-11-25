@@ -272,6 +272,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#using-browser-to-pause-your-script" id="toc-using-browser-to-pause-your-script" class="nav-link" data-scroll-target="#using-browser-to-pause-your-script"><span class="header-section-number">8.1</span> Using browser() to pause your script</a></li>
   <li><a href="#initializing-the-state-variable" id="toc-initializing-the-state-variable" class="nav-link" data-scroll-target="#initializing-the-state-variable"><span class="header-section-number">8.2</span> Initializing the state variable</a></li>
+  <li><a href="#debug-with-cat" id="toc-debug-with-cat" class="nav-link" data-scroll-target="#debug-with-cat"><span class="header-section-number">8.3</span> Debug with cat()</a></li>
   </ul></li>
   <li><a href="#application" id="toc-application" class="nav-link" data-scroll-target="#application"><span class="header-section-number">9</span> Application</a>
   <ul class="collapse">
@@ -309,6 +310,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="issues" class="level3" data-number="0.1">
 <h3 data-number="0.1" class="anchored" data-anchor-id="issues"><span class="header-section-number">0.1</span> Issues</h3>
+<ul>
+<li><p>8.2: add something to view progress: cat()??</p></li>
+<li><p>start using browser in 7.1 instead of 8?</p></li>
+</ul>
 </section>
 <section id="purpose" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="purpose"><span class="header-section-number">1</span> Purpose</h2>
@@ -328,17 +333,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="for-loops-a-vital-skill" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="for-loops-a-vital-skill"><span class="header-section-number">3</span> For loops – a vital skill</h2>
-<p>In this lesson, we will be using <strong><em>for</em></strong> loops and <strong><em>if()</em></strong> statements to do common calculations on a vector (e.g., finding the sum, finding maximum value, checking if any value meets a condition).&nbsp; There are functions for all of these calculations in R that are easier to use than a for loop.&nbsp; But, the best way to learn <strong><em>for</em></strong> loops is to use them in applications that are easy to understand.&nbsp; You are going to have many situations where you cannot rely on an R function or package – and <strong><em>for</em></strong> loops with embedded <strong><em>if-else</em></strong> statements are the best solution.</p>
+<p>In this lesson, we will be using <strong><em>for</em></strong> loops and <strong><em>if()</em></strong> statements to do common calculations on a vector (e.g., finding the sum, finding maximum value, checking if any value meets a condition).&nbsp; There are functions for all of these calculations in R that are easier to use than a <strong><em>for</em></strong> loop.&nbsp; Hoever, the best way to learn <strong><em>for</em></strong> loops is to use them in applications that are easy to understand.&nbsp; You are going to have many situations where you cannot rely on an R function or package – and <strong><em>for</em></strong> loops with embedded <strong><em>if-else</em></strong> statements are the best solution.</p>
 <p>&nbsp;</p>
 <p>Understanding how to effectively use <strong><em>for</em></strong> loops is perhaps the most vital skill you will learn as a programmer.</p>
 </section>
 <section id="multiple-state-variables" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="multiple-state-variables"><span class="header-section-number">4</span> Multiple state variables</h2>
-<p>We ended last lesson by introducing you to the concept of a <em>state variable</em> – this is a variable that updates information (e.g., the state of some value) as the <strong><em>for</em></strong> loops cycles.&nbsp; The state variable is always declared outside of the <strong><em>for</em></strong> loop and modified within the <strong><em>for</em></strong> loop.</p>
+<p>We ended last lesson by introducing you to the concept of a state variable – a <span class="hl">state variable</span> is a variable that updates information (e.g., the state of some value) as the <strong><em>for</em></strong> loops cycles.&nbsp; The state variable is always declared outside of the <strong><em>for</em></strong> loop and modified within the <strong><em>for</em></strong> loop.</p>
 <p>&nbsp;</p>
-<p><span class="note">Note: if the state variable was declared inside the for loop then it would be re-initialized every time the for loop cycles.</span></p>
+<p><span class="note">Note: if the state variable was declared inside the <strong>for</strong> loop then it would be re-initialized every time the <strong>for</strong> loop cycles.</span></p>
 <p>&nbsp;</p>
-<p>The state variable also needs to be initialized to some default value – or the value the state variable should be if the <strong><em>for</em></strong> loop has no cycles (an empty vector).&nbsp; In the last example from last lesson, the state variable <strong><em>sunnyDays</em></strong> was initialized to <strong>0.</strong></p>
+<p>The state variable needs to be initialized to some default value – or the value the state variable should be if the <strong><em>for</em></strong> loop has no cycles (an empty vector).&nbsp; In the last example from last lesson, the state variable <strong><em>sunnyDays</em></strong> was initialized to <strong>0</strong>, which is the correct value if the condition inside the <strong><em>for</em></strong> loop is <strong>FALSE</strong> every cycle..</p>
 <div id="fig-sunnyDaysWithStateVar" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-sunnyDaysWithStateVar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -370,13 +375,12 @@ Figure&nbsp;1: Using a state variable to calculate how many sunny days there was
 <span id="fig-multStateVar-6"><a href="#fig-multStateVar-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(noonCond[i] <span class="sc">==</span> <span class="st">"Sunny"</span>)</span>
 <span id="fig-multStateVar-7"><a href="#fig-multStateVar-7" aria-hidden="true" tabindex="-1"></a>  {</span>
 <span id="fig-multStateVar-8"><a href="#fig-multStateVar-8" aria-hidden="true" tabindex="-1"></a>    sunnyDays <span class="ot">=</span> sunnyDays <span class="sc">+</span><span class="dv">1</span>; <span class="co"># increases sunnyDays by 1</span></span>
-<span id="fig-multStateVar-9"><a href="#fig-multStateVar-9" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="fig-multStateVar-10"><a href="#fig-multStateVar-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># We use else if here because we know "Sunny" and "Rain" are mutually exclusive</span></span>
-<span id="fig-multStateVar-11"><a href="#fig-multStateVar-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span> <span class="cf">if</span>(noonCond[i] <span class="sc">==</span> <span class="st">"Rain"</span>)</span>
-<span id="fig-multStateVar-12"><a href="#fig-multStateVar-12" aria-hidden="true" tabindex="-1"></a>  {</span>
-<span id="fig-multStateVar-13"><a href="#fig-multStateVar-13" aria-hidden="true" tabindex="-1"></a>    rainyDays <span class="ot">=</span> rainyDays <span class="sc">+</span><span class="dv">1</span>; <span class="co"># increases rainyDays by 1</span></span>
-<span id="fig-multStateVar-14"><a href="#fig-multStateVar-14" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="fig-multStateVar-15"><a href="#fig-multStateVar-15" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="fig-multStateVar-9"><a href="#fig-multStateVar-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># We use else if here because we know "Sunny" and "Rain" are mutually exclusive</span></span>
+<span id="fig-multStateVar-10"><a href="#fig-multStateVar-10" aria-hidden="true" tabindex="-1"></a>  }<span class="cf">else</span> <span class="cf">if</span>(noonCond[i] <span class="sc">==</span> <span class="st">"Rain"</span>)</span>
+<span id="fig-multStateVar-11"><a href="#fig-multStateVar-11" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="fig-multStateVar-12"><a href="#fig-multStateVar-12" aria-hidden="true" tabindex="-1"></a>    rainyDays <span class="ot">=</span> rainyDays <span class="sc">+</span><span class="dv">1</span>; <span class="co"># increases rainyDays by 1</span></span>
+<span id="fig-multStateVar-13"><a href="#fig-multStateVar-13" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="fig-multStateVar-14"><a href="#fig-multStateVar-14" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-multStateVar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2: Using multiple state variables
@@ -392,14 +396,15 @@ Figure&nbsp;2: Using multiple state variables
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">11</span>] <span class="st">"Snow"</span> <span class="st">"Sunny"</span> <span class="st">"Sunny"</span> <span class="st">"Sunny"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <section id="the-if-else-statement" class="level3" data-number="4.1">
 <h3 data-number="4.1" class="anchored" data-anchor-id="the-if-else-statement"><span class="header-section-number">4.1</span> The if-else statement</h3>
-<p>In <a href="#fig-multStateVar" class="quarto-xref">Figure&nbsp;2</a> we used an <strong><em>if-else</em></strong> structure to separate the two conditional statement (sunny and rainy).&nbsp; We could have just used two <strong><em>if()</em></strong> statements.&nbsp; In other words, the 8<sup>th</sup> line could have been written:</p>
+<p>In <a href="#fig-multStateVar" class="quarto-xref">Figure&nbsp;2</a> we used an <strong><em>if-else</em></strong> structure to separate the two conditional statement (Sunny and Rain).&nbsp; We could have just used two <strong><em>if()</em></strong> statements.&nbsp; In other words, the 10<sup>th</sup> line could have been written:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(noonCond[i] <span class="sc">==</span> <span class="st">"Rain"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>But we would be checking for <strong>Rain</strong> on days that we already know is <strong>Sunny</strong>.&nbsp; <strong><em>noonCond</em></strong> on a specific day cannot be both <strong>Sunny</strong> and <strong>Rain</strong> (i.e., they are mutually exclusive) – so the extra checks are not needed.&nbsp; The code would still work, just not be as efficient.&nbsp; But, efficiency becomes more important as the number of values in your vector increases – and efficiency means quicker execution time.</p>
 </section>
 </section>
 <section id="state-variables-uses" class="level2" data-number="5">
 <h2 data-number="5" class="anchored" data-anchor-id="state-variables-uses"><span class="header-section-number">5</span> State variables uses</h2>
-<p>We can also use state variables on numeric value to count how many times a condition is met such as the temperature being in a certain range.&nbsp;</p>
+<p>We can also use state variables on numeric values to count how many times a condition is met.</p>
+<p>&nbsp;</p>
 <p>In this case, we will look at how many time</p>
 <ul>
 <li><p>the temperature was greater than 60</p></li>
@@ -418,12 +423,11 @@ Figure&nbsp;2: Using multiple state variables
 <span id="fig-mult-tempValues-6"><a href="#fig-mult-tempValues-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(highTemps[i] <span class="sc">&gt;</span> <span class="dv">60</span>)      <span class="co"># high temp more than 60</span></span>
 <span id="fig-mult-tempValues-7"><a href="#fig-mult-tempValues-7" aria-hidden="true" tabindex="-1"></a>  {</span>
 <span id="fig-mult-tempValues-8"><a href="#fig-mult-tempValues-8" aria-hidden="true" tabindex="-1"></a>    tempGT60 <span class="ot">=</span> tempGT60 <span class="sc">+</span><span class="dv">1</span>;</span>
-<span id="fig-mult-tempValues-9"><a href="#fig-mult-tempValues-9" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="fig-mult-tempValues-10"><a href="#fig-mult-tempValues-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span> <span class="cf">if</span>(highTemps[i] <span class="sc">&lt;</span> <span class="dv">50</span>) <span class="co"># high temp less than 50</span></span>
-<span id="fig-mult-tempValues-11"><a href="#fig-mult-tempValues-11" aria-hidden="true" tabindex="-1"></a>  {</span>
-<span id="fig-mult-tempValues-12"><a href="#fig-mult-tempValues-12" aria-hidden="true" tabindex="-1"></a>    tempLT50 <span class="ot">=</span> tempLT50 <span class="sc">+</span><span class="dv">1</span>;</span>
-<span id="fig-mult-tempValues-13"><a href="#fig-mult-tempValues-13" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="fig-mult-tempValues-14"><a href="#fig-mult-tempValues-14" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="fig-mult-tempValues-9"><a href="#fig-mult-tempValues-9" aria-hidden="true" tabindex="-1"></a>  }<span class="cf">else</span> <span class="cf">if</span>(highTemps[i] <span class="sc">&lt;</span> <span class="dv">50</span>) <span class="co"># high temp less than 50</span></span>
+<span id="fig-mult-tempValues-10"><a href="#fig-mult-tempValues-10" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="fig-mult-tempValues-11"><a href="#fig-mult-tempValues-11" aria-hidden="true" tabindex="-1"></a>    tempLT50 <span class="ot">=</span> tempLT50 <span class="sc">+</span><span class="dv">1</span>;</span>
+<span id="fig-mult-tempValues-12"><a href="#fig-mult-tempValues-12" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="fig-mult-tempValues-13"><a href="#fig-mult-tempValues-13" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mult-tempValues-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;3: Using multiple state variables to look at temperature values
@@ -447,12 +451,11 @@ Figure&nbsp;3: Using multiple state variables to look at temperature values
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(highTemps[i] <span class="sc">&gt;</span> <span class="dv">60</span>)</span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  {</span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    tempGT60odd <span class="ot">=</span> tempGT60odd <span class="sc">+</span><span class="dv">1</span>;</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span> <span class="cf">if</span>(highTemps[i] <span class="sc">&lt;</span> <span class="dv">50</span>)</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  {</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    tempLT50odd <span class="ot">=</span> tempLT50odd <span class="sc">+</span><span class="dv">1</span>;</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  }<span class="cf">else</span> <span class="cf">if</span>(highTemps[i] <span class="sc">&lt;</span> <span class="dv">50</span>)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    tempLT50odd <span class="ot">=</span> tempLT50odd <span class="sc">+</span><span class="dv">1</span>;</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>And, again, the <strong><em>Environment</em></strong> tab will show the final values of the state variables:</p>
 <div class="sourceCode" id="cb7" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>tempGT60odd<span class="sc">:</span>   <span class="dv">1</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>tempLT50odd<span class="sc">:</span>   <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -460,9 +463,9 @@ Figure&nbsp;3: Using multiple state variables to look at temperature values
 </section>
 <section id="state-variable-to-sum-values" class="level2" data-number="6">
 <h2 data-number="6" class="anchored" data-anchor-id="state-variable-to-sum-values"><span class="header-section-number">6</span> State variable to sum values</h2>
-<p>We have used state variables as a counter – adding 1 to the state variable during each cycle of a <strong><em>for</em></strong> loop when a condition is <strong><em>TRUE</em></strong>.</p>
+<p>We have used state variables to count values – adding 1 to the state variable during each cycle of a <strong><em>for</em></strong> loop when a condition is <strong><em>TRUE</em></strong>.</p>
 <p>&nbsp;</p>
-<p>In this case we want to add up all the precipitation values to get the total precipitation.&nbsp; Again, we initialize the state variable to default value of 0, because 0 is the answer if there are no days to check. &nbsp;</p>
+<p>Next we will use a state variable to add values. In this case, adding up precipitation values to get the total precipitation.&nbsp; Again, we initialize the state variable to default value of 0, because 0 is the answer if there is nothing to add.</p>
 <p>&nbsp;</p>
 <p>The difference is that, instead of adding 1 to the state variable, <span class="hl">we add the precipitation for that day</span>, or <strong><em>precip[i]</em></strong> where <strong><em>i</em></strong> is the index variable.</p>
 <p>&nbsp;</p>
@@ -484,7 +487,7 @@ Figure&nbsp;4: Using a state variable to add values
 </section>
 <section id="if-any-checks" class="level2" data-number="7">
 <h2 data-number="7" class="anchored" data-anchor-id="if-any-checks"><span class="header-section-number">7</span> if-any checks</h2>
-<p>This time, instead of counting the number of days that meet a condition, we are just going to see if <span class="hl">any value in the vector meets a condition</span>.</p>
+<p>Now we are going to use a state variable to see <span class="hl"><strong><em>if any</em></strong> value in the vector meets a condition</span>.</p>
 <p>&nbsp;</p>
 <p>We are going to initialize the state variable to <strong><em>FALSE</em></strong> and if any variable meets the condition, the state variable will be changed to <strong><em>TRUE</em></strong>.&nbsp; The condition we will look is whether a temperature is less than 40.</p>
 <p>&nbsp;</p>
@@ -499,9 +502,8 @@ Figure&nbsp;4: Using a state variable to add values
 <span id="fig-if-any-5"><a href="#fig-if-any-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(highTemps[i] <span class="sc">&lt;</span> <span class="dv">40</span>)</span>
 <span id="fig-if-any-6"><a href="#fig-if-any-6" aria-hidden="true" tabindex="-1"></a>  {</span>
 <span id="fig-if-any-7"><a href="#fig-if-any-7" aria-hidden="true" tabindex="-1"></a>    anyDayLT40 <span class="ot">=</span> <span class="cn">TRUE</span>;</span>
-<span id="fig-if-any-8"><a href="#fig-if-any-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># break;    # when uncommented, this will break out of the for loop</span></span>
-<span id="fig-if-any-9"><a href="#fig-if-any-9" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="fig-if-any-10"><a href="#fig-if-any-10" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="fig-if-any-8"><a href="#fig-if-any-8" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="fig-if-any-9"><a href="#fig-if-any-9" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-if-any-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;5: Using for loops to find out if any value in a vectors meets a condition
@@ -512,9 +514,20 @@ Figure&nbsp;5: Using for loops to find out if any value in a vectors meets a con
 <div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(highTemps[i] <span class="sc">&lt;</span> <span class="dv">30</span>)  <span class="co"># this will produce a FALSE result</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <section id="the-break-statement" class="level3" data-number="7.1">
 <h3 data-number="7.1" class="anchored" data-anchor-id="the-break-statement"><span class="header-section-number">7.1</span> The break statement</h3>
-<p>This <strong><em>for</em></strong> loop is inefficient because it will continue to check every temperature value even after one of them passes the condition.&nbsp; This is not necessary because we only care if at least one value meets the condition.</p>
+<p>In <a href="#fig-if-any" class="quarto-xref">Figure&nbsp;5</a>, the <strong><em>for</em></strong> loop is inefficient because it will continue to check every temperature value even after one of them passes the condition of being greater that 40.&nbsp; This is not necessary because we only care if at least one value meets the condition. We do not care if more than one meets the condition</p>
 <p>&nbsp;</p>
-<p>If you uncomment the <strong><em>break</em></strong> line then R will break out of the <strong><em>for</em></strong> loop as soon as the condition <strong><em>highTemps[i] &lt; 40</em></strong> is <strong><em>TRUE</em></strong>.&nbsp; This does not change the final results but it does speed it up the script bit by not doing unnecessary cycles of the <strong><em>for</em></strong> loop.</p>
+<p>To make the code more efficient, we can add a <strong><em>break</em></strong> statement to the codeblock attached to the <strong><em>if()</em></strong>. <strong><em>break</em></strong> is a command that tells R to immediately exit the <strong><em>for</em></strong> loop. In other words, if the 5<sup>th</sup> value passes the condition, the <strong><em>for</em></strong> loop will end and not cycle through values 6-14.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># A more efficient check if any value in highTemps is less than 40</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  anyDayLT40_2 <span class="ot">=</span> <span class="cn">FALSE</span>;     <span class="co"># initialize state variable to FALSE</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>numDays) </span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(highTemps[i] <span class="sc">&lt;</span> <span class="dv">40</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>      anyDayLT40_2 <span class="ot">=</span> <span class="cn">TRUE</span>;  <span class="co"># found a value -- change state variable to TRUE</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>      «break;»                <span class="co"># exits the for loop immediately</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>A break statement in the above code will not meaningfully speed up this script, but it will speed up script that is cycling through 1000s or 10000s of times through a for loop.</p>
 </section>
 </section>
 <section id="finding-the-highest-or-lowest-value" class="level2" data-number="8">
@@ -547,14 +560,14 @@ Figure&nbsp;6: Finding the highest value in a vector
 <p>The <strong><em>for</em></strong> loop above is going through every value in the <strong><em>highTemps</em></strong> in order.&nbsp; Each time a new high temperature is found, <strong><em>highestTemp</em></strong> is set top that value.&nbsp; So, <strong><em>highestTemp</em></strong> is going to start at 0 (the initial value), and change multiple times.</p>
 <p>&nbsp;</p>
 <p>If we put <strong><em>highTemps</em></strong> in the <strong><em>Console</em></strong>, we can see each time a new highest temperature will occur:</p>
-<div class="sourceCode" id="cb9" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> highTemps</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] «<span class="dv">57</span>» <span class="dv">50</span> <span class="dv">54</span> <span class="dv">40</span> <span class="dv">39</span> «<span class="dv">58</span>» «<span class="dv">60</span>» <span class="dv">53</span> <span class="dv">55</span> <span class="dv">44</span> <span class="dv">39</span> <span class="dv">54</span> «<span class="dv">61</span>» «<span class="dv">75</span>»</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> highTemps</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] «<span class="dv">57</span>» <span class="dv">50</span> <span class="dv">54</span> <span class="dv">40</span> <span class="dv">39</span> «<span class="dv">58</span>» «<span class="dv">60</span>» <span class="dv">53</span> <span class="dv">55</span> <span class="dv">44</span> <span class="dv">39</span> <span class="dv">54</span> «<span class="dv">61</span>» «<span class="dv">75</span>»</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>A new highest temperature will be discovered 5 times: 57, 58, 60, 61, and 75 (cycles 1, 6 , 7, 13, and 14).</p>
 <p>&nbsp;</p>
 <p>We can use <strong><em>browser()</em></strong> to see this, too.&nbsp; <strong><em>browser()</em></strong> is an instruction to pause the script in the middle of execution and put it in debug mode.</p>
 <p>&nbsp;</p>
 <p>If we uncomment the <strong><em>browser()</em></strong> line in <a href="#fig-highValue" class="quarto-xref">Figure&nbsp;6</a>:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>   <span class="co"># browser();  # uncomment to pause the script's execution at this point</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>   <span class="co"># browser();  # uncomment to pause the script's execution at this point</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Then the script will pause at that line when the condition <strong><em>if(highestTemp &gt; highTemps[i])</em></strong> is <strong>TRUE</strong>, which happens 5 times (out of 14 cycles) when <strong><em>i</em></strong> = 1, 6, 7, 13, and 14.</p>
 <p>&nbsp;</p>
 <p><strong><em>browser()</em></strong> will initially pause the script when <strong><em>i</em></strong> = 1 and you can click <strong><em>Continue</em></strong> to pause the script when <strong><em>i</em></strong> = 6, 7, 13, and 14.&nbsp; For now, the only other button you should know is <strong><em>Stop</em></strong>, which ends debug mode.</p>
@@ -569,7 +582,7 @@ Figure&nbsp;7: The script Sourced with browser() uncommented after Continue is c
 </figure>
 </div>
 <p>&nbsp;</p>
-<p>Debug mode is a complicated topic that will be more fully explored in a future lesson.</p>
+<p>Debug mode is a complicated topic that will be more fully explored in future lessons.</p>
 </section>
 <section id="initializing-the-state-variable" class="level3" data-number="8.2">
 <h3 data-number="8.2" class="anchored" data-anchor-id="initializing-the-state-variable"><span class="header-section-number">8.2</span> Initializing the state variable</h3>
@@ -588,8 +601,10 @@ Figure&nbsp;7: The script Sourced with browser() uncommented after Continue is c
 <span id="fig-highVal-5"><a href="#fig-highVal-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(highTemps[i] <span class="sc">&gt;</span> highestTemp2) <span class="co"># is this day's value greater than the current high</span></span>
 <span id="fig-highVal-6"><a href="#fig-highVal-6" aria-hidden="true" tabindex="-1"></a>  {</span>
 <span id="fig-highVal-7"><a href="#fig-highVal-7" aria-hidden="true" tabindex="-1"></a>    highestTemp2 <span class="ot">=</span> highTemps[i];  <span class="co"># set the state variable to the current day's value</span></span>
-<span id="fig-highVal-8"><a href="#fig-highVal-8" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="fig-highVal-9"><a href="#fig-highVal-9" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="fig-highVal-8"><a href="#fig-highVal-8" aria-hidden="true" tabindex="-1"></a>    <span class="do">### another way to debug your script...</span></span>
+<span id="fig-highVal-9"><a href="#fig-highVal-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"Day "</span>, i, <span class="st">" the highest temp changed to "</span>, highTemps[i], <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>, <span class="at">sep=</span><span class="st">""</span>);</span>
+<span id="fig-highVal-10"><a href="#fig-highVal-10" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="fig-highVal-11"><a href="#fig-highVal-11" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-highVal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;8: Using a for loop to find the highest value in a vector
@@ -597,6 +612,15 @@ Figure&nbsp;8: Using a for loop to find the highest value in a vector
 </figure>
 </div>
 <p>Whenever you are looking for the most extreme value in a vector, it is best to set the state variable to the first value in the vector.&nbsp; By doing this, you do not have to guess what kind of values you are going to get.</p>
+</section>
+<section id="debug-with-cat" class="level3" data-number="8.3">
+<h3 data-number="8.3" class="anchored" data-anchor-id="debug-with-cat"><span class="header-section-number">8.3</span> Debug with cat()</h3>
+<p>Using <strong><em>cat()</em></strong> to output information to the Console is a quick-and-dirty, if not the most robust, way to debug your script. In this case, <strong><em>cat()</em></strong> shows the four time the highest temperature was changed in the 14 cycles of the <strong><em>for</em></strong> loop.</p>
+<div class="sourceCode" id="cb12" data-tab="Console"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>Day 6 the highest temp changed to 58</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>Day 7 the highest temp changed to 60</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>Day 13 the highest temp changed to 61</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>Day 14 the highest temp changed to 75</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Remember to remove or comment out your <strong><em>cat()</em></strong> statements that are used for debugging before sharing your script.</p>
 </section>
 </section>
 <section id="application" class="level2" data-number="9">
@@ -609,7 +633,7 @@ Figure&nbsp;8: Using a for loop to find the highest value in a vector
 <li><p>add code that outputs to <strong><em>Console</em></strong> the first day that met the condition</p></li>
 </ul>
 <p>&nbsp;</p>
-<p>3) Find the mean low temperature using for loops: get the total and divide by the number</p>
+<p>3) Find the mean low temperature using <strong><em>for</em></strong> loops: get the total and divide by the number</p>
 <p>&nbsp;</p>
 <p>4) In one for loop find out how many days had:</p>
 <ul>
@@ -620,8 +644,9 @@ Figure&nbsp;8: Using a for loop to find the highest value in a vector
 <p>&nbsp;</p>
 <p>5) Find out the lowest low temp and output to the <strong><em>Console</em></strong> the lowest temperature and the date it occurred on.</p>
 <p>&nbsp;</p>
-<p>6) Make sure all the code above is generalizable so that it will also work with columns with any number of values (including from this <a href="..\content/DEVELOPMENT/2020/courses/DEV-belinsky-2020-ProgrammingFundamentalsUsingR/R/Lessons/../Scripts/LansingNOAA2016.csv">weather data frame</a>).&nbsp; In comments: explain how your script is generalizable.</p>
-<p>Save the script as&nbsp;<strong><em>app1-11.r</em></strong> in your&nbsp;<strong><em>scripts</em></strong> folder and&nbsp; email your Project Folder to Charlie Belinsky at belinsky@msu.edu.</p>
+<p>6) On days that were cloudy: find the highest temperature and the mean temperature .</p>
+<p>&nbsp;</p>
+<p>Save the script as&nbsp;<strong><em>app</em></strong>1-11<strong><em>.r</em></strong> in your&nbsp;<strong><em>scripts</em></strong> folder and&nbsp; email your Project Folder to Charlie Belinsky at belinsky@msu.edu.</p>
 <p>&nbsp;</p>
 <p><a href="1-01-RStudioProjectsSetup.html#sec-zip-folder" target="_blank">Instructions for zipping the Project Folder are here.</a></p>
 <p>&nbsp;</p>
@@ -638,7 +663,7 @@ Figure&nbsp;8: Using a for loop to find the highest value in a vector
 </section>
 <section id="trap-using-t-and-f-to-represent-true-and-false-is-a-bad-idea" class="level2" data-number="10">
 <h2 data-number="10" class="anchored" data-anchor-id="trap-using-t-and-f-to-represent-true-and-false-is-a-bad-idea"><span class="header-section-number">10</span> Trap: Using T and F to represent TRUE and FALSE is a bad idea</h2>
-<p>The terms <strong><em>TRUE</em></strong> and <strong><em>FALSE</em></strong> are reserved <span class="hl">keywords</span>in R (just like <strong><em>if, for, else</em></strong>…) – this means that <em><strong>TRUE</strong> and</em> <strong><em>FALSE</em></strong> are predefined and <span class="hl">cannot be used as variable names</span> in R.</p>
+<p>The terms <strong><em>TRUE</em></strong> and <strong><em>FALSE</em></strong> are reserved <span class="hl">keywords</span> in R (just like <strong><em>if, for, else</em></strong>…) – this means that <em><strong>TRUE</strong> and</em> <strong><em>FALSE</em></strong> are predefined and <span class="hl">cannot be used as variable names</span> in R.</p>
 <p>&nbsp;</p>
 <p>If you try to assign a value to a “variable” named <strong>TRUE</strong> or <strong>FALSE</strong>, you will get an <span class="hl">invalid (do_set) left-hand side to assignment</span> error (<a href="#fig-keywordError" class="quarto-xref">Figure&nbsp;9</a>).&nbsp; This is the same error you get if you try to assign a number to a number (i.e., 10 = 5).</p>
 <div id="fig-keywordError" class="fs quarto-float quarto-figure quarto-figure-left anchored">
