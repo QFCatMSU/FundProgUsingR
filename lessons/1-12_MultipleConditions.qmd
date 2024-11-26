@@ -6,8 +6,6 @@ short: "1-12"
 
 ### Changes
 
--   Choose & or && (have notes about this in OneDrive)
-
 ## Purpose
 
 -   Check for multiple conditions on variables
@@ -24,24 +22,28 @@ The files for this lesson:
 
 This lesson data has two new columns in it compared to the previous lesson's data -- so 14 obs. of ***7*** variables (instead of 5).  The new columns (***noonCondMessy*** and ***precipBad***) are copies of the previous columns with some issues added that are addressed in this lesson.
 
-![The new weatherData data frame with two new columns](images/R-1-11_NewDataframe.png){#fig-newDataframe .fs}
+![The new weatherData data frame with two new columns](images/R-1-12_NewDataframe.png){#fig-newDataframe .fs}
 
  
 
 If you have any questions about the material in this lesson, feel free to email them to the instructor, {{< var instructor.name >}}, at {{< var instructor.email >}}.
 
-## Logical Operators: AND (&, &&), OR (\|, \|\|)
+## Logical Operators: AND (&), OR (\|)
 
-In this lesson we are going to learn how to combine conditional statements in ***if()*** statements using two new operators: ***AND***, ***OR***.  ***AND*** is represented as one or two ampersands (***&***, ***&&***) and ***OR*** is represented as one or two pipe symbols (vertical lines: **\|**, **\|\|**).  For situations where you are checking one value at a time, the single and double operators have the same functionality.  We will cover the other situation later in this lesson.
+In this lesson we are going to learn how to combine conditional statements in ***if()*** statements using two new operators: ***AND***, ***OR***.  The symbol for the ***AND*** operator is the ampersand ( ***&*** ) and the symbol for the ***OR*** operator is the vertical pipe ( **\|** ).  For situations where you are checking one value at a time, the single and double operators have the same functionality.  We will cover the other situation later in this lesson.
+
+ 
+
+[Extension: & vs && and \| vs \|\|]
 
  
 
 The ***AND*** operator combines two conditional statements into one conditional statement with the rule:
 
--   if [both]{.hl}of the conditional statements are **TRUE** then the whole conditional statement is **TRUE**
+-   if [both]{.hl} of the conditional statements are **TRUE** then the whole conditional statement is **TRUE**
 
 ``` r
-if (condition1 AND condition2)
+if (condition1 & condition2)
 {
    # Execute the code between these curly brackets
    #   if both condition1 and condition2 are TRUE
@@ -50,10 +52,10 @@ if (condition1 AND condition2)
 
 The **OR** operator combines two conditional statements into one conditional statement with the rule:
 
--   if [either]{.hl}of the conditional statements are **TRUE** then the whole conditional statement is **TRUE**
+-   if [either]{.hl} of the conditional statements are **TRUE** then the whole conditional statement is **TRUE**
 
 ``` r
-if (condition1 OR condition2)
+if (condition1 | condition2)
 {
    # Execute the code between these curly brackets
    #   if either condition1 or condition2 is TRUE
@@ -90,9 +92,8 @@ for(i in 1:numDays)
   if(noonCond[i] == "Sunny")
   {
     sunnyDays = sunnyDays +1; # increases sunnyDays by 1
-  }
   # We use else if here because we know "Sunny" and "Rain" are mutually exclusive
-  else if(noonCond[i] == "Rain")
+  }else if(noonCond[i] == "Rain")
   {
     rainyDays = rainyDays +1; # increases rainyDays by 1
   }
@@ -146,7 +147,7 @@ sunnyOrRainyDays:   9
 In programming we need to be explicit when using multiple conditional statement:
 
 ``` r
-  if(noonCond[i] == "Sunny" | noonCond[i] == "Rainy")
+  if(noonCond[i] == "Sunny" | noonCond[i] == "Rainy")  # this is correct
 ```
 
 In English, it makes sense to ask: Is the day sunny or rainy?
@@ -156,12 +157,14 @@ In English, it makes sense to ask: Is the day sunny or rainy?
 And, naively, the code for this sentence would look like this:
 
 ``` r
-  if(noonCond[i] == "Sunny" | "Rain")
+  if(noonCond[i] == "Sunny" | "Rain")  # this in incorrect
 ```
 
 If you do this, you will get the error:
 
 [Error in noonCond\[i\] == "Sunny" \| "Rain" : invalid 'y' type in 'x \| y']{.hl}
+
+where ***x*** represent `noonCond[i] == "Sunny"` and ***y*** represents `"Rain"`
 
  
 
@@ -213,7 +216,7 @@ And, once again we get six:
 sunnyDays1:  6
 ```
 
-This is a brute force method! There are more robust way to check for different spelling using substrings and pattern recognition (i.e., ***substr()*** and ***grep()***).
+[Note: This is a brute force method for finding multiple spellings.]{.note} There are more robust way to check for different spelling using substrings and pattern recognition (i.e., ***substr()*** and ***grep()***), topics we will touch on later in this class.
 
 ## The AND operator
 
@@ -251,7 +254,7 @@ There were 2 days that were both over 60 and sunny:
 goOutDays:   2
 ```
 
-[Note: day 7 is 60 degrees and sunny but not counted here because the condition is ***greater than*** (but not equal to) 60]{.note}
+[Note: day 7 is 60 degrees and sunny but not counted here because the condition ( **\>** ) is ***greater than*** (but not equal to) 60]{.note}
 
 ### The NOT EQUAL operator
 
@@ -285,7 +288,7 @@ stayInDays:    5
 
 ### Mutually exclusive if() statement
 
-Since the two ***if()*** statements above (@fig-and-op-two-columns and @fig-reverse-cond-statement) have mutually exclusive conditions and use the exact some ***for*** loop, we can (and should) combine them into one ***if-else-if*** statement.  The following code is functionally the same but more efficient (i.e., faster):
+Since the two ***if()*** statements above (@fig-and-op-two-columns and @fig-reverse-cond-statement) have mutually exclusive conditions (i.e., there are no situations where both can be **TRUE**), we can (and should) combine them into one ***if-else-if*** statement.  The following code is functionally the same but more efficient (i.e., faster):
 
 ::: {#fig-mutually-exclusive-mult-cond}
 ``` r
@@ -294,8 +297,7 @@ for(i in 1:numDays)
   if(highTemps[i] > 60 & noonCond[i] == "Sunny")
   {
     cat("day", i, " good day to go out\n");
-  }
-  else if(highTemps[i] <= 50 & noonCond[i] == "Rain")
+  }else if(highTemps[i] <= 50 & noonCond[i] == "Rain")
   {
     cat("day", i, " good day to stay in\n");
   }
@@ -411,9 +413,9 @@ Day 7 has a value of -0.005
 Day 8 has a value of 49
 ```
 
-## Boolean vectors
+## Boolean vectors {#sec-booleanVec}
 
-Up until this point. we have been using conditional operators to check values individually.  We can also use conditional operators to check every value in a vector at once and create a TRUE/FALSE (Boolean) vector from the result.  To create these vectors, [you have to use the single operators (&, \|).]{.hl}
+Up until this point. we have been using conditional operators to check values individually.  We can also use conditional operators to check every value in a vector at once and create a TRUE/FALSE (Boolean) vector from the result.
 
  
 
@@ -443,7 +445,7 @@ niceDayBool   logi [1:14] FALSE FALSE FALSE FALSE...
 precipBool    logi [1:14] FALSE FALSE FALSE TRUE...
 ```
 
-We can look at ***sunnyDayBool*** and see that the index of **the** TRUE values match the index of "Sunny" days in ***noonCond***:
+We can look at ***sunnyDayBool*** and see that the index of **the** **TRUE** values match the index of "Sunny" days in ***noonCond*** (values 3, 6, 7, 12, 13, and 14):
 
 ``` {.r tab="Console"}
 > sunnyDayBool
@@ -470,6 +472,62 @@ Or, that 4 of the 14 days had some precipitation (rain or snow):
 [12] FALSE FALSE FALSE
 ```
 
+### Masking a dataframe
+
+A common use for a Boolean vector is to reduce (or mask) a dataframe to rows that meet a condition. We can create a dataframe that contains only the rows with sunny days using the Boolean vector ***sunnyDayBool***.
+
+::: {#fig-maskdf}
+``` r
+### Using a Boolean vector to "mask" a dataframe 
+sunnyDayWD = weatherData[sunnyDayBool,];
+```
+
+Masking a dataframe using \[X,Y\] subset notation
+:::
+
+In @fig-maskdf, we use \[X,Y\] notation to subset the dataframe with:
+
+-   ***sunnyDayBool*** subsets ***X*** (the rows) – so only rows where sunnyDayBool is TRUE will be in the subsetted dataframe
+
+-   nothing subsets ***Y*** (the columns) – so all columns will be in the subsetted dataframe
+
+ 
+
+The subsetted dataframe, ***sunnyDayWD*** has 6 rows, representing the 6 of the 14 rows (rows 3, 6, 7, 12, 13, and 14) from the original dataframe where ***noonCondition*** was **Sunny**:
+
+``` {.r tag="Console"}
+> sunnyDayWD
+    date highTemp lowTemp precipitation «noonCondition» noonCondMessy precipBad
+3  Mar29       54      46         0.040         Sunny           sun     0.040
+6   Apr1       58      45         0.000         Sunny         Sunny     0.000
+7   Apr2       60      32         0.005         Sunny         sunny    -0.005
+12  Apr7       54      43         0.004         Sunny         SUNNY     0.004
+13  Apr8       61      45         0.000         Sunny           Sun     0.000
+14  Apr9       75      63         0.000         Sunny           sun     0.000 
+```
+
+### Masking rows and columns
+
+We can use the \[X,Y\] notation to subset columns. The following code will also remove the precipitation column, which is column 4.
+
+``` r
+### Masking rows and columns
+sunnyDayWD2 = weatherData[sunnyDayBool, c(-4)];  # remove precipitation column (4)
+```
+
+And in the ***Console***, we see the same data with the ***precipitation*** column removed:
+
+``` {.r tag="Console"}
+sunnyDayWD2                                                          ")
+    date highTemp lowTemp noonCondition noonCondMessy precipBad
+3  Mar29       54      46         Sunny           sun     0.040
+6   Apr1       58      45         Sunny         Sunny     0.000
+7   Apr2       60      32         Sunny         sunny    -0.005
+12  Apr7       54      43         Sunny         SUNNY     0.004
+13  Apr8       61      45         Sunny           Sun     0.000
+14  Apr9       75      63         Sunny           sun     0.000
+```
+
 ## Application
 
 A\) Create *one* [**if-else-if**]{.hl} structure that checks for:
@@ -482,19 +540,27 @@ A\) Create *one* [**if-else-if**]{.hl} structure that checks for:
 
 -   Non-Sunny greater than 54
 
-In comments answer: Why do this as one ***if-else-if*** structure instead of 4 separate ***if*** statements? Give a specific example of where 4 separate ***if*** statement would not be ideal.
+In comments answer: Why do this as one ***if-else-if*** structure instead of 4 separate ***if*** statements?
 
  
 
-B\) Create a Boolean vector that finds all cloudy days in ***noonCondMessy*** (note different spellings)
+B\) Create a Boolean (logical) vector that finds all cloudy days in ***noonCondMessy*** (note different spellings)
 
  
 
-C\) Create an ***if()*** that combines all rainy, cloudy, and snowy days from ***noonCondition***.
+C\) Create a ***cloudyDays*** dataframe that:
+
+-   Only has the rows from weatherData where weather conditions were cloudy
+
+-   Removes the last 2 columns from ***weatherData*** (***noonCondMessy*** and ***precipBad***)
 
  
 
-D\) Find which days meet [all three]{.hl} of these conditions:
+D\) Create an ***if()*** that combines all rainy, cloudy, and snowy days from ***noonCondition***.
+
+ 
+
+E\) Find which days meet [all three]{.hl} of these conditions:
 
 -   ***lowTemps*** \> 40
 
@@ -504,7 +570,7 @@ D\) Find which days meet [all three]{.hl} of these conditions:
 
  
 
-E\) Use the following random number generator:
+F\) Use the following random number generator:
 
 ``` r
 randomTemp = sample(0:100, size=1);  # pick 1 random from 0 to 100
@@ -523,3 +589,57 @@ and create one ***if-else-if*** structure that outputs:
 -   "unusually warm" if ***randomTemp*** 60-80
 
 {{< include ../assets/_AppInstructions.qmd >}}
+
+## Extension: & vs && and \| vs \|\|
+
+R has two **AND** operators (**&** and **&&**) and two **OR** operators (**\|** and **\|\|**), which I will refer to as the [singles ]{.hl}and [doubles ]{.hl}operators.
+
+ 
+
+The big difference is that ***singles*** work on one or multiple values, whereas ***doubles*** only work on one vaule. In other words, you can replace ***singles*** with ***doubles*** for the whole lesson except in @sec-booleanVec, where we are working with a vector of values. In @sec-booleanVec, switching the ***singles*** with ***doubles*** will cause an error.
+
+ 
+
+At this point it seems there is no reason to use ***doubles*** if ***singles*** do everything and more. And for a beginner, this is enough information. However, as you get into more advanced programming, there are benefits to using ***doubles***.
+
+### doubles are more efficient
+
+In the following code, ***&*** will ***always*** check both if ***highTemps*** \> 50 and ***noonCond*** is Sunny:
+
+``` r
+  if(highTemps > 50 «&» noonCond == "Sunny") 
+```
+
+But if ***highTemps*** is less than 50 then there is no point to checking ***noonCond*** because the condition is already ***FALSE***.
+
+ 
+
+***&&*** will only check what is necessary to get the condition:
+
+``` r
+if(highTemps > 50 «&&» noonCond == "Sunny")
+```
+
+if ***highTemps*** is less than 50, && will not bother to check ***noonCond***.
+
+### doubles can used to avoid errors
+
+Another common usage of ***doubles*** is to check if a variable exists before checking the value of the variable. Here we are checking first to see if ***highTemps*** exists, then we will check if the value is greater than 50:
+
+``` r
+if( exists(highTemps) «&&» highTemps > 50 )  # will avoid errors
+```
+
+Because we are using ***&&***, if `exists(highTemps)` is ***FALSE***, the value of ***highTemps*** will not be checked.
+
+ 
+
+If we use ***&***, then the value of ***highTemps*** will be checked even if ***highTemps*** does not exist, causing an error in your script.
+
+``` r
+ if( exists(highTemps) «&» highTemps > 50 ) # error if highTemps does not exist
+```
+
+### singles and double in other programming languages
+
+In a lot of language, the ***doubles*** have a similar meaning to the ***singles*** in R. Just remember where you use ***singles*** in R, you are likely using ***doubles*** in other languages.
