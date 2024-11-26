@@ -121,3 +121,4 @@ if(highTemps[3] > 70)      # check for anything above 70
 {
   cat("  That is a usually cold for April!");   
 }
+
