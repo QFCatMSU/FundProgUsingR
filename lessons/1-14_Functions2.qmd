@@ -6,8 +6,9 @@ short: "1-14"
 
 ### Changes
 
--   set up an example before describing the counter function
--   consistency with & and &&
+-   Extension: combining all four error checks into one (or do this as an application?)
+
+-   Create a function with a count value
 
 ## Purpose
 
@@ -23,7 +24,7 @@ The files for this lesson:
 
 -   Script: [you can download the script here](../scripts/1-14_Functions2.R)
 
--   Second Script: [a second script containing functions can be downloaded here](../scripts/toolbox.R)
+-   Second Script: [a second script containing functions can be downloaded here](../scripts/1-14_myFunctions.R)
 
 -   Data: [download the data file here](../data/twoWeekWeatherData3.csv)
 
@@ -31,716 +32,554 @@ The files for this lesson:
 
 If you have any questions about the material in this lesson, feel free to email them to the instructor, {{< var instructor.name >}}, at {{< var instructor.email >}}.
 
-## Functions are independent of script files
+## Opening a script file
 
-Last lesson we used built-in R statistical functions (e.g., ***mean()***, ***median()***) and we created our own functions (e.g., ***isDivisible()***).  The statistical functions exists outside your script files and can be called from any script but ***isDivisible()*** only exists inside your script file.  In this lesson we will be creating more functions and making them available to any script file -- just like R's statistical functions.
-
-## Creating an external file for functions
-
-Functions are like tools in that they are called upon to perform some common task.  Since these tasks are going to be used by many other script files, it is useful to create a separate script that only contains functions.
+A reminder that anytime a script file is looking for some resource, (e.g., a data file, another script file), the script needs a starting point (i.e., a folder) to find the location of the resource. R calls this starting point the Working Directory. [When you are in an RStudio Project, the starting folder/Working Directory is the Project Folder.]{.hl} This is what makes an RStudio Project Folder easy to share – the code to link resources does not need to change when the Project Folder is shared.
 
  
 
-We are going to create a script that holds only functions, called ***toolbox.r***, and start by adding ***isDivisible()*** to it.
+The main script file for this lesson needs the functions within ***1-14_myFunctions.R***, which is in the ***scripts*** folder inside the Project Folder: `scripts/1_14-myFunctions.r`
 
  
 
-To do this:
+And we get the functions by calling:
 
-1\) In RStudio, create a new script file
-
-2\) Copy and paste the ***isDivisible()*** function (below) to the new script file
-
-3\) Save the file as  ***toolbox.r*** inside the ***scripts*** folder.
-
-::: {#fig-function-toolbox}
 ``` r
-# see if the first number is divisible by the second
-isDivisible = function(div1, div2)
+source("scripts/1-14_myFunctions.R") 
+```
+
+ 
+
+If the path is incorrect, either because the file name or folder path is incorrect, the line will give you the error:
+
+``` r
+cannot open file 'wrong_path/1-14_myFunctions.R': No such file or directory
+```
+
+or
+
+``` r
+cannot open file 'script/wrong_name.R': No such file or directory
+```
+
+[Note: uppercase/lowercase does not matter in the file path on Windows and Mac. However, case does matter on Linux, so keep that in mind when sharing your files.]{.note}
+
+## Modulus arithmetic
+
+All of the functions in this lesson use the modulus operator: ***%%***. The modulus operator divides the two numbers and returns only the remainder.
+
+ 
+
+Some examples:
+
+``` {.r tag="Console"}
+> 11 %% 4 
+[1] 3 
+> 12 %% 4 
+[1] 0 
+> 13 %% 4 
+[1] 1 
+> 14 %% 4 
+[1] 2
+```
+
+The modulus operator is often used in a ***for*** loop to perform a task at a regular interval. For instance, modulus can be used to check every 100^th^ value in a large vector (***val %% 100***).
+
+## Modulus operator and checking for divisibility
+
+We are going to use the ***%%*** operator to check if one number (the [divisor]{.hl}) evenly divides another number (the [dividend]{.hl}). If the divisor divides the dividend evenly, then the modulus will be **0** (i.e., no remainder). The function is called ***isDivisible()***.
+
+ 
+
+``` {.r tab="1-14_myFunctions"}
+isDivisible = function(dividend, divisor)
 {
-  remainder = div1 %% div2;
-  if(remainder == 0)
-  {
-    return(TRUE);
-  }
-  else
-  {
-    return (FALSE);
-  }
+  ### get the remainder of the division using modulus
+  remainder = dividend %% divisor;
+  ### Check if the remainder is 0
+  divBy0 = (remainder == 0);  # TRUE if 0, FALSE otherwise
+  
+  ### return whether the modulus was 0 (TRUE) or more than zero (FALSE)
+  return(divBy0);
 }
 ```
 
-Putting a function inside the toolbox.r script
-:::
+[Extension: Variable and function names do not matter... to R]
 
-Functions are like variables except they store codeblock instead of values.  If we click ***Source*** on ***toolbox.r*** the script does nothing except list the ***isDivisible()*** function (along with its arguments) in the ***Environment*** tab.  Once a function has been loaded into the ***Environment***, it can be called upon by the script.
+### A function that checks divisibility
 
-![Adding isDivisible() to a functions script called toolbox.r](images/R-1-13_toolbox.png){#fig-add-function-isdivisible .fs}
-
- 
-
-[Warning: Do not include **rm(list=ls())** in a functions script.]{.hl} This would clear the ***Environment*** of the calling script.
-
-## Using the functions
-
-We want any script file in our RStudio Project to be able to use the ***isDivisible()*** function that is included in ***toolbox.r***.  To do this, we need the outside script to include the function script, ***toolbox.r***.  We can do this using the ***source()*** function and the argument is the location and name of the script file you want to include.
-
- 
-
-This code tells R to execute (Source) everything in the ***toolbox.r*** file (which is in the ***scripts*** folder) -- so, ***toolbox.r***, and everything in it, is now part of your script and put into the ***Environment***:
+The first function in ***1-14_myFunctions.r*** has two arguments: ***dividend*** and ***divisor***.
 
 ``` r
-source(file = "scripts/toolbox.r");  # load script with isDivisible() function
+isDivisible = function(dividend, divisor)
 ```
 
-If you click ***Run*** on the line of code that ***source()*** is on then you will see ***isDivisible()*** appear in the ***Environment*** tab.
+The codeblock calculates the modulus of the dividend and the divisor (i.e., it divides the dividend by the divisor and returns the remainder)
+
+``` r
+remainder = dividend %% divisor;
+```
+
+Then the codeblock checks whether ***remainder*** is **0** and saves the results to ***divBy0***:
+
+``` r
+divBy0 = (remainder == 0); # TRUE if 0, FALSE otherwise
+```
+
+Finally, the codeblock returns ***divBy0*** to the caller:
+
+``` r
+return(divBy0);
+```
+
+### A Boolean return value
+
+***divBy0*** is a [Boolean value]{.hl}. In other words, ***divBy0*** can only have two possible values: **TRUE** and **FALSE**.
 
  
 
-[Extension: The many arguments in source()](#extension-the-many-arguments-in-source)
-
-### Using functions from other scripts
-
-Since everything inside ***toolbox.r*** is now part of this new script, we can call ***isDivisible()*** [as if it existed in our script]{.hl}.  The script below is from last lesson and will produce the same results in this script. 
+The Boolean value is created in this line:
 
 ``` r
-## from last lesson
-div12_4 = isDivisible(12,4);
+divBy0 = (remainder == 0);
+```
+
+`(remainder == 0)` compares ***remainder*** to **0**, just like it would if this were an ***if()*** statement. The results of this comparison is a Boolean ***TRUE/FALSE*** that is saved to the variable ***divBy0***.
+
+ 
+
+This line of code uses both the comparison operator ( **==** ) to created a Boolean values and the assignment operator ( **=** ) to save the Boolean value to a variable.
+
+### Testing isDivisible()
+
+We can pass in two arguments, the first representing the ***divisor***, and the second representing the ***dividend***:
+
+``` r
+div12_4 = isDivisible(12,4); 
 div12_5 = isDivisible(12,5);
-
-# better to put in argument names:
-div12_4a = isDivisible(div1=12, div2=4);
-div12_5a = isDivisible(div1=12, div2=5);
-
-# the order does not matter when you use argument names:
-div12_4b = isDivisible(div2=4, div1=12);
-div12_5b = isDivisible(div2=5, div1=12);
 ```
 
-![Calling isDivisible() from a separate script](images/R-1-13_Use_toolbox.png){#fig-call-function-sep-script .fs}
+And we get the results:
 
-### Common errors when reading other script files
-
-When calling another script file from your script you need to make sure the:
-
--   script name is spelled right
-
--   folder(s) names are spelled right
-
--   folder path is correct
-
- 
-
-If any of these are wrong then R will give you a *"*[Cannot open the connection]{.hl}*"* error when you ***Source*** the code.
-
- 
-
-You will also get this error if you [open your script file outside your RStudio Project]{.hl}.  This is because the Working Directory has not been set to your Project Folder and the folder path (***scripts/***) to ***toolbox.r*** is wrong.
-
-![Error calling the toolbox.r file because we are not in the RStudio Project](images/R-1-13_connection_error.png){#fig-error-call-outside-proj .fs}
-
-## Adding to our toolbox: the counter function
-
-Now we will add a new counter function to ***toolbox.r***.
-
- 
-
-***counter()*** will
-
--   count up all the values in a vector that meet a user-specified condition
-
--   return that count to the caller
-
- 
-
-So ***counter()***, when completed,will be able to do things like:
-
--   count all temperature values equal to 60 in the ***lowTemp*** vector
-
--   count all precipitation values greater than zero in the ***precip*** vector
-
--   count all values less than 50 in the ***highTemp*** vector
-
-### Adding counter() to toolbox.r
-
-In our first version of this function, ***counter()*** will count the number of values [in a vector]{.hl} that are greater than *a comparison value*.
-
- 
-
-This means there are *two arguments* for ***counter()***:
-
-1\) ***vector***: the numeric vector to be searched through
-
-2\) ***compareVal***: the value used for comparison when determining whether each of the elements meets the condition.
-
- 
-
-So, in ***toolbox.r***,  we will create a function called ***counter()*** that takes two arguments from the caller:
-
-``` r
-counter = function(vector, compareVal)  
-{
-
-}
+``` {.r tab="Environment"}
+div12_4:   TRUE
+div12_5:   FALSE
 ```
 
-Remember that ***vector*** and ***compareVal*** are arguments whose [values get assigned by the caller]{.hl}.
+We can also put in the argument names to make the functions more readable:
 
-### Going through each value in the vector
+``` r
+div12_4a = isDivisible(dividend=12, divisor=4); 
+div12_5a = isDivisible(dividend=12, divisor=5);
+```
 
-The first thing we want the function to do is to go through all the values in the vector that the caller supplied.
+And we get the same results:
+
+``` {.r tab="Environment"}
+div12_4a:   TRUE 
+div12_5a:   FALSE
+```
+
+Aside from readability, another advantage to using argument names is that you can put the arguments in any order you want:
+
+``` r
+div12_4b = isDivisible(divisor=4, dividend=12); 
+div12_5b = isDivisible(divisor=5, dividend=12);
+```
+
+``` r
+div12_4b: TRUE 
+div12_5b: FALSE
+```
+
+When calling ***isDivisible()***, it is fine to skip argument names but using argument names is a necessity for functions that have lots of arguments, [such as ***geom_boxplot()***](https://ggplot2.tidyverse.org/reference/geom_boxplot.html):
+
+## Prime function
+
+The function, ***isDivisible()***, performs the simple task of checking if one number is divisible by another number. We are going to expand that by checking whether the dividend can be evenly divided [by any number]{.hl}. In other words, we are checking to see if the dividend is a prime number. This function is called ***isPrime1()***.
 
  
 
-To do that we need to:
+[note: The method we are using to check for prime works but is very inefficient!]{.note}
 
-1.  find the number of values in the vector using ***length()***
-
-2.  create a ***for()*** that cycles through each value in the vector
-
-``` r
-counter = function(vector, compareVal)
+``` {.r tab="1-14_myFunctions.R"}
+isPrime1 = function(dividend)
 {
-  vecLength = length(vector);  # get the length of the vector
-  for(val in 1:vecLength)      # go through each value in vector
+  for(i in 2:(dividend-1))
   {
-    # counting script will go here
-  }
-}
-```
-
-We get the length of the vector in line 3 by using the ***length()*** function:
-
-``` r
-vecLength = length(vector);
-```
-
-and we use the length to give the number of cycles in the sequence ***1:vecLength***: 
-
-``` r
-for(val in 1:vecLength)
-```
-
-[Note: ***val*** will change each cycle of the ***for()*** going from **1** to ***vecLength.***]{.note}
-
-### Checking each value
-
-The ***for()*** will cycle through each value in the vector value, using ***val*** as the index.  Now we need to check each vector value against ***compareVal***.
-
- 
-
-Inside the ***for()***, we check each indexed value to see if it is greater than the value given by the caller:
-
-``` r
-counter = function(vector, compareVal)
-{
-  vecLength = length(vector);  # get the length of the vector
-  for(val in 1:vecLength)      # go through each value in vector
-  {
-    # check if the vector value is greater than the compareVal
-    «if(vector[val] > compareVal)»
+    if(dividend %% i == 0)
     {
-      # add one to the count
+      ## number can be divided evenly by another number -- return FALSE
+      return(FALSE);
     }
   }
+  ## number cannot be divided evenly by another number -- return TRUE
+  return(TRUE);
 }
 ```
 
-### Creating a count value
+### Parts of the ***isPrime()*** function
 
-Now we need a way to capture how many times the value from the vector was greater than the one supplied by the caller.
+The header of the function only has one argument this time: the value you want to check for prime:
+
+``` r
+isPrime1 = function(dividend)
+```
+
+To check if ***dividend*** is prime, you need to go through all numbers smaller than ***dividend***, starting with 2. If none of those values evenly divide ***dividend*** then ***dividend*** is prime.
 
  
 
-So we need a[state variable]{.hl} that will hold the count -- we will call it ***countVal*** and initially assign ***countVal*** the value of **0**.
+We check all possible divisors with a ***for*** loop that cycles from 2 to one less than ***dividend***:
 
 ``` r
-countVal = 0;
+for(i in 2:(dividend-1))
 ```
 
-[Note: If there are no values in the vector or if no values in the vector are greater than the ***compareVal***, ***counter()*** will return ***0*** to the caller.]{.note}
+Inside the ***for*** loop, we takes the modulus of the dividend against the current ***for*** loop cycle value (`i`):
+
+``` r
+if(dividend %% i == 0)
+```
+
+If any modulus is **0**, then we know a number evenly divides ***dividend*** and ***dividend*** cannot be prime. At this point we do not need to check any more values and can immediately return ***FALSE*** back to the caller.
+
+``` r
+  return(FALSE);  #dividend is not prime
+```
+
+If the ***for*** loop cycles through all of the values, and the modulus is never **0**, then we know ***dividend*** is prime and return ***TRUE*** to the caller:
+
+``` r
+return(TRUE);    #dividend is prime
+```
+
+### Two return locations
+
+This function has two places where it calls ***return()***.
+
+1.  In the ***for*** loop if the modulus is **0**. At this point we know the dividend cannot be prime because another number evenly divides it. We can immediately end the function and return ***FALSE*** to the caller (i.e., the dividend is not prime)
+2.  At the end of the function after the ***for*** loop. If the ***for*** loop cycles through every number and none evenly divide the dividend then we know the dividend has to be prime and return ***TRUE*** to the caller.
 
  
 
-***countVal*** is increased by one each time the following conditional statement is ***TRUE***:
+[Note: There is no way both ***return()*** can be executed in one function call.]{.note}
+
+### Checking for prime
+
+We will call the function multiple times with different dividends. You can convince yourself that the function is correctly declaring prime numbers:
 
 ``` r
-if(vector[val] > compareVal)
+p0 = isPrime1(13);
+p1 = isPrime1(14);
+p2 = isPrime1(81);
+p3 = isPrime1(dividend=83);
+p4 = isPrime1(dividend=87);
+p5 = isPrime1(dividend=89);
 ```
 
-Increasing ***countVal*** by one is the same as saying *"assign the value **(countVal** + 1) to **countVal**":*
+[Note: the first (and only) argument is ***dividend***. We can either explicitly name the argument or have R assume the one value is for the first argument.]{.note}
 
-``` r
-countVal = countVal + 1;  # intermediate states for countVal
+``` {.r tab="Environment"}
+p0: TRUE
+p1: FALSE
+p2: FALSE
+p3: TRUE
+p4: FALSE
+p5: TRUE
 ```
 
-Putting all the code together:
+## Error checking
 
-``` r
-counter = function(vector, compareVal)
-{
-  vecLength = length(vector);  # get the length of the vector
-  «countVal = 0;»                # initialize the count to 0
-  for(val in 1:vecLength)      # go through each value in vector
+The assumption when someone calls ***isPrime1()*** is that the caller will send a valid integer as an argument. It is not a good strategy to assume this will be true as there are many other types of value the caller can pass in:
+
+-   A vector of values (i.e., multiple values)
+
+-   A non-numeric value (e.g., a string or Boolean value)
+
+-   A negative value
+
+-   A decimal value
+
+ 
+
+***isPrime2()*** is the same as ***isPrime1()*** except that ***isPrime2()*** first does a series of checks using an ***if-else-if*** structure. If any of the statements are ***TRUE*** (i.e., the argument is an invalid value) then the function will return an error message and end:
+
+``` {.r tab="1-14_myFunctions.R"}
+  ### Error checking the argument value
+  if(length(dividend) > 1)         # error check 1: too many values
   {
-    # check if the vector value is greater than the compareVal
-    if(vector[val] > compareVal)
-    {
-      «countVal = countVal + 1;» # add one to the count
-    }
+    return("Error: too many values");
   }
-}
+  else if (!is.numeric(dividend))  # error check 2: value not numeric
+  {
+    return("Error: value is not numeric");
+  }
+  else if (dividend < 0)           # error check 3: value is negative
+  {
+    return("Error: value must be positive");
+  }
+  else if (dividend %% 1 != 0)     # error check 4: value is a decimal
+  {
+    return("Error: value must be an integer");
+  }
 ```
 
-### Returning the count to the user
+A truly robust function will first check to make sure the arguments are valid using some sort of error checking.
 
-The last step is to return the final state of ***countVal*** to the caller using the ***return()*** function. 
+### The error checks:
+
+There are four error checks:
+
+1\) Check to see if the argument has more than one value
 
 ``` r
-counter = function(vector, compareVal)
-{
-  vecLength = length(vector);  # get the length of the vector
-  countVal = 0;                # initialize the count to 0
-  for(val in 1:vecLength)      # go through each value in vector
-  {
-    if(vector[val] > compareVal)
-    {
-      countVal = countVal + 1; # add one to the count
-    }
-  }
-  «return(countVal);»  # return the count value to the caller
-}
+if(length(val) > 1)         # error check 1: too many values
 ```
 
-\[Extension: Using which() instead of for() and if()\]
+2\) Check to see if the argument is not a numeric value:
+
+``` r
+else if (!is.numeric(val))  # error check 2: value not numeric
+```
+
+3\) Check to see if the argument is a negative value:
+
+``` r
+else if (val < 0)           # error check 3: value is negative
+```
+
+4\) Check to see if the number is a decimal (i.e., not an integer):
+
+``` r
+else if (val %% 1 != 0)     # error check 4: value is a decimal
+```
+
+The first three checks are self-explanatory. The last one is a bit trickier as R does not have a dedicated check for integers. [Note: R has a function named ***is.integer()***, but this function only checks if the number has been explicitly declared an integer, something the caller is unlikely to do.]{.note}
 
  
 
-The [return value]{.hl}is the function's output for your inputs (i.e., the arguments).  This is like doing a mathematical operation in the ***Console*** -- you call a function (in this case, multiplication), with two arguments (**5** and **7**), and the output is the return value from the function (**35**).
+The trick we use is to perform a modulus between the dividend and **1**. If the dividend is a decimal then the decimal is the answer to a modulus by ***1***. You can convince yourself of this in the ***Console***:
 
 ``` {.r tab="Console"}
-> 5*7
-[1] 35
+> 5.5 %% 1 
+[1] 0.5 
+> 8.333 %% 1 
+[1] 0.333 
+> 10 %% 1 
+[1] 0 
+> 12.99 %% 1 
+[1] 0.99
 ```
 
-## toolbox.r code
+### Testing the error checking
 
-Your ***toolbox.r*** file should look like this:
+We will check for the four errors and test valid values to make sure we have not lost the functionality of the original ***isPrime1()***:
 
 ``` r
-# see if the first number is divisible by the second
-isDivisible = function(div1, div2)
-{
-  remainder = div1 %% div2;
-  if(remainder == 0)
-  {
-    return(TRUE);
-  }
-  else
-  {
-    return (FALSE);
-  }
-}
-
-counter = function(vector, compareVal)
-{
-  vecLength = length(vector);  # get the length of the vector
-  countVal = 0;                # initialize the count to 0
-  for(val in 1:vecLength)      # go through each value in vector
-  {
-    if(vector[val] > compareVal)
-    {
-      countVal = countVal + 1; # add one to the count
-    }
-  }
-  «return(countVal);»  # return the count value to the caller
-}
+e1 = isPrime2(c(10,34)); # too many values 
+e2 = isPrime2("hello");  # not numeric 
+e3 = isPrime2(FALSE);    # not numeric 
+e4 = isPrime2(-35);      # negative numeric 
+e5 = isPrime2(74.24);    # decimal numeric 
+e6 = isPrime1(13);       # valid -- and prime 
+e7 = isPrime1(14);       # valid -- and not prime 
+e8 = isPrime1(81);       # valid -- and not prime
 ```
-
-## Calling the function
-
-Now we have the ***counter()*** function in ***toolbox.r*** and we have included,using ***source()***,  ***toolbox.r*** in our script, we can use ***counter()***.
-
- 
-
-The following script makes 3 calls to ***counter()*** and assigns the return value to a variable (***count1***, ***count2***, and ***count3***):
-
-``` r
-weatherData = read.csv("data/twoWeekWeatherData.csv");
-highTemps = weatherData$highTemp;
-lowTemps = weatherData$lowTemp;
-
-count1 = counter(vector = highTemps, compareVal = 45);
-count2 = counter(vector = highTemps, compareVal = 55);
-count3 = counter(lowTemps, 40);
-```
-
-In the ***Environment***, you can see that:
-
--   the number of ***highTemp*** values greater than 45 is ***10*** (***count1***)
-
--   the number of ***highTemp*** values greater than 55 is ***5*** (***count2***)
-
--   the number of ***lowTemp*** values greater than 40 is ***9*** (***count3***)
-
-``` {.r tag="Environment"}
-count1     10
-count2      5
-count3      9
-```
-
-[Note: you can be explicit and use the argument names in the function call (e.g., **count1, count2**) or just put the values in the call (e.g., **count3**).]{.note}  If you just put in the values, make sure you put them in the right order.  In my opinion it is best to use argument names, they make the code more readable and easier to debug.
-
- 
-
-[Trap: Putting arguments values in the wrong order]
-
-## Allowing for more conditional operators
-
-As of right now, ***counter()*** only uses the greater than ( ***\>*** ) conditional operator when comparing the vector values to another value.  We want to make the ***counter()*** more robust by allowing the user to choose other conditional operators.
-
- 
-
-For the next example we will create a new function called ***counter2()*** and give it the ability to compare vector values with a comparison value using one of three conditional operators: greater than (**\>**), less than (**\<**), or equal to (**==**).
-
- 
-
-To do this, [we need a third argument in ***counter2()***]{.hl}, which we will call ***conditionalOp*** and we will set the default value for ***conditionalOp*** to greater than (**\>**).  So, if the caller does not assign a value to ***conditionalOp*** then the default value will be "\>".
-
-``` r
-counter2 = function(vector, compareVal, conditionalOp=">")
-```
-
-### if-else-if to check for the operation
-
-The code will allow for three values to be assigned to the argument ***conditionOp***: "\>",  "\<", and "==".
-
- 
-
-This means the script needs to check for each possible ***conditionOp*** using an ***if-else-if*** structure.
-
- 
-
-But we also need to determine if the value meets the condition -- this is given by ***conditionOp***.
-
- 
-
-The three multiple-conditions situations that need to be checked are:
-
-1.  if ***conditionalOp*** is "\>" ***and*** the vector's *value is greater than* ***compareVal***
-
-2.  else if ***conditionalOp*** is "\<" ***and*** the vector's *value is less than* ***compareVal***
-
-3.  else if ***conditionalOp*** is "==" ***and*** the vector's *value is equal to **compareVal***
-
- 
-
-Putting the code together (in the **toolbox.r** file):
-
-``` r
-counter2 = function(vector, compareVal, conditionalOp=">")
-{
-  vecLength = length(vector);  # get the length of the vector
-  countVal = 0;                # initialize the count to 0
-  for(val in 1:vecLength)      # go through each value in vector
-  {
-    if(«conditionalOp == ">"» & vector[val] «>» compareVal)
-    {
-      countVal = countVal + 1; # add one to the count
-    }
-    else if(«conditionalOp == "<"» & vector[val] «<» compareVal)
-    {
-      countVal = countVal + 1; # add one to the count
-    }
-    else if(«conditionalOp ==» "==" & vector[val] «==» compareVal)
-    {
-      countVal = countVal + 1; # add one to the count
-    }
-  }
-  return(countVal);    # return the count value to the caller
-}
-```
-
-[Extension: Checking for invalid values]
-
-## Calling the updated function
-
-[Make sure you save your functions script before sourcing it.]{.hl}***\
-***
-
-The first test will be to make sure ***counter2()*** can repeat what ***counter()*** did, which it can because the default value for ***conditionalOp*** is ***\>***:
-
-``` r
-count1a = counter2(vector = highTemps, compareVal = 45);
-count2a = counter2(vector = highTemps, compareVal = 55);
-count3a = counter2(lowTemps, 40);
-```
-
-And we see we get the same values using ***counter2()*** as we got with ***counter()***:
 
 ``` {.r tab="Environment"}
-count1     10
-count1a    10
-count2      5
-count2a     5
-count3      9
-count3a     9
+e1: "Error: too many values"
+e2: "Error: value is not numeric"
+e3: "Error: value is not numeric"
+e4: "Error: value must be positive"
+e5: "Error: value must be an integer"
+e6: TRUE
+e7: FALSE
+e8: FALSE
 ```
 
-### Using the conditionalOp argument
+## Multiple return values
 
-Now let's assign values to the ***conditionalOp*** arguments:
+All the functions we have created so far in the past two lessons have returned one value, either a single Boolean value, or a single numeric value.
+
+ 
+
+We are going to create a function that returns an undetermined number of values. Specifically, we are going to modify the ***isPrime1()*** to return all factors of the dividend supplied by the caller. For example, **12** can be divided by **2, 3, 4**, and **6** so the return has 4 values: `c(2,3,4,6)`.
+
+ 
+
+The function is called ***findFactors()***:
+
+``` {.r tab="1-14_myFunctions.R"}
+findFactors = function(val)
+{
+  ### Store the factors here
+  factors = c();
+  
+  for(i in 2:(val-1))
+  {
+    if(val %% i == 0)
+    {
+      ## number can be divided evenly by another number 
+      ## insert this number as a factor
+      factors = c(factors, i);
+    }
+  }
+  ## number cannot be divided evenly by another number -- return TRUE
+  return(factors);
+}
+```
+
+### Storing multiple values
+
+We start the function by creating the vector that will store the values returned to the caller:
 
 ``` r
-count4 = counter2(vector = lowTemps, compareVal = 40, conditionalOp = "<");
-count5 = counter2(vector = highTemps, compareVal = 54, conditionalOp = "==");
-count6 = counter2(lowTemps, 38, "==");
-count7 = counter2(highTemps, 60, ">");
+### Store the factors here (starts as a NULL vector)
+factors = c();
 ```
 
--   ***count4*** and ***count5*** explicitly assign values to the three arguments (***vector***, ***compareVal***, and ***conditionalOp***)
+***factors*** starts as an empty, or ***NULL***, vector. And a ***NULL*** vector will be returned to the caller if ***dividend*** is prime (i.e., ***dividend*** has no factors).
 
--   ***count6*** and ***count7*** pass in the values without the argument name (so, they need to be in order)
+ 
+
+The ***for*** loop still cycles from ***2*** to one less than ***dividend*** and checks if the modulus is ***0***. Every time the modulus is 0, the value that evenly divides ***dividend*** is inserted in the ***factors*** vector:
+
+``` r
+  for(i in 2:(dividend-1))
+  {
+    if(val %% i == 0)
+    {
+      ## number can be divided evenly by another number 
+      ## insert this number as a factor
+      factors = c(factors, i);
+    }
+  }
+```
+
+### Adding values to a vector
+
+This line says that ***factors*** is equal to a vector of itself plus the ***i*** value that we just calculated to be a factor:
+
+``` r
+factors = c(factors, i);
+```
+
+In other words, the code above creates a new vector that is the old vector with the ***i*** value inserted at the end.
+
+### Returning the factors
+
+After cycling through all the values in the ***for*** loop, we return the ***factors*** vector to the caller:
+
+``` r
+return(factors);
+```
+
+***factors*** will either be ***NULL*** (***dividend*** is prime), or have a list of all factors of ***dividend***.
+
+### Testing findFactors()
+
+We will test ***findFactors()*** with values that we know are prime (13, 83), values we know are not prime (14, 81, 87), and one value that has many factors (72):
+
+``` r
+f0 = findFactors(dividend=13);
+f1 = findFactors(14);
+f2 = findFactors(dividend=81);
+f3 = findFactors(83);
+f4 = findFactors(dividend=87);
+f5 = findFactors(72);
+```
+
+And we get ***NULL*** for the dividends that are prime or a list of factors for the non-prime dividends:
 
 ``` {.r tab="Environment"}
-count4     4
-count5     2
-count6     1
-count7     2
+f0: NULL
+f1: int [1:2] 2 7
+f2: int [1:3] 3 9 27
+f3: NULL
+f4: int [1:2] 3 29
+f5: int [1:10] 2 3 4 6 8 9 12 18 24 36
 ```
-
-## When to add default values to arguments
-
-There is no hard and fast rule for when you should have a default value in the argument -- it is more of an art than a science.
-
- 
-
-The situations which has obvious rules are:
-
--   Do not use a default value for data points (e.g., ***vector*** in ***counter2()***).  You are just guessing data points that are going to be wrong.
-
--   Use a default value when you know a value represents the most commonly used option. So, use ***conditionalOp="\>"*** if you know that "\>" will be used more than any of the other options.
-
- 
-
-Every other situation falls in the gray area between the two ends:
-
--   You could set the ***compareVal*** to default value of **0**.  It is a reasonable value-- arguably the most reasonable value out of the infinite options.  However, it is unlikely to be the value the caller will want to use.
-
--   If you are unsure which option for ***conditionalOp*** will be most used, you still can set it to a default value.  It is reasonable to use a default value for an argument that has a smallish number of possible options.
 
 ## Application
 
-Most of the work in this application will be done in your ***toolbox.r*** script, but [you need to call and test the functions in ***toolbox.r*** from you ***app1-14.r*** script]{.hl}.
+1\) For this application you need two scripts:
+
+-   a functions script named ***app1-14_functions.r*** that contains the functions created in this application
+
+-   a main script named ***app1-14.r*** where you will answer questions in comments and use and test the functions created in this application
+
+-   [Make sure you test all the functions thoroughly in your main script.]{.hl} I want to see the test code.
+
+-   ***source()*** your functions script from the main script
 
  
 
-1\) Create a script named ***app1-14.r*** in your ***scripts*** folder.  In that script file, call the ***toolbox.r*** script.
+2\) In comments answer: Why is ***factors*** created as an empty vector in ***findFactors()*** before it is used in the ***for*** loop? What happens if ***factors*** is not created first? Why?
 
  
 
-2\) extend the ***counter2()*** function in ***toolbox.r*** to include three more conditions:
+3\) For the function: ***isPrime1()***
 
--   greater than or equal to (\>=)
-
--   less than or equal to (\<=)
-
--   not equal to (!=)
-
-Test the 3 new conditions in ***app1-14.r***
+-   copy ***isPrime1()*** to your function script for this application
+-   Fix the function so it can correctly handle the numbers 0, 1, and 2 (0 and 1 are not prime, 2 is prime)
+-   Make the function more efficient by having the ***for*** loop cycle from 2 to the square root of ***dividend*** (yes, this works)
+    -   [note: the ***for*** loop will ignore the decimal in the square loop value]{.note}
 
  
 
-3\) Add an error condition to ***counter2()*** if the caller gives an invalid conditional operator value.
+3\) Create a function to checks a vector of numbers to see which of those numbers are divisible by 7, 11, or 13
 
-Test the error condition in ***app1-14.r***
+-   The function has one argument: a vector a values
 
- 
-
-4\) Create a function in ***toolbox.r*** that checks to see if [at least one value]{.hl} in a vector is (a) greater than, (b) equal, or (c) less than a given value.
+-   The function return all the values in the vector that can be evenly divided by 7, 11, or 13
 
  
 
-So, just like ***counter2()***, this new function will take in three arguments:
+4\) Create a function that check if modulus of two numbers is a value given by caller:
 
--   vector with numeric data
+-   The function has three arguments: ***dividend***, ***divisor***, ***remainder***
 
--   conditional operator (==, \<, or \>)
+-   The function will check to see if the modulus of ***dividend*** and ***divisor*** is equal to the ***remainder*** and return ***TRUE*** or ***FALSE*** based on this
 
--   comparison value
+-   Have the function return an error if (1) any of the numbers are zero or negative or (2) ***remainder*** is bigger than ***divisor***
 
-But, the function will only return ***TRUE*** or ***FALSE***
-
--   ***TRUE*** if any value in the vector meets the condition
-
--   ***FALSE*** if no values in the vector meet the condition
-
-Make sure to test the function from your ***app1-14.r*** script.
+-   Have the function set a default value for ***remainder***
 
  
 
-5\) Create a function in ***toolbox.r*** that calculates the Mean Square Error (MSE) of a vector (V) of numeric values.
+5\) Create one function that converts a temperature value from/to Celsius (C), Fahrenheit (F), or Kelvin (K). There are six possible conversions ($K = C + 273$ and $F=\frac{9}{5} C+32$):
 
-$$
-M S E=\frac{1}{n} \sum_{i=1}^{n}\left(V_{i}-\operatorname{mean}(V)\right)^{2}
-$$
+a\) F -\> C
 
-A good middle step for this problem is to calculate the mean of the vector using a ***for*** loop (i.e., add all the vector values using a ***for*** loop and then divide by the length of the vector).
+b\) C -\> F
 
-### Tips for question 4
+c\) F -\> K
 
--   ***n*** is the same as the length of the vector
+d\) C -\> K
 
--   Use the ***mean()*** function to find the mean of the vector.
+e\) K -\> C
 
--   Create a state variable that hold the total value
+f\) K -\> F
 
--   Use a ***for*** loop to cycle through each value in the vector.  For each value you want to calculate $\left(V_{i}-\operatorname{mean}(V)\right)^{2}$ and add that to the total value
-
--   After you get the total, divide it by the length of the vector
-
- 
-
-**Example** If you have:
-
-``` r
-vec = c(8, 11, 9, 4);
-```
-
-then the ***mean(vec) = 8*** and
-
-$$
-M S E=\frac{(8-8)^{2}+(11-8)^{2}+(9-8)^{2}+(4-8)^{2}}{4}=6.5
-$$
+-   You need an argument for the temperature values.
+-   There are multiple ways to allow the user to choose the conversion, probably the most robust is to have a ***from*** and a ***to*** argument.
 
 {{< include ../assets/_AppInstructions.qmd >}}
 
-## Extension: The many arguments in source() {#extension-the-many-arguments-in-source}
+## Extension: Variable and function names do not matter... to R
 
-When you look at ***source()*** in the ***Help*** tab, you can see that ***source()*** has many arguments.  If you look more carefully, you can see that all the arguments except two has a default value (***file*** and ***exprs***).   The first without a default value is ***file***, which makes sense because there is no way ***source()*** could, by default, guess what file you are calling -- a default value would most likely cause a file-not-found error.
-
- 
-
-***exprs*** is complicated but it is an alternative to ***file*** and is ignored if ***file*** has a value.
-
- 
-
-The rest of the arguments can be used to tweak the way ***source()*** operates but they are rarely used.  You can look underneath for a description of all of the arguments -- and what the default value means.
-
-![The source() function with its many arguments -- all but file has a default value](images/R-1-13_Source.png){#fig-source-in-help .fs}
-
-Default values allow you to add arguments to a function, making the function more flexible, without increasing the complexity for the user.  The average user can ignore everything except ***file*** whereas the advanced user has many more dials that they can tweak.
-
-## Extension: Checking for invalid values
-
-One situation that can occur when checking for conditional operators is that the caller provided an invalid operator.
-
- 
-
-Let's say we have the situation:
-
-1.  the valid operators are: **\<, \>, ==**
-
-2.  the caller gave the operator: **\@**
-
- 
-
-First, we want to create a conditional statement that checks to see if the operator is invalid.  There are two ways to do this.  The first is to check to see if the operator is valid and invert the conditional statement using the ( **!** ) operator:
+Variable and function names are generally chosen to make it easier for the reader to understand the script.  But R could care less what names you use.  The following script executes the exact same calculation and returns the exact same ***TRUE/FALSE*** values as ***isDivisible()*** -- it just uses variable and function names that are not intuitive to the user.  Do not do this in your script!
 
 ``` r
-if( «!(»conditionalOp == ">" | conditionalOp == "<" | conditionalOp != "=="«)» )
+do_stuff = function(a_number, another_number)
 {
-  cat("Sorry, ", conditionalOp, " is not a valid operator");
-}
-```
-
-The conditional statement first checks the inner parentheses.  The ***or*** operator ( **\|** ) means inner parentheses will be ***TRUE*** if ***conditionalOp*** is any of the three operators given.  The ***not*** operator ( **!** ) inverts that condition to **FALSE**.  This means the code attached to the ***if()*** will be executed only if ***conditionalOp*** is ***not*** any of the three.
-
- 
-
-There is a second way we can write the conditional statement using the ***and*** operator ( **&** ):
-
-``` r
-if(conditionalOp «!=» ">" «&» conditionalOp «!=» "<" & conditionalOp «!=» "==")
-{
-  cat("Sorry, ", conditionalOp, " is not a valid operator");
-}
-```
-
-The ***&*** operator says that all three conditions must be ***TRUE*** in order for the conditional statement to be ***TRUE***.  The three conditions all involve the ***not equal to*** operator.  So, the conditional statement is ***TRUE*** if ***conditionalOpis not equal*** to all the three operators given.
-
- 
-
-In mathematical parlance, the two conditional statements above are [contrapositives]{.hl}.  In other words, two operations were reversed and the result stays the same.
-
- 
-
-We will often first check for invalid values in an ***if-else*** structure.  This is because there is no point in making any of the other check if the ***conditionOp*** is not valid.
-
-``` r
-counter = function(vector, compareVal, conditionalOp=">")
-{
-  vecLength = length(vector);  # get the length of the vector
-  countVal = 0;                # initialize the count to 0
-  for(val in 1:vecLength)      # go through each value in vector
-  {
-    «if(conditionalOp != ">" && conditionalOp != "<" && conditionalOp != "==")»
-    {
-      cat("Sorry, ", conditionalOp, " is not a valid operator");
-    }
-    else if(conditionalOp == ">" && vector[val] > compareVal)
-    {
-      countVal = countVal + 1; # add one to the count
-    }
-    else if(conditionalOp == "<" && vector[val] < compareVal)
-    {
-      countVal = countVal + 1; # add one to the count
-    }
-    else if(conditionalOp == "==" && vector[val] == compareVal)
-    {
-      countVal = countVal + 1; # add one to the count
-    }
-  }
-  return(countVal);    # return the count value to the caller
-}
-```
-
-## Trap: Putting arguments values in the wrong order
-
-``` r
-rm(list=ls()); options(show.error.locations = TRUE);
-source("scripts/toolbox.r");   # load functions from toolbox.r file
-
-weatherData = read.csv("data/LansingWeather3.csv");
-highTempData = weatherData[ ,"highTemp"];
-lowTempData = weatherData[ ,"lowTemp"];
-
-count1 = counter(vector = highTempData, compareVal = 50);
-count2 = counter(vector = highTempData, compareVal = 60);
-count3 = counter(«40, lowTempData»);  # problem here!
-```
-
-Unfortunately, executing this script causes no errors.  ***counter()*** happily tries to compare what it thinks is the one-value vector (***40***) to the value of ***lowTempData***.  And the answer it gets for ***count3*** is ***0***.  This is because ***counter()*** can only use one comparison value -- so it uses the first value in the ***lowTempData***, which is ***45***.  **40** is not greater than **45**, so the answer is **0**.  If the first value in ***lowTempData*** is less than **40**, then ***count3*** will be **1**.
-
- 
-
-Either way, this is not what you want.  So, be careful when you don't use names to keep the argument values ordered correctly -- or be safe and use argument names.
-
-## Extension: Using ***which()*** instead of for() and if()
-
-***which()*** is essentially a ***for()*** loop and an ***if()*** statement wrapped into one command.  In this case, ***which()*** cycles through all values in the ***vector*** and performs a conditional operation on each to see if they are greater than the ***compareVal***.
-
- 
-
-***gtVals*** is a vector that contains all the indexes that met the condition.  So, if ***vector*** values 3, 5, 7, and 9 were greater than the ***compareVal***, ***gtVal*** would be ***c(3,5,7,9)***.  The length of ***gtVal*** would be **4**.
-
-``` r
-counter = function(vector, compareVal)
-{
-  # gives the index for all values in the vector that meet the condition
-  gtVals = which(vector > compareVal); 
-
-  # returns the length, or number of values, that met the condition
-  return(length(gtVals)); 
+  ### get the remainder of the division using modulus
+  the_answer = a_number %% another_number;
+  ### Check if the remainder is 0
+  thing_to_return = (the_answer == 0);  # TRUE if 0, FALSE otherwise
+  
+  ### return whether the modulus was 0 (TRUE) or more than zero (FALSE)
+  return(thing_to_return);
 }
 ```
