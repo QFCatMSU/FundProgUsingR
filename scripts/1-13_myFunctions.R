@@ -58,9 +58,3 @@ mean_adv = function(vec, removeNA = FALSE)
   ### return the mean value to the caller
   return(meanVal);
 }
-
-mean_adv(vec=c(1,5,2,3,4));
-mean_adv(vec=c(1,5,2,3,4));
-mean_adv(vec=c(1,5,NA,3,NA), removeNA = TRUE);
-mean_adv(vec=c(1,5,NA,3,NA), removeNA = FALSE);
-mean_adv(vec=c(1,5,NA,3,NA));   ## removeNA is, by default, FALSE

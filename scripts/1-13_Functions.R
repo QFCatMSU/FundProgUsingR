@@ -1,88 +1,26 @@
-{
-  rm(list=ls());  # cleans out the Environment every time the code is executed
-  options(show.error.locations = TRUE);  # show the line number of errors in the Console
-  
-  #### functions need to go at the top of your script
-  # function to convert Fahrenheit temperatures to Celsius
-  convertFtoC = function(fTemp)     # argument: values given by the caller to convert
-  {
-    celTemp = (5/9) * (fTemp - 32); # the argument is used as part of the calculation
-    return(celTemp);   # the results of the calculation are sent back to the caller           
-  }
-  
-  # function to see if the first number is divisible by the second
-  #   using the modulus operation ( %% )
-  isDivisible = function(div1, div2)  # arguments given by caller
-  {
-    remainder = div1 %% div2;  # calculating the modulus
-    if(remainder == 0)         # div2 divides div1 evenly (no remainder)
-    {
-      return(TRUE);
-    } 
-    else                       # div2 does not divide div1 (there is a remainder)
-    {
-      return(FALSE);
-    }
-  }
-  
-  ### read in data from  twoWeekWeatherData.csv
-  weatherData = read.csv(file="data/twoWeekWeatherData3.csv", 
-                         sep=",",
-                         header=TRUE, 
-                         stringsAsFactors = FALSE);  
-  
-  # single value conversions:
-  F1 = 50;     C1 = (5/9)*(F1 - 32);
-  F2 = 212;    C2 = (5/9)*(F2 - 32);
-  
-  # multiple value conversion:
-  F3 = c(0,50,100,150);               # has 4 values
-  C3 = (5/9)*(F3 - 32);
-  F4 = seq(from=100, to=10, by=-10);  # has 10 values
-  C4 = (5/9)*(F4 - 32);
- 
-  # convert column from data frame
-  F5 = weatherData$highTemp;
-  C5 = (5/9)*(F5 - 32);      # has 14 values
-  F6 = weatherData$lowTemp;
-  C6 = (5/9)*(F6 - 32);      # has 14 values
-  # the 2 lines above can be combined:  
-  #    C6 = (5/9)*(weatherData$lowTemp - 32);
-  
+rm(list=ls());  
 
-  
-  # calling the conversion function with argument names
-  C2b = convertFtoC(fTemp=F2);
-  C4b = convertFtoC(fTemp=F4);
-  C6b = convertFtoC(fTemp=F6);
- 
-  # calling the conversion function without argument names 
-  C2c = convertFtoC(F2);
-  C4c = convertFtoC(F4);
-  C6c = convertFtoC(F6);
-  
+# get the function from the functions script and put them in the Environment
+source("scripts/1-13_myFunctions.R");
 
-  
-  # testing the modulus function above
-  div12_4 = isDivisible(12,4);   # does 4 divide evenly into 12?
-  div12_5 = isDivisible(12,5);   # does 5 divide evenly into 12?
-  
-  
-  # Extension: Same function but uses for loops
-  convertFtoC2 = function(fTemp)
-  {
-    celTemp = c();  # create a vector for the Celsius values
-    
-    for(i in 1:length(fTemp))  # go through each value in fTemp vector
-    { 
-      # convert the indexed fTemp -- save to the celTemp vector
-      celTemp[i] = (5/9) * (fTemp[i] - 32); 
-    }
-    return(celTemp);  # return the celsius temp vector to the caller
-  }
-  
-  # Test the conversion function that uses for loops
-  C2d = convertFtoC2(fTemp=F2);
-  C4d = convertFtoC2(fTemp=F4);
-  C6d = convertFtoC2(fTemp=F6);
-}
+# Testing the built-in R function mean()
+testVector = c(10, 15, 5, NA, -100, 10); # has an NA value
+ret1a = mean(x=testVector);               # uses default for na.rm, which is FALSE
+ret1b = mean(x=testVector, na.rm=FALSE);  # same as above
+ret1c = mean(x=testVector, na.rm=TRUE);   # remove NAs
+ret1d = mean(x=testVector, na.rm=TRUE, trim=0.1);  # remove NAs and trims high and low value
+
+# Testing the mean_class() function in the function script for the lesson
+ret2a = mean_class(vec=c(6,2,8,3));        # 4.75
+# ret2b = mean_class();                    # error because argument not provided
+ret2c = mean_class(vec=c(6,2, NA, 8,3));   # NA_Real because of the NA 
+ret2d = mean_class(vec=c(6,2,8,3,75,200)); # 49
+anotherVec = c(7, -7, 10, -8);
+ret2e = mean_class(vec=anotherVec);        # can use a predefined vector
+
+# Testing the mean_adv() function in the function script for the lesson
+ret3a = mean_adv(vec=c(6,2,8,3));       # 4.75
+# ret3b = mean_adv();                   # will cause error because argument not provided 
+ret3c = mean_adv(vec=c(6,2, NA, 8,3));  # will be NA (removeNA default is FALSE)
+ret3d = mean_adv(vec=c(6,2, NA, 8,3), removeNA = TRUE);  # 4.75
+ret3e = mean_adv(vec=c(6,2,8,3, 75,200)); # 49

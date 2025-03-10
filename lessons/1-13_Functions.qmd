@@ -8,7 +8,6 @@ short: "1-13"
 
 -   4 parts of programming
 -   switch to standard ***if-else*** statement spacing?
--   link median() to lesson 5 section 2
 
 ## Purpose
 
@@ -40,15 +39,15 @@ Functions are self-contained scripts that performs a common task. For example, t
 
 There are essentially three types of functions in R:
 
-1\) Built-in to R
+1\) Built-in
 
-2\) Packages, which are extensions of R (e.g., ggplot2, tidyverse – we cover these in the next part of the class)
+2\) Packages, which are extensions of R (e.g., ***ggplot2***, ***tidyverse*** – we will cover these in the next part of the class)
 
 3\) User-created, which we will focus on in this lesson
 
 ## Parts of a function
 
-All functions, whether built into R, in packages, or user-created, have the same four components: **name**, **argument**, ***codeblock***, and **return value**. 
+All functions, whether built into R, in packages, or user-created, have the same four components: **name**, **arguments**, ***codeblock***, and **return value**. 
 
  
 
@@ -80,7 +79,7 @@ In this case, ***x*** is the vector of values that the caller want to find the m
 
  
 
-The other two arguments, ***trim*** and ***na.rm***, are tweaks to ***mean()*** that give ***mean()*** more functionality. ***trim*** is used to remove extreme values and ***na.rm*** is used to ignore **NA** values. ***trim*** and ***na.rm*** have [default values]{.hl} `(trim = 0, na.rm= FALSE)` meaning the caller does not need to provide values for these arguments unless they want to change the default functionality of ***mean()***.
+The other two arguments, ***trim*** and ***na.rm***, are tweaks to ***mean()*** that give ***mean()*** more functionality. ***trim*** can be used to remove extreme values and ***na.rm*** can be used to ignore **NA** values. ***trim*** and ***na.rm*** have [default values]{.hl} `(trim = 0, na.rm= FALSE)` meaning the caller does not need to provide values for these arguments unless they want to change the default functionality of ***mean()***.
 
  
 
@@ -139,7 +138,7 @@ In other words, the return value from ***mean()*** is one value: the mean.
 
 ### Using a function
 
-We will call ***mean()*** multiple times with the same vector of values but changing the arguments. One value in the vector is ***NA***, which we need to deal with because the mean of any vector with an ***NA*** value is ***NA***. [Note: this was covered in more detail in lesson 5 with ***median()***.]{.note}
+We will call ***mean()*** multiple times with the same vector of values but changing the arguments. One value in the vector is ***NA***, which we need to deal with because the mean of any vector with an ***NA*** value is ***NA***. [Note: this was covered in more detail in [lesson 5 with ***median()***](1-05_Functions_Introduction.html#sec-median-NA).]{.note}
 
  
 
@@ -147,26 +146,26 @@ Each line of code below calls the function ***mean()***, passes in values for on
 
 ``` r
 testVector = c(10, 15, 5, NA, -100, 10); # has an NA value
-ret1 = mean(x=testVector);               # uses default for na.rm, which is FALSE
-ret2 = mean(x=testVector, na.rm=FALSE);  # same as above
-ret3 = mean(x=testVector, na.rm=TRUE);   # remove NAs
-ret4 = mean(x=testVector, na.rm=TRUE, trim=0.1);  # remove NAs and trims high and low value
+ret1a = mean(x=testVector);               # uses default for na.rm, which is FALSE
+ret1b = mean(x=testVector, na.rm=FALSE);  # same as above
+ret1c = mean(x=testVector, na.rm=TRUE);   # remove NAs
+ret1d = mean(x=testVector, na.rm=TRUE, trim=0.1);  # remove NAs and trims high and low value
 ```
 
 In the ***Environment*** we can see the return values stored in the variables.
 
 ``` {.r tab="Environment"}
-ret1: NA_real_
-ret2: NA_real_
-ret3: -12
-ret4: 10
+ret1a: NA_real_
+ret1b: NA_real_
+ret1c: -12
+ret1d: 10
 ```
 
-***ret1*** and ***ret2*** are ***NA_real*** because there was an unignored ***NA*** value in the vector and we did not choose to remove the ***NA***. [note: ***NA_real\_*** means the value is ***NA*** but should be a real number (as opposed to a string value).]{.note}
+-   ***ret1*** and ***ret2*** are ***NA_real*** because there was an unignored ***NA*** value in the vector and we did not choose to remove the ***NA***. [note: ***NA_real\_*** means the value is ***NA*** but should be a real number (as opposed to a string value).]{.note}
 
-***ret3*** is **-12**, the mean of the values when the ***NA*** is removed
+-   ***ret3*** is **-12**, the mean of the values when the ***NA*** is removed
 
-***ret4*** is **10**, the mean of the values when the high (15) and low (-100) values are also removed. [Note: trim=0.1 means trim top and bottom 10%.]{.note}
+-   ***ret4*** is **10**, the mean of the values when the high (15) and low (-100) values are also removed. [Note: trim=0.1 means trim top and bottom 10%.]{.note}
 
 ## Using a function script
 
@@ -193,7 +192,7 @@ Headers for the two functions in 1-13_myFunctions.R
 Since the functions are in a separate script, we must first read in the functions script to gain access to the functions. In the main lesson script, ***1-13_Functions.R***. we read in the functions script using ***source()*** and the path to the function script as the argument (in this case: ***scripts/myFunctions.R***):
 
 ``` {.r tab="1-13_Functions.R"}
-source("scripts/1-13_myFunctions.R")
+source("scripts/1-13_myFunctions.R");
 ```
 
 The above code adds the two functions from ***1-13_myFunction.R*** to the ***Functions*** section of the ***Environment***, giving the script the ability to use the functions.
@@ -232,7 +231,7 @@ The function, ***mean_class()*** solves for the mean by going through all the va
 
 ### Header line of a function
 
-The first line of a function is often called the header and gives the name of the function (***mean_class()***) and the arguments (***vec***):
+The first line of a function is often called the header and gives the name of the function (***mean_class***) and the arguments (***vec***):
 
 ``` r
 mean_class = function(vec)
@@ -286,28 +285,28 @@ retVal = mean_class(c(3,5,2,7));  # saves the return value, 4.25, to the variabl
 
 ### Calling the function
 
-Remember that a function, like a variable, cannot be used unless it is in your ***Environment***, this is what `source("scripts/1-13_myFunctions.R")` does.
+Remember that a function, like a variable, cannot be used unless it is put in your ***Environment***, this is what `source("scripts/1-13_myFunctions.R")` does.
 
  
 
 We will call ***mean_class()*** multiple times and save the results to four different variables:
 
 ``` r
-ret1b = mean_class(vec=c(6,2,8,3));        # 4.75
+ret2a = mean_class(vec=c(6,2,8,3));        # 4.75
 # ret2b = mean_class();                    # error because argument not provided
-ret3b = mean_class(vec=c(6,2, NA, 8,3));   # NA_Real because of the NA 
-ret4b = mean_class(vec=c(6,2,8,3,75,200)); # 49
-anotherVec = (7, -7, 10, -8);
-ret5b = mean_class(vec=anotherVec);        # can use a predefined vector
+ret2c = mean_class(vec=c(6,2, NA, 8,3));   # NA_Real because of the NA 
+ret2d = mean_class(vec=c(6,2,8,3,75,200)); # 49
+anotherVec = c(7, -7, 10, -8);
+ret2e = mean_class(vec=anotherVec);        # can use a predefined vector
 ```
 
 Each line of code above calls the function ***mean()***, passes in values for one or more arguments, and saves the return value from the function to a variable. In the ***Environment*** we can see the return values stored in the variables.
 
 ``` {.r tab="Environment"}
-ret1b: 4.75 
-ret3b: NA_real_
-ret4b: 49
-ret5b: 1
+ret2a: 4.75 
+ret2c: NA_real_
+ret2d: 49
+ret2e: 1
 ```
 
 ------------------------------------------------------------------------
@@ -324,7 +323,7 @@ The header for ***mean_adv()*** looks similar to ***mean_class()*** except there
 mean_adv = function(vec, removeNA = FALSE)
 ```
 
-### Codeblock
+### Codeblock {#@sec-mean_adv_code}
 
 In the codeblock attached to ***mean_adv()***, we need to conditionally handle the situation where ***NA*** values are to be removed, based on the value of the argument ***removeNA***. We do this using an `if-else-if` structure inside the `for` loop.
 
@@ -389,20 +388,20 @@ Since `return()` ends a function, only one `return()` can be executed per functi
 ### Using the function
 
 ``` r
-ret1c = mean_adv(vec=c(6,2,8,3));       # 4.75
-# ret2c = mean_adv();                   # will cause error because argument not provided 
+ret3a = mean_adv(vec=c(6,2,8,3));       # 4.75
+# ret3b = mean_adv();                   # will cause error because argument not provided 
 ret3c = mean_adv(vec=c(6,2, NA, 8,3));  # will be NA (removeNA default is FALSE)
-ret4c = mean_adv(vec=c(6,2, NA, 8,3), removeNA = TRUE);  # 4.75
-ret5c = mean_adv(vec=c(6,2,8,3, 75,200)); # 49
+ret3d = mean_adv(vec=c(6,2, NA, 8,3), removeNA = TRUE);  # 4.75
+ret3e = mean_adv(vec=c(6,2,8,3, 75,200)); # 49
 ```
 
 Each line of code above calls the function ***mean()***, passes in values for one or more arguments, and saves the return value from the function to a variable. In the ***Environment*** we can see the return values stored in the variables.
 
 ``` {.r tab="Environment"}
-ret1c:  4.75 
+ret3a:  4.75 
 ret3c:  NA_real_
-ret4c:  4.75
-ret5c:  49
+ret3d:  4.75
+ret3e:  49
 ```
 
 ------------------------------------------------------------------------
@@ -413,7 +412,7 @@ ret5c:  49
 
 -   a functions script named ***app1-13_functions.r*** that contains the functions created in this application
 
--   a main script named ***app1-13.r*** where you will answer questions in comments and use and test the functions created in this application
+-   a main script named ***app1-13.r*** where you will answer questions in comments and test the functions created in ***app1-13_functions.r***
 
 -   [Make sure you test all the functions thoroughly in your main script.]{.hl} I want to see the test code.
 
@@ -425,7 +424,7 @@ ret5c:  49
 
 -   Why do we count the number of ***NA***s?
 
--   For the two ***else if*** statements, what assumption can be made about the value being checked? Why can we make this assumption?
+-   For the two ***else if*** statements, what assumption can be made about the i^th^ value being checked? Why can we make this assumption?
 
 -   Why does ***removeNA*** have a default value but ***vec*** does not?
 
@@ -439,7 +438,7 @@ ret5c:  49
 
 3\) Create a function that returns either the standard deviation or variance of a vector:
 
--   There should be two arguments:  (1) the vector and (2) something that allows the caller choose whether they want the standard deviation or the variance.
+-   There should be two arguments: (1) the vector and (2) something that allows the caller choose whether they want the standard deviation or the variance of the vector.
 
 -   Do not use ***var()*** or ***sd()*** – use your own formula. You can use the code from application 1-03 as a starting point.
 
@@ -449,7 +448,7 @@ ret5c:  49
 
 -   The conversion is: $F=\frac{9}{5} C+32$
 
--   The user needs to pass in two arguments: the temperature value and which direction they want to convert
+-   The user needs to pass in two arguments: (1) the temperature value and (2) which direction they want to convert
 
  
 

@@ -379,13 +379,13 @@ window.Quarto = {
 <p>Functions are self-contained scripts that performs a common task. For example, there are statistical functions that take a vector of values and return the statistical value (e.g., <strong><em>mean()</em></strong> and <strong><em>median()</em></strong>), functions that take data and create plots (e.g., <strong><em>plot(), boxplot()</em></strong>), and functions that interact with the <strong><em>Console</em></strong> (e.g., <strong><em>cat()</em></strong> and <strong><em>print()</em></strong>). The functions listed above are all built into R and are designed to be used in any script.</p>
 <p>&nbsp;</p>
 <p>There are essentially three types of functions in R:</p>
-<p>1) Built-in to R</p>
-<p>2) Packages, which are extensions of R (e.g., ggplot2, tidyverse – we cover these in the next part of the class)</p>
+<p>1) Built-in</p>
+<p>2) Packages, which are extensions of R (e.g., <strong><em>ggplot2</em></strong>, <strong><em>tidyverse</em></strong> – we will cover these in the next part of the class)</p>
 <p>3) User-created, which we will focus on in this lesson</p>
 </section>
 <section id="parts-of-a-function" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="parts-of-a-function"><span class="header-section-number">4</span> Parts of a function</h2>
-<p>All functions, whether built into R, in packages, or user-created, have the same four components: <strong>name</strong>, <strong>argument</strong>, <strong><em>codeblock</em></strong>, and <strong>return value</strong>.&nbsp;</p>
+<p>All functions, whether built into R, in packages, or user-created, have the same four components: <strong>name</strong>, <strong>arguments</strong>, <strong><em>codeblock</em></strong>, and <strong>return value</strong>.&nbsp;</p>
 <p>&nbsp;</p>
 <p>In the <strong><em>Help</em></strong> tab we can see most of the components for the statistical function, <strong><em>mean()</em></strong>:</p>
 <div id="fig-meanFunction" class="fs quarto-float quarto-figure quarto-figure-left anchored">
@@ -412,7 +412,7 @@ Figure&nbsp;1: Info about the function mean() in the Help tab
 <div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x, <span class="at">trim =</span> <span class="dv">0</span>, <span class="at">na.rm =</span> <span class="cn">FALSE</span>, ...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>In this case, <strong><em>x</em></strong> is the vector of values that the caller want to find the mean for. <span class="note">Note: <strong><em>x</em></strong> is often used by R as a generic argument for input values.</span></p>
 <p>&nbsp;</p>
-<p>The other two arguments, <strong><em>trim</em></strong> and <strong><em>na.rm</em></strong>, are tweaks to <strong><em>mean()</em></strong> that give <strong><em>mean()</em></strong> more functionality. <strong><em>trim</em></strong> is used to remove extreme values and <strong><em>na.rm</em></strong> is used to ignore <strong>NA</strong> values. <strong><em>trim</em></strong> and <strong><em>na.rm</em></strong> have <span class="hl">default values</span> <code>(trim = 0, na.rm= FALSE)</code> meaning the caller does not need to provide values for these arguments unless they want to change the default functionality of <strong><em>mean()</em></strong>.</p>
+<p>The other two arguments, <strong><em>trim</em></strong> and <strong><em>na.rm</em></strong>, are tweaks to <strong><em>mean()</em></strong> that give <strong><em>mean()</em></strong> more functionality. <strong><em>trim</em></strong> can be used to remove extreme values and <strong><em>na.rm</em></strong> can be used to ignore <strong>NA</strong> values. <strong><em>trim</em></strong> and <strong><em>na.rm</em></strong> have <span class="hl">default values</span> <code>(trim = 0, na.rm= FALSE)</code> meaning the caller does not need to provide values for these arguments unless they want to change the default functionality of <strong><em>mean()</em></strong>.</p>
 <p>&nbsp;</p>
 <p><a href="#extension-functions-without-arguments">Extension: Functions without arguments</a></p>
 </section>
@@ -458,7 +458,7 @@ Figure&nbsp;1: Info about the function mean() in the Help tab
 </section>
 <section id="using-a-function" class="level3" data-number="4.5">
 <h3 data-number="4.5" class="anchored" data-anchor-id="using-a-function"><span class="header-section-number">4.5</span> Using a function</h3>
-<p>We will call <strong><em>mean()</em></strong> multiple times with the same vector of values but changing the arguments. One value in the vector is <strong><em>NA</em></strong>, which we need to deal with because the mean of any vector with an <strong><em>NA</em></strong> value is <strong><em>NA</em></strong>. <span class="note">Note: this was covered in more detail in lesson 5 with <strong><em>median()</em></strong>.</span></p>
+<p>We will call <strong><em>mean()</em></strong> multiple times with the same vector of values but changing the arguments. One value in the vector is <strong><em>NA</em></strong>, which we need to deal with because the mean of any vector with an <strong><em>NA</em></strong> value is <strong><em>NA</em></strong>. <span class="note">Note: this was covered in more detail in <a href="1-05_Functions_Introduction.html#sec-median-NA">lesson 5 with <strong><em>median()</em></strong></a>.</span></p>
 <p>&nbsp;</p>
 <p>Each line of code below calls the function <strong><em>mean()</em></strong>, passes in values for one or more arguments, and saves the return value from the function to the variables named <strong><em>ret1</em></strong>, <strong><em>ret2</em></strong>, <strong><em>ret3</em></strong>, and <strong><em>ret4</em></strong>.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>testVector <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">5</span>, <span class="cn">NA</span>, <span class="sc">-</span><span class="dv">100</span>, <span class="dv">10</span>); <span class="co"># has an NA value</span></span>
