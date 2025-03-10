@@ -6,25 +6,341 @@ short: "1-15"
 
 ## Purpose {#sec-first}
 
--   look at other functions in temperature.r
-
-see @sec-first for more
+-   Add page number (PDF), remove header/footer
 
 ## Questions about the material...
 
 The files for this lesson:
 
--   Script: [you can download the script here](../scripts/1-15_Functions3.R)
+-   Script (only one this lesson): [you can download the script here](../scripts/1-15_Functions3.R)
 
--   Second Script: [a second script containing functions can be downloaded here](../scripts/temperature.R)
-
--   Data: [download the data file here](../data/LansingNOAA2016.csv)
+-   Data (should there be data?)
 
  
 
 If you have any questions about the material in this lesson, feel free to email them to the instructor, {{< var instructor.name >}}, at {{< var instructor.email >}}.
 
-## Functions and arguments
+## Functions within a script
+
+In the previous two lessons, we created a separate script for the functions. For this lesson, the functions we use will be put inside the main script. This is not usually the best place to put functions (why this is true will be an application question). However, there are many occasions where you will see functions put directly inside a script, so it is good to be familiar with this practice.
+
+### functions, like variables, need to be declared first
+
+Functions are like variables in that they store information to a named objects – and [objects must be declared before they are used]{.hl}. If you are going to put a function directly in a script then you need to declare the function before you call the function.
+
+## Checking multiple values for prime
+
+For the first function, we have modified ***isPrime2()*** from last lesson so that it can check multiple numbers for prime. Instead of one number being passed in to check for prime, the caller passes in a vector of numbers and ***isPrime3()*** will check through each number to see which are prime.
+
+ 
+
+In this case, [***isPrime3()***]{.underline} will return a ***TRUE/FALSE*** vector that marks each number as prime (**TRUE**) or not prime (**FALSE**).
+
+``` r
+# does not handle one or two well
+isPrime3 = function(vals)
+{
+  isPrime = c(rep(TRUE, length(vals)));
+  names(isPrime) = vals; 
+   
+  for(i in 1:length(vals))
+  {
+    for(j in 2:(vals[i]-1))
+    {
+      if(vals[i] %% j == 0)
+      {
+        isPrime[i] = FALSE;
+      }
+    }
+  }
+  return(isPrime);
+}
+```
+
+### Set up the return value
+
+The function returns a Boolean vector to the caller that is the same length as the number of dividends the caller passed in .
+
+ 
+
+All numbers are assumed to be prime (**TRUE**) before they get checked in the ***for*** loops. In the ***for*** loops, if one number divides the dividend evenly then we switch the value to **FALSE**.
+
+ 
+
+\<The Out Loop\>
+
+``` r
+  for(i in 1:length(vals))
+  {
+    for(j in 2:(vals[i]-1))
+    {
+      if(vals[i] %% j == 0)
+      {
+        isPrime[i] = FALSE;
+      }
+    }
+  }
+```
+
+\<The Inner Loop\>
+
+``` r
+    for(j in 2:(vals[i]-1))
+    {
+      if(vals[i] %% j == 0)
+      {
+        isPrime[i] = FALSE;
+      }
+    }
+```
+
+\<Environment: show rep() and names() \>
+
+\<use breakpoints here to show Environment??\>
+
+### for loops within a for loops
+
+In ***isPrime2()***, we needed a ***for*** loop so we could cycle through all numbers to check if any of them divided the value evenly.
+
+ 
+
+In ***isPrime3()***, we need to add a ***for*** loop that goes through each value we are checking for prime
+
+ 
+
+\<highlight outer for loop here\>
+
+``` r
+# does not handle one or two well
+isPrime3 = function(vals)
+{
+  isPrime = c(rep(TRUE, length(vals)));
+  names(isPrime) = vals; 
+   
+  for(i in 1:length(vals))
+  {
+    for(j in 2:(vals[i]-1))
+    {
+      if(vals[i] %% j == 0)
+      {
+        isPrime[i] = FALSE;
+      }
+    }
+  }
+  return(isPrime);
+}
+```
+
+### Two index values: i and j
+
+In general, in programming the first, or outer, for loop uses i as its cycling value and the second, or inner, for loop uses j.
+
+ 
+
+This is not a hard-and-fast rule, and it is not neccessarity best practice, but it is what we will use for now.
+
+\<highlight i and j\>
+
+``` r
+# does not handle one or two well
+isPrime3 = function(vals)
+{
+  isPrime = c(rep(TRUE, length(vals)));
+  names(isPrime) = vals; 
+   
+  for(i in 1:length(vals))
+  {
+    for(j in 2:(vals[i]-1))
+    {
+      if(vals[i] %% j == 0)
+      {
+        isPrime[i] = FALSE;
+      }
+    }
+  }
+  return(isPrime);
+}
+```
+
+### REturn value
+
+\<highlight return – talk about how its a vector (like the return value in ***findFactors()*** )\>
+
+``` r
+# does not handle one or two well
+isPrime3 = function(vals)
+{
+  isPrime = c(rep(TRUE, length(vals)));
+  names(isPrime) = vals; 
+   
+  for(i in 1:length(vals))
+  {
+    for(j in 2:(vals[i]-1))
+    {
+      if(vals[i] %% j == 0)
+      {
+        isPrime[i] = FALSE;
+      }
+    }
+  }
+  return(isPrime);
+}
+```
+
+### Testing out isPrime3()
+
+ 
+
+## A Matrix of values
+
+We have a second function that also uses ***for*** loops within ***for*** loops. In this case, the for loops are creating a two-dimensional vector called a [matrix]{.hl}. The matrix contains wind chill values calculated from temperatures (rows) and wind speeds (columns)
+
+\<image of matrix\>
+
+### matrix setup
+
+Structuring is the most important part – proper structure makes ***for*** loops much easier to embed.
+
+ 
+
+Much like ***isPrime3()***, one of the most important tasks is setting up the return value, which is a two-dimensional matrix whose length and width are determined by the number of temperature and wind speed values:
+
+ 
+
+Create the sequences based on user input
+
+``` r
+tempSeq = seq(tempStart, tempEnd, tempStep) 
+windSeq = seq(windStart, windEnd, windStep)
+```
+
+Get the length of each sequence (this is the number of rows and columns):
+
+``` r
+  numRows = length(tempSeq);
+  numCols = length(windSeq);
+```
+
+Create a blank matrix with the appropriate number of rows and columns:
+
+``` r
+windChillTable = matrix(nrow=numRows, ncol=numCols); 
+```
+
+Give the rows and columns names that match the temperature and wind speed values they represent:
+
+``` r
+rownames(windChillTable) = tempSeq; 
+colnames(windChillTable) = windSeq;
+```
+
+### for loops handling matrix rows and columns
+
+\<explcitly talk about the inner and out for loops and highlight them\>
+
+``` r
+  for(i in 1:numRows)
+  {
+    for(j in 1:numCols)
+    {
+      windChillMatrix[i,j] = 35.74 + 
+                            0.6215*tempSeq[i] - 
+                            35.75*(windSeq[j]^0.16) + 
+                            0.4275*tempSeq[i]*(windSeq[j]^0.16);
+    }
+  }
+```
+
+``` r
+  for(i in 1:numRows)
+  {
+    for(j in 1:numCols)
+    {
+      windChillMatrix[i,j] = 35.74 + 
+                            0.6215*tempSeq[i] - 
+                            35.75*(windSeq[j]^0.16) + 
+                            0.4275*tempSeq[i]*(windSeq[j]^0.16);
+    }
+  }
+```
+
+### Populating the matrix:
+
+This line of code calculates a wind chill based on the i^th^ temperature and j^th^ wind speed temperature values (based on the [wind chill formula given by the National Weather Service](https://www.weather.gov/media/epz/wxcalc/windChill.pdf)) and adds the value to the ***windChillMatrix*** at the appropriate position:
+
+``` r
+      windChillMatrix[i,j] = 35.74 + 
+                            0.6215*tempSeq[i] - 
+                            35.75*(windSeq[j]^0.16) + 
+                            0.4275*tempSeq[i]*(windSeq[j]^0.16);
+```
+
+### REturn the matrix back to the caller
+
+The fully populated ***windChillMatrix*** is returned to the caller. When we look at it in RStudio, we can see the values
+
+ 
+
+\<View windChillMatrix in RStudio\>
+
+### Testing out windChill
+
+ 
+
+ 
+
+## Application
+
+1\) Why might is be better to put functions in a separate script?
+
+ 
+
+2\) heat index matrix
+
+error checking the matrix
+
+ 
+
+3\) find all connected #s within a List
+
+-   find pairs that evenly divide
+
+-   return named vector
+
+    -   dividend1: divisor1
+
+    -   dividend2: divisor2
+
+    -   ...
+
+ 
+
+4\) difference between #s in vector
+
+ \
+5) MLE Calc
+
+ 
+
+6\) Create a function that finds the [difference in temperatures]{.hl} between consecutive days and returns the temperature differences as a vector.
+
+ 
+
+So if you have four high temperatures: **40, 45, 35, 42**:
+
+-   the four calculations would be: **(no calculation), (45-40), (35-45), (42-35)**
+
+-   and the return vector would be:  **(NA, 5, -10, 7**
+
+[Note: The first value of the return vector is always NA because there is nothing to subtract.]{.note}
+
+[Save you script file as **app1-15.r**  in the **scripts** folder of your RStudio Project for the class.]{.note}
+
+{{< include ../assets/_AppInstructions.qmd >}}
+
+\_\_\_\_
+
+## Functions and arguments {data-link="Functions and arguments"}
 
 In this lesson we will build up to a function that takes two arguments:
 
@@ -76,7 +392,7 @@ Most functions have arguments.  ***mean()*** will take the ***x*** value passed
 
 When you call ***mean()***, you are setting the variable ***x*** for the function and ***x*** gets used inside the function.  You can also, optionally, set ***trim*** and ***na.rm*** -- but those already have default values (**0** and **FALSE**).
 
-![The mean() function -- note than stat.ethz.ch is the website used in the RStudio Help tab](images/R-1-15_MeanFunction.png){#fig-mean-function .fs}
+![The mean() function -- note than stat.ethz.ch is the website used in the RStudio Help tab](images/R-1-15_MeanFunction.png){#fig-mean-function .fs alt="The mean() function -- note than stat.ethz.ch is the website used in the RStudio Help tab"}
 
 ## Creating your own functions
 
@@ -91,11 +407,7 @@ We will start be creating a new script file called ***termperature.r*** and save
 We will start off simply and have our first function, ***tempCategory()***, take one value as an argument and give a category for the temperature (e.g., hot, warm, cold).  This argument will be called ***tempValue***.  ***tempValue*** could be given a default value (e.g., ***tempValue = 50***), but this probably does not make sense because there are too many values the caller could use (and infinitely many if you include decimals).
 
 ``` r
-tempCategory = function(tempValue)  # there is no default value for tempValue
-{
-  # like if-else statements and for loops, the curly brackets create a codeblock
-  # attached to the function -- and all code inside the function gets indented
-}
+tempCategory = function(tempValue)  # there is no default value for tempValue {   # like if-else statements and for loops, the curly brackets create a codeblock   # attached to the function -- and all code inside the function gets indented }
 ```
 
 Next we add in a ***if-else-if*** structure to categorize the temperature value:
@@ -115,29 +427,7 @@ Next we add in a ***if-else-if*** structure to categorize the temperature value:
 And for each ***if-else-if*** statement, we will return the temperature category.
 
 ``` r
-tempCategory = function(tempValue)
-{
-  if(tempValue >= 1 & tempValue <= 20)
-  {
-    return("freezing");
-  }
-  else if(tempValue >= 21 & tempValue <= 40)
-  {
-    return("cold");
-  }
-  else if(tempValue >= 41 & tempValue <= 60)
-  {
-    return("moderate");
-  }
-  else if(tempValue >= 61 & tempValue <= 80)
-  {
-    return("warm");
-  }
-  else if(tempValue >= 81 & tempValue <= 100)
-  {
-    return("hot");
-  }
-}
+tempCategory = function(tempValue) {   if(tempValue >= 1 & tempValue <= 20)   {     return("freezing");   }   else if(tempValue >= 21 & tempValue <= 40)   {     return("cold");   }   else if(tempValue >= 41 & tempValue <= 60)   {     return("moderate");   }   else if(tempValue >= 61 & tempValue <= 80)   {     return("warm");   }   else if(tempValue >= 81 & tempValue <= 100)   {     return("hot");   } }
 ```
 
 ### Getting functions into a script
@@ -163,17 +453,11 @@ Now we can call ***tempCategory()***.
 [The argument **tempValue** is a variable]{.hl} that is set by the caller and used by the function ***tempCategory()***.  Here we test out 4 different calls to ***tempCategory()*** -- each setting ***tempValue*** to a value:
 
 ``` r
-cat1a = tempCategory(45);
-cat1b = tempCategory(tempValue=85);
-cat1c = tempCategory(tempValue=17);
-cat1d = tempCategory(-2); 
+cat1a = tempCategory(45); cat1b = tempCategory(tempValue=85); cat1c = tempCategory(tempValue=17); cat1d = tempCategory(-2); 
 ```
 
 ``` {.r tab="Environment"}
-cat1a:   "moderate"
-cat1b:   "hot"
-cat1c:   "freezing"
-cat1d:   NULL
+cat1a:   "moderate" cat1b:   "hot" cat1c:   "freezing" cat1d:   NULL
 ```
 
 When **-2** is the argument, **NULL** is the return value.  The function does not handle negative values so **nothing**, or ***NULL***, was returned**.\
@@ -200,10 +484,7 @@ Up to this point we are assuming that the temperature will be in Fahrenheit.  B
 The easiest way is to just create a string argument that holds the unit.  Since there are only two choices (at this point), we will put a default value of "F".  This means that if the caller does not set ***unit***, the temperature is assumed to be in Fahrenheit:
 
 ``` r
-tempCategory2 = function(tempValue, unit="F") # there is a default value for unit.
-{
-
-}
+tempCategory2 = function(tempValue, unit="F") # there is a default value for unit. {  }
 ```
 
 The function will allow for two possibilities units for ***tempValue***: Fahrenheit (F) and Celsius (C).  This means we need code to handle both situations.
@@ -213,35 +494,7 @@ The function will allow for two possibilities units for ***tempValue***: Fahrenh
 The ***if-else*** structure already uses Fahrenheit temperatures so we only need to do something extra if the unit is Celsius.  The easiest thing to do is convert the Celsius temperatures into Fahrenheit before the ***if-else*** structure:
 
 ``` r
-tempCategory2 = function(tempValue, unit="F")
-{
-  «if(unit == "C")»  # if the unit is set to Celsius by the caller
-  {
-    «tempValue = (9/5)*tempValue + 32;»    # Convert tempValue to Fahrenheit
-  }
-  # note: the if statement above is completely independent from the
-  #       if-else-if structure below
-  if(tempValue >= 1 & tempValue <= 20)
-  {
-    return("freezing");
-  }
-  else if(tempValue >= 21 & tempValue <= 40)
-  {
-    return("cold");
-  }
-  else if(tempValue >= 41 & tempValue <= 60)
-  {
-    return("moderate");
-  }
-  else if(tempValue >= 61 & tempValue <= 80)
-  {
-    return("warm");
-  }
-  else if(tempValue >= 81 & tempValue <= 100)
-  {
-    return("hot");
-  }
-}
+tempCategory2 = function(tempValue, unit="F") {   «if(unit == "C")»  # if the unit is set to Celsius by the caller   {     «tempValue = (9/5)*tempValue + 32;»    # Convert tempValue to Fahrenheit   }   # note: the if statement above is completely independent from the   #       if-else-if structure below   if(tempValue >= 1 & tempValue <= 20)   {     return("freezing");   }   else if(tempValue >= 21 & tempValue <= 40)   {     return("cold");   }   else if(tempValue >= 41 & tempValue <= 60)   {     return("moderate");   }   else if(tempValue >= 61 & tempValue <= 80)   {     return("warm");   }   else if(tempValue >= 81 & tempValue <= 100)   {     return("hot");   } }
 ```
 
 ### Calling tempCategory2()
@@ -249,19 +502,11 @@ tempCategory2 = function(tempValue, unit="F")
 Let's test the ***unit*** argument in ***tempCategory2()*** from our outside script:
 
 ``` r
-cat2a = tempCategory2(45);       
-cat2b = tempCategory2(15, "F");  
-cat2c = tempCategory2(15, "C");                 # 15C ~ 59F
-cat2d = tempCategory2(tempValue=35, unit="C");  # 35C ~ 95F
-cat2e = tempCategory2(tempValue=45, unit="C");  # NULL because 45C > 100F
+cat2a = tempCategory2(45);        cat2b = tempCategory2(15, "F");   cat2c = tempCategory2(15, "C");                 # 15C ~ 59F cat2d = tempCategory2(tempValue=35, unit="C");  # 35C ~ 95F cat2e = tempCategory2(tempValue=45, unit="C");  # NULL because 45C > 100F
 ```
 
 ``` {.r tab="Environment"}
-cat2a:   "moderate"
-cat2b:   "freezing"
-cat2c:   "moderate"
-cat2d:   "hot"
-cat2e:   NULL
+cat2a:   "moderate" cat2b:   "freezing" cat2c:   "moderate" cat2d:   "hot" cat2e:   NULL
 ```
 
 ### setting ( = ) vs comparing ( == )
@@ -271,17 +516,13 @@ This is probably a good time to reinforce the difference between these two commo
 The ( **=** ) operation [sets]{.hl}the variable on the left to the value on the right:
 
 ``` r
-a = 4;           # set a to be 4
-tempValue = 45;  # set tempValue to be 45
-unit = "F";      # set unit to be "F"
+a = 4;           # set a to be 4 tempValue = 45;  # set tempValue to be 45 unit = "F";      # set unit to be "F"
 ```
 
 The ( **==** ) operation [compares]{.hl}the variable on the left to the value on the right and returns a Boolean (TRUE/FALSE) value:
 
 ``` r
-a == 4          # Is a equal to 4?  TRUE if a is 4, FALSE otherwise
-tempValue == 45 # Is tempValue equal to 45? TRUE if tempValue is 45, FALSE otherwise
-unit == "F"     # Is unit equal to "F"? TRUE if unit is "F", FALSE otherwise
+a == 4          # Is a equal to 4?  TRUE if a is 4, FALSE otherwise tempValue == 45 # Is tempValue equal to 45? TRUE if tempValue is 45, FALSE otherwise unit == "F"     # Is unit equal to "F"? TRUE if unit is "F", FALSE otherwise
 ```
 
 [Note: "F" here means Fahrenheit -- another reason to not use T or F to represent TRUE and FALSE]{.note}
@@ -291,45 +532,13 @@ unit == "F"     # Is unit equal to "F"? TRUE if unit is "F", FALSE otherwise
 An alternate way to setup the ***tempCategory()*** function is to use a Boolean argument to determine whether the temperature is Fahrenheit or Celsius.  A [Boolean]{.hl}has two possible values: **TRUE** and **FALSE**.  Boolean values are convenient to use when there are only two choice.  In this case the two choice are Fahrenheit and Celsius, or, another way to put it: **Fahrenheit** and **not Fahrenheit**.
 
 ``` r
-tempCategory3 = function(tempValue, isFahr=TRUE) # isFahr = FALSE means Celsius
-{
-
-}
+tempCategory3 = function(tempValue, isFahr=TRUE) # isFahr = FALSE means Celsius {  }
 ```
 
 [TRUE and FALSE do not go into quotes.  They are predefined variables in R.]{.hl}  If you use quotes then R will think you mean the character "T" followed by the character "R" followed by the character "U" followed by the character "E".  This is not the same as the Boolean **TRUE**.
 
 ``` r
-tempCategory3 = function(tempValue, isFahr=TRUE)
-{
-  # Do not put TRUE and FALSE in quotes. They are variables in R -- not strings.
-  «if(isFahr == FALSE)»  # the tempValue is Celsius
-  {
-    # convert tempValue to Fahrenheit
-    «tempValue = (9/5)*tempValue + 32;»
-  }
-
-  if(tempValue >= 1 & tempValue <= 20)
-  {
-    return("freezing");
-  }
-  else if(tempValue >= 21 & tempValue <= 40)
-  {
-    return("cold");
-  }
-  else if(tempValue >= 41 & tempValue <= 60)
-  {
-    return("moderate");
-  }
-  else if(tempValue >= 61 & tempValue <= 80)
-  {
-    return("warm");
-  }
-  else if(tempValue >= 81 & tempValue <= 100)
-  {
-    return("hot");
-  }
-}
+tempCategory3 = function(tempValue, isFahr=TRUE) {   # Do not put TRUE and FALSE in quotes. They are variables in R -- not strings.   «if(isFahr == FALSE)»  # the tempValue is Celsius   {     # convert tempValue to Fahrenheit     «tempValue = (9/5)*tempValue + 32;»   }    if(tempValue >= 1 & tempValue <= 20)   {     return("freezing");   }   else if(tempValue >= 21 & tempValue <= 40)   {     return("cold");   }   else if(tempValue >= 41 & tempValue <= 60)   {     return("moderate");   }   else if(tempValue >= 61 & tempValue <= 80)   {     return("warm");   }   else if(tempValue >= 81 & tempValue <= 100)   {     return("hot");   } }
 ```
 
 ### Using tempCategory3()
@@ -337,21 +546,13 @@ tempCategory3 = function(tempValue, isFahr=TRUE)
 Aside from changing the second argument to a Boolean value, this function works the same as the last:
 
 ``` r
-cat3a = tempCategory3(45);
-cat3b = tempCategory3(15, TRUE);
-cat3c = tempCategory3(15, FALSE);
-cat3d = tempCategory3(tempValue=35, isFahr=FALSE);
-cat3e = tempCategory3(tempValue=45, isFahr=FALSE);
+cat3a = tempCategory3(45); cat3b = tempCategory3(15, TRUE); cat3c = tempCategory3(15, FALSE); cat3d = tempCategory3(tempValue=35, isFahr=FALSE); cat3e = tempCategory3(tempValue=45, isFahr=FALSE);
 ```
 
 Since we used the same values and units as last time, the results are the same:
 
 ``` {.r tab="Environment"}
-cat3a:   "moderate"
-cat3b:   "freezing"
-cat3c:   "moderate"
-cat3d:   "hot"
-cat3e:   NULL
+cat3a:   "moderate" cat3b:   "freezing" cat3c:   "moderate" cat3d:   "hot" cat3e:   NULL
 ```
 
 ### Advantages/disadvantages of using Boolean
@@ -367,39 +568,7 @@ The ***advantages*** to using Boolean arguments over string arguments:
 The ***disadvantage*** to Boolean arguments is that string values are more robust and can handle more complex situations.  For instance, you might want to extend the function to include Kelvin temperatures.  You cannot handle 3 units (F, K, and C) with one Boolean variable, but you can handle as many units as you want with one string variable -- you just need to extend the ***if-else-if*** structure that coverts the value:
 
 ``` r
-tempCategory4 = function(tempValue, unit="F")
-{
-  if(unit == "C")
-  {
-    tempValue = (9/5)*tempValue + 32;
-  }
-  «else if(unit == "K")»
-  {
-    «tempValue = tempValue - 273;»      # convert K to C
-    tempValue = (9/5)*tempValue + 32; # convert C to F
-  }
-
-  if(tempValue >= 1 & tempValue <= 20)
-  {
-    return("freezing");
-  }
-  else if(tempValue >= 21 & tempValue <= 40)
-  {
-    return("cold");
-  }
-  else if(tempValue >= 41 & tempValue <= 60)
-  {
-    return("moderate");
-  }
-  else if(tempValue >= 61 & tempValue <= 80)
-  {
-    return("warm");
-  }
-  else if(tempValue >= 81 & tempValue <= 100)
-  {
-    return("hot");
-  }
-}
+tempCategory4 = function(tempValue, unit="F") {   if(unit == "C")   {     tempValue = (9/5)*tempValue + 32;   }   «else if(unit == "K")»   {     «tempValue = tempValue - 273;»      # convert K to C     tempValue = (9/5)*tempValue + 32; # convert C to F   }    if(tempValue >= 1 & tempValue <= 20)   {     return("freezing");   }   else if(tempValue >= 21 & tempValue <= 40)   {     return("cold");   }   else if(tempValue >= 41 & tempValue <= 60)   {     return("moderate");   }   else if(tempValue >= 61 & tempValue <= 80)   {     return("warm");   }   else if(tempValue >= 81 & tempValue <= 100)   {     return("hot");   } }
 ```
 
 [Note: I broke the conversion from Kelvin to Fahrenheit into 2 steps: Kelvin to Celsius and Celsius to Fahrenheit.  This could have been done in one step.]{.note}
@@ -409,19 +578,13 @@ tempCategory4 = function(tempValue, unit="F")
 Testing out the Kelvin is less intuitive as 300K is about room temperature:
 
 ``` r
-cat4a = tempCategory4(305, "K");   # ~89F
-cat4b = tempCategory4(270, "K");   # ~26F            
-cat4c = tempCategory4(285, "K");   # ~53F
-cat4d = tempCategory4(tempValue=325, unit="K"); # ~125F
+cat4a = tempCategory4(305, "K");   # ~89F cat4b = tempCategory4(270, "K");   # ~26F             cat4c = tempCategory4(285, "K");   # ~53F cat4d = tempCategory4(tempValue=325, unit="K"); # ~125F
 ```
 
 Since we used the same values and units as last time, the results are the same:
 
 ``` {.r tab="Environment"}
-cat4a:   "hot"
-cat4b:   "cold"
-cat4c:   "moderate"
-cat4d:   NULL
+cat4a:   "hot" cat4b:   "cold" cat4c:   "moderate" cat4d:   NULL
 ```
 
 ## Using a vector instead of a single value
@@ -443,71 +606,15 @@ There are three changes we need to make to the code to handle vectors instead of
 We need a ***for*** loop to cycle through, and categorize, every value in the vector ***tempVector***.  The number of cycles we need is the same as the length of ***tempVector***, which is given by ***length(tempVector)***.
 
 ``` r
-tempCategory5 = function(tempVector, unit="F")
-{
-  «# This part stays the same» 
-  if(unit == "C") 
-  {
-    tempVector = (9/5)*tempVector + 32;
-  }
-  else if(unit == "K")
-  {
-    tempValue = tempValue - 273;      # convert K to C
-    tempValue = (9/5)*tempValue + 32; # convert C to F
-  }
-
-  # go through each value in tempVector
-  «for(i in 1:length(tempVector))»
-  {
-    # the i will index tempVector each time through the loop
-    # i will go from 1 to the length of the vector
-  }
-}
+tempCategory5 = function(tempVector, unit="F") {   «# This part stays the same»    if(unit == "C")    {     tempVector = (9/5)*tempVector + 32;   }   else if(unit == "K")   {     tempValue = tempValue - 273;      # convert K to C     tempValue = (9/5)*tempValue + 32; # convert C to F   }    # go through each value in tempVector   «for(i in 1:length(tempVector))»   {     # the i will index tempVector each time through the loop     # i will go from 1 to the length of the vector   } }
 ```
 
-### Index the temperature values
+### Index the temperature values {data-link="Index the temperature values"}
 
 Inside the ***for*** loop, we need to index the vector, ***tempVector*** so that we are only checking one value at a time.  ***i*** is the value that index ***tempVector*** and ***i*** changes each time the for loop cycles (***i*** goes from 1 to the length of the vector)
 
 ``` r
-tempCategory5 = function(tempVector, unit="F")
-{
-  # This part stays the same
-  if(unit == "C") 
-  {
-    tempVector = (9/5)*tempVector + 32;
-  }
-  else if(unit == "K")
-  {
-    tempValue = tempValue - 273;      # convert K to C
-    tempValue = (9/5)*tempValue + 32; # convert C to F
-  }
-
-  # go through each value in tempVector
-  for(i in 1:length(tempVector))
-  {
-    if(tempVector«[i]» >= 1 & tempVector«[i]» <= 20)
-    {
-
-    }
-    else if(tempVector«[i]» >= 21 & tempVector«[i]» <= 40)
-    {
-
-    }
-    else if(tempVector«[i]» >= 41 & tempVector«[i]» <= 60)
-    {
- 
-    }
-    else if(tempVector«[i]» >= 61 & tempVector«[i]» <= 80)
-    {
-
-    }
-    else if(tempVector«[i]» >= 81 & tempVector«[i]» <= 100)
-    {
-
-    }
-  }
-}
+tempCategory5 = function(tempVector, unit="F") {   # This part stays the same   if(unit == "C")    {     tempVector = (9/5)*tempVector + 32;   }   else if(unit == "K")   {     tempValue = tempValue - 273;      # convert K to C     tempValue = (9/5)*tempValue + 32; # convert C to F   }    # go through each value in tempVector   for(i in 1:length(tempVector))   {     if(tempVector«[i]» >= 1 & tempVector«[i]» <= 20)     {      }     else if(tempVector«[i]» >= 21 & tempVector«[i]» <= 40)     {      }     else if(tempVector«[i]» >= 41 & tempVector«[i]» <= 60)     {       }     else if(tempVector«[i]» >= 61 & tempVector«[i]» <= 80)     {      }     else if(tempVector«[i]» >= 81 & tempVector«[i]» <= 100)     {      }   } }
 ```
 
 ### Return a vector output
@@ -525,50 +632,7 @@ There are 3 steps here:
 3.  Return the vector to the caller after the ***for*** loop (after the vector has been fully populated with values)
 
 ``` r
-tempCategory5 = function(tempVector, unit="F")
-{
-  # This part stays the same
-  if(unit == "C") 
-  {
-    tempVector = (9/5)*tempVector + 32;
-  }
-  else if(unit == "K")
-  {
-    tempValue = tempValue - 273;      # convert K to C
-    tempValue = (9/5)*tempValue + 32; # convert C to F
-  }
-
-  «# step 1: create a return vector»
-  «retVector = c();»   # c() means this is a vector
-
-  # go through each value in tempVector
-  for(i in 1:length(tempVector))
-  {
-    if(tempVector[i] >= 1 & tempVector[i] <= 20)
-    {
-      «# step 2: populate the return value inside the for loop»
-      «retVector[i] = "freezing";» 
-    }
-    else if(tempVector[i] >= 21 & tempVector[i] <= 40)
-    {
-      retVector[i] = "cold";  
-    }
-    else if(tempVector[i] >= 41 & tempVector[i] <= 60)
-    {
-      retVector[i] = "moderate";  
-    }
-    else if(tempVector[i] >= 61 & tempVector[i] <= 80)
-    {
-      retVector[i] = "warm";  
-    }
-    else if(tempVector[i] >= 81 & tempVector[i] <= 100)
-    {
-      retVector[i] = "hot";  
-    }
-  }
-  «# step 3: return the populated vector to the caller:»
-  «return(retVector);»
-}
+tempCategory5 = function(tempVector, unit="F") {   # This part stays the same   if(unit == "C")    {     tempVector = (9/5)*tempVector + 32;   }   else if(unit == "K")   {     tempValue = tempValue - 273;      # convert K to C     tempValue = (9/5)*tempValue + 32; # convert C to F   }    «# step 1: create a return vector»   «retVector = c();»   # c() means this is a vector    # go through each value in tempVector   for(i in 1:length(tempVector))   {     if(tempVector[i] >= 1 & tempVector[i] <= 20)     {       «# step 2: populate the return value inside the for loop»       «retVector[i] = "freezing";»      }     else if(tempVector[i] >= 21 & tempVector[i] <= 40)     {       retVector[i] = "cold";       }     else if(tempVector[i] >= 41 & tempVector[i] <= 60)     {       retVector[i] = "moderate";       }     else if(tempVector[i] >= 61 & tempVector[i] <= 80)     {       retVector[i] = "warm";       }     else if(tempVector[i] >= 81 & tempVector[i] <= 100)     {       retVector[i] = "hot";       }   }   «# step 3: return the populated vector to the caller:»   «return(retVector);» }
 ```
 
 ### Using tempCategory5()
@@ -576,45 +640,27 @@ tempCategory5 = function(tempVector, unit="F")
 Let's first test to make sure the function still works with one value:
 
 ``` r
-cat5a = tempCategory(45);
-cat5b = tempCategory(tempVector=85);
-cat5c = tempCategory(tempVector=17);
-cat5d = tempCategory(-2); 
+cat5a = tempCategory(45); cat5b = tempCategory(tempVector=85); cat5c = tempCategory(tempVector=17); cat5d = tempCategory(-2); 
 ```
 
 ``` {.r tab="Environment"}
-cat5a:   "moderate"
-cat5b:   "hot"
-cat5c:   "freezing"
-cat5d:   NULL
+cat5a:   "moderate" cat5b:   "hot" cat5c:   "freezing" cat5d:   NULL
 ```
 
 And next test ***tempCategory5()*** with vectors that we create using ***c()*** and ***seq()***:
 
 ``` r
-cat5e = tempCategory5(c(10,30,50,70,90));
-cat5f = tempCategory5(seq(from=5, to=90, by=20));
-cat5g = tempCategory5(tempVector=c(30,25,20,15,10), unit="C");
-cat5h = tempCategory5(tempVector=seq(from=25, to=-5, by=-5), unit="C");
+cat5e = tempCategory5(c(10,30,50,70,90)); cat5f = tempCategory5(seq(from=5, to=90, by=20)); cat5g = tempCategory5(tempVector=c(30,25,20,15,10), unit="C"); cat5h = tempCategory5(tempVector=seq(from=25, to=-5, by=-5), unit="C");
 ```
 
 ``` {.r tab="Environment"}
-cat5e = tempCategory5(c(10,30,50,70,90));
-cat5f = tempCategory5(seq(from=5, to=90, by=20));
-cat5g = tempCategory5(tempVector=c(30,25,20,15,10), unit="C");
-cat5h = tempCategory5(tempVector=seq(from=25, to=-5, by=-5), unit="C");
+cat5e = tempCategory5(c(10,30,50,70,90)); cat5f = tempCategory5(seq(from=5, to=90, by=20)); cat5g = tempCategory5(tempVector=c(30,25,20,15,10), unit="C"); cat5h = tempCategory5(tempVector=seq(from=25, to=-5, by=-5), unit="C");
 ```
 
 And, lastly, test ***tempCategory5()*** with vectors from a data frame.  For this we will use the Lansing weather data for the year 2016 and use the ***maxTemp*** and ***minTemp*** columns:
 
 ``` r
-weatherData = read.csv(file="data/LansingNOAA2016.csv", 
-                       sep=",",
-                       header=TRUE, 
-                       stringsAsFactors = FALSE); 
-
-cat5i = tempCategory5(weatherData$maxTemp);
-cat5j = tempCategory5(weatherData$minTemp);
+weatherData = read.csv(file="data/LansingNOAA2016.csv",                         sep=",",                        header=TRUE,                         stringsAsFactors = FALSE);   cat5i = tempCategory5(weatherData$maxTemp); cat5j = tempCategory5(weatherData$minTemp);
 ```
 
 ### Saving vectors to a data frame
@@ -622,13 +668,12 @@ cat5j = tempCategory5(weatherData$minTemp);
 The ***Environment*** says that there are **366** values inside ***cat5i*** and ***cat5j***, but it would be easier to see the values in context -- by adding the vectors to the ***weatherData*** data frame.
 
 ``` r
-  weatherData$maxTempCat = cat5i;
-  weatherData$minTempCat = cat5j;
+  weatherData$maxTempCat = cat5i;   weatherData$minTempCat = cat5j;
 ```
 
 When you double-click on ***weatherData*** in the ***Environment***, you will see the new columns at the end (***maxTempCat*** and ***minTempCat***).  The view in @fig-add-vector-to-df is days at the beginning of the year -- so, January and it's cold.
 
-![Adding the temperature vectors to the weatherData data frame](images/clipboard-1744612833.png){#fig-add-vector-to-df .fs}
+![Adding the temperature vectors to the weatherData data frame](images/clipboard-1744612833.png){#fig-add-vector-to-df .fs alt="Adding the temperature vectors to the weatherData data frame"}
 
  
 
@@ -728,42 +773,6 @@ So if you have four high temperatures: **40, 45, 35, 42**:
 
 {{< include ../assets/_AppInstructions.qmd >}}
 
-## {for next lesson}
-
-5\) Create a function in ***toolbox.r*** that calculates the Mean Square Error (MSE) of a vector (V) of numeric values.
-
-$$
-M S E=\frac{1}{n} \sum_{i=1}^{n}\left(V_{i}-\operatorname{mean}(V)\right)^{2}
-$$
-
-A good middle step for this problem is to calculate the mean of the vector using a ***for*** loop (i.e., add all the vector values using a ***for*** loop and then divide by the length of the vector).
-
-### Tips for question 4
-
--   ***n*** is the same as the length of the vector
-
--   Use the ***mean()*** function to find the mean of the vector.
-
--   Create a state variable that hold the total value
-
--   Use a ***for*** loop to cycle through each value in the vector.  For each value you want to calculate $\left(V_{i}-\operatorname{mean}(V)\right)^{2}$ and add that to the total value
-
--   After you get the total, divide it by the length of the vector
-
- 
-
-**Example** If you have:
-
-``` r
-vec = c(8, 11, 9, 4);
-```
-
-then the ***mean(vec) = 8*** and
-
-$$
-M S E=\frac{(8-8)^{2}+(11-8)^{2}+(9-8)^{2}+(4-8)^{2}}{4}=6.5
-$$
-
 ### End-of-unit survey
 
 [Please take this short (less than 5 minute) survey regarding this class.](https://msu.co1.qualtrics.com/jfe/form/SV_b9I3VPJ2We28Qzs?online=true&sync=false&class=rfund)
@@ -789,50 +798,25 @@ factorVector:  Factor w/ 5 levels "cold", "freezing",...: 1 1 1 1 1 1 4 1 4 ...
 The 5 levels are just the five possible values from the original vector ***cat5i*** in alphabetical order.  You can also get these five levels in the ***Console***:
 
 ``` {.r tab="Console"}
-> levels(factorVector)
-[1] "cold"     "freezing" "hot"      "moderate" "warm"  
+> levels(factorVector) [1] "cold"     "freezing" "hot"      "moderate" "warm"  
 ```
 
 The numbers refer to the 5 levels.  1 is "cold", 2 is "freezing"... We can look at the numbers in the ***Console*** using ***as.numeric()***:
 
 ``` {.r tab="Console"}
-> as.numeric(factorVector)
-  [1] 1 1 1 1 1 1 4 1 4 1 2 1 2 1 4 1 1 2 1 1 1 1 1 1 1 4 1 1 1 4 4 4 1 4 1 1 1
- [38] 4 1 1 1 1 1 2 2 1 1 1 1 4 4 4 1 4 1 1 1 4 4 4 1 1 1 1 1 4 4 5 5 4 4 4 4 4
- [75] 4 4 4 4 1 4 4 4 4 1 4 4 5 4 4 5 5 4 1 4 1 4 4 1 1 1 4 4 4 4 4 5 5 5 3 5 5
-[112] 5 4 4 5 5 4 4 4 4 4 4 4 5 4 5 5 5 5 5 4 5 5 5 4 4 5 5 5 5 5 5 5 5 3 3 3 3
-[149] 3 3 3 3 5 5 3 3 5 5 5 5 5 3 3 3 5 5 3 5 3 3 3 3 3 3 5 3 3 3 3 5 5 3 5 5 5
-[186] 3 3 3 3 3 5 3 3 3 3 3 5 5 3 3 3 3 3 3 3 3 3 3 3 3 5 5 5 3 3 3 3 3 3 3 3 3
-[223] 3 3 3 3 3 3 3 3 3 3 3 5 5 5 3 3 3 5 3 3 3 5 5 5 5 5 3 3 3 5 5 5 5 5 3 5 5
-[260] 5 5 5 3 3 3 3 5 5 5 5 5 5 5 5 5 5 5 5 5 5 3 4 5 5 5 5 4 5 5 5 5 5 5 4 4 4
-[297] 5 4 4 1 4 4 5 4 4 5 5 4 4 5 5 5 4 4 5 4 4 4 4 4 4 5 5 4 1 1 1 1 4 4 1 4 4
-[334] 4 4 4 1 1 1 1 4 1 1 1 1 1 1 1 1 2 2 1 1 2 1 1 1 1 1 1 4 1 1 1 1 4
+> as.numeric(factorVector)   [1] 1 1 1 1 1 1 4 1 4 1 2 1 2 1 4 1 1 2 1 1 1 1 1 1 1 4 1 1 1 4 4 4 1 4 1 1 1  [38] 4 1 1 1 1 1 2 2 1 1 1 1 4 4 4 1 4 1 1 1 4 4 4 1 1 1 1 1 4 4 5 5 4 4 4 4 4  [75] 4 4 4 4 1 4 4 4 4 1 4 4 5 4 4 5 5 4 1 4 1 4 4 1 1 1 4 4 4 4 4 5 5 5 3 5 5 [112] 5 4 4 5 5 4 4 4 4 4 4 4 5 4 5 5 5 5 5 4 5 5 5 4 4 5 5 5 5 5 5 5 5 3 3 3 3 [149] 3 3 3 3 5 5 3 3 5 5 5 5 5 3 3 3 5 5 3 5 3 3 3 3 3 3 5 3 3 3 3 5 5 3 5 5 5 [186] 3 3 3 3 3 5 3 3 3 3 3 5 5 3 3 3 3 3 3 3 3 3 3 3 3 5 5 5 3 3 3 3 3 3 3 3 3 [223] 3 3 3 3 3 3 3 3 3 3 3 5 5 5 3 3 3 5 3 3 3 5 5 5 5 5 3 3 3 5 5 5 5 5 3 5 5 [260] 5 5 5 3 3 3 3 5 5 5 5 5 5 5 5 5 5 5 5 5 5 3 4 5 5 5 5 4 5 5 5 5 5 5 4 4 4 [297] 5 4 4 1 4 4 5 4 4 5 5 4 4 5 5 5 4 4 5 4 4 4 4 4 4 5 5 4 1 1 1 1 4 4 1 4 4 [334] 4 4 4 1 1 1 1 4 1 1 1 1 1 1 1 1 2 2 1 1 2 1 1 1 1 1 1 4 1 1 1 1 4
 ```
 
 We can reorder the levels to go by temperature category instead of alphabetical instead using factor():
 
 ``` r
-  reorderedFactor = factor(factorVector, 
-                           levels=c("freezing", "cold", "moderate", 
-                                    "warm", "hot"));
+  reorderedFactor = factor(factorVector,                             levels=c("freezing", "cold", "moderate",                                      "warm", "hot"));
 ```
 
 And now the output is a bit more intuitive:
 
 ``` {.r tab="Console"}
-> levels(reorderedFactor)
-[1] "freezing" "cold"     "moderate" "warm"     "hot"     
-> as.numeric(reorderedFactor)
-  [1] 2 2 2 2 2 2 3 2 3 2 1 2 1 2 3 2 2 1 2 2 2 2 2 2 2 3 2 2 2 3 3 3 2 3 2 2 2
- [38] 3 2 2 2 2 2 1 1 2 2 2 2 3 3 3 2 3 2 2 2 3 3 3 2 2 2 2 2 3 3 4 4 3 3 3 3 3
- [75] 3 3 3 3 2 3 3 3 3 2 3 3 4 3 3 4 4 3 2 3 2 3 3 2 2 2 3 3 3 3 3 4 4 4 5 4 4
-[112] 4 3 3 4 4 3 3 3 3 3 3 3 4 3 4 4 4 4 4 3 4 4 4 3 3 4 4 4 4 4 4 4 4 5 5 5 5
-[149] 5 5 5 5 4 4 5 5 4 4 4 4 4 5 5 5 4 4 5 4 5 5 5 5 5 5 4 5 5 5 5 4 4 5 4 4 4
-[186] 5 5 5 5 5 4 5 5 5 5 5 4 4 5 5 5 5 5 5 5 5 5 5 5 5 4 4 4 5 5 5 5 5 5 5 5 5
-[223] 5 5 5 5 5 5 5 5 5 5 5 4 4 4 5 5 5 4 5 5 5 4 4 4 4 4 5 5 5 4 4 4 4 4 5 4 4
-[260] 4 4 4 5 5 5 5 4 4 4 4 4 4 4 4 4 4 4 4 4 4 5 3 4 4 4 4 3 4 4 4 4 4 4 3 3 3
-[297] 4 3 3 2 3 3 4 3 3 4 4 3 3 4 4 4 3 3 4 3 3 3 3 3 3 4 4 3 2 2 2 2 3 3 2 3 3
-[334] 3 3 3 2 2 2 2 3 2 2 2 2 2 2 2 2 1 1 2 2 1 2 2 2 2 2 2 3 2 2 2 2 3
+> levels(reorderedFactor) [1] "freezing" "cold"     "moderate" "warm"     "hot"      > as.numeric(reorderedFactor)   [1] 2 2 2 2 2 2 3 2 3 2 1 2 1 2 3 2 2 1 2 2 2 2 2 2 2 3 2 2 2 3 3 3 2 3 2 2 2  [38] 3 2 2 2 2 2 1 1 2 2 2 2 3 3 3 2 3 2 2 2 3 3 3 2 2 2 2 2 3 3 4 4 3 3 3 3 3  [75] 3 3 3 3 2 3 3 3 3 2 3 3 4 3 3 4 4 3 2 3 2 3 3 2 2 2 3 3 3 3 3 4 4 4 5 4 4 [112] 4 3 3 4 4 3 3 3 3 3 3 3 4 3 4 4 4 4 4 3 4 4 4 3 3 4 4 4 4 4 4 4 4 5 5 5 5 [149] 5 5 5 5 4 4 5 5 4 4 4 4 4 5 5 5 4 4 5 4 5 5 5 5 5 5 4 5 5 5 5 4 4 5 4 4 4 [186] 5 5 5 5 5 4 5 5 5 5 5 4 4 5 5 5 5 5 5 5 5 5 5 5 5 4 4 4 5 5 5 5 5 5 5 5 5 [223] 5 5 5 5 5 5 5 5 5 5 5 4 4 4 5 5 5 4 5 5 5 4 4 4 4 4 5 5 5 4 4 4 4 4 5 4 4 [260] 4 4 4 5 5 5 5 4 4 4 4 4 4 4 4 4 4 4 4 4 4 5 3 4 4 4 4 3 4 4 4 4 4 4 3 3 3 [297] 4 3 3 2 3 3 4 3 3 4 4 3 3 4 4 4 3 3 4 3 3 3 3 3 3 4 4 3 2 2 2 2 3 3 2 3 3 [334] 3 3 3 2 2 2 2 3 2 2 2 2 2 2 2 2 1 1 2 2 1 2 2 2 2 2 2 3 2 2 2 2 3
 ```
 
 The advantage to using factors is that they are faster.  Factors are actually numeric vectors with each possible number asigned a string value.  So, there are 366 numeric values and 5 string values in ***reorderedFactor***.  Numeric values can be be read in and processed much quicker than string values.  Also, there are older statistical and plotting functions that only accept factors as an argument.
