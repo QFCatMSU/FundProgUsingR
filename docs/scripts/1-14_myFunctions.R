@@ -87,14 +87,14 @@ isPrime2 = function(dividend)
   return(TRUE);
 }
 
-findFactors = function(val)
+findFactors = function(dividend)
 {
   ### Store the factors here (starts as a NULL vector)
   factors = c();
   
-  for(i in 2:(val-1))
+  for(i in 2:(dividend-1))
   {
-    if(val %% i == 0)
+    if(dividend %% i == 0)
     {
       ## number can be divided evenly by another number 
       ## insert this number as a factor

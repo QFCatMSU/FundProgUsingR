@@ -1,38 +1,54 @@
-{
-  rm(list=ls());  # cleans out the Environment every time the code is executed
-  options(show.error.locations = TRUE);  # show the line number of errors in the Console
-  
-  source(file="scripts/toolbox.r");  # load script with isDivisible() function
-  
-  ## from last lesson
-  div12_4 = isDivisible(12,4);
-  div12_5 = isDivisible(12,5);
-  
-  # better to put in parameter names:
-  div12_4a = isDivisible(div1=12, div2=4);
-  div12_5a = isDivisible(div1=12, div2=5);
-  
-  # the order does not matter when you use parameter names:
-  div12_4b = isDivisible(div2=4, div1=12);
-  div12_5b = isDivisible(div2=5, div1=12);
-  
-  ### Get the weather data
-  weatherData = read.csv("data/twoWeekWeatherData.csv");
-  highTemps = weatherData$highTemp;
-  lowTemps = weatherData$lowTemp;
-  
-  ### Calling counter()
-  count1 = counter(vector = highTemps, compareVal = 45);
-  count2 = counter(vector = highTemps, compareVal = 55);
-  count3 = counter(lowTemps, 40);
-  
-  ### Calling counter2()
-  count1a = counter2(vector = highTemps, compareVal = 45);
-  count2a = counter2(vector = highTemps, compareVal = 55);
-  count3a = counter2(lowTemps, 40);
-  
-  count4 = counter2(vector = lowTemps, compareVal = 40, conditionalOp = "<");
-  count5 = counter2(vector = highTemps, compareVal = 54, conditionalOp = "==");
-  count6 = counter2(lowTemps, 38, "==");
-  count7 = counter2(highTemps, 60, ">");
-}
+rm(list=ls()); 
+
+# get the functions from the function script and put them in the Environment
+source("scripts/1-14_myFunctions.R");
+
+# Modulus tests:
+print(11 %% 4); 
+print(12 %% 4); 
+print(13 %% 4); 
+print(14 %% 4); 
+
+## testing the isDivisible() function in function script
+div12_4 = isDivisible(12,4);
+div12_5 = isDivisible(12,5);
+
+# better to put in argument  names:
+div12_4a = isDivisible(dividend=12, divisor=4);
+div12_5a = isDivisible(dividend=12, divisor=5);
+
+# the order does not matter when you use argument names:
+div12_4b = isDivisible(divisor=4, dividend=12);
+div12_5b = isDivisible(divisor=5, dividend=12);
+
+## Checking for prime numbers using isPrime1()
+p0 = isPrime1(13);
+p1 = isPrime1(14);
+p2 = isPrime1(81);
+p3 = isPrime1(dividend=83);
+p4 = isPrime1(dividend=87);
+p5 = isPrime1(dividend=89);
+
+# Testing modulus with decimal numbers
+print(5.5 %% 1); 
+print(8.333 %% 1); 
+print(10 %% 1); 
+print(12.99 %% 1);
+
+# Testing the error checking in isPrime2():
+e1 = isPrime2(c(10,34)); # too many values 
+e2 = isPrime2("hello");  # not numeric 
+e3 = isPrime2(FALSE);    # not numeric 
+e4 = isPrime2(-35);      # negative numeric 
+e5 = isPrime2(74.24);    # decimal numeric 
+e6 = isPrime1(13);       # valid -- and prime 
+e7 = isPrime1(14);       # valid -- and not prime 
+e8 = isPrime1(81);       # valid -- and not prime
+
+# Testing the fundFactor() function:
+f0 = findFactors(dividend=13);
+f1 = findFactors(14);
+f2 = findFactors(dividend=81);
+f3 = findFactors(83);
+f4 = findFactors(dividend=87);
+f5 = findFactors(72);
