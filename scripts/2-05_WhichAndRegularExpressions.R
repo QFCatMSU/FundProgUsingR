@@ -53,8 +53,8 @@
   snowyDaysGrep = grep(weatherData$weatherType, pattern="SN");
   daysWithPrecipUnion = union(rainyDaysGrep, snowyDaysGrep);
   
-  hazyDays = grep(weatherData$weatherType, pattern="RA");
-  hotDays = which(weatherData$maxTemp > 90);
+  hazyDays = grep(weatherData$weatherType, pattern="HZ");
+  hotDays = which(weatherData$maxTemp > 85);
   hazyOrHotDays = union(hazyDays, hotDays);
   
   # daysWithRainAndSnow = grep("RN&SN", weatherData$weatherType);  # this does not work!
