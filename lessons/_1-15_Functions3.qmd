@@ -1,0 +1,481 @@
+---
+title: "1-15: Functions and nested loops"
+short: "1-15"
+# special characters for highlighting code : «»
+---
+
+### To-Do {#sec-first}
+
+-   Add page number (PDF), remove header/footer
+-   rename:
+
+## Purpose
+
+-   embedded for loops
+
+-   functions within a script
+
+-   using matrices
+
+-   named values in a vector
+
+## Questions about the material...
+
+The files for this lesson:
+
+-   Script (only one this lesson): [you can download the script here](../scripts/1-15_Functions3.R)
+
+-   Data (should there be data?)
+
+ 
+
+If you have any questions about the material in this lesson, feel free to email them to the instructor, {{< var instructor.name >}}, at {{< var instructor.email >}}.
+
+## Functions within a script
+
+In the previous two lessons, we created a separate script for the functions. For this lesson, the functions used will be put inside the main script. This is not usually the best place to put functions (why this is true will be an application question). However, there are many occasions where you will see functions put directly inside a script, so it is good to be familiar with this practice.
+
+### functions, like variables, need to be declared first
+
+Functions are like variables in that they store information to a named objects – and [objects must be declared before they are used]{.hl}. If you are going to put a function directly in a script then you need to declare the function before you call the function.
+
+ 
+
+Examples of named objects:
+
+``` r
+namedObj1 = "Hello";      # string variable
+namedObj2 = c(4,7,1);     # numeric vector
+namedObj3 = TRUE;         # Boolean variable
+namedObj4 = function(who) 
+{
+  cat("Hello", who, "how are you?");
+}
+```
+
+[Note: unlike variables, functions have attached curly brackets because function can have multiple commands, requiring a codeblock.]{.note}
+
+ 
+
+All of these object will appear in the ***Environment***. The first three under ***Values*** and the last under ***Functions***:
+
+``` {.r tab="Environment"}
+Values
+  namedObj1:  "Hello"
+  namedObj2:  num [1:3] 4 7 1
+  namedObj3:  TRUE
+Functions
+  namedObj4:  function (who)
+```
+
+### Executing the function in script
+
+The function ***namedObj4()*** can be used after it has been declared:
+
+``` r
+print( namedObj4("llama") );
+```
+
+``` {.r tab="Console"}
+[1] "Hello,llama, how are you?"
+```
+
+## Embedded for loops
+
+In the script for this lesson, we are going to look at two functions:
+
+-   ***isPrime3()***: a modification of ***isPrime2()*** from last lesson that checks any number of dividends (instead of one) for prime
+
+-   ***windChillMatrix()***: takes a range of temperatures and wind speeds and creates a 2D vector (called a ***matrix***) of wind chills
+
+ 
+
+Both of these functions use [nested ***for*** loops]{.hl}, or ***for*** loops that are inside ***for*** loops. Nested for loops are a staple of programming especially when you have data with multiple dimensions (e.g., heat index from a range of temperatures and humidity).
+
+## Checking multiple values for prime
+
+For the first function, we have modified ***isPrime2()*** from last lesson so that it can now check multiple dividends for prime. For ***isPrime3()***, the caller passes in a vector of numbers and ***isPrime3()*** will check through each number to see which are prime.
+
+ 
+
+The return value for [***isPrime3()***]{.underline} is a Boolean vector that labels each dividend as prime (**TRUE**) or not prime (**FALSE**).
+
+### Examples of isPrime3()
+
+Before we look at the code, let's look at an example of its use:
+
+``` r
+primeTest1 = isPrime3(c(12,13,14,15,16,17));
+```
+
+In the Environment, primeTest1 is called a ***Named logi***.
+
+``` {.r tab="Environment"}
+primeTest1: Named logi [1:6] FALSE TRUE FALSE FALSE FALSE TRUE
+```
+
+This means the values in the vector are named. You cannot see the names in the ***Environment*** but you can in the ***Console***:
+
+``` {.r tab="Console"}
+> primeTest1
+   12    13    14    15    16    17 
+FALSE  TRUE FALSE FALSE FALSE  TRUE 
+```
+
+The names are on the top row and the names are the numbers. The bottom row gives the Boolean values.
+
+### Named values
+
+Let's first look at the first two lines in the function to see how naming is set up:
+
+``` r
+isPrime3 = function(dividends)
+{
+  «primeNum = c(rep(TRUE, length(dividends)));»
+  «names(primeNum) = dividends;» 
+  
+  for(i in 1:length(dividends))
+  {
+    for(j in 2:(dividends[i]-1))
+    {
+      if(dividends[i] %% j == 0)
+      {
+        primeNum[i] = FALSE;
+      }
+    }
+  }
+  return(primeNum);
+}
+```
+
+***rep()*** will create a vector that repeats a specific value n times so:
+
+``` {.r tab="Console"}
+> rep("a", 4)
+[1] "a" "a" "a" "a"
+> rep(-2, 6)
+[1] -2 -2 -2 -2 -2 -2
+```
+
+***primeNum*** starts as a vector with a bunch of ***TRUE*** values – the same as the number of dividends. The reason ***primeNum*** starts will all TRUE values is that the function assumes all dividends are prime, until proven otherwise. This will be described in much more detail when we go through the code.
+
+ 
+
+The second line turns ***primeNum*** into a named vector by giving each value in ***primeNum*** a name. In this case, the name is the same as the dividends passed in by the caller.
+
+ 
+
+You can manually create a named vector in the ***Console***:
+
+``` {.r tab="Console"}
+> myVec = c(1,2,3,4)
+> names(myVec) = c("z", "y", "x", "w")
+> myVec
+z y x w 
+1 2 3 4 
+```
+
+***names()*** is used to both set the names of vectors and display the names:
+
+``` {.r tab="Console"}
+> names(myVec)
+[1] "z" "y" "x" "w"
+> names(myVec)[3]
+[1] "x"
+```
+
+## Nested for loops
+
+***isPrime3()*** has two ***for*** loops:
+
+-   outer loop: indexes through the range of ***dividends*** supplied by the caller
+
+-   inner loop: indexes through the range of divisors that will be used to check the dividend for prime
+
+    -   range will be from 2 to one less than the dividend
+
+### Outer loop
+
+The job of the outer loop is index ***dividends*** in the inner loop. It does this by cycling ***i*** from 1 to the number of value in dividends.
+
+``` r
+  «for(i in 1:length(dividends))»
+  {
+    for(j in 2:(dividends[i]-1))
+    {
+      if(dividends[i] %% j == 0)
+      {
+        primeNum[i] = FALSE;
+      }
+    }
+  «}»
+```
+
+### Inner loop
+
+***isPrime2()*** needed a for loop to check the dividend to see if it was prime. That for loop is now the inner ***for*** loop in in ***isPrime3()***. The inner ***for*** loop cycled through every single value from 2 to one less that the dividend, except the index variable is ***j,*** because ***i*** was used by the outer loop.
+
+ 
+
+[Extension: alternative naming to i and j]
+
+``` r
+  for(i in 1:length(vals))
+  {
+    «for(j in 2:(vals[i]-1))»
+    «{»
+      if(vals[i] %% j == 0)
+      {
+        primeNum[i] = FALSE;
+      }
+    «}»
+  }
+```
+
+The main difference is there is now a vector of Boolean value to set instead of one value. And that vector, ***primeNum***, gets indexed by the index of the outer loop, ***i,*** and ***i*** cycles from 1 to the length of ***dividends***, which will also be the length of ***primeNum***.
+
+### Set up the return value
+
+The function returns a Boolean vector to the caller that is the same length as ***divendends*** the caller passed in .
+
+ 
+
+primeNum is a vector the length of dividends with initially all TRUE values. In other words, all dividends are prime until proven otherwise. The proof is here:
+
+ 
+
+The inner ***for*** loop goes through all possible divisors to try to prove the dividend is not prime. If one of the divisors divides the dividend evenly then we know the dividend is not prime and, in highlighted line 2, switch the single value in the vector ***primeNum*** to **FALSE**.
+
+``` r
+isPrime3 = function(vals)
+{
+  «isPrime = c(rep(TRUE, length(vals)));»  #1
+  names(isPrime) = vals;
+   
+  for(i in 1:length(vals))
+  {
+    for(j in 2:(vals[i]-1))
+    {
+      if(vals[i] %% j == 0)
+      {
+        «isPrime[i] = FALSE;»   #2
+      }
+    }
+  }
+  «return(isPrime);»  #3
+}
+```
+
+Finally, we return ***primeNum*** back to the caller and ***primeNum*** gets save to the variable the caller set equal to the function.
+
+### Examples \<??\>
+
+\<another example here? Console examples earlier and variable examples here?\>
+
+ 
+
+ 
+
+ 
+
+## A Matrix of values
+
+We have a second function that also uses nested ***for*** loops. In this case, the for loops are creating a two-dimensional vector called a [matrix]{.hl}. The matrix contains wind chill values calculated from temperatures (rows) and wind speeds (columns)
+
+\<image of matrix\>
+
+### What is a matrix
+
+A matrix is a two-dimensional vector, or a vector with a defined number of rows and columns. In some ways, a matrix is like a data frame in that it has two-dimension but it functions more like a vector. There will be a larger lesson on matrices later...
+
+``` {.r tab="Console"}
+> matrix(data=1:12, nrow=4, ncol=3)
+     [,1] [,2] [,3]
+[1,]    1    5    9
+[2,]    2    6   10
+[3,]    3    7   11
+[4,]    4    8   12
+```
+
+\<data types are all the same – across rows and columns (diff from data frame)\>
+
+\<examples of creating a matrix in Console\>
+
+<https://www.weather.gov/media/epz/wxcalc/windChill.pdf>
+
+### Testing the function
+
+\<before this give: name, args, return value\>
+
+\<ranges of temp and wind speeds\>
+
+\<note the row(temp) and column (wind speed) setup\>
+
+## Codeblock: matrix setup and for loops
+
+Structuring is the most important part – proper structure makes ***for*** loops much easier to embed.
+
+ 
+
+Much like ***isPrime3()***, one of the most important tasks is setting up the return value, which is a two-dimensional matrix whose length and width are determined by the number of temperature and wind speed values:
+
+ 
+
+Create the sequences based on user input
+
+``` r
+tempSeq = seq(tempStart, tempEnd, tempStep) 
+windSeq = seq(windStart, windEnd, windStep)
+```
+
+Get the length of each sequence (this is the number of rows and columns):
+
+``` r
+  numRows = length(tempSeq);
+  numCols = length(windSeq);
+```
+
+Create a blank matrix with the appropriate number of rows and columns:
+
+``` r
+windChillTable = matrix(nrow=numRows, ncol=numCols); 
+```
+
+Give the rows and columns names that match the temperature and wind speed values they represent: \<more about the row and column setup\>
+
+``` r
+rownames(windChillTable) = tempSeq; 
+colnames(windChillTable) = windSeq;
+```
+
+[Note: This is similar to creating a named vector]{.note}
+
+### for loops handling matrix rows and columns
+
+\<explcitly talk about the inner and out for loops and highlight them\>
+
+\<change i,j to row, col\>
+
+``` r
+  for(i in 1:numRows)
+  {
+    for(j in 1:numCols)
+    {
+      windChillMatrix[i,j] = 35.74 + 
+                            0.6215*tempSeq[i] - 
+                            35.75*(windSeq[j]^0.16) + 
+                            0.4275*tempSeq[i]*(windSeq[j]^0.16);
+    }
+  }
+```
+
+\<show cell structure\>
+
+| Col1 | Col2 | Col3 | Col4 |
+|------|------|------|------|
+| 1    | 4    | 7    | 10   |
+| 2    | 5    | 8    | 11   |
+| 3    | 6    | 9    | 12   |
+
+[note: the ***for*** loops can be reversed... this will be an application question]{.note}
+
+### Populating the matrix:
+
+This line of code calculates a wind chill based on the i^th^ temperature and j^th^ wind speed temperature values (based on the [wind chill formula given by the National Weather Service](https://www.weather.gov/media/epz/wxcalc/windChill.pdf)) and adds the value to the ***windChillMatrix*** at the appropriate position:
+
+``` r
+      windChillMatrix[i,j] = 35.74 + 
+                            0.6215*tempSeq[i] - 
+                            35.75*(windSeq[j]^0.16) + 
+                            0.4275*tempSeq[i]*(windSeq[j]^0.16);
+```
+
+### REturn the matrix back to the caller
+
+The fully populated ***windChillMatrix*** is returned to the caller. When we look at it in RStudio, we can see the values
+
+ 
+
+\<View windChillMatrix in RStudio\>
+
+ 
+
+ 
+
+## Application
+
+1\) What is the disadvantage of putting a function in the same script that it is called from?
+
+How many times does the inner for loop get execute \<which function? both?\>
+
+ 
+
+2\) REverse the for loops in the wind chill matrix...
+
+-   rows: speed, columns: temp
+
+-   \<change the names of the indexing variables to something more meaningful \>
+
+ 
+
+2\) heat index matrix \<give formula\>
+
+-   error checking the matrix
+
+-   Use X,Y as inputs, – show the output
+
+-   temp: 0-120, hum: 0-100
+
+ 
+
+3\) find all connected #s within a List
+
+-   find pairs that evenly divide
+
+-   return named vector
+
+    -   dividend1: divisor1
+
+    -   dividend2: divisor2
+
+    -   So if you have the vector c(3,4,7,12,14,15)
+
+        -   you have four answers: 3:12, 4:12, 7:14, 3:15
+
+ 
+
+4\) Create a function that finds the [difference in temperatures]{.hl} between consecutive days and returns the temperature differences as a vector.
+
+ 
+
+So if you have four high temperatures: **40, 45, 35, 42**:
+
+-   the four calculations would be: **(no calculation), (45-40), (35-45), (42-35)**
+
+-   and the return vector would be:  **(NA, 5, -10, 7)**
+
+[Note: The first value of the return vector is always NA because there is nothing to subtract.]{.note}
+
+[Save you script file as **app1-15.r**  in the **scripts** folder of your RStudio Project for the class.]{.note}
+
+ 
+
+Test this with vectors you create
+
+{{< include ../assets/_AppInstructions.qmd >}}
+
+## Extension: alternative naming to i and j
+
+In general, in programming the first, or outer, for loop uses i as its cycling value and the second, or inner, for loop uses j.
+
+ 
+
+This is not a hard-and-fast rule, and it is not necessarily best practice, but it is what we will use for now.
+
+\<highlight i and j\>
+
+``` r
+# does not handle one or two well isPrime3 = function(vals) {   isPrime = c(rep(TRUE, length(vals)));   names(isPrime) = vals;        for(i in 1:length(vals))   {     for(j in 2:(vals[i]-1))     {       if(vals[i] %% j == 0)       {         isPrime[i] = FALSE;       }     }   }   return(isPrime); }
+```
+
+### 
