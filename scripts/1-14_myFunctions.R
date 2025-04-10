@@ -9,6 +9,7 @@ isDivisible = function(dividend, divisor)
 {
   ### get the remainder of the division using modulus
   remainder = dividend %% divisor;
+	
   ### Check if the remainder is 0
   divBy0 = (remainder == 0);  # TRUE if 0, FALSE otherwise
   
@@ -16,48 +17,24 @@ isDivisible = function(dividend, divisor)
   return(divBy0);
 }
 
-#### Find if one number divides another number:
-### name: isDivisible()
-### arguments: dividend, divisor 
-### return value: a Boolean (TRUE/FALSE) value 
-isDivisible2 = function(dividend, divisor)
-{
-  ### Go through all of the divisors:
-  for(i in 1:length(divisor))
-  {
-    ### get the remainder of the division using modulus
-    remainder = dividend %% divisor[i];
-    
-    ### Check if the remainder is 0
-    divBy0 = (remainder == 0);  # TRUE if 0, FALSE otherwise
-    
-    if(divBy0 == TRUE) 
-    {
-      return(TRUE);
-    }
-  }
-  
-  ### return whether the modulus was 0 (TRUE) or more than zero (FALSE)
-  return(FALSE);
-}
-
 isPrime1 = function(dividend)
 {
+  # check all numbers between 2 and one less that dividend
   for(i in 2:(dividend-1))
   {
     if(dividend %% i == 0)
     {
       ## number can be divided evenly by another number -- return FALSE
-      return(FALSE);  # dividend is not prime
+      return(FALSE);
     }
   }
   ## number cannot be divided evenly by another number -- return TRUE
-  return(TRUE);   # dividend is prime
+  return(TRUE);
 }
 
 isPrime2 = function(dividend)
 {
-  ### Error checking the argument value
+  ### Error checks on the argument value
   if(length(dividend) > 1)         # error check 1: too many values
   {
     return("Error: too many values");
@@ -75,9 +52,10 @@ isPrime2 = function(dividend)
     return("Error: value must be an integer");
   }
   
+  # check all numbers between 2 and one less that dividend
   for(i in 2:(dividend-1))
   {
-    if(val %% i == 0)
+    if(dividend %% i == 0)
     {
       ## number can be divided evenly by another number -- return FALSE
       return(FALSE);
@@ -89,7 +67,7 @@ isPrime2 = function(dividend)
 
 findFactors = function(dividend)
 {
-  ### Store the factors here (starts as a NULL vector)
+  ### Store the factors here
   factors = c();
   
   for(i in 2:(dividend-1))

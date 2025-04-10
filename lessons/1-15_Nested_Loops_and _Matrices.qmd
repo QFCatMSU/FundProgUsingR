@@ -7,6 +7,8 @@ short: "1-15"
 ### To-Do {#sec-first}
 
 -   nested for loop work well with breakpoints...
+-   more about the nested for loops in isPrime3()
+-   more about 2D subsetting of matrices (section 6.3)
 
 ## Purpose
 
@@ -24,7 +26,7 @@ The files for this lesson:
 
 -   Script (only one this lesson): [you can download the script here](../scripts/1-15_NestedLoopsAndMatrices.R)
 
--   Data (should there be data?)
+-   Data \<should there be data? in app?\>
 
  
 
@@ -32,11 +34,11 @@ If you have any questions about the material in this lesson, feel free to email 
 
 ## Functions within a script
 
-In the previous two lessons, we created a separate script for the functions used in the lesson. For this lesson, the function used, ***isPrime3()***, has been put inside the main script. It is not usually best place to put functions inside the calling script (why this is true will be an application question). However, there are many occasions where you will see functions put directly inside a script, so it is good to be familiar with this practice.
+In the previous two lessons, we created a separate script for the functions used in the lesson. For this lesson, the function used, ***isPrime3()***, has been put inside the main script. It is not usually best practice to put functions inside the calling script (why this is true will be an application question). However, there are many occasions where you will see functions put directly inside a script, so it is good to be familiar with this practice.
 
 ### functions, like variables, need to be declared first
 
-Functions are like variables in that they store information to a named objects – and [objects must be declared before they are used]{.hl}. If you are going to put a function directly in a script then you need to declare the function before you call the function.
+Functions are like variables in that they store information to a named objects – and [objects must be declared before they are used]{.hl}. If you are going to code a function directly in a script then you need to declare the function before you call the function.
 
 ## Nesting for loops: isPrime3()
 
@@ -56,7 +58,7 @@ for(each dividend we want to check)         # outer loop
 }
 ```
 
-### Examples of isPrime3()
+### Examples of isPrime3() {#sec-example}
 
 Before we look at the code, let's look at an example of its use:
 
@@ -104,7 +106,19 @@ FALSE
 
 ### Outer loop
 
-The job of the outer loop is cycle through each ***dividends***. The index value, ***i***, determines the current dividend, indexed from the ***dividends*** vector, inside the inner ***for*** loop.
+The job of the outer loop is cycle through each ***dividends***. The index value, ***i***, determines the current dividend, indexed from the ***dividends*** vector. The indexed dividend gets used inside the inner ***for*** loop.
+
+ 
+
+In the example above (@sec-example),
+
+primeNum\[1\] = 12;
+
+primeNum\[2\] = 13;
+
+...
+
+primeNum\[6\] = 17;
 
 ``` r
   «for(i in 1:length(dividends))»   
@@ -125,12 +139,16 @@ The job of the outer loop is cycle through each ***dividends***. The index value
 
 ***isPrime2()*** needed a ***for*** loop to check all the possible divisors for the dividend. That ***for*** loop is now the inner ***for*** loop in ***isPrime3()***. The inner ***for*** loop cycles through every single value from 2 to one less that the dividend, except the index variable is ***j,*** because ***i*** was used by the outer loop.
 
+ 
+
+In
+
 ``` r
   for(i in 1:length(dividends))   
   {  
      primeNum[i] = TRUE;
      
-    «for(j in 2:(dividends[i]-1))»     
+    «for(j in 2:(dividends[i]-1))»  # 2 to one less than current dividend  
     «{»       
       if(dividends[i] %% «j» == 0)       
       {         
@@ -146,19 +164,23 @@ The main difference is there is now a vector of Boolean value to set and return 
 
 The function returns a Boolean vector to the caller that is the same length as ***dividends*** passed in by the caller. The vector is created in the first line of the function:
 
-`primeNum = c();`
-
- 
+``` r
+primeNum = c();
+```
 
 Like before, we assume that the dividend is prime until proven otherwise, so at the beginning of the outer for loop, we set the current ***primeNum*** to **TRUE**:
 
-`primeNum[i] = TRUE;`
+``` r
+primeNum[i] = TRUE;
+```
 
  
 
 The inner ***for*** loop goes through all possible divisors to try to prove the dividend is not prime. If one of the divisors divides the dividend evenly then we know the dividend is not prime and, in highlighted line 2, switch the single value in the vector ***primeNum*** to **FALSE**.
 
-`primeNum[i] = FALSE;`
+``` r
+primeNum[i] = FALSE;
+```
 
 ``` r
 isPrime3 = function(dividends)
@@ -224,7 +246,7 @@ One of the more natural uses of nested ***for*** loops is the creation of two-di
 
 ### What is a matrix
 
-A matrix is somewhat of a cross between a vector and a data frame. It has rows and columns like a data frame. However, all values are of the same type in a matrix. This means a matrix functions more like a vector in that calculations can be applied to all values. We will talk more about the use of matrices in a later lesson.
+A matrix is somewhat of a cross between a vector and a data frame. A matrix has rows and columns like a data frame. However, all values in a matrix are of the same type link a vector. This means that calculations on a matrix can be applied to all values. We will talk more about the use of matrices in a later lesson.
 
 ### Matrix creation
 
@@ -251,6 +273,34 @@ Or fill the matrix with values:
 [2,]    2    6   10
 [3,]    3    7   11
 [4,]    4    8   12
+```
+
+### Subsetting a matrix
+
+Let's see the same matrix as the variable, testMatrix, so that we can see how you subset the matrix:
+
+``` r
+> testMatrix = matrix(data=1:12, nrow=4, ncol=3)
+```
+
+To get a specific cell from the matrix, you need two values, a row and a column:
+
+``` r
+> testMatrix[1,2]
+[1] 5
+> testMatrix[3,1]
+[1] 3
+> testMatrix[4,3]
+[1] 12
+```
+
+You can get a whole row by leaving the column blank and vice versa:
+
+``` r
+> testMatrix[3,]
+[1] 3  7 11
+> testMatrix[,2]
+[1] 5 6 7 8
 ```
 
 ### Matrices are often all combinations of two factors
@@ -296,6 +346,7 @@ for(i in 1:length(mult1))   # outer loop (for each mult1)
 {
   for(j in 1:length(mult2)) # inner loop (for each mult2)
   {
+    # The [i,j] cell get set to the multiplication of the correspoding i and j values
     multTable[i,j] = mult1[i] * mult2[j];  
   }
 }
@@ -309,11 +360,11 @@ The calculations go in this order:
 
 Aside from cycling through values, the only code is this line:
 
-```         
+``` r
 multTable[i,j] = mult1[i] * mult2[j]; 
 ```
 
-***multTable*** is a matrix, so it need two values to subset it – a row and a column. The \[i, j\] spot in the matrix gets populated with the multiplication of the ***i^th^*** value of ***mult1*** and ***j^th^*** value of ***mult2***.
+***multTable*** is a 2D matrix and needs 2 values to subset it (i and j). The \[i, j\] spot in the matrix gets populated with the multiplication of the ***i^th^*** value of ***mult1*** multiplied by the ***j^th^*** value of ***mult2***.
 
 ### Naming rows and columns
 
@@ -329,7 +380,7 @@ After we execute the for loop, we have a matrix that looks like this:
 [5,]   48   54   60
 ```
 
-Let's make the matrix more visually informative by adding names for the rows and columns:
+Let's make the matrix more visually informative by naming the rows and columns to the values in `mult1` and `mult2`:
 
 ``` r
 rownames(multTable) = mult1;
@@ -361,7 +412,7 @@ and can use the names to refer to rows and columns:
 
 We will do a slightly more complicated matrix that combines temperatures and wind speeds to create a wind chill matrix
 
-### Matrix setup
+### Matrix setup {#sec-example_windchill}
 
 We first need our temperature and wind speed values. This time we will use sequences that gives every 10^th^ value:
 
@@ -389,9 +440,9 @@ colnames(windChillTable) = speeds;
 It is common programming practice to use ***i*** and ***j*** for the index values of the outer and inner ***for*** loops, respectively. However, this is often not the most intuitive naming. For this example I will use ***row*** and ***col*** as the index values:
 
 ``` r
-for(row in 1:length(temps))     # cycle thru temps for each row
+for(«row» in 1:length(temps))     # cycle thru temps for each row
 {
-  for(col in 1:length(speeds))  # cycle thru speeds for each column
+  for(«col» in 1:length(speeds))  # cycle thru speeds for each column
   {
     windChillTable[row,col] = 35.74 +
                               0.6215*temps[row] -
@@ -409,19 +460,21 @@ The ***windChillTable*** ***for*** loop operates almost exactly the same as the 
 
 But the formula always sets the current cell in the matrix:
 
-`windChillMatrix[row,col]`
-
- 
+``` r
+windChillMatrix[row,col]
+```
 
 to a formula that contains the current temperature:
 
-`temps[row]`
-
- 
+``` r
+temps[row]
+```
 
 and the current wind speed:
 
-`speeds[col]`
+``` r
+speeds[col]
+```
 
 ## Application
 
@@ -429,17 +482,23 @@ and the current wind speed:
 
 -   What is the disadvantage of putting a function in the same script that it is called from?
 
--   How many times does the inner for loop get executed in ***windChillTable()***? In what order does it get executed?
+-   How many times does the inner ***for*** loop get executed in ***windChillTable()*** in @sec-example_windchill? Which temperature and winds speed value is used for the 13^th^ cycles? 27^th^ cycle?
 
  
 
-2\) Create a function for the will chill matrix that allows a caller to call it with a vector of temperatures and a vector of wind speeds. The return will be the wind chill matrix.
-
-3\) Reverse the for loops in the wind chill matrix...
+2\) Reverse the for loops in the wind chill matrix...
 
 -   rows: speed, columns: temp
 
-     
+ 
+
+3\) Create a function for the will chill matrix that allows a caller to call it with a vector of temperatures and a vector of wind speeds. The return will be the wind chill matrix.
+
+\<give a demo function call\>
+
+windchill = windchill(temps, speeds)
+
+ 
 
 4\) Create a heat index function
 
@@ -448,6 +507,8 @@ and the current wind speed:
  
 
 5\) find every pairs on numbers from a vector that evenly divide
+
+\<give pseudo numbers for this\>
 
 -   So if you have the vector c(3,4,7,12,14,15)
 
@@ -460,6 +521,8 @@ and the current wind speed:
          3   4  7  3
         12  12 14 15
         ```
+
+        for every number in the vector, check if it divides every other number
 
  
 

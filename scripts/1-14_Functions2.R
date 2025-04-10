@@ -45,7 +45,7 @@ e6 = isPrime1(13);       # valid -- and prime
 e7 = isPrime1(14);       # valid -- and not prime 
 e8 = isPrime1(81);       # valid -- and not prime
 
-# Testing the fundFactor() function:
+# Testing the findFactor() function:
 f0 = findFactors(dividend=13);
 f1 = findFactors(14);
 f2 = findFactors(dividend=81);
