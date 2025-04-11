@@ -6,9 +6,7 @@ short: "1-15"
 
 ### To-Do {#sec-first}
 
--   nested for loop work well with breakpoints...
--   more about the nested for loops in isPrime3()
--   more about 2D subsetting of matrices (section 6.3)
+-   nested for loop and breakpoints
 
 ## Purpose
 
@@ -34,7 +32,7 @@ If you have any questions about the material in this lesson, feel free to email 
 
 In the previous two lessons, we created a separate script for the functions used in the lesson. For this lesson, the function ***isPrime3()*** has been put inside the main script. It is not usually best practice to put functions inside the calling script (why this is true will be an application question). However, there are many occasions where you will see functions put directly inside a script, so it is good to be familiar with this practice.
 
-### functions need to be declared 
+### functions need to be declared
 
 Functions are like variables in that they store information to a named objects – and objects must be declared before they are used. If you are going to code a function directly in a script then [you need to declare the function before you call the function]{.hl}.
 
@@ -73,8 +71,9 @@ primeTest1: Named logi [1:6] FALSE TRUE FALSE FALSE FALSE TRUE
 ***logi*** means the vector values are Boolean and ***Named*** means the individual vector values are named. You cannot see the names in the ***Environment*** but you can in the ***Console***:
 
 ``` {.r tab="Console"}
-> primeTest1    12    13    14    15    16    17  
-             FALSE  TRUE FALSE FALSE FALSE  TRUE 
+> primeTest1    
+   12    13    14    15    16    17  
+FALSE  TRUE FALSE FALSE FALSE  TRUE 
 ```
 
 The names are the same as the dividend values passed in by the caller. How this is done will be shown later in this lesson.
@@ -308,7 +307,7 @@ One common use of a matrix is to create a table the contains every combination o
 
 ![Heat index table from NOAA](images/1-15_HeatIndexTable.jpg){.fs}
 
-## Multiplication table 
+## Multiplication table
 
 We will start with a simpler example: a multiplication table. For this table we will have two numeric vectors and populate the matrix with every possible multiplication between values in the two vectors:
 
@@ -338,7 +337,7 @@ multTable = matrix(nrow=length(mult1),
                    ncol=length(mult2));
 ```
 
-### Using nested for loops to fill matrix
+### Using nested for loops to fill matrix {#sec-mult-matrix}
 
 We use nested ***for*** loops to cycle through every possible combination of ***mult1*** and ***mult2***.
 
@@ -419,7 +418,7 @@ and can use the names to refer to rows and columns:
 
 Rownames and column names are always characters – this is why the values are in quotes. Numeric value are used to index rows and columns.
 
--    `multTable[4, 10]` is the value in row 4 and column 10, which does not exist so this would be an error.
+-   `multTable[4, 10]` is the value in row 4 and column 10, which does not exist so this would be an error.
 
 -   `multTable["4", "10"]` is the value in the row named "4" and column named "10"
 
@@ -497,9 +496,11 @@ and the current wind speed:
                               0.4275*temps[row]*(«speeds[col]»^0.16);
 ```
 
+![The wind chill matrix in Rstudio](images/1-15_WindChillTable.png){#fig-windChillTable .fs}
+
 ## Application
 
-1\) For this application, all functions, code, and answers to questions will go in one script named ***1-15.r.*** [Make sure you test all the functions thoroughly in your script.]{.hl}
+1\) For this application, all functions, code, and answers to questions will go in one script named ***1-15.r.*** [Make sure you test all code thoroughly in your script.]{.hl}
 
  
 
@@ -509,54 +510,48 @@ and the current wind speed:
 
 -   How many times does the inner ***for*** loop get executed in ***windChillTable()*** in @sec-example_windchill?
 
-    -   In order, what are the first 10 calculations (just give the row number and column number).
+-   If you reverse the order of the ***for*** loop in the multiplication matrix in @sec-mult-matrix (i.e., outer loop cycles through ***mult2***, inner loop cycles through ***mult1***), what is the order of the calculations?
 
  
 
-3\) Reverse the for loops in the wind chill matrix...
-
--   rows: speed, columns: temp
+3\) Reverse the order of the ***for*** loops in the wind chill matrix so that the rows are wind speeds and columns and temperatures.
 
  
 
-4\) Create a wind chill matrix function that allows a caller to call it with a vector of temperatures and a vector of wind speeds. The return value will be the wind chill matrix.
-
- \
-So, this code:
-
-``` r
-windChill = windchill(temps=2:6, speeds=8:10)
-```
-
-should save to `windChill` a matrix that looks like this @fig-mult-table-ex
-
- 
-
-5\) Using nested for loops, create a heat index matrix
+4\) Using nested ***for*** loops, create a heat index matrix
 
 -   The formula for heat index is on [page 2 of this document](https://www.weather.gov/media/ffc/ta_htindx.PDF)
 
  
 
-6\) Create a function that return every pairs of numbers from a vector where one number evenly divides another.
+5\) Create a wind chill matrix function that has temperature and wind speed as arguments and the return value is the wind chill matrix.
 
--   So if you have the vector `c(3,4,7,12,14,15)`
+ \
+So, this code:
 
-    -   you have four answers: 3 divides 12, 4 divides 12, 7 divides 14, 3 divides15
+``` r
+windChill = windchill(temps = seq(from=40, to=-20, by=-10), 
+                      speeds = seq(from=5, to=45, by=10))
+```
 
--   the answer will be in this form (order does not matter):
+should save to `windChill` a matrix that looks like this @fig-windChillTable
 
-    ``` r
-    > allDivides( c(3,4,7,12,14,15) )
+ 
+
+6\) Challenge: Create a function that takes a vector of numbers as an argument and returns every pair where one number evenly divides another number.
+
+-   So, if you have the vector `c(3,4,7,12,14,15)`
+
+    -   you have four pairs: (1) **3** divides **12**, (2) **4** divides **12**, (3) **7** divides **14**, (4) **3** divides **15**
+    -   Do not include pairs with the same number (e.g., **3** divides **3**, **14** divides **14**)
+
+-   the answer should look like this – the order of the pairs does not matter:
+
+    ``` {.r tab="Console"}
+    > evenlyDivides( c(3,4,7,12,14,15) )
      3   4  7  3
     12  12 14 15
     ```
-
--   check every number in the vector against every other number (except itself) to see which numbers it divides. This requires nested for loops.
-
-    -   The outer loop cycles through all numbers in the vector
-
-    -   The inner loop cycles through all number except the current outer loop number
 
 {{< include ../assets/_AppInstructions.qmd >}}
 

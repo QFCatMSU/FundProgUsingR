@@ -42,6 +42,7 @@ for(i in 1:length(mult1))   # outer loop (for each mult1)
 {
   for(j in 1:length(mult2)) # inner loop (for each mult2)
   {
+    # The [i,j] cell get set to the multiplication of the corresponding i and j values
     multTable[i,j] = mult1[i] * mult2[j];  
   }
 }
