@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.22">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>2-09: Stacking and Mapping</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b4406b7675125bc2ba204020e191172.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-5f39cfd1aee7e7785011fc5df168ee92.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link rel="shortcut icon" href="https://qfcatmsu.github.io/assets/quarto/qfc_icon.png">
+<script>mod=true; menuCollapse=true;</script>
+<script src="https://qfcatmsu.github.io/assets/quarto/qfc_styles.js"></script>
+ 
+
+
+<link rel="stylesheet" href="https://qfcatmsu.github.io/assets/quarto/qfc_styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+          <h1 class="quarto-secondary-nav-title">2-09: Stacking and Mapping</h1>
+        </a>     
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text"><b>Fundamentals of Programming class</b></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/0-01-IntroductionAndSyllabus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction and Syllabus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-01-RStudioProjectsSetup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-01: RStudio Projects Setup</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-02-Variables.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-02: Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-03_Mathematical_Operations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-03: Mathematical Operations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-04_Vectors_And_Data_Frames.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-04: Vectors and Data Frames</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-05_Functions_Introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-05: Functions Introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-06_Run_and_Source.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-06: Run and Source</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-07_Outputs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-07: Outputs</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-08_Conditional_Operations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-08: Conditional Operations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-09_If_Else_Statements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-09: If-Else Statements</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-10_For_Loops.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-10: For Loops</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-11_For_Loops_and_State_Varibles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-11: For Loops and State Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-12_MultipleConditions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-12: Multiple Conditions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-13_Functions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-13: Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-14_Functions2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-14: Functions 2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-15_Nested_Loops_and _Matrices.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-15: Nested loops and Matrices</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-15_Nested_Loops_and _Matrices-HOME-GALAXYBOOK.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-15: Nested loops and Matrices</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-01_R-Base_Plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-01: R-Base Plots</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-02_DataFrame_Modifications.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-02: DataFrame Modifications</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-03_DataTypesAndDateFrames.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-03: Data Types and Data Frames</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-04_WhichStatements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-04: Which Statements</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-05_WhichAndRegularExpressions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-05: Which and Regular Expressions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-06_Datetime_Obejects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-06: Datetime objects</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-07_Matrices.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-07: Matrices</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-08_Binding_Sampling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-08: Binding and Sampling</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-09_Stacking_Mapping.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">2-09: Stacking and Mapping</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-10_Statistical_Tests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-10: Statistical Tests</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-11_Objects_Attributes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-11: Objects and Attributes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-12_Lists.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-12: Lists</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-13_Breakpoints.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-13: Breakpoints</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title"><b>Lesson Content</b></h2>
+   
+  <ul>
+  <li><a href="#purpose" id="toc-purpose" class="nav-link active" data-scroll-target="#purpose"><span class="header-section-number">1</span> Purpose</a></li>
+  <li><a href="#script-and-data-for-this-lesson" id="toc-script-and-data-for-this-lesson" class="nav-link" data-scroll-target="#script-and-data-for-this-lesson"><span class="header-section-number">2</span> Script and data for this lesson</a></li>
+  <li><a href="#ggplot-mapping" id="toc-ggplot-mapping" class="nav-link" data-scroll-target="#ggplot-mapping"><span class="header-section-number">3</span> GGPlot mapping</a></li>
+  <li><a href="#reading-in-the-data-frame" id="toc-reading-in-the-data-frame" class="nav-link" data-scroll-target="#reading-in-the-data-frame"><span class="header-section-number">4</span> Reading in the data frame</a></li>
+  <li><a href="#line-plots" id="toc-line-plots" class="nav-link" data-scroll-target="#line-plots"><span class="header-section-number">5</span> Line Plots</a></li>
+  <li><a href="#adding-a-legend" id="toc-adding-a-legend" class="nav-link" data-scroll-target="#adding-a-legend"><span class="header-section-number">6</span> Adding a legend</a></li>
+  <li><a href="#stacking-the-data-frame" id="toc-stacking-the-data-frame" class="nav-link" data-scroll-target="#stacking-the-data-frame"><span class="header-section-number">7</span> Stacking the data frame</a>
+  <ul class="collapse">
+  <li><a href="#a-note-from-the-author-about-stacked-data-frame" id="toc-a-note-from-the-author-about-stacked-data-frame" class="nav-link" data-scroll-target="#a-note-from-the-author-about-stacked-data-frame"><span class="header-section-number">7.1</span> A note from the author about stacked data frame</a></li>
+  <li><a href="#plotting-the-stacked-data-frame" id="toc-plotting-the-stacked-data-frame" class="nav-link" data-scroll-target="#plotting-the-stacked-data-frame"><span class="header-section-number">7.2</span> Plotting the stacked data frame</a></li>
+  </ul></li>
+  <li><a href="#using-for-loops-to-plot-6-columns" id="toc-using-for-loops-to-plot-6-columns" class="nav-link" data-scroll-target="#using-for-loops-to-plot-6-columns"><span class="header-section-number">8</span> Using for loops to plot 6 columns</a></li>
+  <li><a href="#unstacking-the-data-frame" id="toc-unstacking-the-data-frame" class="nav-link" data-scroll-target="#unstacking-the-data-frame"><span class="header-section-number">9</span> Unstacking the data frame</a></li>
+  <li><a href="#boxplots" id="toc-boxplots" class="nav-link" data-scroll-target="#boxplots"><span class="header-section-number">10</span> Boxplots</a></li>
+  <li><a href="#box-plots-using-the-stacked-dataframe" id="toc-box-plots-using-the-stacked-dataframe" class="nav-link" data-scroll-target="#box-plots-using-the-stacked-dataframe"><span class="header-section-number">11</span> Box Plots using the stacked dataframe</a></li>
+  <li><a href="#stacking-a-subset-of-the-columns" id="toc-stacking-a-subset-of-the-columns" class="nav-link" data-scroll-target="#stacking-a-subset-of-the-columns"><span class="header-section-number">12</span> Stacking a subset of the columns</a>
+  <ul class="collapse">
+  <li><a href="#plotting-the-subset-stacked-dataframe" id="toc-plotting-the-subset-stacked-dataframe" class="nav-link" data-scroll-target="#plotting-the-subset-stacked-dataframe"><span class="header-section-number">12.1</span> Plotting the subset stacked dataframe</a></li>
+  <li><a href="#plotting-a-subset-using-for-loops" id="toc-plotting-a-subset-using-for-loops" class="nav-link" data-scroll-target="#plotting-a-subset-using-for-loops"><span class="header-section-number">12.2</span> Plotting a subset using for loops</a></li>
+  </ul></li>
+  <li><a href="#saving-data-frames-to-one-object" id="toc-saving-data-frames-to-one-object" class="nav-link" data-scroll-target="#saving-data-frames-to-one-object"><span class="header-section-number">13</span> Saving data frames to one object</a>
+  <ul class="collapse">
+  <li><a href="#saving-the-list-object-to-a-file" id="toc-saving-the-list-object-to-a-file" class="nav-link" data-scroll-target="#saving-the-list-object-to-a-file"><span class="header-section-number">13.1</span> Saving the List object to a file</a></li>
+  </ul></li>
+  <li><a href="#application" id="toc-application" class="nav-link" data-scroll-target="#application"><span class="header-section-number">14</span> Application</a>
+  <ul class="collapse">
+  <li><a href="#questions-to-answer" id="toc-questions-to-answer" class="nav-link" data-scroll-target="#questions-to-answer"><span class="header-section-number">14.1</span> Questions to answer</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content column-page-right" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">2-09: Stacking and Mapping</h1>
+</div>
+
+
+
+<div class="quarto-title-meta column-page-right">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="purpose" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="purpose"><span class="header-section-number">1</span> Purpose</h2>
+<ul>
+<li><p>stacking dataframe</p></li>
+<li><p>creating line plots and box plots</p></li>
+<li><p>mapping values other than x and y</p></li>
+<li><p>creating a List object</p></li>
+<li><p>Fix figure 2 and 4</p></li>
+<li><p>switch to !! instead of aes_()</p></li>
+</ul>
+</section>
+<section id="script-and-data-for-this-lesson" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="script-and-data-for-this-lesson"><span class="header-section-number">2</span> Script and data for this lesson</h2>
+<p>The <a href="../scripts/2-09_StackingAndMapping.R">script for the lesson is here</a></p>
+<p>Data for the lesson: <a href="../data/LansingJanTempsFixed.csv">LansingJanTempsFixed.csv</a></p>
+</section>
+<section id="ggplot-mapping" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="ggplot-mapping"><span class="header-section-number">3</span> GGPlot mapping</h2>
+<p>This lesson is designed to give an overview of the many issues that occur when you are creating plots in GGPlot and some of the fixes. There is the huge topic of mapping in GGPlot that we use in this lesson, but do not have time to fully explain (we go into much more detail in our dedicated GGPlot class…).&nbsp; Mapping is how you relate data in a data frame to a visual aspect of a plot.&nbsp; We have already mapped data in a data frame to the x and y axis of a plot – but, you can map many other visual aspects to data like size, shape, and, in this lesson, color.&nbsp; Mapping is a complicated topic and we are just scratching the surface of it in this lesson.</p>
+</section>
+<section id="reading-in-the-data-frame" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="reading-in-the-data-frame"><span class="header-section-number">4</span> Reading in the data frame</h2>
+<p>We will be using the data from <strong><em>lansingJanTempsFixed.csv</em></strong> that has 6 years of January temperatures in Fahrenheit.&nbsp; First we need to read in the file, <strong><em>lansJanTempsFixed.csv</em></strong>, and save the temperature data to a data frame:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>lansJanTempsDF <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">"data/lansingJanTempsFixed.csv"</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="line-plots" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="line-plots"><span class="header-section-number">5</span> Line Plots</h2>
+<p>We are going to go over the multiple ways in GGPlot to make a line plot for each of the 6 temperature column in one canvas area.&nbsp; The ggplot component that creates a line plot is <strong><em>geom_line()</em></strong>.</p>
+<p>&nbsp;</p>
+<p>The simplest way to do it is to create six <strong><em>geom_line()</em></strong> components – one for each column in the data frame:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>  plot1 <span class="ot">=</span> <span class="fu">ggplot</span>( <span class="at">data=</span>(lansJanTempsDF), </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                  «<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">31</span>)») <span class="sc">+</span> </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>( <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">y=</span>Jan2011),</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>( <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">y=</span>Jan2012),</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">"green"</span>) <span class="sc">+</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>( <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">y=</span>Jan2013),</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">"orange"</span>) <span class="sc">+</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>( <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">y=</span>Jan2014),</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>( <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">y=</span>Jan2015),</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">"purple"</span>) <span class="sc">+</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>( <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">y=</span>Jan2016),</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>( <span class="at">title=</span><span class="st">"January Temperature"</span>,</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>          <span class="at">subtitle=</span><span class="st">"Lansing, MI -- 2011-2016"</span>,</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>          <span class="at">x =</span> <span class="st">"January Days"</span>,</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>          <span class="at">y =</span> <span class="st">"temperature (F)"</span>) <span class="sc">+</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>();</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(plot1);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Since the x-axis gets mapped to the same date values (1 to 31) for each line plot, we can place the <strong><em>x</em></strong> mapping in <strong><em>ggplot()</em></strong> call.&nbsp; This makes the <strong><em>x</em></strong> mapping of <strong>1:31</strong> universal for all components in the canvas area.</p>
+<p>&nbsp;</p>
+<p>Each <strong><em>geom_line</em></strong> component is also customized with a <strong><em>color</em></strong> subcomponent.</p>
+<div id="fig-line_plot" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-line_plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-2-09-LinePlot.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-line_plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: A line plot for the six temperature columns
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="adding-a-legend" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="adding-a-legend"><span class="header-section-number">6</span> Adding a legend</h2>
+<p>The problem with <a href="#fig-line_plot" class="quarto-xref">Figure&nbsp;1</a> is that the individual line plots are not labelled. We would like to add a legend to the plot that maps the color to the year and adding a legend in GGPlot is awkward.&nbsp; Generally speaking <span class="hl">GGPlot will put a legend on the plot when something is <strong>mapped</strong> other than <strong>x</strong> or <strong>y</strong></span>.&nbsp; We are going to <strong><em>map</em></strong> color.&nbsp; To do this, we move <strong><em>color</em></strong> from being a subcomponent of the <strong><em>geom_line</em></strong> to being a mapped element of the <strong><em>geom_line</em></strong>.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>  plot2 <span class="ot">=</span> <span class="fu">ggplot</span>( <span class="at">data=</span>(lansJanTempsDF), </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">31</span>)) <span class="sc">+</span>  </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>( <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">y=</span>Jan2011, <span class="at">color =</span> <span class="st">"Jan2011"</span>) ) <span class="sc">+</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>( <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">y=</span>Jan2012, <span class="at">color =</span> <span class="st">"Jan2012"</span>) ) <span class="sc">+</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>( <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">y=</span>Jan2013, <span class="at">color =</span> <span class="st">"Jan2013"</span>) ) <span class="sc">+</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>( <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">y=</span>Jan2014, <span class="at">color =</span> <span class="st">"Jan2014"</span>) ) <span class="sc">+</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>( <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">y=</span>Jan2015, <span class="at">color =</span> <span class="st">"Jan2015"</span>) ) <span class="sc">+</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>( <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">y=</span>Jan2016, <span class="at">color =</span> <span class="st">"Jan2016"</span>) ) <span class="sc">+</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>( <span class="at">title=</span><span class="st">"January Temperature"</span>,</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>          <span class="at">subtitle=</span><span class="st">"Lansing, MI -- 2011-2016"</span>,</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>          <span class="at">x =</span> <span class="st">"January Days"</span>,</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>          <span class="at">y =</span> <span class="st">"temperature (F)"</span>) <span class="sc">+</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>();</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(plot2);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In this plot, we moved <strong><em>color</em></strong> to the mapping of the <strong><em>geom_line</em></strong> and set <strong><em>color</em></strong> to the text we want displayed in the legend (not an actual color).&nbsp; This solution adds a legend with the text but the line colors are chosen by GGPlot.&nbsp; <span class="note">Note: There is a way to customize these color but that is beyond the scope of this class.</span></p>
+<div id="fig-legend" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-legend-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-2-09-Legend.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-legend-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Line plots with a legend – note that the legend text matches the color mappings
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="stacking-the-data-frame" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="stacking-the-data-frame"><span class="header-section-number">7</span> Stacking the data frame</h2>
+<p>The most common (and pretty ugly) technique used to plot multiple line plots on one canvas is to create a new data frame that has all the data you want to plot in two columns – this process is often called <span class="hl">melting</span>or <span class="hl">stacking</span>the data frame.</p>
+<p>&nbsp;</p>
+<p>We can use <strong><em>stack()</em></strong> to create a stacked data frame:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>stackedDF <span class="ot">=</span> <span class="fu">stack</span>(lansJanTempsDF);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The stacked data frame has the same data as the original data frame but everything is put in two columns:</p>
+<div id="fig-two_col_stacked" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-two_col_stacked-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/2-09-Stacking.jpg" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-two_col_stacked-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: A stacked dataframe of the six years of temperature data put into two columns
+</figcaption>
+</figure>
+</div>
+<p>The stacked data frame has <strong>186</strong> rows (<strong>31</strong> days * <strong>6</strong> years) and two columns:</p>
+<ul>
+<li><p><strong><em>column 1:</em></strong> combined the 6 temperature columns into one column called <strong><em>values</em></strong></p></li>
+<li><p><strong><em>column 2</em></strong>: contains the names of the six temperature columns (2011 to 2016) called <strong><em>ind</em></strong></p>
+<p>&nbsp;</p></li>
+</ul>
+<p><span class="hl">The 6 years of data are now stacked on top of each-other</span>with the first <strong>31</strong> rows containing values from <strong>2011</strong>, the next <strong>31</strong> rows containing values from <strong>2012</strong>, etc…&nbsp; The <strong><em>ind</em></strong> columns give the year the temperatures came from.</p>
+<section id="a-note-from-the-author-about-stacked-data-frame" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="a-note-from-the-author-about-stacked-data-frame"><span class="header-section-number">7.1</span> A note from the author about stacked data frame</h3>
+<p>This author considers stacking data frames to be a bad programming practice but this practice is widely reinforced by R.&nbsp; The reason stacking a data frame is bad is you are restructuring the data frame to meet the needs of a function.&nbsp; But, the data frame is an object that should remain fixed.&nbsp; The better practice is to code functions that match the structure of the data frame.&nbsp; This is not a difficult task, but, unfortunately, this is not how R operates and there is no good way to get around stacking data frames.</p>
+</section>
+<section id="plotting-the-stacked-data-frame" class="level3" data-number="7.2">
+<h3 data-number="7.2" class="anchored" data-anchor-id="plotting-the-stacked-data-frame"><span class="header-section-number">7.2</span> Plotting the stacked data frame</h3>
+<p>With the stacked data frame, we only need one <strong><em>geom_line</em></strong> component to plot all 6 lines.&nbsp; This works because of the <strong><em>color</em></strong> mapping.&nbsp; The <strong><em>color</em></strong> mapping tells GGPlot to create a distinct line for each different value in the <strong><em>ind</em></strong> column – and set each to a different color.&nbsp;&nbsp; The <strong><em>ind</em></strong> column has 6 different value – the 6 column names from the original data frame (<strong><em>Jan2011</em></strong>, <strong><em>Jan2012</em></strong>,…).</p>
+<p>&nbsp;</p>
+<p>The x-axis represents the days from 1 to 31.&nbsp; We have 186 rows but every 31 rows represents a new line plot (31 * 6 = 186).&nbsp; So, we want to repeat the values 1 to 31 six times.</p>
+<p>&nbsp;</p>
+<p>The <strong><em>y</em></strong> mapping is the temperature values from the original data frame put into one long <strong><em>values</em></strong> column.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>  plot3 <span class="ot">=</span> <span class="fu">ggplot</span>( <span class="at">data=</span>(stackedDF)) <span class="sc">+</span>  </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>( <span class="at">mapping=</span>«<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">31</span>, <span class="at">times=</span><span class="dv">6</span>)», <span class="at">y=</span>values, <span class="at">color=</span>ind) ) <span class="sc">+</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>( <span class="at">title=</span><span class="st">"January Temperature"</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">subtitle=</span><span class="st">"Lansing, MI -- 2011-2016"</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">x =</span> <span class="st">"January Days"</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">y =</span> <span class="st">"temperature (F)"</span>) <span class="sc">+</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>();</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(plot3);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-plot_stacked" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-plot_stacked-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-2-09-StackedLines.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-plot_stacked-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Plotting using a stacked dataframe
+</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="using-for-loops-to-plot-6-columns" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="using-for-loops-to-plot-6-columns"><span class="header-section-number">8</span> Using for loops to plot 6 columns</h2>
+<p>I consider using for loops to be the most robust because it allows you to plot multiple column with only one command and, more importantly, maintains the integrity of the original data frame.&nbsp; It is also probably the most difficult method:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>  plot4 <span class="ot">=</span> <span class="fu">ggplot</span>( <span class="at">data=</span>(lansJanTempsDF));  <span class="co"># create a canvas</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(lansJanTempsDF))         <span class="co"># add plots to canvas one at a time</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    «plot4 <span class="ot">=</span> plot4» <span class="sc">+</span> <span class="fu">geom_line</span>( <span class="at">mapping=</span>«aes_»(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(lansJanTempsDF), </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>                                            <span class="at">y=</span>lansJanTempsDF[,i], </span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>                                            <span class="at">color=</span><span class="fu">colnames</span>(lansJanTempsDF)[i]) )</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add the labels and theme to the canvas</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  «plot4 <span class="ot">=</span> plot4» <span class="sc">+</span> <span class="fu">labs</span>( <span class="at">title=</span><span class="st">"January Temperature"</span>,</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>          <span class="at">subtitle=</span><span class="st">"Lansing, MI -- 2011-2016"</span>,</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>          <span class="at">x =</span> <span class="st">"January Days"</span>,</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>          <span class="at">y =</span> <span class="st">"temperature (F)"</span>) <span class="sc">+</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>();</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(plot4);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In this example, the <strong><em>for</em></strong> loop adds the six plot components to the <strong><em>plot4</em></strong> canvas one at a time.&nbsp; When mapping in a <strong><em>for</em></strong> loop, you need to use the function <strong><em>aes_()</em></strong> instead of <strong><em>aes()</em></strong>.&nbsp; After the plot components are added, we then add the labels and theme to <strong><em>plot4</em></strong>.</p>
+<div id="fig-for_stacked" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-for_stacked-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-2-09-ForLoopPlot.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-for_stacked-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: Using for loops to plot 6 column – this authors believes this is the most robust solution
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="unstacking-the-data-frame" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="unstacking-the-data-frame"><span class="header-section-number">9</span> Unstacking the data frame</h2>
+<p>You can take a stacked data frame and return it to original state using <strong><em>unstack()</em></strong>:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>origDF <span class="ot">=</span> <span class="fu">unstack</span>(stackedDF);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>And <strong><em>origDF</em></strong> looks just like the original <strong><em>lansJanTempDF</em></strong></p>
+<div id="fig-unstacking" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-unstacking-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/2-09-Unstacking.jpg" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-unstacking-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: Unstacking a dataframe return you to the original dataframe
+</figcaption>
+</figure>
+</div>
+<p>&nbsp;</p>
+<p><span class="note">Note: The stacked version of a dataframe is often called <strong>long format</strong> and the original dataframe called <strong>wide format.</strong></span></p>
+</section>
+<section id="boxplots" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="boxplots"><span class="header-section-number">10</span> Boxplots</h2>
+<p>A good way to visually compare the six years of January temperatures is to use a boxplot.&nbsp; In GGPlot, the component to use is <strong><em>geom_boxplot.</em></strong> &nbsp; For our first attempt, we will just create two boxes representing the columns <strong><em>Jan2011</em></strong> and <strong><em>Jan2012</em></strong>.</p>
+<p>&nbsp;</p>
+<p>Like all plotting components in GGPlot, <strong><em>geom_boxplot</em></strong> needs to be mapped.&nbsp; The y-axis represents the temperatures so we can map <strong><em>y</em></strong> to the columns, <strong><em>Jan2011</em></strong> in onebox and <strong><em>Jan2012</em></strong> in the other.</p>
+<p>&nbsp;</p>
+<p>We also need to map <strong><em>x</em></strong> to something otherwise the two boxplots will appear right on top of each other (try it!). We can start by mapping the boxplot to the years they represent:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>  plot5 <span class="ot">=</span> <span class="fu">ggplot</span>(<span class="at">data=</span>lansJanTempsDF) <span class="sc">+</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span><span class="dv">2011</span>, <span class="at">y=</span>Jan2011)) <span class="sc">+</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span><span class="dv">2012</span>, <span class="at">y=</span>Jan2012)) <span class="sc">+</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>();</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(plot5);  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This code successfully creates two boxplots but the x-axis is a bit weird:</p>
+<div id="fig-boxplot1" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-boxplot1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/2-09-Boxplot-Num-X.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-boxplot1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7: The boxes for January temperatures in 2011 and 2012
+</figcaption>
+</figure>
+</div>
+<p>&nbsp;</p>
+<p>Because we used numbers to map the x-axis, GGPlot assumed a continuous and numeric x-axis.&nbsp; But, the<span class="hl">x-axis in a boxplot is really a discrete axis</span> – we are not plotting value in between 2011 and 2012.&nbsp; If we want a discrete axis, then we need to put the years in quotes (i.e., make the year a string value):</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>  plot6 <span class="ot">=</span> <span class="fu">ggplot</span>(<span class="at">data=</span>lansJanTempsDF) <span class="sc">+</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">mapping=</span><span class="fu">aes</span>(«<span class="at">x=</span><span class="st">"2011"</span>», <span class="at">y=</span>Jan2011)) <span class="sc">+</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">mapping=</span><span class="fu">aes</span>(«<span class="at">x=</span><span class="st">"2012"</span>», <span class="at">y=</span>Jan2012)) <span class="sc">+</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>();</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(plot6);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now, we have a discrete x-axis:</p>
+<div id="fig-boxplot_discrete" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-boxplot_discrete-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/2-09-Boxplot-String-X.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-boxplot_discrete-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8: The same boxplots with a discrete x-axis
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="box-plots-using-the-stacked-dataframe" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="box-plots-using-the-stacked-dataframe"><span class="header-section-number">11</span> Box Plots using the stacked dataframe</h2>
+<p>Just like with lines plots, there is no great way to create boxes from multiple columns in a dataframe.&nbsp; We could plot all six columns by creating six <strong><em>geom_boxplot</em></strong> components, one for each year.&nbsp; But, in programming, you generally do not want to repeat code – this about how messy this could get if there were 20 columns.</p>
+<p>&nbsp;</p>
+<p>The most common technique used for plotting multiple columns is to use a stacked dataframe.</p>
+<p>&nbsp;</p>
+<p>Using the stacked dataframe, we can plot all 6 years using one <strong><em>geom_boxplot</em></strong> component.&nbsp; The works by mapping <strong><em>x</em></strong> to the <strong><em>ind</em></strong> column (which has the years) and mapping <strong><em>y</em></strong> to the <strong><em>values</em></strong> column (which has all the temperature values).</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>  plot7 <span class="ot">=</span> <span class="fu">ggplot</span>(<span class="at">data=</span>stackedDF) <span class="sc">+</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>ind, <span class="at">y=</span>values)) <span class="sc">+</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>();</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(plot7);    </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The x-axis of the boxplot is labelled with the names of the columns and the y-axis has the box for each year:</p>
+<div id="fig-six_boxes_stacked" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-six_boxes_stacked-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-2-09-All-Boxes.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-six_boxes_stacked-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9: Boxes for all six columns using the stacked data frame
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="stacking-a-subset-of-the-columns" class="level2" data-number="12">
+<h2 data-number="12" class="anchored" data-anchor-id="stacking-a-subset-of-the-columns"><span class="header-section-number">12</span> Stacking a subset of the columns</h2>
+<p>We can create stacked dataframes that only has a subset of the columns from the original data frame.</p>
+<p>This stacked dataframe only has the values from <strong>2</strong> columns, the3<sup>rd</sup> and 6<sup>th</sup> (2013 and 2016– <strong>62</strong> values in all):</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>stackedDF2 <span class="ot">=</span> <span class="fu">stack</span>(lansJanTempsDF[,<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">6</span>)]); <span class="co"># 2013 and 2016</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>And this stacked dataframe has the values from <strong>4</strong> columns: the1<sup>st</sup>, 2<sup>nd</sup>, 5<sup>th</sup>, and 6<sup>th</sup> (2011, 2012, 2015, &amp; 2016 – <strong>124</strong> values in all):</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>  stackedDF3 <span class="ot">=</span> <span class="fu">stack</span>(lansJanTempsDF[,<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">5</span>,<span class="dv">6</span>)]); <span class="co"># 2011, 2012, 2015, &amp; 2016</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In the <strong><em>Environment</em></strong> tab we see the two new stacked dataframes, both with 2 columns (<strong><em>values</em></strong> and <strong><em>ind</em></strong>) and 62 values (for two Januaries) and 124 values (for four Januaries)</p>
+<div class="sourceCode" id="cb13" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>🞃 stackedDF2<span class="sc">:</span>   <span class="dv">62</span> obs. of <span class="dv">2</span> variables</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="sc">$</span> values<span class="sc">:</span> num <span class="dv">25</span> <span class="dv">26</span> <span class="dv">29</span> <span class="dv">33</span> <span class="dv">35</span> <span class="dv">35</span> ...</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="sc">$</span> ind    <span class="sc">:</span>  Factor w<span class="sc">/</span> <span class="dv">2</span> levels <span class="st">"Jan2013"</span>,...</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>🞃 stackedDF3<span class="sc">:</span>   <span class="dv">124</span> obs. of <span class="dv">4</span> variables</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="sc">$</span> values<span class="sc">:</span> num <span class="dv">54</span> <span class="dv">25</span> <span class="dv">33</span> <span class="dv">32</span> <span class="dv">23</span> ...</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="sc">$</span> ind    <span class="sc">:</span>  Factor w<span class="sc">/</span> <span class="dv">4</span> levels <span class="st">"Jan2011"</span>,...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="plotting-the-subset-stacked-dataframe" class="level3" data-number="12.1">
+<h3 data-number="12.1" class="anchored" data-anchor-id="plotting-the-subset-stacked-dataframe"><span class="header-section-number">12.1</span> Plotting the subset stacked dataframe</h3>
+<p>We can plot the four boxes from dataframe <strong><em>stackedDF3</em></strong> just like we plotting all six boxes using <strong><em>stackedDF</em></strong>:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>  plot8 <span class="ot">=</span> <span class="fu">ggplot</span>(<span class="at">data=</span>«stackedDF3») <span class="sc">+</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>ind, <span class="at">y=</span>values)) <span class="sc">+</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>();</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(plot8);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig_box_subset_stacked" class="quarto-figure quarto-figure-left anchored">
+<figure class="figure">
+<p><img src="images/R-2-09-StackedSubsetBox.png" class="fs img-fluid figure-img"></p>
+<figcaption>Plotting boxes from a stacked dataframe that has been subsetted</figcaption>
+</figure>
+</div>
+</section>
+<section id="plotting-a-subset-using-for-loops" class="level3" data-number="12.2">
+<h3 data-number="12.2" class="anchored" data-anchor-id="plotting-a-subset-using-for-loops"><span class="header-section-number">12.2</span> Plotting a subset using for loops</h3>
+<p>Again, this author believes the most robust way to plot the subsetting data is to use for loop.&nbsp; Once again, this allows you to work with the original data frame – there is no need to create a stacked data frame.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>  plot9 <span class="ot">=</span> <span class="fu">ggplot</span>( <span class="at">data=</span>(lansJanTempsDF)); </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> «<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">5</span>,<span class="dv">6</span>)»)   <span class="co"># cycle through the four columns</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="do">## map the column names to x and the column values to y</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    plot9 <span class="ot">=</span> plot9 <span class="sc">+</span> <span class="fu">geom_boxplot</span>(<span class="at">mapping=</span><span class="fu">aes_</span>(<span class="at">x=</span>«<span class="fu">colnames</span>(lansJanTempsDF)[i]», </span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>                                              <span class="at">y=</span>lansJanTempsDF[,i] ))</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  plot9 <span class="ot">=</span> plot9 <span class="sc">+</span> <span class="fu">theme_bw</span>();</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(plot9);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In this code,</p>
+<ul>
+<li><p>the <strong><em>for</em></strong> loops only cycles through the four columns we want to plot <strong><em>c(1,2,5,6)</em></strong>.&nbsp;</p></li>
+<li><p><strong><em>x</em></strong> is mapped to the subsetted column name</p></li>
+<li><p><strong><em>y</em></strong> is mapped to the subsetted column values</p>
+<p>&nbsp;</p></li>
+</ul>
+<div id="fig-boxplot_for_loops" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-boxplot_for_loops-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-2-09-ForLoopBox.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-boxplot_for_loops-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10: Using for loops to create a boxplot of four of the columns from the temperature data frame
+</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="saving-data-frames-to-one-object" class="level2" data-number="13">
+<h2 data-number="13" class="anchored" data-anchor-id="saving-data-frames-to-one-object"><span class="header-section-number">13</span> Saving data frames to one object</h2>
+<p>In this lesson, we created four data frames:</p>
+<ul>
+<li><p><strong><em>lansJanTempsDF</em></strong>: the original data frame</p></li>
+<li><p><strong><em>stackedDF</em></strong>: a stacked version of the full data frame</p></li>
+<li><p><strong><em>stackedDF2</em></strong>: a stacked version of columns 3 and 6 only</p></li>
+<li><p><strong><em>stackedDF3</em></strong>: a stacked version of columns 1, 3, 5, and 6</p>
+<p>&nbsp;</p></li>
+</ul>
+<p>We are going to use these data frames in the next lesson.&nbsp; In the next lesson, we could just reopen the <strong><em>lansingJanTempsFixed.csv</em></strong> file, save the data to a data frame and then create the stacked dataframes.&nbsp; But, since we have already done that work, it would be easier to pass the data frames from this lesson to the next lesson.</p>
+<p>&nbsp;</p>
+<p>We will create one object that holds all four data frame using <strong><em>list()</em></strong>.&nbsp; The object is a <strong><em>List</em></strong> object (we will be talking a lot more about List object in the next few lessons):</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>  temperatureDFs<span class="ot">=</span> <span class="fu">list</span>(<span class="st">"origDF"</span> <span class="ot">=</span> lansJanTempsDF,</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"stackedDF"</span> <span class="ot">=</span> stackedDF,</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"stackDF_3_6"</span> <span class="ot">=</span> stackedDF2,</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"stackedDF_1_2_5_6"</span> <span class="ot">=</span> stackedDF3);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The value in quotes is the name of the object – you can choose the name but you should use variable naming conventions.</p>
+<p>&nbsp;</p>
+<p><strong><em>temperatureDFs</em></strong> appear in the <strong><em>Environment</em></strong> as a <strong><em>List</em></strong> object with four data frames inside it.&nbsp; We can view the data frames in the list by clicking on the arrow in the <strong><em>Environment</em></strong> tab or double-clicking on <strong><em>temperatureDFs</em></strong> to see it in a viewer tab:</p>
+<div id="fig-list_object" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-list_object-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-2-09-ListObject.jpg" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-list_object-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11: The List object in the Environment and the viewer tab
+</figcaption>
+</figure>
+</div>
+<section id="saving-the-list-object-to-a-file" class="level3" data-number="13.1">
+<h3 data-number="13.1" class="anchored" data-anchor-id="saving-the-list-object-to-a-file"><span class="header-section-number">13.1</span> Saving the List object to a file</h3>
+<p>We want to use the <strong><em>List</em></strong> object with four data frames in the next lesson.&nbsp; To do this, <span class="hl">we need to save the <strong>List</strong> to a file</span> – a file we will open in the next lesson:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(temperatureDFs, <span class="at">file =</span> <span class="st">"data/tempDFs.rdata"</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>There should now be a file named <strong><em>tempDFs.rdata</em></strong> in the <strong><em>data</em></strong> folder of your Project that contains <strong><em>temperatureDFs</em></strong>.</p>
+</section>
+</section>
+<section id="application" class="level2" data-number="14">
+<h2 data-number="14" class="anchored" data-anchor-id="application"><span class="header-section-number">14</span> Application</h2>
+<p>A) Open the file&nbsp;<a href="..\content/DEVELOPMENT/2020/courses/DEV-belinsky-2020-ProgrammingFundamentalsUsingR/R/Lessons/../Data/Lansing2016Noaa.csv?isCourseFile=true"><strong><em>LansingNOAA2016.csv</em></strong></a>and save the contents of the file to a data frame named <strong><em>weatherData</em></strong></p>
+<p>&nbsp;</p>
+<p>B) Create a stacked data frame named <strong><em>stackedWD</em></strong> that only contains the three temperature columns from <strong><em>weatherData</em></strong> (<strong><em>maxTemp</em></strong>, <strong><em>avgTemp</em></strong>, and <strong><em>minTemp</em></strong>).&nbsp;</p>
+<ul>
+<li><p><strong><em>stackedWD</em></strong> will have 2 columns (<strong><em>values</em></strong> and <strong><em>ind</em></strong>) and 1098 rows (366 * 3).</p>
+<p>&nbsp;</p></li>
+</ul>
+<p>C) Create six GGPlot canvases, the canvas will contain:</p>
+<ol type="1">
+<li><p>Three lines plots (<strong><em>maxTemp</em></strong>, <strong><em>avgTemp</em></strong>, and <strong><em>minTemp</em></strong>) using <strong><em>weatherData</em></strong> and three <strong><em>geom_line</em></strong> components – the method used in <a href="#fig-line_plot" class="quarto-xref">Figure&nbsp;1</a></p></li>
+<li><p>Three lines plots (<strong><em>maxTemp</em></strong>, <strong><em>avgTemp</em></strong>, and <strong><em>minTemp</em></strong>) using <strong><em>stackedWD</em></strong> and one <strong><em>geom_line</em></strong> component.</p></li>
+<li><p>Thre&nbsp; lines plots (<strong><em>maxTemp</em></strong>, <strong><em>avgTemp</em></strong>, and <strong><em>minTemp</em></strong>) using <strong><em>weatherData</em></strong> and a <strong><em>for</em></strong> loop.</p></li>
+<li><p>Three box plots (<strong><em>maxTemp</em></strong>, <strong><em>avgTemp</em></strong>, and <strong><em>minTemp</em></strong>) using <strong><em>weatherData</em></strong> and three <strong><em>geom_boxplot</em></strong> components</p></li>
+<li><p>Three box plots (<strong><em>maxTemp</em></strong>, <strong><em>avgTemp</em></strong>, and <strong><em>minTemp</em></strong>) using <strong><em>stackedWD</em></strong> and one <strong><em>geom_boxplot</em></strong> component.</p></li>
+<li><p>Three&nbsp; box plots (<strong><em>maxTemp</em></strong>, <strong><em>avgTemp</em></strong>, and <strong><em>minTemp</em></strong>) using <strong><em>weatherData</em></strong> and a <strong><em>for</em></strong> loop.</p>
+<p>&nbsp;</p></li>
+</ol>
+<p>&nbsp;</p>
+<p>Save the script as&nbsp;<strong><em>app2-09.r</em></strong> in your&nbsp;<strong><em>scripts</em></strong> folder and&nbsp; email your Project Folder to Charlie Belinsky at belinsky@msu.edu.</p>
+<p>&nbsp;</p>
+<p><a href="1-01-RStudioProjectsSetup.html#sec-zip-folder" target="_blank">Instructions for zipping the Project Folder are here.</a></p>
+<p>&nbsp;</p>
+<p>If you have any questions regarding this application, feel free to email them to Charlie Belinsky at belinsky@msu.edu.</p>
+<section id="questions-to-answer" class="level3" data-number="14.1">
+<h3 data-number="14.1" class="anchored" data-anchor-id="questions-to-answer"><span class="header-section-number">14.1</span> Questions to answer</h3>
+<p>Answer the following in comments inside your application script:</p>
+<ol type="1">
+<li><p>What was your level of comfort with the lesson/application?</p></li>
+<li><p>What areas of the lesson/application confused or still confuses you?</p></li>
+<li><p>What are some things you would like to know more about that is related to, but not covered in, this lesson?</p></li>
+</ol>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

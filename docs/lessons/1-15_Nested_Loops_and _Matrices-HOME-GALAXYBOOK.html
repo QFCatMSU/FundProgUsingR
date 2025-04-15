@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.22">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>1-15: Nested loops and Matrices</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b4406b7675125bc2ba204020e191172.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-5f39cfd1aee7e7785011fc5df168ee92.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link rel="shortcut icon" href="https://qfcatmsu.github.io/assets/quarto/qfc_icon.png">
+<script>mod=true; menuCollapse=true;</script>
+<script src="https://qfcatmsu.github.io/assets/quarto/qfc_styles.js"></script>
+ 
+
+
+<link rel="stylesheet" href="https://qfcatmsu.github.io/assets/quarto/qfc_styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+          <h1 class="quarto-secondary-nav-title">1-15: Nested loops and Matrices</h1>
+        </a>     
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text"><b>Fundamentals of Programming class</b></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/0-01-IntroductionAndSyllabus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction and Syllabus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-01-RStudioProjectsSetup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-01: RStudio Projects Setup</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-02-Variables.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-02: Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-03_Mathematical_Operations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-03: Mathematical Operations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-04_Vectors_And_Data_Frames.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-04: Vectors and Data Frames</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-05_Functions_Introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-05: Functions Introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-06_Run_and_Source.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-06: Run and Source</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-07_Outputs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-07: Outputs</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-08_Conditional_Operations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-08: Conditional Operations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-09_If_Else_Statements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-09: If-Else Statements</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-10_For_Loops.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-10: For Loops</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-11_For_Loops_and_State_Varibles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-11: For Loops and State Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-12_MultipleConditions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-12: Multiple Conditions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-13_Functions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-13: Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-14_Functions2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-14: Functions 2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-15_Nested_Loops_and _Matrices.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-15: Nested loops and Matrices</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-15_Nested_Loops_and _Matrices-HOME-GALAXYBOOK.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">1-15: Nested loops and Matrices</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-01_R-Base_Plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-01: R-Base Plots</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-02_DataFrame_Modifications.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-02: DataFrame Modifications</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-03_DataTypesAndDateFrames.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-03: Data Types and Data Frames</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-04_WhichStatements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-04: Which Statements</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-05_WhichAndRegularExpressions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-05: Which and Regular Expressions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-06_Datetime_Obejects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-06: Datetime objects</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-07_Matrices.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-07: Matrices</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-08_Binding_Sampling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-08: Binding and Sampling</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-09_Stacking_Mapping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-09: Stacking and Mapping</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-10_Statistical_Tests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-10: Statistical Tests</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-11_Objects_Attributes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-11: Objects and Attributes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-12_Lists.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-12: Lists</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-13_Breakpoints.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-13: Breakpoints</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title"><b>Lesson Content</b></h2>
+   
+  <ul>
+  <li><a href="#sec-first" id="toc-sec-first" class="nav-link active" data-scroll-target="#sec-first"><span class="header-section-number">0.1</span> To-Do</a></li>
+  <li><a href="#purpose" id="toc-purpose" class="nav-link" data-scroll-target="#purpose"><span class="header-section-number">1</span> Purpose</a></li>
+  <li><a href="#questions-about-the-material" id="toc-questions-about-the-material" class="nav-link" data-scroll-target="#questions-about-the-material"><span class="header-section-number">2</span> Questions about the material…</a></li>
+  <li><a href="#functions-within-a-script" id="toc-functions-within-a-script" class="nav-link" data-scroll-target="#functions-within-a-script"><span class="header-section-number">3</span> Functions within a script</a>
+  <ul class="collapse">
+  <li><a href="#functions-need-to-be-declared" id="toc-functions-need-to-be-declared" class="nav-link" data-scroll-target="#functions-need-to-be-declared"><span class="header-section-number">3.1</span> functions need to be declared</a></li>
+  </ul></li>
+  <li><a href="#nesting-for-loops-isprime3" id="toc-nesting-for-loops-isprime3" class="nav-link" data-scroll-target="#nesting-for-loops-isprime3"><span class="header-section-number">4</span> Nesting for loops: isPrime3()</a>
+  <ul class="collapse">
+  <li><a href="#sec-example" id="toc-sec-example" class="nav-link" data-scroll-target="#sec-example"><span class="header-section-number">4.1</span> Examples of isPrime3()</a></li>
+  </ul></li>
+  <li><a href="#nested-for-loops" id="toc-nested-for-loops" class="nav-link" data-scroll-target="#nested-for-loops"><span class="header-section-number">5</span> Nested for loops</a>
+  <ul class="collapse">
+  <li><a href="#outer-loop" id="toc-outer-loop" class="nav-link" data-scroll-target="#outer-loop"><span class="header-section-number">5.1</span> Outer loop</a></li>
+  <li><a href="#inner-loop" id="toc-inner-loop" class="nav-link" data-scroll-target="#inner-loop"><span class="header-section-number">5.2</span> Inner loop</a></li>
+  <li><a href="#set-up-the-return-value" id="toc-set-up-the-return-value" class="nav-link" data-scroll-target="#set-up-the-return-value"><span class="header-section-number">5.3</span> Set up the return value</a></li>
+  <li><a href="#return-named-vector" id="toc-return-named-vector" class="nav-link" data-scroll-target="#return-named-vector"><span class="header-section-number">5.4</span> Return named vector</a></li>
+  <li><a href="#console-examples" id="toc-console-examples" class="nav-link" data-scroll-target="#console-examples"><span class="header-section-number">5.5</span> Console Examples</a></li>
+  </ul></li>
+  <li><a href="#two-dimensional-vectors" id="toc-two-dimensional-vectors" class="nav-link" data-scroll-target="#two-dimensional-vectors"><span class="header-section-number">6</span> Two-dimensional vectors</a>
+  <ul class="collapse">
+  <li><a href="#what-is-a-matrix" id="toc-what-is-a-matrix" class="nav-link" data-scroll-target="#what-is-a-matrix"><span class="header-section-number">6.1</span> What is a matrix</a></li>
+  <li><a href="#matrix-creation" id="toc-matrix-creation" class="nav-link" data-scroll-target="#matrix-creation"><span class="header-section-number">6.2</span> Matrix creation</a></li>
+  <li><a href="#subsetting-a-matrix" id="toc-subsetting-a-matrix" class="nav-link" data-scroll-target="#subsetting-a-matrix"><span class="header-section-number">6.3</span> Subsetting a matrix</a></li>
+  <li><a href="#matrices-are-often-all-combinations-of-two-factors" id="toc-matrices-are-often-all-combinations-of-two-factors" class="nav-link" data-scroll-target="#matrices-are-often-all-combinations-of-two-factors"><span class="header-section-number">6.4</span> Matrices are often all combinations of two factors</a></li>
+  </ul></li>
+  <li><a href="#multiplication-table" id="toc-multiplication-table" class="nav-link" data-scroll-target="#multiplication-table"><span class="header-section-number">7</span> Multiplication table</a>
+  <ul class="collapse">
+  <li><a href="#setting-up-the-matrix" id="toc-setting-up-the-matrix" class="nav-link" data-scroll-target="#setting-up-the-matrix"><span class="header-section-number">7.1</span> Setting up the matrix</a></li>
+  <li><a href="#using-nested-for-loops-to-fill-matrix" id="toc-using-nested-for-loops-to-fill-matrix" class="nav-link" data-scroll-target="#using-nested-for-loops-to-fill-matrix"><span class="header-section-number">7.2</span> Using nested for loops to fill matrix</a></li>
+  <li><a href="#naming-rows-and-columns" id="toc-naming-rows-and-columns" class="nav-link" data-scroll-target="#naming-rows-and-columns"><span class="header-section-number">7.3</span> Naming rows and columns</a></li>
+  <li><a href="#indexing-named-numeric-values" id="toc-indexing-named-numeric-values" class="nav-link" data-scroll-target="#indexing-named-numeric-values"><span class="header-section-number">7.4</span> Indexing named numeric values</a></li>
+  </ul></li>
+  <li><a href="#wind-chill-matrix" id="toc-wind-chill-matrix" class="nav-link" data-scroll-target="#wind-chill-matrix"><span class="header-section-number">8</span> Wind Chill Matrix</a>
+  <ul class="collapse">
+  <li><a href="#sec-example_windchill" id="toc-sec-example_windchill" class="nav-link" data-scroll-target="#sec-example_windchill"><span class="header-section-number">8.1</span> Matrix setup</a></li>
+  <li><a href="#changing-index-names-in-nested-for-loops" id="toc-changing-index-names-in-nested-for-loops" class="nav-link" data-scroll-target="#changing-index-names-in-nested-for-loops"><span class="header-section-number">8.2</span> changing index names in nested for loops</a></li>
+  <li><a href="#populating-the-matrix" id="toc-populating-the-matrix" class="nav-link" data-scroll-target="#populating-the-matrix"><span class="header-section-number">8.3</span> Populating the matrix</a></li>
+  </ul></li>
+  <li><a href="#application" id="toc-application" class="nav-link" data-scroll-target="#application"><span class="header-section-number">9</span> Application</a>
+  <ul class="collapse">
+  <li><a href="#questions-to-answer" id="toc-questions-to-answer" class="nav-link" data-scroll-target="#questions-to-answer"><span class="header-section-number">9.1</span> Questions to answer</a></li>
+  </ul></li>
+  <li><a href="#manually-create-named-vectors" id="toc-manually-create-named-vectors" class="nav-link" data-scroll-target="#manually-create-named-vectors"><span class="header-section-number">10</span> Manually create Named vectors</a></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content column-page-right" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">1-15: Nested loops and Matrices</h1>
+</div>
+
+
+
+<div class="quarto-title-meta column-page-right">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="sec-first" class="level3" data-number="0.1">
+<h3 data-number="0.1" class="anchored" data-anchor-id="sec-first"><span class="header-section-number">0.1</span> To-Do</h3>
+<ul>
+<li>nested for loop work well with breakpoints…</li>
+<li>more about the nested for loops in isPrime3()</li>
+<li>more about 2D subsetting of matrices (section 6.3)</li>
+</ul>
+</section>
+<section id="purpose" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="purpose"><span class="header-section-number">1</span> Purpose</h2>
+<ul>
+<li><p>embedded for loops</p></li>
+<li><p>functions within a script</p></li>
+<li><p>using matrices</p></li>
+<li><p>named values in a vector</p></li>
+</ul>
+</section>
+<section id="questions-about-the-material" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="questions-about-the-material"><span class="header-section-number">2</span> Questions about the material…</h2>
+<p>The files for this lesson:</p>
+<ul>
+<li>Script (only one this lesson):&nbsp;<a href="../scripts/1-15_NestedLoopsAndMatrices.R">you can download the script here</a></li>
+</ul>
+<p>&nbsp;</p>
+<p>If you have any questions about the material in this lesson, feel free to email them to the instructor, Charlie Belinsky, at belinsky@msu.edu.</p>
+</section>
+<section id="functions-within-a-script" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="functions-within-a-script"><span class="header-section-number">3</span> Functions within a script</h2>
+<p>In the previous two lessons, we created a separate script for the functions used in the lesson. For this lesson, the function <strong><em>isPrime3()</em></strong> has been put inside the main script. It is not usually best practice to put functions inside the calling script (why this is true will be an application question). However, there are many occasions where you will see functions put directly inside a script, so it is good to be familiar with this practice.</p>
+<section id="functions-need-to-be-declared" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="functions-need-to-be-declared"><span class="header-section-number">3.1</span> functions need to be declared</h3>
+<p>Functions are like variables in that they store information to a named objects – and objects must be declared before they are used. If you are going to code a function directly in a script then <span class="hl">you need to declare the function before you call the function</span>.</p>
+</section>
+</section>
+<section id="nesting-for-loops-isprime3" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="nesting-for-loops-isprime3"><span class="header-section-number">4</span> Nesting for loops: isPrime3()</h2>
+<p>In the function <strong><em>isPrime2()</em></strong>, the <strong><em>for</em></strong> loop cycles through all of the possible divisors for the dividend supplied by the caller. If none of the modulus calculations are zero (i.e., there is always a remainder when dividing), then we know the dividend is prime. <strong><em>isPrime3()</em></strong> extends <strong><em>isPrime2()</em></strong> so that it can check multiple dividends for prime instead of one.</p>
+<p>&nbsp;</p>
+<p>This means we need nested <strong><em>for</em></strong> loops (<strong><em>for</em></strong> loops inside of <strong><em>for</em></strong> loops). The outer <strong><em>for</em></strong> loop cycles through each of the dividends and the inner <strong><em>for</em></strong> loop cycles though all the possible divisors for the specific dividend:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(each dividend we want to check)         <span class="co"># outer loop</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(each divisor of the current dividend) <span class="co"># inner loop</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="sec-example" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="sec-example"><span class="header-section-number">4.1</span> Examples of isPrime3()</h3>
+<p>Before we look at the code, let’s look at an example of its use:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>primeTest1 <span class="ot">=</span> <span class="fu">isPrime3</span>(<span class="fu">c</span>(<span class="dv">12</span>,<span class="dv">13</span>,<span class="dv">14</span>,<span class="dv">15</span>,<span class="dv">16</span>,<span class="dv">17</span>));</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In the <strong><em>Environment</em></strong>, <strong><em>primeTest1</em></strong>, which stored the return value, is called a <strong><em>Named logi</em></strong>.</p>
+<div class="sourceCode" id="cb3" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>primeTest1<span class="sc">:</span> Named logi [<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>] <span class="cn">FALSE</span> <span class="cn">TRUE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">TRUE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong><em>logi</em></strong> means the vector values are Boolean and <strong><em>Named</em></strong> means the individual vector values are named. You cannot see the names in the <strong><em>Environment</em></strong> but you can in the <strong><em>Console</em></strong>:</p>
+<div class="sourceCode" id="cb4" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> primeTest1    <span class="dv">12</span>    <span class="dv">13</span>    <span class="dv">14</span>    <span class="dv">15</span>    <span class="dv">16</span>    <span class="dv">17</span>  </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>             <span class="cn">FALSE</span>  <span class="cn">TRUE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span>  <span class="cn">TRUE</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The names are the same as the dividend values passed in by the caller. How this is done will be shown later in this lesson.</p>
+<p>&nbsp;</p>
+<p>One advantage to <strong><em>Named</em></strong> variables is that you can index the vector by either name or position:</p>
+<div class="sourceCode" id="cb5" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> primeTest1[<span class="st">"14"</span>]</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>   <span class="dv">14</span> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="cn">FALSE</span> </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> primeTest1[<span class="dv">3</span>]</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>   <span class="dv">14</span> </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="cn">FALSE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="nested-for-loops" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="nested-for-loops"><span class="header-section-number">5</span> Nested for loops</h2>
+<p><strong><em>isPrime3()</em></strong> has two <strong><em>for</em></strong> loops:</p>
+<ul>
+<li><p>outer loop: indexes through the range of <strong><em>dividends</em></strong> supplied by the caller</p></li>
+<li><p>inner loop: indexes through the range of divisors that will be used to check the dividend for prime</p>
+<ul>
+<li>the range will be from 2 to one less than the dividend</li>
+</ul></li>
+</ul>
+<section id="outer-loop" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="outer-loop"><span class="header-section-number">5.1</span> Outer loop</h3>
+<p>The job of the outer loop is cycle through each <strong><em>dividends</em></strong>. The index value, <strong><em>i</em></strong>, determines the current dividend, indexed from the <strong><em>dividends</em></strong> vector. The indexed dividend gets used inside the inner <strong><em>for</em></strong> loop.</p>
+<p>&nbsp;</p>
+<p>In the example above (<a href="#sec-example" class="quarto-xref">Section&nbsp;4.1</a>),</p>
+<p>primeNum[1] = 12;</p>
+<p>primeNum[2] = 13;</p>
+<p>…</p>
+<p>primeNum[6] = 17;</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>  «<span class="fu">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(dividends))»   </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  {     </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    primeNum[i] <span class="ot">=</span> <span class="cn">TRUE</span>;</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>     </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>(dividends[«i»]<span class="sc">-</span><span class="dv">1</span>))     </span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    {      </span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span>(dividends[«i»] <span class="sc">%%</span> j <span class="sc">==</span> <span class="dv">0</span>)       </span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>      {         </span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>        primeNum[«i»] <span class="ot">=</span> <span class="cn">FALSE</span>;       </span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>      }     </span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    }   </span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  «}»</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="inner-loop" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="inner-loop"><span class="header-section-number">5.2</span> Inner loop</h3>
+<p><strong><em>isPrime2()</em></strong> used a <strong><em>for</em></strong> loop to check all the possible divisors for the dividend. That <strong><em>for</em></strong> loop is now the inner <strong><em>for</em></strong> loop in <strong><em>isPrime3()</em></strong>. The inner <strong><em>for</em></strong> loop cycles through every single value from 2 to one less that the current dividend, except the index variable is now <strong><em>j,</em></strong> because <strong><em>i</em></strong> was used by the outer loop.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(dividends))   </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  {  </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>     primeNum[i] <span class="ot">=</span> <span class="cn">TRUE</span>;</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>     </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    «<span class="fu">for</span>(j <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>(dividends[i]<span class="sc">-</span><span class="dv">1</span>))»  <span class="co"># 2 to one less than current dividend  </span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    «{»       </span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span>(dividends[i] <span class="sc">%%</span> «j» <span class="sc">==</span> <span class="dv">0</span>)       </span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>      {         </span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        primeNum[i] <span class="ot">=</span> <span class="cn">FALSE</span>;       </span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>      }     </span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    «}»   </span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The return value needs to specific if each dividend is prime (<strong><em>TRUE</em></strong>) or not (<strong><em>FALSE</em></strong>). This means a vector of Boolean value needs to be set and returned to the caller. The vector returned to the caller needs to have the same number of values as <strong><em>dividends</em></strong>.</p>
+</section>
+<section id="set-up-the-return-value" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="set-up-the-return-value"><span class="header-section-number">5.3</span> Set up the return value</h3>
+<p>The function returns a Boolean vector to the caller that is the same length as <strong><em>dividends</em></strong> passed in by the caller. The vector is created in the first line of the function:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>primeNum <span class="ot">=</span> <span class="fu">c</span>();</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Like before, we assume that the dividend is prime until proven otherwise, so at the beginning of the outer for loop, we set the current <strong><em>primeNum</em></strong> to <strong>TRUE</strong>:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>primeNum[i] <span class="ot">=</span> <span class="cn">TRUE</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The inner <strong><em>for</em></strong> loop goes through all possible divisors and tries to prove the dividend is not prime. If one of the divisors divides the dividend evenly then the dividend is not prime and switches the single value in the vector <strong><em>primeNum</em></strong> to <strong>FALSE</strong>.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>primeNum[i] <span class="ot">=</span> <span class="cn">FALSE</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>isPrime3 <span class="ot">=</span> <span class="cf">function</span>(dividends)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  «primeNum <span class="ot">=</span> <span class="fu">c</span>();»</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(dividends))   <span class="co"># outer loop</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    «primeNum[i] <span class="ot">=</span> <span class="cn">TRUE</span>;»  <span class="co"># default is that dividend is prime</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>(dividends[i]<span class="sc">-</span><span class="dv">1</span>))  <span class="co"># inner loop</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span>(dividends[i] <span class="sc">%%</span> j <span class="sc">==</span> <span class="dv">0</span>)  <span class="co"># i from outer loop indexing dividends</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>      {</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>        «primeNum[i] <span class="ot">=</span> <span class="cn">FALSE</span>;»  <span class="co"># dividend not be prime</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(primeNum) <span class="ot">=</span> dividends;</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>  «<span class="fu">return</span>(primeNum);»</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="return-named-vector" class="level3" data-number="5.4">
+<h3 data-number="5.4" class="anchored" data-anchor-id="return-named-vector"><span class="header-section-number">5.4</span> Return named vector</h3>
+<p>If we just returned <strong><em>primeNum</em></strong> to the caller, the return would be a Boolean vector that can be indexed by position only.</p>
+<p>&nbsp;</p>
+<p>It order to make the return value more readable to the caller, we attached names to each vector value. Since the caller want to know the prime status of each dividend, it makes sense to name the return with the dividend values:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(primeNum) <span class="ot">=</span> dividends;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In the end, we return <strong><em>primeNum</em></strong> back to the caller and <strong><em>primeNum</em></strong> gets save to the variable the caller set equal to the function:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">return</span>(primeNum);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="console-examples" class="level3" data-number="5.5">
+<h3 data-number="5.5" class="anchored" data-anchor-id="console-examples"><span class="header-section-number">5.5</span> Console Examples</h3>
+<p>We can call the function <strong><em>isPrime3()</em></strong> from within the script, as before (<a href="#sec-example" class="quarto-xref">Section&nbsp;4.1</a>), or from the <strong><em>Console</em></strong>:</p>
+<div class="sourceCode" id="cb14" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">isPrime3</span>(<span class="dv">30</span><span class="sc">:</span><span class="dv">39</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>   <span class="dv">30</span>    <span class="dv">31</span>    <span class="dv">32</span>    <span class="dv">33</span>    <span class="dv">34</span>    <span class="dv">35</span>    <span class="dv">36</span>    <span class="dv">37</span>    <span class="dv">38</span>    <span class="dv">39</span> </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="cn">FALSE</span>  <span class="cn">TRUE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span>  <span class="cn">TRUE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span> </span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">isPrime3</span>(<span class="fu">seq</span>(<span class="at">from=</span><span class="dv">17</span>, <span class="at">to=</span><span class="dv">57</span>, <span class="at">by=</span><span class="dv">10</span>)) </span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>   <span class="dv">17</span>    <span class="dv">27</span>    <span class="dv">37</span>    <span class="dv">47</span>    <span class="dv">57</span> </span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a> <span class="cn">TRUE</span> <span class="cn">FALSE</span>  <span class="cn">TRUE</span>  <span class="cn">TRUE</span> <span class="cn">FALSE</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If the <code>names(primeNum) = dividends;</code> was taken out of the function then the return values would look like this:</p>
+<div class="sourceCode" id="cb15" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">isPrime3</span>(<span class="dv">30</span><span class="sc">:</span><span class="dv">39</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] <span class="cn">FALSE</span>  <span class="cn">TRUE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span>  <span class="cn">TRUE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">isPrime3</span>(<span class="fu">seq</span>(<span class="at">from=</span><span class="dv">17</span>, <span class="at">to=</span><span class="dv">57</span>, <span class="at">by=</span><span class="dv">10</span>)) </span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>]  <span class="cn">TRUE</span> <span class="cn">FALSE</span>  <span class="cn">TRUE</span>  <span class="cn">TRUE</span> <span class="cn">FALSE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="two-dimensional-vectors" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="two-dimensional-vectors"><span class="header-section-number">6</span> Two-dimensional vectors</h2>
+<p>One of the more natural uses of nested <strong><em>for</em></strong> loops in R is the creation of two-dimensional vectors, also called a <span class="hl">matrix</span>.</p>
+<section id="what-is-a-matrix" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="what-is-a-matrix"><span class="header-section-number">6.1</span> What is a matrix</h3>
+<p>A matrix is somewhat of a cross between a vector and a data frame. A matrix has rows and columns like a data frame. However, like a vector, all values in a matrix are of the same type. This means that calculations on a matrix can be applied to all values as opposed to just one column. We will talk more about the use of matrices in a later lesson.</p>
+</section>
+<section id="matrix-creation" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="matrix-creation"><span class="header-section-number">6.2</span> Matrix creation</h3>
+<p>Just like <strong><em>c()</em></strong> can be used to create a vector, <strong><em>matrix()</em></strong> can be used to create a matrix, with the arguments <strong><em>nrow</em></strong> and <strong><em>ncol</em></strong> giving the dimensions of the matrix.</p>
+<p>&nbsp;</p>
+<p>We can create an empty matrix:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">matrix</span>(<span class="at">nrow=</span><span class="dv">4</span>, <span class="at">ncol=</span><span class="dv">3</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>     [,<span class="dv">1</span>] [,<span class="dv">2</span>] [,<span class="dv">3</span>]</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>,]   <span class="cn">NA</span>   <span class="cn">NA</span>   <span class="cn">NA</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">2</span>,]   <span class="cn">NA</span>   <span class="cn">NA</span>   <span class="cn">NA</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">3</span>,]   <span class="cn">NA</span>   <span class="cn">NA</span>   <span class="cn">NA</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>[<span class="dv">4</span>,]   <span class="cn">NA</span>   <span class="cn">NA</span>   <span class="cn">NA</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Or fill the matrix with values:</p>
+<div class="sourceCode" id="cb17" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">matrix</span>(<span class="at">data=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="at">nrow=</span><span class="dv">4</span>, <span class="at">ncol=</span><span class="dv">3</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>     [,<span class="dv">1</span>] [,<span class="dv">2</span>] [,<span class="dv">3</span>]</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>,]    <span class="dv">1</span>    <span class="dv">5</span>    <span class="dv">9</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">2</span>,]    <span class="dv">2</span>    <span class="dv">6</span>   <span class="dv">10</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">3</span>,]    <span class="dv">3</span>    <span class="dv">7</span>   <span class="dv">11</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>[<span class="dv">4</span>,]    <span class="dv">4</span>    <span class="dv">8</span>   <span class="dv">12</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="subsetting-a-matrix" class="level3" data-number="6.3">
+<h3 data-number="6.3" class="anchored" data-anchor-id="subsetting-a-matrix"><span class="header-section-number">6.3</span> Subsetting a matrix</h3>
+<p>Let’s save the matrix as the variable, <strong><em>testMatrix</em></strong>, so that we can subset the matrix:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> testMatrix <span class="ot">=</span> <span class="fu">matrix</span>(<span class="at">data=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="at">nrow=</span><span class="dv">4</span>, <span class="at">ncol=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>To get a specific cell from the matrix, you need two values, a row and a column:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> testMatrix[<span class="dv">1</span>,<span class="dv">2</span>]</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">5</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> testMatrix[<span class="dv">3</span>,<span class="dv">1</span>]</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">3</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> testMatrix[<span class="dv">4</span>,<span class="dv">3</span>]</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">12</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You can get a whole row by leaving the column blank and a whole column by leaving the row blank:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> testMatrix[<span class="dv">3</span>,]</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">3</span>  <span class="dv">7</span> <span class="dv">11</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> testMatrix[,<span class="dv">2</span>]</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">5</span> <span class="dv">6</span> <span class="dv">7</span> <span class="dv">8</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="matrices-are-often-all-combinations-of-two-factors" class="level3" data-number="6.4">
+<h3 data-number="6.4" class="anchored" data-anchor-id="matrices-are-often-all-combinations-of-two-factors"><span class="header-section-number">6.4</span> Matrices are often all combinations of two factors</h3>
+<p>One common use of a matrix is to create a table the contains every combination of two factors. For instance, we can have a vector of temperature values and a vector of humidity values and create a heat index matrix for every temperature/humidity combination:</p>
+<p>&nbsp;</p>
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="images/1-15_HeatIndexTable.jpg" class="fs img-fluid figure-img"></p>
+<figcaption>Heat index table from NOAA</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="multiplication-table" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="multiplication-table"><span class="header-section-number">7</span> Multiplication table</h2>
+<p>We will start with a simpler example: a multiplication table. For this table we will have two numeric vectors and populate the matrix with every possible multiplication between values in the two vectors:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>1</strong></td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td><strong>2</strong></td>
+<td>2</td>
+<td>4</td>
+<td>6</td>
+</tr>
+<tr class="odd">
+<td><strong>3</strong></td>
+<td>3</td>
+<td>6</td>
+<td>9</td>
+</tr>
+<tr class="even">
+<td><strong>4</strong></td>
+<td>4</td>
+<td>8</td>
+<td>12</td>
+</tr>
+<tr class="odd">
+<td><strong>5</strong></td>
+<td>5</td>
+<td>10</td>
+<td>15</td>
+</tr>
+</tbody>
+</table>
+<section id="setting-up-the-matrix" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="setting-up-the-matrix"><span class="header-section-number">7.1</span> Setting up the matrix</h3>
+<p>First we need our numeric vectors:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Factors for multiplication table</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>mult1 <span class="ot">=</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">6</span>;</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>mult2 <span class="ot">=</span> <span class="dv">8</span><span class="sc">:</span><span class="dv">10</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Then we need to create an empty matrix that has the correct number of rows and columns – given by the lengths of <strong><em>mult1</em></strong> and <strong><em>mult2</em></strong>:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Create a matrix that will contain the calculations</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>multTable <span class="ot">=</span> <span class="fu">matrix</span>(<span class="at">nrow=</span><span class="fu">length</span>(mult1),</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">ncol=</span><span class="fu">length</span>(mult2));</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="using-nested-for-loops-to-fill-matrix" class="level3" data-number="7.2">
+<h3 data-number="7.2" class="anchored" data-anchor-id="using-nested-for-loops-to-fill-matrix"><span class="header-section-number">7.2</span> Using nested for loops to fill matrix</h3>
+<p>We use nested <strong><em>for</em></strong> loops to cycle through every possible combination of <strong><em>mult1</em></strong> and <strong><em>mult2</em></strong>.</p>
+<p>&nbsp;</p>
+<p>The outer loop cycles through <strong><em>mult1</em></strong> and the inner loop cycles through <strong><em>mult2</em></strong>:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(mult1))   <span class="co"># outer loop (for each mult1)</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(mult2)) <span class="co"># inner loop (for each mult2)</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># The [i,j] cell get set to the multiplication of the corresponding i and j values</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    multTable[i,j] <span class="ot">=</span> mult1[i] <span class="sc">*</span> mult2[j];  </span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The calculations go in this order:</p>
+<p>2*8, 2*9, 2*10, 3*8, 3*9, 3*10, 4*8, 4*9, 4*10, 5*8, 5*9, 5*10, 6*8, 6*9, 6*10.</p>
+<p>&nbsp;</p>
+<p>Aside from cycling through values, the only code is this line:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>multTable[i,j] <span class="ot">=</span> mult1[i] <span class="sc">*</span> mult2[j]; </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong><em>multTable</em></strong> is a 2D matrix and needs 2 values to subset it (<strong><em>i</em></strong> and <strong><em>j</em></strong>). The <code>[i, j]</code> spot in the matrix gets populated the <strong><em>i<sup>th</sup></em></strong> value of <strong><em>mult1</em></strong> multiplied by the <strong><em>j<sup>th</sup></em></strong> value of <strong><em>mult2</em></strong>.</p>
+</section>
+<section id="naming-rows-and-columns" class="level3" data-number="7.3">
+<h3 data-number="7.3" class="anchored" data-anchor-id="naming-rows-and-columns"><span class="header-section-number">7.3</span> Naming rows and columns</h3>
+<p>After we execute the for loop, we have a matrix that looks like this:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> multTable</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>     [,<span class="dv">1</span>] [,<span class="dv">2</span>] [,<span class="dv">3</span>]</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>,]   <span class="dv">16</span>   <span class="dv">18</span>   <span class="dv">20</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">2</span>,]   <span class="dv">24</span>   <span class="dv">27</span>   <span class="dv">30</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">3</span>,]   <span class="dv">32</span>   <span class="dv">36</span>   <span class="dv">40</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>[<span class="dv">4</span>,]   <span class="dv">40</span>   <span class="dv">45</span>   <span class="dv">50</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>[<span class="dv">5</span>,]   <span class="dv">48</span>   <span class="dv">54</span>   <span class="dv">60</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Let’s make the matrix more visually informative by naming the rows and columns to the values in <code>mult1</code> and <code>mult2</code>:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(multTable) <span class="ot">=</span> mult1;</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(multTable) <span class="ot">=</span> mult2;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now we get something that’s easier to read:</p>
+<div id="fig-mult-table-ex" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mult-table-ex-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> multTable</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>   <span class="dv">8</span>  <span class="dv">9</span> <span class="dv">10</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="dv">16</span> <span class="dv">18</span> <span class="dv">20</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="dv">24</span> <span class="dv">27</span> <span class="dv">30</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span> <span class="dv">32</span> <span class="dv">36</span> <span class="dv">40</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span> <span class="dv">40</span> <span class="dv">45</span> <span class="dv">50</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span> <span class="dv">48</span> <span class="dv">54</span> <span class="dv">60</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-mult-table-ex-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1
+</figcaption>
+</figure>
+</div>
+<p>and can use the names to refer to rows and columns:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> multTable[<span class="st">"4"</span>, <span class="st">"10"</span>]</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">40</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> multTable[<span class="st">"2"</span>, <span class="st">"9"</span>]</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">18</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="indexing-named-numeric-values" class="level3" data-number="7.4">
+<h3 data-number="7.4" class="anchored" data-anchor-id="indexing-named-numeric-values"><span class="header-section-number">7.4</span> Indexing named numeric values</h3>
+<p>Rownames and column names are always characters – this is why the values are in quotes. Numeric value are used to index rows and columns.</p>
+<ul>
+<li><p><code>multTable[4, 10]</code> is the value in row 4 and column 10, which does not exist so this would be an error.</p></li>
+<li><p><code>multTable["4", "10"]</code> is the value in the row named “4” and column named “10”</p></li>
+</ul>
+</section>
+</section>
+<section id="wind-chill-matrix" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="wind-chill-matrix"><span class="header-section-number">8</span> Wind Chill Matrix</h2>
+<p>We will do a slightly more complicated matrix that combines temperature values and wind speed values to create a wind chill matrix</p>
+<section id="sec-example_windchill" class="level3" data-number="8.1">
+<h3 data-number="8.1" class="anchored" data-anchor-id="sec-example_windchill"><span class="header-section-number">8.1</span> Matrix setup</h3>
+<p>We first need our temperature and wind speed values. This time we will use sequences that gives every 10<sup>th</sup> value:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>temps <span class="ot">=</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">40</span>, <span class="at">to=</span><span class="sc">-</span><span class="dv">20</span>, <span class="at">by=</span><span class="sc">-</span><span class="dv">10</span>); <span class="co"># 40, 30, 20...</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>speeds <span class="ot">=</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">5</span>, <span class="at">to=</span><span class="dv">45</span>, <span class="at">by=</span><span class="dv">10</span>);   <span class="co"># 5, 15, 25 ...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>And create a matrix that has the correct number of rows and columns based on the length of <strong><em>temps</em></strong> and <strong><em>speeds</em></strong>:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>windChillTable <span class="ot">=</span> <span class="fu">matrix</span>(<span class="at">nrow=</span><span class="fu">length</span>(temps),</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">ncol=</span><span class="fu">length</span>(speeds));</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Finally, we will add row names and column names to make the matrix easier to read:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(windChillTable) <span class="ot">=</span> temps;</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(windChillTable) <span class="ot">=</span> speeds;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="changing-index-names-in-nested-for-loops" class="level3" data-number="8.2">
+<h3 data-number="8.2" class="anchored" data-anchor-id="changing-index-names-in-nested-for-loops"><span class="header-section-number">8.2</span> changing index names in nested for loops</h3>
+<p>It is common programming practice to use <strong><em>i</em></strong> and <strong><em>j</em></strong> for the index values of the outer and inner <strong><em>for</em></strong> loops, respectively. However, this is often not the most intuitive naming. For this example I will use <strong><em>row</em></strong> and <strong><em>col</em></strong> as the index values:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(«row» <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(temps))     <span class="co"># cycle thru temps for each row</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(«col» <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(speeds))  <span class="co"># cycle thru speeds for each column</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>    windChillTable[row,col] <span class="ot">=</span> <span class="fl">35.74</span> <span class="sc">+</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>                              <span class="fl">0.6215</span><span class="sc">*</span>temps[row] <span class="sc">-</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>                              <span class="fl">35.75</span><span class="sc">*</span>(speeds[col]<span class="sc">^</span><span class="fl">0.16</span>) <span class="sc">+</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>                              <span class="fl">0.4275</span><span class="sc">*</span>temps[row]<span class="sc">*</span>(speeds[col]<span class="sc">^</span><span class="fl">0.16</span>);</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="populating-the-matrix" class="level3" data-number="8.3">
+<h3 data-number="8.3" class="anchored" data-anchor-id="populating-the-matrix"><span class="header-section-number">8.3</span> Populating the matrix</h3>
+<p>The <strong><em>windChillTable</em></strong> <strong><em>for</em></strong> loop operates almost exactly the same as the multiplication table. It has a outer loop the cycles through one set of values (temperatures) and send each temperature into the inner loop where it cycles through the second set of values (wind speeds). The main difference is the formula, <a href="https://www.weather.gov/media/epz/wxcalc/windChill.pdf">supplied by the National Weather Service</a>, is more complicated.</p>
+<p>&nbsp;</p>
+<p>But, like the multiplication matrix, each cell in the wind chill matrix…</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>windChillMatrix[row,col]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>is set to a formula that contains the current temperature:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>    windChillTable[row,col] <span class="ot">=</span> <span class="fl">35.74</span> <span class="sc">+</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>                              <span class="fl">0.6215</span><span class="sc">*</span>«temps[row]» <span class="sc">-</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>                              <span class="fl">35.75</span><span class="sc">*</span>(speeds[col]<span class="sc">^</span><span class="fl">0.16</span>) <span class="sc">+</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>                              <span class="fl">0.4275</span><span class="sc">*</span>«temps[row]»<span class="sc">*</span>(speeds[col]<span class="sc">^</span><span class="fl">0.16</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>and the current wind speed:</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>    windChillTable[row,col] <span class="ot">=</span> <span class="fl">35.74</span> <span class="sc">+</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>                              <span class="fl">0.6215</span><span class="sc">*</span>temps[row] <span class="sc">-</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>                              <span class="fl">35.75</span><span class="sc">*</span>(«speeds[col]»<span class="sc">^</span><span class="fl">0.16</span>) <span class="sc">+</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>                              <span class="fl">0.4275</span><span class="sc">*</span>temps[row]<span class="sc">*</span>(«speeds[col]»<span class="sc">^</span><span class="fl">0.16</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="application" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="application"><span class="header-section-number">9</span> Application</h2>
+<p>1) For this application, all functions, code, and answers to questions will go in one script named <strong><em>1-15.r.</em></strong> <span class="hl">Make sure you test all the functions thoroughly in your script.</span></p>
+<p>&nbsp;</p>
+<p>2) In comments answer:</p>
+<ul>
+<li><p>What is the disadvantage of putting a function in the same script that it is called from?</p></li>
+<li><p>How many times does the inner <strong><em>for</em></strong> loop get executed in <strong><em>windChillTable()</em></strong> in <a href="#sec-example_windchill" class="quarto-xref">Section&nbsp;8.1</a>?</p>
+<ul>
+<li>In order, what are the first 10 calculations (just give the row number and column number).</li>
+</ul></li>
+</ul>
+<p>&nbsp;</p>
+<p>3) Reverse the for loops in the wind chill matrix…</p>
+<ul>
+<li>rows: speed, columns: temp</li>
+</ul>
+<p>&nbsp;</p>
+<p>4) Create a wind chill matrix function that allows a caller to call it with a vector of temperatures and a vector of wind speeds. The return value will be the wind chill matrix.</p>
+<p>&nbsp;<br>
+So, this code:</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>windChill <span class="ot">=</span> <span class="fu">windchill</span>(<span class="at">temps=</span><span class="dv">2</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">speeds=</span><span class="dv">8</span><span class="sc">:</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>should save to <code>windChill</code> a matrix that looks like this <a href="#fig-mult-table-ex" class="quarto-xref">Figure&nbsp;1</a></p>
+<p>&nbsp;</p>
+<p>5) Using nested for loops, create a heat index matrix</p>
+<ul>
+<li>The formula for heat index is on <a href="https://www.weather.gov/media/ffc/ta_htindx.PDF">page 2 of this document</a></li>
+</ul>
+<p>&nbsp;</p>
+<p>6) Create a function that return every pairs of numbers from a vector where one number evenly divides another.</p>
+<ul>
+<li><p>So if you have the vector <code>c(3,4,7,12,14,15)</code></p>
+<ul>
+<li>you have four answers: 3 divides 12, 4 divides 12, 7 divides 14, 3 divides15</li>
+</ul></li>
+<li><p>the answer will be in this form (order does not matter):</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">allDivides</span>( <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">7</span>,<span class="dv">12</span>,<span class="dv">14</span>,<span class="dv">15</span>) )</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a> <span class="dv">3</span>   <span class="dv">4</span>  <span class="dv">7</span>  <span class="dv">3</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="dv">12</span>  <span class="dv">12</span> <span class="dv">14</span> <span class="dv">15</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>check every number in the vector against every other number (except itself) to see which numbers it divides. This requires nested for loops.</p>
+<ul>
+<li><p>The outer loop cycles through all numbers in the vector</p></li>
+<li><p>The inner loop cycles through all number except the current outer loop number</p></li>
+</ul></li>
+</ul>
+<p>&nbsp;</p>
+<p>Save the script as&nbsp;<strong><em>app1-15.r</em></strong> in your&nbsp;<strong><em>scripts</em></strong> folder and&nbsp; email your Project Folder to Charlie Belinsky at belinsky@msu.edu.</p>
+<p>&nbsp;</p>
+<p><a href="1-01-RStudioProjectsSetup.html#sec-zip-folder" target="_blank">Instructions for zipping the Project Folder are here.</a></p>
+<p>&nbsp;</p>
+<p>If you have any questions regarding this application, feel free to email them to Charlie Belinsky at belinsky@msu.edu.</p>
+<section id="questions-to-answer" class="level3" data-number="9.1">
+<h3 data-number="9.1" class="anchored" data-anchor-id="questions-to-answer"><span class="header-section-number">9.1</span> Questions to answer</h3>
+<p>Answer the following in comments inside your application script:</p>
+<ol type="1">
+<li><p>What was your level of comfort with the lesson/application?</p></li>
+<li><p>What areas of the lesson/application confused or still confuses you?</p></li>
+<li><p>What are some things you would like to know more about that is related to, but not covered in, this lesson?</p></li>
+</ol>
+</section>
+</section>
+<section id="manually-create-named-vectors" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="manually-create-named-vectors"><span class="header-section-number">10</span> Manually create Named vectors</h2>
+<p>You can manually create a named vector in the <strong><em>Console</em></strong>:</p>
+<div class="sourceCode" id="cb38" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> myVec <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>) </span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">names</span>(myVec) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"z"</span>, <span class="st">"y"</span>, <span class="st">"x"</span>, <span class="st">"w"</span>) </span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> myVec z y x w  <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">4</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong><em>names()</em></strong> is used to both set the names of vectors and display the names:</p>
+<div class="sourceCode" id="cb39" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">names</span>(myVec) </span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"z"</span> <span class="st">"y"</span> <span class="st">"x"</span> <span class="st">"w"</span> </span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">names</span>(myVec)[<span class="dv">3</span>] [<span class="dv">1</span>] <span class="st">"x"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

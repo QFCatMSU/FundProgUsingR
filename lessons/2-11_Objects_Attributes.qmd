@@ -1,0 +1,664 @@
+---
+title: "2-11: Objects and Attributes"
+short: "2-11"
+# special characters for highlighting code : «»
+---
+
+### To-do
+
+## Purpose
+
+-   Distinguish between atomic vectors and Lists
+
+-   Show the different types of vectors
+
+-   Apply attributes to a vector: names, dimensions, and class
+
+-   Subsetting a vector
+
+## Script for this lesson
+
+The [script for the lesson is here](../scripts/2-11_ObjectsAndAttributes.R)
+
+## Terminology
+
+This lesson requires the use of terminology that has been inconsistently used in R or has morphed in meaning throughout the years, so you will find different definitions online.  In general, I will be using the terminology used in the 2nd edition of [Hadley Wickham's Advanced R book](https://adv-r.hadley.nz/) and mention places where there is commonly used terminology that is different.
+
+## Objects and Variables
+
+In the programming world, anything stored in memory that has a value (or multiple values) associated with it is called a ***variable***.  This terms gets a bit confusing because values that do not change are still called ***variables*** (sometimes called ***constant variables***).  Also, variables has different meanings in different fields from mathematics to science to statistics.  Maybe for this reason, R tends to use the term ***object*** to define anything that has a name and stores values. That means that [everything in the Environment tab in RStudio is an object]{.hl}.
+
+ 
+
+Broadly speaking, in R there are two types of objects: Atomic Vectors (covered in this lesson) and Lists (covered in the next lesson). 
+
+### Atomic vectors and Lists
+
+[Atomic vectors are objects that hold values]{.hl}and all the values are the same type (e.g., numeric, string).  Atomic vectors are just vectors -- but, in R, you will get error messages that use the word "atomic", and it is important to know the error is referring to an (atomic) vectors.
+
+ 
+
+Anything you create with ***c()*** is an atomic vector and atomic vectors can have dimensions -- a 2D atomic vector is called a matrix and a 3D atomic vector is called an array.
+
+ 
+
+Whereas atomic vectors hold values, [a List is an object that holds other objects]{.hl} -- including other Lists.
+
+ 
+
+A data frame is an example of a List where each column is an atomic vector -- and each column has the same number of values.
+
+### Folder and file analogy for Lists and atomic vectors
+
+Lists and Atomic Vectors functionally play the same role as folder and files on your computer.  Folders are used to create a tree-like structure for information on your computer. Folders do not directly contain information (i.e., you do not read or execute a folder) -- folders contain more folders (hence, the tree-like structure) and files .  It is the files that contains the information -- and files are always at the end of the tree (a file cannot contain another folder or file).
+
+ 
+
+Lists are the folders of the R world -- they create a tree-like structure for information.  Lists can contain other Lists or Atomic Vector.  The Atomic Vector are the file -- they contain information and are always at the end of the tree (Atomic Vector cannot contain Lists nor other atomic vectors).
+
+ 
+
+A data frame is a type of List (folder) that contains multiple columns/Atomic Vectors (files) of the same size.
+
+ 
+
+[Note: Atomic vectors are often referred to as ***homogeneous objects*** and Lists are often referred to as **heterogeneous objects,** but I believe these terms are not helpful as they create a false distinction between Lists and atomic vectors. ]{.note}
+
+## The simplest object in R: the vector
+
+Because R is a programming language designed to work with data, the vector represents the most basic object in R.  [Note: This is different from most programming languages where a single named value is the most basic object]{.note}*.*
+
+ 
+
+A vector is a named object that hold values of the same type (or class) -- usually strings or numeric.
+
+ 
+
+[Even a single value is put into a vector.]{.hl}  Setting a variable to one value creates a one-value vector**:**
+
+``` r
+temperature = 80; # a vector, temperature, with one value, 80
+```
+
+The fact that ***temperature*** is a vector with one value is not shown in the ***Environment*** but it is shown in the ***Console*** with the **\[1\]**:
+
+``` {.r tab="Console"}
+> temperature
+[1] 80
+```
+
+This code creates a vector named ***JulyTemps*** with eight numeric values:
+
+``` r
+JulyTemps = c(90, 88, 86, 77,81, 83, 80, 80);
+```
+
+And, the ***Environment*** shows that it is a numeric (num) vector with eight values \[1:8\]:
+
+``` {.r tab="Environment"}
+JulyTemps num [1:8] 90 88 86 ...
+```
+
+### Types of vector
+
+There are six basic types/***classes*** of vectors in R:
+
+-   characters (strings)
+
+-   numeric (decimal numbers)
+
+-   integers (numbers without decimals)
+
+-   complex (numbers with real and imaginary parts -- these are not covered in this class)
+
+-   Boolean/logical (TRUE/FALSE values)
+
+-   raw (hold bytes -- rarely used and are not covered in this class)
+
+     
+
+We have mentioned character and numeric vectors multiple times in previous lessons.  We are going to look a little deeper into integer and Boolean vectors.
+
+### Integer vectors
+
+Integer vectors can be useful when you need counting values because integer values take up less space in memory and can be processed faster than numeric vectors (i.e., decimal numbers).
+
+ 
+
+The issue is that, R will often coerce integer vectors to numeric vectors, effectively taking away the memory and speed advantages.
+
+ 
+
+Let's create an integer vector:
+
+``` r
+intValues = as.integer(c(3,4,5));
+```
+
+And then add 1 :
+
+``` r
+intValues2 = intValues + 1;
+```
+
+In the ***Environment*** we see that ***intValues*** is an integer vector but ***intValues2*** is numeric:
+
+``` {.r tab="Environment"}
+intValues:    int [1:3] 3 4 5
+intValues2:   num [1:3] 4 5 6
+```
+
+If we want the results to be an integer, then we need to declare **1** as an integer:
+
+``` r
+intValues3 = intValues + as.integer(1);
+```
+
+Now, R will see the results as integers:
+
+``` {.r tab="Environment"}
+intValues3: int [1:3] 4 5 6
+```
+
+[Extension: rounding functions in R]
+
+### A Boolean/logical vector (TRUE/FALSE values)
+
+We have not talked much about Boolean vectors but they are useful in programming because they are fast as they only have two possible values: **TRUE** and **FALSE**.  [Note: It is bad programming practice (and potentially dangerous) to use **T** and **F** to represent **TRUE** and **FALSE**.]{.note}
+
+ 
+
+There are two general ways to create a Boolean vector: manually or with a conditional statement
+
+#### Manually create a Boolean vector
+
+We can use ***c()*** to create a vector with Boolean values.  Let's create a vector that tells whether it rained on the eight days in ***JulyTemps***:
+
+``` r
+rainyDaysInJuly = c(FALSE, FALSE, TRUE, FALSE, FALSE, TRUE, TRUE, FALSE);
+```
+
+In the Environment, ***rainyDaysInJuly*** is given as a ***logi***, which stands for ***logical*** -- which is just another name for Boolean:
+
+``` {.r tab="Environment"}
+rainyDaysInJuly: logi [1:8] FALSE FALSE TRUE ...
+```
+
+and we can check which values are ***TRUE*** using ***which()***:
+
+``` {.r tab="Console"}
+which(rainyDaysInJuly)
+[1] 3 5 6
+```
+
+#### Conditional statements create a Boolean vector
+
+A conditional statement always creates a Boolean vector.  We have used conditional statements in ***if()*** statements:
+
+``` r
+  for(i in 1:length(JulyTemps))
+  {
+    # Output Boolean value instead of executing the if() statement
+    #  if(JulyTemps[i] > 85)
+    cat("day", i, (JulyTemps[i] > 85), "\n");
+  }    
+```
+
+The output from the above ***for*** loop is:
+
+``` {.r tab="Console"}
+day 1 TRUE 
+day 2 TRUE 
+day 3 TRUE 
+day 4 FALSE 
+day 5 FALSE 
+day 6 FALSE 
+day 7 FALSE 
+day 8 FALSE 
+```
+
+This means that the first three days in ***JulyTemps*** were more than 85, the rest were less than or equal to 85.
+
+We could also save the Boolean results to a vector.  ***(JulyTemps \> 85)*** instructs R to check the 8 values in ***JulyTemps*** against the number **85**:
+
+``` r
+hotterThan85 = (JulyTemps > 85);
+```
+
+And the answer is given as a Boolean vector:
+
+``` {.r tab="Console"}
+> hotterThan85
+[1]  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE
+```
+
+## Attributes of a objects
+
+[Attributes ]{.hl}is a very broad term in R.  All objects can have attributes and there are two distinct types of attributes in R.
+
+ 
+
+1\) Attributes that are [properties of the object]{.hl} --  these are defined by R and they include:
+
+-   ***names***: names for the [values inside an object]{.hl} -- not to be confused with the name of the object
+
+-   ***class***: the type of object is it (numeric, boolean...)
+
+-   ***dim***: dimension -- this is how you create a 2D matrix, 3D array, or higher dimension arrays
+
+ 
+
+2\) Attributes that act as [metadata for the object]{.hl}.  These attributes are defined by the user and are analogous to comments in a script. 
+
+ 
+
+Attributes can be confusing because there is not a consistent way to apply or view them in R.  In this lesson, we will look at attributes on vectors and next lesson look at attributes on Lists.
+
+## names attribute
+
+All objects have a name and they can be assigned an attribute called ***names***.  [The name of the object and the **names** attribute are two different things]{.hl}*.* The attribute ***names*** refers to names given to the values [within the object]{.hl}and are assigned using the ***names()*** function.
+
+ 
+
+Let's first create a copy of our ***JulyTemps*** vector:
+
+``` r
+JulyTempsNamed = JulyTemps;
+```
+
+And we will use ***names()*** to give the date to each temperature value:
+
+``` r
+names(JulyTempsNamed) = c("July22", "July23", "July24", "July25",
+                          "July26", "July27", "July28", "July29");
+```
+
+***JulyTempsNamed*** is called a ***Named*** vector in the ***Environment*** and the names are given in the ***Console***:
+
+``` {.r tab="Environment"}
+JulyTempsNames:  Named num [1:8] 90 88 86 77...
+```
+
+And in the ***Console***, ***JulyTempsNamed*** has two rows, the first contains the names and the second contains the values:
+
+``` {.r tab="Console"}
+> JulyTempsNamed
+July22 July23 July24 July25 July26 July27 July28 July29 
+    90     88     86     77     81     83     80     80
+```
+
+### Subsetting named values with square brackets \[ \]
+
+The main advantage to naming vectors is that you can use the names to subset the value within the object.
+
+ 
+
+To get the second value in ***JulyTempsNamed***, you can subset with the position (**2**) or the name (**July23**):
+
+::: {#fig-subset_named_vec}
+``` {.r tab="Console"}
+> JulyTempsNamed[2]
+July23 
+    88 
+> JulyTempsNamed["July23"]
+July23 
+    88 
+```
+
+Subsetting a named vector with the position and the name -- the results are the same
+:::
+
+You can subset multiple values by position or name:
+
+``` {.r tab="Console"}
+> JulyTempsNamed[c(2,4,6)]
+July23 July25 July27 
+    88     77     83 
+> JulyTempsNamed[c("July23", "July25", "July27")]
+July23 July25 July27 
+    88     77     83 
+```
+
+From a functional perspective, [named values and unnamed values will work exactly the same in any computation]{.hl}.  The difference between the two is only how they are displayed and can be referenced.  Here we subtract all values in ***JulyTempsNamed*** by **20**:
+
+::: {#fig-math_named_unamed}
+``` {.r tab="Console"}
+> JulyTempsNamed - 20
+July22 July23 July24 July25 July26 July27 July28 July29 
+    70     68     66     57     61     63     60     60 
+```
+
+You can do mathematics on named values just like unnamed values
+:::
+
+### Subsetting named values with double-square brackets \[\[ \]\]
+
+You can also subset a named vector with double square brackets **\[\[  \]\]** and you will just get the value (without the name):
+
+::: {#fig-double_brackets}
+``` r
+> JulyTempsNamed[[2]]
+[1] 88
+> JulyTempsNamed[["July23"]]
+[1] 88
+```
+
+Using double brackets to subset named vectors will give you just the value
+:::
+
+This is generally not recommended because you cannot select multiple elements using **\[\[ \]\]**
+
+::: {#fig-single_double_brackets}
+``` r
+> JulyTempsNamed[2:4]
+July23 July24 July25 
+    88     86     77 
+> JulyTempsNamed[[2:4]]
+Error in JulyTempsNamed[[2:4]] : 
+  attempt to select more than one element in vectorIndex
+```
+
+using single brackets and double brackets to subset multiple values in a vector
+:::
+
+[Note: **element** here means the same as **values** (so, the  8 elements in **JulyTempsNamed** are the eight values)]{.note}
+
+## dimension (dim) attribute
+
+When you create a vector using ***c()***, you are creating an object that, functionally, has one dimension.  This is why you can subset values in ***JulyTemps*** using their position within the vector (@fig-subset_named_vec).
+
+ 
+
+However, data is sometimes best represented in multiple dimensions -- for instance you might have temperatures that are stored by both location and date.
+
+### Multidimensional objects
+
+We can use ***dim()*** to add more dimensions to a vector.
+
+ 
+
+We are going to make a two-dimensional vector (also called a matrix or a 2D array) using ***JulyTemps***.  First, we will create a copy and then set the dimensions of the copy to two values (**4** and **2**).  Those two dimension values (which can be thought of as **4** rows and **2** columns) must multiply to the number of values in the vector (**8**).
+
+``` r
+JulyTemps2D = July Temps;
+dim(JulyTemps2D) = c(4,2);
+```
+
+The ***Environment*** and ***Console*** reflect the dimensions in ***JulyTemps2D***:
+
+``` {.r tab="Console"}
+> JulyTemps2D
+     [,1] [,2]
+[1,]   90   81
+[2,]   88   83
+[3,]   86   80
+[4,]   77   80
+```
+
+::: {#fig-2D_display}
+``` {.r tab="Environment"}
+JulyTemps2D: num [1:4, 1:2] 90 88 86 77...
+```
+
+Displaying a 2D value in the Console and the Environment
+:::
+
+Now we have a 2D object that can be subsetted using the **\[ , \]** operator (which can be though of as a dimensional subset operator):
+
+``` {.r tab="Console"}
+> JulyTemps2D[3,2]
+[1] 80
+```
+
+We could create a three-dimensional object (called a 3D array) by setting the dimensions to three values.  The numbers still need to multiply to **8**:
+
+``` r
+JulyTemps3D = JulyTemps;
+dim(JulyTemps3D) = c(2,2,2); # each dimension has length of 2
+```
+
+``` {.r tab="Console"}
+> JulyTemps3D[1,2,2]
+[1] 80
+```
+
+[Note: You can declare a one-dimensional vector (also called a 1D array).  I do not know if there is a practical reason to do this since vectors functionally operate as 1D objects:]{.note}
+
+``` r
+JulyTemps1D = JulyTemps;
+dim(JulyTemps1D) = c(8);
+```
+
+### accessing rows and columns in matrices
+
+Let's take the 2D matrix we created and add names for the rows and columns using ***rownames()*** and ***colnames()***:
+
+``` r
+JulyTemps2DNamed = JulyTemps2D;
+rownames(JulyTemps2DNamed) = paste("date", 1:4, sep="");
+colnames(JulyTemps2DNamed) = c("location1", "location2");
+```
+
+And we can see the names in the ***Console***:
+
+``` {.r tab="Console"}
+> JulyTemps2DNamed
+      location1 location2
+date1        90        81
+date2        88        83
+date3        86        80
+date4        77        80
+```
+
+We can now access values in the matrix by name or position using the dimensional operator:
+
+``` {.r tab="Console"}
+> JulyTemps2DNamed[3,2]
+[1] 80
+> JulyTemps2DNamed["date3","location2"]
+[1] 80
+```
+
+And we can access whole rows or columns by leaving the other blank:
+
+``` {.r tab="Console"}
+> JulyTemps2DNamed[3,]
+location1 location2 
+       86        80 
+> JulyTemps2DNamed[,2]
+date1 date2 date3 date4 
+   81    83    80    80 
+> JulyTemps2DNamed[,"location2"]
+date1 date2 date3 date4 
+   81    83    80    80 
+```
+
+### matrices are vectors
+
+The ***\[ , \]*** operator is really the same thing as the ***\[ \]*** operator.  The difference is that ***\[ , \]*** is used for 2D objects (matrices) whereas ***\[ \]*** is used for 1D objects (vectors).
+
+ 
+
+You can use the 1D operator on a matrix -- ***\[ \]*** will flatten the matrix to one dimensional vector:
+
+``` {.r tab="Console"}
+> JulyTemps2DNamed[1:8]
+[1] 90 88 86 77 81 83 80 80
+
+> JulyTemps2DNamed[5]
+[1] 81
+```
+
+### The \$ operator
+
+You cannot use **\$** to subset any Atomic Vector (vector, matrix, or array). You will get the[\$ operator is invalid for atomic vectors]{.hl} error:
+
+``` r
+> JulyTemps2DNamed$col2
+Error in JulyTemps2DNamed$col2 : $ operator is invalid for atomic vectors
+```
+
+## class attribute and typeof()
+
+***class()*** is a function that allows you to either view or set the class of an object (i.e., change a numeric vector to a character vector).  [You should never use **class()** to changes the class of an object, instead use a specialized function like **as.character()**.]{.hl}
+
+ 
+
+Using ***class()*** to get the class of an object will produces inconsistent results.  Using class on an object will return the value type if the vector has no dimensions set, and will return the object type if there are dimensions set:
+
+``` {.r tab="Console"}
+> class(JulyTemps2D)
+[1] "matrix" "array" 
+> class(JulyTemps)
+[1] "numeric"
+```
+
+Instead of class, you should use[ typeof()]{.hl}***.***It will always give you the class of the values:
+
+``` {.r tab="Console"}
+> typeof(JulyTemps2D)
+[1] "double"
+> typeof(JulyTemps)
+[1] "double"
+```
+
+[Note: **double** means the values are **numeric**.  In other programming languages (especially older ones), there is a corresponding **single** class, but not in R. ]{.note}
+
+## Other attributes (metadata or comments)
+
+You can create any attribute you want and add it an object using ***attr()***.  We are going to add 2 attributes using ***attr()*** to a copy of ***JulyTemps2DNamed***.  The attributes will be named ***timeChecked*** and ***unit*** and they will be set to ***noon*** and ***Fahrenheit***:
+
+``` r
+JulyTemps2DNamed_2 = JulyTemps2DNamed;
+attr(JulyTemps2DNamed_2, "timeChecked") = "noon";
+attr(JulyTemps2DNamed_2, "unit") = "Fahrenheit";
+```
+
+[note: while not enforced, attribute names should follow variable variable naming conventions]{.note}
+
+ 
+
+We can also use ***attr()***  to get the attributes of an object:
+
+``` {.r tab="Console"}
+> attr(JulyTempsNamed_2, "timeChecked")
+[1] "noon"
+> attr(JulyTempsNamed_2, "unit")
+[1] "Fahrenheit"
+```
+
+[User-defined attributes should be treated as comments or metadata]{.hl}*.*  Attributes give information that might interest the user of your script but attributes should not be a functional part of the script. 
+
+### Viewing all attributes
+
+If you view a object in the ***Console***, the user-defined attributes will be displayed:
+
+``` {.r tab="Console"}
+> JulyTemps2DNamed_2
+      location1 location2
+date1        90        81
+date2        88        83
+date3        86        80
+date4        77        80
+attr(,"timeChecked")
+[1] "noon"
+attr(,"unit")
+[1] "Fahrenheit"
+```
+
+For a more robust view of the attributes in an object, you can use ***attributes()***:
+
+``` {.r tab="Console"}
+> attributes(JulyTemps2DNamed_2)
+$dim
+[1] 4 2
+$dimnames
+$dimnames[[1]]
+[1] "date1" "date2" "date3" "date4"
+$dimnames[[2]]
+[1] "location1" "location2"
+
+$timeChecked
+[1] "noon"
+$unit
+[1] "Fahrenheit"
+```
+
+[Note: **dimnames** is a property attribute that was set when you set the row and column names]{.note}
+
+## Application
+
+A\) In comment at the top of your script answer:
+
+-   What happens when you create this vector:  **c(1, "a", 2, "b")**?  Why?  Explain in terms of atomic vectors and type (class).
+
+ 
+
+B\) Save the data from [Lansing2016Noaa-3.csv](../data/Lansing2016Noaa-3.csv) to a data frame names ***weatherData***
+
+ 
+
+C\) Open the CSV file above and save it to the dataframe ***weatherData***
+
+-   Add a logical/Boolean column to ***weatherData*** call ***wasPrecip*** that gives whether there was any precipitation for the day
+
+-   Add a logical/Boolean column to ***weatherData*** call ***wasMild*** that gives whether a day had high temperatures between 50 and 70   
+
+-   Add a logical/Boolean column to ***weatherData*** call ***wasMuggy*** that gives whether a day had high temperatures greater than 70 and humidity greater than 80
+
+ 
+
+D\) Save the ***avgTemp*** column from ***weatherData*** to a vector named ***averageTemp***
+
+-   Add two user-defined attributes to  ***averageTemp*** -- one that gives the temperature unit (Fahrenheit), the other that gives the year (2016)
+
+-   use variable naming conventions when naming the attributes
+
+ 
+
+E\) Add a names attribute for the first five values in ***averageTemp*** that gives the day (Jan1, Jan2...)
+
+-   Answer in comments: What happens to the other 361 unnamed values?
+
+ 
+
+F\) Create a 4D array from this vector:  c(1:64)
+
+-   subset two values in the 4D vector
+
+{{< include ../assets/_AppInstructions.qmd >}}
+
+## Extension: rounding functions in R
+
+There are three rounding functions in R:
+
+-   ***round()***   \# rounds to nearest integer (**5.3** become **5** and **5.7** becomes **6**)
+
+-   ***floor()*** \# drops the decimal (*both* **5.3** and **5.7** become **5**)
+
+-   ***ceiling()***  \# increase decimal number to next integer  (*both* **5.3** and **5.7** become **6**)
+
+     
+
+Even though these function create integer-like values, R will still see the values as numeric:
+
+``` {.r tab="Console"}
+> a = c(2.5, 3.6, -1.3)
+> b = round(a)
+> b
+[1]  2  4 -1
+> class(b)
+[1] "numeric"
+```
+
+If you actually want integer values, then you need to to convert the vector to an integer:
+
+``` {.r tab="Console"}
+> b = as.integer(b)
+> b
+[1]  2  4 -1
+> class(b)
+[1] "integer"
+```
+
+Integer values have a speed advantage over numeric values, which you will notice if you are processing 100,000 values.

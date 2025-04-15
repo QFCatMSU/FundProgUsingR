@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.22">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>2-07: Matrices</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b4406b7675125bc2ba204020e191172.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-5f39cfd1aee7e7785011fc5df168ee92.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link rel="shortcut icon" href="https://qfcatmsu.github.io/assets/quarto/qfc_icon.png">
+<script>mod=true; menuCollapse=true;</script>
+<script src="https://qfcatmsu.github.io/assets/quarto/qfc_styles.js"></script>
+ 
+
+
+<link rel="stylesheet" href="https://qfcatmsu.github.io/assets/quarto/qfc_styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+          <h1 class="quarto-secondary-nav-title">2-07: Matrices</h1>
+        </a>     
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text"><b>Fundamentals of Programming class</b></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/0-01-IntroductionAndSyllabus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction and Syllabus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-01-RStudioProjectsSetup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-01: RStudio Projects Setup</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-02-Variables.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-02: Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-03_Mathematical_Operations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-03: Mathematical Operations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-04_Vectors_And_Data_Frames.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-04: Vectors and Data Frames</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-05_Functions_Introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-05: Functions Introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-06_Run_and_Source.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-06: Run and Source</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-07_Outputs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-07: Outputs</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-08_Conditional_Operations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-08: Conditional Operations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-09_If_Else_Statements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-09: If-Else Statements</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-10_For_Loops.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-10: For Loops</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-11_For_Loops_and_State_Varibles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-11: For Loops and State Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-12_MultipleConditions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-12: Multiple Conditions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-13_Functions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-13: Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-14_Functions2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-14: Functions 2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-15_Nested_Loops_and _Matrices.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-15: Nested loops and Matrices</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-15_Nested_Loops_and _Matrices-HOME-GALAXYBOOK.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-15: Nested loops and Matrices</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-01_R-Base_Plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-01: R-Base Plots</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-02_DataFrame_Modifications.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-02: DataFrame Modifications</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-03_DataTypesAndDateFrames.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-03: Data Types and Data Frames</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-04_WhichStatements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-04: Which Statements</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-05_WhichAndRegularExpressions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-05: Which and Regular Expressions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-06_Datetime_Obejects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-06: Datetime objects</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-07_Matrices.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">2-07: Matrices</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-08_Binding_Sampling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-08: Binding and Sampling</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-09_Stacking_Mapping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-09: Stacking and Mapping</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-10_Statistical_Tests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-10: Statistical Tests</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-11_Objects_Attributes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-11: Objects and Attributes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-12_Lists.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-12: Lists</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-13_Breakpoints.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-13: Breakpoints</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title"><b>Lesson Content</b></h2>
+   
+  <ul>
+  <li><a href="#to-do" id="toc-to-do" class="nav-link active" data-scroll-target="#to-do"><span class="header-section-number">0.1</span> to do</a></li>
+  <li><a href="#purpose" id="toc-purpose" class="nav-link" data-scroll-target="#purpose"><span class="header-section-number">1</span> Purpose</a></li>
+  <li><a href="#script-for-the-lesson" id="toc-script-for-the-lesson" class="nav-link" data-scroll-target="#script-for-the-lesson"><span class="header-section-number">2</span> Script for the lesson</a></li>
+  <li><a href="#csv-files" id="toc-csv-files" class="nav-link" data-scroll-target="#csv-files"><span class="header-section-number">3</span> CSV files</a>
+  <ul class="collapse">
+  <li><a href="#saving-data-to-a-data-frame" id="toc-saving-data-to-a-data-frame" class="nav-link" data-scroll-target="#saving-data-to-a-data-frame"><span class="header-section-number">3.1</span> Saving data to a data frame</a></li>
+  <li><a href="#column-name-change" id="toc-column-name-change" class="nav-link" data-scroll-target="#column-name-change"><span class="header-section-number">3.2</span> Column name change</a></li>
+  </ul></li>
+  <li><a href="#data-frames-and-matrices-two-dimensional-data" id="toc-data-frames-and-matrices-two-dimensional-data" class="nav-link" data-scroll-target="#data-frames-and-matrices-two-dimensional-data"><span class="header-section-number">4</span> Data frames and matrices (two-dimensional data)</a>
+  <ul class="collapse">
+  <li><a href="#advantages-of-a-matrix" id="toc-advantages-of-a-matrix" class="nav-link" data-scroll-target="#advantages-of-a-matrix"><span class="header-section-number">4.1</span> Advantages of a matrix</a></li>
+  </ul></li>
+  <li><a href="#modifying-the-whole-matrix" id="toc-modifying-the-whole-matrix" class="nav-link" data-scroll-target="#modifying-the-whole-matrix"><span class="header-section-number">5</span> Modifying the whole matrix</a>
+  <ul class="collapse">
+  <li><a href="#calculations-on-the-whole-matrix" id="toc-calculations-on-the-whole-matrix" class="nav-link" data-scroll-target="#calculations-on-the-whole-matrix"><span class="header-section-number">5.1</span> Calculations on the whole matrix</a></li>
+  <li><a href="#statistical-operation-on-the-whole-matrix" id="toc-statistical-operation-on-the-whole-matrix" class="nav-link" data-scroll-target="#statistical-operation-on-the-whole-matrix"><span class="header-section-number">5.2</span> Statistical operation on the whole matrix</a></li>
+  </ul></li>
+  <li><a href="#subsetting-matrices" id="toc-subsetting-matrices" class="nav-link" data-scroll-target="#subsetting-matrices"><span class="header-section-number">6</span> Subsetting matrices&nbsp;</a>
+  <ul class="collapse">
+  <li><a href="#subset-a-column-in-a-matrix" id="toc-subset-a-column-in-a-matrix" class="nav-link" data-scroll-target="#subset-a-column-in-a-matrix"><span class="header-section-number">6.1</span> Subset a column in a matrix</a></li>
+  <li><a href="#subset-a-row-in-a-matrix" id="toc-subset-a-row-in-a-matrix" class="nav-link" data-scroll-target="#subset-a-row-in-a-matrix"><span class="header-section-number">6.2</span> Subset a row in a matrix</a></li>
+  <li><a href="#subset-both-rows-and-columns-in-a-matrix" id="toc-subset-both-rows-and-columns-in-a-matrix" class="nav-link" data-scroll-target="#subset-both-rows-and-columns-in-a-matrix"><span class="header-section-number">6.3</span> Subset both rows and columns in a matrix</a></li>
+  <li><a href="#non-continuous-subsetting-of-rows-and-column" id="toc-non-continuous-subsetting-of-rows-and-column" class="nav-link" data-scroll-target="#non-continuous-subsetting-of-rows-and-column"><span class="header-section-number">6.4</span> Non-continuous subsetting of rows and column</a></li>
+  </ul></li>
+  <li><a href="#reversing-the-matrix-transpose" id="toc-reversing-the-matrix-transpose" class="nav-link" data-scroll-target="#reversing-the-matrix-transpose"><span class="header-section-number">7</span> Reversing the matrix (transpose)</a></li>
+  <li><a href="#statistics-across-all-rows-and-columns" id="toc-statistics-across-all-rows-and-columns" class="nav-link" data-scroll-target="#statistics-across-all-rows-and-columns"><span class="header-section-number">8</span> Statistics across all rows and columns</a>
+  <ul class="collapse">
+  <li><a href="#for-loops" id="toc-for-loops" class="nav-link" data-scroll-target="#for-loops"><span class="header-section-number">8.1</span> For loops</a></li>
+  <li><a href="#apply" id="toc-apply" class="nav-link" data-scroll-target="#apply"><span class="header-section-number">8.2</span> apply()</a></li>
+  </ul></li>
+  <li><a href="#saving-the-matrix" id="toc-saving-the-matrix" class="nav-link" data-scroll-target="#saving-the-matrix"><span class="header-section-number">9</span> Saving the matrix</a></li>
+  <li><a href="#application" id="toc-application" class="nav-link" data-scroll-target="#application"><span class="header-section-number">10</span> Application</a>
+  <ul class="collapse">
+  <li><a href="#questions-to-answer" id="toc-questions-to-answer" class="nav-link" data-scroll-target="#questions-to-answer"><span class="header-section-number">10.1</span> Questions to answer</a></li>
+  </ul></li>
+  <li><a href="#extension-dataframes-and-tibbles" id="toc-extension-dataframes-and-tibbles" class="nav-link" data-scroll-target="#extension-dataframes-and-tibbles"><span class="header-section-number">11</span> Extension: dataframes and tibbles</a></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content column-page-right" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">2-07: Matrices</h1>
+</div>
+
+
+
+<div class="quarto-title-meta column-page-right">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="to-do" class="level3" data-number="0.1">
+<h3 data-number="0.1" class="anchored" data-anchor-id="to-do"><span class="header-section-number">0.1</span> to do</h3>
+</section>
+<section id="purpose" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="purpose"><span class="header-section-number">1</span> Purpose</h2>
+<ul>
+<li><p>Using matrices for 2D data</p></li>
+<li><p>performing math and statistic on a matrix</p></li>
+</ul>
+</section>
+<section id="script-for-the-lesson" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="script-for-the-lesson"><span class="header-section-number">2</span> Script for the lesson</h2>
+<p>The <a href="../scripts/2-07_Matrices.R">script for the lesson is here</a></p>
+<p>The <a href="../data/LansingJanTemps.csv">LansingJanTemps.csv</a></p>
+</section>
+<section id="csv-files" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="csv-files"><span class="header-section-number">3</span> CSV files</h2>
+<p>Let’s first look at the CSV file, <strong><em>LansingJanTemps.csv</em></strong>.&nbsp; The data in the CSV file was downloaded from the NOAA/NCDC website and contains the high temperature for every day in January from 2011 to 2016.</p>
+<p>&nbsp;</p>
+<p>A CSV file is a text file that can be read by any text editor.&nbsp; We can look at the csv file by clicking on it in the <strong><em>Files</em></strong> tab of RStudio and choosing <strong><em>View File</em></strong>.&nbsp; The file will open in RStudio’s file viewer:</p>
+<div id="fig-CSVinRStudio" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-CSVinRStudio-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-2-07-OpenCSV.jpg" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-CSVinRStudio-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Opening and viewing a CSV file in RStudio
+</figcaption>
+</figure>
+</div>
+<p>The temperature values are in tenths of a Celsius degree and the columns have generic names – we will deal with both of these issues later.</p>
+<section id="saving-data-to-a-data-frame" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="saving-data-to-a-data-frame"><span class="header-section-number">3.1</span> Saving data to a data frame</h3>
+<p>Let’s open the CSV file and save it to a data frame, named <strong><em>lansingJanDF</em></strong>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>lansingJanDF <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">"data/LansingJanTemps.csv"</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong><em>lansingJanDF</em></strong> is a data frame with 6 columns of January temperatures from the years 2011-2016.&nbsp; The view of <strong><em>lansingJanDF</em></strong> looks very similar to the view of the CSV file the data came from <a href="#fig-CSVinRStudio" class="quarto-xref">Figure&nbsp;1</a>.</p>
+<div id="fig-dataframe_csv" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dataframe_csv-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-2-07-DF.jpg" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dataframe_csv-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Viewing the data frame from the CSV file
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="column-name-change" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="column-name-change"><span class="header-section-number">3.2</span> Column name change</h3>
+<p>Let’s create a copy of the data frame so we can maintain the original data frame while making changes:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>lansingJanDF2 <span class="ot">=</span> lansingJanDF;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We want to change the column names to something that has the years in it.&nbsp; It is possible to change the six column names to the six years 2011-2016 using the sequence <strong><em>2011:2016</em></strong>:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colnames</span>(lansingJanMat2) <span class="ot">=</span> <span class="dv">2011</span><span class="sc">:</span><span class="dv">2016</span>;  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>But, <span class="hl">it is not recommended to start a column name with a number</span>.&nbsp; Column names are essentially variable names and variable names cannot start with a number.&nbsp; R does allow you to start a column name with a number, but there are problems with this that are beyond the scope of this lesson.</p>
+<p>&nbsp;</p>
+<p>To avoid problems, <span class="hl">you should always use variable naming standards for column names in a dataframe</span>even though R does not enforce this.</p>
+<p>&nbsp;</p>
+<p>As a reminder, the are that variable names :</p>
+<ul>
+<li><p>can only start with a letter, underscore ( _ ) , or a dot ( . )</p>
+<ul>
+<li><span class="note">remember: most programming language do not accept dots ( . ) in names</span></li>
+</ul></li>
+<li><p>can consist of letters, numbers, underscore ( _ ), or a dot ( . )</p></li>
+<li><p>cannot have spaces</p></li>
+<li><p>cannot be reserved words (e.g., <strong><em>if</em></strong>, <strong><em>else</em></strong>, <strong><em>TRUE</em></strong>, <strong><em>FALSE</em></strong>, <strong><em>function</em></strong>, <strong><em>for</em></strong>)</p>
+<p>&nbsp;</p></li>
+</ul>
+<p>We are going to name the columns <strong><em>Jan2011</em></strong>, <strong><em>Jan2012</em></strong>… using <strong><em>paste()</em></strong> to create the six column names:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(lansingJanMat2) <span class="ot">=</span> <span class="fu">paste</span>(<span class="st">"Jan"</span>, <span class="dv">2011</span><span class="sc">:</span><span class="dv">2016</span>, <span class="at">sep=</span><span class="st">""</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><span class="note">Note: we needed to set sep=““, otherwise there would be a space in the name</span></p>
+<div id="fig-rename_column" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-rename_column-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-2-07-RenameColumns.jpg" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rename_column-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Changing the column names – make sure column names follow the same rules as variable names
+</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="data-frames-and-matrices-two-dimensional-data" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="data-frames-and-matrices-two-dimensional-data"><span class="header-section-number">4</span> Data frames and matrices (two-dimensional data)</h2>
+<p>A data frame is a two dimensional data structure that is a collection of related vectors (i.e., columns). For instance, the <strong><em>weatherData</em></strong> data frame used in previous lessons had different types of weather data (<strong>columns</strong>) collected every day (<strong>rows</strong>).</p>
+<p>&nbsp;</p>
+<p>Data frames, by design, have<span class="hl">columns that hold different types of data</span>.&nbsp; The weather data from previous lessons had temperature columns, humidity columns, precipitation columns, etc..</p>
+<p>&nbsp;</p>
+<p>However, in this lesson, we have a data frame where <span class="hl">all the columns are the same type of value</span> (temperatures) and we will want to perform calculations across rows, columns, and the whole structure.&nbsp; This cannot be done with a data frame, but it can be done with a matrix.</p>
+<p>&nbsp;</p>
+<p>A <span class="hl">matrix</span>is a <span class="hl">two-dimensional vector</span> that is similar to a two-dimensional data frame except that all the columns are the same type of value.</p>
+<p>&nbsp;</p>
+<p>We can convert a data frame directly into a matrix using <strong><em>as.matrix()</em></strong>:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>lansingJanMat <span class="ot">=</span> <span class="fu">as.matrix</span>(lansingJanDF2);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In the <strong><em>Environment</em></strong> tab, the matrix is placed in the <strong><em>Data</em></strong> section (like a data frame), but is presented as a two-dimensional vector (31 rows by 6 columns):</p>
+<div class="sourceCode" id="cb6" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>lansingJanMat<span class="sc">:</span> num [<span class="dv">1</span><span class="sc">:</span><span class="dv">31</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>] <span class="dv">122</span> <span class="sc">-</span><span class="dv">39</span> <span class="dv">6</span> <span class="dv">0</span> <span class="sc">-</span><span class="dv">50</span> <span class="sc">-</span><span class="dv">33</span> ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>And, if you double-click on the matrix, it will show up in a <strong><em>Viewer</em></strong> tab and look like a data frame:</p>
+<div id="fig-matrixInRStudio" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-matrixInRStudio-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-2-07-ViewingMatrix.jpg" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-matrixInRStudio-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Matrices and data frame in the Environment – double-clicking on a matrix opens it in a Viewer tab
+</figcaption>
+</figure>
+</div>
+<section id="advantages-of-a-matrix" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="advantages-of-a-matrix"><span class="header-section-number">4.1</span> Advantages of a matrix</h3>
+<p>A matrix has two advantages over a data frame:</p>
+<ul>
+<li><p>a matrix allows you to perform calculations across rows and the whole structure</p></li>
+<li><p>operations are faster on a matrix than on a data frame</p>
+<p>&nbsp;</p></li>
+</ul>
+<p>If you are dealing with large data that is all of the same type, then it is best to use a matrix.</p>
+</section>
+</section>
+<section id="modifying-the-whole-matrix" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="modifying-the-whole-matrix"><span class="header-section-number">5</span> Modifying the whole matrix</h2>
+<p>The temperature data in the <strong><em>lansingJanMat</em></strong> is in units of tenths of Celsius (this author does not know why NOAA/NCDC chose to store the data this way).&nbsp; Let’s convert this to Fahrenheit.</p>
+<p>&nbsp;</p>
+<p>Because this is a matrix, we can execute mathematical operations on all values at once – just like a vector (remember, a <span class="hl">matrix is a two-dimensional vector</span>).</p>
+<p>&nbsp;</p>
+<p>In order, I am going to:</p>
+<ol type="1">
+<li><p>change the units from tenth of a Celsius to Celsius&nbsp;</p></li>
+<li><p>convert the temperatures from Celsius to Fahrenheit</p></li>
+<li><p>change values to two significant digits</p></li>
+</ol>
+<section id="calculations-on-the-whole-matrix" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="calculations-on-the-whole-matrix"><span class="header-section-number">5.1</span> Calculations on the whole matrix</h3>
+<p>We are going to perform three operations on the matrix and show the results of the operations on the first 10 values of the matrix.</p>
+<p>&nbsp;</p>
+<p><span class="note">Note: I create a new matrices to maintain the old versions of the matrix, but this is not necessary – you could keep saving the results to <strong><em>lansingJanMat</em></strong>.&nbsp;</span></p>
+<p>&nbsp;</p>
+<p>The first 10 values in the matrix are:</p>
+<div class="sourceCode" id="cb7" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> lansingJanMat[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] <span class="dv">122</span> <span class="sc">-</span><span class="dv">39</span>   <span class="dv">6</span>   <span class="dv">0</span> <span class="sc">-</span><span class="dv">50</span> <span class="sc">-</span><span class="dv">33</span> <span class="sc">-</span><span class="dv">72</span> <span class="sc">-</span><span class="dv">56</span> <span class="sc">-</span><span class="dv">28</span> <span class="sc">-</span><span class="dv">39</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 1) Divide by 10 to get units from tenths of Celsius to Celsius</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>lansingJanMat2 <span class="ot">=</span> lansingJanMat <span class="sc">/</span> <span class="dv">10</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> lansingJanMat2[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] <span class="fl">12.2</span> <span class="sc">-</span><span class="fl">3.9</span>  <span class="fl">0.6</span>  <span class="fl">0.0</span> <span class="sc">-</span><span class="fl">5.0</span> <span class="sc">-</span><span class="fl">3.3</span> <span class="sc">-</span><span class="fl">7.2</span> <span class="sc">-</span><span class="fl">5.6</span> <span class="sc">-</span><span class="fl">2.8</span> <span class="sc">-</span><span class="fl">3.9</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2)  Converting from Celsius to Fahrenheit</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>lansingJanMat3 <span class="ot">=</span> (<span class="dv">9</span><span class="sc">/</span><span class="dv">5</span>) <span class="sc">*</span> lansingJanMat2 <span class="sc">+</span> <span class="dv">32</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> lansingJanMat3[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] <span class="fl">53.96</span> <span class="fl">24.98</span> <span class="fl">33.08</span> <span class="fl">32.00</span> <span class="fl">23.00</span> <span class="fl">26.06</span> <span class="fl">19.04</span> <span class="fl">21.92</span> <span class="fl">26.96</span> <span class="fl">24.98</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 3) Set the number of significant digits to 2</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>lansingJanMat4 <span class="ot">=</span> <span class="fu">signif</span>(<span class="at">x=</span>lansingJanMat3, <span class="at">digits=</span><span class="dv">2</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-four_matrices" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-four_matrices-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="cb13" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> lansingJanMat4[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] <span class="dv">54</span> <span class="dv">25</span> <span class="dv">33</span> <span class="dv">32</span> <span class="dv">23</span> <span class="dv">26</span> <span class="dv">19</span> <span class="dv">22</span> <span class="dv">27</span> <span class="dv">25</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-four_matrices-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: Displaying the first ten temperature values of the 4 matrices
+</figcaption>
+</figure>
+</div>
+<div id="fig-fimal_matrix" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-fimal_matrix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-2-07-FinalMatrix.jpg" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fimal_matrix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: The final matrix in the Viewer tab
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="statistical-operation-on-the-whole-matrix" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="statistical-operation-on-the-whole-matrix"><span class="header-section-number">5.2</span> Statistical operation on the whole matrix</h3>
+<p>We can also apply statistical functions to the whole matrix.&nbsp; For instance, we can find the mean and standard deviation of all values in the matrix:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>meanAllTemps <span class="ot">=</span> <span class="fu">mean</span>(lansWeatherMat4);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb15" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> meanAllTemps</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">29.68495</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> sdAllTemps</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">10.60749</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="subsetting-matrices" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="subsetting-matrices"><span class="header-section-number">6</span> Subsetting matrices&nbsp;</h2>
+<p>If we just want to work with part of the data in a matrix, then we need to subset the matrix.&nbsp; Similar to using bracket notation, <strong><em>[x]</em></strong>, in one-dimensional vectors, we can use two-dimensional bracket <strong><em>[x,y]</em></strong> notation to subset a matrix.</p>
+<p>&nbsp;</p>
+<p>In this notation, <strong><em>x</em></strong> represents the row numbers to subset and <strong><em>y</em></strong> represents the column numbers to subset.</p>
+<section id="subset-a-column-in-a-matrix" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="subset-a-column-in-a-matrix"><span class="header-section-number">6.1</span> Subset a column in a matrix</h3>
+<p>If <strong><em>x</em></strong> is not given, it means<span class="hl">take all rows (i.e., do not subset the rows)</span>.&nbsp; So, the following will find the mean of all rows in column 3 (i.e., all values in the year 2013):</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>meanJan2013 <span class="ot">=</span> <span class="fu">mean</span>(lansWeatherMat[ ,<span class="dv">3</span>]);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-console_matrix" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-console_matrix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="cb17" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> lansingJanMat4[,<span class="dv">3</span>]</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] <span class="dv">25</span> <span class="dv">26</span> <span class="dv">29</span> <span class="dv">33</span> <span class="dv">35</span> <span class="dv">35</span> <span class="dv">35</span> <span class="dv">38</span> <span class="dv">45</span> <span class="dv">44</span> <span class="dv">55</span> <span class="dv">58</span> <span class="dv">40</span> <span class="dv">26</span> <span class="dv">29</span> <span class="dv">34</span> <span class="dv">33</span> <span class="dv">35</span> <span class="dv">45</span> <span class="dv">41</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">21</span>] <span class="dv">15</span> <span class="dv">10</span> <span class="dv">17</span> <span class="dv">16</span> <span class="dv">20</span> <span class="dv">27</span> <span class="dv">30</span> <span class="dv">43</span> <span class="dv">57</span> <span class="dv">56</span> <span class="dv">27</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> meanJan2013</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">34.16129</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-console_matrix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7: Console output for the matrix subsetted by row 3 and the mean of this subset
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="subset-a-row-in-a-matrix" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="subset-a-row-in-a-matrix"><span class="header-section-number">6.2</span> Subset a row in a matrix</h3>
+<p>If <strong><em>y</em></strong> is not given, it means <em>take all columns (i.e., do not subset the columns)</em>.&nbsp; So, the following will find the mean of all columns in row 17 (i.e., the Jan 17<sup>th</sup> value for every year):</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>meanJan17 <span class="ot">=</span> <span class="fu">mean</span>(lansWeatherMat[<span class="dv">17</span>,]);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-matrix_subsetted" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-matrix_subsetted-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="cb19" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> lansingJanMat4[<span class="dv">17</span>,]</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>Jan2011 Jan2012 Jan2013 Jan2014 Jan2015 Jan2016 </span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>     <span class="dv">30</span>      <span class="dv">40</span>      <span class="dv">33</span>      <span class="dv">30</span>      <span class="dv">45</span>      <span class="dv">26</span> </span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> meanJan17</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">34</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-matrix_subsetted-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8: Console output for the matrix subsetted by column 17 and the mean of this subset
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="subset-both-rows-and-columns-in-a-matrix" class="level3" data-number="6.3">
+<h3 data-number="6.3" class="anchored" data-anchor-id="subset-both-rows-and-columns-in-a-matrix"><span class="header-section-number">6.3</span> Subset both rows and columns in a matrix</h3>
+<p>And you can use sequences for both <strong><em>x</em></strong> and <strong><em>y</em></strong> to get a two-dimensional subset of the matrix.&nbsp; The following will get the mean of the 10<sup>th</sup> through 19<sup>th</sup> (Jan 10-19) values of the first three years (2011, 2012, 2013):</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>meanJanPart <span class="ot">=</span> <span class="fu">mean</span>(lansingJanMat4[<span class="dv">10</span><span class="sc">:</span><span class="dv">19</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-console_matrix_subset" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-console_matrix_subset-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="cb21" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> lansingJanMat4[<span class="dv">10</span><span class="sc">:</span><span class="dv">19</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>      Jan2011 Jan2012 Jan2013</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>,]      <span class="dv">25</span>      <span class="dv">47</span>      <span class="dv">44</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a> [<span class="dv">2</span>,]      <span class="dv">26</span>      <span class="dv">50</span>      <span class="dv">55</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a> [<span class="dv">3</span>,]      <span class="dv">27</span>      <span class="dv">37</span>      <span class="dv">58</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a> [<span class="dv">4</span>,]      <span class="dv">25</span>      <span class="dv">26</span>      <span class="dv">40</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a> [<span class="dv">5</span>,]      <span class="dv">23</span>      <span class="dv">22</span>      <span class="dv">26</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a> [<span class="dv">6</span>,]      <span class="dv">26</span>      <span class="dv">24</span>      <span class="dv">29</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a> [<span class="dv">7</span>,]      <span class="dv">18</span>      <span class="dv">42</span>      <span class="dv">34</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a> [<span class="dv">8</span>,]      <span class="dv">30</span>      <span class="dv">40</span>      <span class="dv">33</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a> [<span class="dv">9</span>,]      <span class="dv">34</span>      <span class="dv">24</span>      <span class="dv">35</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>[<span class="dv">10</span>,]      <span class="dv">22</span>      <span class="dv">27</span>      <span class="dv">45</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> meanJanPart</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">33.13333</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-console_matrix_subset-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9: Console output for the matrix subsetted by rows 10-19 and columns 1-3, and the mean of this subset
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="non-continuous-subsetting-of-rows-and-column" class="level3" data-number="6.4">
+<h3 data-number="6.4" class="anchored" data-anchor-id="non-continuous-subsetting-of-rows-and-column"><span class="header-section-number">6.4</span> Non-continuous subsetting of rows and column</h3>
+<p>Finally, you can create more complicated sequences to subset the matrix.&nbsp; The following will find the mean of all even days on odd years.</p>
+<p>&nbsp;</p>
+<p>Since the subsetting is getting more complex, it is best to first create variables that hold the subset values:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>  evenDays <span class="ot">=</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">2</span>, <span class="at">to=</span><span class="dv">31</span>, <span class="at">by=</span><span class="dv">2</span>);</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  oddYears <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">5</span>);  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>and then use the variables in the bracket notation:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>meanJanEvenOdd <span class="ot">=</span> <span class="fu">mean</span>(lansingJanMat4[evenDays, oddYears]);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-complex_subset" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-complex_subset-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="cb24" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> lansingJanMat4[evenDays, oddYears]</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>      Jan2011 Jan2013 Jan2015</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>,]      <span class="dv">25</span>      <span class="dv">26</span>      <span class="dv">34</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a> [<span class="dv">2</span>,]      <span class="dv">32</span>      <span class="dv">33</span>      <span class="dv">32</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a> [<span class="dv">3</span>,]      <span class="dv">26</span>      <span class="dv">35</span>      <span class="dv">17</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a> [<span class="dv">4</span>,]      <span class="dv">22</span>      <span class="dv">38</span>      <span class="dv">13</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a> [<span class="dv">5</span>,]      <span class="dv">25</span>      <span class="dv">44</span>      <span class="dv">16</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a> [<span class="dv">6</span>,]      <span class="dv">27</span>      <span class="dv">58</span>      <span class="dv">27</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a> [<span class="dv">7</span>,]      <span class="dv">23</span>      <span class="dv">26</span>      <span class="dv">19</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a> [<span class="dv">8</span>,]      <span class="dv">18</span>      <span class="dv">34</span>      <span class="dv">32</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a> [<span class="dv">9</span>,]      <span class="dv">34</span>      <span class="dv">35</span>      <span class="dv">39</span></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>[<span class="dv">10</span>,]      <span class="dv">23</span>      <span class="dv">41</span>      <span class="dv">31</span></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>[<span class="dv">11</span>,]      <span class="dv">16</span>      <span class="dv">10</span>      <span class="dv">30</span></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>[<span class="dv">12</span>,]      <span class="dv">29</span>      <span class="dv">16</span>      <span class="dv">37</span></span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>[<span class="dv">13</span>,]      <span class="dv">29</span>      <span class="dv">27</span>      <span class="dv">26</span></span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>[<span class="dv">14</span>,]      <span class="dv">29</span>      <span class="dv">43</span>      <span class="dv">31</span></span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>[<span class="dv">15</span>,]      <span class="dv">24</span>      <span class="dv">56</span>      <span class="dv">23</span></span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> meanJanEvenOdd</span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">29.13333</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-complex_subset-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10: Console output for the matrix subsetted by even rows and odd columns 1-3, and the mean of this subset
+</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="reversing-the-matrix-transpose" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="reversing-the-matrix-transpose"><span class="header-section-number">7</span> Reversing the matrix (transpose)</h2>
+<p>In the previous examples, the rows represent days and the columns represent years.&nbsp; We could easily reverse the matrix so that the <em>rows represent the years</em> and the <em>columns represent the days</em>. We do this using the transpose, <strong><em>t()</em></strong>, function:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>lansingJanMat_T <span class="ot">=</span> <span class="fu">t</span>(lansingJanMat4);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The resulting matrix has 6 row and 31 columns with temperature values for the months going horizontally across the matrix instead of vertically down:</p>
+<div id="fig-transpose" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-transpose-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-2-07-Transpose.jpg" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-transpose-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11: The transpose matrix (reversing the rows and columns)
+</figcaption>
+</figure>
+</div>
+<p>One use of a transpose matrix is that you transpose a matrix when taking the dot (scalar) product of two matrices.</p>
+</section>
+<section id="statistics-across-all-rows-and-columns" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="statistics-across-all-rows-and-columns"><span class="header-section-number">8</span> Statistics across all rows and columns</h2>
+<p>Earlier, we found the mean of a single column of temperature values (<a href="#fig-console_matrix_subset" class="quarto-xref">Figure&nbsp;9</a>).&nbsp; Often, we want to find the mean of every column.&nbsp; We could just repeat the same line 6 times, once for each column:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>meanJan2011 <span class="ot">=</span> <span class="fu">mean</span>(lansWeatherMat[ ,<span class="dv">1</span>]);</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>meanJan2012 <span class="ot">=</span> <span class="fu">mean</span>(lansWeatherMat[ ,<span class="dv">2</span>]);</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>But, this is not an efficient way to code and would become more burdensome as the number of columns increases.</p>
+<p>&nbsp;</p>
+<p>There are two better ways to cycle through each column and get the means:</p>
+<ul>
+<li><p>Use <strong><em>for</em></strong> loops</p></li>
+<li><p>Use <strong><em>apply()</em></strong></p></li>
+</ul>
+<section id="for-loops" class="level3" data-number="8.1">
+<h3 data-number="8.1" class="anchored" data-anchor-id="for-loops"><span class="header-section-number">8.1</span> For loops</h3>
+<p>A <strong><em>for</em></strong> loop can be used to cycle through, and calculate the mean of, each column in the matrix.&nbsp; Since there are multiple mean values that you are calculating, you need to save the mean values to one vector.</p>
+<p>&nbsp;</p>
+<p><span class="hl">The vector needs to be created before the <strong>for</strong> loop</span> and assigned values during the <strong><em>for</em></strong> loop.&nbsp; After, the <strong><em>for</em></strong> loop the vector will have the same number of values as the matrix has columns (i.e., 6).</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a> <span class="co"># vector that holds the 6 yearly mean values</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  yearlyMean <span class="ot">=</span> <span class="fu">c</span>();</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># cycle through the six column and find the mean of the temperature values</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>) </span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># get the mean of all values in column i and save it to yearlyMean[i]</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>    yearlyMean[i] <span class="ot">=</span> <span class="fu">mean</span>(lansingJanMat4[,i]);</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>  }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The <strong><em>yearlyMean</em></strong> vector has 6 values, representing the mean for each of the 6 years:</p>
+<div class="sourceCode" id="cb28" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> yearlyMean</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">25.61290</span> <span class="fl">35.77419</span> <span class="fl">34.16129</span> <span class="fl">23.36774</span> <span class="fl">27.45161</span> <span class="fl">31.74194</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="apply" class="level3" data-number="8.2">
+<h3 data-number="8.2" class="anchored" data-anchor-id="apply"><span class="header-section-number">8.2</span> apply()</h3>
+<p><strong><em>apply()</em></strong> is a useful, if somewhat archaic, function in base R that allows you to apply a statistical or mathematical function for every row or column in a matrix.</p>
+<p>&nbsp;</p>
+<p><strong><em>apply()</em></strong> takes three arguments:</p>
+<ul>
+<li><p>the matrix you want to perform the function on</p></li>
+<li><p><strong><em>MARGIN</em></strong>: a number indicating whether you want to perform the action on rows or columns</p>
+<ul>
+<li><strong>1</strong> means all rows, <strong>2</strong> means all columns</li>
+</ul></li>
+<li><p><strong><em>FUN</em></strong>: the function to apply</p></li>
+</ul>
+<p>&nbsp;</p>
+<p>So, to get the <strong><em>mean</em></strong> of all columns in the <strong><em>lansingJanMat4</em></strong> matrix:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>  yearlyMean2 <span class="ot">=</span> <span class="fu">apply</span>(lansingJanMat4, <span class="at">MARGIN=</span><span class="dv">2</span>, <span class="at">FUN=</span>mean);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>And, <strong><em>yearlyMean2</em></strong> is a vector with 6 value, the same as <strong><em>yearlyMean</em></strong> above.</p>
+<div class="sourceCode" id="cb30" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> yearlyMean2</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a> Jan2011  Jan2012  Jan2013  Jan2014  Jan2015  Jan2016 </span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="fl">25.61290</span> <span class="fl">35.77419</span> <span class="fl">34.16129</span> <span class="fl">23.36774</span> <span class="fl">27.45161</span> <span class="fl">31.74194</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong><em>yearlyMean2</em></strong> is formatted differently than <strong><em>yearlyMean</em></strong> – <strong><em>yearlyMean2</em></strong> is a <strong><em>named</em></strong> variable.&nbsp; The distinction is something we will look more into in the lesson on Objects in R.</p>
+</section>
+</section>
+<section id="saving-the-matrix" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="saving-the-matrix"><span class="header-section-number">9</span> Saving the matrix</h2>
+<p>We are going to save <strong><em>lansingJanMat4</em></strong> to a CSV fileso we can use it in the next lesson and avoid the hassle of reformatting the original CSV file:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(<span class="at">x=</span>lansWeatherMat, <span class="at">file =</span> <span class="st">"data/LansingJanTempsFixed.csv"</span>,    </span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">row.names =</span> <span class="cn">FALSE</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This will put a CSV file named <strong><em>LansingJanTempsFixed.csv</em></strong> in the <strong><em>data</em></strong> folder of your Project Folder.</p>
+</section>
+<section id="application" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="application"><span class="header-section-number">10</span> Application</h2>
+<p>1) You are given a data frame with three columns:</p>
+<ul>
+<li><p>average temperature</p></li>
+<li><p>maximum temperature</p></li>
+<li><p>minimum temperature</p>
+<p>&nbsp;</p></li>
+</ul>
+<p>Is it best to convert the data frame into matrix?&nbsp; In comments in your script for the lesson give 1 reason why it is best and one reason why it is not.</p>
+<p>&nbsp;</p>
+<p>2) Find:</p>
+<ul>
+<li><p>the minimum (<strong><em>min()</em></strong>) temperature value in January 2013</p></li>
+<li><p>the maximum (<strong><em>max()</em></strong>) temperature value in January 2013</p></li>
+<li><p>the minimum (<strong><em>min()</em></strong>) temperature value on January 14<sup>th</sup></p></li>
+<li><p>the maximum (<strong><em>min()</em></strong>) temperature value in January 14<sup>th</sup></p>
+<p>&nbsp;</p></li>
+</ul>
+<p>3) Using <strong><em>for</em></strong> loops, find the mean value for each day in January (i.e., mean of the rows)</p>
+<p>&nbsp;</p>
+<p>4) Using <strong><em>apply()</em></strong>, find the mean value for each day in January (i.e., mean of the rows)</p>
+<p>&nbsp;</p>
+<p>5) Find the mean temperature of every 4th day in the years 2011, 2014, and 2016.</p>
+<p>&nbsp;</p>
+<p>6) Convert the temperature matrix so that it show how many degrees the temperature was above or below freezing on the Fahrenheit scale.&nbsp; So, 25 would become -7,&nbsp; and 60 would become 38.</p>
+<p>&nbsp;</p>
+<p>Save the script as&nbsp;<strong><em>app2-07.r</em></strong> in your&nbsp;<strong><em>scripts</em></strong> folder and&nbsp; email your Project Folder to Charlie Belinsky at belinsky@msu.edu.</p>
+<p>&nbsp;</p>
+<p><a href="1-01-RStudioProjectsSetup.html#sec-zip-folder" target="_blank">Instructions for zipping the Project Folder are here.</a></p>
+<p>&nbsp;</p>
+<p>If you have any questions regarding this application, feel free to email them to Charlie Belinsky at belinsky@msu.edu.</p>
+<section id="questions-to-answer" class="level3" data-number="10.1">
+<h3 data-number="10.1" class="anchored" data-anchor-id="questions-to-answer"><span class="header-section-number">10.1</span> Questions to answer</h3>
+<p>Answer the following in comments inside your application script:</p>
+<ol type="1">
+<li><p>What was your level of comfort with the lesson/application?</p></li>
+<li><p>What areas of the lesson/application confused or still confuses you?</p></li>
+<li><p>What are some things you would like to know more about that is related to, but not covered in, this lesson?</p></li>
+</ol>
+</section>
+</section>
+<section id="extension-dataframes-and-tibbles" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="extension-dataframes-and-tibbles"><span class="header-section-number">11</span> Extension: dataframes and tibbles</h2>
+<p>In March 2019, the line of code to get a column of temperature values from the <strong><em>lansWeather11Data</em></strong> dataframe (and the other 5 years) changed from</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>lansWeather11Val <span class="ot">=</span> lansWeather11Data [, <span class="st">"value"</span>];</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>to</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>lansWeather11Val <span class="ot">=</span> lansWeather11Data<span class="sc">$</span>value;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The reason for this change is that the NOAA/NCDC database starting sending data in tibbles instead of dataframes.&nbsp; Tibbles are designed to be a more modern take on the dataframe, basically taking the lessons from decades on dataframe usage to create a better dataframe.</p>
+<p>&nbsp;</p>
+<p>Tibbles are essentially the tidyverse version of a data frame and they supposedly improve on the data frame.</p>
+<p>&nbsp;</p>
+<p>But, one difference is that in a data frame the three following lines all function exactly the same – they each take the column <strong><em>value</em></strong> from the data frame <strong><em>lw11Data</em></strong> and save it to a vector called <strong><em>temps</em></strong>:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>temps<span class="ot">=</span>lw11Data<span class="sc">$</span>value</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>temps<span class="ot">=</span>lw11Data[, <span class="st">"value"</span>]</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>temps<span class="ot">=</span>lw11Data[[<span class="st">"value"</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>However, in a tibble, the following line saves the column <strong><em>value</em></strong> into <em>a new 1 column tibble</em> called <strong><em>temps</em></strong>.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>temps<span class="ot">=</span>lw11Data[,<span class="st">"value"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In other words, <strong><em>temps</em></strong> is not a vector, hence the error.</p>
+<p>&nbsp;</p>
+<p>These two lines work the same in tibbles and data frames:</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>temps<span class="ot">=</span>lw11Data<span class="sc">$</span>value</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>temps<span class="ot">=</span>lw11Data[[“value”]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

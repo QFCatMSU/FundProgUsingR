@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.22">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>2-02: DataFrame Modifications</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b4406b7675125bc2ba204020e191172.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-5f39cfd1aee7e7785011fc5df168ee92.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link rel="shortcut icon" href="https://qfcatmsu.github.io/assets/quarto/qfc_icon.png">
+<script>mod=true; menuCollapse=true;</script>
+<script src="https://qfcatmsu.github.io/assets/quarto/qfc_styles.js"></script>
+ 
+
+
+<link rel="stylesheet" href="https://qfcatmsu.github.io/assets/quarto/qfc_styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+          <h1 class="quarto-secondary-nav-title">2-02: DataFrame Modifications</h1>
+        </a>     
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text"><b>Fundamentals of Programming class</b></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/0-01-IntroductionAndSyllabus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction and Syllabus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-01-RStudioProjectsSetup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-01: RStudio Projects Setup</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-02-Variables.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-02: Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-03_Mathematical_Operations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-03: Mathematical Operations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-04_Vectors_And_Data_Frames.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-04: Vectors and Data Frames</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-05_Functions_Introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-05: Functions Introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-06_Run_and_Source.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-06: Run and Source</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-07_Outputs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-07: Outputs</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-08_Conditional_Operations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-08: Conditional Operations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-09_If_Else_Statements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-09: If-Else Statements</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-10_For_Loops.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-10: For Loops</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-11_For_Loops_and_State_Varibles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-11: For Loops and State Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-12_MultipleConditions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-12: Multiple Conditions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-13_Functions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-13: Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-14_Functions2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-14: Functions 2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-15_Nested_Loops_and _Matrices.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-15: Nested loops and Matrices</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-15_Nested_Loops_and _Matrices-HOME-GALAXYBOOK.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-15: Nested loops and Matrices</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-01_R-Base_Plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-01: R-Base Plots</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-02_DataFrame_Modifications.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">2-02: DataFrame Modifications</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-03_DataTypesAndDateFrames.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-03: Data Types and Data Frames</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-04_WhichStatements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-04: Which Statements</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-05_WhichAndRegularExpressions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-05: Which and Regular Expressions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-06_Datetime_Obejects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-06: Datetime objects</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-07_Matrices.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-07: Matrices</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-08_Binding_Sampling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-08: Binding and Sampling</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-09_Stacking_Mapping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-09: Stacking and Mapping</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-10_Statistical_Tests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-10: Statistical Tests</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-11_Objects_Attributes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-11: Objects and Attributes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-12_Lists.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-12: Lists</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-13_Breakpoints.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-13: Breakpoints</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title"><b>Lesson Content</b></h2>
+   
+  <ul>
+  <li><a href="#to-do" id="toc-to-do" class="nav-link active" data-scroll-target="#to-do"><span class="header-section-number">0.1</span> To-do</a></li>
+  <li><a href="#purpose" id="toc-purpose" class="nav-link" data-scroll-target="#purpose"><span class="header-section-number">1</span> Purpose</a></li>
+  <li><a href="#material" id="toc-material" class="nav-link" data-scroll-target="#material"><span class="header-section-number">2</span> Material</a></li>
+  <li><a href="#a-larger-data-frame" id="toc-a-larger-data-frame" class="nav-link" data-scroll-target="#a-larger-data-frame"><span class="header-section-number">3</span> A larger data frame</a></li>
+  <li><a href="#string-manipulations" id="toc-string-manipulations" class="nav-link" data-scroll-target="#string-manipulations"><span class="header-section-number">4</span> String manipulations</a>
+  <ul class="collapse">
+  <li><a href="#substrings" id="toc-substrings" class="nav-link" data-scroll-target="#substrings"><span class="header-section-number">4.1</span> Substrings</a></li>
+  <li><a href="#pasting-values" id="toc-pasting-values" class="nav-link" data-scroll-target="#pasting-values"><span class="header-section-number">4.2</span> Pasting values</a></li>
+  <li><a href="#three-dots-and-arguments" id="toc-three-dots-and-arguments" class="nav-link" data-scroll-target="#three-dots-and-arguments"><span class="header-section-number">4.3</span> three dots ( … ) and arguments</a></li>
+  <li><a href="#using-paste" id="toc-using-paste" class="nav-link" data-scroll-target="#using-paste"><span class="header-section-number">4.4</span> Using paste()</a></li>
+  </ul></li>
+  <li><a href="#rounding-numbers" id="toc-rounding-numbers" class="nav-link" data-scroll-target="#rounding-numbers"><span class="header-section-number">5</span> Rounding numbers</a>
+  <ul class="collapse">
+  <li><a href="#using-round" id="toc-using-round" class="nav-link" data-scroll-target="#using-round"><span class="header-section-number">5.1</span> Using round()</a></li>
+  </ul></li>
+  <li><a href="#adding-vectors-to-the-data-frame" id="toc-adding-vectors-to-the-data-frame" class="nav-link" data-scroll-target="#adding-vectors-to-the-data-frame"><span class="header-section-number">6</span> Adding vectors to the data frame</a>
+  <ul class="collapse">
+  <li><a href="#sec-add_column" id="toc-sec-add_column" class="nav-link" data-scroll-target="#sec-add_column"><span class="header-section-number">6.1</span> Adding a new column</a></li>
+  <li><a href="#overwriting-a-column" id="toc-overwriting-a-column" class="nav-link" data-scroll-target="#overwriting-a-column"><span class="header-section-number">6.2</span> Overwriting a column</a></li>
+  </ul></li>
+  <li><a href="#deleting-columns-from-a-data-frame" id="toc-deleting-columns-from-a-data-frame" class="nav-link" data-scroll-target="#deleting-columns-from-a-data-frame"><span class="header-section-number">7</span> Deleting columns from a data frame</a>
+  <ul class="collapse">
+  <li><a href="#alternate-ways-to-delete-columns" id="toc-alternate-ways-to-delete-columns" class="nav-link" data-scroll-target="#alternate-ways-to-delete-columns"><span class="header-section-number">7.1</span> Alternate ways to delete columns</a></li>
+  </ul></li>
+  <li><a href="#moving-columns" id="toc-moving-columns" class="nav-link" data-scroll-target="#moving-columns"><span class="header-section-number">8</span> Moving columns</a>
+  <ul class="collapse">
+  <li><a href="#using-sequences-to-create-the-column-order" id="toc-using-sequences-to-create-the-column-order" class="nav-link" data-scroll-target="#using-sequences-to-create-the-column-order"><span class="header-section-number">8.1</span> using sequences to create the column order</a></li>
+  <li><a href="#a-more-complex-moving-example" id="toc-a-more-complex-moving-example" class="nav-link" data-scroll-target="#a-more-complex-moving-example"><span class="header-section-number">8.2</span> A more complex moving example</a></li>
+  <li><a href="#multiple-column-sequences" id="toc-multiple-column-sequences" class="nav-link" data-scroll-target="#multiple-column-sequences"><span class="header-section-number">8.3</span> Multiple column sequences</a></li>
+  </ul></li>
+  <li><a href="#saving-the-data-frame-to-a-csv-file" id="toc-saving-the-data-frame-to-a-csv-file" class="nav-link" data-scroll-target="#saving-the-data-frame-to-a-csv-file"><span class="header-section-number">9</span> Saving the data frame to a CSV file</a></li>
+  <li><a href="#application" id="toc-application" class="nav-link" data-scroll-target="#application"><span class="header-section-number">10</span> Application</a>
+  <ul class="collapse">
+  <li><a href="#questions-to-answer" id="toc-questions-to-answer" class="nav-link" data-scroll-target="#questions-to-answer"><span class="header-section-number">10.1</span> Questions to answer</a></li>
+  </ul></li>
+  <li><a href="#extension-index-values-in-output" id="toc-extension-index-values-in-output" class="nav-link" data-scroll-target="#extension-index-values-in-output"><span class="header-section-number">11</span> Extension: Index values in output</a></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content column-page-right" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">2-02: DataFrame Modifications</h1>
+</div>
+
+
+
+<div class="quarto-title-meta column-page-right">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="to-do" class="level3" data-number="0.1">
+<h3 data-number="0.1" class="anchored" data-anchor-id="to-do"><span class="header-section-number">0.1</span> To-do</h3>
+</section>
+<section id="purpose" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="purpose"><span class="header-section-number">1</span> Purpose</h2>
+<ul>
+<li><p>Using string manipulations on columns within a data frame</p></li>
+<li><p>Add, remove, and reorder columns in a data frame</p></li>
+</ul>
+</section>
+<section id="material" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="material"><span class="header-section-number">2</span> Material</h2>
+<p>The <a href="../scripts/2-02_DataframeModifications.R">script for this lesson</a> is here (right-click, Save link as)</p>
+<p>The <a href="../scripts/Lansing2016Noaa.csv">Lansing2016Noaa.csv</a> is here (left-click)</p>
+</section>
+<section id="a-larger-data-frame" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="a-larger-data-frame"><span class="header-section-number">3</span> A larger data frame</h2>
+<p>For this lesson we are going to use weather data for Lansing, Michigan for all of 2016.&nbsp; The weather data comes from NCDC/NOAA.</p>
+<p>&nbsp;</p>
+<p>To open the data:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>weatherData <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="at">file=</span><span class="st">"data/Lansing2016NOAA.csv"</span>,</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">sep=</span><span class="st">","</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">header=</span><span class="cn">TRUE</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In the <strong><em>Environment</em></strong>, you can see that <strong><em>weatherData</em></strong> consists of 366 observations (366 days – it was a Leap Year) of 23 variables.&nbsp; In other words there are 23 different weather variables in the data (columns) for each of the 366 days (rows).</p>
+<div class="sourceCode" id="cb2" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>weatherData<span class="sc">:</span> &nbsp;&nbsp;&nbsp;&nbsp; <span class="dv">366</span> obs. of <span class="dv">23</span> variables</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If we double-click on <strong><em>weatherData</em></strong> in the <strong><em>Environment</em></strong>, we can look at the data frame in the file viewer section of RStudio:</p>
+<div id="fig-weatherData" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-weatherData-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-1-14_ViewDataFrame.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-weatherData-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Viewing the weatherData data frame in the main section
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="string-manipulations" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="string-manipulations"><span class="header-section-number">4</span> String manipulations</h2>
+<p>There is extra information in the values of the <strong><em>dateTime</em></strong> column (column 1) that is not needed.&nbsp; We really only need the two-digit month and day, which is the <span class="hl">6th through the 10th characters</span> of each <strong><em>dateTime</em></strong> value:</p>
+<ul>
+<li><p>2016-«<strong>01-02</strong>»T00:00:00</p></li>
+<li><p>2016-«<strong>01-14</strong>»T00:00:00</p></li>
+<li><p>2016-«<strong>01-26</strong>»T00:00:00</p></li>
+</ul>
+<section id="substrings" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="substrings"><span class="header-section-number">4.1</span> Substrings</h3>
+<p>We can use the function <strong><em>substr()</em></strong> to subset, or pull out, a portion of the string’s value.</p>
+<div id="fig-substr" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-substr-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-1-14_Substr.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-substr-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: The substr() function
+</figcaption>
+</figure>
+</div>
+<p><span class="note">note: <strong>substr()</strong> and <strong>substring()</strong> are very similar – and both would work in this example</span></p>
+<p>&nbsp;</p>
+<p><strong><em>substr()</em></strong> has three arguments that we need to assign value to:</p>
+<ul>
+<li><p><strong><em>x</em></strong>: the values that we want to subset (the <strong><em>dateTime</em></strong> column)</p></li>
+<li><p><strong><em>start</em></strong>: the position we want the substring to start at (the 6<sup>th</sup> character)</p></li>
+<li><p><strong><em>stop</em></strong>: the position that we want the substring to end at (the 10<sup>th</sup> character)</p></li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dateOnly <span class="ot">=</span> <span class="fu">substr</span>(<span class="at">x=</span>weatherData<span class="sc">$</span>dateTime, <span class="at">start=</span><span class="dv">6</span>, <span class="at">stop=</span><span class="dv">10</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This removes the year at the beginning and the time stamp at the end of all the values and saves the results to <strong><em>dateOnly</em></strong>.</p>
+<p>&nbsp;</p>
+<p>We can look at the first six values of <strong><em>dateOnly</em></strong> in the Console using <strong><em>head()</em></strong>&nbsp; and the last 6 values using <strong><em>tail()</em></strong>:</p>
+<div class="sourceCode" id="cb4" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">head</span>(dateOnly)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"01-01"</span> <span class="st">"01-02"</span> <span class="st">"01-03"</span> <span class="st">"01-04"</span> <span class="st">"01-05"</span> <span class="st">"01-06"</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">tail</span>(dateOnly)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"12-26"</span> <span class="st">"12-27"</span> <span class="st">"12-28"</span> <span class="st">"12-29"</span> <span class="st">"12-30"</span> <span class="st">"12-31"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Based on the 12 dates, we can see we have just the 2-digit month and date.</p>
+</section>
+<section id="pasting-values" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="pasting-values"><span class="header-section-number">4.2</span> Pasting values</h3>
+<p>Let’s say we actually want the year in the column, but we want it at the end.&nbsp;</p>
+<p>In other words, we want the format to be <strong>MM-DD-YYYY</strong>:</p>
+<ul>
+<li><p><strong>01-02-2016</strong></p></li>
+<li><p><strong>01-14-2016</strong></p></li>
+<li><p><strong>01-26-2016</strong></p></li>
+</ul>
+<p>&nbsp;</p>
+<p>You can use <strong><em>paste()</em></strong> to add (or, concatenate) string values together.</p>
+<div id="fig-paste" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-paste-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-1-14_Paste-01.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-paste-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: The paste() function – with … as the first “argument”
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="three-dots-and-arguments" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="three-dots-and-arguments"><span class="header-section-number">4.3</span> three dots ( … ) and arguments</h3>
+<p>In the <strong><em>Help</em></strong> tab that the first argument in <strong><em>paste()</em></strong> is three dots ( … ).&nbsp; The three dots means that <strong><em>paste()</em></strong> will take <span class="hl">any number of objects of any type</span>and try to paste them together.</p>
+<p>&nbsp;</p>
+<p>The three dots represents sort of a <span class="hl">pseudo-argument</span>, meaning that for this function, <span class="hl">any argument that does not have a name</span> will be assigned to the three dots (i.e., unnamed arguments are objects to be pasted).</p>
+<p>&nbsp;</p>
+<p>This means that<span class="hl">you have to use argument names for everything else</span> (e.g., <strong><em>sep</em></strong>, <strong><em>collapse</em></strong>).&nbsp; If you do not use the argument name, then <strong><em>paste()</em></strong> will assume the object is to be pasted.</p>
+</section>
+<section id="using-paste" class="level3" data-number="4.4">
+<h3 data-number="4.4" class="anchored" data-anchor-id="using-paste"><span class="header-section-number">4.4</span> Using paste()</h3>
+<p>In this case we want to paste two objects: the <strong><em>dateOnly</em></strong> vector and the string <strong>“-2016”</strong> with no separator:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>dateYear <span class="ot">=</span> <span class="fu">paste</span>(dateOnly, <span class="st">"-2016"</span>, <span class="at">sep=</span><span class="st">""</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Looking at the first ten values in <strong><em>dateYear</em></strong> in the <strong><em>Console</em></strong>:</p>
+<div class="sourceCode" id="cb6" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> dateYear[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"01-01-2016"</span> <span class="st">"01-02-2016"</span> <span class="st">"01-03-2016"</span> <span class="st">"01-04-2016"</span> <span class="st">"01-05-2016"</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">6</span>] <span class="st">"01-06-2016"</span> <span class="st">"01-07-2016"</span> <span class="st">"01-08-2016"</span> <span class="st">"01-09-2016"</span> <span class="st">"01-10-2016"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="the-sep-argument" class="level4" data-number="4.4.1">
+<h4 data-number="4.4.1" class="anchored" data-anchor-id="the-sep-argument"><span class="header-section-number">4.4.1</span> The <strong><em>sep</em></strong> argument</h4>
+<p>If you do not put the <strong><em>sep</em></strong> argument in, then <strong><em>sep</em></strong> defaults to one space, meaning an extra space between each object in the <strong><em>paste()</em></strong> – in this case, the date and year:&nbsp;</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>dateYearMistake <span class="ot">=</span> <span class="fu">paste</span>(dateOnly, <span class="st">"-2016"</span>); <span class="co"># sep default to " "</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The results have a space after the date:</p>
+<div class="sourceCode" id="cb8" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> dateYearMistake</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="dv">01-02</span> <span class="sc">-</span><span class="dv">2016</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="dv">01-14</span> <span class="sc">-</span><span class="dv">2016</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="dv">01-26</span> <span class="sc">-</span><span class="dv">2016</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In general, it is best to set <strong><em>sep=““</em></strong> (i.e., to nothing) – this gives you more control of the output.&nbsp;</p>
+</section>
+</section>
+</section>
+<section id="rounding-numbers" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="rounding-numbers"><span class="header-section-number">5</span> Rounding numbers</h2>
+<p>We have a column, <strong><em>windSpeed</em></strong>, where there are more decimal places than necessary.</p>
+<p>Looking at the first ten values in the vector we can see three decimal places are used:</p>
+<div class="sourceCode" id="cb9" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> weatherData<span class="sc">$</span>windSpeed[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">15.539</span> <span class="fl">14.614</span> <span class="fl">9.986</span> <span class="fl">7.742</span> <span class="fl">7.586</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">6</span>] <span class="fl">7.601</span> <span class="fl">4.823</span> <span class="fl">6.720</span> <span class="fl">7.294</span> <span class="fl">17.758</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>One decimal place is probably enough in this case and we can round the values using the <strong><em>round()</em></strong> function:</p>
+<div id="fig-round" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-round-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-1-14_Round.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-round-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: The round() function
+</figcaption>
+</figure>
+</div>
+<p><strong><em>round()</em></strong> has two arguments:</p>
+<ul>
+<li><p><strong><em>x</em></strong>: the values to round</p></li>
+<li><p><strong><em>digits</em></strong>: decimal places to round to</p></li>
+</ul>
+<section id="using-round" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="using-round"><span class="header-section-number">5.1</span> Using round()</h3>
+<p>Let’s round <strong><em>windSpeed</em></strong> to one decimal place and save it to the vector <strong><em>windSpeedRounded</em></strong>:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>windSpeedRounded <span class="ot">=</span> <span class="fu">round</span>(weatherData<span class="sc">$</span>windSpeed, <span class="at">digits=</span><span class="dv">1</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>And look at 10 values in <strong><em>windSpeedRounded</em></strong> to make sure it worked (this time I’ll look at values 40-49):</p>
+<div id="fig-rounding" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-rounding-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="cb11" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> windSpeedRounded[<span class="dv">40</span><span class="sc">:</span><span class="dv">49</span>]</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">12.9</span> <span class="fl">13.8</span> <span class="fl">8.9</span> <span class="fl">14.5</span> <span class="fl">9.5</span> <span class="fl">8.1</span> <span class="fl">6.9</span> <span class="fl">3.8</span> <span class="fl">5.9</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">10</span>] <span class="fl">10.7</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rounding-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: Values rounded to 1 decimal
+</figcaption>
+</figure>
+</div>
+<p>In the <strong><em>Console</em></strong>, we are looking at values 40-49 in <strong><em>windSpeedRounded</em></strong> but the output only has ten values – the&nbsp; [1] and the [10] reflect the index value of the output (the 10 values in windSpeedRounded[40:49].&nbsp; <a href="#extension-index-values-in-output">Extension: Index values in output</a></p>
+</section>
+</section>
+<section id="adding-vectors-to-the-data-frame" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="adding-vectors-to-the-data-frame"><span class="header-section-number">6</span> Adding vectors to the data frame</h2>
+<p>We have created two new vectors: <strong><em>dateYear</em></strong> and <strong><em>windSpeedRounded</em></strong>, and we want add them both to the <strong><em>weatherData</em></strong> data frame.&nbsp; There are two ways to add a vector to a data frame:</p>
+<ul>
+<li><p>add a new column</p></li>
+<li><p>overwrite an existing column.</p></li>
+</ul>
+<p>&nbsp;</p>
+<p>First, we will make a copy of <strong><em>weatherData</em></strong> called <strong><em>weatherData2</em></strong>.&nbsp; We will be creating multiple copies of <strong><em>weatherData</em></strong> so that we can see the progress of the data frames in the <strong><em>Environment</em></strong> tab.&nbsp; You could just manipulate the original <strong><em>weatherData</em></strong> data frame.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># copy the original data frame</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>weatherData2 <span class="ot">=</span> weatherData;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="sec-add_column" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="sec-add_column"><span class="header-section-number">6.1</span> Adding a new column</h3>
+<p>Let’s add the <strong><em>dateYear</em></strong> vector to the data frame to a column called <strong><em>dateYear</em></strong>:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>  weatherData2<span class="sc">$</span>dateYear <span class="ot">=</span> dateYear;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Since there was no <strong><em>dateYear</em></strong> column in <strong><em>weatherData2</em></strong>, the above code added a column called <strong><em>dateYear</em></strong> to the end of the data frame and populated it with the values in the vector <strong><em>dateYear</em></strong>.&nbsp; <span class="note">Note that <strong>weatherData2</strong> now has one more column (<strong>24</strong>) than <strong>weatherData</strong> (<strong>23</strong>).</span>&nbsp; Double-click on <strong><em>weatherData2</em></strong> in the <strong><em>Environment</em></strong> tab and scroll to the end to see the new <strong><em>dateYear</em></strong> column:</p>
+<div id="fig-addColumn" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-addColumn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-2-01-AddColumn.jpg" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-addColumn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: A column was added to the end of the weatherData2 data frame
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="overwriting-a-column" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="overwriting-a-column"><span class="header-section-number">6.2</span> Overwriting a column</h3>
+<p>When you use a column name that does not currently exist (e.g., <strong><em>dateYear</em></strong>), R will create a new column with that name.&nbsp; If you use a column name that already exists (e.g., <strong><em>windSpeed</em></strong>), then R will overwrite the column with the values in the vector.</p>
+<p>&nbsp;</p>
+<p>We are going to put the <strong><em>windSpeedRounded</em></strong> vector in the <strong><em>weatherData2</em></strong> data frame, but this time we are going to overwrite the <strong><em>windSpeed</em></strong> column:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>weatherData2<span class="sc">$</span>windSpeed <span class="ot">=</span> windSpeedRounded;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now the values in the <strong><em>windSpeed</em></strong> column reflect the rounded values from <strong><em>windSpeedRounded</em></strong> and there are still 24 columns:</p>
+<div id="fig-overwriteColumn" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-overwriteColumn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-2-01-OverwriteColumn.jpg" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-overwriteColumn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7: the windSpeed column was overwritten with the values from the windSpeedRounded vector
+</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="deleting-columns-from-a-data-frame" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="deleting-columns-from-a-data-frame"><span class="header-section-number">7</span> Deleting columns from a data frame</h2>
+<p>The easiest way to delete a column from a data frame is just to set the column to <strong>NULL</strong>.&nbsp;</p>
+<p>We will again create another copy of <strong><em>weatherData</em></strong>:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>weatherData3 <span class="ot">=</span> weatherData2;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now we will remove the <strong><em>dateTime</em></strong> column&nbsp; from <strong><em>weatherData3</em></strong> by setting it to <strong>NULL</strong>:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>weatherData3<span class="sc">$</span>dateTime <span class="ot">=</span> <span class="cn">NULL</span>; </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The <strong><em>dateTime</em></strong> column, which was the first column in the data frame, has now been removed and the number of columns has dropped by 1:</p>
+<div id="fig-removeCol" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-removeCol-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-2-01-RemoveColumn.jpg" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-removeCol-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8: The dateTime column was removed from weatherData3
+</figcaption>
+</figure>
+</div>
+<section id="alternate-ways-to-delete-columns" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="alternate-ways-to-delete-columns"><span class="header-section-number">7.1</span> Alternate ways to delete columns</h3>
+<p>You can also use the <strong><em>within()</em></strong> function to remove columns.&nbsp;</p>
+<p>Using <strong><em>within()</em></strong> to remove the <strong><em>dateTime</em></strong> column:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Within weatherData, remove the column dateTime</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co"># weatherData3 = within(weatherData, rm(dateTime));  </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The advantage to this method, is that <span id="hl">you can delete multiple columns</span> at a time:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># weatherData3 = within(weatherData, rm(maxTemp, minTemp, avgTemp));</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="moving-columns" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="moving-columns"><span class="header-section-number">8</span> Moving columns</h2>
+<p>We will make another copy of <strong><em>weatherData</em></strong> here:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>weatherData4 <span class="ot">=</span> weatherData3;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>There is no great way to move data frame columns around in R because you cannot just say “move column X to position Y”.&nbsp; Instead, <span class="hl">you need to recreate the whole column order of the data frame</span> to reflect the new position of every column – taking care to include every column.</p>
+<p>&nbsp;</p>
+<p>So, let’s say we want to move the <strong><em>dateYear</em></strong> column we created earlier (<a href="#sec-add_column" class="quarto-xref">Section&nbsp;6.1</a>) from the end of the data frame to the beginning.&nbsp; We essentially need to recreate the 23 columns starting with <strong><em>dateYear</em></strong> first and then have the other 22 columns follow <strong><em>dateYear</em></strong>.</p>
+<section id="using-sequences-to-create-the-column-order" class="level3" data-number="8.1">
+<h3 data-number="8.1" class="anchored" data-anchor-id="using-sequences-to-create-the-column-order"><span class="header-section-number">8.1</span> using sequences to create the column order</h3>
+<p>Luckily, we do not have to write out all 23 column names because we are allowed to use sequences to refer to multiple columns:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Move the last column (dateYear) to the beginning:</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  weatherData4 <span class="ot">=</span> <span class="fu">subset</span>(weatherData2, <span class="at">select=</span><span class="fu">c</span>(dateYear, «maxTemp<span class="sc">:</span>windSusDir»));</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>( : ) is the sequence operator and it says to take all the columns in between (and inclusive of) <strong><em>maxTemp</em></strong> and <strong><em>windSusDir</em></strong>.&nbsp; Since <strong><em>maxTemp</em></strong> was the first column and <strong><em>windSusDir</em></strong> was the second to last column (the last being <strong><em>dateYear</em></strong>), this basically says all other columns except <strong><em>dateYear</em></strong>.</p>
+<p>&nbsp;</p>
+<p>So, <strong><em>select=c(dateYear, maxTemp:windSusDir))</em></strong> says to order the columns with <strong><em>dateYear</em></strong> first and every other column after that.</p>
+<div id="fig-moveColumn" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-moveColumn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/sy81vh6o.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-moveColumn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9: the dateYear column moves from the end to the beginning
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="a-more-complex-moving-example" class="level3" data-number="8.2">
+<h3 data-number="8.2" class="anchored" data-anchor-id="a-more-complex-moving-example"><span class="header-section-number">8.2</span> A more complex moving example</h3>
+<p>We will create one last data frame:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>  weatherData5 <span class="ot">=</span> weatherData4;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>It is trickier to move columns in the middle because you need to keep track of all the other columns.</p>
+<p>&nbsp;</p>
+<p>Let’s says we want to move <strong><em>heatDays</em></strong> and <strong><em>coolDays</em></strong> right after <strong><em>tempDept.</em></strong> These are all columns in the middle of the data frame so you need to break the columns up more to order them the way you want.</p>
+<p>&nbsp;</p>
+<p>Moving <strong><em>heatDays</em></strong> and <strong><em>coolDays</em></strong> after <strong><em>tempDept</em></strong> creates 4 separate column sequences (<a href="#fig-moveMiddleColumns" class="quarto-xref">Figure&nbsp;10</a>):</p>
+<ol type="1">
+<li><p><strong>dateYear:tempDept</strong></p></li>
+<li><p><strong>heatDays:coolDays</strong></p></li>
+<li><p><strong>relHum:wetBulbTemp</strong></p></li>
+<li><p><strong>sunrise:windSusDir</strong></p></li>
+</ol>
+<div id="fig-moveMiddleColumns" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-moveMiddleColumns-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-2-01-MoveMiddleColumns.jpg" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-moveMiddleColumns-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10: The four column sequences when moving columns in the middle of the data frame
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="multiple-column-sequences" class="level3" data-number="8.3">
+<h3 data-number="8.3" class="anchored" data-anchor-id="multiple-column-sequences"><span class="header-section-number">8.3</span> Multiple column sequences</h3>
+<p>The column sequences above get used in the <strong><em>select</em></strong> argument:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>  weatherData5 <span class="ot">=</span> <span class="fu">subset</span>(weatherData5, <span class="at">select=</span><span class="fu">c</span>(dateYear<span class="sc">:</span>tempDept, </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>                                               heatDays<span class="sc">:</span>coolDays,</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>                                               relHum<span class="sc">:</span>wetBulbTemp,</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>                                               sunrise<span class="sc">:</span>windSusDir));</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>And now we have the reordered columns:</p>
+<div id="fig-afterMove" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-afterMove-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-2-01-MoveMiddleColumns2.jpg" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-afterMove-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11: After the middle columns were moved
+</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="saving-the-data-frame-to-a-csv-file" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="saving-the-data-frame-to-a-csv-file"><span class="header-section-number">9</span> Saving the data frame to a CSV file</h2>
+<p>We are going to use the <strong><em>weatherData4</em></strong> data frame in the next lesson, so let’s save it to a CSV file.</p>
+<p>Quite often, people just call <strong><em>write.csv()</em></strong>, pass in the data frame and the file name to save it to:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write.csv</span>(weatherData5, <span class="at">file=</span><span class="st">"data/Lansing2016Noaa-2-bad.csv"</span>);  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The above code will add an extra column populated by the row numbers.&nbsp; This is because, by default, <strong><em>write.csv()</em></strong> assumes the row numbers are row names.</p>
+<p>&nbsp;</p>
+<p>To stop <strong><em>write.csv()</em></strong> from assuming the row numbers are row names, we need to set the argument <strong><em>row.names</em></strong> to <strong>FALSE</strong>:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write.csv</span>(weatherData5, <span class="at">file=</span><span class="st">"data/Lansing2016Noaa-2.csv"</span>,</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">row.names =</span> <span class="cn">FALSE</span>);  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In the next lesson, we will open both of these CSV files and look at the difference.</p>
+</section>
+<section id="application" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="application"><span class="header-section-number">10</span> Application</h2>
+<p>A) Save the data from <strong><em>Lansing2016NOAA.csv</em></strong> to a data frame named <strong><em>weatherData_app</em></strong>.</p>
+<p>&nbsp;</p>
+<p>B) Reorder <strong><em>weatherData_app</em></strong> to put all five of the wind columns immediately after the temperature columns.</p>
+<p>&nbsp;</p>
+<p>C) Remove the <strong><em>heatDays</em></strong> and <strong><em>coolDays</em></strong> columns from <strong><em>weatherData_app</em></strong></p>
+<p>&nbsp;</p>
+<p>D) Using substrings, create a <strong><em>dateTimeNew</em></strong> vector that has the dates in this format: <span class="hl">2-digit date, 2-digit month, 2-digit year</span>.</p>
+<ul>
+<li><p>So, <strong><em>April, 20th 2016</em></strong> would be <strong><em>20-04-16</em></strong></p></li>
+<li><p>Save <strong><em>dateTimeNew</em></strong> to a column in <strong><em>weatherData_app</em></strong></p></li>
+<li><p>Move <strong><em>dateTimeNew</em></strong> to the second column in <strong><em>weatherData_app</em></strong> (do not remove the original <strong><em>dateTime</em></strong> column)</p></li>
+</ul>
+<p>&nbsp;</p>
+<p>E) Change <strong><em>tempDept</em></strong> in <strong><em>weatherData_app</em></strong> to 2 significant digits – do not use <strong><em>round()</em></strong></p>
+<ul>
+<li><p>The function for significant digits can be found in the <strong><em>Help</em></strong> for <strong><em>round()</em></strong></p></li>
+<li><p>You are overwriting the <strong><em>tempDept</em></strong> colu</p></li>
+</ul>
+<p>&nbsp;</p>
+<p>Save the script as&nbsp;<strong><em>app2-02.r</em></strong> in your&nbsp;<strong><em>scripts</em></strong> folder and&nbsp; email your Project Folder to Charlie Belinsky at belinsky@msu.edu.</p>
+<p>&nbsp;</p>
+<p><a href="1-01-RStudioProjectsSetup.html#sec-zip-folder" target="_blank">Instructions for zipping the Project Folder are here.</a></p>
+<p>&nbsp;</p>
+<p>If you have any questions regarding this application, feel free to email them to Charlie Belinsky at belinsky@msu.edu.</p>
+<section id="questions-to-answer" class="level3" data-number="10.1">
+<h3 data-number="10.1" class="anchored" data-anchor-id="questions-to-answer"><span class="header-section-number">10.1</span> Questions to answer</h3>
+<p>Answer the following in comments inside your application script:</p>
+<ol type="1">
+<li><p>What was your level of comfort with the lesson/application?</p></li>
+<li><p>What areas of the lesson/application confused or still confuses you?</p></li>
+<li><p>What are some things you would like to know more about that is related to, but not covered in, this lesson?</p></li>
+</ol>
+</section>
+</section>
+<section id="extension-index-values-in-output" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="extension-index-values-in-output"><span class="header-section-number">11</span> Extension: Index values in output</h2>
+<p>Let’s take a closer look at how the index values work in the Console output.</p>
+<p>We are going to take a subset of the vector <strong><em>dateYear</em></strong> that goes backwards and only gives at every sixth value.</p>
+<p>&nbsp;</p>
+<p>So, the subset will go: Dec 31, Dec 25, Dec 19, Dec 13…</p>
+<p>First, let’s create the sequence:</p>
+<ul>
+<li><p>start at the last value (from = 366)</p></li>
+<li><p>ends at the first value (to = 1)</p></li>
+<li><p>moves bacwards 6 values each time (by = -6)</p></li>
+</ul>
+<div class="sourceCode" id="cb25" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">366</span>, <span class="at">to=</span><span class="dv">1</span>, <span class="at">by=</span><span class="sc">-</span><span class="dv">6</span>)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] <span class="dv">366</span> <span class="dv">360</span> <span class="dv">354</span> <span class="dv">348</span> <span class="dv">342</span> <span class="dv">336</span> <span class="dv">330</span> <span class="dv">324</span> <span class="dv">318</span> <span class="dv">312</span> <span class="dv">306</span> <span class="dv">300</span> <span class="dv">294</span> <span class="dv">288</span> <span class="dv">282</span> <span class="dv">276</span> <span class="dv">270</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">18</span>] <span class="dv">264</span> <span class="dv">258</span> <span class="dv">252</span> <span class="dv">246</span> <span class="dv">240</span> <span class="dv">234</span> <span class="dv">228</span> <span class="dv">222</span> <span class="dv">216</span> <span class="dv">210</span> <span class="dv">204</span> <span class="dv">198</span> <span class="dv">192</span> <span class="dv">186</span> <span class="dv">180</span> <span class="dv">174</span> <span class="dv">168</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">35</span>] <span class="dv">162</span> <span class="dv">156</span> <span class="dv">150</span> <span class="dv">144</span> <span class="dv">138</span> <span class="dv">132</span> <span class="dv">126</span> <span class="dv">120</span> <span class="dv">114</span> <span class="dv">108</span> <span class="dv">102</span>  <span class="dv">96</span>  <span class="dv">90</span>  <span class="dv">84</span>  <span class="dv">78</span>  <span class="dv">72</span>  <span class="dv">66</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">52</span>]  <span class="dv">60</span>  <span class="dv">54</span>  <span class="dv">48</span>  <span class="dv">42</span>  <span class="dv">36</span>  <span class="dv">30</span>  <span class="dv">24</span>  <span class="dv">18</span>  <span class="dv">12</span>   <span class="dv">6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The output has 61 values (366 / 6 = 61).&nbsp; The first value is 366, the 18<sup>th</sup> value is 264, the 52<sup>nd</sup> value is 60, and the 61<sup>st</sup> value is 6.</p>
+<p>&nbsp;</p>
+<p>When we use the sequence to subset dateYear, we also get 61 values, representing the 61 dates on the 61 rows indexed:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> dateYear[<span class="fu">seq</span>(<span class="at">from=</span><span class="dv">366</span>, <span class="at">to=</span><span class="dv">1</span>, <span class="at">by=</span><span class="sc">-</span><span class="dv">6</span>)]</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] <span class="st">"12-31-2016"</span> <span class="st">"12-25-2016"</span> <span class="st">"12-19-2016"</span> <span class="st">"12-13-2016"</span> <span class="st">"12-07-2016"</span> <span class="st">"12-01-2016"</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a> [<span class="dv">7</span>] <span class="st">"11-25-2016"</span> <span class="st">"11-19-2016"</span> <span class="st">"11-13-2016"</span> <span class="st">"11-07-2016"</span> <span class="st">"11-01-2016"</span> <span class="st">"10-26-2016"</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">13</span>] <span class="st">"10-20-2016"</span> <span class="st">"10-14-2016"</span> <span class="st">"10-08-2016"</span> <span class="st">"10-02-2016"</span> <span class="st">"09-26-2016"</span> <span class="st">"09-20-2016"</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">19</span>] <span class="st">"09-14-2016"</span> <span class="st">"09-08-2016"</span> <span class="st">"09-02-2016"</span> <span class="st">"08-27-2016"</span> <span class="st">"08-21-2016"</span> <span class="st">"08-15-2016"</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>[<span class="dv">25</span>] <span class="st">"08-09-2016"</span> <span class="st">"08-03-2016"</span> <span class="st">"07-28-2016"</span> <span class="st">"07-22-2016"</span> <span class="st">"07-16-2016"</span> <span class="st">"07-10-2016"</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>[<span class="dv">31</span>] <span class="st">"07-04-2016"</span> <span class="st">"06-28-2016"</span> <span class="st">"06-22-2016"</span> <span class="st">"06-16-2016"</span> <span class="st">"06-10-2016"</span> <span class="st">"06-04-2016"</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>[<span class="dv">37</span>] <span class="st">"05-29-2016"</span> <span class="st">"05-23-2016"</span> <span class="st">"05-17-2016"</span> <span class="st">"05-11-2016"</span> <span class="st">"05-05-2016"</span> <span class="st">"04-29-2016"</span></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>[<span class="dv">43</span>] <span class="st">"04-23-2016"</span> <span class="st">"04-17-2016"</span> <span class="st">"04-11-2016"</span> <span class="st">"04-05-2016"</span> <span class="st">"03-30-2016"</span> <span class="st">"03-24-2016"</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>[<span class="dv">49</span>] <span class="st">"03-18-2016"</span> <span class="st">"03-12-2016"</span> <span class="st">"03-06-2016"</span> <span class="st">"02-29-2016"</span> <span class="st">"02-23-2016"</span> <span class="st">"02-17-2016"</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>[<span class="dv">55</span>] <span class="st">"02-11-2016"</span> <span class="st">"02-05-2016"</span> <span class="st">"01-30-2016"</span> <span class="st">"01-24-2016"</span> <span class="st">"01-18-2016"</span> <span class="st">"01-12-2016"</span></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>[<span class="dv">61</span>] <span class="st">"01-06-2016"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Again, the index values in square brackets is just given you the index value of the first value on the row.&nbsp; So, 12-31 is the first value, 12-01 is the 5<sup>th</sup> value, 11-25 is the 7<sup>th</sup> value, and 01-06 is the 61<sup>st</sup> value.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

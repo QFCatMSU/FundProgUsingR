@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.22">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>2-03: Data Types and Data Frames</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b4406b7675125bc2ba204020e191172.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-5f39cfd1aee7e7785011fc5df168ee92.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link rel="shortcut icon" href="https://qfcatmsu.github.io/assets/quarto/qfc_icon.png">
+<script>mod=true; menuCollapse=true;</script>
+<script src="https://qfcatmsu.github.io/assets/quarto/qfc_styles.js"></script>
+ 
+
+
+<link rel="stylesheet" href="https://qfcatmsu.github.io/assets/quarto/qfc_styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+          <h1 class="quarto-secondary-nav-title">2-03: Data Types and Data Frames</h1>
+        </a>     
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text"><b>Fundamentals of Programming class</b></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/0-01-IntroductionAndSyllabus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction and Syllabus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-01-RStudioProjectsSetup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-01: RStudio Projects Setup</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-02-Variables.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-02: Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-03_Mathematical_Operations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-03: Mathematical Operations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-04_Vectors_And_Data_Frames.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-04: Vectors and Data Frames</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-05_Functions_Introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-05: Functions Introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-06_Run_and_Source.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-06: Run and Source</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-07_Outputs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-07: Outputs</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-08_Conditional_Operations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-08: Conditional Operations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-09_If_Else_Statements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-09: If-Else Statements</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-10_For_Loops.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-10: For Loops</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-11_For_Loops_and_State_Varibles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-11: For Loops and State Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-12_MultipleConditions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-12: Multiple Conditions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-13_Functions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-13: Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-14_Functions2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-14: Functions 2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-15_Nested_Loops_and _Matrices.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-15: Nested loops and Matrices</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-15_Nested_Loops_and _Matrices-HOME-GALAXYBOOK.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-15: Nested loops and Matrices</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-01_R-Base_Plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-01: R-Base Plots</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-02_DataFrame_Modifications.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-02: DataFrame Modifications</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-03_DataTypesAndDateFrames.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">2-03: Data Types and Data Frames</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-04_WhichStatements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-04: Which Statements</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-05_WhichAndRegularExpressions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-05: Which and Regular Expressions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-06_Datetime_Obejects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-06: Datetime objects</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-07_Matrices.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-07: Matrices</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-08_Binding_Sampling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-08: Binding and Sampling</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-09_Stacking_Mapping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-09: Stacking and Mapping</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-10_Statistical_Tests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-10: Statistical Tests</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-11_Objects_Attributes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-11: Objects and Attributes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-12_Lists.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-12: Lists</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-13_Breakpoints.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-13: Breakpoints</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title"><b>Lesson Content</b></h2>
+   
+  <ul>
+  <li><a href="#to-do" id="toc-to-do" class="nav-link active" data-scroll-target="#to-do"><span class="header-section-number">0.1</span> To-do</a></li>
+  <li><a href="#purpose" id="toc-purpose" class="nav-link" data-scroll-target="#purpose"><span class="header-section-number">1</span> Purpose</a></li>
+  <li><a href="#material" id="toc-material" class="nav-link" data-scroll-target="#material"><span class="header-section-number">2</span> Material</a></li>
+  <li><a href="#extra-columns-in-data-frames" id="toc-extra-columns-in-data-frames" class="nav-link" data-scroll-target="#extra-columns-in-data-frames"><span class="header-section-number">3</span> Extra columns in data frames</a></li>
+  <li><a href="#adding-columns-with-the-wrong-number-of-values" id="toc-adding-columns-with-the-wrong-number-of-values" class="nav-link" data-scroll-target="#adding-columns-with-the-wrong-number-of-values"><span class="header-section-number">4</span> Adding columns with the wrong number of values</a>
+  <ul class="collapse">
+  <li><a href="#adding-column-with-a-divisible-number-of-values" id="toc-adding-column-with-a-divisible-number-of-values" class="nav-link" data-scroll-target="#adding-column-with-a-divisible-number-of-values"><span class="header-section-number">4.1</span> Adding column with a divisible number of values</a></li>
+  </ul></li>
+  <li><a href="#manually-repeating-values" id="toc-manually-repeating-values" class="nav-link" data-scroll-target="#manually-repeating-values"><span class="header-section-number">5</span> Manually repeating values</a></li>
+  <li><a href="#numeric-and-character-columns" id="toc-numeric-and-character-columns" class="nav-link" data-scroll-target="#numeric-and-character-columns"><span class="header-section-number">6</span> Numeric and character columns</a>
+  <ul class="collapse">
+  <li><a href="#when-numbers-are-treated-as-characters" id="toc-when-numbers-are-treated-as-characters" class="nav-link" data-scroll-target="#when-numbers-are-treated-as-characters"><span class="header-section-number">6.1</span> When numbers are treated as characters</a></li>
+  <li><a href="#forcing-characters-to-become-numbers" id="toc-forcing-characters-to-become-numbers" class="nav-link" data-scroll-target="#forcing-characters-to-become-numbers"><span class="header-section-number">6.2</span> Forcing characters to become numbers</a></li>
+  <li><a href="#double-values-are-numeric" id="toc-double-values-are-numeric" class="nav-link" data-scroll-target="#double-values-are-numeric"><span class="header-section-number">6.3</span> Double values are numeric…</a></li>
+  </ul></li>
+  <li><a href="#operations-on-na-values" id="toc-operations-on-na-values" class="nav-link" data-scroll-target="#operations-on-na-values"><span class="header-section-number">7</span> Operations on NA values</a>
+  <ul class="collapse">
+  <li><a href="#finding-the-number-of-na-values" id="toc-finding-the-number-of-na-values" class="nav-link" data-scroll-target="#finding-the-number-of-na-values"><span class="header-section-number">7.1</span> Finding the number of NA values</a></li>
+  <li><a href="#removing-na-values" id="toc-removing-na-values" class="nav-link" data-scroll-target="#removing-na-values"><span class="header-section-number">7.2</span> Removing NA values</a></li>
+  <li><a href="#replacing-the-na-values" id="toc-replacing-the-na-values" class="nav-link" data-scroll-target="#replacing-the-na-values"><span class="header-section-number">7.3</span> Replacing the NA values</a></li>
+  <li><a href="#reserved-words-in-r" id="toc-reserved-words-in-r" class="nav-link" data-scroll-target="#reserved-words-in-r"><span class="header-section-number">7.4</span> Reserved Words in R</a></li>
+  <li><a href="#mathematical-operations-on-the-new-vector" id="toc-mathematical-operations-on-the-new-vector" class="nav-link" data-scroll-target="#mathematical-operations-on-the-new-vector"><span class="header-section-number">7.5</span> Mathematical operations on the new vector</a></li>
+  <li><a href="#adding-the-numeric-precip-column" id="toc-adding-the-numeric-precip-column" class="nav-link" data-scroll-target="#adding-the-numeric-precip-column"><span class="header-section-number">7.6</span> Adding the numeric precip column</a></li>
+  </ul></li>
+  <li><a href="#plotting-rainfall-values" id="toc-plotting-rainfall-values" class="nav-link" data-scroll-target="#plotting-rainfall-values"><span class="header-section-number">8</span> Plotting rainfall values</a>
+  <ul class="collapse">
+  <li><a href="#a-scatterplot" id="toc-a-scatterplot" class="nav-link" data-scroll-target="#a-scatterplot"><span class="header-section-number">8.1</span> A scatterplot</a></li>
+  <li><a href="#scatterplot-with-chr-values" id="toc-scatterplot-with-chr-values" class="nav-link" data-scroll-target="#scatterplot-with-chr-values"><span class="header-section-number">8.2</span> Scatterplot with chr values</a></li>
+  </ul></li>
+  <li><a href="#application" id="toc-application" class="nav-link" data-scroll-target="#application"><span class="header-section-number">9</span> Application</a>
+  <ul class="collapse">
+  <li><a href="#questions-to-answer" id="toc-questions-to-answer" class="nav-link" data-scroll-target="#questions-to-answer"><span class="header-section-number">9.1</span> Questions to answer</a></li>
+  </ul></li>
+  <li><a href="#a-scatterplot-with-a-third-mapping" id="toc-a-scatterplot-with-a-third-mapping" class="nav-link" data-scroll-target="#a-scatterplot-with-a-third-mapping"><span class="header-section-number">10</span> A scatterplot with a third mapping</a>
+  <ul class="collapse">
+  <li><a href="#customizing-the-colors" id="toc-customizing-the-colors" class="nav-link" data-scroll-target="#customizing-the-colors"><span class="header-section-number">10.1</span> Customizing the colors</a></li>
+  <li><a href="#barplot" id="toc-barplot" class="nav-link" data-scroll-target="#barplot"><span class="header-section-number">10.2</span> Barplot</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content column-page-right" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">2-03: Data Types and Data Frames</h1>
+</div>
+
+
+
+<div class="quarto-title-meta column-page-right">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="to-do" class="level3" data-number="0.1">
+<h3 data-number="0.1" class="anchored" data-anchor-id="to-do"><span class="header-section-number">0.1</span> To-do</h3>
+<ul>
+<li>Add that, effectively, na.rm = TRUE changes an NA to a NULL</li>
+</ul>
+</section>
+<section id="purpose" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="purpose"><span class="header-section-number">1</span> Purpose</h2>
+<ul>
+<li><p>Manipulations of a data frames</p></li>
+<li><p>Converting a column’s datatype</p></li>
+</ul>
+</section>
+<section id="material" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="material"><span class="header-section-number">2</span> Material</h2>
+<p>Like last lesson we will fixing some typical issues of columns in a data frame and we will also be manipulating the data frame to reflect the changes</p>
+<p>&nbsp;</p>
+<p>The <a href="../scripts/2-03_DataTypesAndDataFrames.R">script for this lesson</a> is here (right-click, Save link as)</p>
+<p>We will be looking at two data frames in this lesson:</p>
+<ul>
+<li><p>The <a href="../Data/Lansing2016Noaa-2-bad.csv">Lansing2016Noaa-2-bad.csv</a> is here (left-click)</p></li>
+<li><p>The <a href="../Data/Lansing2016Noaa-2.csv">Lansing2016Noaa-2.csv</a> is here (left-click)</p></li>
+</ul>
+</section>
+<section id="extra-columns-in-data-frames" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="extra-columns-in-data-frames"><span class="header-section-number">3</span> Extra columns in data frames</h2>
+<p>We are going to start this lesson by looking at a couple issues that occur when writing a data frame to a CSV file.</p>
+<p>&nbsp;</p>
+<p>In the last lesson we wrote to two CSV files, the first one using all default values for <strong><em>write.csv()</em></strong>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(weatherData5, <span class="at">file=</span><span class="st">"data/Lansing2016Noaa-2-bad.csv"</span>);  <span class="co"># from last lesson</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Let’s open up this file and see what happened:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>badData <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="at">file=</span><span class="st">"data/Lansing2016NOAA-2-bad.csv"</span>,</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">sep=</span><span class="st">","</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">header=</span><span class="cn">TRUE</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>After you double-click on <strong><em>badData</em></strong> in the <strong><em>Environment</em></strong> tab, you can see there is an extra column in the data frame at the beginning which has the row numbers in it.&nbsp; This is because, by default, <strong><em>write.csv()</em></strong> <span class="hl">will treat the row numbers as a column of data</span>.</p>
+<div id="fig-extraColumn" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-extraColumn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-2-03-ExtraColumn.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-extraColumn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: An extra column containing row numbers was added to the data frame
+</figcaption>
+</figure>
+</div>
+<p>This is not a big deal but each time you write to a CSV file without setting <strong><em>row.names = FALSE</em></strong>, you are going to write another column of row numbers to the file.&nbsp; If you keep writing to a CSV file without setting <strong><em>row.names</em></strong> to <strong>FALSE</strong>, you will get something like this:</p>
+<div id="fig-multExtraColumns" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-multExtraColumns-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/2-03_MultipleBadColumns.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-multExtraColumns-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Multiple column containing row numbers…
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="adding-columns-with-the-wrong-number-of-values" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="adding-columns-with-the-wrong-number-of-values"><span class="header-section-number">4</span> Adding columns with the wrong number of values</h2>
+<p>While we are messing around with a throwaway data frame, let’s see what happens if you try to add/overwrite a column to the data frame that has the wrong number of values.&nbsp; In this case, the data frame has 366 rows, meaning there are 366 values in each column.</p>
+<p>&nbsp;</p>
+<p>Let’s attempt to overwrite the column <strong><em>test1</em></strong> with <strong>400</strong> values and write to a new column called <strong><em>test2</em></strong> with <strong>10</strong> values:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>badData<span class="sc">$</span>test1 <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">400</span>);  <span class="co"># 400 values: 1-400</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>badData<span class="sc">$</span>test2 <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>);   <span class="co"># 10 values: 1-10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The <strong><em>test1</em></strong> line will output this error:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> <span class="st">`</span><span class="at">$&lt;-.data.frame</span><span class="st">`</span>(<span class="st">`</span><span class="at">*tmp*</span><span class="st">`</span>, test1, <span class="at">value =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">400</span>) <span class="sc">:</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  replacement has <span class="dv">400</span> rows, data has <span class="dv">366</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>and, similarly, the <strong><em>test2</em></strong> line will output this error:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> <span class="st">`</span><span class="at">$&lt;-.data.frame</span><span class="st">`</span>(<span class="st">`</span><span class="at">*tmp*</span><span class="st">`</span>, test2, <span class="at">value =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) <span class="sc">:</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  replacement has <span class="dv">10</span> rows, data has <span class="dv">366</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Basically, R is saying that the vector you are trying to add to the data frame does not have the same number of values as the row in the data frame.</p>
+<section id="adding-column-with-a-divisible-number-of-values" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="adding-column-with-a-divisible-number-of-values"><span class="header-section-number">4.1</span> Adding column with a divisible number of values</h3>
+<p>There is one situation is which R will let you write a column to a data frame even if the number of values is not the same as the number of rows– and that is when <span class="hl">the number of values in the vector evenly divides the number of rows</span> in the data frame.&nbsp; In the case of <strong><em>weatherData</em></strong> that is any number that can evenly divide 366 (e.g., 1,2,3,6…)</p>
+<p>&nbsp;</p>
+<p>In this case, R will repeat the values provided until 366 values is reached.</p>
+<p>&nbsp;</p>
+<p>So, if you use one value to create a column:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>badData<span class="sc">$</span>test3 <span class="ot">=</span><span class="dv">10</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Then R will create a column called <strong><em>test3</em></strong> with the value <strong>10</strong> in every cell.</p>
+<p>&nbsp;</p>
+<p>Or, if you use <strong>6</strong> values (366/6 = 61):</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>badData<span class="sc">$</span>test4 <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Then R will create a column called <strong><em>test4</em></strong> that repeat the numbers <strong>1-6</strong> 61times:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> badData<span class="sc">$</span>test3</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">10</span> <span class="dv">10</span> <span class="dv">10</span> <span class="dv">10</span> <span class="dv">10</span> <span class="dv">10</span> <span class="dv">10</span> <span class="dv">10</span> <span class="dv">10</span> ...</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> badData<span class="sc">$</span>test4</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">4</span> <span class="dv">5</span> <span class="dv">6</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">4</span> <span class="dv">5</span> <span class="dv">6</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">4</span> ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-repeatValues_Column" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-repeatValues_Column-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-2-03-ZColumns.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-repeatValues_Column-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Adding columns with values that repeats
+</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="manually-repeating-values" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="manually-repeating-values"><span class="header-section-number">5</span> Manually repeating values</h2>
+<p>You can manually create a vector with repeated values using <strong><em>rep()</em></strong>, which has 2 arguments:</p>
+<ul>
+<li><p>the value(s) you want to repeat</p></li>
+<li><p>the number of <strong><em>times</em></strong> you want to repeat the values</p>
+<p>&nbsp;</p></li>
+</ul>
+<p>If you want to repeat the letters A through F to fill a 366 value vector:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>vectorAF <span class="ot">=</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"D"</span>, <span class="st">"E"</span>, <span class="st">"F"</span>), <span class="at">times =</span> <span class="dv">61</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong><em>vectorAF</em></strong> repeats “A”-“F” 61 times.&nbsp; Let’s look at the first 20 values:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> vectorAF[<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>]</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] <span class="st">"A"</span> <span class="st">"B"</span> <span class="st">"C"</span> <span class="st">"D"</span> <span class="st">"E"</span> <span class="st">"F"</span> <span class="st">"A"</span> <span class="st">"B"</span> <span class="st">"C"</span> <span class="st">"D"</span> <span class="st">"E"</span> <span class="st">"F"</span> <span class="st">"A"</span> <span class="st">"B"</span> <span class="st">"C"</span> <span class="st">"D"</span> <span class="st">"E"</span> <span class="st">"F"</span> <span class="st">"A"</span> <span class="st">"B"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Alternatively, you can use the argument <strong><em>length.out</em></strong> to give the length of the vector.&nbsp; So, if you want to repeat the numbers 1 through 10 until you reach 366 values:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>vector1_10 <span class="ot">=</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">length.out=</span><span class="dv">366</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you look at the last 20 values of <strong><em>vector1_10</em></strong>, you see that the last, or 366<sup>th</sup>, value is a <strong>6</strong>:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> vector1_10[<span class="dv">345</span><span class="sc">:</span><span class="dv">366</span>]</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>]  <span class="dv">5</span>  <span class="dv">6</span>  <span class="dv">7</span>  <span class="dv">8</span>  <span class="dv">9</span> <span class="dv">10</span>  <span class="dv">1</span>  <span class="dv">2</span>  <span class="dv">3</span>  <span class="dv">4</span>  <span class="dv">5</span>  <span class="dv">6</span>  <span class="dv">7</span>  <span class="dv">8</span>  <span class="dv">9</span> <span class="dv">10</span>  <span class="dv">1</span>  <span class="dv">2</span>  <span class="dv">3</span>  <span class="dv">4</span>  <span class="dv">5</span>  <span class="dv">6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you want to repeat values a certain number and then move on to another value, for instance creating a vector with the months of the years, then you can use <strong><em>rep()</em></strong> within a vector:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>firstThreeMonths <span class="ot">=</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"Jan"</span>, <span class="dv">31</span>), <span class="fu">rep</span>(<span class="st">"Feb"</span>, <span class="dv">29</span>), <span class="fu">rep</span>(<span class="st">"Mar"</span>, <span class="dv">31</span>));</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>And <strong><em>firstThreeMonth</em></strong> will have 91 values:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> firstThreeMonths</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] <span class="st">"Jan"</span> <span class="st">"Jan"</span> <span class="st">"Jan"</span> <span class="st">"Jan"</span> <span class="st">"Jan"</span> <span class="st">"Jan"</span> <span class="st">"Jan"</span> <span class="st">"Jan"</span> <span class="st">"Jan"</span> <span class="st">"Jan"</span> <span class="st">"Jan"</span> <span class="st">"Jan"</span> <span class="st">"Jan"</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">14</span>] <span class="st">"Jan"</span> <span class="st">"Jan"</span> <span class="st">"Jan"</span> <span class="st">"Jan"</span> <span class="st">"Jan"</span> <span class="st">"Jan"</span> <span class="st">"Jan"</span> <span class="st">"Jan"</span> <span class="st">"Jan"</span> <span class="st">"Jan"</span> <span class="st">"Jan"</span> <span class="st">"Jan"</span> <span class="st">"Jan"</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">27</span>] <span class="st">"Jan"</span> <span class="st">"Jan"</span> <span class="st">"Jan"</span> <span class="st">"Jan"</span> <span class="st">"Jan"</span> <span class="st">"Feb"</span> <span class="st">"Feb"</span> <span class="st">"Feb"</span> <span class="st">"Feb"</span> <span class="st">"Feb"</span> <span class="st">"Feb"</span> <span class="st">"Feb"</span> <span class="st">"Feb"</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">40</span>] <span class="st">"Feb"</span> <span class="st">"Feb"</span> <span class="st">"Feb"</span> <span class="st">"Feb"</span> <span class="st">"Feb"</span> <span class="st">"Feb"</span> <span class="st">"Feb"</span> <span class="st">"Feb"</span> <span class="st">"Feb"</span> <span class="st">"Feb"</span> <span class="st">"Feb"</span> <span class="st">"Feb"</span> <span class="st">"Feb"</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>[<span class="dv">53</span>] <span class="st">"Feb"</span> <span class="st">"Feb"</span> <span class="st">"Feb"</span> <span class="st">"Feb"</span> <span class="st">"Feb"</span> <span class="st">"Feb"</span> <span class="st">"Feb"</span> <span class="st">"Feb"</span> <span class="st">"Mar"</span> <span class="st">"Mar"</span> <span class="st">"Mar"</span> <span class="st">"Mar"</span> <span class="st">"Mar"</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>[<span class="dv">66</span>] <span class="st">"Mar"</span> <span class="st">"Mar"</span> <span class="st">"Mar"</span> <span class="st">"Mar"</span> <span class="st">"Mar"</span> <span class="st">"Mar"</span> <span class="st">"Mar"</span> <span class="st">"Mar"</span> <span class="st">"Mar"</span> <span class="st">"Mar"</span> <span class="st">"Mar"</span> <span class="st">"Mar"</span> <span class="st">"Mar"</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>[<span class="dv">79</span>] <span class="st">"Mar"</span> <span class="st">"Mar"</span> <span class="st">"Mar"</span> <span class="st">"Mar"</span> <span class="st">"Mar"</span> <span class="st">"Mar"</span> <span class="st">"Mar"</span> <span class="st">"Mar"</span> <span class="st">"Mar"</span> <span class="st">"Mar"</span> <span class="st">"Mar"</span> <span class="st">"Mar"</span> <span class="st">"Mar"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="numeric-and-character-columns" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="numeric-and-character-columns"><span class="header-section-number">6</span> Numeric and character columns</h2>
+<p>Now let’s read in the “good” CSV file created in the last lesson:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>  weatherData <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="at">file=</span><span class="st">"data/Lansing2016Noaa-2.csv"</span>,</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">sep=</span><span class="st">","</span>,</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">header=</span><span class="cn">TRUE</span>, </span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If we look at the <strong><em>Environment</em></strong> (<a href="#fig-stringCol" class="quarto-xref">Figure&nbsp;4</a>), there are a few columns in the <strong><em>weatherData</em></strong> data frame that R categorizes as string (<strong><em>chr</em></strong>) even though they are numeric by nature.&nbsp; For instance, <strong><em>precip, snow,</em></strong> and <strong><em>snowDepth</em></strong> are all labelled as <strong><em>chr</em></strong> even though they have (mostly) numeric values.</p>
+<p>&nbsp;</p>
+<p>The issue is the <strong><em>“T”</em></strong> values used in these columns to indicate a <strong><em>trace</em></strong> of precipitation (less than 0.01 inches).&nbsp; <strong><em>“T”</em></strong> is a <strong><em>chr/string</em></strong> values and, in R,<span class="hl">if any value in a vector or a column is a string then every value in the vector (or column) is treated as a string</span>.</p>
+<div id="fig-stringCol" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-stringCol-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-1-14_StringPrecip.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-stringCol-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: The precip column is seen as a string (chr) column by R
+</figcaption>
+</figure>
+</div>
+<p><span class="note">Note: You can also use the <strong><em>typeof()</em></strong> function to find the data type for a vector:</span></p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">typeof</span>(weatherData<span class="sc">$</span>precip)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"character"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="when-numbers-are-treated-as-characters" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="when-numbers-are-treated-as-characters"><span class="header-section-number">6.1</span> When numbers are treated as characters</h3>
+<p>In R, <strong>“1234”</strong> is not the same as <strong>1234</strong>.&nbsp; The former is 4 characters, a “<strong>1</strong>” followed by a “<strong>2</strong>” followed by a “<strong>3</strong>”, followed by a “<strong>4</strong>”.&nbsp; The latter is the number <strong>1234</strong>.&nbsp; In R, you cannot perform mathematical operations on&nbsp; characters, even if they look like numbers.</p>
+<p>&nbsp;</p>
+<p>If you try to perform mathematical operations on character, even ones that look like numbers, you will get the error: <span class="hl">non-numeric argument to binary operator</span>.</p>
+<p>&nbsp;</p>
+<p>We can see this in the <strong><em>Console</em></strong>:</p>
+<div class="sourceCode" id="cb17" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> a <span class="ot">=</span> <span class="dv">9</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> b <span class="ot">=</span> <span class="st">"7"</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> a <span class="sc">+</span> a</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">18</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> a <span class="sc">+</span> b</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> a <span class="sc">+</span> b <span class="sc">:</span> non<span class="sc">-</span>numeric argument to binary operator</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> b <span class="sc">+</span> b</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> b <span class="sc">+</span> b <span class="sc">:</span> non<span class="sc">-</span>numeric argument to binary operator</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Let’s save the <strong><em>precip</em></strong> column in <strong><em>weatherData</em></strong> to a vector called <strong><em>precip</em></strong></p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>precip <span class="ot">=</span> weatherData<span class="sc">$</span>precip;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>A similar error will occur if you try to perform mathematical functions on <strong><em>precip,</em></strong> like adding up all of the values using <strong><em>sum()</em></strong>:</p>
+<div class="sourceCode" id="cb19" data-tab-console=""><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> totalPrecip <span class="ot">=</span> <span class="fu">sum</span>(precip);</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> <span class="fu">sum</span>(precip) <span class="sc">:</span> invalid <span class="st">'type'</span> (character) of argument</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>And statistical function like <strong><em>mean()</em></strong> will generally give an answer of <strong><em>NA</em></strong>:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> meanPrecip <span class="ot">=</span> <span class="fu">mean</span>(precip);</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>Warning message<span class="sc">:</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>In <span class="fu">mean.default</span>(precip) <span class="sc">:</span> argument is not numeric or logical<span class="sc">:</span> returning <span class="cn">NA</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="forcing-characters-to-become-numbers" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="forcing-characters-to-become-numbers"><span class="header-section-number">6.2</span> Forcing characters to become numbers</h3>
+<p>The solution is to change the <strong><em>chr</em></strong> (string) vector into a numeric vector using <strong><em>as.numeric()</em></strong>:</p>
+<p>&nbsp;</p>
+<p>Let’s use <strong><em>as.numeric()</em></strong> on the <strong><em>precip</em></strong> vector as save the results to <strong><em>precip2</em></strong>:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>precip2 <span class="ot">=</span> <span class="fu">as.numeric</span>(precip);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If we look at the <strong><em>Environment</em></strong>, we can see that <strong><em>precip2</em></strong> is a numeric vector and the numbers no longer have quotes around them.&nbsp; But, the non-numeric “T” values were replaced with <strong><em>NA</em></strong>:</p>
+<div class="sourceCode" id="cb22" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>precip<span class="sc">:</span>   chr[<span class="dv">1</span><span class="sc">:</span><span class="dv">366</span>]  <span class="st">"0.04"</span> <span class="st">"0.00"</span> <span class="st">"T"</span> <span class="st">"T"</span> <span class="st">"0.00"</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>precip2<span class="sc">:</span>  num[<span class="dv">1</span><span class="sc">:</span><span class="dv">366</span>]  <span class="fl">0.04</span> <span class="dv">0</span> <span class="cn">NA</span> <span class="cn">NA</span> <span class="dv">0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="double-values-are-numeric" class="level3" data-number="6.3">
+<h3 data-number="6.3" class="anchored" data-anchor-id="double-values-are-numeric"><span class="header-section-number">6.3</span> Double values are numeric…</h3>
+<p>Using <strong><em>typeof()</em></strong>&nbsp; to find out what type of vector <strong><em>precip2</em></strong> is:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">typeof</span>(weatherData<span class="sc">$</span>precip2)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"double"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><span class="hl">A <strong>double</strong> value is a numeric value</span><em>.</em>&nbsp; <strong><em>double</em></strong> refers to how big of a numeric value the vector can hold and meant a lot more in the days when computer memory was at a premium.&nbsp;</p>
+</section>
+</section>
+<section id="operations-on-na-values" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="operations-on-na-values"><span class="header-section-number">7</span> Operations on NA values</h2>
+<p>To R, <strong>NA</strong> means that the value is <strong>N</strong>ot <strong>A</strong>vailable.&nbsp; <strong>NA</strong> can be an error indicating that an operation could not be performed and therefore no value can be given.&nbsp; <strong><em>NA</em></strong> could also be a placeholder for a value that is known to not exist.</p>
+<p>&nbsp;</p>
+<p><strong><em>NULL</em></strong> and <strong><em>NA</em></strong> are often confused but they are functionally much different.&nbsp; If <strong><em>NULL</em></strong> is used in a vector, it will remove the value from the vector:</p>
+<div class="sourceCode" id="cb24" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="cn">NULL</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">1</span> <span class="dv">3</span> <span class="dv">4</span> <span class="dv">5</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="cn">NA</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>]  <span class="dv">1</span> <span class="cn">NA</span>  <span class="dv">3</span>  <span class="dv">4</span>  <span class="dv">5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you try to perform mathematical or statistical operation on a vector that has numeric <strong>NA</strong> values, R will tell you the answer is <strong>NA</strong>, or <strong><em>NA_Real,</em></strong> which is just R’s way of telling you that the answer would be a real number if the <strong><em>NA</em></strong> values existed.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>meanPrecip <span class="ot">=</span> <span class="fu">mean</span>(precip2);</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>totalPrecip <span class="ot">=</span> <span class="fu">sum</span>(precip2);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb26" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>  meanPrecip<span class="sc">:</span> NA_Real</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  totalPrecip<span class="sc">:</span> NA_Real</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="finding-the-number-of-na-values" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="finding-the-number-of-na-values"><span class="header-section-number">7.1</span> Finding the number of NA values</h3>
+<p><strong><em>is.na(precip2)</em></strong> will go through each value in <strong><em>precip2</em></strong> and create a <strong><em>TRUE/FALSE</em></strong> vector with <strong>366</strong> values:</p>
+<div class="sourceCode" id="cb27" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">is.na</span>(precip2)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  [<span class="dv">1</span>] <span class="cn">FALSE</span> <span class="cn">FALSE</span>  <span class="cn">TRUE</span>  <span class="cn">TRUE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span>  </span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a> [<span class="dv">14</span>] <span class="cn">TRUE</span> <span class="cn">FALSE</span>  <span class="cn">TRUE</span>  <span class="cn">TRUE</span> <span class="cn">FALSE</span>  <span class="cn">TRUE</span>  <span class="cn">TRUE</span> <span class="cn">FALSE</span>  <span class="cn">TRUE</span>  <span class="cn">TRUE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a> ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The <strong><em>TRUE</em></strong> values represent <strong><em>NA</em></strong> values.&nbsp; We can count the <strong><em>TRUE</em></strong> values using <strong><em>sum()</em></strong>:</p>
+<div class="sourceCode" id="cb28" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(precip2))</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">60</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>So, there are <strong>60</strong> <strong><em>NA</em></strong> values in <strong><em>precip2.</em></strong></p>
+</section>
+<section id="removing-na-values" class="level3" data-number="7.2">
+<h3 data-number="7.2" class="anchored" data-anchor-id="removing-na-values"><span class="header-section-number">7.2</span> Removing NA values</h3>
+<p>You can get around the <strong>NA</strong> issues by instructing R to remove the <strong>NA</strong> values from the calculation by setting the <strong>NA</strong> removal argument <strong><em>na.rm</em></strong> to <strong>TRUE</strong>:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>meanPrecip2 <span class="ot">=</span> <span class="fu">mean</span>(precip2, <span class="at">na.rm =</span> <span class="cn">TRUE</span>);</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>totalPrecip2 <span class="ot">=</span> <span class="fu">sum</span>(precip2, <span class="at">na.rm =</span> <span class="cn">TRUE</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Without the <strong><em>NA</em></strong> values in the vector, the results are:</p>
+<div class="sourceCode" id="cb30" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>  meanPrecip2<span class="sc">:</span> <span class="dv">0</span>.<span class="dv">1144</span>...</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  totalPrecip2<span class="sc">:</span> <span class="fl">35.01</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><span class="note">Note: most mathematical and statistical functions include the argument <strong><em>na.rm</em></strong></span></p>
+</section>
+<section id="replacing-the-na-values" class="level3" data-number="7.3">
+<h3 data-number="7.3" class="anchored" data-anchor-id="replacing-the-na-values"><span class="header-section-number">7.3</span> Replacing the NA values</h3>
+<p>Using the argument <strong><em>na.rm=TRUE</em></strong> assumes that the <strong><em>NA</em></strong> values should be ignored.&nbsp; However, that is not true in this case – the <strong>NA</strong> values are the old “T” values, whichrepresented a trace or rain.&nbsp; We need to keep these values in the vector.&nbsp; Since a <strong><em>trace</em></strong> of precipitation is defined as less than <strong>0.01</strong> inches of precipitation – so we will go halfway and change all <strong><em>NA</em></strong> values to <strong>0.005</strong><em>:</em></p>
+<p>&nbsp;</p>
+<p>We will first make another copy of <strong><em>precip</em></strong>:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>  precip3 <span class="ot">=</span> precip2;          <span class="co"># make another copy of precip</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>And then cycle through all the values in <strong><em>precip3</em></strong>, checking for <strong><em>NA</em></strong> values and changing them to <strong>0.005</strong>:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(precip3)) <span class="co"># go through every value in precip</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">is.na</span>(precip3[i]))     <span class="co"># if the value is NA</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>      precip[i] <span class="ot">=</span> <span class="fl">0.005</span>;      <span class="co"># change it to 0.005</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>  }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>And we can see that <strong><em>precip3 now</em></strong> has <strong>0.005</strong> in place of <strong>NA</strong>:</p>
+<div class="sourceCode" id="cb33" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>precip3 num [<span class="dv">1</span><span class="sc">:</span><span class="dv">366</span>] <span class="fl">0.04</span> <span class="fl">0.00</span> «<span class="fl">0.005</span> <span class="fl">0.005</span>» <span class="dv">0</span>.<span class="dv">00</span>...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="reserved-words-in-r" class="level3" data-number="7.4">
+<h3 data-number="7.4" class="anchored" data-anchor-id="reserved-words-in-r"><span class="header-section-number">7.4</span> Reserved Words in R</h3>
+<p><strong><em>NA</em></strong> is a <span class="hl">reserved word</span> in R.&nbsp; This means you cannot create a variable named <strong><em>NA</em></strong> in R:</p>
+<div class="sourceCode" id="cb34" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>«»</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong><em>NA</em></strong> is not the same as the string value “N” followed by “A”, so this <strong><em>if</em></strong> statement will not work:</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(precip3[i] <span class="sc">==</span> <span class="st">"NA"</span>) <span class="co"># checking for the characters "N" and "A"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>And <strong><em>NA</em></strong> is not a variable name in R, so this &nbsp;<strong><em>if</em></strong> statement does not work:</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(precip3[i] <span class="sc">==</span> <span class="cn">NA</span>) <span class="co"># checking for the variable named NA</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Instead, we must use the function <strong><em>is.na()</em></strong> to check for <strong>NA</strong> values:</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">is.na</span>(precip3[i])) <span class="co"># checking if precip[i] is an NA value</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><span class="note">Note: There are many other reserved words in R like <strong><em>NULL</em></strong>, <strong><em>TRUE</em></strong>, <strong><em>FALSE</em></strong>, <strong><em>for</em></strong>, <strong><em>if</em></strong>, <strong><em>else</em></strong>, <strong><em>function</em></strong>…</span></p>
+</section>
+<section id="mathematical-operations-on-the-new-vector" class="level3" data-number="7.5">
+<h3 data-number="7.5" class="anchored" data-anchor-id="mathematical-operations-on-the-new-vector"><span class="header-section-number">7.5</span> Mathematical operations on the new vector</h3>
+<p>Now when we find the mean and the sum of the <strong><em>precip3</em></strong> vector with <strong>0.005</strong> in place of <strong>NA</strong>, we see values that reflect the fact that 60 days had a trace of rain:</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>meanPrecip3 <span class="ot">=</span> <span class="fu">mean</span>(precip3);</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>totalPrecip3 <span class="ot">=</span> <span class="fu">sum</span>(precip3);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The mean precipitation was lowered a bit because we added 60 days that had trace precipitation to the calculation – this also increased the total precipitation a bit:</p>
+<div class="sourceCode" id="cb39" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>meanPrecip2<span class="sc">:</span>   <span class="dv">0</span>.<span class="dv">1144</span>...</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>totalPrecip2<span class="sc">:</span>  <span class="fl">35.01</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>meanPrecip3<span class="sc">:</span>   <span class="dv">0</span>.<span class="dv">0964</span>...</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>totalPrecip3<span class="sc">:</span>  <span class="dv">35</span>.<span class="dv">31</span>...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="adding-the-numeric-precip-column" class="level3" data-number="7.6">
+<h3 data-number="7.6" class="anchored" data-anchor-id="adding-the-numeric-precip-column"><span class="header-section-number">7.6</span> Adding the numeric precip column</h3>
+<p>We will add the numeric <strong><em>precip3</em></strong> column to <strong><em>weatherData</em></strong> and call the new column <strong><em>precipNum</em></strong>:</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>  weatherData<span class="sc">$</span>precipNum <span class="ot">=</span> precip3;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-precipNumCol" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-precipNumCol-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-2-03-precipnum.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-precipNumCol-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: The precipNum column added to weatherData – note the 0.005 in place of NA
+</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="plotting-rainfall-values" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="plotting-rainfall-values"><span class="header-section-number">8</span> Plotting rainfall values</h2>
+<p>We are going to do some basic plots with the rainfall values.&nbsp; For all of these plots we are going to plot rainfall vs.&nbsp;the day number (e.g., <strong>1</strong> is Jan 1, <strong>2</strong> is Jan 2, <strong>366</strong> is Dec 31).&nbsp; We will deal with dates in a later lesson.</p>
+<section id="a-scatterplot" class="level3" data-number="8.1">
+<h3 data-number="8.1" class="anchored" data-anchor-id="a-scatterplot"><span class="header-section-number">8.1</span> A scatterplot</h3>
+<p>The first plot will be a scatterplot with rainfall (<strong><em>precipNum</em></strong>) on the y-axis and day number on the x-axis.&nbsp; Since day number is just the row number, we will map the y-axis to a sequence from <strong><em>1</em></strong> to the number of rows in <strong><em>weatherData</em></strong> (i.e., <strong>366</strong>)</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>  plot1 <span class="ot">=</span> <span class="fu">ggplot</span>(<span class="at">data=</span>weatherData ) <span class="sc">+</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>( <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(weatherData),  <span class="co"># 1:366</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>                            <span class="at">y=</span>precipNum),</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>( <span class="at">title=</span><span class="st">"Daily Precipitation"</span>,</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">subtitle=</span><span class="st">"Lansing, MI -- 2016"</span>,</span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">x =</span> <span class="st">"Day Number"</span>,</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">y =</span> <span class="st">"Precipitation (inches)"</span>) <span class="sc">+</span></span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>();</span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(plot1);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><span class="note">Note: we could have used <strong>366</strong> instead of <strong>nrow(weatherData</strong>) but <strong>nrow(weatherData)</strong> is more robust as it can handle changes to the size of the data frame (e.g., a year that is not a leap year)</span></p>
+<div id="fig-scatterplot_rainfall" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-scatterplot_rainfall-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-2-03-ScatterplotPrecip.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-scatterplot_rainfall-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: scatterplot of rainfall for every day
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="scatterplot-with-chr-values" class="level3" data-number="8.2">
+<h3 data-number="8.2" class="anchored" data-anchor-id="scatterplot-with-chr-values"><span class="header-section-number">8.2</span> Scatterplot with chr values</h3>
+<p>GGPlot can also create a scatterplot from the precipitation values that are given in the <strong><em>precip</em></strong> column that is of type <strong><em>chr</em></strong>:</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>  plot2 <span class="ot">=</span> <span class="fu">ggplot</span>(<span class="at">data=</span>weatherData ) <span class="sc">+</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>( <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(weatherData),  </span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>                            <span class="at">y=</span>precip),  <span class="co"># chr values</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>( <span class="at">title=</span><span class="st">"Daily Precipitation"</span>,</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">subtitle=</span><span class="st">"Lansing, MI -- 2016"</span>,</span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">x =</span> <span class="st">"Day Number"</span>,</span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">y =</span> <span class="st">"Precipitation (inches)"</span>) <span class="sc">+</span></span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>();</span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(plot2);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>But, since <strong><em>precip</em></strong> contains <strong><em>chr</em></strong>/string values (not numbers), GGPlot will output every unique <strong><em>precip</em></strong> value on the y-axis and put them in “alphabetical” order – this is why <strong><em>T</em></strong> is at the top (it is alphabetically greater than the numbers)</p>
+<div id="fig-scatterplot_chr" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-scatterplot_chr-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-2-03_ChrScatterplot.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-scatterplot_chr-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7: A scatterplot using character values instead of numeric
+</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="application" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="application"><span class="header-section-number">9</span> Application</h2>
+<p>1) Answer the following questions in comments at the top of your script:</p>
+<ul>
+<li><p>In the <strong><em>weatherType</em></strong> column, there are a bunch of days without any conditions.&nbsp; If you wanted to indicate that the lack of conditions is fine would you use <strong><em>NA</em></strong> or <strong><em>NULL</em></strong>?&nbsp; Why?&nbsp;</p></li>
+<li><p>What happens when you try to sum, using <strong><em>sum()</em></strong>,&nbsp; the following two vectors?&nbsp; Why?</p>
+<ul>
+<li><p>c(8, 10, 6, NULL, 4)</p></li>
+<li><p>c(8, 10, 6, NA, 4)</p></li>
+</ul></li>
+</ul>
+<p>&nbsp;</p>
+<p>2) Find the total amount of snow was for the year and save it to the variable named <strong><em>snowTotal</em></strong></p>
+<ul>
+<li>the snow column also uses “T” values, but trace in this case means snowfall between 0 and 0.5 inches</li>
+</ul>
+<p>&nbsp;</p>
+<p>3) Find the average snow depth for the year and save it to the variable <strong><em>snowDepthAvg</em></strong></p>
+<p>&nbsp;</p>
+<p>4) Create a vector with <strong>366</strong> valuescalled <strong><em>seasons</em></strong> and add the vector to a column in the <strong><em>weatherData</em></strong> called <strong><em>season</em></strong></p>
+<ul>
+<li><p>March 21 June 21, and September 21 are approximate dates for the transition of the season – it is OK for this application to be off by a few days</p></li>
+<li><p>But, you need to deal with the fact that the beginning of the year and end of the year are winter days</p>
+<p>&nbsp;</p></li>
+</ul>
+<p>5) Create a vector call <strong><em>daysOfTheWeek</em></strong> (Sun-Mon-Tues-Wed) and add it to the <strong><em>weatherData</em></strong> column</p>
+<ul>
+<li><span class="note">Note: January 1, 2016 was a Friday</span></li>
+</ul>
+<p>&nbsp;</p>
+<p>6) Create a scatterplot with relative humidity on the y-axis and (numeric) precipitation on the x-axis.&nbsp;</p>
+<ul>
+<li>Color the points blue and add appropriate labels and titles</li>
+</ul>
+<p>&nbsp;</p>
+<p>Save the script as&nbsp;<strong><em>app2-03.r</em></strong> in your&nbsp;<strong><em>scripts</em></strong> folder and&nbsp; email your Project Folder to Charlie Belinsky at belinsky@msu.edu.</p>
+<p>&nbsp;</p>
+<p><a href="1-01-RStudioProjectsSetup.html#sec-zip-folder" target="_blank">Instructions for zipping the Project Folder are here.</a></p>
+<p>&nbsp;</p>
+<p>If you have any questions regarding this application, feel free to email them to Charlie Belinsky at belinsky@msu.edu.</p>
+<section id="questions-to-answer" class="level3" data-number="9.1">
+<h3 data-number="9.1" class="anchored" data-anchor-id="questions-to-answer"><span class="header-section-number">9.1</span> Questions to answer</h3>
+<p>Answer the following in comments inside your application script:</p>
+<ol type="1">
+<li><p>What was your level of comfort with the lesson/application?</p></li>
+<li><p>What areas of the lesson/application confused or still confuses you?</p></li>
+<li><p>What are some things you would like to know more about that is related to, but not covered in, this lesson?</p></li>
+</ol>
+<p><strong>#### Under here is material that will go in another lesson ####</strong></p>
+</section>
+</section>
+<section id="a-scatterplot-with-a-third-mapping" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="a-scatterplot-with-a-third-mapping"><span class="header-section-number">10</span> A scatterplot with a third mapping</h2>
+<p><strong><em>x</em></strong> and <strong><em>y</em></strong> are calling mappings in R.&nbsp; In the scatterplots above <strong><em>x</em></strong> is mapped to row numbers (1-366) and <strong><em>y</em></strong> is mapped to a precipitation column.</p>
+<p>&nbsp;</p>
+<p>We can map more than just the axes in a plot.&nbsp; We can map other physical properties of the plot like color, shape, and size to other columns in the data frame.</p>
+<p>&nbsp;</p>
+<p>In this case, we will add the mapping of <strong><em>color</em></strong> to the <strong><em>avgTemp</em></strong> column:</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Mapping color to the temperature</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  plot3 <span class="ot">=</span> <span class="fu">ggplot</span>(<span class="at">data=</span>weatherData ) <span class="sc">+</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>( <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(weatherData),</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>                            <span class="at">y=</span>precipNum,</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>                            <span class="at">color=</span>avgTemp)) <span class="sc">+</span></span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>( <span class="at">title=</span><span class="st">"Daily Precipitation"</span>,</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">subtitle=</span><span class="st">"Lansing, MI -- 2016"</span>,</span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">x =</span> <span class="st">"Day Number"</span>,</span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>          <span class="at">y =</span> <span class="st">"Precipitation (inches)"</span>) <span class="sc">+</span></span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>();</span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(plot3);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>And now the color of the dots represent the temperature values in <strong><em>avgTemp</em></strong>.&nbsp; As expected, the highest temperatures occur in the middle of the plot, which represents the summer months:</p>
+<div id="fig-map_color" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-map_color-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-2-03-ColorMap.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-map_color-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8: Mapping color to temperature
+</figcaption>
+</figure>
+</div>
+<p><span class="note">Note: We took out the subcomponent color=“red” from the previous examples</span><em>.</em> If we had not done that then the red color would have overridden the <strong><em>color</em></strong> mapping.</p>
+<section id="customizing-the-colors" class="level3" data-number="10.1">
+<h3 data-number="10.1" class="anchored" data-anchor-id="customizing-the-colors"><span class="header-section-number">10.1</span> Customizing the colors</h3>
+<p>R’s default choice of colors does not have great contrast nor represents the data very well.&nbsp; We can customize the color using a scale component called <strong><em>scale_color_gradientn</em></strong>.</p>
+<p>&nbsp;</p>
+<p>We will talk more about <strong><em>scale</em></strong> components in a later lesson but the name of the <strong><em>scale</em></strong> component basically says what it does. &nbsp;<strong><em>scale_color_gradientn</em></strong> will customize the <strong><em>color</em></strong> mapping using a <strong><em>gradient</em></strong> with <strong><em>n</em></strong> number of values:</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Customizing the color of the temperature mapping</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  plot4 <span class="ot">=</span> <span class="fu">ggplot</span>(<span class="at">data=</span>weatherData ) <span class="sc">+</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>( <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(weatherData),</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>                            <span class="at">y=</span>precipNum,</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>                            <span class="at">color=</span>avgTemp)) <span class="sc">+</span></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>    «<span class="fu">scale_color_gradientn</span>(<span class="at">colors =</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"green"</span>, <span class="st">"red"</span>))» <span class="sc">+</span></span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>( <span class="at">title=</span><span class="st">"Daily Precipitation"</span>,</span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">subtitle=</span><span class="st">"Lansing, MI -- 2016"</span>,</span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>          <span class="at">x =</span> <span class="st">"Day Number"</span>,</span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>          <span class="at">y =</span> <span class="st">"Precipitation (inches)"</span>) <span class="sc">+</span></span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>();</span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(plot4);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In <strong><em>scale_color_gradientn</em></strong>, the <strong><em>colors</em></strong> argument to a vector with 3 color values.&nbsp; You can use as many color values as you want.&nbsp; The result is a scatterplot with colors that make more intuitive sense:</p>
+<div id="fig-custom_colors" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-custom_colors-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-2-03-CustomColors.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-custom_colors-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9: Customizing colors in a mapping
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="barplot" class="level3" data-number="10.2">
+<h3 data-number="10.2" class="anchored" data-anchor-id="barplot"><span class="header-section-number">10.2</span> Barplot</h3>
+<p>If we want to use lines instead of points to represent the rainfall values, then we can switch to a bar plot by using <strong><em>geom_col()</em></strong> instead of <strong><em>geom_point()</em></strong>:</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>  plot3 <span class="ot">=</span> <span class="fu">ggplot</span>(<span class="at">data=</span>weatherData ) <span class="sc">+</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>    «geom_col»( <span class="at">mapping=</span><span class="fu">aes</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(weatherData), </span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">y=</span>precipNum),</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>( <span class="at">title=</span><span class="st">"Daily Precipitation"</span>,</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">subtitle=</span><span class="st">"Lansing, MI -- 2016"</span>,</span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">x =</span> <span class="st">"Precipitation (inches)"</span>,</span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">y =</span> <span class="st">"Number of Days"</span>) <span class="sc">+</span></span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>();</span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(plot3);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-barplot" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-barplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-2-03-Barplot.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-barplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10: A barplot of precipitation vs day number
+</figcaption>
+</figure>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

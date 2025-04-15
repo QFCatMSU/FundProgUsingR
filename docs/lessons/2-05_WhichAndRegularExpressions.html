@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.22">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>2-05: Which and Regular Expressions</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b4406b7675125bc2ba204020e191172.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-5f39cfd1aee7e7785011fc5df168ee92.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link rel="shortcut icon" href="https://qfcatmsu.github.io/assets/quarto/qfc_icon.png">
+<script>mod=true; menuCollapse=true;</script>
+<script src="https://qfcatmsu.github.io/assets/quarto/qfc_styles.js"></script>
+ 
+
+
+<link rel="stylesheet" href="https://qfcatmsu.github.io/assets/quarto/qfc_styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+          <h1 class="quarto-secondary-nav-title">2-05: Which and Regular Expressions</h1>
+        </a>     
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text"><b>Fundamentals of Programming class</b></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/0-01-IntroductionAndSyllabus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction and Syllabus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-01-RStudioProjectsSetup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-01: RStudio Projects Setup</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-02-Variables.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-02: Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-03_Mathematical_Operations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-03: Mathematical Operations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-04_Vectors_And_Data_Frames.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-04: Vectors and Data Frames</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-05_Functions_Introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-05: Functions Introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-06_Run_and_Source.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-06: Run and Source</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-07_Outputs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-07: Outputs</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-08_Conditional_Operations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-08: Conditional Operations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-09_If_Else_Statements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-09: If-Else Statements</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-10_For_Loops.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-10: For Loops</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-11_For_Loops_and_State_Varibles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-11: For Loops and State Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-12_MultipleConditions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-12: Multiple Conditions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-13_Functions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-13: Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-14_Functions2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-14: Functions 2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-15_Nested_Loops_and _Matrices.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-15: Nested loops and Matrices</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-15_Nested_Loops_and _Matrices-HOME-GALAXYBOOK.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-15: Nested loops and Matrices</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-01_R-Base_Plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-01: R-Base Plots</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-02_DataFrame_Modifications.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-02: DataFrame Modifications</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-03_DataTypesAndDateFrames.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-03: Data Types and Data Frames</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-04_WhichStatements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-04: Which Statements</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-05_WhichAndRegularExpressions.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">2-05: Which and Regular Expressions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-06_Datetime_Obejects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-06: Datetime objects</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-07_Matrices.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-07: Matrices</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-08_Binding_Sampling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-08: Binding and Sampling</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-09_Stacking_Mapping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-09: Stacking and Mapping</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-10_Statistical_Tests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-10: Statistical Tests</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-11_Objects_Attributes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-11: Objects and Attributes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-12_Lists.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-12: Lists</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-13_Breakpoints.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-13: Breakpoints</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title"><b>Lesson Content</b></h2>
+   
+  <ul>
+  <li><a href="#to-do" id="toc-to-do" class="nav-link active" data-scroll-target="#to-do"><span class="header-section-number">0.1</span> To-do</a></li>
+  <li><a href="#purpose" id="toc-purpose" class="nav-link" data-scroll-target="#purpose"><span class="header-section-number">1</span> Purpose</a></li>
+  <li><a href="#script-and-data-for-this-lesson" id="toc-script-and-data-for-this-lesson" class="nav-link" data-scroll-target="#script-and-data-for-this-lesson"><span class="header-section-number">2</span> Script and data for this lesson</a></li>
+  <li><a href="#which-on-string-data" id="toc-which-on-string-data" class="nav-link" data-scroll-target="#which-on-string-data"><span class="header-section-number">3</span> Which on string data</a>
+  <ul class="collapse">
+  <li><a href="#identifying-values-using-which" id="toc-identifying-values-using-which" class="nav-link" data-scroll-target="#identifying-values-using-which"><span class="header-section-number">3.1</span> Identifying values using which()</a></li>
+  </ul></li>
+  <li><a href="#using-the-indexed-value-generated-by-which" id="toc-using-the-indexed-value-generated-by-which" class="nav-link" data-scroll-target="#using-the-indexed-value-generated-by-which"><span class="header-section-number">4</span> Using the indexed value generated by which()</a>
+  <ul class="collapse">
+  <li><a href="#multiple-conditions-on-string-values" id="toc-multiple-conditions-on-string-values" class="nav-link" data-scroll-target="#multiple-conditions-on-string-values"><span class="header-section-number">4.1</span> Multiple conditions on string values</a></li>
+  <li><a href="#inverting-logic-the-not-operator" id="toc-inverting-logic-the-not-operator" class="nav-link" data-scroll-target="#inverting-logic-the-not-operator"><span class="header-section-number">4.2</span> Inverting logic: the <strong>not</strong> operator</a></li>
+  <li><a href="#two-common-ways-to-incorrectly-invert-logic" id="toc-two-common-ways-to-incorrectly-invert-logic" class="nav-link" data-scroll-target="#two-common-ways-to-incorrectly-invert-logic"><span class="header-section-number">4.3</span> Two common ways to Incorrectly invert logic</a></li>
+  <li><a href="#conditions-from-different-columns" id="toc-conditions-from-different-columns" class="nav-link" data-scroll-target="#conditions-from-different-columns"><span class="header-section-number">4.4</span> Conditions from different columns</a></li>
+  </ul></li>
+  <li><a href="#multiple-conditions-on-multiple-variables" id="toc-multiple-conditions-on-multiple-variables" class="nav-link" data-scroll-target="#multiple-conditions-on-multiple-variables"><span class="header-section-number">5</span> Multiple conditions on multiple variables</a>
+  <ul class="collapse">
+  <li><a href="#combining-conditional-statements" id="toc-combining-conditional-statements" class="nav-link" data-scroll-target="#combining-conditional-statements"><span class="header-section-number">5.1</span> Combining conditional statements</a></li>
+  </ul></li>
+  <li><a href="#finding-patterns-within-strings" id="toc-finding-patterns-within-strings" class="nav-link" data-scroll-target="#finding-patterns-within-strings"><span class="header-section-number">6</span> Finding patterns within strings</a>
+  <ul class="collapse">
+  <li><a href="#a-quick-grep-example" id="toc-a-quick-grep-example" class="nav-link" data-scroll-target="#a-quick-grep-example"><span class="header-section-number">6.1</span> A quick grep() example</a></li>
+  <li><a href="#using-grep-to-find-patterns-within-a-dataframe" id="toc-using-grep-to-find-patterns-within-a-dataframe" class="nav-link" data-scroll-target="#using-grep-to-find-patterns-within-a-dataframe"><span class="header-section-number">6.2</span> Using grep() to find patterns within a dataframe</a></li>
+  <li><a href="#subsetting-vectors" id="toc-subsetting-vectors" class="nav-link" data-scroll-target="#subsetting-vectors"><span class="header-section-number">6.3</span> Subsetting vectors</a></li>
+  </ul></li>
+  <li><a href="#grep-with-the-condition" id="toc-grep-with-the-condition" class="nav-link" data-scroll-target="#grep-with-the-condition"><span class="header-section-number">7</span> grep() with the | condition:</a>
+  <ul class="collapse">
+  <li><a href="#more-complex-union-scenario" id="toc-more-complex-union-scenario" class="nav-link" data-scroll-target="#more-complex-union-scenario"><span class="header-section-number">7.1</span> More complex union() scenario</a></li>
+  <li><a href="#an-alternative-to-when-using-grep" id="toc-an-alternative-to-when-using-grep" class="nav-link" data-scroll-target="#an-alternative-to-when-using-grep"><span class="header-section-number">7.2</span> An alternative to &amp; when using grep()</a></li>
+  </ul></li>
+  <li><a href="#setdiff" id="toc-setdiff" class="nav-link" data-scroll-target="#setdiff"><span class="header-section-number">8</span> SetDiff()</a>
+  <ul class="collapse">
+  <li><a href="#quick-example" id="toc-quick-example" class="nav-link" data-scroll-target="#quick-example"><span class="header-section-number">8.1</span> quick example</a></li>
+  <li><a href="#example-using-a-column" id="toc-example-using-a-column" class="nav-link" data-scroll-target="#example-using-a-column"><span class="header-section-number">8.2</span> Example using a column</a></li>
+  </ul></li>
+  <li><a href="#application" id="toc-application" class="nav-link" data-scroll-target="#application"><span class="header-section-number">9</span> Application</a>
+  <ul class="collapse">
+  <li><a href="#questions-to-answer" id="toc-questions-to-answer" class="nav-link" data-scroll-target="#questions-to-answer"><span class="header-section-number">9.1</span> Questions to answer</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content column-page-right" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">2-05: Which and Regular Expressions</h1>
+</div>
+
+
+
+<div class="quarto-title-meta column-page-right">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="to-do" class="level3" data-number="0.1">
+<h3 data-number="0.1" class="anchored" data-anchor-id="to-do"><span class="header-section-number">0.1</span> To-do</h3>
+</section>
+<section id="purpose" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="purpose"><span class="header-section-number">1</span> Purpose</h2>
+<ul>
+<li><p>use which() on string values</p></li>
+<li><p>Regular Expressions to find a basic patterns within a string</p></li>
+<li><p>union() and intersect() to combine conditions</p></li>
+</ul>
+</section>
+<section id="script-and-data-for-this-lesson" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="script-and-data-for-this-lesson"><span class="header-section-number">2</span> Script and data for this lesson</h2>
+<p>The script for this lesson <a href="../scripts/2-05_WhichAndRegularExpressions.R">can be downloaded here</a></p>
+<p>The data for this lesson <a href="../data/Lansing2016Noaa-3.csv">can be downloaded here</a></p>
+</section>
+<section id="which-on-string-data" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="which-on-string-data"><span class="header-section-number">3</span> Which on string data</h2>
+<p>Like last lesson we are going to use the the data from <strong><em>Lansing2016NOAA-3.csv</em></strong>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>weatherData <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="at">file=</span><span class="st">"data/Lansing2016NOAA-3.csv"</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In the last lesson we used <strong><em>which()</em></strong> to find numeric values in a vector that met a specific condition:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>highPrecip <span class="ot">=</span> <span class="fu">which</span>(precipNum <span class="sc">&gt;</span> <span class="dv">1</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>And there were 8 days with precipitation greater than 1 inch:</p>
+<div class="sourceCode" id="cb3" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> highPrecip</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>]  <span class="dv">73</span>  <span class="dv">91</span> <span class="dv">225</span> <span class="dv">228</span> <span class="dv">229</span> <span class="dv">273</span> <span class="dv">290</span> <span class="dv">307</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="identifying-values-using-which" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="identifying-values-using-which"><span class="header-section-number">3.1</span> Identifying values using which()</h3>
+<p>In this lesson we will be searching for values that meet a condition within string (<strong><em>chr</em></strong>) columns.</p>
+<p>&nbsp;</p>
+<p>In <strong><em>weatherData</em></strong>, the string column <strong><em>weatherType</em></strong> contains information about the type of weather (e.g., Fog, Snow, Rain, etc.) that occurred during that day:</p>
+<div id="fig-weatherTypeCol" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-weatherTypeCol-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-2-05_weatherType.jpg" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-weatherTypeCol-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: The weatherType column within the weatherData data frame
+</figcaption>
+</figure>
+</div>
+<p>We can use <strong><em>which()</em></strong> to find which values in <strong><em>weatherType</em></strong> are equal to a specific string, for instance, which values are equal to snow, “SN”?</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>snowyDays <span class="ot">=</span> <span class="fu">which</span>(weatherData<span class="sc">$</span>weatherType <span class="sc">==</span> <span class="st">"SN"</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The above code:</p>
+<ol type="1">
+<li><p>Cycles through each value in the <strong><em>weatherType</em></strong> column&nbsp;</p></li>
+<li><p>Check if the value is equal to “SN”</p></li>
+<li><p>Create a vector that has the index of all the values in the vector equal to “SN”</p></li>
+<li><p>Save that vector to <strong><em>snowyDays</em></strong></p>
+<p>&nbsp;</p></li>
+</ol>
+<p>The result is a vector, <strong><em>snowyDays</em></strong>, with <strong>11</strong> values, so <strong>11</strong> days exclusively had snow:</p>
+<div class="sourceCode" id="cb5" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>snowyDays<span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">11</span>] <span class="dv">3</span> <span class="dv">16</span> <span class="dv">17</span> <span class="dv">29</span> ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>There were many more days with snow but many were not counted in the search because those days had other weather condition.&nbsp; For instance, the first and fourth column in <a href="#fig-weatherTypeCol" class="quarto-xref">Figure&nbsp;1</a> had snow (SN) and breeze (BR). We will deal with those situations later in this lesson when we talk about <strong><em>grep()</em></strong> and Regular Expressions.</p>
+</section>
+</section>
+<section id="using-the-indexed-value-generated-by-which" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="using-the-indexed-value-generated-by-which"><span class="header-section-number">4</span> Using the indexed value generated by which()</h2>
+<p>We can use the vector of indexed values (<strong><em>snowyDays</em></strong>) to index other vectors like <strong><em>avgTemp</em></strong> and <strong><em>avgWind</em></strong>.</p>
+<p>&nbsp;</p>
+<p>Let’s find the temperatures and wind speeds on days that it was snowy</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>  snowyDayTemps <span class="ot">=</span> weatherData<span class="sc">$</span>avgTemp[snowyDays];</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  snowyDayWinds <span class="ot">=</span> weatherData<span class="sc">$</span>windSpeed[snowyDays];</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>since <strong><em>snowyDays</em></strong> =<span class="hl">c(3, 16, 17, 29, 39, 45, 136, 351, 354, 364, 365)</span></p>
+<p>&nbsp;</p>
+<p><strong><em>avgTemp</em></strong>[<strong>snowyDays</strong>] is equivalent to <strong><em>avgTemp</em></strong>[<span class="hl">c(3, 16, 17, 29, 39, 45, 136, 351, 354, 364, 365)</span>];</p>
+<p>This gives the temperature on the 11 days indexed in the <strong><em>snowyDays</em></strong> vector</p>
+<p>&nbsp;</p>
+<p><strong><em>avgWind</em></strong>[<strong>snowyDays</strong>] is equivalent to <strong><em>avgWind</em></strong>[<span class="hl">c(3, 16, 17, 29, 39, 45, 136, 351, 354, 364, 365)</span>];</p>
+<p>This gives the winds on the 11 days indexed in the <strong><em>snowyDays</em></strong> vector</p>
+<p>&nbsp;</p>
+<p>The average temperatures and average wind speeds for the 11 days with snow were:</p>
+<div id="fig-elevenDaySubset" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-elevenDaySubset-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> snowyDayTemps<span class="sc">:</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] <span class="dv">29</span> <span class="dv">30</span> <span class="dv">18</span> <span class="dv">24</span> <span class="dv">34</span> <span class="dv">9</span> <span class="dv">40</span> <span class="dv">12</span> <span class="dv">11</span> <span class="dv">34</span> <span class="dv">28</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> snowyDayWinds</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] <span class="fl">10.0</span> <span class="fl">13.8</span> <span class="fl">15.5</span> <span class="fl">10.7</span>  <span class="fl">6.8</span>  <span class="fl">8.1</span> <span class="fl">10.9</span>  <span class="fl">9.4</span> <span class="fl">11.5</span> <span class="fl">16.7</span> <span class="fl">14.0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-elevenDaySubset-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: the temperature and wind speeds on the 11 snowy days
+</figcaption>
+</figure>
+</div>
+<section id="multiple-conditions-on-string-values" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="multiple-conditions-on-string-values"><span class="header-section-number">4.1</span> Multiple conditions on string values</h3>
+<p>Just like with <strong><em>if-else</em></strong> conditional statements, we can create more complex conditions by using the <strong><em>and</em></strong> ( <strong><em>&amp;</em></strong> ),&nbsp; <strong><em>or</em></strong> ( <strong>|</strong> ),&nbsp; <strong><em>not</em></strong> ( <strong><em>!</em></strong> ), and <strong><em>not equal</em></strong> (<strong><em>!=</em></strong>) operators.</p>
+<p>&nbsp;</p>
+<p>Let’s find all days that has rain or snow using the <strong><em>or</em></strong> operator ( <strong>|</strong> ):</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>  rainOrSnow <span class="ot">=</span> <span class="fu">which</span>(weatherData<span class="sc">$</span>weatherType <span class="sc">==</span> <span class="st">"SN"</span> <span class="sc">|</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>                     weatherData<span class="sc">$</span>weatherType <span class="sc">==</span> <span class="st">"RA"</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>There were <strong>39</strong> days that had rain or snow.&nbsp; Since we know 11 of those days had snow, the other 28 must be rain:</p>
+<div class="sourceCode" id="cb9" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> rainOrSnow</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>]   <span class="dv">3</span>  <span class="dv">16</span>  <span class="dv">17</span>  <span class="dv">29</span>  <span class="dv">39</span>  <span class="dv">45</span>  <span class="dv">69</span>  <span class="dv">77</span>  <span class="dv">82</span>  <span class="dv">87</span>  <span class="dv">90</span> <span class="dv">110</span> <span class="dv">120</span> <span class="dv">134</span> <span class="dv">136</span> <span class="dv">137</span> <span class="dv">150</span> <span class="dv">158</span> <span class="dv">165</span> <span class="dv">175</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">21</span>] <span class="dv">178</span> <span class="dv">193</span> <span class="dv">197</span> <span class="dv">211</span> <span class="dv">224</span> <span class="dv">258</span> <span class="dv">264</span> <span class="dv">271</span> <span class="dv">272</span> <span class="dv">281</span> <span class="dv">282</span> <span class="dv">294</span> <span class="dv">304</span> <span class="dv">313</span> <span class="dv">337</span> <span class="dv">351</span> <span class="dv">354</span> <span class="dv">364</span> <span class="dv">365</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><span class="note">Note: these results also do not include the days that had rain along with other conditions.</span></p>
+</section>
+<section id="inverting-logic-the-not-operator" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="inverting-logic-the-not-operator"><span class="header-section-number">4.2</span> Inverting logic: the <strong>not</strong> operator</h3>
+<p>We can reverse the condition to look for days that did not have “RA” nor “SN” using the <strong><em>not</em></strong> ( <strong>!</strong> ) operator.</p>
+<p>&nbsp;</p>
+<p>The original condition was:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>weatherData<span class="sc">$</span>weatherType <span class="sc">==</span> <span class="st">"SN"</span> <span class="sc">|</span>  weatherData<span class="sc">$</span>weatherType <span class="sc">==</span> <span class="st">"RA"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You can invert a condition using the <strong><em>not</em></strong> operator ( <strong>!</strong> ) and parentheses around the original condition:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>«<span class="sc">!</span>(»weatherData<span class="sc">$</span>weatherType <span class="sc">==</span> <span class="st">"SN"</span> <span class="sc">|</span>  weatherData<span class="sc">$</span>weatherType <span class="sc">==</span> <span class="st">"RA"</span>«)»</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>And then put the inverted condition into the <strong><em>which()</em></strong> statement.&nbsp; Here we are saying, “<strong><em>which</em></strong> days did <strong><em>not</em></strong> have (snow <strong><em>or</em></strong> rain)”</p>
+<div class="sourceCode" id="cb12" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>  noRainNorSnow <span class="ot">=</span> <span class="fu">which</span>(«<span class="sc">!</span>(»weatherData<span class="sc">$</span>weatherType <span class="sc">==</span> <span class="st">"SN"</span> <span class="sc">|</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                          weatherData<span class="sc">$</span>weatherType <span class="sc">==</span> <span class="st">"RA"</span>«)»);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>And we see that <strong><em>noRainNorSnow</em></strong> has <strong>327</strong> values, which is <strong>366-39</strong>:</p>
+<div class="sourceCode" id="cb13" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>noRainNorSnow<span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">327</span>] <span class="dv">1</span> <span class="dv">2</span> <span class="dv">4</span> <span class="dv">5</span> <span class="dv">6</span> <span class="dv">7</span> ...</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>rainOrSnow<span class="sc">:</span>    int [<span class="dv">1</span><span class="sc">:</span><span class="dv">39</span>] <span class="dv">3</span> <span class="dv">16</span> <span class="dv">17</span> <span class="dv">29</span> <span class="dv">39</span> ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>An equivalent way to reverse the logic is to say, “<strong><em>which</em></strong> days that did <strong><em>not</em></strong> have snow <strong><em>and</em></strong> days that did <strong><em>not</em></strong> have rain”</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a> noRainNorSnow2 <span class="ot">=</span> <span class="fu">which</span>(weatherData<span class="sc">$</span>weatherType «<span class="sc">!=</span>» <span class="st">"SN"</span> «<span class="sc">&amp;</span>»</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>                        weatherData<span class="sc">$</span>weatherType «<span class="sc">!=</span>» <span class="st">"RA"</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The result is the same:</p>
+<div class="sourceCode" id="cb15" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>noRainNorSnow2<span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">327</span>] <span class="dv">1</span> <span class="dv">2</span> <span class="dv">4</span> <span class="dv">5</span> <span class="dv">6</span> <span class="dv">7</span> ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="two-common-ways-to-incorrectly-invert-logic" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="two-common-ways-to-incorrectly-invert-logic"><span class="header-section-number">4.3</span> Two common ways to Incorrectly invert logic</h3>
+<p>In this section, we will look at two common ways to incorrectly invert logic.&nbsp;</p>
+<section id="forgetting-the-parenthesis" class="level4" data-number="4.3.1">
+<h4 data-number="4.3.1" class="anchored" data-anchor-id="forgetting-the-parenthesis"><span class="header-section-number">4.3.1</span> Forgetting the parenthesis:</h4>
+<p>If you take this condition:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>weatherData<span class="sc">$</span>weatherType <span class="sc">==</span> <span class="st">"SN"</span> <span class="sc">|</span>  weatherData<span class="sc">$</span>weatherType <span class="sc">==</span> <span class="st">"RA"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>And put a <strong><em>not</em></strong> operator in front without parentheses:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="sc">!</span>weatherData<span class="sc">$</span>weatherType <span class="sc">==</span> <span class="st">"SN"</span> <span class="sc">|</span>  weatherData<span class="sc">$</span>weatherType <span class="sc">==</span> <span class="st">"RA"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Then you have the logic: <strong><em>not</em></strong> SN <strong><em>or</em></strong> rain.</p>
+<p>&nbsp;</p>
+<p>So, you will get all days that:</p>
+<ul>
+<li><p>did not have snow <strong><em>or</em></strong></p></li>
+<li><p>did have rain</p></li>
+</ul>
+</section>
+<section id="forgetting-to-flip-the-orand-operator" class="level4" data-number="4.3.2">
+<h4 data-number="4.3.2" class="anchored" data-anchor-id="forgetting-to-flip-the-orand-operator"><span class="header-section-number">4.3.2</span> Forgetting to flip the <strong><em>or/and</em></strong> operator</h4>
+<p>If you choose to use the <strong><em>not equal</em></strong> operators on each component of the condition, then you need to flip the operator from <strong><em>or</em></strong> to <strong><em>and</em></strong> (or vice versa).</p>
+<p>&nbsp;</p>
+<p>Here we did not flip the operator and kept the conditional operator <strong><em>or</em></strong>:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>noRainNorSnow_bad <span class="ot">=</span> <span class="fu">which</span>(weatherData<span class="sc">$</span>weatherType <span class="sc">!=</span> <span class="st">"SN"</span> <span class="sc">|</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>                          weatherData<span class="sc">$</span>weatherType <span class="sc">!=</span> <span class="st">"RA"</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>And the result is that all 366 values meet the condition:</p>
+<div id="fig-notNor" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-notNor-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="cb19" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>noRainNorSnow_bad<span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">366</span>] <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">4</span> <span class="dv">5</span> <span class="dv">6</span> <span class="dv">7</span> ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-notNor-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: all values meet the conditnion of <strong>not</strong> rain and <strong>not</strong> snow
+</figcaption>
+</figure>
+</div>
+<p>In the application for this lesson, I will let you explain why saying “<strong><em>not</em></strong> snow <strong><em>or not</em></strong> rain” gives you every value in the column.</p>
+</section>
+</section>
+<section id="conditions-from-different-columns" class="level3" data-number="4.4">
+<h3 data-number="4.4" class="anchored" data-anchor-id="conditions-from-different-columns"><span class="header-section-number">4.4</span> Conditions from different columns</h3>
+<p>We also can combine conditions from two different columns.&nbsp; For examples, let’s get all days that were raining and 70 degrees or more:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>  rainAndHighTemps <span class="ot">=</span> <span class="fu">which</span>(weatherData<span class="sc">$</span>weatherType <span class="sc">==</span> <span class="st">"RA"</span> <span class="sc">&amp;</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>                           weatherData<span class="sc">$</span>avgTemp <span class="sc">&gt;=</span> <span class="dv">70</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>There are 7 days where both these condition (rain and temperatures 70 or more) occurred:</p>
+<div id="fig-diffColConditions" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-diffColConditions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="cb21" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> rainAndHighTemps</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] <span class="dv">150</span> <span class="dv">178</span> <span class="dv">193</span> <span class="dv">197</span> <span class="dv">211</span> <span class="dv">224</span> <span class="dv">264</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-diffColConditions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Days with rain and average temperatures at or above 70
+</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="multiple-conditions-on-multiple-variables" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="multiple-conditions-on-multiple-variables"><span class="header-section-number">5</span> Multiple conditions on multiple variables</h2>
+<p>Similar to <strong><em>if()</em></strong>, we can use <strong><em>which()</em></strong> to create more complex condition.&nbsp; The trick is to make sure you have the parentheses correct, because, like in Algebra, parentheses determine the order of operations.&nbsp; <span class="note">Note: in programming, just like Algebra, adding extra parentheses does not hurt.</span></p>
+<p>&nbsp;</p>
+<p>So, let’s say we want days where there was rain <strong><em>or</em></strong> snow and temperatures between 25 <strong><em>and</em></strong> 40:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>  complexCond <span class="ot">=</span> <span class="fu">which</span>( (weatherData<span class="sc">$</span>weatherType <span class="sc">==</span> <span class="st">"RA"</span> <span class="sc">|</span> </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>                        weatherData<span class="sc">$</span>weatherType <span class="sc">==</span> <span class="st">"SN"</span>) <span class="sc">&amp;</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>                       (weatherData<span class="sc">$</span>avgTemp <span class="sc">&gt;=</span> <span class="dv">25</span> <span class="sc">&amp;</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>                        weatherData<span class="sc">$</span>avgTemp <span class="sc">&lt;=</span> <span class="dv">40</span>) );</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>There were 7 days that meet all the conditions above:</p>
+<div id="fig-advCondition" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-advCondition-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="cb23" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>  complexCond <span class="ot">=</span> <span class="fu">which</span>( (weatherData<span class="sc">$</span>weatherType <span class="sc">==</span> <span class="st">"RA"</span> <span class="sc">|</span> </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>                        weatherData<span class="sc">$</span>weatherType <span class="sc">==</span> <span class="st">"SN"</span>) <span class="sc">&amp;</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>                       (weatherData<span class="sc">$</span>avgTemp <span class="sc">&gt;=</span> <span class="dv">25</span> <span class="sc">&amp;</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>                        weatherData<span class="sc">$</span>avgTemp <span class="sc">&lt;=</span> <span class="dv">40</span>) );</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-advCondition-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: The results of a more complex condition inside a <strong>which()</strong> statement
+</figcaption>
+</figure>
+</div>
+<section id="combining-conditional-statements" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="combining-conditional-statements"><span class="header-section-number">5.1</span> Combining conditional statements</h3>
+<p>For the above code, we have the inner parentheses with these two conditional statements:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>(weatherData<span class="sc">$</span>weatherType <span class="sc">==</span> <span class="st">"RA"</span> <span class="sc">|</span> weatherData<span class="sc">$</span>weatherType <span class="sc">==</span> <span class="st">"SN"</span>)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>(weatherData<span class="sc">$</span>avgTemp <span class="sc">&gt;=</span> <span class="dv">25</span> <span class="sc">&amp;</span> weatherData<span class="sc">$</span>avgTemp <span class="sc">&lt;=</span> <span class="dv">40</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>And an outer parenthses that <strong><em>ands</em></strong> the two conditional statements together:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>«(» (weatherData<span class="sc">$</span>weatherType <span class="sc">==</span> <span class="st">"RA"</span> <span class="sc">|</span> weatherData<span class="sc">$</span>weatherType <span class="sc">==</span> <span class="st">"SN"</span>) «<span class="sc">&amp;</span>»</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  (weatherData<span class="sc">$</span>avgTemp <span class="sc">&gt;=</span> <span class="dv">25</span> <span class="sc">&amp;</span> weatherData<span class="sc">$</span>avgTemp <span class="sc">&lt;=</span> <span class="dv">40</span>) «)»</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In the <strong><em>Console</em></strong> we can break down the steps:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">which</span>(weatherData<span class="sc">$</span>weatherType <span class="sc">==</span> <span class="st">"RA"</span> <span class="sc">|</span> weatherData<span class="sc">$</span>weatherType <span class="sc">==</span> <span class="st">"SN"</span>)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>]   «<span class="dv">3</span>»  «<span class="dv">16</span>»  <span class="dv">17</span>  <span class="dv">29</span>  «<span class="dv">39</span>»  <span class="dv">45</span>  <span class="dv">69</span>  <span class="dv">77</span>  <span class="dv">82</span>  <span class="dv">87</span>  <span class="dv">90</span> <span class="dv">110</span> <span class="dv">120</span> <span class="dv">134</span> «<span class="dv">136</span>» <span class="dv">137</span> <span class="dv">150</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">18</span>] <span class="dv">158</span> <span class="dv">165</span> <span class="dv">175</span> <span class="dv">178</span> <span class="dv">193</span> <span class="dv">197</span> <span class="dv">211</span> <span class="dv">224</span> <span class="dv">258</span> <span class="dv">264</span> <span class="dv">271</span> <span class="dv">272</span> <span class="dv">281</span> <span class="dv">282</span> <span class="dv">294</span> <span class="dv">304</span> <span class="dv">313</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">35</span>] «<span class="dv">337</span>» <span class="dv">351</span> <span class="dv">354</span> «<span class="dv">364</span>» «<span class="dv">365</span>»</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">which</span>(weatherData<span class="sc">$</span>avgTemp <span class="sc">&gt;=</span> <span class="dv">25</span> <span class="sc">&amp;</span> weatherData<span class="sc">$</span>avgTemp <span class="sc">&lt;=</span> <span class="dv">40</span>)</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>]   <span class="dv">1</span>   <span class="dv">2</span>   «<span class="dv">3</span>»   <span class="dv">6</span>   <span class="dv">7</span>   <span class="dv">8</span>   <span class="dv">9</span>  <span class="dv">10</span>  <span class="dv">14</span>  <span class="dv">15</span>  «<span class="dv">16</span>»  <span class="dv">25</span>  <span class="dv">26</span>  <span class="dv">27</span>  <span class="dv">28</span>  <span class="dv">30</span>  <span class="dv">32</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>[<span class="dv">18</span>]  <span class="dv">33</span>  <span class="dv">34</span>  <span class="dv">35</span>  <span class="dv">36</span>  <span class="dv">37</span>  <span class="dv">38</span>  «<span class="dv">39</span>»  <span class="dv">40</span>  <span class="dv">47</span>  <span class="dv">52</span>  <span class="dv">53</span>  <span class="dv">54</span>  <span class="dv">55</span>  <span class="dv">56</span>  <span class="dv">57</span>  <span class="dv">58</span>  <span class="dv">60</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>[<span class="dv">35</span>]  <span class="dv">65</span>  <span class="dv">66</span>  <span class="dv">78</span>  <span class="dv">79</span>  <span class="dv">80</span>  <span class="dv">81</span>  <span class="dv">83</span>  <span class="dv">84</span>  <span class="dv">85</span>  <span class="dv">86</span>  <span class="dv">88</span>  <span class="dv">89</span>  <span class="dv">93</span>  <span class="dv">94</span>  <span class="dv">95</span>  <span class="dv">96</span>  <span class="dv">97</span></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>[<span class="dv">52</span>]  <span class="dv">98</span>  <span class="dv">99</span> <span class="dv">100</span> <span class="dv">101</span> <span class="dv">103</span> «<span class="dv">136</span>» <span class="dv">300</span> <span class="dv">301</span> <span class="dv">317</span> <span class="dv">324</span> <span class="dv">325</span> <span class="dv">326</span> <span class="dv">327</span> <span class="dv">328</span> <span class="dv">330</span> <span class="dv">331</span> <span class="dv">332</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>[<span class="dv">69</span>] <span class="dv">336</span> «<span class="dv">337</span>» <span class="dv">338</span> <span class="dv">339</span> <span class="dv">340</span> <span class="dv">341</span> <span class="dv">342</span> <span class="dv">343</span> <span class="dv">344</span> <span class="dv">346</span> <span class="dv">347</span> <span class="dv">356</span> <span class="dv">357</span> <span class="dv">358</span> <span class="dv">359</span> <span class="dv">360</span> <span class="dv">362</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>[<span class="dv">86</span>] <span class="dv">363</span> «<span class="dv">364</span>» «<span class="dv">365</span>» <span class="dv">366</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>And see that <strong><em>3, 16, 39, 136, 337, 364,</em></strong> and <strong><em>365</em></strong> are the only value in both conditional statements.</p>
+</section>
+</section>
+<section id="finding-patterns-within-strings" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="finding-patterns-within-strings"><span class="header-section-number">6</span> Finding patterns within strings</h2>
+<p>The elephant in the room is that we are only capturing days that <span class="hl">exclusively</span>had snow or rain using <strong><em>which()</em></strong>.</p>
+<p>&nbsp;</p>
+<p>But we know from looking at the <strong><em>weatherType</em></strong> column (<a href="#fig-weatherTypeCol" class="quarto-xref">Figure&nbsp;1</a>) that many values in <strong><em>weatherType</em></strong> have “SN” or “RA” with other weather conditions – and these are not being captured because <strong><em>which()</em></strong> only checks for values that are exactly “SN”.</p>
+<p>&nbsp;</p>
+<p>We really want <span class="hl">every value that contains “SN”</span>.&nbsp; This cannot be easily done using <strong><em>which()</em></strong> but it can be done easily using <strong><em>grep().&nbsp; grep()</em></strong> is a powerful tool that allows one to search for <strong><em>patterns</em></strong> within a string.&nbsp;</p>
+<section id="a-quick-grep-example" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="a-quick-grep-example"><span class="header-section-number">6.1</span> A quick grep() example</h3>
+<p><strong><em>grep()</em></strong> is a very powerful tool for finding patterns within strings (the process is known as Regular Expressions, which would take many lessons to properly teach).&nbsp; In this lesson, we are only using the most basic functionality in <strong><em>grep()</em></strong> which is finding a substring within a string.</p>
+<p>&nbsp;</p>
+<p>Let’s start with this vector:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>grepTestVec <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"one fish"</span>, <span class="st">"two fish"</span>, <span class="st">"one llama"</span>, <span class="st">"two llama"</span>,</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>                <span class="st">"red fish"</span>, <span class="st">"blue fish"</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong><em>grep()</em></strong> return the indices of the vectors value that contain the substring specified:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>test1 <span class="ot">=</span> <span class="fu">grep</span>(<span class="st">"two"</span>, grepTestVec);  <span class="co"># values that have the substring "two"</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>test2 <span class="ot">=</span> <span class="fu">grep</span>(<span class="st">"lla"</span>, grepTestVec);  <span class="co"># values that have the substring "lla"</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>test3 <span class="ot">=</span> <span class="fu">grep</span>(<span class="st">"fish"</span>, grepTestVec); <span class="co"># values that have the substring "fish"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>And we can match the index values below with the values in <strong><em>grepTestVec</em></strong>:</p>
+<div class="sourceCode" id="cb29" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>test1<span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>] <span class="dv">2</span> <span class="dv">4</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>test2<span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>] <span class="dv">3</span> <span class="dv">4</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>test3<span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>] <span class="dv">1</span> <span class="dv">2</span> <span class="dv">5</span> <span class="dv">6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="using-grep-to-find-patterns-within-a-dataframe" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="using-grep-to-find-patterns-within-a-dataframe"><span class="header-section-number">6.2</span> Using grep() to find patterns within a dataframe</h3>
+<p>We are going to use <strong><em>grep()</em></strong> to find the substring (“SN”) contained within a vector of string values (<strong><em>weatherType</em></strong>):</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>snowyDaysGrep <span class="ot">=</span> <span class="fu">grep</span>(weatherData<span class="sc">$</span>weatherType, <span class="at">pattern=</span><span class="st">"SN"</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong><em>grep(),</em></strong>like <strong><em>which()</em></strong>, produces a vector of the index values that meets the condition (i.e., index of the <strong><em>weatherType</em></strong> values that contain “SN”).</p>
+<p>&nbsp;</p>
+<p>And we can see there were actually 65 days that had snow – a much more reasonable result for Lansing, MI!</p>
+<div class="sourceCode" id="cb31" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>snowyDaysGrep<span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">65</span>] <span class="dv">1</span> <span class="dv">3</span> <span class="dv">4</span> <span class="dv">10</span> <span class="dv">11</span> <span class="dv">12</span> <span class="dv">13</span> <span class="dv">14</span> <span class="dv">16</span> <span class="dv">17</span>...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="subsetting-vectors" class="level3" data-number="6.3">
+<h3 data-number="6.3" class="anchored" data-anchor-id="subsetting-vectors"><span class="header-section-number">6.3</span> Subsetting vectors</h3>
+<p><strong><em>snowyDaysGrep</em></strong> is a vector with 65 indexed values, representing the 65 days in Lansing that had snow.</p>
+<p>&nbsp;</p>
+<p>Just like before, we can use the results of a <strong><em>grep()</em></strong> to index another column.&nbsp; We will use <strong><em>snowyDaysGrep</em></strong> to index the <strong><em>avgTemp</em></strong> and <strong><em>windSpeed</em></strong> columns in <strong><em>weatherData</em></strong>:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>snowDaysGrepTemp <span class="ot">=</span> weatherData<span class="sc">$</span>avgTemp[snowyDaysGrep];</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>snowDaysGrepWind <span class="ot">=</span> weatherData<span class="sc">$</span>windSpeed[snowyDaysGrep];</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>And we can see the average temperature and wind speeds for the 65 days that had snow:</p>
+<div class="sourceCode" id="cb33" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> snowDaysGrepTemp</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] <span class="dv">26</span> <span class="dv">29</span> <span class="dv">17</span> <span class="dv">27</span> <span class="dv">13</span> <span class="dv">18</span> <span class="dv">15</span> <span class="dv">26</span> <span class="dv">30</span> <span class="dv">18</span> <span class="dv">11</span> <span class="dv">13</span> <span class="dv">17</span> <span class="dv">19</span> <span class="dv">22</span> <span class="dv">36</span> <span class="dv">26</span> <span class="dv">30</span> <span class="dv">24</span> <span class="dv">38</span> <span class="dv">26</span> <span class="dv">26</span> <span class="dv">34</span> <span class="dv">28</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">25</span>] <span class="dv">16</span> <span class="dv">14</span>  <span class="dv">9</span> <span class="dv">20</span> <span class="dv">27</span> <span class="dv">20</span> <span class="dv">30</span> <span class="dv">29</span> <span class="dv">34</span> <span class="dv">22</span> <span class="dv">19</span> <span class="dv">18</span> <span class="dv">20</span> <span class="dv">28</span> <span class="dv">34</span> <span class="dv">32</span> <span class="dv">36</span> <span class="dv">28</span> <span class="dv">35</span> <span class="dv">33</span> <span class="dv">28</span> <span class="dv">34</span> <span class="dv">40</span> <span class="dv">40</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">49</span>] <span class="dv">34</span> <span class="dv">33</span> <span class="dv">28</span> <span class="dv">26</span> <span class="dv">23</span> <span class="dv">26</span> <span class="dv">28</span> <span class="dv">18</span> <span class="dv">15</span> <span class="dv">10</span> <span class="dv">12</span> <span class="dv">21</span> <span class="dv">14</span> <span class="dv">11</span> <span class="dv">36</span> <span class="dv">34</span> <span class="dv">28</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> snowDaysGrepWind</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] <span class="fl">15.5</span> <span class="fl">10.0</span>  <span class="fl">7.7</span> <span class="fl">17.8</span> <span class="fl">12.2</span> <span class="fl">18.2</span> <span class="fl">13.2</span>  <span class="fl">5.6</span> <span class="fl">13.8</span> <span class="fl">15.5</span> <span class="fl">13.1</span>  <span class="fl">7.6</span>  <span class="fl">4.4</span>  <span class="fl">5.5</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>[<span class="dv">15</span>]  <span class="fl">6.3</span> <span class="fl">18.2</span> <span class="fl">13.3</span> <span class="fl">14.1</span> <span class="fl">10.7</span> <span class="fl">13.5</span>  <span class="fl">7.9</span>  <span class="fl">7.3</span>  <span class="fl">6.8</span> <span class="fl">12.9</span> <span class="fl">13.8</span> <span class="fl">14.5</span>  <span class="fl">8.1</span>  <span class="fl">6.9</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>[<span class="dv">29</span>]  <span class="fl">3.8</span>  <span class="fl">5.9</span> <span class="fl">18.9</span> <span class="fl">16.5</span> <span class="fl">16.2</span> <span class="fl">13.1</span>  <span class="fl">9.7</span>  <span class="fl">3.7</span>  <span class="fl">2.2</span>  <span class="fl">5.4</span> <span class="fl">10.2</span> <span class="fl">10.4</span> <span class="fl">10.9</span> <span class="fl">11.6</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>[<span class="dv">43</span>] <span class="fl">10.7</span>  <span class="fl">7.9</span>  <span class="fl">9.4</span> <span class="fl">13.8</span> <span class="fl">10.9</span> <span class="fl">19.2</span>  <span class="fl">5.9</span>  <span class="fl">8.6</span> <span class="fl">16.7</span> <span class="fl">10.2</span>  <span class="fl">8.6</span> <span class="fl">10.3</span> <span class="fl">13.8</span> <span class="fl">10.8</span></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>[<span class="dv">57</span>] <span class="fl">16.7</span> <span class="fl">11.3</span>  <span class="fl">9.4</span>  <span class="fl">4.1</span>  <span class="fl">8.1</span> <span class="fl">11.5</span>  <span class="fl">7.3</span> <span class="fl">16.7</span> <span class="fl">14.0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><span class="note">note: if you want to sort the values, you can use <strong>sort(snowDaysGrepWind)</strong></span></p>
+</section>
+</section>
+<section id="grep-with-the-condition" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="grep-with-the-condition"><span class="header-section-number">7</span> grep() with the | condition:</h2>
+<p>Similar to <strong><em>which()</em></strong> statements, we can use the <strong><em>or</em></strong> ( <strong><em>|</em></strong> ) operator to find all values in <strong><em>weatherType</em></strong> that contain <span class="hl">either</span><strong>SN</strong> or <strong>RN</strong>:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>daysWithPrecipGrep <span class="ot">=</span> <span class="fu">grep</span>(weatherData<span class="sc">$</span>weatherType, <span class="at">pattern=</span><span class="st">"RA|SN"</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>And we get a vector with 179 values in it, representing the 179 days that had rain or snow (or both):</p>
+<div class="sourceCode" id="cb35" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>daysWithPrecipGrep<span class="sc">:</span> int[<span class="dv">1</span><span class="sc">:</span><span class="dv">179</span>] <span class="dv">1</span> <span class="dv">3</span> <span class="dv">4</span> <span class="dv">8</span> <span class="dv">9</span> <span class="dv">10</span> ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>An equivalent result can be obtained by getting the <strong><em>grep()</em></strong> results for <strong><em>RA</em></strong> and <strong><em>SN</em></strong> separately and then combining them using <strong><em>union()</em></strong>:</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>rainyDaysGrep <span class="ot">=</span> <span class="fu">grep</span>(<span class="st">"RA"</span>, weatherData<span class="sc">$</span>weatherType);</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>snowyDaysGrep <span class="ot">=</span> <span class="fu">grep</span>(<span class="st">"SN"</span>, weatherData<span class="sc">$</span>weatherType);</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>daysWithPrecipUnion <span class="ot">=</span> <span class="fu">union</span>(rainyDaysGrep, snowyDaysGrep);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Looking at the days with rain, snow, and the combination of the two:</p>
+<div class="sourceCode" id="cb37" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>rainyDaysGrep<span class="sc">:</span>       int[<span class="dv">1</span><span class="sc">:</span><span class="dv">124</span>] <span class="dv">8</span> <span class="dv">9</span> <span class="dv">10</span> <span class="dv">15</span> <span class="dv">25</span> <span class="dv">26</span> ...</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>snowyDaysGrep<span class="sc">:</span>       int[<span class="dv">1</span><span class="sc">:</span><span class="dv">65</span>] <span class="dv">1</span> <span class="dv">3</span> <span class="dv">4</span> <span class="dv">10</span> <span class="dv">11</span> <span class="dv">12</span> <span class="dv">13</span> ...</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>daysWithPrecipUnion<span class="sc">:</span> int[<span class="dv">1</span><span class="sc">:</span><span class="dv">179</span>] <span class="dv">1</span> <span class="dv">3</span> <span class="dv">4</span> <span class="dv">8</span> <span class="dv">9</span> <span class="dv">10</span> ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><span class="note">Note: the rainy days and snowy days adds up to 189 whereas the union has only 179 days.&nbsp; This is because there were 10 days that had both rain and snow… like day 10.</span></p>
+<section id="more-complex-union-scenario" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="more-complex-union-scenario"><span class="header-section-number">7.1</span> More complex union() scenario</h3>
+<p>Using <strong><em>union()</em></strong> seems more complicated than just using the <strong><em>or</em></strong> operator&nbsp; ( <strong>|</strong> ) in <strong><em>grep()</em></strong>, but <strong><em>union()</em></strong> allows for more complex situations.</p>
+<p>&nbsp;</p>
+<p>For instance if we want to combine results from different columns like days that were hazy (<strong><em>HZ</em></strong>) or had temperatures above&nbsp;<strong>85</strong> (<strong><em>maxTemp</em></strong> &gt; 85):</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>hazyDays <span class="ot">=</span> <span class="fu">grep</span>(weatherData<span class="sc">$</span>weatherType, <span class="at">pattern=</span><span class="st">"HZ"</span>);</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>hotDays <span class="ot">=</span> <span class="fu">which</span>(weatherData<span class="sc">$</span>maxTemp <span class="sc">&gt;</span> <span class="dv">85</span>);</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>hazyOrHotDays <span class="ot">=</span> <span class="fu">union</span>(hazyDays, hotDays);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>And we see there were <strong>44</strong> hazy days, <strong>40</strong> hot days, and <strong>82</strong> days that were hazy or hot (<span class="note">note: the union of hazy and hot days is not quite the addition of the two</span>):</p>
+<div id="fig-union" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-union-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="cb39" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>hazyDays int[<span class="dv">1</span><span class="sc">:</span><span class="dv">44</span>] <span class="dv">12</span> <span class="dv">13</span> <span class="dv">14</span> <span class="dv">19</span> <span class="dv">20</span>...</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>hotDays<span class="sc">:</span> int[<span class="dv">1</span><span class="sc">:</span><span class="dv">40</span>] <span class="dv">149</span> <span class="dv">162</span> <span class="dv">163</span> <span class="dv">167</span>...</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>hazyOrHotDays<span class="sc">:</span> int[<span class="dv">1</span><span class="sc">:</span><span class="dv">82</span>] <span class="dv">12</span> <span class="dv">13</span> <span class="dv">14</span> <span class="dv">19</span>...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-union-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: Using <strong>union()</strong> to combine hazy and hot days
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="an-alternative-to-when-using-grep" class="level3" data-number="7.2">
+<h3 data-number="7.2" class="anchored" data-anchor-id="an-alternative-to-when-using-grep"><span class="header-section-number">7.2</span> An alternative to &amp; when using grep()</h3>
+<p>With <strong><em>grep()</em></strong> we can find days with rain <strong><em>or</em></strong> snow using the <strong><em>or</em></strong> operator ( <strong>|</strong> )&nbsp; but we cannot use <strong><em>grep()</em></strong> to return days with <strong><em>both</em></strong> rain <strong><em>and</em></strong> snow (i.e., there is no <strong><em>&amp;</em></strong> operator in <strong><em>grep()</em></strong>)</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="do">#### this does not work!</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="co"># daysWithRainAndSnow = grep(weatherData$weatherType, pattern="RN&amp;SN");</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The reason for this requires a lengthy explanation of how <em><strong>grep()</strong> works</em> (and regular expressions, in general), which is beyond the scope of this class.</p>
+<p>&nbsp;</p>
+<p>What we want is the <span class="hl">index values that are in both <strong>rainyDaysGrep</strong> and <strong>snowyDaysGrep</strong></span>.</p>
+<p>&nbsp;</p>
+<p>Luckily, there is a function for that called <strong><em>intersect()</em></strong>.&nbsp; <strong><em>intersect()</em></strong> is the sibling function to <strong><em>union()</em></strong>, <strong><em>intersect()</em></strong> takes two vectors and produces a vector of values that occur in both the original vectors.</p>
+<p>&nbsp;</p>
+<p>In this case we will use <strong><em>intersect()</em></strong> on the vectors <strong><em>rainyDaysGrep</em></strong> and <strong><em>snowDaysGrep</em></strong>:</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>daysWithRainAndSnow <span class="ot">=</span> <span class="fu">intersect</span>(rainyDaysGrep, snowyDaysGrep);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong><em>daysWithRainAndSnow</em></strong> has <strong>10</strong> values, representing the <strong>10</strong> values that are in both <strong><em>rainyDaysGrep</em></strong> and <strong><em>snowyDaysGrep</em></strong></p>
+<div class="sourceCode" id="cb42" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> daysWithRainAndSnow</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>]  <span class="dv">10</span>  <span class="dv">26</span>  <span class="dv">34</span>  <span class="dv">35</span>  <span class="dv">84</span>  <span class="dv">94</span>  <span class="dv">98</span> <span class="dv">101</span> <span class="dv">352</span> <span class="dv">359</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="setdiff" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="setdiff"><span class="header-section-number">8</span> SetDiff()</h2>
+<p><strong><em>union()</em></strong> is functionally similar to the <strong><em>or</em></strong> operator, <strong><em>intersect()</em></strong> is functionally similar to the <strong><em>and</em></strong> operator.</p>
+<p>&nbsp;</p>
+<p>The equivalent to a <strong><em>not</em></strong> operator is a bit more complex – the function to use is <strong><em>setDiff()</em></strong>.</p>
+<p>&nbsp;</p>
+<p>In <strong><em>setDiff()</em></strong>, we compare two vectors:</p>
+<ul>
+<li><p>a vector with all possible values (so, if there are 366 values, then a vector from 1:366)</p></li>
+<li><p>the vector we want to invert</p>
+<p>&nbsp;</p></li>
+</ul>
+<p><strong><em>setDiff()</em></strong> returns the <span class="hl">the values in the first vector that are not in the second vector</span>effectively subtracting out values from the second vector that are in the first vector.</p>
+<section id="quick-example" class="level3" data-number="8.1">
+<h3 data-number="8.1" class="anchored" data-anchor-id="quick-example"><span class="header-section-number">8.1</span> quick example</h3>
+<p>If the are 10 values in a vector and 4 of them (<strong><em>3,5,6,9</em></strong>) meet a condition:</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>  meetsCondition <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">9</span>);</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  invertCondition <span class="ot">=</span> <span class="fu">setdiff</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, meetsCondition);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>And we see that <strong><em>invertCondition</em></strong> is all values from 1 to 10 not represented in <strong><em>meetsCondition</em></strong>:</p>
+<div class="sourceCode" id="cb44" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>invertCondition<span class="sc">:</span> int[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>] <span class="dv">1</span> <span class="dv">2</span> <span class="dv">4</span> <span class="dv">7</span> <span class="dv">8</span> <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="example-using-a-column" class="level3" data-number="8.2">
+<h3 data-number="8.2" class="anchored" data-anchor-id="example-using-a-column"><span class="header-section-number">8.2</span> Example using a column</h3>
+<p>If we want to find the days without rain or snow, we can take the days with rain or snow.</p>
+<p>&nbsp;</p>
+<p>and use <strong><em>setDiff()</em></strong> to find the difference between that and a vector with all 366 values:</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>daysWithoutPrecip <span class="ot">=</span> <span class="fu">setdiff</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">366</span>, daysWithPrecipGrep);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>And we see that adding up the <strong><em>daysWithPrecipGrep</em></strong> (179) and <strong><em>daysWithoutPrecip</em></strong> (187), we get 366 days:</p>
+<div class="sourceCode" id="cb46" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>daysWithPrecipGrep<span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">179</span>] <span class="dv">1</span> <span class="dv">3</span> <span class="dv">4</span> <span class="dv">8</span> <span class="dv">9</span> <span class="dv">10</span> ...</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>daysWithoutPrecip<span class="sc">:</span>  int [<span class="dv">1</span><span class="sc">:</span><span class="dv">187</span>] <span class="dv">2</span> <span class="dv">5</span> <span class="dv">6</span> <span class="dv">7</span> <span class="dv">22</span> <span class="dv">24</span> ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="application" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="application"><span class="header-section-number">9</span> Application</h2>
+<p>A) Create a new script file named <strong><em>app2-05.r</em></strong> and put it in your <strong><em>scripts</em></strong> folder.</p>
+<p>&nbsp;</p>
+<p>B) In comments at the top of your script answer the following:</p>
+<ol type="1">
+<li><p>Why do all values in the <strong><em>weatherType</em></strong> column meet the condition of&nbsp; <strong><em>not</em></strong> rain <strong><em>or not</em></strong> snow (<a href="#fig-notNor" class="quarto-xref">Figure&nbsp;3</a>)?</p></li>
+<li><p>How many days are both hazy and hot <a href="#fig-union" class="quarto-xref">Figure&nbsp;6</a>)?</p></li>
+</ol>
+<p>C) Give two ways to change this logic (<a href="#fig-diffColConditions" class="quarto-xref">Figure&nbsp;4</a>) to rain <strong><em>and</em></strong> temperatures <strong><em>less than</em></strong> 70:</p>
+<ol type="1">
+<li><p>one by changing the conditional operator on the temperature</p></li>
+<li><p>one by adding a <strong><em>not</em></strong> operator</p></li>
+</ol>
+<p><span class="note">Note: the answer for both will have the same 21 values</span></p>
+<p>&nbsp;</p>
+<p>D) Use <strong><em>which()</em></strong>to:</p>
+<ol type="1">
+<li><p>find days that were RA, SN, or HZ with temperatures between 50 and 70</p></li>
+<li><p>find days that were RA or SN, with temperatures between 50 and 70, and windspeed between 10 and 30</p>
+<p>&nbsp;</p></li>
+</ol>
+<p>E) Use <strong><em>grep()</em></strong> (and some of <strong><em>union</em></strong>/<strong><em>intersect</em></strong>/<strong><em>setdiff</em></strong>) to find days with snow (<strong>SN</strong>) but not blowing snow (<strong>BLSN</strong>)</p>
+<p>&nbsp;</p>
+<p>F) Challenge: Use <strong><em>grep()</em></strong> to on the <strong><em>precip</em></strong> column in <strong><em>weatherType</em></strong> to (<span class="note">note: <strong>precip</strong> is a string column</span>):</p>
+<ol type="1">
+<li><p>find all precipitation values greater than or equal to 1.0 (hint: what is a unique substring for values &gt;= 1)</p></li>
+<li><p>find all precipitation values greater than or equal to 0.8</p></li>
+<li><p>find all days that have precipitation values greater than 0.8 and have maximum temperatures between 70-80</p>
+<ul>
+<li>use <strong><em>which()</em></strong> to find the temperatures</li>
+</ul></li>
+</ol>
+<p>&nbsp;</p>
+<p><span class="note">Note: if you are looking for characters that are not alphanumeric then you might need to set the argument&nbsp;<strong><em>fixed</em></strong> in <strong><em>grep()</em></strong> to <strong>TRUE</strong>.</span></p>
+<p>&nbsp;</p>
+<p>Save the script as&nbsp;<strong><em>app2-05.r</em></strong> in your&nbsp;<strong><em>scripts</em></strong> folder and&nbsp; email your Project Folder to Charlie Belinsky at belinsky@msu.edu.</p>
+<p>&nbsp;</p>
+<p><a href="1-01-RStudioProjectsSetup.html#sec-zip-folder" target="_blank">Instructions for zipping the Project Folder are here.</a></p>
+<p>&nbsp;</p>
+<p>If you have any questions regarding this application, feel free to email them to Charlie Belinsky at belinsky@msu.edu.</p>
+<section id="questions-to-answer" class="level3" data-number="9.1">
+<h3 data-number="9.1" class="anchored" data-anchor-id="questions-to-answer"><span class="header-section-number">9.1</span> Questions to answer</h3>
+<p>Answer the following in comments inside your application script:</p>
+<ol type="1">
+<li><p>What was your level of comfort with the lesson/application?</p></li>
+<li><p>What areas of the lesson/application confused or still confuses you?</p></li>
+<li><p>What are some things you would like to know more about that is related to, but not covered in, this lesson?</p></li>
+</ol>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

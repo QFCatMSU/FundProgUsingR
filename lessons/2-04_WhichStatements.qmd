@@ -1,0 +1,508 @@
+---
+title: "2-04: Which Statements"
+short: "2-04"
+# special characters for highlighting code : «»
+---
+
+### To-do
+
+## Purpose
+
+-    create conditional statements to evaluate the values in a vector
+
+-    get the index of vector values that meet a condition
+
+-    use indexing to subset another vector
+
+-    plot values from a subset index
+
+## Script and data for this lesson
+
+The script for this lesson [can be downloaded here](../scripts/2-04_WhichStatements.R)
+
+The data for this lesson [can be download here](../data/Lansing2016Noaa-3.csv)
+
+## which() -- conditional statements for vectors
+
+***which()*** answers the question: [Which values in this vector meet a specified condition?]{.hl}
+
+ 
+
+The answer to ***which()*** is presented as a [vector of index values]{.hl} representing the values in the vector where the condition is ***TRUE***.
+
+ 
+
+Let's do some quick example with the following vectors:
+
+``` r
+ages = c(25,47,13,59,76,33,45);
+animalNames = c("llama", "alpaca", "goat", "llama", "guanaco");
+```
+
+We will ask four questions, using ***which()*** on the two vectors above:
+
+1.   Which ages are greater than 40?
+
+2.   Which ages are less than or equal to 33?
+
+3.   Which animals names are equal to llama?
+
+4.   Which animals names are not equal to llama?
+
+ 
+
+``` r
+index1 = which(ages > 40);   # index of ages greater than 40
+index2 = which(ages <= 33);  # index of ages less than or equal to 33
+index3 = which(animalNames == "llama"); # index of animals named "llama"
+index4 = which(animalNames != "llama"); # index of animals not named "llama"
+```
+
+***which()*** outputs a vector of indexed values that meet the condition in parentheses.  This vector is saved to the variables ***index1, index2, index3, and index4.***
+
+### which() produces an index vector
+
+The four index vectors [hold the index of the values that met the condition]{.hl} -- not the values itself.
+
+The number of values in the vector that met the condition is given by the second number in brackets **\[1:X\]**
+
+``` {.r tab="Environment"}
+index1: int [1:4] 2 4 5 7
+index2: int [1:3] 1 3 6
+index3: int [1:2] 1 4
+index4: int [1:3] 2 3 5
+```
+
+***index1*** says there were **4** values in ***ages*** greater than **40**: values 2, 4, 5, and 7 (values: 47, 59, 76, and 45)
+
+***index2*** says there were ***3*** values in ***ages*** less than or equal to **33**: values 1, 3, and 6 (values: 25, 13, and 33)
+
+***index3*** says there were ***2*** values in ***animalNames*** that were *equal* to "llama": values 1 and 4
+
+***index4*** says there were ***3*** values in ***animalNames*** *not equal* to "llama": values  2,3 and 5 (alpaca, guanaco, and goat)
+
+ 
+
+[Extension: The TRUE/FALSE vector]
+
+## Using which() on numeric data
+
+For the rest of this lesson, we are going to use the ***weatherData*** frame from last lesson.
+
+``` r
+weatherData = read.csv(file="data/Lansing2016NOAA-3.csv");
+```
+
+We are going to use ***which()*** to
+
+1.   find values in the precipitation columns that meet a certain condition
+
+2.   subset other columns (e.g., ***avgTemp***, ***relHum***) by these values
+
+    -   in other words, find the ***avgTemp*** on days where precipitation meets a certain condition
+
+### Finding the NA values using which()
+
+In the last lesson we took the ***chr*** column ***precip***, converted it to a numeric vector, and then using ***for*** loops, changed the **NA** values to **0.005**.
+
+ 
+
+We are going to repeat this process using ***which()*** statements. 
+
+ 
+
+First we will save the ***precip*** column in ***weatherData*** to the vector ***precip***:
+
+``` r
+precip = weatherData$precip;
+```
+
+Then convert the ***chr*** vector ***precip*** to a numeric vector -- and save the results to ***precip2***:
+
+``` r
+precip2 = as.numeric(precip);
+```
+
+Use ***which()*** to find which values in ***precip2*** are **NA**:
+
+``` r
+naValues = which(is.na(precip2));
+```
+
+In the ***Environment***, we see there are 60 **NA** values in ***precip2***, starting with values ***3, 4, 14***... (meaning the 3^rd^, 4^th^, 14^th^... values in ***precip2*** are **NA**)
+
+``` {.r tab="Environment"}
+naValues:  int[1:60] 3 4 14 16 17 19 20 ...
+```
+
+Create a copy of ***precip2*** called ***precip3*** (this is only done so we can see the progress):
+
+``` r
+precip3 = precip2;
+```
+
+Set the ***precip3*** values indexed by ***naValues*** to ***0.005*** (change the 3^rd^, 4^th^, 14^th^... values in ***precip2*** to **0.005**):
+
+``` r
+precip3[naValues] = 0.005;
+```
+
+Like last lesson, we see the progress from a ***chr*** vector (***precip***) to a numeric vector with **NA** values (***precip2***) to a numeric value with **NA** values replaced with **0.005** (***precip3***):
+
+``` {.r tab="Environment"}
+precip:   chr[1:366]  "0.04" "0.00" «"T" "T"» "0.00" ...
+precip2:  num[1:366]  0.04 0 «NA NA» 0 ...
+precip3:  num[1:366]  0.04 0 «0.005 0.005» 0 ...
+```
+
+### Subset based on numeric conditions
+
+We are going to subset the ***precipNum*** column in 3 ways: 
+
+1.  no precipitation (***precipitation*** == **0.00**)
+
+2.  a lot of precipitation (***precipitation*** \> **1.00**).
+
+3.  moderate precipitation (***precipitation*** \> **0.25 & \< 0.50**).
+
+     
+
+First we need to create vectors that contain the index values for ***precipNum*** that correspond to the three scenarios above.  We will use ***which()*** on the ***precipNum*** column.  ***which()*** statements use conditional statement just like ***if*** statements.
+
+``` r
+daysNoPrecip = which(weatherData$precipNum == 0.00);   # days where precip is 0
+daysHighPrecip = which(weatherData$precipNum > 1.00);  # days where precip is > 1
+```
+
+[Note: it is good practice to put in the decimal (**1.00** as opposed to **1**) to indicate to the reader that it is a real number that, in this situation, happens to have a value the looks like an integer.]{.note}
+
+ 
+
+The first two scenarios have one condition, the third scenario has two conditions:
+
+-    ***precipNum*** \> 0.25 and
+
+-    ***precipNum*** \< 0.50
+
+ 
+
+As with ***if*** statements, each condition must be explicit:
+
+``` r
+# explicit condition: days where precip is > 0.25 and precip < 0.5
+daysModPrecip = which(weatherData$precipNum > 0.25 & weatherData$precipNum < 0.5);
+
+# this code is not explicit and will cause an error
+# daysModPrecip = which(weatherData$precipNum > 0.25 & < 0.5);
+```
+
+We see in the ***Environment*** tab that there were:
+
+-   **167** days without any precipitation
+
+-   **8** days with precipitation more than **1** inch
+
+-   **18** days with precipitation between **0.25** and **0.50** inches
+
+     
+
+::: {#fig-vectorIndices}
+``` r
+daysHighPrecip: int [1:«8»]  73 91 225 228 229 273 290 307
+daysModPrecip:  int [1:«18»]  33 88 119 121 123 125 168 183 ...
+daysNoPrecip:   int [1:«167»]  2 5 6 7 24 30 37 38 42 49 ...
+```
+
+Creating vector indices of days based on precipitation amounts
+:::
+
+## Subsetting other vectors
+
+The index vectors in @fig-vectorIndices give the rows in ***weatherData\$precipNum*** that meet the given condition.  We can use this information to subset other columns and answer questions like:
+
+-   Which dates (***dateYear*** column) had more than 1 inch of rain?
+
+-   What was the average wind speed (***windSpeed***) for the days that had greater than 1 inch of rain?
+
+     
+
+``` r
+rainyDates = weatherData$dateYear[highPrecipIndex];
+rainyDayWindSpeed = weatherData$windSpeed[highPrecipIndex];
+```
+
+***rainyDates*** and ***rainyDayWindSpeed*** are both vector with 8 values, the 8 values are on the same rows as the precipitations that are greater than 1 inch.
+
+ 
+
+We see in the ***Console*** the 8 dates that had a high amount of precipitation and the average wind speed for those dates:
+
+::: {#fig-subsetDays}
+``` r
+> rainyDates
+[1] "03-13-2016" "03-31-2016" "08-12-2016" "08-15-2016" "08-16-2016" "09-29-2016" "10-16-2016"
+[8] "11-02-2016"
+> rainyDayWindSpeed
+[1]  9.2 17.3  6.1  3.8  9.2 12.4  8.1  4.6
+```
+
+Printing out the subsetted rainy dates to the Console
+:::
+
+[Extension: Data frame columns instead of vectors]
+
+## Plotting subsetted vectors
+
+In previous lesson, we created a scatterplot by initializing a data frame in ***ggplot()*** and mapping columns to the ***x*** and ***y*** axes:
+
+``` r
+  plot1 = ggplot(«data=weatherData») +                # initialize data frame
+    geom_point( «mapping=aes(x=avgTemp, y=relHum)»,   # map the x and y axes
+                color = "blue") +
+    labs( title="Humidity vs. Temperature",
+          subtitle="Lansing, 2016",
+          x = "Temperature (F)",
+          y = "Humidity (%)") +
+    theme_bw();
+  plot(plot1);
+```
+
+And we get a scatterplot of all 366 values:
+
+![Scatterplot of humidity vs temperature using all values in the columns](images/R-2-04-Scatterplot.png){#fig-scatterplot .fs}
+
+In this section, we want to create a humidity (***relHum***) vs temperature (***avgTemp***) scatterplot limited to the days that meet the precipitation conditions.
+
+ 
+
+In GGPlot there are two ways to do this:
+
+1.   subset the ***weatherData*** data frame
+
+2.   subset the ***x*** and ***y*** mappings
+
+### Subsetting the data frame
+
+When we use this code to set up a ggplot canvas:
+
+``` r
+ggplot(data = weatherData)
+```
+
+We are saying that the plots added to the canvas are going to use data from the ***weatherData*** data frame.
+
+ 
+
+In this case, we do not want to use all of the rows from the data frame -- so, we want to set up the ggplot canvas with a data frame that is a subset of ***weatherData***
+
+ 
+
+We can create a subset of ***weatherData*** using the index vector ***daysHighPrecip***.  In other words, we create a data frame that only has the rows from ***weatherData*** given by ***daysHighPrecip***.
+
+ 
+
+To subset rows in a data frame:
+
+``` r
+subset1 = weatherData[1:10,];           # subset rows 1-10, all columns
+subset2 = weatherData[daysHighPrecip,]  # subset rows given by daysHighPrecip
+```
+
+***subset1*** has the first 10 rows of ***weatherData***:
+
+![subset1 is a data frame that has the first 10 rows of weatherData](images/R-2-04-SubsetDF1.png){#fig-subset1 .fs}
+
+***subset2*** is **8** rows from ***weatherData*** given by the **8** index values in ***daysHighPrecip*** (73, 91, 225..).
+
+![Subsetting the weatherData data frame by rows](images/R-2-04-SubsetDF2.png){#fig-subset2 .fs}
+
+### Using a subset dataframe in ggplot
+
+To plot the data from the 8 rows with precipitation greater than one inch, we can initialize ***ggplot()*** with the subsetted data frame, ***subset2.***
+
+``` r
+  plot2 = ggplot(data=«subset2») +      # initialize the cvanvas with subset2
+    geom_point( mapping=aes(x=«avgTemp», y=«relHum»), # avgTemp and relHum from subset2
+                color = "blue") +
+    labs( title="Humidity vs. Temperature",
+          subtitle="Precipiation greater than 1 inch",
+          x = "Temperature (F)",
+          y = "Humidity (%)") +
+    theme_bw();
+  plot(plot2);
+```
+
+[note: Mappings within plot components will always search the columns in the data frame that was initialized with the canvas]{.note}
+
+ 
+
+The data frame only has 8 rows, we will just get the 8 points representing the 8 days of high precipitation:
+
+![Plot of subsetted humidity and temperature values](images/R-2-04-SubsetPlot.png){#fig-subsetPlot .fs}
+
+### Subset the mappings
+
+The second way to plot the data is to:
+
+-   [not initialize]{.hl} the ggplot canvas area with a data frame  (use ***ggplot()***)
+
+-   directly map the subset vectors -- in this case, ***avgTemp*** and ***relHum***.
+
+     
+
+If we subset ***relHum*** and ***avgTemp*** with the ***daysHighPrecip*** vector, then we get the 8 humidity and temperatures values that correspond to the 8 days with high precipitation:
+
+``` r
+> weatherData$relHum[daysHighPrecip]
+[1] 85 85 82 78 77 90 88 83
+> weatherData$avgTemp[daysHighPrecip]
+[1] 46 53 82 72 76 58 65 58
+```
+
+If we subset the mapping the we can leave out the data frame initialization in ***ggplot()*** and add the subsetted vectors to the mappings:
+
+``` r
+  plot3 = ggplot() +    «# no data frame was initialized for the ggplot canvas»
+    geom_point( mapping=aes(«x=weatherData$avgTemp[daysHighPrecip]»,  
+                            «y=weatherData$relHum[daysHighPrecip]»)) +
+    labs( title="Humidity vs. Temperature",
+          subtitle="Precipitation greater than 1 inch",
+          x = "Temperature (F)",
+          y = "Humidity (%)") +
+    theme_bw();
+  plot(plot3);
+```
+
+This code will produce the exact same plot as above (@fig-subsetPlot).
+
+ 
+
+[Warning: You will get an error if you mix the two method (initializing the canvas with a data frame and mapping subsetted vector).]{.note}
+
+### Manually entering values in mappings
+
+When you do not initialize a data frame in ***ggplot()***, then you are manually entering vectors in the mappings.  To be explicit about this fact, we could just put in vector values:
+
+``` r
+  plot4 = ggplot() +
+    geom_point( mapping=aes(x=c(46,53,82,72,76,58,65,58),
+                            y=c(85,85,82,78,77,90,88,83)),
+                color = "blue") +
+    labs( title="Humidity vs. Temperature",
+          subtitle="Precipiation greater than 1 inch",
+          x = "Temperature (F)",
+          y = "Humidity (%)") +
+    theme_bw();
+  plot(plot4);
+```
+
+This code will, again, produce the exact same plot as above (@fig-subsetPlot).
+
+## Application
+
+1.   Find dates that had snow (so, snow \> 0)
+
+    -   snow, like precip, uses **T** values
+
+2.   Find dates that had more than a trace of rain
+
+3.   Find the dates that had peak winds between 30 and 40 mph
+
+    -   Plot a rain vs temperature scatterplot for these date
+
+4.  Find the number of days the humidity was high (greater than 85%) and for these days output to the ***Console***:
+
+    -    the date
+
+    -    the amount of precipitation
+
+    -    the maximum wind speed
+
+ 
+
+The results of #4 would be best done with a ***for*** loop the cycles through all the days and  should look something like this:
+
+     01-09-2016 had X inches of rain and a wind speed of X miles/hour
+
+     01-14-2016 had X inches of rain and a wind speed of X miles/hour
+
+     01-15-2016 had X inches of rain and a wind speed of X miles/hour
+
+ 
+
+{{< include ../assets/_AppInstructions.qmd >}}
+
+## Extension: Data frame columns instead of vectors
+
+The line of code:
+
+``` r
+humidity = lansing2016Weather[,"humidity"];
+```
+
+saves all the values from the column "humidity" in the data frame ***lansing2016Weather*** to the vector ***humidity***.
+
+ 
+
+We then could use ***humidity*** to find which days had high humidity
+
+``` r
+highHumidity = which(humidity > 80);  # days with high humidity
+```
+
+But we could do the exact same thing with the column from the data frame
+
+``` r
+highHumidity = which(lansing2016Weather[,"humidity"] > 80);
+```
+
+While we can use both ***humidity*** and ***lansing2016Weather\[,"humidity"\]*** in the ***which()***, there are two advantages to using ***humidity***
+
+1.  The code is easier to read
+
+2.  We can modify ***humidity*** without modifying the data frame, ***lansing2016Weather***
+
+## Extension: The TRUE/FALSE vector
+
+Let's take another look at the ***which()*** code:
+
+``` r
+ages = c(2,7,3,9,6,3,5);
+animals = c("llama", "alpaca", "goat", "llama", "guanaco");
+
+index1 = which(ages > 4);  # holds index of ages greater than 4
+index2 = which(ages < 4);  # holds index of ages less than 4
+
+index3 = which(animals == "llama"); # holds index of animals that are "llama"
+index4 = which(animals != "llama"); # holds index of animals that are not "llama"
+```
+
+There is an in between step that we skipped over here.  Each ***which()*** has a conditional statement inside.  That conditional statement gets evaluated by R first, and then ***which()*** is performed on the answer to the conditional statement.  Using the Console Window, let's look at how the conditional statement get evaluated by R:
+
+![Looking at TRUE/FALSE vectors for conditional statements on a vector](images/R-03-07 TF Vector.PNG){#fig-TF_Vector .fs}
+
+Each conditional statement produces a vector that has the same length as the number of values in the vector (@fig-TF_Vector).  The vector has only two vales: **TRUE** and **FALSE**.  The **TRUE** and **FALSE** values match the index of the values in the original index.
+
+ 
+
+So if:
+
+``` r
+ages = c(2,7,3,9,6,3,5);
+```
+
+then:
+
+***(ages*** **\> 4)**  is evaluated as:  **c(FALSE, TRUE, FALSE, TRUE, TRUE, FALSE, TRUE)**
+
+ 
+
+This indicates that the **2^nd^**, **4^th^**, **5^th^**, and **7^th^** values of the vector ***ages*** are greater than **4**
+
+ 
+
+***which()*** takes the **TRUE/FALSE** index and outputs the indices of the ***TRUE*** values
+
+``` r
+which(ages > 4);   # This evaluates to c(2, 4, 5, 7)
+```

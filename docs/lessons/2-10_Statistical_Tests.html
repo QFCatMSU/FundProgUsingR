@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.22">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>2-10: Statistical Tests</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b4406b7675125bc2ba204020e191172.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-5f39cfd1aee7e7785011fc5df168ee92.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link rel="shortcut icon" href="https://qfcatmsu.github.io/assets/quarto/qfc_icon.png">
+<script>mod=true; menuCollapse=true;</script>
+<script src="https://qfcatmsu.github.io/assets/quarto/qfc_styles.js"></script>
+ 
+
+
+<link rel="stylesheet" href="https://qfcatmsu.github.io/assets/quarto/qfc_styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+          <h1 class="quarto-secondary-nav-title">2-10: Statistical Tests</h1>
+        </a>     
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text"><b>Fundamentals of Programming class</b></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/0-01-IntroductionAndSyllabus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction and Syllabus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-01-RStudioProjectsSetup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-01: RStudio Projects Setup</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-02-Variables.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-02: Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-03_Mathematical_Operations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-03: Mathematical Operations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-04_Vectors_And_Data_Frames.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-04: Vectors and Data Frames</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-05_Functions_Introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-05: Functions Introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-06_Run_and_Source.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-06: Run and Source</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-07_Outputs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-07: Outputs</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-08_Conditional_Operations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-08: Conditional Operations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-09_If_Else_Statements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-09: If-Else Statements</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-10_For_Loops.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-10: For Loops</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-11_For_Loops_and_State_Varibles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-11: For Loops and State Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-12_MultipleConditions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-12: Multiple Conditions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-13_Functions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-13: Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-14_Functions2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-14: Functions 2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-15_Nested_Loops_and _Matrices.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-15: Nested loops and Matrices</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-15_Nested_Loops_and _Matrices-HOME-GALAXYBOOK.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-15: Nested loops and Matrices</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-01_R-Base_Plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-01: R-Base Plots</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-02_DataFrame_Modifications.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-02: DataFrame Modifications</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-03_DataTypesAndDateFrames.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-03: Data Types and Data Frames</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-04_WhichStatements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-04: Which Statements</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-05_WhichAndRegularExpressions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-05: Which and Regular Expressions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-06_Datetime_Obejects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-06: Datetime objects</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-07_Matrices.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-07: Matrices</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-08_Binding_Sampling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-08: Binding and Sampling</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-09_Stacking_Mapping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-09: Stacking and Mapping</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-10_Statistical_Tests.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">2-10: Statistical Tests</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-11_Objects_Attributes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-11: Objects and Attributes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-12_Lists.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-12: Lists</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-13_Breakpoints.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-13: Breakpoints</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title"><b>Lesson Content</b></h2>
+   
+  <ul>
+  <li><a href="#to-do" id="toc-to-do" class="nav-link active" data-scroll-target="#to-do"><span class="header-section-number">0.1</span> to-do</a></li>
+  <li><a href="#purpose" id="toc-purpose" class="nav-link" data-scroll-target="#purpose"><span class="header-section-number">1</span> Purpose</a></li>
+  <li><a href="#script-and-data-for-this-lesson" id="toc-script-and-data-for-this-lesson" class="nav-link" data-scroll-target="#script-and-data-for-this-lesson"><span class="header-section-number">2</span> Script and data for this lesson</a></li>
+  <li><a href="#reading-in-the-rdata-file-list-from-last-lesson" id="toc-reading-in-the-rdata-file-list-from-last-lesson" class="nav-link" data-scroll-target="#reading-in-the-rdata-file-list-from-last-lesson"><span class="header-section-number">3</span> Reading in the rdata file (List from last lesson)</a>
+  <ul class="collapse">
+  <li><a href="#extracting-the-data-frames" id="toc-extracting-the-data-frames" class="nav-link" data-scroll-target="#extracting-the-data-frames"><span class="header-section-number">3.1</span> Extracting the data frames</a></li>
+  </ul></li>
+  <li><a href="#t-tests" id="toc-t-tests" class="nav-link" data-scroll-target="#t-tests"><span class="header-section-number">4</span> t-tests</a>
+  <ul class="collapse">
+  <li><a href="#first-t-test-on-columns-that-do-not-look-similar" id="toc-first-t-test-on-columns-that-do-not-look-similar" class="nav-link" data-scroll-target="#first-t-test-on-columns-that-do-not-look-similar"><span class="header-section-number">4.1</span> first t-test on columns that do not look similar</a></li>
+  <li><a href="#second-t-test-on-columns-that-do-look-similar" id="toc-second-t-test-on-columns-that-do-look-similar" class="nav-link" data-scroll-target="#second-t-test-on-columns-that-do-look-similar"><span class="header-section-number">4.2</span> second t-test on columns that do look similar</a></li>
+  <li><a href="#sec-seven_subsets" id="toc-sec-seven_subsets" class="nav-link" data-scroll-target="#sec-seven_subsets"><span class="header-section-number">4.3</span> Seven ways to subset columns in a Data Frame</a></li>
+  <li><a href="#summary-of-subset-operators" id="toc-summary-of-subset-operators" class="nav-link" data-scroll-target="#summary-of-subset-operators"><span class="header-section-number">4.4</span> Summary of subset operators</a></li>
+  </ul></li>
+  <li><a href="#anovas" id="toc-anovas" class="nav-link" data-scroll-target="#anovas"><span class="header-section-number">5</span> ANOVAs</a>
+  <ul class="collapse">
+  <li><a href="#performing-an-anova" id="toc-performing-an-anova" class="nav-link" data-scroll-target="#performing-an-anova"><span class="header-section-number">5.1</span> Performing an ANOVA</a></li>
+  <li><a href="#a-second-anova-make-into-application" id="toc-a-second-anova-make-into-application" class="nav-link" data-scroll-target="#a-second-anova-make-into-application"><span class="header-section-number">5.2</span> A Second ANOVA &lt;make into application&gt;</a></li>
+  <li><a href="#histogram-on-the-residuals" id="toc-histogram-on-the-residuals" class="nav-link" data-scroll-target="#histogram-on-the-residuals"><span class="header-section-number">5.3</span> Histogram on the residuals</a></li>
+  </ul></li>
+  <li><a href="#linear-regression" id="toc-linear-regression" class="nav-link" data-scroll-target="#linear-regression"><span class="header-section-number">6</span> Linear Regression</a>
+  <ul class="collapse">
+  <li><a href="#calculate-a-linear-regression" id="toc-calculate-a-linear-regression" class="nav-link" data-scroll-target="#calculate-a-linear-regression"><span class="header-section-number">6.1</span> Calculate a linear regression</a></li>
+  </ul></li>
+  <li><a href="#application" id="toc-application" class="nav-link" data-scroll-target="#application"><span class="header-section-number">7</span> Application</a>
+  <ul class="collapse">
+  <li><a href="#questions-to-answer" id="toc-questions-to-answer" class="nav-link" data-scroll-target="#questions-to-answer"><span class="header-section-number">7.1</span> Questions to answer</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content column-page-right" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">2-10: Statistical Tests</h1>
+</div>
+
+
+
+<div class="quarto-title-meta column-page-right">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="to-do" class="level3" data-number="0.1">
+<h3 data-number="0.1" class="anchored" data-anchor-id="to-do"><span class="header-section-number">0.1</span> to-do</h3>
+<ul>
+<li>Change question 1 to be its own question (i.e., subset … in 4 different ways)</li>
+</ul>
+</section>
+<section id="purpose" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="purpose"><span class="header-section-number">1</span> Purpose</h2>
+<ul>
+<li><p>Opening , and using data from, rdata files</p></li>
+<li><p>Use t-tests and ANOVAS</p></li>
+<li><p>demonstrate subsetting methods</p></li>
+<li><p>plot and calculate a linear regresion</p></li>
+</ul>
+</section>
+<section id="script-and-data-for-this-lesson" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="script-and-data-for-this-lesson"><span class="header-section-number">2</span> Script and data for this lesson</h2>
+<p>The <a href="../scripts/2-10_StatisticalTests.R">script for the lesson is here</a></p>
+<p>The List file created in the last lesson: <a href="../data/tempDFs.rdata">tempDFs.rdata</a></p>
+</section>
+<section id="reading-in-the-rdata-file-list-from-last-lesson" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="reading-in-the-rdata-file-list-from-last-lesson"><span class="header-section-number">3</span> Reading in the rdata file (List from last lesson)</h2>
+<p>In previous lesson, we opened up a CSV file and saved the data to a data frame using <strong><em>read.csv()</em></strong>.&nbsp; In this lesson, we are going to use some of the data frames created in the last lesson – data frames that were saved to a <strong><em>rdata</em></strong> file in the <strong><em>data</em></strong> folder of our project.</p>
+<p>&nbsp;</p>
+<p>From last lesson:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># save(temperatureDFs, file = "data/tempDFs.rdata");</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now, let’s open up the file using <strong><em>load()</em></strong>:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="at">file =</span> <span class="st">"data/tempDFs.rdata"</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Inside the <strong><em>rdata</em></strong> file is a List object, <strong><em>temperatureDFs</em></strong>,&nbsp; with four data frames.&nbsp; In the next couple lessons, we will be dealing a lot more with navigating and creating <strong><em>List</em></strong> objects.&nbsp; For now, a <strong><em>List</em></strong> object is a container for other object (like data frames). &nbsp;&nbsp; <strong><em>load()</em></strong> takes the objects from the <strong><em>rdata</em></strong> file&nbsp; and puts in the <strong><em>Environment</em></strong>:</p>
+<div id="fig-rdata_list" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-rdata_list-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-2-10-LoadRData.jpg" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rdata_list-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: The List object from the rdata file – it is a carbon copy of the List object from last lesson
+</figcaption>
+</figure>
+</div>
+<section id="extracting-the-data-frames" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="extracting-the-data-frames"><span class="header-section-number">3.1</span> Extracting the data frames</h3>
+<p>The data frames inside the List can be extracted just like a column can be extracted from a data frame.&nbsp; Let’s extract the four data frame using the ( $ ) subset operator:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>  lansJanTempsDF <span class="ot">=</span> temperatureDFs<span class="sc">$</span>origDF;</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  stackedDF <span class="ot">=</span> temperatureDFs<span class="sc">$</span>stackedDF;</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  stackedDF2 <span class="ot">=</span> temperatureDFs<span class="sc">$</span>stackDF_3_6;</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  stackedDF3 <span class="ot">=</span> temperatureDFs<span class="sc">$</span>stackedDF_1_2_5_6;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This put the data frames directly in the <strong><em>Environment</em></strong>:</p>
+<div class="sourceCode" id="cb4" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>⮞ lansJanTempsDF<span class="sc">:</span>   <span class="dv">31</span> obs. of <span class="dv">6</span> variables</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>⮞ stackedDF<span class="sc">:</span>        <span class="dv">186</span> obs. of <span class="dv">2</span> variables</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>⮞ stackedDF2<span class="sc">:</span>       <span class="dv">62</span> obs. of <span class="dv">2</span> variables</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>⮞ stackedDF3<span class="sc">:</span>       <span class="dv">124</span> obs. of <span class="dv">2</span> variables</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="t-tests" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="t-tests"><span class="header-section-number">4</span> t-tests</h2>
+<p>In the last lesson, we created line plot and box plot to display the temperature data.&nbsp; Let’s be more formal about analyzing the data and do a two-sample t-test<em>.</em>&nbsp; In statistics, a<span class="hl">two-sample t-test</span> is used to determine if there is evidence that the means from two groups of values are different.&nbsp; In this case, we are asking if the columns (years) in the matrix, are statistically different.&nbsp;</p>
+<div id="fig-box_temp_data" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-box_temp_data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-2-09-All-Boxes-01.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-box_temp_data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Boxplot of temperature data from last lesson
+</figcaption>
+</figure>
+</div>
+<section id="first-t-test-on-columns-that-do-not-look-similar" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="first-t-test-on-columns-that-do-not-look-similar"><span class="header-section-number">4.1</span> first t-test on columns that do not look similar</h3>
+<p>We are going to compare the means from January 2012 (column <strong>2</strong>) and January 2014 (column <strong>4</strong>). – two columns that, based on <a href="#fig-box_temp_data" class="quarto-xref">Figure&nbsp;2</a>, do not look similar at all.&nbsp; To perform a t-test between these two years, we call the function <strong><em>t.test()</em></strong> and use the arguments <strong><em>x</em></strong> and <strong><em>y</em></strong>.&nbsp; <strong><em>x</em></strong> and <strong><em>y</em></strong> are set to the two columns we are comparing using the subset operator ( <strong><em>$</em></strong> ).</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>tTest1 <span class="ot">=</span> <span class="fu">t.test</span>(<span class="at">x=</span>lansJanTempsDF<span class="sc">$</span>Jan2012, <span class="at">y=</span>lansJanTempsDF<span class="sc">$</span>Jan2014);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In the <strong><em>Environment</em></strong> tab, <strong><em>tTest1</em></strong> is labelled as a “List of 10”.&nbsp; We will dig more into this later.&nbsp; For now, we can get a helpful summary using the function <strong><em>print()</em></strong> and passing it the results of the t-test:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(tTest1);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-summary_ttest" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-summary_ttest-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="cb7" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span>   <span class="fu">print</span>(tTest1);</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    Welch Two Sample t<span class="sc">-</span>test</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>data<span class="sc">:</span>  lansJanTempsDF<span class="sc">$</span>Jan2012 and lansJanTempsDF<span class="sc">$</span>Jan2014</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>t <span class="ot">=</span> <span class="fl">4.7784</span>, df <span class="ot">=</span> <span class="fl">59.561</span>, p<span class="sc">-</span>value <span class="ot">=</span> «<span class="fl">1.195e-05</span>»</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>alternative hypothesis<span class="sc">:</span> true difference <span class="cf">in</span> means is not equal to <span class="dv">0</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="dv">95</span> percent confidence interval<span class="sc">:</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  «<span class="fl">7.212138</span> <span class="fl">17.600765</span>»</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>sample estimates<span class="sc">:</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>mean of x mean of y </span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a> «<span class="fl">35.77419</span>  <span class="fl">23.36774</span>»</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-summary_ttest-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Printing the summary of the t-test in the <strong>Console</strong> tab
+</figcaption>
+</figure>
+</div>
+<p>In the summary of the t-test it is stated that</p>
+<ol type="1">
+<li><p>The mean of <strong><em>x</em></strong> (Jan 2012) is <strong>35.77419</strong> and the mean of <strong><em>y</em></strong> (Jan 2014) is <strong>23.36774</strong></p></li>
+<li><p>If the “experiment” could be repeated, we would expect to see a difference of this size between the means <strong>0.001195%</strong> of the time (from the p-value of <strong>1.195e-05</strong> or <strong>0.00001195</strong>)</p></li>
+<li><p>We are 95% sure that the means of <strong><em>x</em></strong> and <strong><em>y</em></strong> have a difference between <strong>7.212138</strong> and <strong>17.600765</strong></p>
+<ul>
+<li>So, <strong>0</strong>, or no difference is <strong><em>not</em></strong> within our confidence interval</li>
+</ul></li>
+<li><p>In this case, we would reject the null hypothesis that the means of <strong><em>x</em></strong> and <strong><em>y</em></strong> are equal – in other words, January 2012 and 2014 temperatures <strong><em>are</em></strong> statistically different.</p></li>
+</ol>
+</section>
+<section id="second-t-test-on-columns-that-do-look-similar" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="second-t-test-on-columns-that-do-look-similar"><span class="header-section-number">4.2</span> second t-test on columns that do look similar</h3>
+<p>We will do a second t-test between years that do look as similar in <a href="#fig-box_temp_data" class="quarto-xref">Figure&nbsp;2</a> – 2013 (column <strong>3</strong>) and 2016 (column <strong>6</strong>):</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>tTest2 <span class="ot">=</span> <span class="fu">t.test</span>(<span class="at">x=</span>lansJanTempsDF[,<span class="dv">3</span>], <span class="at">y=</span>lansJanTempsDF[,<span class="dv">6</span>]);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>And, let’s summarize the results of the t-test in the <strong><em>Console</em></strong> tab:</p>
+<div id="fig-second_summary_ttest" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-second_summary_ttest-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span>   <span class="fu">print</span>(tTest2);</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    Welch Two Sample t<span class="sc">-</span>test</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>data<span class="sc">:</span>  lansJanTempsDF[, <span class="dv">3</span>] and lansJanTempsDF[, <span class="dv">6</span>]</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>t <span class="ot">=</span> <span class="fl">0.88083</span>, df <span class="ot">=</span> <span class="fl">53.993</span>, p<span class="sc">-</span>value <span class="ot">=</span> «<span class="fl">0.3823</span>»</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>alternative hypothesis<span class="sc">:</span> true difference <span class="cf">in</span> means is not equal to <span class="dv">0</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="dv">95</span> percent confidence interval<span class="sc">:</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a> «<span class="sc">-</span><span class="fl">3.087414</span>  <span class="fl">7.926124</span>»</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>sample estimates<span class="sc">:</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>mean of x mean of y </span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a> «<span class="fl">34.16129</span>  <span class="fl">31.74194</span>» </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-second_summary_ttest-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Printing the summary of the second t-test in the Console tab
+</figcaption>
+</figure>
+</div>
+<p>In the summary of the t-test it is stated that</p>
+<ol type="1">
+<li><p>The mean of <strong><em>x</em></strong> (Jan 2013) is <strong>34.16129</strong> and the mean of <strong><em>y</em></strong> (Jan 2016) is <strong>31.74194</strong></p></li>
+<li><p>If the “experiment” could be repeated, we would expect to see a difference of this size between the means <strong>38.23%</strong> of the time (from the p-value of <strong>0.3823</strong>)</p></li>
+<li><p>We are 95% sure that the means of <strong><em>x</em></strong> and <strong><em>y</em></strong> have a difference between <strong>-3.087414</strong> and <strong>7.926124</strong></p>
+<ul>
+<li>So, <strong>0</strong>, or no difference <strong><em>is within</em></strong> our confidence interval</li>
+</ul></li>
+<li><p>In this case, we would <strong><em>not reject</em></strong> the null hypothesis that the means of <strong><em>x</em></strong> and <strong><em>y</em></strong> are equal – in other words, January 2013 and 2016 temperatures <strong><em>are</em></strong> statistically similar.</p></li>
+</ol>
+</section>
+<section id="sec-seven_subsets" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="sec-seven_subsets"><span class="header-section-number">4.3</span> Seven ways to subset columns in a Data Frame</h3>
+<p>For <strong><em>tTest1</em></strong> an <strong><em>tTest2</em></strong>, we used 2 different methods for subsetting a column in a dataframe.&nbsp; <span class="hl">There are actually seven ways to subset a column in a dataframe</span> and they all produce the same result.</p>
+<p>&nbsp;</p>
+<p>This is because there are four different operators that you can use to subset a dataframe and for three of the operators you can use numbers or names:</p>
+<ul>
+<li><p><strong><em>$:</em></strong> dollar sign operator (<span class="note">note: this is the only operator where you cannot use a number</span>)</p></li>
+<li><p><strong><em>[ ,]</em></strong>: row/column operator (<span class="note">note: this is the only subset operator one that works for a matrix</span>)</p></li>
+<li><p><strong><em>[ ]</em></strong> : single bracket operator</p></li>
+<li><p><strong><em>[[ ]]:</em></strong> double bracket operator</p></li>
+</ul>
+<p>&nbsp;</p>
+<p>1) The row-column operator <strong><em>[ , ]</em></strong> using column numbers (also works on a matrix):</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>tTest2a <span class="ot">=</span> <span class="fu">t.test</span>(<span class="at">x=</span>lansJanTempsDF[,<span class="dv">2</span>], <span class="at">y=</span>lansJanTempsDF[,<span class="dv">4</span>]);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>2) The row-column operator <strong><em>[ , ]</em></strong> using column names (also works on a matrix):</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>tTest2b <span class="ot">=</span> <span class="fu">t.test</span>(<span class="at">x=</span>lansJanTempsDF[,<span class="st">"Jan2012"</span>], <span class="at">y=</span>lansJanTempsDF[,<span class="st">"Jan2014"</span>]);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>3) The single bracket operator <strong><em>[&nbsp; ]</em></strong> using column numbers:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>tTest2c <span class="ot">=</span> <span class="fu">t.test</span>(<span class="at">x=</span>lansJanTempsDF[<span class="dv">2</span>], <span class="at">y=</span>lansJanTempsDF[<span class="dv">4</span>]);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>4) The single bracket operator <strong><em>[&nbsp; ]</em></strong> using column names:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>tTest2d <span class="ot">=</span> <span class="fu">t.test</span>(<span class="at">x=</span>lansJanTempsDF[<span class="st">"Jan2012"</span>], <span class="at">y=</span>lansJanTempsDF[<span class="st">"Jan2014"</span>]);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>5) The double bracket operator <strong><em>[[&nbsp; ]]</em></strong> using column numbers:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>tTest2e <span class="ot">=</span> <span class="fu">t.test</span>(<span class="at">x=</span>lansJanTempsDF[[<span class="dv">2</span>]], <span class="at">y=</span>lansJanTempsDF[[<span class="dv">4</span>]]);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>6) The double bracket operator <strong><em>[[&nbsp; ]]</em></strong> using column names:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>tTest2f <span class="ot">=</span> <span class="fu">t.test</span>(<span class="at">x=</span>lansJanTempsDF[[<span class="st">"Jan2012"</span>]], <span class="at">y=</span>lansJanTempsDF[[<span class="st">"Jan2014"</span>]]);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>7) The dollar sign operator <strong><em>$</em></strong> using column names (you cannot use <strong><em>$</em></strong> with column numbers):</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>tTest2g <span class="ot">=</span> <span class="fu">t.test</span>(<span class="at">x=</span>lansJanTempsDF<span class="sc">$</span>Jan2012, <span class="at">y=</span>lansJanTempsDF<span class="sc">$</span>Jan2014;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="summary-of-subset-operators" class="level3" data-number="4.4">
+<h3 data-number="4.4" class="anchored" data-anchor-id="summary-of-subset-operators"><span class="header-section-number">4.4</span> Summary of subset operators</h3>
+<p>The operators in general (and in order of this author preference):</p>
+<ul>
+<li><p>The <strong><em>$</em></strong> operator is the most convenient because it requires the least code and RStudio will give you suggestions</p></li>
+<li><p>The <strong><em>[ , ]</em></strong> operator is the most explicit because it shows the two-dimensionality of the dataframe – and allows you to subset the rows along with the columns – this is the best choice if you are subsetting rows and columns at the same time</p></li>
+<li><p>The <strong><em>[[&nbsp; ]]</em></strong> operator is best used for more complex object like <strong><em>Lists</em></strong> – I generally avoid these when using data frames</p></li>
+<li><p>The <strong><em>[&nbsp; ]</em></strong> operator does a different kind of subsetting than the other three operators – this will be explored in the next lesson but this author would argue that it is the least useful operator</p></li>
+</ul>
+</section>
+</section>
+<section id="anovas" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="anovas"><span class="header-section-number">5</span> ANOVAs</h2>
+<p>ANOVAs are similar to t-tests except they generally are used to test the means from three or more groups of data, whereas a t-test can only test the means from two groups.&nbsp; For comparison, we are going to start by using an ANOVA on 2 groups (Jan2013 and Jan2016).</p>
+<p>&nbsp;</p>
+<p>ANOVAs are functionally similar to a t-test but R requires that the data be structured differently.&nbsp; In R, the ANOVA function <strong><em>aov()</em></strong> cannot compare values from different columns like <strong><em>t.test()</em></strong>.&nbsp; Instead <strong><em>aov()</em></strong> compares values within a column <span class="hl">grouped by a second column</span>.</p>
+<p>&nbsp;</p>
+<p>In other words, to perform an ANOVA using <strong><em>aov()</em></strong>, <span class="hl">you need to use a stacked dataframe</span> and we will use the stacked dataframes created in the last lesson and loaded in from the <strong><em>rdata</em></strong> file.</p>
+<p>&nbsp;</p>
+<p><span class="note">Note: the reason why <strong>aov()</strong> requires a stacked data frame is largely a legacy issue</span></p>
+<section id="performing-an-anova" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="performing-an-anova"><span class="header-section-number">5.1</span> Performing an ANOVA</h3>
+<p>We will perform an ANOVA on&nbsp;<strong><em>stackedDF2</em></strong>, which contains data from <strong><em>Jan2013</em></strong> and <strong><em>Jan2016</em></strong> only,to check whether the temperatures from the 2 months are likely to be from the same distribution.</p>
+<p>&nbsp;</p>
+<p>To perform an Anova using <strong><em>aov()</em></strong> you need two arguments:</p>
+<ul>
+<li><p><strong><em>data</em></strong>: the (stacked) dataframe that contains the data</p>
+<ul>
+<li>in this case: the stacked dataframe <strong><em>stackedDF2</em></strong></li>
+</ul></li>
+<li><p><strong><em>formula</em></strong>: the columns used for the ANOVA in the form: <strong><em>all_values~grouping</em></strong></p>
+<ul>
+<li><strong><em>all_values</em></strong> comes from the <strong><em>values</em></strong> column and the <strong><em>grouping</em></strong> comes from the <strong><em>ind</em></strong> column (<span class="note">note: this is similar to an <strong>x, y</strong> mapping GGPlot except that it is y~x</span>)</li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>Jan13_16_Anova <span class="ot">=</span> <span class="fu">aov</span>(<span class="at">data=</span>stackedDF2, <span class="at">formula=</span>values<span class="sc">~</span>ind);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>To get the results of the ANOVA you need to <strong><em>print</em></strong> the <strong><em>summary</em></strong> of the Anova:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">summary</span>(Jan13_16_Anova);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Doing this in the <strong><em>Console</em></strong> tab, we get:</p>
+<div id="fig-anova_results" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-anova_results-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span>   <span class="fu">print</span>(<span class="fu">summary</span>(Jan13_16_Anova));</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>            Df Sum Sq Mean Sq F value <span class="fu">Pr</span>(<span class="sc">&gt;</span>F)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>ind          <span class="dv">1</span>     <span class="dv">91</span>   <span class="fl">90.73</span>   <span class="fl">0.776</span>  «<span class="fl">0.382</span>»</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>Residuals   <span class="dv">60</span>   <span class="dv">7016</span>  <span class="fl">116.94</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-anova_results-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: ANOVA of the temperatures from 2012 and 2014
+</figcaption>
+</figure>
+</div>
+<p>The results of the ANOVA show the probability that the temperatures come from the same distribution is <strong><em>0.382</em></strong> (<strong><em>38.2%</em></strong>).&nbsp; This, as expected, is the very close to the same probability (<strong>0.3823</strong>) that we got from doing the t-test between <strong>2013</strong> and <strong>2016</strong> and means we do not reject the NULL hypothesis that the groups come from the same distribution.</p>
+</section>
+<section id="a-second-anova-make-into-application" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="a-second-anova-make-into-application"><span class="header-section-number">5.2</span> A Second ANOVA &lt;make into application&gt;</h3>
+<p>We are going to perform a second ANOVA on the 4 years (2011, 2012, 2015,and 2016) in <strong><em>stackedDF3</em></strong> created in last lesson.</p>
+<p>&nbsp;</p>
+<p>The Anova call looks almost the same:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>Jan4MonthAnova <span class="ot">=</span> <span class="fu">aov</span>(<span class="at">data=</span>stackedDF3, <span class="at">formula=</span>values<span class="sc">~</span>ind);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Summarizing the ANOVA in the <strong><em>Console</em></strong> tab:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span>   <span class="fu">print</span>(<span class="fu">summary</span>(Jan4MonthAnova));</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>             Df Sum Sq Mean Sq F value   <span class="fu">Pr</span>(<span class="sc">&gt;</span>F)    </span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>ind           <span class="dv">3</span>   <span class="dv">1923</span>   <span class="fl">641.0</span>   <span class="fl">8.617</span> «<span class="fl">3.17e-05</span>» <span class="sc">**</span><span class="er">*</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>Residuals   <span class="dv">120</span>   <span class="dv">8926</span>    <span class="fl">74.4</span>                     </span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="sc">---</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>Signif. codes<span class="sc">:</span>  <span class="dv">0</span> ‘<span class="sc">**</span><span class="er">*</span>’ <span class="fl">0.001</span> ‘<span class="sc">**</span>’ <span class="fl">0.01</span> ‘<span class="sc">*</span>’ <span class="fl">0.05</span> ‘.’ <span class="fl">0.1</span> ‘ ’ <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The results of the ANOVA show that the probability of the four sets of January temperatures coming from the same distribution is <strong>3.17e-05</strong>, or <strong>0.00317%</strong>. In this case, we reject the NULL hypothesis that the groups come from the same distribution.</p>
+</section>
+<section id="histogram-on-the-residuals" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="histogram-on-the-residuals"><span class="header-section-number">5.3</span> Histogram on the residuals</h3>
+<p>Lastly, we can perform a histogram on the residuals of the ANOVA to show the we have not violated normality assumptions.</p>
+<p>The <strong><em>residuals()</em></strong> function gets the 124 residuals from <strong><em>Jan4MonthAnova:</em></strong></p>
+<div class="sourceCode" id="cb22" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>residuals<span class="sc">:</span> Named num [<span class="dv">1</span><span class="sc">:</span><span class="dv">124</span>] <span class="fl">28.387</span> <span class="sc">-</span><span class="fl">0.613</span> <span class="fl">7.387</span> <span class="fl">6.387</span> ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We can then plot the <strong><em>residuals</em></strong> vector in a histogram by mapping the vector to <strong><em>x</em></strong> (the y-axis is count as does not get mapped):</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>  residuals <span class="ot">=</span> <span class="fu">residuals</span>(Jan4MonthAnova);</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  plot1 <span class="ot">=</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_histogram</span>(<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>residuals)) <span class="sc">+</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>();</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(plot1);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>… and this histogram looks fairly normal so we probably did not violated the normality assumption.</p>
+<div id="fig-hist_anova_residuals" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-hist_anova_residuals-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-2-09-Residuals.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hist_anova_residuals-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: Histogram of the residuals from the second ANOVA
+</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="linear-regression" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="linear-regression"><span class="header-section-number">6</span> Linear Regression</h2>
+<p>For linear regressions, we will be using the data from the bigger data set found in Lansing2016Noaa-3.csv:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>weatherData <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="at">file=</span><span class="st">"data/Lansing2016Noaa-3.csv"</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In the GGPlot introductory lesson (2-01), we did a scatterplot of humidity vs.&nbsp;temperature using a <strong><em>geom_point</em></strong> component and added a linear regression using <strong><em>geom_smooth</em></strong>.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>  plot1 <span class="ot">=</span> <span class="fu">ggplot</span>(<span class="at">data=</span>weatherData) <span class="sc">+</span> </span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    «geom_point»( <span class="at">mapping=</span><span class="fu">aes</span>( <span class="at">x=</span>avgTemp, <span class="at">y=</span>relHum ) ) <span class="sc">+</span> </span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    «geom_smooth»( <span class="at">mapping=</span><span class="fu">aes</span>( <span class="at">x=</span>avgTemp, <span class="at">y=</span>relHum ),</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">method=</span><span class="st">"lm"</span> ) <span class="sc">+</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>( <span class="at">title=</span><span class="st">"Humidity vs Temperature"</span>,</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">subtitle=</span><span class="st">"Lansing, MI -- 2016"</span>,</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">x =</span> <span class="st">"Average Temperatures (Fahrenheit)"</span>,</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">y =</span> <span class="st">"Relative Humidity"</span>) <span class="sc">+</span> </span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>();</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(plot1);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The plot looks like this:</p>
+<div id="fig-scatterplot" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-scatterplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-2-10-LinearRegression.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-scatterplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7: Scatterplot of humidity vs.&nbsp;temperature with a linear regression
+</figcaption>
+</figure>
+</div>
+<section id="calculate-a-linear-regression" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="calculate-a-linear-regression"><span class="header-section-number">6.1</span> Calculate a linear regression</h3>
+<p>We can also more formalize the calculation of the humidity vs.&nbsp;temperature linear regression using <strong><em>lm()</em></strong>.</p>
+<p>&nbsp;</p>
+<p>The argument we need to set for <strong><em>lm()</em></strong> is <strong><em>formula</em></strong> and <strong><em>formula</em></strong> is in this form: <strong><em>y ~ x</em></strong></p>
+<p>So, <strong><em>y</em></strong> is the humidity column and <strong><em>x</em></strong> is the temperature column:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>tempHumLM <span class="ot">=</span> <span class="fu">lm</span>( <span class="at">formula =</span> weatherData<span class="sc">$</span>relHum <span class="sc">~</span> weatherData<span class="sc">$</span>avgTemp );</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We can <strong><em>print()</em></strong> the results to the <strong><em>Console</em></strong> and see the intercept is about <strong>75</strong> and the slope is about <strong>-0.13</strong>:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span>   <span class="fu">print</span>(tempHumLM);</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>Call<span class="sc">:</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(<span class="at">formula =</span> weatherData<span class="sc">$</span>relHum <span class="sc">~</span> weatherData<span class="sc">$</span>avgTemp)</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>Coefficients<span class="sc">:</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>        (Intercept)  weatherData<span class="sc">$</span>avgTemp  </span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>            «<span class="fl">75.4863</span>»              «<span class="sc">-</span><span class="fl">0.1326</span>» </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The results seem to match the linear regression in the plot in <a href="#fig-scatterplot" class="quarto-xref">Figure&nbsp;7</a> .</p>
+<p>&nbsp;</p>
+<p>We can get a lot more information using <strong><em>print(summary())</em></strong>:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span>   <span class="fu">print</span>(<span class="fu">summary</span>(tempHumLM));</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>Call<span class="sc">:</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(<span class="at">formula =</span> weatherData<span class="sc">$</span>relHum <span class="sc">~</span> weatherData<span class="sc">$</span>avgTemp)</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>Residuals<span class="sc">:</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>     Min       <span class="dv">1</span>Q   Median       <span class="dv">3</span>Q      Max </span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="fl">30.0624</span>  <span class="sc">-</span><span class="fl">7.5984</span>   <span class="fl">0.3051</span>   <span class="fl">8.2171</span>  <span class="fl">25.8165</span> </span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>Coefficients<span class="sc">:</span></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>                    Estimate Std. Error t value <span class="fu">Pr</span>(<span class="sc">&gt;</span><span class="er">|</span>t<span class="sc">|</span>)    </span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>(Intercept)         «<span class="fl">75.48632</span>»    <span class="fl">1.61703</span>  <span class="fl">46.682</span>  <span class="sc">&lt;</span> <span class="fl">2e-16</span> <span class="sc">**</span><span class="er">*</span></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>weatherData<span class="sc">$</span>avgTemp «<span class="sc">-</span><span class="fl">0.13257</span>»    <span class="fl">0.02988</span>  <span class="sc">-</span><span class="fl">4.437</span> <span class="fl">1.21e-05</span> <span class="sc">**</span><span class="er">*</span></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a><span class="sc">---</span></span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>Signif. codes<span class="sc">:</span>  <span class="dv">0</span> ‘<span class="sc">**</span><span class="er">*</span>’ <span class="fl">0.001</span> ‘<span class="sc">**</span>’ <span class="fl">0.01</span> ‘<span class="sc">*</span>’ <span class="fl">0.05</span> ‘.’ <span class="fl">0.1</span> ‘ ’ <span class="dv">1</span></span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>Residual standard error<span class="sc">:</span> <span class="fl">10.88</span> on <span class="dv">364</span> degrees of freedom</span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>Multiple R<span class="sc">-</span>squared<span class="sc">:</span>  «<span class="fl">0.0513</span>»,    Adjusted R<span class="sc">-</span>squared<span class="sc">:</span>  <span class="fl">0.04869</span> </span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>F<span class="sc">-</span>statistic<span class="sc">:</span> <span class="fl">19.68</span> on <span class="dv">1</span> and <span class="dv">364</span> DF,  p<span class="sc">-</span>value<span class="sc">:</span> «<span class="fl">1.213e-05</span>»</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The slope and intercept are also in this summary.&nbsp; The R-squared value tells us that temperature explains about <strong><em>5.13%</em></strong> (0.0513) of the variance in humidity and the p-value of <strong><em>1.21e-05</em></strong> (0.0000121) says we reject the NULL hypothesis that temperature is not a predictor of humidity.&nbsp; In other words, changes in temperature can predict some change in humidity.&nbsp;</p>
+</section>
+</section>
+<section id="application" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="application"><span class="header-section-number">7</span> Application</h2>
+<p>1) In the application, use at least four different methods of subsetting a data frame from <a href="#sec-seven_subsets" class="quarto-xref">Section&nbsp;4.3</a></p>
+<p>&nbsp;</p>
+<p>2) Based on the boxplot of all 6 years ( <a href="#fig-box_temp_data" class="quarto-xref">Figure&nbsp;2</a> ),&nbsp; try to figure which three years would most likely come form the same distribution (i.e., the ANOVA would not reject the NULL hypothesis).</p>
+<ul>
+<li><p>create a stacked frame with just these three years</p></li>
+<li><p>perform an ANOVA on the three years</p></li>
+<li><p>print the result to the <strong><em>Console</em></strong></p></li>
+</ul>
+<p>&nbsp;</p>
+<p>3) Using t-tests, find which year’s January temperatures is most statistically similar to the temperatures from January 2014 (other than itself!).</p>
+<p>&nbsp;</p>
+<p>4) Perform four linear models:</p>
+<ul>
+<li><p><strong><em>stnPressure</em></strong> vs.&nbsp;<strong><em>windSpeed</em></strong>,</p></li>
+<li><p><strong><em>stnPressure</em></strong> vs.&nbsp;<strong><em>precipNum</em></strong></p></li>
+<li><p><strong><em>stnPressure</em></strong> vs.&nbsp;<strong><em>avgTemp</em></strong></p></li>
+<li><p><strong><em>stnPressure</em></strong> vs.&nbsp;<strong><em>relHum</em></strong></p>
+<p>&nbsp;</p></li>
+</ul>
+<p>5) For only the linear model that shows the most correlation of the four above:</p>
+<ul>
+<li><p>print to the <strong><em>Console</em></strong> and, in comments, explain the summary of the linear model</p></li>
+<li><p>create a scatterplot of the two variables</p></li>
+<li><p>place a regression line on the scatterplot</p></li>
+<li><p>create a histogram of the residuals</p></li>
+</ul>
+<p>&nbsp;</p>
+<p>Save the script as&nbsp;<strong><em>app2-10.r</em></strong> in your&nbsp;<strong><em>scripts</em></strong> folder and&nbsp; email your Project Folder to Charlie Belinsky at belinsky@msu.edu.</p>
+<p>&nbsp;</p>
+<p><a href="1-01-RStudioProjectsSetup.html#sec-zip-folder" target="_blank">Instructions for zipping the Project Folder are here.</a></p>
+<p>&nbsp;</p>
+<p>If you have any questions regarding this application, feel free to email them to Charlie Belinsky at belinsky@msu.edu.</p>
+<section id="questions-to-answer" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="questions-to-answer"><span class="header-section-number">7.1</span> Questions to answer</h3>
+<p>Answer the following in comments inside your application script:</p>
+<ol type="1">
+<li><p>What was your level of comfort with the lesson/application?</p></li>
+<li><p>What areas of the lesson/application confused or still confuses you?</p></li>
+<li><p>What are some things you would like to know more about that is related to, but not covered in, this lesson?</p></li>
+</ol>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
