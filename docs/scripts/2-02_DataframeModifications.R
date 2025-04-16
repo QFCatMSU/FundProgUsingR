@@ -4,8 +4,7 @@
   
   weatherData = read.csv(file="data/Lansing2016NOAA.csv",
                          sep=",",
-                         header=TRUE, 
-                         stringsAsFactors = FALSE);
+                         header=TRUE);
   
   # subset the dateTime column so that you only have the month and day (MM-DD)
   dateOnly = substr(weatherData$dateTime, start=6, stop=10);

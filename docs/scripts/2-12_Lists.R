@@ -48,6 +48,7 @@
   anim4 = listDynamic5["animal"];
   
   #### A Humidity vs. Temperature plot with linear regression ####
+  ### <have a base-R version of this... but does not work with list below ###
   plot1 = ggplot( data=weatherData ) +
     geom_point( mapping=aes(x=avgTemp, y=relHum) ) +
     geom_smooth( mapping=aes(x=avgTemp, y=relHum), 
