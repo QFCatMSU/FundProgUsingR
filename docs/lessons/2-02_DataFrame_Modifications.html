@@ -149,12 +149,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           </a> 
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../lessons/0-01-IntroductionAndSyllabus.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Introduction and Syllabus</span></a>
-  </div>
-</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Part 1</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../lessons/1-01-RStudioProjectsSetup.html" class="sidebar-item-text sidebar-link">
@@ -245,12 +248,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">1-15: Nested loops and Matrices</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../lessons/1-15_Nested_Loops_and _Matrices-HOME-GALAXYBOOK.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1-15: Nested loops and Matrices</span></a>
-  </div>
-</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Part 2</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../lessons/2-01_R-Base_Plots.html" class="sidebar-item-text sidebar-link">
@@ -329,6 +337,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">2-13: Breakpoints</span></a>
   </div>
 </li>
+      </ul>
+  </li>
       </ul>
   </li>
     </ul>
@@ -443,9 +453,9 @@ Figure&nbsp;1: Viewing the weatherData data frame in the main section
 <h2 data-number="4" class="anchored" data-anchor-id="string-manipulations"><span class="header-section-number">4</span> String manipulations</h2>
 <p>There is extra information in the values of the <strong><em>dateTime</em></strong> column (column 1) that is not needed.&nbsp; We really only need the two-digit month and day, which is the <span class="hl">6th through the 10th characters</span> of each <strong><em>dateTime</em></strong> value:</p>
 <ul>
-<li><p>2016-«<strong>01-02</strong>»T00:00:00</p></li>
-<li><p>2016-«<strong>01-14</strong>»T00:00:00</p></li>
-<li><p>2016-«<strong>01-26</strong>»T00:00:00</p></li>
+<li><p>2016-<span class="hl">01-02</span>T00:00:00</p></li>
+<li><p>2016-<span class="hl">01-14</span>T00:00:00</p></li>
+<li><p>2016-<span class="hl">01-26</span>T00:00:00</p></li>
 </ul>
 <section id="substrings" class="level3" data-number="4.1">
 <h3 data-number="4.1" class="anchored" data-anchor-id="substrings"><span class="header-section-number">4.1</span> Substrings</h3>
@@ -460,7 +470,7 @@ Figure&nbsp;2: The substr() function
 </figcaption>
 </figure>
 </div>
-<p><span class="note">note: <strong>substr()</strong> and <strong>substring()</strong> are very similar – the main difference being different names for the arguments</span></p>
+<p><span class="note">note: <strong>substr()</strong> and <strong>substring()</strong> are very similar – the main difference is the argument names</span></p>
 <p>&nbsp;</p>
 <p><strong><em>substr()</em></strong> has three arguments that we need to assign value to:</p>
 <ul>
@@ -469,7 +479,7 @@ Figure&nbsp;2: The substr() function
 <li><p><strong><em>stop</em></strong>: the position that we want the substring to end at (the 10<sup>th</sup> character)</p></li>
 </ul>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dateOnly <span class="ot">=</span> <span class="fu">substr</span>(<span class="at">x=</span>weatherData<span class="sc">$</span>dateTime, <span class="at">start=</span><span class="dv">6</span>, <span class="at">stop=</span><span class="dv">10</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>This the values between characters 6 and 10 and saves the results to <strong><em>dateOnly</em></strong>.</p>
+<p>This removes the the values between characters 6 and 10 and saves the results to <strong><em>dateOnly</em></strong>.</p>
 <p>&nbsp;</p>
 <p>We can look at the first six values of <strong><em>dateOnly</em></strong> in the <strong><em>Console</em></strong> using <strong><em>head()</em></strong>&nbsp; and the last 6 values using <strong><em>tail()</em></strong>:</p>
 <div class="sourceCode" id="cb4" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">head</span>(dateOnly)</span>
@@ -518,15 +528,15 @@ Figure&nbsp;3: The paste() function – with … as the first “argument”
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">6</span>] <span class="st">"01-06-2016"</span> <span class="st">"01-07-2016"</span> <span class="st">"01-08-2016"</span> <span class="st">"01-09-2016"</span> <span class="st">"01-10-2016"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <section id="the-sep-argument" class="level4" data-number="4.4.1">
 <h4 data-number="4.4.1" class="anchored" data-anchor-id="the-sep-argument"><span class="header-section-number">4.4.1</span> The <strong><em>sep</em></strong> argument</h4>
-<p>The <strong><em>sep</em></strong> argument is the characters that get placed in between the values being pasted together. If you do not put the <strong><em>sep</em></strong> argument in, then <strong><em>sep</em></strong> defaults to one space, meaning an extra space between each object in the <strong><em>paste()</em></strong> – in this case, the date and year:&nbsp;</p>
+<p>The <strong><em>sep</em></strong> argument is the character that get placed in between the values being pasted. If you do not put the <strong><em>sep</em></strong> argument in, then <strong><em>sep</em></strong> defaults to one space, meaning an extra space between each object in the <strong><em>paste()</em></strong> – in this case, the date and year:&nbsp;</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>dateYearMistake <span class="ot">=</span> <span class="fu">paste</span>(dateOnly, <span class="st">"-2016"</span>); <span class="co"># sep default to " "</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The results have a space after the date:</p>
 <div class="sourceCode" id="cb8" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> dateYearMistake</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="dv">01-02</span> <span class="sc">-</span><span class="dv">2016</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="dv">01-14</span> <span class="sc">-</span><span class="dv">2016</span></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="dv">01-26</span> <span class="sc">-</span><span class="dv">2016</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Or, you can set <strong><em>sep</em></strong> to some value, and those characters appear between the date and yera:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">paste</span>(dateOnly, <span class="st">"-2016"</span>, <span class="at">sep=</span><span class="st">"@!@"</span>)</span>
+<p>Or, you can set <strong><em>sep</em></strong> to some value, and those characters appear between the date and year:</p>
+<div class="sourceCode" id="cb9" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">paste</span>(dateOnly, <span class="st">"-2016"</span>, <span class="at">sep=</span><span class="st">"@!@"</span>)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="dv">01-02</span><span class="sc">@!</span><span class="er">@</span><span class="sc">-</span><span class="dv">2016</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="dv">01-14</span><span class="sc">@!</span><span class="er">@</span><span class="sc">-</span><span class="dv">2016</span></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="dv">01-26</span><span class="sc">@!</span><span class="er">@</span><span class="sc">-</span><span class="dv">2016</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -541,7 +551,7 @@ Figure&nbsp;3: The paste() function – with … as the first “argument”
 <div class="sourceCode" id="cb10" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> weatherData<span class="sc">$</span>windSpeed[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">15.539</span> <span class="fl">14.614</span> <span class="fl">9.986</span> <span class="fl">7.742</span> <span class="fl">7.586</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">6</span>] <span class="fl">7.601</span> <span class="fl">4.823</span> <span class="fl">6.720</span> <span class="fl">7.294</span> <span class="fl">17.758</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>One decimal place is enough in this case and we can round the values using the <strong><em>round()</em></strong> function:</p>
+<p>One decimal place is probably enough in this case and we can round the values using the <strong><em>round()</em></strong> function:</p>
 <div id="fig-round" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-round-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -643,12 +653,11 @@ Figure&nbsp;8: The dateTime column was removed from weatherData3
 </div>
 <section id="alternate-ways-to-delete-columns" class="level3" data-number="7.1">
 <h3 data-number="7.1" class="anchored" data-anchor-id="alternate-ways-to-delete-columns"><span class="header-section-number">7.1</span> Alternate ways to delete columns</h3>
-<p>You can also use the <strong><em>within()</em></strong> function to remove columns (uncomment lines in code to test).</p>
-<p>&nbsp;</p>
+<p>You can also use the <strong><em>within()</em></strong> function to remove columns.&nbsp;</p>
 <p>Using <strong><em>within()</em></strong> to remove the <strong><em>dateTime</em></strong> column:</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Within weatherData, remove the column dateTime</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># weatherData3 = within(weatherData, rm(dateTime));  </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The advantage to this method, is that <span class="hl">you can delete multiple columns</span> at a time:</p>
+<p>The advantage to this method, is that <span id="hl">you can delete multiple columns</span> at a time:</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># weatherData3 = within(weatherData, rm(maxTemp, minTemp, avgTemp));</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
@@ -727,6 +736,7 @@ Figure&nbsp;11: After the middle columns were moved
 <section id="saving-the-data-frame-to-a-csv-file" class="level2" data-number="9">
 <h2 data-number="9" class="anchored" data-anchor-id="saving-the-data-frame-to-a-csv-file"><span class="header-section-number">9</span> Saving the data frame to a CSV file</h2>
 <p>We are going to use the <strong><em>weatherData4</em></strong> data frame in the next lesson, so let’s save it to a CSV file.</p>
+<p>&nbsp;</p>
 <p>Quite often, people just call <strong><em>write.csv()</em></strong>, pass in the data frame and the file name to save it to:</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write.csv</span>(weatherData5, <span class="at">file=</span><span class="st">"data/Lansing2016Noaa-2-bad.csv"</span>);  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The above code will add an extra column populated by the row numbers.&nbsp; This is because, by default, <strong><em>write.csv()</em></strong> assumes the row numbers are row names.</p>
