@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.22">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>1-03: Mathematical Operations</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b4406b7675125bc2ba204020e191172.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-5f39cfd1aee7e7785011fc5df168ee92.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link rel="shortcut icon" href="https://qfcatmsu.github.io/assets/quarto/qfc_icon.png">
+<script>mod=true; menuCollapse=true;</script>
+<script src="https://qfcatmsu.github.io/assets/quarto/qfc_styles.js"></script>
+ 
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="https://qfcatmsu.github.io/assets/quarto/qfc_styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+          <h1 class="quarto-secondary-nav-title">1-03: Mathematical Operations</h1>
+        </a>     
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text"><b>Fundamentals of Programming class</b></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/0-01-IntroductionAndSyllabus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction and Syllabus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-01-RStudioProjectsSetup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-01: RStudio Projects Setup</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-02-Variables.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-02: Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-03_Mathematical_Operations.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">1-03: Mathematical Operations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-04_Vectors_And_Data_Frames.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-04: Vectors and Data Frames</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-05_Functions_Introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-05: Functions Introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-06_Run_and_Source.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-06: Run and Source</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-07_Outputs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-07: Outputs</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-08_Conditional_Operations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-08: Conditional Operations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-09_If_Else_Statements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-09: If-Else Statements</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-10_For_Loops.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-10: For Loops</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-11_For_Loops_and_State_Varibles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-11: For Loops and State Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-12_MultipleConditions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-12: Multiple Conditions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-13_Functions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-13: Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-14_Functions2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-14: Functions 2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-15_Nested_Loops_and _Matrices.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-15: Nested loops and Matrices</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-15_Nested_Loops_and _Matrices-HOME-GALAXYBOOK.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-15: Nested loops and Matrices</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-01_R-Base_Plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-01: R-Base Plots</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-02_DataFrame_Modifications.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-02: DataFrame Modifications</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-03_DataTypesAndDateFrames.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-03: Data Types and Data Frames</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-04_WhichStatements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-04: Which Statements</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-05_WhichAndRegularExpressions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-05: Which and Regular Expressions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-06_Datetime_Obejects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-06: Datetime objects</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-07_Matrices.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-07: Matrices</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-08_Binding_Sampling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-08: Binding and Sampling</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-09_Stacking_Mapping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-09: Stacking and Mapping</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-10_Statistical_Tests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-10: Statistical Tests</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-11_Objects_Attributes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-11: Objects and Attributes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-12_Lists.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-12: Lists</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-13_Breakpoints.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-13: Breakpoints</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title"><b>Lesson Content</b></h2>
+   
+  <ul>
+  <li><a href="#changes" id="toc-changes" class="nav-link active" data-scroll-target="#changes"><span class="header-section-number">0.1</span> Changes</a></li>
+  <li><a href="#purpose" id="toc-purpose" class="nav-link" data-scroll-target="#purpose"><span class="header-section-number">1</span> Purpose</a></li>
+  <li><a href="#questions-about-the-material" id="toc-questions-about-the-material" class="nav-link" data-scroll-target="#questions-about-the-material"><span class="header-section-number">2</span> Questions about the material…</a></li>
+  <li><a href="#putting-a-formula-in-code" id="toc-putting-a-formula-in-code" class="nav-link" data-scroll-target="#putting-a-formula-in-code"><span class="header-section-number">3</span> Putting a formula in code</a>
+  <ul class="collapse">
+  <li><a href="#minding-your-parentheses" id="toc-minding-your-parentheses" class="nav-link" data-scroll-target="#minding-your-parentheses"><span class="header-section-number">3.1</span> Minding your parentheses</a></li>
+  <li><a href="#other-ways-to-assign-values" id="toc-other-ways-to-assign-values" class="nav-link" data-scroll-target="#other-ways-to-assign-values"><span class="header-section-number">3.2</span> Other ways to assign values</a></li>
+  <li><a href="#variable-naming-error" id="toc-variable-naming-error" class="nav-link" data-scroll-target="#variable-naming-error"><span class="header-section-number">3.3</span> Variable naming error</a></li>
+  </ul></li>
+  <li><a href="#powers-and-multiplication" id="toc-powers-and-multiplication" class="nav-link" data-scroll-target="#powers-and-multiplication"><span class="header-section-number">4</span> Powers and multiplication</a>
+  <ul class="collapse">
+  <li><a href="#dealing-with-parenthesis-and-multiplication" id="toc-dealing-with-parenthesis-and-multiplication" class="nav-link" data-scroll-target="#dealing-with-parenthesis-and-multiplication"><span class="header-section-number">4.1</span> Dealing with parenthesis and multiplication</a></li>
+  <li><a href="#dealing-with-square-power" id="toc-dealing-with-square-power" class="nav-link" data-scroll-target="#dealing-with-square-power"><span class="header-section-number">4.2</span> Dealing with square power</a></li>
+  </ul></li>
+  <li><a href="#the-power-operator" id="toc-the-power-operator" class="nav-link" data-scroll-target="#the-power-operator"><span class="header-section-number">5</span> The power operator ( ^ )</a>
+  <ul class="collapse">
+  <li><a href="#coding-the-power" id="toc-coding-the-power" class="nav-link" data-scroll-target="#coding-the-power"><span class="header-section-number">5.1</span> Coding the power</a></li>
+  <li><a href="#correcting-the-power-with-parenthses" id="toc-correcting-the-power-with-parenthses" class="nav-link" data-scroll-target="#correcting-the-power-with-parenthses"><span class="header-section-number">5.2</span> Correcting the power with parenthses</a></li>
+  <li><a href="#more-power-and-roots" id="toc-more-power-and-roots" class="nav-link" data-scroll-target="#more-power-and-roots"><span class="header-section-number">5.3</span> More power and roots</a></li>
+  </ul></li>
+  <li><a href="#the-square-root-function" id="toc-the-square-root-function" class="nav-link" data-scroll-target="#the-square-root-function"><span class="header-section-number">6</span> The square root function</a></li>
+  <li><a href="#random-values" id="toc-random-values" class="nav-link" data-scroll-target="#random-values"><span class="header-section-number">7</span> Random values</a>
+  <ul class="collapse">
+  <li><a href="#normal-values" id="toc-normal-values" class="nav-link" data-scroll-target="#normal-values"><span class="header-section-number">7.1</span> normal values</a></li>
+  </ul></li>
+  <li><a href="#application" id="toc-application" class="nav-link" data-scroll-target="#application"><span class="header-section-number">8</span> Application</a>
+  <ul class="collapse">
+  <li><a href="#questions-to-answer" id="toc-questions-to-answer" class="nav-link" data-scroll-target="#questions-to-answer"><span class="header-section-number">8.1</span> Questions to answer</a></li>
+  </ul></li>
+  <li><a href="#extension-mathematical-operations-across-multiple-lines" id="toc-extension-mathematical-operations-across-multiple-lines" class="nav-link" data-scroll-target="#extension-mathematical-operations-across-multiple-lines"><span class="header-section-number">9</span> Extension: Mathematical operations across multiple lines</a></li>
+  <li><a href="#traps-forgetting-multiplication-symbol" id="toc-traps-forgetting-multiplication-symbol" class="nav-link" data-scroll-target="#traps-forgetting-multiplication-symbol"><span class="header-section-number">10</span> Traps: Forgetting Multiplication Symbol</a></li>
+  <li><a href="#trap-units-or-lack-thereof-in-programming" id="toc-trap-units-or-lack-thereof-in-programming" class="nav-link" data-scroll-target="#trap-units-or-lack-thereof-in-programming"><span class="header-section-number">11</span> Trap: Units, or lack thereof, in programming</a></li>
+  <li><a href="#extension-the-show.error.location-line" id="toc-extension-the-show.error.location-line" class="nav-link" data-scroll-target="#extension-the-show.error.location-line"><span class="header-section-number">12</span> Extension: The show.error.location line</a></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content column-page-right" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">1-03: Mathematical Operations</h1>
+</div>
+
+
+
+<div class="quarto-title-meta column-page-right">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="changes" class="level3" data-number="0.1">
+<h3 data-number="0.1" class="anchored" data-anchor-id="changes"><span class="header-section-number">0.1</span> Changes</h3>
+</section>
+<section id="purpose" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="purpose"><span class="header-section-number">1</span> Purpose</h2>
+<ul>
+<li><p>Perform mathematical operations, including powers, on numerical variables</p></li>
+<li><p>Explicit use of mathematical symbols in formulas</p></li>
+<li><p>Convert algebraic formulas to programming formulas</p></li>
+<li><p>Use parentheses to establish the order of operations for formulas</p></li>
+</ul>
+</section>
+<section id="questions-about-the-material" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="questions-about-the-material"><span class="header-section-number">2</span> Questions about the material…</h2>
+<p>If you have any questions about the material in this lesson, feel free to email them to the instructor, Charlie Belinsky, at belinsky@msu.edu.</p>
+</section>
+<section id="putting-a-formula-in-code" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="putting-a-formula-in-code"><span class="header-section-number">3</span> Putting a formula in code</h2>
+<p>Once again, we will calculate <strong><em>velocity</em></strong> using <strong><em>distance</em></strong> and <strong><em>time,</em></strong> except, we will now use the full version of the <strong><em>velocity</em></strong> formula, which looks at the <span class="hl">changes in distance and time</span> as opposed to absolute distance and time.</p>
+<p>&nbsp;</p>
+<p>The full velocity formula is (subscript <strong><em>i</em></strong> means <span class="hl">initial</span>, subscript <strong><em>f</em></strong> means <span class="hl">final</span>):</p>
+<p><span class="math inline">\(v=\frac{d_{f}-d_{i}}{t_{f}-t_{i}}\)</span> .</p>
+<p>&nbsp;</p>
+<p><span class="note">Note: If <strong><em>t<sub>i</sub></em></strong> and <strong><em>d<sub>i</sub></em></strong> are zero then you get the formula we used in Lesson 1-2: (<span class="math inline">\(\boldsymbol{v}=\frac{d}{t}\)</span>)</span></p>
+<p>&nbsp;</p>
+<p>We are going to code this formula, but there are a couple of issues:</p>
+<ol type="1">
+<li><p>fractions are “stacked” – but in scripts, equations can only be read left to right</p></li>
+<li><p>variable names have subscript characters (e.g., <strong><em>t<sub>i</sub></em></strong>), but subscript and superscript characters are not allowed in script</p></li>
+</ol>
+<section id="minding-your-parentheses" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="minding-your-parentheses"><span class="header-section-number">3.1</span> Minding your parentheses</h3>
+<p>In script, everything goes left-to-right so you cannot write a fraction as you would in Algebra.&nbsp; Instead, we need to be more explicit and put both both the numerator and the denominator in parentheses:</p>
+<p><span class="math display">\[
+v=\frac{\left(d_{f}-d_{i}\right)}{\left(t_{f}-t_{i}\right)}
+\]</span></p>
+<p>Then, pull out the fraction between the numerator and denominator and replace it with a division sign:</p>
+<p><span class="math display">\[
+v=\left(d_{f}-d_{i}\right) /\left(t_{f}-t_{i}\right)
+\]</span></p>
+<p>Now the formula is all on one line, but the symbols need to be replaced with valid variable names that do not have subscripts:</p>
+<p><span class="math display">\[
+\text { velocity }=(\text { finalDist }- \text { initDist }) /(\text { finalTime }- \text { initTime })
+\]</span></p>
+<p>This is now a valid line of code in R, assuming all four variables on the right side have assigned values.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>velocity <span class="ot">=</span> (finalDist <span class="sc">-</span> initDist) <span class="sc">/</span> (finalTime <span class="sc">-</span> initTime);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The line of code above says that <strong><em>velocity</em></strong> <span class="hl">will be assigned</span> the value equal to the calculations of the four variables on the right side of the equation.</p>
+</section>
+<section id="other-ways-to-assign-values" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="other-ways-to-assign-values"><span class="header-section-number">3.2</span> Other ways to assign values</h3>
+<p>In most programming languages the equal sign is used to assign values, and the equal sign always evaluates what is on the right side and assigns it to the variable on the left.&nbsp; In R, you can use arrows to assign values:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>«velocity <span class="ot">&lt;-</span>» (finalDist <span class="sc">-</span> initDist) <span class="sc">/</span> (finalTime <span class="sc">-</span> initTime); <span class="co"># commonly used</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>(finalDist <span class="sc">-</span> initDist) <span class="sc">/</span> (finalTime <span class="sc">-</span> initTime) «<span class="ot">-&gt;</span> velocity»; <span class="co"># rarely used</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The top ( <strong>&lt;-</strong> ) is the most commonly used in R and the bottom ( <strong>-&gt;</strong> ) works but is rarely used anymore.&nbsp; I prefer using ( <strong>=</strong> ) to ( <strong>&lt;-</strong> ) because ( <strong>=</strong> ) is used in most programming languages whereas ( <strong>&lt;-</strong> ) is not.&nbsp;</p>
+<p>&nbsp;</p>
+<p><span class="note">Note: In this case, ( <strong>=</strong> ) and ( <strong>&lt;-</strong> ) are functionally the same.</span> There are differences between the two, which we will talk about in the lesson on functions.</p>
+</section>
+<section id="variable-naming-error" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="variable-naming-error"><span class="header-section-number">3.3</span> Variable naming error</h3>
+<p>Here is the full script with a small error on the line calculating <strong><em>velocity</em></strong>:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>());   <span class="co"># Clear out environment</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">show.error.locations =</span> <span class="cn">TRUE</span>); <span class="co"># give line number of error*</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>finalDistance <span class="ot">=</span> <span class="dv">100</span>;</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>initDistance <span class="ot">=</span> <span class="dv">50</span>;</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>finaltime <span class="ot">=</span> <span class="dv">20</span>;       <span class="co"># misspelled: use t instead of T</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>initTime <span class="ot">=</span> <span class="dv">15</span>;</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># error will be on the line below:</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>«velocity <span class="ot">=</span> (finalDistance <span class="sc">-</span> initDistance) <span class="sc">/</span> (finalTime <span class="sc">-</span> initTime)»</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Every variable on the right side of the <strong><em>velocity</em></strong> equation must be given a value beforehand –&nbsp; otherwise, you will get the pesky <span class="hl">Object not found</span> error as shown in the image below (<a href="#fig-naming-error" class="quarto-xref">Figure&nbsp;1</a>)</p>
+<p>&nbsp;</p>
+<div id="fig-naming-error" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-naming-error-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-1-03_NamingError.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-naming-error-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Object not found because the variable name does not exist (it is misspelled).
+</figcaption>
+</figure>
+</div>
+<p>&nbsp;</p>
+<p><a href="#extension-the-show.error.location-line">Extension: The show.error.location line</a></p>
+<p>&nbsp;</p>
+<p><span class="note">Note: <strong>Object</strong> is almost synonymous with <strong>Variable</strong> in R.</span>&nbsp; The error is basically saying that there is no variable with that name.&nbsp; Any spelling error will cause the&nbsp;<span class="hl">Object not found</span> error.&nbsp; In this case I “spelled” the variable name wrong by changing the case of the <strong><em>T</em></strong>.&nbsp; <strong>final<span class="hl">t</span>ime</strong> is not the same as <strong>final<span class="hl">T</span>ime.</strong><br>
+&nbsp;</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>());           <span class="co"># clean out the environment</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">show.error.locations =</span> <span class="cn">TRUE</span>); <span class="co"># give line number of error*</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>finalDistance <span class="ot">=</span> <span class="dv">100</span>;</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>initDistance <span class="ot">=</span> <span class="dv">50</span>;</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>«finalTime» <span class="ot">=</span> <span class="dv">20</span>;</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>initTime <span class="ot">=</span> <span class="dv">15</span>;</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>velocity <span class="ot">=</span> (finalDistance <span class="sc">-</span> initDistance) <span class="sc">/</span> (finalTime <span class="sc">-</span> initTime);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-correctedSpelling" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-correctedSpelling-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-1-03_Corrected_name.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-correctedSpelling-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Misspelled variable name corrected – script now calculates velocity.
+</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="powers-and-multiplication" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="powers-and-multiplication"><span class="header-section-number">4</span> Powers and multiplication</h2>
+<p>We will look at one more formula that relates <strong><em>kinetic energy</em></strong> to <strong><em>mass</em></strong> and <strong><em>velocity</em></strong>:</p>
+<p><span class="math display">\[
+E_{k}=\frac{1}{2} m v^{2}
+\]</span></p>
+<p>There are two new issues with coding this formula:</p>
+<ol type="1">
+<li><p>the square function is a superscript – you cannot use superscript characters in R</p></li>
+<li><p>the implicit multiplication – we know that mass (<strong>m</strong>) and velocity (<strong>v</strong>) are being multiplied, but there is no multiplication sign</p></li>
+</ol>
+<section id="dealing-with-parenthesis-and-multiplication" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="dealing-with-parenthesis-and-multiplication"><span class="header-section-number">4.1</span> Dealing with parenthesis and multiplication</h3>
+<p>So let’s first pull the <strong><em>one-half</em></strong> out of fraction form and into division form:</p>
+<p><span class="math display">\[
+E_{k}=1 / 2 m v^{2}
+\]</span></p>
+<p>We need to be more explicit because this formula could be misinterpreted by the reader as <span class="math inline">\(E_{k}=1 /\left(2 m v^{2}\right)\)</span>, so we need to put the one-half in parenthesis:</p>
+<p><span class="math display">\[
+E_{k}=(1 / 2) m v^{2}
+\]</span></p>
+<p>Next, we will explicitly put in the multiplication symbols – a necessity in programming:</p>
+<p><span class="math display">\[
+E_{k}=(1 / 2)^{*} m^{*} v^{2}
+\]</span></p>
+<p><a href="#traps-forgetting-multiplication-symbol">Traps: Forgetting Multiplication Symbol</a></p>
+<p>&nbsp;</p>
+<p>And then change the symbols to script-friendly variable names:</p>
+<p><span class="math display">\[
+\text { kineticEnergy }=(1 / 2)^{*} \text { mass }^{*} \text { velocity }^{2}
+\]</span></p>
+</section>
+<section id="dealing-with-square-power" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="dealing-with-square-power"><span class="header-section-number">4.2</span> Dealing with square power</h3>
+<p>In R the ( ^ ) is the power operator.&nbsp; So <strong><em>^2</em></strong> means raise to the power of 2 (i.e., square):</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># this formula works...</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>kineticEnergy <span class="ot">=</span> (<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>)<span class="sc">*</span>mass<span class="sc">*</span>velocity<span class="sc">^</span><span class="dv">2</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>While the above works correctly, it is often helpful to be explicit and add parenthesis around the value or values that are getting raised to the power:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># more explicit solution</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>kineticEnergy <span class="ot">=</span> (<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>)<span class="sc">*</span>mass<span class="sc">*</span>(velocity)<span class="sc">^</span><span class="dv">2</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="the-power-operator" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="the-power-operator"><span class="header-section-number">5</span> The power operator ( ^ )</h2>
+<p>The ( <strong><em>^</em></strong> ) operator works for all powers including square roots, cubed roots, and mixed powers (e.g., raising to the 3/2 or 5/3).</p>
+<p>&nbsp;</p>
+<p>Let’s rearrange the <strong><em>kinetic energy</em></strong> formula to solve for <strong><em>velocity</em></strong>, which requires a <span class="hl">square root</span></p>
+<p><span class="math display">\[
+v=\sqrt{\frac{2 E_{k}}{m}}
+\]</span></p>
+<p>To put the above formula into a script form, we need to:</p>
+<p>1) Put the numerator and denominator on one line by taking out the fraction and replacing it with a division sign.</p>
+<p><span class="math display">\[
+v=\sqrt{\left(2 E_{k} / m\right)}
+\]</span></p>
+<p>2) Be explicit and put in multiplication symbols.</p>
+<p><span class="math display">\[
+v=\sqrt{\left(2^{*} E_{k} / m\right)}
+\]</span></p>
+<p>3) Spell the formula out using script-friendly variable names:</p>
+<p><span class="math display">\[
+\text { velocity }=\sqrt{\left(2^{*} \text { kineticEnergy / mass }\right)}
+\]</span></p>
+<p>4) Use the power operator ( <strong><em>^</em></strong> ) to square root the whole formula.&nbsp; Square rooting something is the same as saying <span class="hl">raise it to the 1/2 power</span>. Since we are square rooting the whole formula, we need to put the whole formula in parenthesis.</p>
+<p><span class="math display">\[
+\text { velocity }=\left(2^{*} \text { kineticEnergy } / \text { mass }\right)^{1 / 2}
+\]</span></p>
+<section id="coding-the-power" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="coding-the-power"><span class="header-section-number">5.1</span> Coding the power</h3>
+<p>So we have this in R:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>());          <span class="co"># clean out the environment</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>kineticEnergy <span class="ot">=</span> <span class="dv">50</span>;</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>mass <span class="ot">=</span> <span class="dv">5</span>;</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>velocity <span class="ot">=</span> (<span class="dv">2</span><span class="sc">*</span>kineticEnergy <span class="sc">/</span> mass)<span class="sc">^</span><span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>; <span class="co"># still a problem here!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-paretheses-pwer" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-paretheses-pwer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-1-03_KineticFormulaIssue.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-paretheses-pwer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Incorrect answer for velocity because the power is missing parentheses
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="correcting-the-power-with-parenthses" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="correcting-the-power-with-parenthses"><span class="header-section-number">5.2</span> Correcting the power with parenthses</h3>
+<p>The <strong><em>Environment</em></strong> tab (<a href="#fig-paretheses-pwer" class="quarto-xref">Figure&nbsp;3</a>) shows that <strong><em>v</em></strong> is, unexpectedly, <strong><em>10</em></strong>.&nbsp; This is because of the order-of-operations. Instead of raising the <strong><em>(2*kineticEnergy/mass)</em></strong> to the <strong><em>1/2</em></strong> power, the above code raised <strong><em>(2*kineticEnergy/mass)</em></strong> to the <strong><em>first (1)</em></strong> power and then divided everything by <strong><em>2</em></strong>.&nbsp; We need to be more explicit and put the <strong><em>1/2</em></strong> in parenthesis.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>());          <span class="co"># clean out the environment</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>kineticEnergy <span class="ot">=</span> <span class="dv">50</span>;</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>mass <span class="ot">=</span> <span class="dv">5</span>;</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>velocity <span class="ot">=</span> (<span class="dv">2</span><span class="sc">*</span>kineticEnergy <span class="sc">/</span> mass)<span class="sc">^</span>«(<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>)»; <span class="co"># now we are good!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-correctedKE" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-correctedKE-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-1-03_CorrectedKineticFormula.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-correctedKE-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Correct answer for velocity
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="more-power-and-roots" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="more-power-and-roots"><span class="header-section-number">5.3</span> More power and roots</h3>
+<p>This style will work for all powers and roots:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>());          <span class="co"># clean out the environment</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>kineticEnergy <span class="ot">=</span> <span class="dv">50</span>;</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>mass <span class="ot">=</span> <span class="dv">5</span>;</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>test1 <span class="ot">=</span> (<span class="dv">2</span><span class="sc">*</span>kineticEnergy <span class="sc">/</span> mass)«<span class="sc">^</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>)»;  <span class="co"># third root</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>test2 <span class="ot">=</span> (<span class="dv">2</span><span class="sc">*</span>kineticEnergy <span class="sc">/</span> mass)«<span class="sc">^</span>(<span class="dv">5</span>)»;    <span class="co"># fifth power</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>test3 <span class="ot">=</span> (<span class="dv">2</span><span class="sc">*</span>kineticEnergy <span class="sc">/</span> mass)«<span class="sc">^</span>(<span class="dv">5</span><span class="sc">/</span><span class="dv">3</span>)»;  <span class="co"># mixed root and power</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>test4 <span class="ot">=</span> (<span class="dv">2</span><span class="sc">*</span>kineticEnergy <span class="sc">/</span> mass)«<span class="sc">^</span>(<span class="fl">3.17</span>)»; <span class="co"># decimal power</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-mixed-powers" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mixed-powers-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-1-03_mixedPowers.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mixed-powers-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: Testing different powers in R
+</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="the-square-root-function" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="the-square-root-function"><span class="header-section-number">6</span> The square root function</h2>
+<p>In R, you will usually see square roots done using the <strong><em>sqrt()</em></strong> function:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>velocity <span class="ot">=</span> «sqrt»(<span class="dv">2</span><span class="sc">*</span>kineticEnergy <span class="sc">/</span> mass);  <span class="co"># how square roots are usually done</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong><em>sqrt()</em></strong> works just fine but there is no equivalent for all the other types of powers and roots.&nbsp; That is why I prefer to use the ( <strong><em>^</em></strong> ) operator – it is easy to remember and you can use it for every power and root situation – you just need to attach the appropriate number.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>velocity <span class="ot">=</span> (<span class="dv">2</span><span class="sc">*</span>kineticEnergy <span class="sc">/</span> mass)<span class="sc">^</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>); <span class="co"># how I prefer to do them</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="random-values" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="random-values"><span class="header-section-number">7</span> Random values</h2>
+<p>In <a href="#fig-mixed-powers" class="quarto-xref">Figure&nbsp;5</a> we hardcoded the values for <strong><em>kineticEnergy</em></strong> and <strong><em>mass</em></strong>, which just means we directly provided a values for the two variables.&nbsp; We can also randomly pick values for variables using <strong><em>sample()</em></strong>.</p>
+<p>&nbsp;</p>
+<p><strong><em>sample()</em></strong> requires two arguments:</p>
+<ul>
+<li><p>the range of numbers you want to randomly sample from</p></li>
+<li><p>the number of values you want to randomly sample (for now we will just do one)</p></li>
+</ul>
+<p>&nbsp;</p>
+<p>The code to pick one random number between 20 and 100 is:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>randomNum1 <span class="ot">=</span> <span class="fu">sample</span>(<span class="dv">20</span><span class="sc">:</span><span class="dv">100</span>, <span class="at">size=</span><span class="dv">1</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><span class="note">note: 20:100 is inclusive of the numbers on both ends – so, 20 and 100 are both possibilities meaning there are 81 possible numbers to choose randomly from</span></p>
+<p>&nbsp;</p>
+<p>The code to pick a random number between -100 and -50 is:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>randomNum2 <span class="ot">=</span> <span class="fu">sample</span>(<span class="sc">-</span><span class="dv">100</span><span class="sc">:-</span><span class="dv">50</span>, <span class="at">size=</span><span class="dv">1</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong><em>sample()</em></strong> always returns a whole number.&nbsp;</p>
+<section id="normal-values" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="normal-values"><span class="header-section-number">7.1</span> normal values</h3>
+<p><strong><em>sample()</em></strong> treats every number the same.&nbsp; If there are 100 numbers in the range then every number has a 1% chance of being picked.&nbsp; If you want to pick a random value, but weigh the value (e.g., a normally distributed random values) then you can use <strong><em>rnorm()</em></strong>.</p>
+<p>&nbsp;</p>
+<p><strong><em>rnorm()</em></strong> requires three arguments:</p>
+<ul>
+<li><p>the number of values you want to randomly pick (for now, we will just pick 1 at a time)</p></li>
+<li><p>the mean of the normal distribution you want to pick randomly from</p></li>
+<li><p>the standard deviation of the normal distribution</p></li>
+</ul>
+<p>&nbsp;</p>
+<p>The code to pick one random number from a normal distribution with mean 10 and standard deviation 3 is:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>randomNorm1 <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">mean=</span><span class="dv">10</span>, <span class="at">sd=</span><span class="dv">3</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The code to pick one random number from a normal distribution with mean -7.5 and standard deviation 0.5 is:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>randomNorm2 <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">mean=</span><span class="sc">-</span><span class="fl">7.5</span>, <span class="at">sd=</span><span class="fl">0.5</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong><em>rnorm()</em></strong> always returns a decimal number</p>
+<div id="fig-randomNumbers" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-randomNumbers-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/clipboard-877561133.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-randomNumbers-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: Picking random numbers – the random numbers will be different each time you execute the code
+</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="application" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="application"><span class="header-section-number">8</span> Application</h2>
+<p>1) Add this code right after the <strong><em>rm(list=ls())</em></strong> lines:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">5</span>); </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The above line will make sure that you get the same “random” number every time you execute your script by creating a seed value.&nbsp; Seed values are covered in a much later lesson.</p>
+<p>&nbsp;</p>
+<p>2) Create six variables that all hold length values:</p>
+<ul>
+<li><p>1st and 2nd are assigned the values: 25, 30</p></li>
+<li><p>3rd and 4th are randomly picked between 20 and 30 (each number has an equal chance)</p></li>
+<li><p>5th and 6th are randomly picked from a normal distribution with mean of 25 and standard deviation of 2</p></li>
+</ul>
+<p>&nbsp;</p>
+<p>3) Calculate the (a) mean, (b) variance, and (c) standard deviation of the six values.</p>
+<ul>
+<li><p><a href="http://davidmlane.com/hyperstat/A16252.html">Visit this page if you need a reminder about how to calculate mean, variance, and standard deviation</a></p></li>
+<li><p>you can use R functions like <strong><em>mean(), var(),</em></strong> and <strong><em>sd()</em></strong> to check these values, but <span class="hl">I want you to manually solve these</span> – it is important to learn how to properly code the mathematics because you will often not have functions to do it for you.</p></li>
+<li><p><a href="#extension-mathematical-operations-across-multiple-lines">Extension: Mathematical operations across multiple lines</a></p></li>
+</ul>
+<p>&nbsp;</p>
+<p>4) Make sure the 6 values, their mean, their variance, and their standard deviation appear in the <strong><em>Environment</em></strong> tab after the script is executed.</p>
+<p>&nbsp;</p>
+<p>5) Challenge: Pick a random two-digit decimal number between 0 and 1 (e.g., 0.23, 0.89, 0.10)</p>
+<ul>
+<li>you will need to use <strong><em>sample()</em></strong> and then manipulate the number</li>
+</ul>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Save the script as&nbsp;<strong><em>app1-03.r</em></strong> in your&nbsp;<strong><em>scripts</em></strong> folder and&nbsp; email your Project Folder to Charlie Belinsky at belinsky@msu.edu.</p>
+<p>&nbsp;</p>
+<p><a href="1-01-RStudioProjectsSetup.html#sec-zip-folder" target="_blank">Instructions for zipping the Project Folder are here.</a></p>
+<p>&nbsp;</p>
+<p>If you have any questions regarding this application, feel free to email them to Charlie Belinsky at belinsky@msu.edu.</p>
+<section id="questions-to-answer" class="level3" data-number="8.1">
+<h3 data-number="8.1" class="anchored" data-anchor-id="questions-to-answer"><span class="header-section-number">8.1</span> Questions to answer</h3>
+<p>Answer the following in comments inside your application script:</p>
+<ol type="1">
+<li><p>What was your level of comfort with the lesson/application?</p></li>
+<li><p>What areas of the lesson/application confused or still confuses you?</p></li>
+<li><p>What are some things you would like to know more about that is related to, but not covered in, this lesson?</p></li>
+</ol>
+</section>
+</section>
+<section id="extension-mathematical-operations-across-multiple-lines" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="extension-mathematical-operations-across-multiple-lines"><span class="header-section-number">9</span> Extension: Mathematical operations across multiple lines</h2>
+<p>If you have a long mathematical formula to execute in code, there is a good chance that you will want to break the code up into multiple lines.</p>
+<p>&nbsp;</p>
+<p>To keep it simple, let’s add 5 values together across multiple lines:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>c <span class="ot">=</span> <span class="dv">10</span> <span class="sc">+</span> <span class="dv">10</span> <span class="sc">+</span> <span class="dv">10</span> <span class="sc">+</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="dv">10</span> <span class="sc">+</span> <span class="dv">10</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you put the above code in you script, then you will get <strong><em>c = 50</em></strong> in the <strong><em>Environment.</em></strong></p>
+<p>&nbsp;</p>
+<p>However, this code:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">=</span> <span class="dv">10</span> <span class="sc">+</span> <span class="dv">10</span> <span class="sc">+</span> <span class="dv">10</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    <span class="sc">+</span> <span class="dv">10</span> <span class="sc">+</span> <span class="dv">10</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>will put <strong><em>d=30</em></strong> in the <strong><em>Environment</em></strong>.</p>
+<p>&nbsp;</p>
+<p>This is because R did not know the continue the equation for <strong><em>d</em></strong> to the second line.&nbsp; R treated the first line as the complete command/equation.&nbsp; By putting the ( + ) at the end of the first line for <strong><em>c</em></strong>, R knew it needed to continue the command to the next line.</p>
+<p>&nbsp;</p>
+<p>By the way, R does do something with the second line for <strong><em>d</em></strong> – it prints the answer to <strong><em>Console</em></strong> if you click <strong><em>Run</em></strong>:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> d <span class="ot">=</span> <span class="dv">10</span> <span class="sc">+</span> <span class="dv">10</span> <span class="sc">+</span> <span class="dv">10</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span>     <span class="sc">+</span> <span class="dv">10</span> <span class="sc">+</span> <span class="dv">10</span>;</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">20</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In other words:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span> <span class="dv">10</span> <span class="sc">+</span> <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>is a command that evaluates to <strong>20</strong></p>
+</section>
+<section id="traps-forgetting-multiplication-symbol" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="traps-forgetting-multiplication-symbol"><span class="header-section-number">10</span> Traps: Forgetting Multiplication Symbol</h2>
+<p>Let’s say you are solving for kinetic energy:</p>
+<p><span class="math display">\[
+E_{k}=\frac{1}{2} m v^{2}
+\]</span></p>
+<p>And you have a value for velocity (<strong><em>v</em></strong>) and mass (<strong><em>m</em></strong>)</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>());          <span class="co"># clean out the environment</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="dv">100</span>;</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>v <span class="ot">=</span> <span class="dv">10</span>;</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>«KE <span class="ot">=</span> ????;    <span class="co"># should be: KE = (1/2)*m*v^2;»</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you code <strong><em>KE</em></strong> like this::</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>KE <span class="ot">=</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">2</span><span class="sc">*</span>mv<span class="sc">^</span><span class="dv">2</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Then you will get the error: <span class="hl">object ‘mv’ not found</span> in the <strong><em>Console</em></strong> tab because R does not realize you want to multiply the variables <strong><em>m</em></strong> and <strong><em>v</em></strong>, it thinks you are trying to use a variable named <strong><em>mv</em></strong>, and the variable <strong><em>mv</em></strong> does not exist.</p>
+<p>&nbsp;</p>
+<p>If you code <strong><em>KE</em></strong> like this::</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>KE <span class="ot">=</span> (<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>)m<span class="sc">*</span>v<span class="sc">^</span><span class="dv">2</span>;  <span class="co"># same error arises if you do 1/2m*v^2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>you will get the error: <span class="hl">unexpected symbol</span> (<a href="#fig-unexpected-symbol" class="quarto-xref">Figure&nbsp;7</a>) and the <strong><em>Console</em></strong> tab will point to the <strong><em>m</em></strong></p>
+<div id="fig-unexpected-symbol" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-unexpected-symbol-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/clipboard-1865764449.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-unexpected-symbol-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7: Unexpected symbol error
+</figcaption>
+</figure>
+</div>
+<p>&nbsp;</p>
+<p>In this case, R is expecting an operation (symbol) after <strong>(1/2)</strong>.&nbsp; <strong><em>m</em></strong> is a variable, not a operation, hence the error.</p>
+</section>
+<section id="trap-units-or-lack-thereof-in-programming" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="trap-units-or-lack-thereof-in-programming"><span class="header-section-number">11</span> Trap: Units, or lack thereof, in programming</h2>
+<p>One problem that crops up quite often in programming is that none of the numbers used in calculations have units.&nbsp; So we often have lines of code without any mention of units like this:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># find an average of the following three weights</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>weight1 <span class="ot">=</span> <span class="dv">175</span>;</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>weight2 <span class="ot">=</span> <span class="dv">200</span>;</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>weight3 <span class="ot">=</span> <span class="dv">210</span>;</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>aveWeight <span class="ot">=</span> (weight1 <span class="sc">+</span> weight2 <span class="sc">+</span> weight3) <span class="sc">/</span> <span class="dv">3</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>And if we add units to the number…</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># find an average of the following three weights</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>«weight1 <span class="ot">=</span> <span class="dv">175</span>lb;  <span class="co"># causes "unexpected symbol" error»</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>weight2 <span class="ot">=</span> <span class="dv">200</span>lb;</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>weight3 <span class="ot">=</span> <span class="dv">210</span>lb;</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>aveWeight <span class="ot">=</span> (weight1 <span class="sc">+</span> weight2 <span class="sc">+</span> weight3) <span class="sc">/</span> <span class="dv">3</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We get the error <span class="hl">unexpected symbol</span> because R is expecting some sort of operation after the number&nbsp;<strong>175</strong> and <strong>lb</strong> is not a valid operation.&nbsp;</p>
+<p>&nbsp;</p>
+<p><span class="note">Note: Lines 3 and 4 would also cause an unexpected symbol error but R ceases executing at the first error.</span></p>
+<p>&nbsp;</p>
+<p>It is best to mention the units somewhere in the comments especially if your script is large or others are using your script.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># find an average of the following three weights («all in pounds»)</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>weight1 <span class="ot">=</span> <span class="dv">175</span>;</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>weight2 <span class="ot">=</span> <span class="dv">200</span>;</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>weight3 <span class="ot">=</span> <span class="dv">210</span>;</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>aveWeight <span class="ot">=</span> (weight1 <span class="sc">+</span> weight2 <span class="sc">+</span> weight3) <span class="sc">/</span> <span class="dv">3</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Otherwise, you risk a situation like the <a href="https://en.wikipedia.org/wiki/Mars_Climate_Orbiter">Mars Climate Orbiter</a> crash, which could have easily been avoided with proper comments.</p>
+</section>
+<section id="extension-the-show.error.location-line" class="level2" data-number="12">
+<h2 data-number="12" class="anchored" data-anchor-id="extension-the-show.error.location-line"><span class="header-section-number">12</span> Extension: The show.error.location line</h2>
+<p>The second line of code in <a href="#fig-naming-error" class="quarto-xref">Figure&nbsp;1</a> tells R to provide a line number where an error occurs:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">show.error.locations =</span> <span class="cn">TRUE</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In <a href="#fig-naming-error" class="quarto-xref">Figure&nbsp;1</a>, in the <strong><em>Console</em></strong> tab the error includes the line number, 9, because of the line above. This seems like a great idea except that this line only works in a few limited situations. As you get into more complex code, this line will not work and R will not show you the line number for the error.</p>
+<p>&nbsp;</p>
+<p>Unfortunately, R is one of the harder programming languages to debug. We will get to some debugging strategies in later lessons. For now, you can include the <strong><em>show.error.location</em></strong> line in your code. It does not hurt – it just has limited utility.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.22">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>1-04: Vectors and Data Frames</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b4406b7675125bc2ba204020e191172.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-5f39cfd1aee7e7785011fc5df168ee92.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link rel="shortcut icon" href="https://qfcatmsu.github.io/assets/quarto/qfc_icon.png">
+<script>mod=true; menuCollapse=true;</script>
+<script src="https://qfcatmsu.github.io/assets/quarto/qfc_styles.js"></script>
+ 
+
+
+<link rel="stylesheet" href="https://qfcatmsu.github.io/assets/quarto/qfc_styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+          <h1 class="quarto-secondary-nav-title">1-04: Vectors and Data Frames</h1>
+        </a>     
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text"><b>Fundamentals of Programming class</b></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/0-01-IntroductionAndSyllabus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction and Syllabus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-01-RStudioProjectsSetup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-01: RStudio Projects Setup</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-02-Variables.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-02: Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-03_Mathematical_Operations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-03: Mathematical Operations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-04_Vectors_And_Data_Frames.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">1-04: Vectors and Data Frames</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-05_Functions_Introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-05: Functions Introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-06_Run_and_Source.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-06: Run and Source</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-07_Outputs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-07: Outputs</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-08_Conditional_Operations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-08: Conditional Operations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-09_If_Else_Statements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-09: If-Else Statements</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-10_For_Loops.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-10: For Loops</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-11_For_Loops_and_State_Varibles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-11: For Loops and State Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-12_MultipleConditions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-12: Multiple Conditions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-13_Functions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-13: Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-14_Functions2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-14: Functions 2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-15_Nested_Loops_and _Matrices.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-15: Nested loops and Matrices</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-15_Nested_Loops_and _Matrices-HOME-GALAXYBOOK.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-15: Nested loops and Matrices</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-01_R-Base_Plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-01: R-Base Plots</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-02_DataFrame_Modifications.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-02: DataFrame Modifications</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-03_DataTypesAndDateFrames.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-03: Data Types and Data Frames</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-04_WhichStatements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-04: Which Statements</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-05_WhichAndRegularExpressions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-05: Which and Regular Expressions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-06_Datetime_Obejects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-06: Datetime objects</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-07_Matrices.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-07: Matrices</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-08_Binding_Sampling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-08: Binding and Sampling</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-09_Stacking_Mapping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-09: Stacking and Mapping</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-10_Statistical_Tests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-10: Statistical Tests</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-11_Objects_Attributes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-11: Objects and Attributes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-12_Lists.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-12: Lists</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-13_Breakpoints.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-13: Breakpoints</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title"><b>Lesson Content</b></h2>
+   
+  <ul>
+  <li><a href="#changes" id="toc-changes" class="nav-link active" data-scroll-target="#changes"><span class="header-section-number">0.1</span> Changes…</a></li>
+  <li><a href="#purpose" id="toc-purpose" class="nav-link" data-scroll-target="#purpose"><span class="header-section-number">1</span> Purpose</a>
+  <ul class="collapse">
+  <li><a href="#sec-lesson-files" id="toc-sec-lesson-files" class="nav-link" data-scroll-target="#sec-lesson-files"><span class="header-section-number">1.1</span> Files for this lesson</a></li>
+  </ul></li>
+  <li><a href="#standalone-scripts-vs.-scripts-within-a-project" id="toc-standalone-scripts-vs.-scripts-within-a-project" class="nav-link" data-scroll-target="#standalone-scripts-vs.-scripts-within-a-project"><span class="header-section-number">2</span> Standalone scripts vs.&nbsp;scripts within a Project</a>
+  <ul class="collapse">
+  <li><a href="#set-working-directory-a-cautionary-statement" id="toc-set-working-directory-a-cautionary-statement" class="nav-link" data-scroll-target="#set-working-directory-a-cautionary-statement"><span class="header-section-number">2.1</span> Set Working Directory (a cautionary statement)</a></li>
+  </ul></li>
+  <li><a href="#vector-variables" id="toc-vector-variables" class="nav-link" data-scroll-target="#vector-variables"><span class="header-section-number">3</span> Vector Variables</a>
+  <ul class="collapse">
+  <li><a href="#grouping-values" id="toc-grouping-values" class="nav-link" data-scroll-target="#grouping-values"><span class="header-section-number">3.1</span> Grouping values</a></li>
+  <li><a href="#indexing-values-in-a-vector" id="toc-indexing-values-in-a-vector" class="nav-link" data-scroll-target="#indexing-values-in-a-vector"><span class="header-section-number">3.2</span> Indexing values in a vector</a></li>
+  <li><a href="#vectors-and-columns-in-a-data-frame" id="toc-vectors-and-columns-in-a-data-frame" class="nav-link" data-scroll-target="#vectors-and-columns-in-a-data-frame"><span class="header-section-number">3.3</span> Vectors and columns in a data frame</a></li>
+  </ul></li>
+  <li><a href="#csv-files" id="toc-csv-files" class="nav-link" data-scroll-target="#csv-files"><span class="header-section-number">4</span> CSV files</a>
+  <ul class="collapse">
+  <li><a href="#opening-a-csv-file" id="toc-opening-a-csv-file" class="nav-link" data-scroll-target="#opening-a-csv-file"><span class="header-section-number">4.1</span> Opening a CSV file</a></li>
+  <li><a href="#reading-in-a-csv-file" id="toc-reading-in-a-csv-file" class="nav-link" data-scroll-target="#reading-in-a-csv-file"><span class="header-section-number">4.2</span> Reading in a CSV file</a></li>
+  <li><a href="#column-value-type" id="toc-column-value-type" class="nav-link" data-scroll-target="#column-value-type"><span class="header-section-number">4.3</span> Column value type</a></li>
+  </ul></li>
+  <li><a href="#functions-and-arguments" id="toc-functions-and-arguments" class="nav-link" data-scroll-target="#functions-and-arguments"><span class="header-section-number">5</span> Functions and arguments</a>
+  <ul class="collapse">
+  <li><a href="#file" id="toc-file" class="nav-link" data-scroll-target="#file"><span class="header-section-number">5.1</span> file</a></li>
+  <li><a href="#sep" id="toc-sep" class="nav-link" data-scroll-target="#sep"><span class="header-section-number">5.2</span> sep</a></li>
+  <li><a href="#header" id="toc-header" class="nav-link" data-scroll-target="#header"><span class="header-section-number">5.3</span> header</a></li>
+  <li><a href="#default-values-for-arguments" id="toc-default-values-for-arguments" class="nav-link" data-scroll-target="#default-values-for-arguments"><span class="header-section-number">5.4</span> Default values for arguments</a></li>
+  </ul></li>
+  <li><a href="#getting-data" id="toc-getting-data" class="nav-link" data-scroll-target="#getting-data"><span class="header-section-number">6</span> Getting data</a>
+  <ul class="collapse">
+  <li><a href="#pulling-out-a-column" id="toc-pulling-out-a-column" class="nav-link" data-scroll-target="#pulling-out-a-column"><span class="header-section-number">6.1</span> Pulling out a column</a></li>
+  <li><a href="#sec-subsetValues" id="toc-sec-subsetValues" class="nav-link" data-scroll-target="#sec-subsetValues"><span class="header-section-number">6.2</span> Pulling out (subsetting) individual values</a></li>
+  <li><a href="#the-environment-and-the-l-value" id="toc-the-environment-and-the-l-value" class="nav-link" data-scroll-target="#the-environment-and-the-l-value"><span class="header-section-number">6.3</span> The Environment and the L value</a></li>
+  </ul></li>
+  <li><a href="#pulling-out-multiple-values" id="toc-pulling-out-multiple-values" class="nav-link" data-scroll-target="#pulling-out-multiple-values"><span class="header-section-number">7</span> Pulling out multiple values</a>
+  <ul class="collapse">
+  <li><a href="#using-a-numeric-vector-to-pull-multiple-values" id="toc-using-a-numeric-vector-to-pull-multiple-values" class="nav-link" data-scroll-target="#using-a-numeric-vector-to-pull-multiple-values"><span class="header-section-number">7.1</span> Using a numeric vector to pull multiple values</a></li>
+  <li><a href="#pulling-out-consecutive-values" id="toc-pulling-out-consecutive-values" class="nav-link" data-scroll-target="#pulling-out-consecutive-values"><span class="header-section-number">7.2</span> Pulling out consecutive values</a></li>
+  <li><a href="#using-the-console-to-view-values-in-a-vector" id="toc-using-the-console-to-view-values-in-a-vector" class="nav-link" data-scroll-target="#using-the-console-to-view-values-in-a-vector"><span class="header-section-number">7.3</span> Using the Console to view values in a vector</a></li>
+  <li><a href="#using-a-sequence-to-get-values" id="toc-using-a-sequence-to-get-values" class="nav-link" data-scroll-target="#using-a-sequence-to-get-values"><span class="header-section-number">7.4</span> Using a sequence to get values</a></li>
+  </ul></li>
+  <li><a href="#application" id="toc-application" class="nav-link" data-scroll-target="#application"><span class="header-section-number">8</span> Application</a>
+  <ul class="collapse">
+  <li><a href="#questions-to-answer" id="toc-questions-to-answer" class="nav-link" data-scroll-target="#questions-to-answer"><span class="header-section-number">8.1</span> Questions to answer</a></li>
+  </ul></li>
+  <li><a href="#trap-opening-csv-files-in-excel" id="toc-trap-opening-csv-files-in-excel" class="nav-link" data-scroll-target="#trap-opening-csv-files-in-excel"><span class="header-section-number">9</span> Trap: Opening CSV files in Excel</a></li>
+  <li><a href="#extension-long-and-short-integers" id="toc-extension-long-and-short-integers" class="nav-link" data-scroll-target="#extension-long-and-short-integers"><span class="header-section-number">10</span> Extension: Long and Short Integers</a></li>
+  <li><a href="#extension-statistical-functions-on-vectors" id="toc-extension-statistical-functions-on-vectors" class="nav-link" data-scroll-target="#extension-statistical-functions-on-vectors"><span class="header-section-number">11</span> Extension: Statistical functions on vectors</a></li>
+  <li><a href="#extension-square-brackets-vs.-round-brackets" id="toc-extension-square-brackets-vs.-round-brackets" class="nav-link" data-scroll-target="#extension-square-brackets-vs.-round-brackets"><span class="header-section-number">12</span> Extension: Square brackets [ ] vs.&nbsp;Round Brackets ( )</a></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content column-page-right" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">1-04: Vectors and Data Frames</h1>
+</div>
+
+
+
+<div class="quarto-title-meta column-page-right">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="changes" class="level3" data-number="0.1">
+<h3 data-number="0.1" class="anchored" data-anchor-id="changes"><span class="header-section-number">0.1</span> Changes…</h3>
+<ul>
+<li><p>extension about why I added arguments when reading the CSV file</p></li>
+<li><p>add some more images for early examples?</p></li>
+</ul>
+</section>
+<section id="purpose" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="purpose"><span class="header-section-number">1</span> Purpose</h2>
+<ul>
+<li><p>Introducing vectors</p></li>
+<li><p>Opening a CSV file and saving data to a data frame</p></li>
+<li><p>Pulling columns from a data frame</p></li>
+<li><p>Pulling individual values from a column</p></li>
+<li><p>Pulling multiple values for a column</p></li>
+</ul>
+<p>&nbsp;</p>
+<p>If you have any questions about the material in this lesson, feel free to email them to the instructor, Charlie Belinsky, at belinsky@msu.edu.</p>
+<section id="sec-lesson-files" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="sec-lesson-files"><span class="header-section-number">1.1</span> Files for this lesson</h3>
+<p>From this point on most lessons will have script and/or data files to download.</p>
+<p>&nbsp;</p>
+<p>The <a href="../scripts/1-04_VectorsAndDataFrames.R">script for this lesson is here</a></p>
+<ul>
+<li>Save the linked script file to the <strong><em>scripts</em></strong> folder in your Class Project</li>
+<li>The script file contains the code in this lesson in the order it appears in this lesson. Source the script to see the results from this lesson.</li>
+</ul>
+<p>&nbsp;</p>
+<p>The data used in this lesson, <a href="../data/twoWeekWeatherData.csv">twoWeekWeatherData.csv</a></p>
+<ul>
+<li><p>Save the linked data file to the <strong><em>data</em></strong> folder in your Class Project</p>
+<ul>
+<li>If you save the data file to the wrong folder, the script file will not be able to read it.</li>
+</ul></li>
+<li><p><a href="#trap-opening-csv-files-in-excel">Trap: Opening CSV files in Excel</a></p></li>
+</ul>
+</section>
+</section>
+<section id="standalone-scripts-vs.-scripts-within-a-project" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="standalone-scripts-vs.-scripts-within-a-project"><span class="header-section-number">2</span> Standalone scripts vs.&nbsp;scripts within a Project</h2>
+<p>In the last two lessons, everything we did was contained to one script file – no outside file was needed.&nbsp; The scripts in those lessons were standalone scripts and could be executed inside or outside your RStudio Project with the same results.</p>
+<p>&nbsp;</p>
+<p>Standalone scripts are rare and are generally only created for testing purposes.</p>
+<p>&nbsp;</p>
+<p>The script for this lesson will not execute correctly if it is treated as a standalone script (e.g., it is executed outside of the RStudio Project).&nbsp;<span class="hl">This is because the file looks for a data file and it needs to know where to look for the data file.</span></p>
+<section id="set-working-directory-a-cautionary-statement" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="set-working-directory-a-cautionary-statement"><span class="header-section-number">2.1</span> Set Working Directory (a cautionary statement)</h3>
+<p>Many people still treat all R scripts as standalone scripts (i.e., they do not use RStudio Project). This causes all sorts of problems when script file look for other files.&nbsp; The old way to get around this is to set the Working Directories using <strong><em>setwd()</em></strong>.&nbsp; This is a mess because Working Directories change when file are moved between computers or even within a computer.&nbsp; <span class="hl">Scripts that set working directories are much harder to share and maintain.</span>&nbsp; This author strongly suggests that you use RStudio Projects and avoid the working directory mess.</p>
+</section>
+</section>
+<section id="vector-variables" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="vector-variables"><span class="header-section-number">3</span> Vector Variables</h2>
+<p>Vector variables, or <strong><em>vector</em></strong> for short, are <span class="hl">variables that hold multiple related values</span><em>.</em>&nbsp; For instance if we have temperature values for 5 days, we could create 5 variables and assign each one a temperature value:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>tempHigh1 <span class="ot">=</span> <span class="dv">65</span>;</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>tempHigh2 <span class="ot">=</span> <span class="dv">57</span>;</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>tempHigh3 <span class="ot">=</span> <span class="dv">61</span>;</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>tempHigh4 <span class="ot">=</span> <span class="dv">64</span>;</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>tempHigh5 <span class="ot">=</span> <span class="dv">59</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>And, in the last lesson’s application, we averaged the 5 values like this:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>tempAvg <span class="ot">=</span> (tempHigh1 <span class="sc">+</span> tempHigh2 <span class="sc">+</span> tempHigh3 <span class="sc">+</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>           tempHigh4 <span class="sc">+</span> tempHigh5) <span class="sc">/</span> <span class="dv">5</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="grouping-values" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="grouping-values"><span class="header-section-number">3.1</span> Grouping values</h3>
+<p>But, in programming we want to group related values together.&nbsp; So, instead of creating 5 different variables, <span class="hl">we create one vector that has 5 values:</span></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>tempHigh <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">65</span>, <span class="dv">57</span>, <span class="dv">61</span>, <span class="dv">64</span>, <span class="dv">59</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>One of the main reasons to create a vector is that <span class="hl">the values in the vector are all associated</span> and we can perform mathematical operations on the whole vector.&nbsp; For instance, the vector might consist of multiple temperatures in Fahrenheit and want to convert all the temperatures to Celsius:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>tempHighCel <span class="ot">=</span> (<span class="dv">5</span><span class="sc">/</span><span class="dv">9</span>) <span class="sc">*</span> (tempHigh <span class="sc">-</span> <span class="dv">32</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Or, we can use one of R’s many, many statistical functions, <strong><em>mean()</em></strong>, on the vector:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>tempMean <span class="ot">=</span> <span class="fu">mean</span>(tempHigh); </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>After executing the code in this section, we can see in the <strong><em>Environment</em></strong> tab that <strong><em>tempHighCel</em></strong> has 5 converted temperatures and that <strong><em>tempMean</em></strong> is the same as <strong><em>tempAvg</em></strong>:</p>
+<div class="sourceCode" id="cb6" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>tempAvg<span class="sc">:</span>     <span class="fl">61.2</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>tempHigh<span class="sc">:</span>    num [<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="dv">65</span> <span class="dv">57</span> <span class="dv">61</span> <span class="dv">64</span> <span class="dv">59</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>tempHighCel<span class="sc">:</span> num [<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="fl">18.3</span> <span class="dv">139</span> <span class="fl">16.1</span> <span class="fl">17.5</span> <span class="dv">15</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>tempMean<span class="sc">:</span>    <span class="fl">61.2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-environment-view" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-environment-view-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-1-04-TempValue-in-Env.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-environment-view-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: View of temperature values in Environment
+</figcaption>
+</figure>
+</div>
+<p><a href="#extension-statistical-functions-on-vectors">Extension: Statistical functions on vectors</a></p>
+</section>
+<section id="indexing-values-in-a-vector" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="indexing-values-in-a-vector"><span class="header-section-number">3.2</span> Indexing values in a vector</h3>
+<p>Putting values into vectors also allows us to associate values between vectors.&nbsp; If we have a vector of high temperature values, then we could also have a vector of low temperature values.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>tempLow <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">45</span>, <span class="dv">40</span>, <span class="dv">55</span>, <span class="dv">37</span>, <span class="dv">42</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We can directly subtract <strong><em>tempLow</em></strong> values from <strong><em>tempHigh</em></strong> to get the difference in temperature for all values:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>tempDiff <span class="ot">=</span> tempHigh <span class="sc">-</span> tempLow;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We can index individual values.&nbsp; You could think of the vector as 5 days.&nbsp; And if you want, you can find the change in temperature for any day using the index 1 through 5:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>tempDiff_3 <span class="ot">=</span> tempHigh[<span class="dv">3</span>] <span class="sc">-</span> tempLow[<span class="dv">3</span>];</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>tempDiff_5 <span class="ot">=</span> tempHigh[<span class="dv">5</span>] <span class="sc">-</span> tempLow[<span class="dv">5</span>];</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The <strong><em>Environment</em></strong> shows:</p>
+<div class="sourceCode" id="cb10" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>tempHigh<span class="sc">:</span>    num [<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="dv">65</span> <span class="dv">57</span> <span class="dv">61</span> <span class="dv">64</span> <span class="dv">59</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>tempLow<span class="sc">:</span>     num [<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="dv">45</span> <span class="dv">40</span> <span class="dv">55</span> <span class="dv">37</span> <span class="dv">42</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>tempDiff<span class="sc">:</span>    num [<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="dv">20</span> <span class="dv">17</span> <span class="dv">6</span> <span class="dv">27</span> <span class="dv">17</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>tempDiff_3<span class="sc">:</span>  <span class="dv">6</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>tempDiff_5<span class="sc">:</span>  <span class="dv">17</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="vectors-and-columns-in-a-data-frame" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="vectors-and-columns-in-a-data-frame"><span class="header-section-number">3.3</span> Vectors and columns in a data frame</h3>
+<p><span class="hl">Data frames are made up of vectors</span> that all have the same length.&nbsp; The vectors are the columns in the data frame and the number of values in the vector is determined by the number of rows in the data frame.</p>
+<p>&nbsp;</p>
+<p>In <a href="#fig-weatherdataframe" class="quarto-xref">Figure&nbsp;2</a> there is a weather data frame (<span class="note">note: we are using this data frame in future lessons, not this one</span>) where each column has a measured daily weather value (e.g., <strong><em>minTemp</em></strong>, <strong><em>maxTemp, relHum</em></strong>).&nbsp; Each row gives the measured weather values for a specific day (e.g., row 1 is Jan 1, row 2 is Jan 2).</p>
+<div id="fig-weatherdataframe" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-weatherdataframe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/clipboard-2481776937.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-weatherdataframe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: A data frame viewed in RStudio with 23 variables (i.e., the 23 columns, which are vector variables)
+</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="csv-files" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="csv-files"><span class="header-section-number">4</span> CSV files</h2>
+<p>In the first couple of lessons we were using data from inside the script but most of the data you will use will come from outside the script – often from a data frame. The data frames themselves often come from a CSV file. CSV stands for Comma Separated Values, meaning that the values in the file are separated by commas.</p>
+<p>&nbsp;</p>
+<p><span class="note">Note: CSV is really just a text file that can be read in any text editor and CSV file do not have to use commas as separators.</span></p>
+<p>&nbsp;</p>
+<p>Let’s look at a small data set we downloaded in the <a href="#sec-lesson-files" class="quarto-xref">Section&nbsp;1.1</a> section called <strong><em>twoWeekWeatherData.csv</em></strong>, which contains two weeks of weather data from Lansing, Michigan.&nbsp;</p>
+<section id="opening-a-csv-file" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="opening-a-csv-file"><span class="header-section-number">4.1</span> Opening a CSV file</h3>
+<p><span class="note">Note: CSV files are often opened by default in Excel and this can problematic</span>: <a href="#trap-opening-csv-files-in-excel">Trap: Opening CSV files in Excel</a></p>
+<p>&nbsp;</p>
+<p><span class="hl">CSV files are just text files</span> and CSV files can be opened in any text editor (e.g., notepad, notepad++, textEdit).</p>
+<p>&nbsp;</p>
+<p><span class="hl">RStudio is also a text editor</span> so we can open and edit <strong><em>twoWeekWeatherData.csv</em></strong> in RStudio by <em>either</em>:</p>
+<ul>
+<li><p>Clicking <strong><em>File -&gt; Open File…</em></strong> and navigate to <strong><em>twoWeekWeatherData.csv</em></strong> and press <strong><em>OK</em></strong>.</p></li>
+<li><p>Using the <strong><em>Files</em></strong> tab: navigate to the <strong><em>data</em></strong> folder, click on <strong><em>twoWeekWeatherData.csv</em></strong>, choose <strong><em>View File</em></strong> (<a href="#fig-openCSV-RStudio" class="quarto-xref">Figure&nbsp;3</a>)</p></li>
+</ul>
+<div id="fig-openCSV-RStudio" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-openCSV-RStudio-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-1-04-CSVFileinRStudio.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-openCSV-RStudio-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: The twoWeekWeatherData.csv file opened in RStudio
+</figcaption>
+</figure>
+</div>
+<p>&nbsp;</p>
+<p>The CSV file has 15 lines (rows).&nbsp; The first row contains the 5 column headers and the other 14 rows contain the 5 values for each date – all separated by a comma.</p>
+</section>
+<section id="reading-in-a-csv-file" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="reading-in-a-csv-file"><span class="header-section-number">4.2</span> Reading in a CSV file</h3>
+<p>We can see that the CSV file has a header row and each row has five values representing: <strong><em>date</em></strong>, <strong><em>highTemp</em></strong>, <strong><em>lowTemp</em></strong>, <strong><em>precipitation, noonCondition</em></strong>.</p>
+<p>&nbsp;</p>
+<p>To use the data in a script we need to read the data into a script file – and for that we will use the <strong><em>read.csv()</em></strong> function.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the data from the twoWeekWeatherData CSV file</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>weatherData <span class="ot">=</span> «read.csv»(<span class="at">file=</span><span class="st">"data/twoWeekWeatherData.csv"</span>, </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">sep=</span><span class="st">","</span>,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">header=</span><span class="cn">TRUE</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong><em>read.csv()</em></strong> reads in the data from the CSV file – and saves the data to a variable called <strong><em>weatherData</em></strong>.</p>
+<p>&nbsp;</p>
+<p><strong><em>weatherData</em></strong> is a <span class="hl">data frame variable</span> and it appears in the <strong><em>Environment</em></strong> tab under <strong><em>Data</em></strong> as <span class="hl">14 obs. of 5 variables</span>. (i.e., 14 rows and 5 columns), which matches what we saw in the CSV file (<a href="#fig-openCSV-RStudio" class="quarto-xref">Figure&nbsp;3</a>).&nbsp;</p>
+<ul>
+<li><p>Double-clicking on <strong><em>weatherData</em></strong> opens the data frame in the <strong><em>File Viewer</em></strong> window.&nbsp; This is a convenient way to visualize the data frame.</p></li>
+<li><p>Clicking on the blue arrow to the left of <strong><em>weatherData</em></strong> provides information about each of the columns</p></li>
+</ul>
+<div id="fig-view-dataframe" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-view-dataframe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-1-04-TwoWeekWeather.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-view-dataframe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Viewing the data frame in the File Viewer
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="column-value-type" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="column-value-type"><span class="header-section-number">4.3</span> Column value type</h3>
+<p>In the <strong><em>Environment</em></strong>, when you click on the arrow next to the left of <strong><em>weatherData</em></strong> (<a href="#fig-weatherdataframe" class="quarto-xref">Figure&nbsp;2</a>) you see some information about the columns in the data frame. The first piece of information is the name of the column (i.e., the header – <strong><em>date</em></strong>, <strong><em>highTemp</em></strong>, etc.).&nbsp; The second is the type of value the column contains.</p>
+<p>&nbsp;</p>
+<p>In <strong><em>weatherData</em></strong> there are three types of values:</p>
+<ol type="1">
+<li><p><strong><em>int</em></strong> (e.g., <strong><em>highTemp</em></strong> and <strong><em>lowTemp</em></strong>): <span class="hl">integer</span> – or non-decimal numbers</p></li>
+<li><p><strong><em>num</em></strong> (e.g., <strong><em>precipitation</em></strong>): <span class="hl">numeric</span>, or numbers with decimals</p></li>
+<li><p><strong><em>chr</em></strong>: (e.g, <strong><em>noonCoondition</em></strong>) this stands for <span class="hl">character</span>, and character is really short for <span class="hl">string of characters</span>, and this in turn is typically shortened to <span class="hl">string</span>.&nbsp; Whatever you call it, it is the catch-all category for values R cannot recognize as anything else.&nbsp;</p></li>
+</ol>
+<p>&nbsp;</p>
+<p><span class="note">Note: the <strong>date</strong> column has date values but it is not formatted properly so R does not recognize it as a Date – something we will cover much later.</span></p>
+</section>
+</section>
+<section id="functions-and-arguments" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="functions-and-arguments"><span class="header-section-number">5</span> Functions and arguments</h2>
+<p><strong><em>read.csv()</em></strong> is a function that tells R to open a file and treat it like a CSV file. A function is a set of code separate from your main script that performs a common task (e.g., plotting values, finding a standard deviation, reading in a file).</p>
+<p>&nbsp;</p>
+<p>There is a lot going on in our first line of code and that is because there are a lot of options, called <span class="hl">arguments</span>, when opening up a CSV file!&nbsp; We will talk a little bit about these arguments here and save the rest of the discussion for the next lesson.</p>
+<p>&nbsp;</p>
+<p>Inside the function <strong><em>read.csv()</em></strong>, I included three arguments (<strong><em>file, sep, and header</em></strong>).&nbsp; <span class="hl">Arguments are like the knobs and dials for a function</span>.&nbsp; The function reads a CSV file and the arguments tweak how the CSV file is read.</p>
+<section id="file" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="file"><span class="header-section-number">5.1</span> file</h3>
+<p><strong><em>file = “data/twoWeekWeatherData.csv”</em></strong> means that the script opens the file called <strong>twoWeekWeatherData<em>.csv</em></strong> located in the <strong><em>data</em></strong> folder of your RStudio Project</p>
+<p>&nbsp;</p>
+<p><span class="hl">This only works if you are in the RStudio Project</span> because the RStudio Project sets the Working Directory to your Project Folder.</p>
+<p>&nbsp;</p>
+<p>If you execute the script file outside your RStudio Project (<a href="#fig-open-outside-project" class="quarto-xref">Figure&nbsp;5</a>), you will get a <span class="hl">cannot open file</span> error in the <strong><em>Console</em></strong> because the script does not know to find the CSV file.</p>
+<div id="fig-open-outside-project" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-open-outside-project-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-1-04-OutSideRSP.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-open-outside-project-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: You get a cannot open file error if you try to execute the script outside of your RStudio Project
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="sep" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="sep"><span class="header-section-number">5.2</span> sep</h3>
+<p><strong><em>sep = “,”</em></strong> means that the values in the file are separated by commas.&nbsp; This is not always true – even for CSV files.</p>
+<p>&nbsp;</p>
+<p>The most common alternate separator values are spaces ( <strong><em>sep = ” “</em></strong> ) and dots ( <strong><em>sep = “.”</em></strong> )</p>
+</section>
+<section id="header" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="header"><span class="header-section-number">5.3</span> header</h3>
+<p><strong><em>header = TRUE</em></strong> means the first row contains header information. In this case the header information is the column names (<strong>date</strong>, <strong>highTemp</strong>, <strong>lowTemp</strong>, and <strong>precipitation</strong>)</p>
+<p>&nbsp;</p>
+<p><strong><em>header = FALSE</em></strong> would mean that the first row contains data (i.e., there are no column names).&nbsp; If you set <strong><em>header=FALSE</em></strong> in this example then R will think that the column names are the first data point.&nbsp; So, you will have 15 values in each vector and the first value will not make sense.</p>
+</section>
+<section id="default-values-for-arguments" class="level3" data-number="5.4">
+<h3 data-number="5.4" class="anchored" data-anchor-id="default-values-for-arguments"><span class="header-section-number">5.4</span> Default values for arguments</h3>
+<p>By default, <strong><em>read.csv()</em></strong> assumes <strong><em>sep=“,”</em></strong> and <strong><em>header=TRUE</em></strong>. For the data in this example, <strong><em>sep</em></strong> and <strong><em>header</em></strong> are not needed and this code would work:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>weatherData <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="at">file=</span><span class="st">"data/twoWeekWeatherData.csv"</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>But I like to keep <strong><em>sep</em></strong> and <strong><em>header</em></strong> in my code because you often do need to change them (e.g., you have data without a header or spaces between values instead of commas) and it is easier to deal with if you already have <strong><em>sep</em></strong> and <strong><em>header</em></strong> when copying code from one script to another.</p>
+</section>
+</section>
+<section id="getting-data" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="getting-data"><span class="header-section-number">6</span> Getting data</h2>
+<p>We now have a data frame with weather information stored in a variable called <strong><em>weatherData</em></strong>.&nbsp; But, we usually do not want to deal with the whole data frame at once.&nbsp; So, our next trick will be to extract parts of the data from the data frame.&nbsp; We might want to work with one column in the data frame (e.g., <strong><em>highTemp</em></strong> or <strong><em>precipitation</em></strong>).&nbsp; We can see all the columns in the data frame by expanding the data frame in the <strong><em>Environment</em></strong> or looking at the headers in the <strong><em>File Viewer</em></strong> (both views are in <a href="#fig-view-dataframe" class="quarto-xref">Figure&nbsp;4</a>).&nbsp;</p>
+<section id="pulling-out-a-column" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="pulling-out-a-column"><span class="header-section-number">6.1</span> Pulling out a column</h3>
+<p>Columns in a data frame are vectors (i.e., a variable with multiple values) and we can save the columns to a vector.&nbsp; We can access the columns from a data frame using the <strong><em>$</em></strong> operator.</p>
+<p>&nbsp;</p>
+<p>We start with <strong><em>weatherData</em></strong> and, use the dollar sign operator ( <strong><em>$</em></strong> ) to access the <strong><em>highTemp</em></strong> column, and save the results to the vector called <strong><em>highTemps</em></strong>:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>highTemps <span class="ot">=</span> weatherData<span class="sc">$</span>highTemp;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In the <strong><em>Environment</em></strong> square brackets (<strong>[ ]</strong> ) indicates the variable is a <strong>vector</strong>.&nbsp; <strong><em>highTemps</em></strong> appears in the <strong><em>Environment</em></strong> as a <strong><em>vector</em></strong>.&nbsp; <strong><em>highTemps</em></strong> has 14 ( <strong><em>[1:14]</em></strong> ) integer (<strong><em>int</em></strong>) values, representing the temperature for each of the 14 days.&nbsp;</p>
+<div id="fig-high-temps" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-high-temps-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-1-04-Vector-from-dataframe.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-high-temps-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: The highTemps vector variable in the Environment tab
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="sec-subsetValues" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="sec-subsetValues"><span class="header-section-number">6.2</span> Pulling out (subsetting) individual values</h3>
+<p>Perhaps we want just one value – specifically, we want to know the high temperature on April 2 (the seventh day in <strong><em>weatherData</em></strong>).</p>
+<p>&nbsp;</p>
+<p>There are multiple ways to access that individual value.&nbsp; I will present three, but for the rest of this lesson, we are going to use the first method.<br>
+&nbsp;</p>
+<p>We could subset using the subset operator ( <strong>[ ]</strong> ) the 7<sup>th</sup> value from <strong><em>highTemps</em></strong>:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>highTempDay7a <span class="ot">=</span> highTemps[<span class="dv">7</span>];</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We could go back to the original data frame (<strong><em>weatherData</em></strong>) and subset the 7<sup>th</sup> value from the column <strong><em>highTemp</em></strong>:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>highTempDay7b <span class="ot">=</span> weatherData<span class="sc">$</span>highTemp[<span class="dv">7</span>];</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Or, we can use a row/column (e.g., X/Y) operation on <strong><em>weatherData</em></strong> to get the value:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>highTempDay7c <span class="ot">=</span> weatherData[<span class="dv">7</span>, <span class="st">"highTemp"</span>];  <span class="co"># think of this as [X,Y] notation</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The last method is functionally the same as the previous two – but <span class="hl">the X,Y notation is the most robust</span> as it can best handle more complex subsetting situations (e.g., subsetting multiple rows and columns), which will be discussed in a future lesson.</p>
+</section>
+<section id="the-environment-and-the-l-value" class="level3" data-number="6.3">
+<h3 data-number="6.3" class="anchored" data-anchor-id="the-environment-and-the-l-value"><span class="header-section-number">6.3</span> The Environment and the L value</h3>
+<p>I will be referring quite often to the <strong><em>Environment</em></strong> tab as it looks after the script has been sourced (as in <a href="#fig-high-temps" class="quarto-xref">Figure&nbsp;6</a>) .&nbsp; Instead of taking a screenshot of the <strong><em>Environment</em></strong> tab (which is hard to maintain), I will display the variables I am focused on like this:</p>
+<div class="sourceCode" id="cb17" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>highTemp7a<span class="sc">:</span>  <span class="dv">60</span>L</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>highTemp7b<span class="sc">:</span>  <span class="dv">60</span>L</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>highTemp7c<span class="sc">:</span>  <span class="dv">60</span>L</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The <strong><em>Environment</em></strong> tab shows that <strong><em>highTemp7a</em></strong>, <strong><em>highTemp7b</em></strong>, and <strong><em>highTemp7c</em></strong> are all equal to <strong>60L</strong></p>
+<p>&nbsp;</p>
+<p>The <strong>L</strong> indicates that the number is explicitly an integer, not just a numeric values that happens to have all zeros in its decimal.</p>
+</section>
+</section>
+<section id="pulling-out-multiple-values" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="pulling-out-multiple-values"><span class="header-section-number">7</span> Pulling out multiple values</h2>
+<p>We have pulled out a column from a data frame and we have pulled out individual values.&nbsp; In this section, we will show different ways to pull out multiple values with:</p>
+<ol type="1">
+<li><p>An index vector created using <strong><em>c()</em></strong></p></li>
+<li><p>A regular (or, simple) sequence using the colon ( : ) operator</p></li>
+<li><p>A more complex sequence using the <strong><em>seq()</em></strong> function</p></li>
+</ol>
+<section id="using-a-numeric-vector-to-pull-multiple-values" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="using-a-numeric-vector-to-pull-multiple-values"><span class="header-section-number">7.1</span> Using a numeric vector to pull multiple values</h3>
+<p><strong><em>highTemps</em></strong> is a vector with <strong>14</strong> values and each of these values can be accessed by their numeric placement:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>val_01 <span class="ot">=</span> highTemps[<span class="dv">1</span>];</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>val_05 <span class="ot">=</span> highTemps[<span class="dv">5</span>];</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>val_12 <span class="ot">=</span> highTemps[<span class="dv">12</span>];</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Or, we might want to combine the temperatures from these three days into one variable.&nbsp; <strong><em>c()</em></strong> creates a vector of the three values (1, 5, and 12) and that vector is used to subset <strong><em>highTemps</em></strong>:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>valComb <span class="ot">=</span> highTemps[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">12</span>)];  <span class="co"># a vector with 3 values</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong><em>valComb</em></strong> is a vector with 3 values, the high temperature for days <strong>1</strong>, <strong>5</strong>, and <strong>12</strong>:</p>
+<div id="fig-subsetValues" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-subsetValues-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="cb20" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>val_01<span class="sc">:</span>    <span class="dv">57</span>L</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>val_05<span class="sc">:</span>    <span class="dv">39</span>L</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>val_12<span class="sc">:</span>    <span class="dv">54</span>L</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>valComb<span class="sc">:</span>   int [<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>] <span class="dv">57</span> <span class="dv">39</span> <span class="dv">54</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-subsetValues-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7: The three values we pulled from <strong>highTemps</strong> individually saved and combined (<strong>valComb</strong>)
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="pulling-out-consecutive-values" class="level3" data-number="7.2">
+<h3 data-number="7.2" class="anchored" data-anchor-id="pulling-out-consecutive-values"><span class="header-section-number">7.2</span> Pulling out consecutive values</h3>
+<p>If we want to get the high temperature for consecutive days, we can use the simple sequencing ( <strong>:</strong> ) operator – simple refers to the fact that we are sequencing by 1:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>consecVals <span class="ot">=</span> highTemps[<span class="dv">3</span><span class="sc">:</span><span class="dv">11</span>];  <span class="co"># same as highTemps[c(3,4,5,6,7,8,9,10,11)]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong><em>consecVals</em></strong> is a vector with 9 values – the high temperatures from days <strong>3</strong> through <strong>11</strong>.&nbsp; <span class="note">Note: <strong>9</strong> values, not <strong>8</strong> – we include both the 3 and the 11.</span></p>
+<p>&nbsp;</p>
+<p>The ( : ) operator also works in reverse</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>consecValsRev <span class="ot">=</span> highTemps[<span class="dv">11</span><span class="sc">:</span><span class="dv">3</span>];</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong><em>consecValsRev</em></strong> is a vector with 9 values – the high temperatures from days <strong>11</strong> <span class="hl">down to</span> <strong>3</strong>.</p>
+<div id="fig-subsetDown" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-subsetDown-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="cb23" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>consecVals<span class="sc">:</span>     int [<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>] <span class="dv">54</span> <span class="dv">40</span> <span class="dv">39</span> ...</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>consecValsRev<span class="sc">:</span>  int [<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>] <span class="dv">39</span> <span class="dv">44</span> <span class="dv">55</span> ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-subsetDown-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8: int [1:9] means 9 values are in each vector – the first few values are shown
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="using-the-console-to-view-values-in-a-vector" class="level3" data-number="7.3">
+<h3 data-number="7.3" class="anchored" data-anchor-id="using-the-console-to-view-values-in-a-vector"><span class="header-section-number">7.3</span> Using the Console to view values in a vector</h3>
+<p>The <strong><em>Environment</em></strong> tab is good for quickly looking at values, but it only shows a few values from each vector.&nbsp; If you want to see all the values then you can use the <strong><em>Console</em></strong> tab (bottom-left corner).&nbsp; In the <strong><em>Console</em></strong> tab, type in the variable you want to see and press <strong><em>Enter</em></strong>:</p>
+<div id="fig-console-variables" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-console-variables-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-1-04-Console.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-console-variables-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9: Using the Console tab to view variables
+</figcaption>
+</figure>
+</div>
+<p>&nbsp;</p>
+<p>These two values, <strong><em>consecVals</em></strong> and <strong><em>consecValRev</em></strong>, are shown in the <strong><em>Console</em></strong> window in <a href="#fig-console-variables" class="quarto-xref">Figure&nbsp;9</a>. In the future I will present the Console like this:</p>
+<div class="sourceCode" id="cb24" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> consecVals </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">54</span> <span class="dv">40</span> <span class="dv">39</span> <span class="dv">58</span> <span class="dv">60</span> <span class="dv">53</span> <span class="dv">55</span> <span class="dv">44</span> <span class="dv">39</span> </span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> consecValsRev </span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">39</span> <span class="dv">44</span> <span class="dv">55</span> <span class="dv">53</span> <span class="dv">60</span> <span class="dv">58</span> <span class="dv">39</span> <span class="dv">40</span> <span class="dv">54</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="using-a-sequence-to-get-values" class="level3" data-number="7.4">
+<h3 data-number="7.4" class="anchored" data-anchor-id="using-a-sequence-to-get-values"><span class="header-section-number">7.4</span> Using a sequence to get values</h3>
+<p>We can use the <strong><em>seq()</em></strong> to create a more complex sequence to subset a vector.</p>
+<p>&nbsp;</p>
+<p>This is a two step process:</p>
+<ol type="1">
+<li><p>Create a sequence.&nbsp;</p></li>
+<li><p>Use the sequence to subset the vector.&nbsp;</p></li>
+</ol>
+<section id="creating-a-sequence" class="level4" data-number="7.4.1">
+<h4 data-number="7.4.1" class="anchored" data-anchor-id="creating-a-sequence"><span class="header-section-number">7.4.1</span> Creating a sequence</h4>
+<p><strong><em>seq()</em></strong> is a function with three arguments:</p>
+<ul>
+<li><p><strong><em>from</em></strong>: the starting point</p></li>
+<li><p><strong><em>to</em></strong>: the ending point</p></li>
+<li><p><strong><em>by</em></strong>: the iteration</p></li>
+</ul>
+<p>&nbsp;</p>
+<p>We can create a sequence that lists every other number from 1-14</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>seq1 <span class="ot">=</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">1</span>, <span class="at">to=</span><span class="dv">14</span>, <span class="at">by=</span><span class="dv">2</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We can reverse the sequence by switching the <strong><em>to</em></strong> and <strong><em>from</em></strong> and inverting the <strong><em>by</em></strong></p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>seq2 <span class="ot">=</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">14</span>, <span class="at">to=</span><span class="dv">1</span>, <span class="at">by=</span><span class="sc">-</span><span class="dv">2</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We can get every 3rd number for the first 10 numbers:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>seq3 <span class="ot">=</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">1</span>, <span class="at">to=</span><span class="dv">10</span>, <span class="at">by=</span><span class="dv">3</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The 3 sequences we created are just vectors of numbers:</p>
+<div class="sourceCode" id="cb28" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>seq1<span class="sc">:</span>   <span class="dv">1</span> <span class="dv">3</span> <span class="dv">5</span> <span class="dv">7</span> <span class="dv">9</span> <span class="dv">11</span> <span class="dv">13</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>seq2<span class="sc">:</span>   <span class="dv">14</span> <span class="dv">12</span> <span class="dv">10</span> <span class="dv">8</span> <span class="dv">6</span> <span class="dv">4</span> <span class="dv">2</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>seq3<span class="sc">:</span>   <span class="dv">1</span> <span class="dv">4</span> <span class="dv">7</span> <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="using-the-sequences-as-indexes" class="level4" data-number="7.4.2">
+<h4 data-number="7.4.2" class="anchored" data-anchor-id="using-the-sequences-as-indexes"><span class="header-section-number">7.4.2</span> Using the sequences as indexes</h4>
+<p>We can use the 3 sequences above as index vectors to index the <strong><em>highTemps</em></strong> vector:</p>
+<p>&nbsp;</p>
+<p>Get <span class="hl">every other</span> high temperature:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>highTempSeq1 <span class="ot">=</span> highTemps[seq1];</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Get every other high temperature <span class="hl">in reverse</span>:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>highTempSeq2 <span class="ot">=</span> highTemps[seq2];</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Get <span class="hl">every 3rd</span> high temperature value in the first 10 values:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>highTempSeq3 <span class="ot">=</span> highTemps[seq3];</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-sequences" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sequences-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="cb32" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>highTempSeq1<span class="sc">:</span>  int [<span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>] <span class="dv">57</span> <span class="dv">54</span> <span class="dv">39</span> <span class="dv">60</span> ...</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>highTempSeq2<span class="sc">:</span>  int [<span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>] <span class="dv">75</span> <span class="dv">54</span> <span class="dv">44</span> <span class="dv">53</span> ...</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>highTempSeq3<span class="sc">:</span>  int [<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="dv">57</span> <span class="dv">40</span> <span class="dv">60</span> <span class="dv">44</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sequences-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10: There are 7 values in the first two sequences and 4 in the third
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="combining-the-above-2-steps" class="level4" data-number="7.4.3">
+<h4 data-number="7.4.3" class="anchored" data-anchor-id="combining-the-above-2-steps"><span class="header-section-number">7.4.3</span> Combining the above 2 steps</h4>
+<p>You can combine the above two steps in 1 command.</p>
+<p>&nbsp;</p>
+<p>The following command will give you the same high temperature values:</p>
+<div class="sourceCode" id="cb33" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>highTempSeq1b <span class="ot">=</span> highTemps[<span class="fu">seq</span>(<span class="at">from=</span><span class="dv">1</span>, <span class="at">to=</span><span class="dv">14</span>, <span class="at">by=</span><span class="dv">2</span>)];  </span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>highTempSeq2b <span class="ot">=</span> highTemps[<span class="fu">seq</span>(<span class="at">from=</span><span class="dv">14</span>, <span class="at">to=</span><span class="dv">1</span>, <span class="at">by=</span><span class="sc">-</span><span class="dv">2</span>)];  </span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>highTempSeq3b <span class="ot">=</span> highTemps[<span class="fu">seq</span>(<span class="at">from=</span><span class="dv">1</span>, <span class="at">to=</span><span class="dv">10</span>, <span class="at">by=</span><span class="dv">3</span>)];</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a href="#extension-square-brackets-vs.-round-brackets">Extension: Square brackets [ ] vs.&nbsp;Round Brackets ( )</a></p>
+</section>
+<section id="note-about-combining-steps-in-r" class="level4" data-number="7.4.4">
+<h4 data-number="7.4.4" class="anchored" data-anchor-id="note-about-combining-steps-in-r"><span class="header-section-number">7.4.4</span> Note about combining steps in R</h4>
+<p>While it might seem like combining steps is a good idea because it reduces the amount of code, this needs to be balanced with the fact that <span class="hl">combining code usually makes it harder to read</span>.&nbsp; One of the big problems I see when looking at people’s code is that they cram too much code into one command and it becomes really difficult to debug if anything goes wrong.&nbsp; If you are going to err on one side then this author recommends you err on the side of breaking up code rather than combining it.</p>
+</section>
+</section>
+</section>
+<section id="application" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="application"><span class="header-section-number">8</span> Application</h2>
+<p>A) Create a file named <strong><em>app</em></strong>1-04<strong><em>.r</em></strong> in your <strong><em>scripts</em></strong> folder inside your RStudio Project and save the information from <strong><em>twoWeekWeatherData.csv</em></strong> to a variable named <strong><em>weatherData</em></strong> (just like in this lesson).</p>
+<p>&nbsp;</p>
+<p>B) Sequencing</p>
+<p>Use the <strong><em>seq()</em></strong> function to create this sequence: (13, 9, 5, 1, -3, -7).&nbsp;</p>
+<p><span class="note">Note: this sequence could not be used to index a vector because it mixes positive and negative numbers.&nbsp;</span><em><br>
+</em></p>
+<p>C) Subsetting:</p>
+<ol type="1">
+<li><p>Pull out two columns <strong><em>precipitation</em></strong> and <strong><em>lowTemp</em></strong> from <strong>weatherData</strong> and save each to a variable</p></li>
+<li><p>Save the 4<sup>th</sup> value of <strong><em>precipitation</em></strong> to a variable</p>
+<ul>
+<li>Repeat the previous step for the other two methods given in <a href="#sec-subsetValues" class="quarto-xref">Section&nbsp;6.2</a></li>
+</ul></li>
+<li><p>Save the 9<sup>th</sup>, 12<sup>th</sup>, 5<sup>th</sup>, and 1<sup>st</sup> values of <strong><em>lowTemp</em></strong> to one variable (in that order)</p></li>
+<li><p>Create a variable that holds the <strong><em>precipitation</em></strong> for the last 5 days (of the 14 days).</p></li>
+<li><p>Create a variable that holds the <strong><em>lowTemp</em></strong> for the days 12 down to 6.</p></li>
+<li><p>Create a variable that holds the first 3 days and last 3 days of <strong><em>precipitation</em></strong></p></li>
+</ol>
+<p>&nbsp;</p>
+<p>D) Negative subsetting:</p>
+<p>Subset <strong><em>precipitation</em></strong> using the sequence <strong>c(-1,-3,-5)</strong><em>.</em> Explain in comments what happened.</p>
+<p>&nbsp;</p>
+<p>E) Vector Math:</p>
+<ul>
+<li>Convert the precipitation column from inches to centimeters (2.54cm = 1in).</li>
+</ul>
+<p>&nbsp;</p>
+<p>F) Opening Data Frames:</p>
+<ol type="1">
+<li><p>Save the file <a href="../data/DowJones1980_2012.csv">DowJones1980_2012.csv</a> to the <strong><em>data</em></strong> folder in your RStudio Project</p>
+<ul>
+<li>To save: right-click on link and choose <strong><em>Save link as…</em></strong></li>
+</ul></li>
+<li><p>Using <strong><em>read.csv()</em></strong>, save the data in <strong><em>DowJones1980_2012.csv</em></strong> to a data frame named <strong><em>dowJonesData</em></strong></p>
+<ul>
+<li>&nbsp;there is no header in this file and the separator is a space</li>
+</ul></li>
+<li><p>Plot the data using the line: <strong><em>plot(dowJonesData$V2)</em></strong></p>
+<ul>
+<li><p>If you opened the file correctly the plot will be in the Plots tab and look like this:</p>
+<div id="fig-dowJonesPlot" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dowJonesPlot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-1-04-Plot.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dowJonesPlot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11: Plot of the Dow Jones data
+</figcaption>
+</figure>
+</div></li>
+</ul></li>
+</ol>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Save the script as&nbsp;<strong><em>app1-04.r</em></strong> in your&nbsp;<strong><em>scripts</em></strong> folder and&nbsp; email your Project Folder to Charlie Belinsky at belinsky@msu.edu.</p>
+<p>&nbsp;</p>
+<p><a href="1-01-RStudioProjectsSetup.html#sec-zip-folder" target="_blank">Instructions for zipping the Project Folder are here.</a></p>
+<p>&nbsp;</p>
+<p>If you have any questions regarding this application, feel free to email them to Charlie Belinsky at belinsky@msu.edu.</p>
+<section id="questions-to-answer" class="level3" data-number="8.1">
+<h3 data-number="8.1" class="anchored" data-anchor-id="questions-to-answer"><span class="header-section-number">8.1</span> Questions to answer</h3>
+<p>Answer the following in comments inside your application script:</p>
+<ol type="1">
+<li><p>What was your level of comfort with the lesson/application?</p></li>
+<li><p>What areas of the lesson/application confused or still confuses you?</p></li>
+<li><p>What are some things you would like to know more about that is related to, but not covered in, this lesson?</p></li>
+</ol>
+</section>
+</section>
+<section id="trap-opening-csv-files-in-excel" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="trap-opening-csv-files-in-excel"><span class="header-section-number">9</span> Trap: Opening CSV files in Excel</h2>
+<p>If you have Excel on your computer, then it is probable that Excel is the default program for opening CSV files.&nbsp; This means double-clicking on a CSV file will open it in Excel.&nbsp; The danger with opening CSV files in Excel is that Excel will sometimes reformat the data (especially date and money columns) and then give a message saying how the data needs to be saved to be preserved.&nbsp; <span class="hl">Do not save the file – it will change the format of your data</span><em>.</em>&nbsp; If you are editing a CSV file in Excel then I would save the results to a test file first to make sure Excel did not do anything untoward.</p>
+<div id="fig-excel" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-excel-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-1-04_Excel.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-excel-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12: Opening a CSV file in Excel – the possible data loss warning is not something you want to heed
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="extension-long-and-short-integers" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="extension-long-and-short-integers"><span class="header-section-number">10</span> Extension: Long and Short Integers</h2>
+<p><strong><em>L</em></strong> stands for <strong><em>Long integer</em></strong> – <strong><em>long</em></strong> meaning that this variable can hold a number larger than 256.&nbsp; In the old days, when space on computers was VERY expensive, programmers would save space by having a <strong><em>short integer</em></strong> and <strong><em>long integer</em></strong> designation.&nbsp; So, if a programmer knew a number was small, they would assign it to a <strong><em>short integer</em></strong> to take up less space on the computer.&nbsp; Since temperatures in Lansing are generally going to be less than 256 (unless you are using the Kelvin system), it is safe to assign temperatures to short integers.</p>
+<p>&nbsp;</p>
+<p>Nowadays, space is so cheap that we rarely care that we are using a tiny bit more memory than we need – so <strong><em>L</em></strong> has become mostly a relic of the past.</p>
+</section>
+<section id="extension-statistical-functions-on-vectors" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="extension-statistical-functions-on-vectors"><span class="header-section-number">11</span> Extension: Statistical functions on vectors</h2>
+<p>One huge advantage to using vectors is that most statistical function take vectors.&nbsp; So, you can easily perform statistical functions on a vector:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>tempHigh <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">65</span>, <span class="dv">57</span>, <span class="dv">61</span>, <span class="dv">64</span>, <span class="dv">59</span>);</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>tempMean <span class="ot">=</span> <span class="fu">mean</span>(tempHigh);</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>tempSD <span class="ot">=</span> <span class="fu">sd</span>(tempHigh);</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>tempVar <span class="ot">=</span> <span class="fu">var</span>(tempHigh);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb35" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>tempMean<span class="sc">:</span>   <span class="fl">61.2</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>tempSD<span class="sc">:</span>     <span class="dv">3</span>.<span class="dv">346</span>...</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>tempVar<span class="sc">:</span>    <span class="fl">11.2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We will be doing more with this in later lessons…</p>
+</section>
+<section id="extension-square-brackets-vs.-round-brackets" class="level2" data-number="12">
+<h2 data-number="12" class="anchored" data-anchor-id="extension-square-brackets-vs.-round-brackets"><span class="header-section-number">12</span> Extension: Square brackets [ ] vs.&nbsp;Round Brackets ( )</h2>
+<p><span class="hl">Square</span> brackets are used when you are <span class="hl">subsetting</span> or indexing a variable.</p>
+<p><span class="hl">Round</span> brackets are used when you are <span class="hl">calling a function</span> and contain the arguments for that function.</p>
+<p>… and the two types of brackets are often used in the same command</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>lowTemps [<span class="fu">seq</span>(<span class="at">from=</span><span class="dv">12</span>, <span class="at">to=</span><span class="dv">2</span>, <span class="at">by=</span><span class="sc">-</span><span class="dv">2</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>says you are going to subset <strong><em>lowTemps</em></strong> using the function <strong><em>seq()</em></strong>.&nbsp;</p>
+<div class="sourceCode" id="cb37" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> lowTemps [<span class="fu">seq</span>(<span class="at">from=</span><span class="dv">12</span>, <span class="at">to=</span><span class="dv">2</span>, <span class="at">by=</span><span class="sc">-</span><span class="dv">2</span>)]</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">43</span> <span class="dv">40</span> <span class="dv">50</span> <span class="dv">45</span> <span class="dv">38</span> <span class="dv">43</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong><em>seq()</em></strong> is a function and produces a vector of numbers:</p>
+<div class="sourceCode" id="cb38" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">12</span>, <span class="at">to=</span><span class="dv">2</span>, <span class="at">by=</span><span class="sc">-</span><span class="dv">2</span>)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">12</span> <span class="dv">10</span> <span class="dv">8</span> <span class="dv">6</span> <span class="dv">4</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong><em>c()</em></strong> is also a function – <strong><em>c</em></strong> stands, unintuitively, for concatenate and will also produce a vector of numbers:</p>
+<div class="sourceCode" id="cb39" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">c</span>(<span class="dv">12</span>,<span class="dv">10</span>,<span class="dv">8</span>,<span class="dv">6</span>,<span class="dv">4</span>,<span class="dv">2</span>)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">12</span> <span class="dv">10</span> <span class="dv">8</span> <span class="dv">6</span> <span class="dv">4</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong><em>lowTemps [c(12,10,8,6,4,2)]</em></strong> and <strong><em>lowTemps [seq(from=12, to=2, by=-2)]</em></strong> produce the same results.</p>
+<p>&nbsp;</p>
+<p>You can also subset <strong><em>lowTemps</em></strong> without calling a function:</p>
+<div class="sourceCode" id="cb40" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> lowTemps[<span class="dv">5</span>]</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">36</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> lowTemps[<span class="dv">4</span><span class="sc">:</span><span class="dv">8</span>]</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">38</span> <span class="dv">36</span> <span class="dv">45</span> <span class="dv">32</span> <span class="dv">50</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Technically, <strong><em>4:8</em></strong> still calls the sequence <strong><em>seq(from=4, to=8, by=1)</em></strong> in the background – but that is really getting into the weeds!</p>
+<p>&nbsp;</p>
+<p><strong><em>read.csv(), ggplot(), plot(), rm()</em></strong> are all functions.&nbsp; There will be a lot more about functions in this class starting with next lesson.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

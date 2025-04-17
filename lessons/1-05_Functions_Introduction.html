@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.22">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>1-05: Functions Introduction</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b4406b7675125bc2ba204020e191172.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-5f39cfd1aee7e7785011fc5df168ee92.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link rel="shortcut icon" href="https://qfcatmsu.github.io/assets/quarto/qfc_icon.png">
+<script>mod=true; menuCollapse=true;</script>
+<script src="https://qfcatmsu.github.io/assets/quarto/qfc_styles.js"></script>
+ 
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="https://qfcatmsu.github.io/assets/quarto/qfc_styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+          <h1 class="quarto-secondary-nav-title">1-05: Functions Introduction</h1>
+        </a>     
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text"><b>Fundamentals of Programming class</b></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/0-01-IntroductionAndSyllabus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction and Syllabus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-01-RStudioProjectsSetup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-01: RStudio Projects Setup</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-02-Variables.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-02: Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-03_Mathematical_Operations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-03: Mathematical Operations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-04_Vectors_And_Data_Frames.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-04: Vectors and Data Frames</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-05_Functions_Introduction.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">1-05: Functions Introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-06_Run_and_Source.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-06: Run and Source</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-07_Outputs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-07: Outputs</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-08_Conditional_Operations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-08: Conditional Operations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-09_If_Else_Statements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-09: If-Else Statements</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-10_For_Loops.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-10: For Loops</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-11_For_Loops_and_State_Varibles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-11: For Loops and State Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-12_MultipleConditions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-12: Multiple Conditions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-13_Functions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-13: Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-14_Functions2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-14: Functions 2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-15_Nested_Loops_and _Matrices.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-15: Nested loops and Matrices</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-15_Nested_Loops_and _Matrices-HOME-GALAXYBOOK.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-15: Nested loops and Matrices</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-01_R-Base_Plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-01: R-Base Plots</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-02_DataFrame_Modifications.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-02: DataFrame Modifications</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-03_DataTypesAndDateFrames.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-03: Data Types and Data Frames</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-04_WhichStatements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-04: Which Statements</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-05_WhichAndRegularExpressions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-05: Which and Regular Expressions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-06_Datetime_Obejects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-06: Datetime objects</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-07_Matrices.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-07: Matrices</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-08_Binding_Sampling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-08: Binding and Sampling</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-09_Stacking_Mapping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-09: Stacking and Mapping</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-10_Statistical_Tests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-10: Statistical Tests</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-11_Objects_Attributes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-11: Objects and Attributes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-12_Lists.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-12: Lists</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-13_Breakpoints.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-13: Breakpoints</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title"><b>Lesson Content</b></h2>
+   
+  <ul>
+  <li><a href="#changes" id="toc-changes" class="nav-link active" data-scroll-target="#changes"><span class="header-section-number">0.1</span> Changes…</a></li>
+  <li><a href="#purpose" id="toc-purpose" class="nav-link" data-scroll-target="#purpose"><span class="header-section-number">1</span> Purpose</a>
+  <ul class="collapse">
+  <li><a href="#files" id="toc-files" class="nav-link" data-scroll-target="#files"><span class="header-section-number">1.1</span> Files</a></li>
+  </ul></li>
+  <li><a href="#functions" id="toc-functions" class="nav-link" data-scroll-target="#functions"><span class="header-section-number">2</span> Functions</a></li>
+  <li><a href="#arguments" id="toc-arguments" class="nav-link" data-scroll-target="#arguments"><span class="header-section-number">3</span> Arguments</a></li>
+  <li><a href="#a-simpler-function-median" id="toc-a-simpler-function-median" class="nav-link" data-scroll-target="#a-simpler-function-median"><span class="header-section-number">4</span> A simpler function: median()</a>
+  <ul class="collapse">
+  <li><a href="#help-for-median" id="toc-help-for-median" class="nav-link" data-scroll-target="#help-for-median"><span class="header-section-number">4.1</span> Help for median()</a></li>
+  <li><a href="#skipping-argument-names" id="toc-skipping-argument-names" class="nav-link" data-scroll-target="#skipping-argument-names"><span class="header-section-number">4.2</span> Skipping argument names</a></li>
+  <li><a href="#sec-median-NA" id="toc-sec-median-NA" class="nav-link" data-scroll-target="#sec-median-NA"><span class="header-section-number">4.3</span> Default argument values</a></li>
+  <li><a href="#dealing-with-the-na" id="toc-dealing-with-the-na" class="nav-link" data-scroll-target="#dealing-with-the-na"><span class="header-section-number">4.4</span> Dealing with the NA</a></li>
+  <li><a href="#alternate-ways-to-call-median" id="toc-alternate-ways-to-call-median" class="nav-link" data-scroll-target="#alternate-ways-to-call-median"><span class="header-section-number">4.5</span> Alternate ways to call median()</a></li>
+  </ul></li>
+  <li><a href="#help-seq" id="toc-help-seq" class="nav-link" data-scroll-target="#help-seq"><span class="header-section-number">5</span> Help seq()</a>
+  <ul class="collapse">
+  <li><a href="#the-arguments-and-defaults" id="toc-the-arguments-and-defaults" class="nav-link" data-scroll-target="#the-arguments-and-defaults"><span class="header-section-number">5.1</span> The arguments and defaults</a></li>
+  <li><a href="#seq-examples" id="toc-seq-examples" class="nav-link" data-scroll-target="#seq-examples"><span class="header-section-number">5.2</span> <strong>seq()</strong> examples</a></li>
+  </ul></li>
+  <li><a href="#read.csv-expanded" id="toc-read.csv-expanded" class="nav-link" data-scroll-target="#read.csv-expanded"><span class="header-section-number">6</span> read.csv() expanded</a>
+  <ul class="collapse">
+  <li><a href="#read.csv-arguments" id="toc-read.csv-arguments" class="nav-link" data-scroll-target="#read.csv-arguments"><span class="header-section-number">6.1</span> read.csv arguments</a></li>
+  <li><a href="#required-arguments-and-default-arguments" id="toc-required-arguments-and-default-arguments" class="nav-link" data-scroll-target="#required-arguments-and-default-arguments"><span class="header-section-number">6.2</span> Required arguments and default arguments</a></li>
+  <li><a href="#the-other-arguments-aside-from-file" id="toc-the-other-arguments-aside-from-file" class="nav-link" data-scroll-target="#the-other-arguments-aside-from-file"><span class="header-section-number">6.3</span> The other arguments (aside from <strong><em>file</em></strong>)</a></li>
+  </ul></li>
+  <li><a href="#application" id="toc-application" class="nav-link" data-scroll-target="#application"><span class="header-section-number">7</span> Application</a>
+  <ul class="collapse">
+  <li><a href="#questions-to-answer" id="toc-questions-to-answer" class="nav-link" data-scroll-target="#questions-to-answer"><span class="header-section-number">7.1</span> Questions to answer</a></li>
+  </ul></li>
+  <li><a href="#trap-forgetting-to-pass-in-a-vector-to-median" id="toc-trap-forgetting-to-pass-in-a-vector-to-median" class="nav-link" data-scroll-target="#trap-forgetting-to-pass-in-a-vector-to-median"><span class="header-section-number">8</span> Trap: Forgetting to pass in a vector to median</a></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content column-page-right" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">1-05: Functions Introduction</h1>
+</div>
+
+
+
+<div class="quarto-title-meta column-page-right">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="changes" class="level3" data-number="0.1">
+<h3 data-number="0.1" class="anchored" data-anchor-id="changes"><span class="header-section-number">0.1</span> Changes…</h3>
+</section>
+<section id="purpose" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="purpose"><span class="header-section-number">1</span> Purpose</h2>
+<p>Explain how functions works and how to use the <strong><em>Help</em></strong> tab in RStudio.&nbsp; The presentation of functions in R is inconsistent but it is very useful to understand how to read a function help page.</p>
+<section id="files" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="files"><span class="header-section-number">1.1</span> Files</h3>
+<p>The <a href="../scripts/1-05_FunctionsIntroduction.R">script for the lesson is here</a></p>
+<ul>
+<li>Save the linked script file to the <strong><em>scripts</em></strong> folder in your Class Project</li>
+<li>All the code in this lesson is sequentially placed in the script</li>
+</ul>
+<p>The data used in this lesson, <a href="../data/twoWeekWeatherData.csv">twoWeekWeatherData.csv</a></p>
+<ul>
+<li>Save the linked data file to the <strong><em>data</em></strong> folder in your Class Project</li>
+</ul>
+</section>
+</section>
+<section id="functions" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="functions"><span class="header-section-number">2</span> Functions</h2>
+<p>In the last lesson we used two functions in R:</p>
+<ul>
+<li><p><strong><em>read.csv():</em></strong> open up a CSV file and read in the data</p></li>
+<li><p><strong><em>seq()</em></strong>: create a configurable sequence of numbers</p></li>
+</ul>
+<p>&nbsp;</p>
+<p>Functions are standalone scripts designed to do some repeatable operations.&nbsp; A function almost always takes inputs (i.e., arguments) and sends a response (i.e., return value).</p>
+<p>&nbsp;</p>
+<p>In the case of <strong><em>read.csv()</em></strong> from last lesson:</p>
+<div id="fig-readFunction" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-readFunction-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># path to data file (from project folder)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>weatherData <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="at">file=</span><span class="st">"data/twoWeekWeatherData.csv"</span>, </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">sep=</span><span class="st">","</span>,      <span class="co"># values separated by comma</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">header=</span><span class="cn">TRUE</span>); <span class="co"># there is a header row</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-readFunction-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Calling <strong>read.csv()</strong> to get data from <strong>twoWeekWeatherData.csv</strong> and save it to <strong>weatherData</strong>
+</figcaption>
+</figure>
+</div>
+<p>The inputs (arguments) are the values for <strong><em>file, sep,</em></strong> and <strong><em>header</em></strong>.</p>
+<p>The response (return value) is the data from the CSV file and gets saved to the variable <strong><em>weatherData</em></strong>.</p>
+<p>&nbsp;</p>
+<p>In the case of <strong><em>seq()</em></strong>:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>seq1 <span class="ot">=</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">1</span>, <span class="at">to=</span><span class="dv">10</span>, <span class="at">by=</span><span class="dv">3</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The inputs (arguments) are the values for <strong><em>from, to, and by</em></strong>.</p>
+<p>The response (return value) is the sequence of numbers that gets saved to the variable <strong><em>seq1</em></strong>.</p>
+</section>
+<section id="arguments" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="arguments"><span class="header-section-number">3</span> Arguments</h2>
+<p>In programming, the values you pass into a function(e.g., <strong><em>file, sep,</em></strong> and <strong><em>header</em></strong>) are called <span class="hl">arguments</span> of the function.&nbsp; Arguments are added to the function call to tweak the operation of the function – arguments act like the knobs and dials for a function.</p>
+<p>&nbsp;</p>
+<p>The majority of the programming world uses the term <span class="hl">parameters</span> instead of <span class="hl">arguments</span>.&nbsp; I tend to like <strong><em>parameters</em></strong> better as I think it better indicates that these values are properties of the function.&nbsp; But, R is a programming language for statisticians and <strong><em>arguments</em></strong> is a mathematical term, so R chose to go with <strong><em>arguments</em></strong>. Just note you will occasionally see the term parameters, and it means the same thing as arguments.</p>
+</section>
+<section id="a-simpler-function-median" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="a-simpler-function-median"><span class="header-section-number">4</span> A simpler function: median()</h2>
+<p>Let’s take a step back and look at a simpler function, <strong><em>median()</em></strong>, which takes a vector and finds the median value in the vector.</p>
+<p>&nbsp;</p>
+<p>To use <strong><em>median()</em></strong> we need a vector with numeric values in it, which we will call <strong><em>vec1</em></strong>:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>vec1 <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">21</span>,<span class="dv">45</span>,<span class="dv">61</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>And then we pass <strong><em>vec1</em></strong> in as an argument to the <strong><em>median()</em></strong> function:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>medianVal1 <span class="ot">=</span> <span class="fu">median</span>(vec1);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a href="#trap-forgetting-to-pass-in-a-vector-to-median">Trap: Forgetting to pass in a vector to median</a></p>
+<p>&nbsp;</p>
+<p>And the <strong><em>Environment</em></strong> shows the return value, saved to <strong><em>medianVal1</em></strong>, is <strong>6</strong></p>
+<div class="sourceCode" id="cb5" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>medianVal1<span class="sc">:</span>   <span class="dv">6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="help-for-median" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="help-for-median"><span class="header-section-number">4.1</span> Help for median()</h3>
+<p>Now let’s use RStudio’s <strong><em>Help</em></strong> tab to go behind-the-scenes of <strong><em>median()</em></strong>.&nbsp; RStudio <strong><em>Help</em></strong> tab is a useful resource for finding out more information on functions. The information that appears in Help is from the latest R documentation. If you do an internet search, you will often get older documentation. <span class="note">Note: the Help window is using the website <a href="https://search.r-project.org/" class="uri">https://search.r-project.org/</a>.</span></p>
+<p>&nbsp;</p>
+<p>If we type <strong><em>median</em></strong> in the search bar we get this:</p>
+<div id="fig-median" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-median-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-1-04b_median.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-median-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: The median function in the Help tab in RStudio
+</figcaption>
+</figure>
+</div>
+<p>&nbsp;</p>
+<p>The Help page shows that <strong><em>median()</em></strong> has two arguments:</p>
+<ul>
+<li><p><strong><em>x</em></strong>: the vector that you want to find the median for</p></li>
+<li><p><strong><em>na.rm</em></strong>: a TRUE/FALSE value that determines how to handle <strong><em>NA</em></strong> values in the vector. <strong>NA</strong> means Not Available and usually indicating a problem with the data</p></li>
+</ul>
+<p>&nbsp;</p>
+<p><span class="note">Note: the ( … ) can be ignored – it is R indicating that this function can be expanded with more arguments</span></p>
+</section>
+<section id="skipping-argument-names" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="skipping-argument-names"><span class="header-section-number">4.2</span> Skipping argument names</h3>
+<p>When we called <strong><em>median()</em></strong>, we did not include any argument names:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>medianVal1 <span class="ot">=</span> <span class="fu">median</span>(vec1);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>However, since <strong><em>x</em></strong> is the first argument in <strong><em>median()</em></strong>, it is assumed that the first value is meant to be for <strong><em>x</em></strong>.</p>
+<p>&nbsp;</p>
+<p>This is an equivalent call to <strong><em>median()</em></strong> that more explicitly says that the <strong><em>vec1</em></strong> is the value for <strong><em>x</em></strong>:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>medianVal1b <span class="ot">=</span> <span class="fu">median</span>(<span class="at">x=</span>vec1);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>And the return value will be the same:</p>
+<div class="sourceCode" id="cb8" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>medianVal1<span class="sc">:</span>   <span class="dv">6</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>medianVal1b<span class="sc">:</span>  <span class="dv">6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="sec-median-NA" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="sec-median-NA"><span class="header-section-number">4.3</span> Default argument values</h3>
+<p>The other argument in <strong><em>median()</em></strong>, <strong><em>na.rm</em></strong>, has a default value of <strong><em>FALSE</em></strong> . This means that <span class="hl">you do not have to supply a value for the argument</span> <strong><em>na.rm</em></strong> when you call the function.&nbsp; You only need to supply a value if you want to change <strong><em>na.rm</em></strong> to something other than <strong>FALSE</strong> (e.g., <strong>TRUE</strong>).</p>
+<p>&nbsp;</p>
+<p>Our first example did not have an <strong>NA</strong> values, let’s create a vector with an <strong>NA</strong> value in it:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>vec2 <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="cn">NA</span>,<span class="dv">6</span>,<span class="dv">21</span>,<span class="dv">45</span>,<span class="dv">61</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>And then use that as an argument for <strong><em>median()</em></strong>:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>medianVal2 <span class="ot">=</span> <span class="fu">median</span>(<span class="at">x=</span>vec2);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If there is an <strong>NA</strong> value in a vector then, for most mathenatical functions in R, the return value will be of type <strong>NA</strong>. The median of a vector with <strong>NA</strong> values will always be <strong>NA_real_</strong>. <strong>NA_real_</strong> says that median cannot be determined but would be a real number.</p>
+<div class="sourceCode" id="cb11" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>medianVal2<span class="sc">:</span>   <span class="cn">NA_real_</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="dealing-with-the-na" class="level3" data-number="4.4">
+<h3 data-number="4.4" class="anchored" data-anchor-id="dealing-with-the-na"><span class="header-section-number">4.4</span> Dealing with the NA</h3>
+<p><strong><em>na.rm</em></strong> is the argument that determines whether <strong>NA</strong> values are removed from the vector – and the default value is <strong>FALSE</strong>, meaning <strong>NA</strong> values are not removed.</p>
+<p>&nbsp;</p>
+<p>Let’s set <strong><em>na.rm</em></strong> to <strong>TRUE</strong> so the <strong>NA</strong> values are removed before finding the median:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>medianVal2b <span class="ot">=</span> <span class="fu">median</span>(<span class="at">x=</span>vec2, <span class="at">na.rm=</span><span class="cn">TRUE</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now the <strong>NA</strong> in the vector is ignored and we get the same median value as before:</p>
+<div class="sourceCode" id="cb13" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>medianVal2b<span class="sc">:</span>   <span class="dv">6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="alternate-ways-to-call-median" class="level3" data-number="4.5">
+<h3 data-number="4.5" class="anchored" data-anchor-id="alternate-ways-to-call-median"><span class="header-section-number">4.5</span> Alternate ways to call median()</h3>
+<p>Argument names (e.g., <strong><em>x</em></strong> and <strong><em>na.rm</em></strong>) are not needed if you put values in the correct order. All of these calls functionally do the same thing as the above <strong><em>median()</em></strong> call:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>medianVal2c <span class="ot">=</span> <span class="fu">median</span>(vec2, <span class="cn">TRUE</span>);</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>medianVal2d <span class="ot">=</span> <span class="fu">median</span>(vec2, <span class="at">na.rm=</span><span class="cn">TRUE</span>);</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>medianVal2e <span class="ot">=</span> <span class="fu">median</span>(<span class="at">na.rm=</span><span class="cn">TRUE</span>, <span class="at">x=</span>vec2);  <span class="co"># can reverse arguments if you name them</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>medianVal2f <span class="ot">=</span> <span class="fu">median</span>(<span class="at">x=</span>vec2, <span class="cn">TRUE</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>My general recommendation is to always use argument names when calling a function.&nbsp; This makes your code easier to read and you don’t have to worry about the order of the arguments.&nbsp; This is especially important when you are dealing with more complicated functions that have lots of arguments (e.g., plotting functions).</p>
+</section>
+</section>
+<section id="help-seq" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="help-seq"><span class="header-section-number">5</span> Help seq()</h2>
+<p>Unfortunately, the <strong><em>Help</em></strong> for functions can contain many abstractions and extraneous information. Throughout this course, we will open up the <strong><em>Help</em></strong> menu for new functions to get you more familiar with the abstractions.</p>
+<p>&nbsp;</p>
+<p>Let’s look at the function <strong><em>seq()</em></strong>:</p>
+<div id="fig-seq" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-seq-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-1-04b_seq.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-seq-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: The Help page for the seq() function
+</figcaption>
+</figure>
+</div>
+<p>&nbsp;</p>
+<p>When you see <strong><em>Default S3 Method</em></strong>, that is most likely the version of the function you care about.&nbsp; <strong><em>S3</em></strong> means <strong>S</strong> version <strong>3</strong>, <strong><em>S</em></strong> is a programming language developed in the 1970s and was the predecessor to R (yeah, that sounds a bit backward…). The other object types you might see are S4, RC (very rare), and R6.</p>
+<section id="the-arguments-and-defaults" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="the-arguments-and-defaults"><span class="header-section-number">5.1</span> The arguments and defaults</h3>
+<p><strong><em>seq()</em></strong> has 5 arguments: <strong><em>from, to, by, length.out,</em></strong> and <strong><em>along.with</em></strong>.&nbsp; We are going to ignore <strong><em>along.with</em></strong>, which complicates matters and is not needed, nor very useful.</p>
+<p>&nbsp;</p>
+<p>The descriptions of the arguments in <a href="#fig-seq" class="quarto-xref">Figure&nbsp;3</a> are helpful but the default argument values for <strong><em>seq()</em></strong> are misinformative:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Default S3 method</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">1</span>, <span class="at">to =</span> <span class="dv">1</span>, <span class="at">by =</span> ((to <span class="sc">-</span> from)<span class="sc">/</span>(length.out <span class="sc">-</span> <span class="dv">1</span>)),</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">length.out =</span> <span class="cn">NULL</span>, <span class="at">along.with =</span> <span class="cn">NULL</span>, ...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong><em>seq()</em></strong> essentially is solving for this equation:</p>
+<p><span class="math display">\[
+by=\frac{\text{ to }-\text{ from }}{\text{ length.out }-1}
+\]</span></p>
+<p>There are four variables in the equation and <span class="hl">you have to give exactly three out of four of them as arguments</span>.&nbsp; <strong><em>seq()</em></strong> will rearrange the formula, calculate the unknown fourth variable, and create the sequence.</p>
+</section>
+<section id="seq-examples" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="seq-examples"><span class="header-section-number">5.2</span> <strong>seq()</strong> examples</h3>
+<p>If you set <strong><em>from</em></strong>, <strong><em>to</em></strong>, and <strong><em>by</em></strong> as we did for <strong><em>seq1,</em></strong> <strong><em>seq()</em></strong> will calculate <strong><em>length.out</em></strong> (the number of values in the sequence)</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>seq1 <span class="ot">=</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">1</span>, <span class="at">to=</span><span class="dv">10</span>, <span class="at">by=</span><span class="dv">3</span>);   <span class="co"># will have 4 values</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>and give you the sequence:</p>
+<div class="sourceCode" id="cb17" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>seq1<span class="sc">:</span> num[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="dv">1</span> <span class="dv">4</span> <span class="dv">7</span> <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong><em>length.out</em></strong> allows you to set the number of values in the sequence.&nbsp; You can also set <strong><em>length.out</em></strong> to a value, but then you can only use 2 of these 3 arguments: <strong><em>from</em></strong>, <strong><em>to</em></strong>, and <strong><em>by</em></strong>.</p>
+<p>&nbsp;</p>
+<p>An example of using <strong><em>length.out</em></strong>:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>seq2 <span class="ot">=</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">1</span>, <span class="at">to=</span><span class="dv">10</span>, <span class="at">length.out=</span><span class="dv">5</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Then you get 5 evenly spaced number starting with 1 and ending with 10</p>
+<div class="sourceCode" id="cb19" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>seq2<span class="sc">:</span>   num[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="dv">1</span> <span class="fl">3.25</span> <span class="fl">5.5</span> <span class="fl">7.75</span> <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="read.csv-expanded" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="read.csv-expanded"><span class="header-section-number">6</span> read.csv() expanded</h2>
+<p>When you go to the <strong><em>Help</em></strong> page for <strong><em>read.csv()</em></strong> , you are taken to the <strong><em>Help</em></strong> page for <strong><em>read.table()</em></strong>. This is because <strong><em>read.csv()</em></strong> is a version of the function <strong><em>read.table()</em></strong>.&nbsp; In other words, <strong><em>read.csv()</em></strong> is <strong><em>read.table()</em></strong> with different default values for the arguments. The different argument values are underlined in <a href="#fig-readcsv" class="quarto-xref">Figure&nbsp;4</a>.</p>
+<p>&nbsp;</p>
+<p>For instance, the default value for <strong><em>sep</em></strong> (the separator between data) is a space in <strong><em>read.table()</em></strong> and a comma in <strong><em>read.csv()</em></strong>.&nbsp; <strong><em>read.csv()</em></strong> uses all the arguments from <strong><em>read.table()</em></strong> (e.g., <strong><em>row.names</em></strong>, <strong><em>col.names</em></strong>), <strong><em>read.csv()</em></strong> just changes some of the values for default arguments (underlined below).</p>
+<div id="fig-readcsv" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-readcsv-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-1-04_ReadCsv_Help.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-readcsv-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Using the Help tab in RStudio to look up functions (and a remainder that arguments are sometimes called parameters)
+</figcaption>
+</figure>
+</div>
+<section id="read.csv-arguments" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="read.csv-arguments"><span class="header-section-number">6.1</span> read.csv arguments</h3>
+<p>When you call <strong><em>read.csv()</em></strong>, you can use any of the argument from <strong><em>read.table()</em></strong>.</p>
+<p>&nbsp;</p>
+<p>And there are a lot of arguments in <strong><em>read.table().</em></strong> The majority of these arguments rarely need to be changed from their default value.</p>
+<p>&nbsp;</p>
+<p>Most of the arguments in <strong><em>read.table()</em></strong> look cryptic and you will probably never have to use them. A couple that are easier to understand:</p>
+<ul>
+<li><p><strong><em>decimal</em></strong>: the character that represents a decimal in the decimal number.&nbsp; You might need to change this to a comma ( , ) if you get data from Europe</p></li>
+<li><p><strong><em>comment.char</em></strong>: the character after which everything on the line is a comment (i.e., not data)</p>
+<ul>
+<li>notice that <strong><em>read.csv()</em></strong> has no <strong><em>comment.char</em></strong> whereas <strong><em>read.table()</em></strong> uses ( <strong>#</strong> ) as the default <strong><em>comment.char</em></strong></li>
+</ul></li>
+</ul>
+</section>
+<section id="required-arguments-and-default-arguments" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="required-arguments-and-default-arguments"><span class="header-section-number">6.2</span> Required arguments and default arguments</h3>
+<p><strong><em>file</em></strong> is an argument that is not set equal to anything in <strong><em>read.table()</em></strong> / <strong><em>read.csv()</em></strong>.&nbsp; This is because <strong><em>file</em></strong> must be supplied by the user –<span class="hl"><strong>file</strong> is the only required argument</span><em>.</em>&nbsp; This should make sense as there is no point in calling <strong><em>read.table()</em></strong> / <strong><em>read.csv()</em></strong> without any data.</p>
+<p>&nbsp;</p>
+<p>Most other argument in <strong><em>read.table()</em></strong> / <strong><em>read.csv()</em></strong> has a default value (except row.names and col.names – there is a question about this in the application). This means you can execute the function without using any argument except <strong><em>file</em></strong>.</p>
+<p>&nbsp;</p>
+<p>In fact, the following code will produce the same results as the earlier <strong><em>read.csv()</em></strong> call in <a href="#fig-readFunction" class="quarto-xref">Figure&nbsp;1</a>:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>weatherData2 <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">"data/twoWeekWeatherData.csv"</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you look in the <strong><em>Environment</em></strong> tab the values for <strong><em>weatherData</em></strong> and <strong><em>weatherData2</em></strong> are exactly the same.</p>
+<div id="fig-weatherdata" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-weatherdata-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-1-05-weatherdata.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-weatherdata-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: Expanding weatherData and weatherData2 in the Environment tab
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="the-other-arguments-aside-from-file" class="level3" data-number="6.3">
+<h3 data-number="6.3" class="anchored" data-anchor-id="the-other-arguments-aside-from-file"><span class="header-section-number">6.3</span> The other arguments (aside from <strong><em>file</em></strong>)</h3>
+<p>In my original call to <strong><em>read.csv()</em></strong>, the arguments <strong><em>sep=“,”</em></strong> and <strong><em>header=TRUE</em></strong> are functionally not changing anything because I have them set to the same value as their default.&nbsp; But, these arguments are changed often enough that it is nice to have them quickly at hand when copying <strong><em>read.csv()</em></strong> from one script to another.</p>
+<p>&nbsp;</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a> weatherData <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="at">file=</span><span class="st">"data/twoWeekWeatherData.csv"</span>,</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">sep=</span><span class="st">","</span>,                 </span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">header=</span><span class="cn">TRUE</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="application" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="application"><span class="header-section-number">7</span> Application</h2>
+<p>1. Create this sequence: <strong><em>13, 9, 5, 1, -3, -7, -11</em></strong> using <strong><em>seq()</em></strong>.</p>
+<ul>
+<li>Come up with two more ways (three in all) to produce the same sequence using&nbsp;<strong><em>seq(),</em></strong> but changing the arguments (<strong><em>from, by, to, length.out</em></strong>).&nbsp;</li>
+</ul>
+<p>&nbsp;</p>
+<p>2. Explain, in comments, why you get an error if you try to use all four arguments (<strong><em>from, by, to, length.out</em></strong>)</p>
+<p>&nbsp;</p>
+<p>3. In comments answer: What are the default values for <strong>row.names</strong>, <strong>col.names</strong>, <strong>na.strings</strong>, and <strong>fill</strong> in <strong><em>read.csv()</em></strong>? For <strong><em>row.names</em></strong> and <strong><em>col.names</em></strong> you will need to look at the Arguments section of the Help for <strong><em>read.csv</em></strong> to find the answer.</p>
+<p>&nbsp;</p>
+<p>4. Find the log (base 5) of this vector: <strong>c(0.04, 0.2, 25, 125)</strong> using the <strong><em>log()</em></strong> function</p>
+<ul>
+<li><p>Use the <strong><em>Help</em></strong> tab to find out more about the <strong><em>log()</em></strong> function</p></li>
+<li><p>The answer is: <strong>-2, -1, 2, 3</strong> (so you can check)</p></li>
+<li><p><span class="note">note: the default value for <strong><em>base</em></strong> is <strong>exp(1)</strong> = e<sup>1</sup> = e = 2.71828… (i.e., the natural logarithm)</span></p></li>
+</ul>
+<p>&nbsp;</p>
+<p>5. Properly read in <a href="../data/twoWeekWeatherData_Comma.csv">this CSV file</a> of the same two week weather data but:</p>
+<ul>
+<li><p>commas are used in place of decimals in precipitation column</p></li>
+<li><p>spaces are used to separate variables (instead of commas)</p></li>
+</ul>
+<p>Save the data to a dataframe name <strong><em>WD_Comma</em></strong></p>
+<p>&nbsp;</p>
+<p>6. In comments, answer: How many factors levels does the <strong><em>noonCondition</em></strong> column have?&nbsp; How about the <strong><em>date</em></strong> column?</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Save the script as&nbsp;<strong><em>app1-05.r</em></strong> in your&nbsp;<strong><em>scripts</em></strong> folder and&nbsp; email your Project Folder to Charlie Belinsky at belinsky@msu.edu.</p>
+<p>&nbsp;</p>
+<p><a href="1-01-RStudioProjectsSetup.html#sec-zip-folder" target="_blank">Instructions for zipping the Project Folder are here.</a></p>
+<p>&nbsp;</p>
+<p>If you have any questions regarding this application, feel free to email them to Charlie Belinsky at belinsky@msu.edu.</p>
+<section id="questions-to-answer" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="questions-to-answer"><span class="header-section-number">7.1</span> Questions to answer</h3>
+<p>Answer the following in comments inside your application script:</p>
+<ol type="1">
+<li><p>What was your level of comfort with the lesson/application?</p></li>
+<li><p>What areas of the lesson/application confused or still confuses you?</p></li>
+<li><p>What are some things you would like to know more about that is related to, but not covered in, this lesson?</p></li>
+</ol>
+</section>
+</section>
+<section id="trap-forgetting-to-pass-in-a-vector-to-median" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="trap-forgetting-to-pass-in-a-vector-to-median"><span class="header-section-number">8</span> Trap: Forgetting to pass in a vector to median</h2>
+<p>If you want to find the median of the vector: <strong><em>c(3,4,6,2,7,10)</em></strong>, you have two choices:</p>
+<p>&nbsp;</p>
+<p>Save the vector to a variable and use the variable as an argument to <strong><em>median()</em></strong>:</p>
+<div class="sourceCode" id="cb22" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> vec6 <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">2</span>,<span class="dv">7</span>,<span class="dv">10</span>) </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">median</span>(vec6) </span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Use the vector directly as an argument to <strong><em>median()</em></strong>:</p>
+<div class="sourceCode" id="cb23" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">median</span>(<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">2</span>,<span class="dv">7</span>,<span class="dv">10</span>)) </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Both produce the correct answer, <strong>3.5</strong>.</p>
+<p>&nbsp;</p>
+<p>A mistake people often make is to forget to put the numbers into a vector by using <strong><em>c()</em></strong>, they do this instead:</p>
+<pre><code>&gt; median(3,4,6,2,7,10) 
+[1] 3</code></pre>
+<p>Is this case, you are calling <strong><em>median()</em></strong> with 6 separate arguments: 3, 4, 6, 2, 7, and 10. <strong><em>median()</em></strong> only takes 1 arguments so it ignores the last five number and takes the median of 3, which is 3.</p>
+<p>&nbsp;</p>
+<p>When you put the six numbers into <strong><em>c()</em></strong>, you are saying that these numbers are all grouped together into one vector, and median will take in the whole vector as the argument.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

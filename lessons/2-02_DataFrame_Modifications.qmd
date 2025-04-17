@@ -8,9 +8,9 @@ short: "2-02"
 
 ## Purpose
 
--    Using string manipulations on columns within a data frame
+-   Using string manipulations on columns within a data frame
 
--    Add, remove, and reorder columns in a data frame
+-   Add, remove, and reorder columns in a data frame
 
 ## Material
 
@@ -46,11 +46,11 @@ If we double-click on ***weatherData*** in the ***Environment***, we can look at
 
 There is extra information in the values of the ***dateTime*** column (column 1) that is not needed.  We really only need the two-digit month and day, which is the [6th through the 10th characters]{.hl} of each ***dateTime*** value:
 
--    2016-«**01-02**»T00:00:00
+-   2016-[01-02]{.hl}T00:00:00
 
--    2016-«**01-14**»T00:00:00
+-   2016-[01-14]{.hl}T00:00:00
 
--    2016-«**01-26**»T00:00:00
+-   2016-[01-26]{.hl}T00:00:00
 
 ### Substrings
 
@@ -58,27 +58,27 @@ We can use the function ***substr()*** to subset, or pull out, a portion of the 
 
 ![The substr() function](images/R-1-14_Substr.png){#fig-substr .fs}
 
-[note: **substr()** and **substring()** are very similar -- and both would work in this example]{.note}
+[note: **substr()** and **substring()** are very similar -- the main difference is the argument names]{.note}
 
  
 
 ***substr()*** has three arguments that we need to assign value to:
 
--    ***x***: the values that we want to subset (the ***dateTime*** column)
+-   ***x***: the values that we want to subset (the ***dateTime*** column)
 
--    ***start***: the position we want the substring to start at (the 6^th^ character)
+-   ***start***: the position we want the substring to start at (the 6^th^ character)
 
--    ***stop***: the position that we want the substring to end at (the 10^th^ character)
+-   ***stop***: the position that we want the substring to end at (the 10^th^ character)
 
 ``` r
 dateOnly = substr(x=weatherData$dateTime, start=6, stop=10);
 ```
 
-This removes the year at the beginning and the time stamp at the end of all the values and saves the results to ***dateOnly***.
+This removes the the values between characters 6 and 10 and saves the results to ***dateOnly***.
 
  
 
-We can look at the first six values of ***dateOnly*** in the Console using ***head()***  and the last 6 values using ***tail()***:
+We can look at the first six values of ***dateOnly*** in the ***Console*** using ***head()***  and the last 6 values using ***tail()***:
 
 ``` {.r tab="Console"}
 > head(dateOnly)
@@ -95,11 +95,11 @@ Let's say we actually want the year in the column, but we want it at the end. 
 
 In other words, we want the format to be **MM-DD-YYYY**:
 
--    **01-02-2016**
+-   **01-02-2016**
 
--    **01-14-2016**
+-   **01-14-2016**
 
--    **01-26-2016**
+-   **01-26-2016**
 
  
 
@@ -137,7 +137,7 @@ Looking at the first ten values in ***dateYear*** in the ***Console***:
 
 #### The ***sep*** argument
 
-If you do not put the ***sep*** argument in, then ***sep*** defaults to one space, meaning an extra space between each object in the ***paste()*** -- in this case, the date and year: 
+The ***sep*** argument is the character that get placed in between the values being pasted. If you do not put the ***sep*** argument in, then ***sep*** defaults to one space, meaning an extra space between each object in the ***paste()*** -- in this case, the date and year: 
 
 ``` r
 dateYearMistake = paste(dateOnly, "-2016"); # sep default to " "
@@ -150,6 +150,15 @@ The results have a space after the date:
 01-02 -2016
 01-14 -2016
 01-26 -2016
+```
+
+Or, you can set ***sep*** to some value, and those characters appear between the date and year:
+
+``` {.r tab="Console"}
+> paste(dateOnly, "-2016", sep="@!@")
+01-02@!@-2016
+01-14@!@-2016
+01-26@!@-2016
 ```
 
 In general, it is best to set ***sep=""*** (i.e., to nothing) -- this gives you more control of the output. 
@@ -172,9 +181,9 @@ One decimal place is probably enough in this case and we can round the values us
 
 ***round()*** has two arguments:
 
--    ***x***: the values to round
+-   ***x***: the values to round
 
--    ***digits***: decimal places to round to
+-   ***digits***: decimal places to round to
 
 ### Using round()
 
@@ -202,9 +211,9 @@ In the ***Console***, we are looking at values 40-49 in ***windSpeedRounded*** b
 
 We have created two new vectors: ***dateYear*** and ***windSpeedRounded***, and we want add them both to the ***weatherData*** data frame.  There are two ways to add a vector to a data frame:
 
--    add a new column
+-   add a new column
 
--    overwrite an existing column.
+-   overwrite an existing column.
 
  
 
@@ -329,13 +338,13 @@ Let's says we want to move ***heatDays*** and ***coolDays*** right after ***temp
 
 Moving ***heatDays*** and ***coolDays*** after ***tempDept*** creates 4 separate column sequences (@fig-moveMiddleColumns):
 
-1.   **dateYear:tempDept**
+1.  **dateYear:tempDept**
 
-2.   **heatDays:coolDays**
+2.  **heatDays:coolDays**
 
-3.   **relHum:wetBulbTemp**
+3.  **relHum:wetBulbTemp**
 
-4.   **sunrise:windSusDir**
+4.  **sunrise:windSusDir**
 
 ![The four column sequences when moving columns in the middle of the data frame](images/R-2-01-MoveMiddleColumns.jpg){#fig-moveMiddleColumns .fs}
 
@@ -357,6 +366,8 @@ And now we have the reordered columns:
 ## Saving the data frame to a CSV file
 
 We are going to use the ***weatherData4*** data frame in the next lesson, so let's save it to a CSV file.
+
+ 
 
 Quite often, people just call ***write.csv()***, pass in the data frame and the file name to save it to:
 
@@ -393,11 +404,11 @@ C\) Remove the ***heatDays*** and ***coolDays*** columns from ***weatherData_app
 
 D\) Using substrings, create a ***dateTimeNew*** vector that has the dates in this format: [2-digit date, 2-digit month, 2-digit year]{.hl}.
 
--    So, ***April, 20th 2016*** would be ***20-04-16***
+-   So, ***April, 20th 2016*** would be ***20-04-16***
 
--    Save ***dateTimeNew*** to a column in ***weatherData_app***
+-   Save ***dateTimeNew*** to a column in ***weatherData_app***
 
--    Move ***dateTimeNew*** to the second column in ***weatherData_app*** (do not remove the original ***dateTime*** column)
+-   Move ***dateTimeNew*** to the second column in ***weatherData_app*** (do not remove the original ***dateTime*** column)
 
  
 

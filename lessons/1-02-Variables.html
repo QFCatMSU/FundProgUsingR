@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.22">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>1-02: Variables</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b4406b7675125bc2ba204020e191172.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-5f39cfd1aee7e7785011fc5df168ee92.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link rel="shortcut icon" href="https://qfcatmsu.github.io/assets/quarto/qfc_icon.png">
+<script>mod=true; menuCollapse=true;</script>
+<script src="https://qfcatmsu.github.io/assets/quarto/qfc_styles.js"></script>
+ 
+
+
+<link rel="stylesheet" href="https://qfcatmsu.github.io/assets/quarto/qfc_styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+          <h1 class="quarto-secondary-nav-title">1-02: Variables</h1>
+        </a>     
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text"><b>Fundamentals of Programming class</b></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/0-01-IntroductionAndSyllabus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction and Syllabus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-01-RStudioProjectsSetup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-01: RStudio Projects Setup</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-02-Variables.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">1-02: Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-03_Mathematical_Operations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-03: Mathematical Operations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-04_Vectors_And_Data_Frames.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-04: Vectors and Data Frames</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-05_Functions_Introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-05: Functions Introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-06_Run_and_Source.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-06: Run and Source</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-07_Outputs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-07: Outputs</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-08_Conditional_Operations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-08: Conditional Operations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-09_If_Else_Statements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-09: If-Else Statements</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-10_For_Loops.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-10: For Loops</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-11_For_Loops_and_State_Varibles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-11: For Loops and State Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-12_MultipleConditions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-12: Multiple Conditions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-13_Functions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-13: Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-14_Functions2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-14: Functions 2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-15_Nested_Loops_and _Matrices.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-15: Nested loops and Matrices</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-15_Nested_Loops_and _Matrices-HOME-GALAXYBOOK.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-15: Nested loops and Matrices</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-01_R-Base_Plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-01: R-Base Plots</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-02_DataFrame_Modifications.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-02: DataFrame Modifications</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-03_DataTypesAndDateFrames.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-03: Data Types and Data Frames</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-04_WhichStatements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-04: Which Statements</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-05_WhichAndRegularExpressions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-05: Which and Regular Expressions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-06_Datetime_Obejects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-06: Datetime objects</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-07_Matrices.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-07: Matrices</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-08_Binding_Sampling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-08: Binding and Sampling</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-09_Stacking_Mapping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-09: Stacking and Mapping</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-10_Statistical_Tests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-10: Statistical Tests</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-11_Objects_Attributes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-11: Objects and Attributes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-12_Lists.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-12: Lists</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-13_Breakpoints.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-13: Breakpoints</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title"><b>Lesson Content</b></h2>
+   
+  <ul>
+  <li><a href="#changes" id="toc-changes" class="nav-link active" data-scroll-target="#changes"><span class="header-section-number">0.1</span> Changes</a></li>
+  <li><a href="#purpose" id="toc-purpose" class="nav-link" data-scroll-target="#purpose"><span class="header-section-number">1</span> Purpose</a></li>
+  <li><a href="#questions-about-the-material" id="toc-questions-about-the-material" class="nav-link" data-scroll-target="#questions-about-the-material"><span class="header-section-number">2</span> Questions about the material…</a></li>
+  <li><a href="#programming-structures" id="toc-programming-structures" class="nav-link" data-scroll-target="#programming-structures"><span class="header-section-number">3</span> Programming structures</a></li>
+  <li><a href="#different-types-of-variables" id="toc-different-types-of-variables" class="nav-link" data-scroll-target="#different-types-of-variables"><span class="header-section-number">4</span> Different types of variables</a>
+  <ul class="collapse">
+  <li><a href="#algebraic-variables" id="toc-algebraic-variables" class="nav-link" data-scroll-target="#algebraic-variables"><span class="header-section-number">4.1</span> Algebraic variables</a></li>
+  <li><a href="#variables-in-programming" id="toc-variables-in-programming" class="nav-link" data-scroll-target="#variables-in-programming"><span class="header-section-number">4.2</span> Variables in programming</a></li>
+  </ul></li>
+  <li><a href="#using-variables-in-a-script" id="toc-using-variables-in-a-script" class="nav-link" data-scroll-target="#using-variables-in-a-script"><span class="header-section-number">5</span> Using variables in a script</a>
+  <ul class="collapse">
+  <li><a href="#open-your-rstudio-project" id="toc-open-your-rstudio-project" class="nav-link" data-scroll-target="#open-your-rstudio-project"><span class="header-section-number">5.1</span> Open your RStudio Project</a></li>
+  <li><a href="#open-a-new-script-file" id="toc-open-a-new-script-file" class="nav-link" data-scroll-target="#open-a-new-script-file"><span class="header-section-number">5.2</span> Open a new script file</a></li>
+  <li><a href="#add-code-to-the-script" id="toc-add-code-to-the-script" class="nav-link" data-scroll-target="#add-code-to-the-script"><span class="header-section-number">5.3</span> Add code to the script</a></li>
+  <li><a href="#execute-your-code-the-environment-tab" id="toc-execute-your-code-the-environment-tab" class="nav-link" data-scroll-target="#execute-your-code-the-environment-tab"><span class="header-section-number">5.4</span> Execute your code – the Environment tab</a></li>
+  </ul></li>
+  <li><a href="#re-assigning-values-to-variables" id="toc-re-assigning-values-to-variables" class="nav-link" data-scroll-target="#re-assigning-values-to-variables"><span class="header-section-number">6</span> Re-assigning values to variables</a>
+  <ul class="collapse">
+  <li><a href="#reassigning-values-to-a-variable" id="toc-reassigning-values-to-a-variable" class="nav-link" data-scroll-target="#reassigning-values-to-a-variable"><span class="header-section-number">6.1</span> Reassigning values to a variable</a></li>
+  </ul></li>
+  <li><a href="#in-line-and-whole-line-comments" id="toc-in-line-and-whole-line-comments" class="nav-link" data-scroll-target="#in-line-and-whole-line-comments"><span class="header-section-number">7</span> In-line and whole-line comments</a></li>
+  <li><a href="#naming-variables" id="toc-naming-variables" class="nav-link" data-scroll-target="#naming-variables"><span class="header-section-number">8</span> Naming variables</a>
+  <ul class="collapse">
+  <li><a href="#naming-rules" id="toc-naming-rules" class="nav-link" data-scroll-target="#naming-rules"><span class="header-section-number">8.1</span> Naming Rules</a></li>
+  <li><a href="#naming-conventions" id="toc-naming-conventions" class="nav-link" data-scroll-target="#naming-conventions"><span class="header-section-number">8.2</span> Naming Conventions</a></li>
+  </ul></li>
+  <li><a href="#application" id="toc-application" class="nav-link" data-scroll-target="#application"><span class="header-section-number">9</span> Application</a>
+  <ul class="collapse">
+  <li><a href="#questions-to-answer" id="toc-questions-to-answer" class="nav-link" data-scroll-target="#questions-to-answer"><span class="header-section-number">9.1</span> Questions to answer</a></li>
+  <li><a href="#challenge" id="toc-challenge" class="nav-link" data-scroll-target="#challenge"><span class="header-section-number">9.2</span> Challenge</a></li>
+  </ul></li>
+  <li><a href="#trap-assignment-vs.-equality-operations" id="toc-trap-assignment-vs.-equality-operations" class="nav-link" data-scroll-target="#trap-assignment-vs.-equality-operations"><span class="header-section-number">10</span> Trap: Assignment vs.&nbsp;Equality Operations</a>
+  <ul class="collapse">
+  <li><a href="#treating-the-equal-sign-as-an-equality-operation" id="toc-treating-the-equal-sign-as-an-equality-operation" class="nav-link" data-scroll-target="#treating-the-equal-sign-as-an-equality-operation"><span class="header-section-number">10.1</span> Treating the equal sign as an equality operation</a></li>
+  </ul></li>
+  <li><a href="#trap-constant-variables-in-r" id="toc-trap-constant-variables-in-r" class="nav-link" data-scroll-target="#trap-constant-variables-in-r"><span class="header-section-number">11</span> Trap: Constant variables in R</a></li>
+  <li><a href="#trap-assigning-nonexistent-variables" id="toc-trap-assigning-nonexistent-variables" class="nav-link" data-scroll-target="#trap-assigning-nonexistent-variables"><span class="header-section-number">12</span> Trap: Assigning nonexistent variables</a></li>
+  <li><a href="#trap-case-counts-in-variable-names" id="toc-trap-case-counts-in-variable-names" class="nav-link" data-scroll-target="#trap-case-counts-in-variable-names"><span class="header-section-number">13</span> Trap: Case counts in variable names</a></li>
+  <li><a href="#extension-alternate-assignment-operator" id="toc-extension-alternate-assignment-operator" class="nav-link" data-scroll-target="#extension-alternate-assignment-operator"><span class="header-section-number">14</span> Extension: alternate assignment operator</a></li>
+  <li><a href="#extension-why-clear-the-environment-tab" id="toc-extension-why-clear-the-environment-tab" class="nav-link" data-scroll-target="#extension-why-clear-the-environment-tab"><span class="header-section-number">15</span> Extension: Why clear the Environment tab?</a></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content column-page-right" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">1-02: Variables</h1>
+</div>
+
+
+
+<div class="quarto-title-meta column-page-right">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="changes" class="level3" data-number="0.1">
+<h3 data-number="0.1" class="anchored" data-anchor-id="changes"><span class="header-section-number">0.1</span> Changes</h3>
+</section>
+<section id="purpose" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="purpose"><span class="header-section-number">1</span> Purpose</h2>
+<ul>
+<li><p>Discuss what a programming variable is and how it compares to an algebraic variable.</p></li>
+<li><p>Discuss naming conventions for variables.</p></li>
+<li><p>Assign and reassign values to variables</p></li>
+<li><p>Introduce in-line and whole-line comments.</p></li>
+</ul>
+</section>
+<section id="questions-about-the-material" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="questions-about-the-material"><span class="header-section-number">2</span> Questions about the material…</h2>
+<p>If you have any questions about the material in this lesson, feel free to email them to the instructor, Charlie Belinsky, at belinsky@msu.edu.</p>
+</section>
+<section id="programming-structures" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="programming-structures"><span class="header-section-number">3</span> Programming structures</h2>
+<p>In all programming languages there are basically 4 main structures that cover almost every aspect of programming:</p>
+<ol type="1">
+<li><p><strong>Variables</strong>: named storage area for values used in the script</p></li>
+<li><p><strong>If-Else Statements</strong>: conditional execution of code</p></li>
+<li><p><strong>For Loops</strong>: execution of code a fixed number of times</p></li>
+<li><p><strong>Functions</strong>: place to store commonly used code</p></li>
+</ol>
+<p>&nbsp;</p>
+<p>We will go through all 4 of these in the class and in the lesson we will cover the first, Variables.</p>
+</section>
+<section id="different-types-of-variables" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="different-types-of-variables"><span class="header-section-number">4</span> Different types of variables</h2>
+<p><strong><em>Variables</em></strong> is a widely used term found in many different fields, and its definition is not consistent across the fields.&nbsp; In this class, when I say <strong><em>variable</em></strong> I am referring to a programming variable. When I am referring to a variable in another field, I will add the field to the term <strong><em>variable</em></strong> (e.g., <span class="hl">algebraic</span> variable, <span class="hl">experimental</span> variable, <span class="hl">statistical</span> variable).</p>
+<section id="algebraic-variables" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="algebraic-variables"><span class="header-section-number">4.1</span> Algebraic variables</h3>
+<p>In Physics, we use algebraic variables to describe the relationship between physical properties.&nbsp; For example, velocity can be expressed algebraically as&nbsp; <strong><em>v=d/t</em></strong> where <strong><em>v</em></strong>, <strong><em>d</em></strong>, and <strong><em>t</em></strong> are symbols representing the physical properties of velocity, distance, and time.&nbsp; The formula states that the relationship <strong><em>v=d/t</em></strong> is always maintained even as the individual values change.</p>
+<p>&nbsp;</p>
+<p>In this case, <strong><em>v, d</em></strong>, and <strong><em>t</em></strong> are all <span class="hl">algebraic variables</span> that have the following properties:</p>
+<ol type="1">
+<li><p><strong>Name</strong>: <strong><em>v, d, t</em></strong> (name is synonymous with symbol)</p></li>
+<li><p><strong>Type</strong>: numeric (<strong><em>v</em></strong>, <strong><em>d</em></strong>, and <strong><em>t</em></strong> are all numbers)</p></li>
+<li><p><strong>Value</strong>: given by situation – the value can be known or unknown</p></li>
+</ol>
+</section>
+<section id="variables-in-programming" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="variables-in-programming"><span class="header-section-number">4.2</span> Variables in programming</h3>
+<p>In programming, <strong>variables</strong> work in a similar way. <span class="hl">Variables</span> in programming are named storage locations in memory that hold information.</p>
+<p>&nbsp;</p>
+<p>This information could be</p>
+<ul>
+<li><p>a runner’s distance, time, and velocity</p></li>
+<li><p>the number of fish caught in a day</p></li>
+<li><p>the name of the lake the fish were caught in</p></li>
+<li><p>weather information such as temperature, humidity, or wind speed</p></li>
+</ul>
+<p>&nbsp;</p>
+<p>Like algebraic variables, variables in programming have a <strong><em>name</em></strong>, <strong><em>type</em></strong>, and <strong><em>value</em></strong>.</p>
+<section id="name" class="level4" data-number="4.2.1">
+<h4 data-number="4.2.1" class="anchored" data-anchor-id="name"><span class="header-section-number">4.2.1</span> Name</h4>
+<p>The <span class="hl">name</span> corresponds to the symbol in our physics example above – it is <span class="hl">how the variable is represented</span> in the script.&nbsp; The name is used to reference the storage location in memory that holds the value.&nbsp; For our initial example, we will use <strong><em>v, d,</em></strong> and <strong><em>t</em></strong> as the variable names.&nbsp; Later in this lesson, I will talk about variable naming conventions.</p>
+</section>
+<section id="value" class="level4" data-number="4.2.2">
+<h4 data-number="4.2.2" class="anchored" data-anchor-id="value"><span class="header-section-number">4.2.2</span> Value&nbsp;</h4>
+<p>The <span class="hl">value</span> is the information that is stored in the location pointed to by the name, so when <strong><em>v = 10</em></strong> , that means there is a storage location in memory named <strong><em>v,</em></strong> and in that location, there is the number <strong><em>10.</em></strong> <span class="note">Note: we will worry about units later.</span></p>
+<p>&nbsp;</p>
+<p><a href="#trap-constant-variables-in-r">Trap: Constant variables in R</a></p>
+</section>
+<section id="type" class="level4" data-number="4.2.3">
+<h4 data-number="4.2.3" class="anchored" data-anchor-id="type"><span class="header-section-number">4.2.3</span> Type</h4>
+<p>The <span class="hl">type</span> describes what kind of value is being stored in memory which, in turn, tells R what kind of operations can be performed on the variable. Distance, velocity, and time all have numeric values<em>,</em> and mathematical operations can be performed on them.</p>
+<p>&nbsp;</p>
+<p><strong>Numeric</strong> is one type of value a variable can have, some of the other types of values are:</p>
+<ul>
+<li><p><strong>strings</strong> (also called <strong>characters</strong>): a text value (e.g., a lake name)</p></li>
+<li><p><strong>categorical</strong>: a limited set of text values (e.g., the four seasons or the five Great Lakes)</p></li>
+<li><p><strong>Boolean</strong>: a TRUE/FALSE statement</p></li>
+<li><p><strong>Date</strong>: a date in day-month-year format</p></li>
+</ul>
+<p>&nbsp;</p>
+<p>We will talk more about the non-numeric variable types in future lessons, for now, we will stick with numeric variables.</p>
+</section>
+</section>
+</section>
+<section id="using-variables-in-a-script" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="using-variables-in-a-script"><span class="header-section-number">5</span> Using variables in a script</h2>
+<p>We are going to create a simple script that calculates velocity given distance and time.</p>
+<p>&nbsp;</p>
+<p>There are three variables in this script: <strong><em>d</em></strong>, <strong><em>v</em></strong>, and <strong><em>t</em></strong></p>
+<p>&nbsp;</p>
+<p>The steps for making this script are:</p>
+<ol type="1">
+<li><p>Open Your RStudio Project (or create one if you do not have one)</p></li>
+<li><p>Open a new script file</p></li>
+<li><p>Add code to the script</p></li>
+<li><p>Execute (<strong><em>Source</em></strong>) the code</p></li>
+</ol>
+<section id="open-your-rstudio-project" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="open-your-rstudio-project"><span class="header-section-number">5.1</span> Open your RStudio Project</h3>
+<p>It would be best to use the same RStudio Project for the whole class and you can use the one you created in the last lesson.</p>
+<p>&nbsp;</p>
+<p>There are multiple ways to open an RStudio Project:</p>
+<ul>
+<li><p>Open your Project Folder in a file manager and double-click the <strong>*.proj</strong> file, where * is the name of your project</p></li>
+<li><p>In RStudio, click <strong><em>File</em></strong> -&gt; <strong><em>Open Project…</em></strong> -&gt; navigate to your Project Folder and click the <strong>*.proj</strong> file</p></li>
+<li><p>In RStudio, click <strong><em>File</em></strong> -&gt; <strong><em>Recent Projects</em></strong> -&gt; choose the RStudio Project</p></li>
+<li><p>Use the Projects dropdown menu in the top-right corner of RStudio (<a href="#fig-projDropdown" class="quarto-xref">Figure&nbsp;1</a>)</p></li>
+</ul>
+<div id="fig-projDropdown" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-projDropdown-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-1-01_ProjectsDropdown.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-projDropdown-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: The Project dropdown menu in RStudio – something I use all the time!
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="open-a-new-script-file" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="open-a-new-script-file"><span class="header-section-number">5.2</span> Open a new script file</h3>
+<p>Inside your RStudio Project, click on <strong><em>File -&gt; New File -&gt; R Script</em></strong> (<a href="#fig-openNewFile" class="quarto-xref">Figure&nbsp;2</a>) .&nbsp; An empty file named <strong><em>Untitled1</em></strong> will appear as a tab in the File Editor window.&nbsp; Save the file as <strong><em>lesson1-02.r</em></strong> in your <strong><em>script</em></strong> folder.</p>
+<p>&nbsp;</p>
+<p><span class="note">Note: you should always name and save a script file before editing it. Do not leave it as Untitled1</span></p>
+<div id="fig-openNewFile" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-openNewFile-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-1-03-OpeningScriptFile.jpg" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-openNewFile-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Opening a new R file in RStudio
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="add-code-to-the-script" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="add-code-to-the-script"><span class="header-section-number">5.3</span> Add code to the script</h3>
+<p>Copy and paste the following lines into the code window and click the <strong><em>Source</em></strong> button in the bar above the code (or click <strong><em>Code</em></strong> -&gt; <strong><em>Source</em></strong>):</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>());    <span class="co"># Clear out the Environment     </span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># create two variables: d and t and give them values</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>d <span class="ot">=</span> <span class="dv">100</span>;</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>t <span class="ot">=</span> <span class="dv">20</span>;</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># create a variable v that is calculated using d and t</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>v <span class="ot">=</span> d<span class="sc">/</span>t;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Lines <strong>1</strong> cleans out the <strong>Environment</strong> tab (top-right corner) each time the script is executed.&nbsp; This provides you with a clean slate each time you run a script and I put this line at the top of most of my scripts.</p>
+<p><a href="#extension-why-clear-the-environment-tab">Extension: Why clear the Environment tab?</a></p>
+<p>&nbsp;</p>
+<p>Line <strong>1</strong> also has an <strong><em>inline comment</em></strong> that starts with <strong>#</strong>. Everything after the <strong>#</strong> is informational and does not get executed.</p>
+<p>&nbsp;</p>
+<p>Lines <strong>3</strong> and <strong>6</strong>&nbsp;are full comment lines – again, they are informational and there to make the script easier to understand.&nbsp; You can take them out and the script will produce the same result.</p>
+<p>&nbsp;</p>
+<p>Lines <strong>4</strong>, <strong>5</strong>, and <strong>7</strong> are where the real action occurs and each line contains a <span class="hl">variable assignment</span>:</p>
+<ul>
+<li><p>Line <strong>4</strong> assigns the value <strong><em>100</em></strong> to the variable named <strong><em>d</em></strong></p></li>
+<li><p>Line <strong>5</strong> assigns the value <strong><em>20</em></strong> to the variable named <strong><em>t</em></strong></p></li>
+<li><p>Line <strong>7</strong>&nbsp;assigns the value of the calculation <strong><em>d/t</em></strong> to the variable named <strong><em>v</em></strong>.</p></li>
+</ul>
+<p>&nbsp;</p>
+<p>Lines <strong>1, 4, 5,</strong>&nbsp;and&nbsp;<strong>7</strong>&nbsp;all have semicolons ( <strong><em>;</em></strong> ) at the end.&nbsp; The semicolon designates the end of a programming command just like the period designates the end of a sentence.&nbsp; The semicolon is optional in R and is often not used, but <span class="hl">I highly recommend the use of semicolons</span> in all of your scripts. Semicolons allow for more flexibility (e.g., you can put multiple “sentences” on one line), help you think about the flow of your code, and are required in many programming languages.</p>
+<p>&nbsp;</p>
+<p><a href="#trap-assignment-vs.-equality-operations">Trap: Assignment vs.&nbsp;Equality Operations</a></p>
+<p><a href="#extension-alternate-assignment-operator">Extension: alternate assignment operator</a></p>
+</section>
+<section id="execute-your-code-the-environment-tab" class="level3" data-number="5.4">
+<h3 data-number="5.4" class="anchored" data-anchor-id="execute-your-code-the-environment-tab"><span class="header-section-number">5.4</span> Execute your code – the Environment tab</h3>
+<p>Click <strong><em>Source</em></strong> to execute your R code ( <a href="#fig-vdtScript" class="quarto-xref">Figure&nbsp;3</a> ).&nbsp; Your RStudio window should look similar to this:</p>
+<div id="fig-vdtScript" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-vdtScript-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-1-02_vdt_sourced.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-vdtScript-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Executing (sourcing) the velocity-distance-time script
+</figcaption>
+</figure>
+</div>
+<p>Notice that the <strong>Environment</strong> tab displays the values for the variables <strong><em>v</em></strong>, <strong><em>d</em></strong>, and <strong><em>t</em></strong>. The <strong><em>Environment</em></strong> tab displays every variable in your script and is a very useful tool for viewing the results of your script and for debugging when things go wrong..</p>
+<p>&nbsp;</p>
+<p>Try changing the values for <strong><em>d</em></strong> and <strong><em>t</em></strong> (lines 7 and 8) and click <strong><em>Source</em></strong> again to see how the values in the <strong>Environment</strong> tab change.</p>
+<section id="the-unexpected-end-of-document-error" class="level4" data-number="5.4.1">
+<h4 data-number="5.4.1" class="anchored" data-anchor-id="the-unexpected-end-of-document-error"><span class="header-section-number">5.4.1</span> The Unexpected end of document error</h4>
+<p>In <a href="#fig-vdtScript" class="quarto-xref">Figure&nbsp;3</a> there is a red <span class="hl">x</span> on the last line indicating an error. The error says <span class="hl">unexpected end of document</span>. This is not a real problem, it will not cause any issues with your script. It is a bug in how RStudio deals with semicolons. You can remove the last semicolon if you want to get rid of the error.</p>
+</section>
+</section>
+</section>
+<section id="re-assigning-values-to-variables" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="re-assigning-values-to-variables"><span class="header-section-number">6</span> Re-assigning values to variables</h2>
+<p>Variables get their namesake from the fact that their values can change.</p>
+<p>&nbsp;</p>
+<p>In the code below:</p>
+<ol type="1">
+<li><p><strong><em>d</em></strong> is assigned the value <strong><em>100</em></strong> in line 5</p></li>
+<li><p><strong><em>d</em></strong> to used to calculate <strong><em>v</em></strong> in line 7</p></li>
+<li><p><strong><em>d</em></strong> is assigned a new value of <strong><em>400</em></strong> in line 8</p></li>
+</ol>
+<p>&nbsp;</p>
+<p>Source the code below to see what happens</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>());    <span class="co"># Clear out the Environment    </span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># create three variables: d, t, and v</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># give d and t values and use them to calculate v</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>d <span class="ot">=</span> <span class="dv">100</span>;   <span class="co"># assign d the value 100</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>t <span class="ot">=</span> <span class="dv">20</span>;</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>v <span class="ot">=</span> d<span class="sc">/</span>t;   <span class="co"># use d to calculate v</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>d <span class="ot">=</span> <span class="dv">400</span>;   <span class="co"># re-assigns d to 400</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In the <strong>Environment</strong> tab the value of <strong><em>v</em></strong> remains <strong><em>5</em></strong> even though <strong><em>d</em></strong> changes.&nbsp;</p>
+<div id="fig-change_d" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-change_d-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-1-02_change_d.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-change_d-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Changing d in the script does not retroactively change v
+</figcaption>
+</figure>
+</div>
+<p>The value of <strong><em>v</em></strong> remains <strong><em>5</em></strong> because line <strong><em>7</em></strong> assigns the <span class="hl">current value</span>of <strong><em>d/t</em></strong> to <strong><em>v.</em></strong> But, as of line <strong>9</strong>, <strong><em>d</em></strong> is still equal to <strong>100</strong><em>. <strong>v</strong></em> does not get updated because one of the variables used to calculate it (in this case, <strong><em>d</em></strong>) changes afterwards. The script runs in order, and <span class="hl">variables are not updated retroactively.</span></p>
+<p>&nbsp;</p>
+<p>In other words, <strong><em>v</em></strong> will remain <strong><em>5</em></strong> until it is explicitly assigned another value.</p>
+<p>&nbsp;</p>
+<p><a href="#trap-assigning-nonexistent-variables">Trap: Assigning nonexistent variables</a></p>
+<section id="reassigning-values-to-a-variable" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="reassigning-values-to-a-variable"><span class="header-section-number">6.1</span> Reassigning values to a variable</h3>
+<p>What happens if you add the line&nbsp;<strong><em>v=d/t</em></strong> at the end of the script? Try the following code and click <strong><em>Source</em></strong></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>());    <span class="co"># Clear out the Environment    </span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># create three variables: d, t, and v</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># give d and t values and use them to calculate v</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>d <span class="ot">=</span> <span class="dv">100</span>; <span class="co"># assign d the value 100</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>t <span class="ot">=</span> <span class="dv">20</span>;</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>v <span class="ot">=</span> d<span class="sc">/</span>t; <span class="co"># use d to calculate v</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>d <span class="ot">=</span> <span class="dv">400</span>; <span class="co"># re-assigns d to 400</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>v <span class="ot">=</span> d<span class="sc">/</span>t; <span class="co"># re-assign v using the new value of d</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Notice that now the value of <strong><em>v</em></strong> has changed.&nbsp; This is because line 10 <span class="hl">assigns a new value</span> to <strong><em>v</em></strong> calculated using the value of <strong><em>d</em></strong> from line 9.</p>
+<div id="fig-reassign_v" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-reassign_v-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-1-02_reassign_v.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reassign_v-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: Assign a new value to v after assigning the new value to d
+</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="in-line-and-whole-line-comments" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="in-line-and-whole-line-comments"><span class="header-section-number">7</span> In-line and whole-line comments</h2>
+<p>The code in the previous script (<a href="#fig-reassign_v" class="quarto-xref">Figure&nbsp;5</a>) has examples of <span class="hl">whole-line comments</span> (lines 3 and 4) and <span class="hl">in-line comments</span> (lines 5, 7, 9, and 10 ).&nbsp; R ignores everything after the ( <strong><em>#</em></strong> ) but still executes everything on the line before the ( <strong><em>#</em></strong> ).&nbsp; In-line comments are a nice way to give a quick description of the code on a line, whereas whole-line comments are better for more robust descriptions – especially when code get complicated.</p>
+</section>
+<section id="naming-variables" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="naming-variables"><span class="header-section-number">8</span> Naming variables</h2>
+<p>The problem with variable names like <strong><em>v</em></strong>, <strong><em>d</em></strong>, and <strong><em>t</em></strong> is that they are not very descriptive.&nbsp; It is good programming practice to give names that are descriptive so that people reading your code can more easily understand what is going on.&nbsp;</p>
+<p>&nbsp;</p>
+<p>The first step would be to spell the variable names out, for example:&nbsp;<strong><em>velocity</em></strong>, <strong><em>distance</em></strong>, and <strong><em>time</em></strong>.</p>
+<p>&nbsp;</p>
+<p>However, a script solving for velocity will probably be calculating multiple velocities.&nbsp; Perhaps the script is calculating the velocity of both a runner and a car – the variable names should reflect this.&nbsp;</p>
+<section id="naming-rules" class="level3" data-number="8.1">
+<h3 data-number="8.1" class="anchored" data-anchor-id="naming-rules"><span class="header-section-number">8.1</span> Naming Rules</h3>
+<p>There are a few rules for naming a variable:</p>
+<ol type="1">
+<li><p>It must start with a letter</p></li>
+<li><p>It can only contain letters, numbers, or the underscore ( <strong>_</strong> )</p>
+<ul>
+<li>dots ( <strong><em>.</em></strong> ) are also accepted in R but dots are not accepted in most programming languages</li>
+<li>this means no spaces!</li>
+</ul></li>
+<li><p>There are system reserved words you cannot use as variable names (e.g., <strong>if</strong>, <strong>else</strong>, <strong><em>for</em></strong>, <strong>while</strong>, <strong>TRUE</strong>, <strong>FALSE</strong>, <strong>function</strong>, <strong>next</strong>…).&nbsp; We will learn what these reserved words mean in future lessons.</p></li>
+</ol>
+</section>
+<section id="naming-conventions" class="level3" data-number="8.2">
+<h3 data-number="8.2" class="anchored" data-anchor-id="naming-conventions"><span class="header-section-number">8.2</span> Naming Conventions</h3>
+<p>There are two common programming conventions for variables names:</p>
+<ol type="1">
+<li><p>Capitalize the first letter of every word except the first: <strong><em>runnerVelocity</em></strong>, <strong><em>runnerDistance</em></strong>, <strong><em>runnerTime</em></strong></p></li>
+<li><p>Put an underscore ( <strong>_</strong> ) between each word:&nbsp; <strong><em>runner_velocity, runner_distance, runner_time</em></strong></p></li>
+</ol>
+<p>&nbsp;</p>
+<p><a href="#trap-case-counts-in-variable-names">Trap: Case counts in variable names</a><br>
+&nbsp;</p>
+<p>For all your class work, you need to use these two conventions.&nbsp; I will use the first convention in most of my examples.</p>
+<p>&nbsp;</p>
+<p><span class="note">Note: R programmers often use dots in variable names: <strong><em>runner.velocity</em></strong>, <strong><em>runner.distance</em></strong>.&nbsp; I do not recommend this as this method will not work in most other programming languages.</span></p>
+</section>
+</section>
+<section id="application" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="application"><span class="header-section-number">9</span> Application</h2>
+<p>Two runners run a <strong>400</strong> meter race.&nbsp;</p>
+<p>The first runner takes <strong>127</strong> seconds, the second runner takes <strong>140</strong> seconds.</p>
+<p>&nbsp;</p>
+<p>Write a script that:</p>
+<ol type="1">
+<li><p>Calculates each runner’s speed in meters/second</p></li>
+<li><p>Calculates each runner’s speed in miles/hour</p>
+<ul>
+<li><p>3600 seconds = 1 hour</p></li>
+<li><p>1609 meters = 1 mile</p></li>
+</ul></li>
+</ol>
+<p>So, the script will calculate 4 velocities in all.</p>
+<p>&nbsp;</p>
+<p>Make sure you <span class="hl">use variables for all values</span> and follow proper variable naming convention.</p>
+<p>&nbsp;</p>
+<p>After your <strong><em>Source</em></strong> the script, make sure you can see all of the variables, with the correct answer, in the <strong><em>Environment</em></strong> tab.</p>
+<p>&nbsp;</p>
+<p>Save the script as&nbsp;<strong><em>app1-02.r</em></strong> in your&nbsp;<strong><em>scripts</em></strong> folder and&nbsp; email your Project Folder to Charlie Belinsky at belinsky@msu.edu.</p>
+<p>&nbsp;</p>
+<p><a href="1-01-RStudioProjectsSetup.html#sec-zip-folder" target="_blank">Instructions for zipping the Project Folder are here.</a></p>
+<p>&nbsp;</p>
+<p>If you have any questions regarding this application, feel free to email them to Charlie Belinsky at belinsky@msu.edu.</p>
+<section id="questions-to-answer" class="level3" data-number="9.1">
+<h3 data-number="9.1" class="anchored" data-anchor-id="questions-to-answer"><span class="header-section-number">9.1</span> Questions to answer</h3>
+<p>Answer the following in comments inside your application script:</p>
+<ol type="1">
+<li><p>What was your level of comfort with the lesson/application?</p></li>
+<li><p>What areas of the lesson/application confused or still confuses you?</p></li>
+<li><p>What are some things you would like to know more about that is related to, but not covered in, this lesson?</p></li>
+</ol>
+</section>
+<section id="challenge" class="level3" data-number="9.2">
+<h3 data-number="9.2" class="anchored" data-anchor-id="challenge"><span class="header-section-number">9.2</span> Challenge</h3>
+<p>Use random values for the times instead of 127 and 140.&nbsp; The easiest way to get a random number in R is to use the <strong><em>sample()</em></strong> function:</p>
+<p>&nbsp;</p>
+<p>Examples:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>randomNum1 <span class="ot">=</span> <span class="fu">sample</span>(<span class="at">x=</span><span class="dv">10</span><span class="sc">:</span><span class="dv">20</span>, <span class="at">size=</span><span class="dv">1</span>);  <span class="co"># number between 10 and 20 (inclusive)</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>randomNum2 <span class="ot">=</span> <span class="fu">sample</span>(<span class="at">x=</span><span class="sc">-</span><span class="dv">5</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">size=</span><span class="dv">1</span>);   <span class="co"># number between -5 and 5 (inclusive)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="trap-assignment-vs.-equality-operations" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="trap-assignment-vs.-equality-operations"><span class="header-section-number">10</span> Trap: Assignment vs.&nbsp;Equality Operations</h2>
+<p>The equal sign ( <strong><em>=</em></strong> ) plays a different role in programming than in Algebra.</p>
+<p>&nbsp;</p>
+<p>In algebra, the equal sign is an <span class="hl">equality operator</span> saying that the two sides are equivalent to each other.</p>
+<ul>
+<li><p>So, in algebra, <strong><em>v = d/t</em></strong> says that <strong><em>v</em></strong> <em>is</em> <span class="hl">equivalent</span> <em>to <strong>d</strong></em> divided by <strong><em>t</em></strong></p></li>
+<li><p>The algebraic variable <strong><em>v</em></strong> will change if <strong><em>d</em></strong> or <strong><em>t</em></strong> changes</p></li>
+</ul>
+<p>&nbsp;</p>
+<p>In programming, the equals sign is an <span class="hl">assignment operator</span> and it says that the variable on the left side will be assigned the value calculated on the right side.</p>
+<ul>
+<li><p>So, in programming, <strong><em>v = d/t</em></strong> says that <strong><em>v</em></strong> will be <span class="hl">assigned</span> the calculation of&nbsp; <strong><em>d</em></strong> divided by <strong><em>t</em></strong></p></li>
+<li><p>In this case,&nbsp;<strong><em>v</em></strong> will not change if <strong><em>d</em></strong> or <strong><em>t</em></strong> changes (unless <strong><em>v</em></strong> is explicitly <span class="hl">reassigned</span> after <strong><em>d</em></strong> or <strong><em>t</em></strong> changes).&nbsp; Once assigned, the value of <strong><em>v</em></strong> is independent of the variables used in the calculations.</p></li>
+</ul>
+<section id="treating-the-equal-sign-as-an-equality-operation" class="level3" data-number="10.1">
+<h3 data-number="10.1" class="anchored" data-anchor-id="treating-the-equal-sign-as-an-equality-operation"><span class="header-section-number">10.1</span> Treating the equal sign as an equality operation</h3>
+<p>A very common error in programming is to treat the assignment operator ( <strong><em>=</em></strong>) as an equality operator.</p>
+<p>&nbsp;</p>
+<p>The following statements make sense in algebra as equality statements&nbsp;but will cause errors in R.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># d/2 is not a valid variable, you cannot "assign" a value to "d/2"</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># d = 100*2 is valid</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>d<span class="sc">/</span><span class="dv">2</span> <span class="ot">=</span> <span class="dv">100</span>; </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 20 cannot be assigned the value of 't' </span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># t = 20 is valid</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="dv">20</span> <span class="ot">=</span> t;  </span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co"># d/t is not a valid variable </span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># v = d/t is valid</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>d<span class="sc">/</span>t <span class="ot">=</span> v;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Put the above lines of code in your script individually.&nbsp; You will notice an error message gets displayed in the <strong>Console</strong> tab.&nbsp; The error messages are often unintuitive.</p>
+<p>&nbsp;</p>
+<p>In the following example (<a href="#fig-assignmentError" class="quarto-xref">Figure&nbsp;6</a>), line 9 contains an error and the lines below it never gets executed:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>());</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># this code sometimes gives the line number of an error</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">show.error.locations =</span> <span class="cn">TRUE</span>);  </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># create three variables: d, t, and v</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"># give d and t values and use them to calculate v</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>d <span class="ot">=</span> <span class="dv">100</span>;</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="dv">20</span> <span class="ot">=</span> t;   <span class="co"># error!</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>v <span class="ot">=</span> d<span class="sc">/</span>t;  <span class="co"># this line will not be executed</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-assignmentError" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-assignmentError-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-1-02_error-assign.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-assignmentError-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: Assignment error in the R Script
+</figcaption>
+</figure>
+</div>
+<p>Notice that the execution of the script stops as soon as an error occurs – so, in this case, line <strong>10</strong>, which calculates <strong><em>v</em></strong>, never gets executed.</p>
+</section>
+</section>
+<section id="trap-constant-variables-in-r" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="trap-constant-variables-in-r"><span class="header-section-number">11</span> Trap: Constant variables in R</h2>
+<p>There are mathematical constants like <strong><em>π</em></strong> that should never change, and R has a predefined variable named <strong><em>pi</em></strong> that is equal to <strong><em>3.1415</em></strong>.&nbsp; In other words, there is a storage location in R referred to as <strong><em>pi</em></strong> that contains the numeric value <strong><em>3.1415</em></strong>. The problem is that pi is technically a variable in R and can be changed.</p>
+<p>&nbsp;</p>
+<p>Source the following code in a new script file:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>());</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>a <span class="ot">=</span> pi;  <span class="co"># pi is a predefined constant in R</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>pi <span class="ot">=</span> <span class="dv">3</span>;  <span class="co"># But, R let's you reassign a value to pi</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>b <span class="ot">=</span> pi;  <span class="co"># And now there is going to be a problem</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>And you will see that you can reassign the value of <strong><em>pi</em></strong> in R. Most programming langauges will give an error if you tried to do this.</p>
+</section>
+<section id="trap-assigning-nonexistent-variables" class="level2" data-number="12">
+<h2 data-number="12" class="anchored" data-anchor-id="trap-assigning-nonexistent-variables"><span class="header-section-number">12</span> Trap: Assigning nonexistent variables</h2>
+<p>The first time you assign a value to a variable, a storage container is created in memory and a value is put in it.&nbsp; We call this a declaration (more about declarations later). After a variable has been declared, it can be used in calculations and re-assigned values.&nbsp; Before a variable is declared, R knows nothing about the variable.</p>
+<p>&nbsp;</p>
+<p>Here is an example of using a variable before it is declared.&nbsp;<span class="note">Note: the only change in this script was moving the line <strong><em>v=d/t</em></strong> before the declaration of <strong><em>d</em></strong> and <strong><em>t:</em></strong></span></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>());             </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># gives the line number of the error</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">show.error.locations =</span> <span class="cn">TRUE</span>);</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># create three variables: d, t, and v</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co"># give d and t values and use them to calculate v</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>v <span class="ot">=</span> d<span class="sc">/</span>t;   <span class="co"># error, d and t have not been declared</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>d <span class="ot">=</span> <span class="dv">100</span>; </span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>t <span class="ot">=</span> <span class="dv">20</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you Source this code in a new script file, you will get an error in the <strong>Console</strong> tab that says <span class="hl">object ‘d’ not found</span>. The reason for this error is that, on line 7, the script is asked to assign the calculation <strong><em>d/t</em></strong> to the variable <strong><em>v</em></strong> but&nbsp;<strong>d</strong> and <strong>t</strong> do not exist yet.</p>
+<p>&nbsp;</p>
+<p>Try the following code and see how the error changes. <span class="note">Notice in this code <strong><em>v=d/t</em></strong> is after the declaration of <strong><em>d</em></strong> but before the declaration of <strong><em>t</em></strong>.</span></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>());             </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># gives the line number of the error</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">show.error.locations =</span> <span class="cn">TRUE</span>);</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># create three variables: d, t, and v</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># give d and t values and use them to calculate v</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>d <span class="ot">=</span> <span class="dv">100</span>;</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>v <span class="ot">=</span> d<span class="sc">/</span>t;  <span class="co"># error</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>t <span class="ot">=</span> <span class="dv">20</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="trap-case-counts-in-variable-names" class="level2" data-number="13">
+<h2 data-number="13" class="anchored" data-anchor-id="trap-case-counts-in-variable-names"><span class="header-section-number">13</span> Trap: Case counts in variable names</h2>
+<p>In R, as in most scripting languages, uppercase and lowercase letters are seen as different.&nbsp; So, <strong><em>runnersTime</em></strong> and <strong><em>runnerstime</em></strong> are seen by R as two different variable names.&nbsp; If the case is not correct, then you will receive an <span class="hl">Object not found</span> error just like you would if you spelled the variable name wrong.</p>
+</section>
+<section id="extension-alternate-assignment-operator" class="level2" data-number="14">
+<h2 data-number="14" class="anchored" data-anchor-id="extension-alternate-assignment-operator"><span class="header-section-number">14</span> Extension: alternate assignment operator</h2>
+<p>In R, there are two assignment operators, the equal sign ( <strong><em>=</em></strong> ) and the arrow ( <strong><em>&lt;-</em></strong> ).&nbsp;</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>());    <span class="co"># Clear out the Environment  </span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="dv">100</span>;   <span class="co"># same as d = 100</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="dv">20</span>;    <span class="co"># same as t = 20</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>v <span class="ot">&lt;-</span> d<span class="sc">/</span>t;   <span class="co"># same = d/t</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You will see a lot of R programs written using the arrow.&nbsp; In this class, I will use the equal sign because that is the standard for most other programming languages (including JavaScript and C) and it is easier to type.&nbsp; You can use either operator in your scripts in this class.</p>
+<p>&nbsp;</p>
+<p>For assigning values to a variable, ( <strong><em>&lt;-</em></strong> ) and ( <strong>=</strong> ) are functionally equivalent. There is a difference between the two operators when working with functions, which we will cover when we get to function.</p>
+</section>
+<section id="extension-why-clear-the-environment-tab" class="level2" data-number="15">
+<h2 data-number="15" class="anchored" data-anchor-id="extension-why-clear-the-environment-tab"><span class="header-section-number">15</span> Extension: Why clear the Environment tab?</h2>
+<p>This is kind of an advanced topic but there are many people who come to this class having already done some R programming and it is most likely they never clear the Environment when running scripts. This means that variables are persistent and will still be around when another script is executed.</p>
+<p>&nbsp;</p>
+<p>This, in general, is a bad programming practice, which I will talk more about in future lessons. If a script needs a variable from another script then you want the first script to call the second script. This kind of explicit programming makes sharing and debugging your scripts a lot easier.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
