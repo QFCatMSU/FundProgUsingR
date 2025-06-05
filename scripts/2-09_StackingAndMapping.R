@@ -96,15 +96,6 @@
     theme_bw();
   plot(plot5);  
   
-  # Create side-by-side boxplots for Jan2011 and Jan2012
-  boxplot(lansJanTempsDF$Jan2011, lansJanTempsDF$Jan2012,
-          names = c(2011, 2012),       # X-axis labels (quotes do not matter...)
-          main = "",                       # No main title
-          xlab = "",                       # No x-axis label
-          ylab = "",                       # No y-axis label
-          col = "lightgray",               # Box fill color
-          border = "black")                # Border color
-  
   ## Boxplot -- give a discrete (string) value to the x mapping 
   plot6 = ggplot(data=lansJanTempsDF) +
     geom_boxplot(mapping=aes(x="2011", y=Jan2011)) +
