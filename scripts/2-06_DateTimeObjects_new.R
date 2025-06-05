@@ -1,4 +1,4 @@
-rm(list=ls());  options(show.error.locations = TRUE);
+rm(list=ls());
 
 #### Get date and datetime data from csv file
 dateTimeData = read.csv("data/dateTimeData.csv");

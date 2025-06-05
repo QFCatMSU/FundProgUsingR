@@ -34,23 +34,6 @@
     theme_bw();
   plot(plot1);
   
-  # Set up a blank plot with appropriate axes
-  plot(1:31, lansJanTempsDF$Jan2011,
-       type = "n",                      # Don't plot points yet
-       main = "January Temperature",
-       sub = "Lansing, MI -- 2011-2016",
-       xlab = "January Days",
-       ylab = "temperature (F)")
-  
-  # Add lines for each year with specified colors
-  lines(1:31, lansJanTempsDF$Jan2011, col = "red")
-  lines(1:31, lansJanTempsDF$Jan2012, col = "green")
-  lines(1:31, lansJanTempsDF$Jan2013, col = "orange")
-  lines(1:31, lansJanTempsDF$Jan2014, col = "blue")
-  lines(1:31, lansJanTempsDF$Jan2015, col = "purple")
-  lines(1:31, lansJanTempsDF$Jan2016, col = "black")
-  
-  
   ## A line plot that includes a legend --
   ## Legends are included whenever you map something other than x or y
   plot2 = ggplot( data=(lansJanTempsDF), 
@@ -71,30 +54,6 @@
     theme_bw();
   plot(plot2);
   
-  # Set up a blank plot with appropriate axes
-  plot(1:31, lansJanTempsDF$Jan2011,
-       type = "n",                      # Don't plot points yet
-       main = "January Temperature",
-       sub = "Lansing, MI -- 2011-2016",
-       xlab = "January Days",
-       ylab = "temperature (F)")
-  
-  # Add lines for each year with specified colors
-  lines(1:31, lansJanTempsDF$Jan2011, col = "red")
-  lines(1:31, lansJanTempsDF$Jan2012, col = "green")
-  lines(1:31, lansJanTempsDF$Jan2013, col = "orange")
-  lines(1:31, lansJanTempsDF$Jan2014, col = "blue")
-  lines(1:31, lansJanTempsDF$Jan2015, col = "purple")
-  lines(1:31, lansJanTempsDF$Jan2016, col = "black")
-  
-  # Add a legend
-  legend("topright",                             # Position
-         legend = c("2011", "2012", "2013", "2014", "2015", "2016"),
-         col = c("red", "green", "orange", "blue", "purple", "black"),
-         lty = 1,                                 # Line type
-         cex = 0.8,                               # Text size
-         title = "Years")
-  
   ## Another plotting solution -- stack the data frame
   stackedDF = stack(lansJanTempsDF);  
   
@@ -109,36 +68,6 @@
           y = "temperature (F)") +
     theme_bw();
   plot(plot3);
-  
-  # Set up blank plot area
-  plot(1:31, stackedDF$values[1:31],  # Use first chunk to define axis limits
-       type = "n",                    # No actual points yet
-       main = "January Temperature",
-       sub = "Lansing, MI -- 2011-2016",
-       xlab = "January Days",
-       ylab = "temperature (F)")
-  
-  # Define colors for each group
-  colors <- c("red", "green", "orange", "blue", "purple", "black")
-  
-  # Loop through each group in stackedDF$ind
-  unique_years <- unique(stackedDF$ind)
-  
-  for (i in seq_along(unique_years)) {
-    # Get the subset of data for this group
-    group_data <- stackedDF$values[stackedDF$ind == unique_years[i]]
-    
-    # Draw the line for this group
-    lines(1:31, group_data, col = colors[i])
-  }
-  
-  # Add legend
-  legend("topright",
-         legend = unique_years,
-         col = colors,
-         lty = 1,
-         cex = 0.8,
-         title = "Years")
   
   ## Most robust method -- use for loops to plot each column
   plot4 = ggplot( data=(lansJanTempsDF));  # create a canvas
@@ -188,15 +117,6 @@
     geom_boxplot(mapping=aes(x=ind, y=values)) +
     theme_bw();
   plot(plot7);    
-
-  # Boxplot of values grouped by ind
-  boxplot(values ~ ind,
-          data = stackedDF,
-          main = "",                # No main title
-          xlab = "",                # No x-axis label
-          ylab = "",                # No y-axis label
-          col = "lightgray",        # Box fill color
-          border = "black")         # Border color
   
   #### Create stacked dataframe that are subsetted
   stackedDF2 = stack(lansJanTempsDF[,c(3,6)]);
@@ -207,15 +127,6 @@
     geom_boxplot(mapping=aes(x=ind, y=values)) +
     theme_bw();
   plot(plot8);
-
-  # Boxplot of values grouped by ind
-  boxplot(values ~ ind,
-          data = stackedDF3,
-          main = "",                # No main title
-          xlab = "",                # No x-axis label
-          ylab = "",                # No y-axis label
-          col = "lightgray",        # Box fill color
-          border = "black")         # Border color
   
   ### Creating the boxplot using the original data frame and for loops 
   plot9 = ggplot( data=(lansJanTempsDF)); 
@@ -228,17 +139,6 @@
   plot9 = plot9 + theme_bw();
   plot(plot9);
   
-  # Select the columns you want to plot
-  selected_cols <- lansJanTempsDF[, c(1, 2, 5, 6)]
-  
-  # Create the boxplot
-  boxplot(selected_cols,
-          names = colnames(selected_cols),  # Use column names as x labels
-          main = "",                        # No main title
-          xlab = "",                        # No x-axis label
-          ylab = "",                        # No y-axis label
-          col = "lightgray",                # Box fill color
-          border = "black")                 # Border color
   
   ## Create a list of the four different data frames in this lesson
   ## The format inside list() is:  "name_of_object" = object

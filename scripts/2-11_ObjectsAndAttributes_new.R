@@ -1,4 +1,4 @@
-rm(list=ls());  options(show.error.locations = TRUE);
+rm(list=ls()); 
 
 ### A numeric vector with one value
 temperature = 80;  # a vector, temperature, with one value, 80

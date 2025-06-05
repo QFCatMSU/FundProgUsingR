@@ -45,8 +45,6 @@ plot1 = ggplot(data=weatherData) +
   theme_bw();
 plot(plot1);
 
-
-
 ### Create a subset of weatherData that contain the first 10 rows rows
 subset1 = weatherData[1:10,];
 ### Create a subset of weatherData that contain just the 8 high precip rows
@@ -62,14 +60,6 @@ plot2 = ggplot(data=subset2) + # could also use weatherData[daysHighPrecip]
   theme_bw();
 plot(plot2);
 
-# Create blank plot first (no points)
-plot(x = subset2$avgTemp,
-     y = subset2$relHum,
-     main = "Humidity vs Temperature\nLansing, MI -- 2016",
-     xlab = "Average Temperatures (Fahrenheit)", 
-     ylab = "Relative Humidity")
-
-
 plot3 = ggplot() +
   geom_point( mapping=aes(x=weatherData$avgTemp[daysHighPrecip],
                           y=weatherData$relHum[daysHighPrecip]),
@@ -80,13 +70,6 @@ plot3 = ggplot() +
         y = "Humidity (%)") +
   theme_bw();
 plot(plot3);
-
-# Create blank plot first (no points)
-plot(x = weatherData$avgTemp[daysHighPrecip],
-     y = weatherData$relHum[daysHighPrecip],
-     main = "Humidity vs Temperature\nLansing, MI -- 2016",
-     xlab = "Average Temperatures (Fahrenheit)", 
-     ylab = "Relative Humidity")
 
 ### Explicit manual mapping:
 plot4 = ggplot() +

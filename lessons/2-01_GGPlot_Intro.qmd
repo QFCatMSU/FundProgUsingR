@@ -1,5 +1,5 @@
 ---
-title: "2-01: R-Base Plots"
+title: "2-01: GGPlot Introduction"
 short: "2-01"
 # special characters for highlighting code : «»
 ---
@@ -14,7 +14,7 @@ short: "2-01"
 
 ### Code for the lesson
 
-The [script for this lesson](../scripts/2-01_RBase_Plots.R) is here (right-click, Save link as)
+The [script for this lesson](../scripts/2-01_GGPlot_Intro_new.R) is here (right-click, Save link as)
 
 The [Lansing2016Noaa.csv](../data/Lansing2016Noaa.csv) is here (left-click)
 
@@ -24,15 +24,14 @@ We are going to use the GGPlot2 package so we need to add the GGPlot library to 
 
 ``` r
 rm(list=ls());                         # clear the Environment tab
-options(show.error.locations = TRUE);  # show line numbers on error
 library(package=ggplot2);              # include all GGPlot2 functions
 ```
 
-This line gives your script access to all of the functions in the GGPlot2 package. This package is technically the third version of GGPlot -- but no one uses the first two versions (ggplot and ggplot1) anymore.
+The second line gives your script access to all of the functions in the GGPlot2 package. [Note: ggplot2 is technically the third version of GGPlot -- but no one uses the first two versions (ggplot and ggplot1) anymore.]{.note}
 
 ## GGPlot components and subcomponents {#sec-components}
 
-For many years, RBase was the main plotting tool in R and it was based somewhat on the metaphor of drawing on a transparency. GGPlot is based more on a building metaphor.
+For many years, RBase was the main plotting tool in R and it was loosely based on the metaphor of drawing on a transparency. GGPlot is based more on a building metaphor.
 
  
 
@@ -82,14 +81,18 @@ The code to create a scatterplot using GGPlot is:
 
 ### Taking out argument names
 
-Below, I highlight the argument names in the code (which, in GGPlot, are the subcomponents):
+Below, the argument names are highlighted:
 
+::: {#fig-argumentName}
 ``` r
   #### Part 1: Create a scatterplot ####
-  plot1 = ggplot( data=weatherData ) +
-          geom_point( mapping=aes(x=avgTemp, y=relHum) );
+  plot1 = ggplot( «data»=weatherData ) +
+          geom_point( «mapping»=aes(«x»=avgTemp, «y»=relHum) );
   plot(plot1);
 ```
+
+Argument names used in ggplot call
+:::
 
 We can remove the argument name and the script will execute exactly the same (i.e., the same plot will be rendered):
 
@@ -119,7 +122,7 @@ In this class, [we will (almost always) use argument names]{.hl} because using a
 The one exception where we will not use argument names is:
 
 ``` r
-plot(plotData)   # no argument name used here
+plot(plotData)   # no argument name used here
 ```
 
 instead of
@@ -132,7 +135,7 @@ There are multiple functions in R and GGPlot where the argument name ***x*** is 
 
  
 
-We will use the argument name ***x*** only when ***x*** refers to an axis (***x=avgTemp***) but not when ***x*** is a generic first-argument name (***x=plotData***).
+We will use the argument name ***x*** when ***x*** refers to an axis (e.g., ***x=avgTemp***) but not when ***x*** is a generic first-argument name (e.g., ***x=plotData***) as shown in @fig-argumentName.
 
 ## Components of a GGPlot
 
@@ -335,7 +338,7 @@ The default GGplot theme, which uses the gray background is not one of my favori
           y = "Relative Humidity") +
     scale_x_continuous( breaks = seq(from=10, to=80, by=10) ) +
     «theme( axis.text.x=element_text(angle=90, vjust=0.5) )» +
-    «theme_bw();  # this complete theme change will remove the theme change» above
+    «theme_bw()»;  # this complete theme change will remove the theme change above
   plot(plot5);
 ```
 

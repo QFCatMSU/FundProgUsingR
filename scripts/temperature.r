@@ -130,8 +130,8 @@ tempCategory5 = function(tempVector, unit="F")
   }
   else if(unit == "K")
   {
-    tempValue = tempValue - 273;      # convert K to C
-    tempValue = (9/5)*tempValue + 32; # convert C to F
+    tempVector = tempVector - 273;      # convert K to C
+    tempVector = (9/5)*tempVector + 32; # convert C to F
   }
   
   # step 1: create a return vector

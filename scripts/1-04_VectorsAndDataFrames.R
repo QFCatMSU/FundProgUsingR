@@ -1,6 +1,6 @@
 rm(list=ls());        # clear out the Environment  
 
-# create 5 separate variables for 5 tempperature values
+# create 5 separate variables for 5 temperature values
 tempHigh1 = 65;
 tempHigh2 = 57;
 tempHigh3 = 61;

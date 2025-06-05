@@ -1,5 +1,4 @@
 rm(list=ls());  # cleans out the Environment every time the code is executed
-options(show.error.locations = TRUE);  # show the line number of errors in the Console
 library(package=ggplot2);
 
 ages = c(25,47,13,59,76,33,45);

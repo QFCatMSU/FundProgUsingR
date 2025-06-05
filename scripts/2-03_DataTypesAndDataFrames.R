@@ -90,29 +90,6 @@
           y = "Precipitation (inches)") +
     theme_bw();
   plot(plot1);
-
-  # NAs introduced by coercion... (NA values not plotted)
-  plot(x=1:nrow(weatherData),  # 366
-       y=weatherData$precip,
-    #   type = "n",  # don't draw points
-       main = "Humidity vs Temperature\nLansing, MI -- 2016",
-       col.main = "red",
-       xlab = "Average Temperatures (Fahrenheit)", 
-       ylab = "Relative Humidity",
-       col.lab="green",
-       xaxt = 'n');
-  
-  # 
-  plot(x=1:nrow(weatherData),  # 366
-       y=weatherData$precipNum,
-       #   type = "n",  # don't draw points
-       main = "Humidity vs Temperature\nLansing, MI -- 2016",
-       col.main = "red",
-       xlab = "Average Temperatures (Fahrenheit)", 
-       ylab = "Relative Humidity",
-       col.lab="green",
-       xaxt = 'n');
-  
   
   ## Scatterplot using the precip column with chr values --
   #  This lists every precip value with T at top since T is > all #s)

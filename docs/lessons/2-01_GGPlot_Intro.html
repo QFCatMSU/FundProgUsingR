@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.28">
+<meta name="generator" content="quarto-1.7.31">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>2-01: R-Base Plots</title>
+<title>2-01: GGPlot Introduction</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -71,7 +71,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-b719d3d4935f2b08311a76135e2bf442.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-c5e6fd5a646752829aeb2af341632313.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -102,7 +102,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-<link rel="shortcut icon" href="https://qfcatmsu.github.io/assets/quarto/qfc_icon.png">
+<link rel="shortcut icon" href="https://qfcatmsu.github.io/assets/images/qfc_icon.png">
 <script>mod=true; menuCollapse=true;</script>
 <script src="https://qfcatmsu.github.io/assets/quarto/qfc_styles.js"></script>
  
@@ -121,7 +121,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-          <h1 class="quarto-secondary-nav-title">2-01: R-Base Plots</h1>
+          <h1 class="quarto-secondary-nav-title">2-01: GGPlot Introduction</h1>
         </a>     
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
@@ -267,8 +267,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../lessons/2-01_R-Base_Plots.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">2-01: R-Base Plots</span></a>
+  <a href="../lessons/2-01_GGPlot_Intro.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">2-01: GGPlot Introduction</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -399,7 +399,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">2-01: R-Base Plots</h1>
+<h1 class="title d-none d-lg-block">2-01: GGPlot Introduction</h1>
 </div>
 
 
@@ -425,7 +425,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <section id="code-for-the-lesson" class="level3" data-number="1.1">
 <h3 data-number="1.1" class="anchored" data-anchor-id="code-for-the-lesson"><span class="header-section-number">1.1</span> Code for the lesson</h3>
-<p>The <a href="../scripts/2-01_RBase_Plots.R">script for this lesson</a> is here (right-click, Save link as)</p>
+<p>The <a href="../scripts/2-01_GGPlot_Intro_new.R">script for this lesson</a> is here (right-click, Save link as)</p>
 <p>The <a href="../data/Lansing2016Noaa.csv">Lansing2016Noaa.csv</a> is here (left-click)</p>
 </section>
 </section>
@@ -433,13 +433,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="2" class="anchored" data-anchor-id="ggplot-package"><span class="header-section-number">2</span> GGPlot package</h2>
 <p>We are going to use the GGPlot2 package so we need to add the GGPlot library to the script.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>());                         <span class="co"># clear the Environment tab</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">show.error.locations =</span> <span class="cn">TRUE</span>);  <span class="co"># show line numbers on error</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="at">package=</span>ggplot2);              <span class="co"># include all GGPlot2 functions</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>This line gives your script access to all of the functions in the GGPlot2 package. This package is technically the third version of GGPlot – but no one uses the first two versions (ggplot and ggplot1) anymore.</p>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="at">package=</span>ggplot2);              <span class="co"># include all GGPlot2 functions</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The second line gives your script access to all of the functions in the GGPlot2 package. <span class="note">Note: ggplot2 is technically the third version of GGPlot – but no one uses the first two versions (ggplot and ggplot1) anymore.</span></p>
 </section>
 <section id="sec-components" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="sec-components"><span class="header-section-number">3</span> GGPlot components and subcomponents</h2>
-<p>For many years, RBase was the main plotting tool in R and it was based somewhat on the metaphor of drawing on a transparency. GGPlot is based more on a building metaphor.</p>
+<p>For many years, RBase was the main plotting tool in R and it was loosely based on the metaphor of drawing on a transparency. GGPlot is based more on a building metaphor.</p>
 <p>&nbsp;</p>
 <p>The full list of functions in the GGPlot package is here:</p>
 <p><a href="https://ggplot2.tidyverse.org/reference/" class="uri">https://ggplot2.tidyverse.org/reference/</a></p>
@@ -476,11 +475,20 @@ Figure&nbsp;1: Our first plot using GGPlot – note that the x and y-axis labels
 </div>
 <section id="taking-out-argument-names" class="level3" data-number="4.1">
 <h3 data-number="4.1" class="anchored" data-anchor-id="taking-out-argument-names"><span class="header-section-number">4.1</span> Taking out argument names</h3>
-<p>Below, I highlight the argument names in the code (which, in GGPlot, are the subcomponents):</p>
+<p>Below, the argument names are highlighted:</p>
+<div id="fig-argumentName" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-argumentName-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>  <span class="do">#### Part 1: Create a scatterplot ####</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  plot1 <span class="ot">=</span> <span class="fu">ggplot</span>( <span class="at">data=</span>weatherData ) <span class="sc">+</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>          <span class="fu">geom_point</span>( <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>avgTemp, <span class="at">y=</span>relHum) );</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  plot1 <span class="ot">=</span> <span class="fu">ggplot</span>( «data»<span class="ot">=</span>weatherData ) <span class="sc">+</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>          <span class="fu">geom_point</span>( «mapping»<span class="ot">=</span><span class="fu">aes</span>(«x»<span class="ot">=</span>avgTemp, «y»<span class="ot">=</span>relHum) );</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(plot1);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-argumentName-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Argument names used in ggplot call
+</figcaption>
+</figure>
+</div>
 <p>We can remove the argument name and the script will execute exactly the same (i.e., the same plot will be rendered):</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>  <span class="do">#### Part 2: Same scatterplot without argument names ####</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  plot2 <span class="ot">=</span> <span class="fu">ggplot</span>( weatherData ) <span class="sc">+</span></span>
@@ -499,12 +507,12 @@ Figure&nbsp;1: Our first plot using GGPlot – note that the x and y-axis labels
 </ul>
 <p>&nbsp;</p>
 <p>The one exception where we will not use argument names is:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(plotData)&nbsp;&nbsp; <span class="co"># no argument name used here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(plotData)   <span class="co"># no argument name used here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>instead of</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">x=</span>plotData) <span class="co"># x is the argument name</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>There are multiple functions in R and GGPlot where the argument name <strong><em>x</em></strong> is used generically as the name for the first argument in a function.&nbsp; This is not intuitive when plotting because <strong><em>x</em></strong> is also used to refer to data that goes on the x-axis.</p>
 <p>&nbsp;</p>
-<p>We will use the argument name <strong><em>x</em></strong> only when <strong><em>x</em></strong> refers to an axis (<strong><em>x=avgTemp</em></strong>) but not when <strong><em>x</em></strong> is a generic first-argument name (<strong><em>x=plotData</em></strong>).</p>
+<p>We will use the argument name <strong><em>x</em></strong> when <strong><em>x</em></strong> refers to an axis (e.g., <strong><em>x=avgTemp</em></strong>) but not when <strong><em>x</em></strong> is a generic first-argument name (e.g., <strong><em>x=plotData</em></strong>) as shown in <a href="#fig-argumentName" class="quarto-xref">Figure&nbsp;2</a>.</p>
 </section>
 </section>
 <section id="components-of-a-ggplot" class="level2" data-number="5">
@@ -582,7 +590,7 @@ Figure&nbsp;1: Our first plot using GGPlot – note that the x and y-axis labels
 <img src="images/GGP-1-01-Components.png" class="fs img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-scatterplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Scatterplot with a few added components
+Figure&nbsp;3: Scatterplot with a few added components
 </figcaption>
 </figure>
 </div>
@@ -592,7 +600,7 @@ Figure&nbsp;2: Scatterplot with a few added components
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">subtitle=</span><span class="st">"Lansing, MI -- 2016"</span>,</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">x =</span> <span class="st">"Average Temperatures (Fahrenheit)"</span>,</span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">y =</span> <span class="st">"Relative Humidity"</span>) <span class="sc">+</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>When we search in the <strong><em>Help</em></strong> tab for <strong><em>labs()</em></strong> (<a href="#fig-help" class="quarto-xref">Figure&nbsp;3</a>) we see that it has many subcomponents (or arguments) that can be changed including:</p>
+<p>When we search in the <strong><em>Help</em></strong> tab for <strong><em>labs()</em></strong> (<a href="#fig-help" class="quarto-xref">Figure&nbsp;4</a>) we see that it has many subcomponents (or arguments) that can be changed including:</p>
 <ul>
 <li><p><strong><em>label</em></strong>: the title</p></li>
 <li><p><strong><em>subtitle</em></strong>: a secondary title</p></li>
@@ -609,12 +617,12 @@ Figure&nbsp;2: Scatterplot with a few added components
 <img src="images/GGP-1-01-labs.png" class="fs img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-help-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: &nbsp;Using the Help tab in RStudio to find info about GGPlot components
+Figure&nbsp;4: &nbsp;Using the Help tab in RStudio to find info about GGPlot components
 </figcaption>
 </figure>
 </div>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scale_x_continuous</span>( <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">10</span>, <span class="at">to=</span><span class="dv">80</span>, <span class="at">by=</span><span class="dv">10</span>) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><strong><em>scale_x_continuous()</em></strong> is the component used when you want to modify an x-axis that has continuous values. There are many subcomponents (<a href="#fig-scale_x_cont" class="quarto-xref">Figure&nbsp;4</a>) that can be changed in <strong><em>scale_x_continuous()</em></strong> and the corresponding <strong><em>scale_y_continuous()</em></strong>.&nbsp; We modified one subcomponent, <em><strong>breaks</strong>,</em> by setting it to a sequence from <strong>10</strong> to <strong><em>8</em>0</strong> with numeric values place at intervals of <strong>10</strong>.</p>
+<p><strong><em>scale_x_continuous()</em></strong> is the component used when you want to modify an x-axis that has continuous values. There are many subcomponents (<a href="#fig-scale_x_cont" class="quarto-xref">Figure&nbsp;5</a>) that can be changed in <strong><em>scale_x_continuous()</em></strong> and the corresponding <strong><em>scale_y_continuous()</em></strong>.&nbsp; We modified one subcomponent, <em><strong>breaks</strong>,</em> by setting it to a sequence from <strong>10</strong> to <strong><em>8</em>0</strong> with numeric values place at intervals of <strong>10</strong>.</p>
 <p>&nbsp;&nbsp;</p>
 <p><span class="note">note: <strong><em>scale_x_discrete()</em></strong> is used to modify an x-axis with discrete values.&nbsp;&nbsp;</span></p>
 <div id="fig-scale_x_cont" class="fs quarto-float quarto-figure quarto-figure-left anchored">
@@ -623,7 +631,7 @@ Figure&nbsp;3: &nbsp;Using the Help tab in RStudio to find info about GGPlot com
 <img src="images/GGP-01-02-ScaleYCont.PNG" class="fs img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-scale_x_cont-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4: scale_x_continuous help page
+Figure&nbsp;5: scale_x_continuous help page
 </figcaption>
 </figure>
 </div>
@@ -637,7 +645,7 @@ Figure&nbsp;4: scale_x_continuous help page
 <img src="images/GGP-01-02-Theme.PNG" class="fs img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-theme-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5: theme() component help page (yes, there is a lot there!)
+Figure&nbsp;6: theme() component help page (yes, there is a lot there!)
 </figcaption>
 </figure>
 </div>
@@ -667,7 +675,7 @@ Figure&nbsp;5: theme() component help page (yes, there is a lot there!)
 <img src="images/GGP-1-01-ChangeTheme.png" class="fs img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-theme_bw-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6: Setting the GGPlot theme to black and white
+Figure&nbsp;7: Setting the GGPlot theme to black and white
 </figcaption>
 </figure>
 </div>
@@ -683,7 +691,7 @@ Figure&nbsp;6: Setting the GGPlot theme to black and white
 <span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">y =</span> <span class="st">"Relative Humidity"</span>) <span class="sc">+</span></span>
 <span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>( <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">10</span>, <span class="at">to=</span><span class="dv">80</span>, <span class="at">by=</span><span class="dv">10</span>) ) <span class="sc">+</span></span>
 <span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    «<span class="fu">theme</span>( <span class="at">axis.text.x=</span><span class="fu">element_text</span>(<span class="at">angle=</span><span class="dv">90</span>, <span class="at">vjust=</span><span class="fl">0.5</span>) )» <span class="sc">+</span></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    «<span class="fu">theme_bw</span>();  <span class="co"># this complete theme change will remove the theme change» above</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    «<span class="fu">theme_bw</span>()»;  <span class="co"># this complete theme change will remove the theme change above</span></span>
 <span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(plot5);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="fig-theme_conflict" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -691,7 +699,7 @@ Figure&nbsp;6: Setting the GGPlot theme to black and white
 <img src="images/GGP-1-01-OverwriteTheme.png" class="fs img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-theme_conflict-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7: The complete theme change removed the theme change above it (the axis labels are no longer at 90 degrees)
+Figure&nbsp;8: The complete theme change removed the theme change above it (the axis labels are no longer at 90 degrees)
 </figcaption>
 </figure>
 </div>
@@ -723,13 +731,13 @@ Figure&nbsp;7: The complete theme change removed the theme change above it (the 
 <img src="images/R-2-04-LinearRegression.png" class="fs img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-second_plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;8: Adding a linear model component
+Figure&nbsp;9: Adding a linear model component
 </figcaption>
 </figure>
 </div>
 <section id="overlapping-plots" class="level3" data-number="8.1">
 <h3 data-number="8.1" class="anchored" data-anchor-id="overlapping-plots"><span class="header-section-number">8.1</span> Overlapping plots</h3>
-<p>When two plots overlap, as the linear model and the scatterplot do in <a href="#fig-second_plot" class="quarto-xref">Figure&nbsp;8</a>, the component that is added later to the <strong><em>ggplot()</em></strong> canvas overlaps the earlier component.&nbsp; So, in the above case, the linear model overlaps the scatterplot.</p>
+<p>When two plots overlap, as the linear model and the scatterplot do in <a href="#fig-second_plot" class="quarto-xref">Figure&nbsp;9</a>, the component that is added later to the <strong><em>ggplot()</em></strong> canvas overlaps the earlier component.&nbsp; So, in the above case, the linear model overlaps the scatterplot.</p>
 <p>&nbsp;</p>
 <p>To have the scatterplot overlap the linear model, just switch the two components around:</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>  <span class="do">#### Part 7: Reversing the overlapping plots ####</span></span>
@@ -751,7 +759,7 @@ Figure&nbsp;8: Adding a linear model component
 <img src="images/r-2-04-SwitchComponents.png" class="fs img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-switchPlots-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9: Switching the order of the components to change which plot is on top
+Figure&nbsp;10: Switching the order of the components to change which plot is on top
 </figcaption>
 </figure>
 </div>
@@ -816,7 +824,7 @@ Figure&nbsp;9: Switching the order of the components to change which plot is on 
 <img src="images/GGP-01-02-NewLineError.PNG" class="fs img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-plus_error-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;10: Error when putting the ( + ) on the next line
+Figure&nbsp;11: Error when putting the ( + ) on the next line
 </figcaption>
 </figure>
 </div>
