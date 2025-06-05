@@ -4,6 +4,10 @@ short: "2-01"
 # special characters for highlighting code : «»
 ---
 
+### To-do
+
+-   handle ***Source*** issues (especially from plots people have to cycle through)
+
 ## Purpose
 
 -   Create a scatterplot in GGPlot
@@ -20,7 +24,7 @@ The [Lansing2016Noaa.csv](../data/Lansing2016Noaa.csv) is here (left-click)
 
 ## GGPlot package
 
-We are going to use the GGPlot2 package so we need to add the GGPlot library to the script.
+We are going to use the ***GGPlot*** package so we need to add the ggplot2 library to the script.
 
 ``` r
 rm(list=ls());                         # clear the Environment tab
@@ -31,7 +35,7 @@ The second line gives your script access to all of the functions in the GGPlot2 
 
 ## GGPlot components and subcomponents {#sec-components}
 
-For many years, RBase was the main plotting tool in R and it was loosely based on the metaphor of drawing on a transparency. GGPlot is based more on a building metaphor.
+For many years, RBase was the main plotting tool in R. Rbase was loosely based on the metaphor of drawing plots on a transparency. GGPlot is based more on a building metaphor.
 
  
 
@@ -49,17 +53,17 @@ The arguments within the functions can be thought of as subcomponents of the com
 
  
 
-A helpful resource is the cheat sheets, which exists for many popular packages -- the cheat sheet for GGPlot2 is the first one on this page:
+A helpful R resource is the cheat sheets, which exists for many popular packages -- the cheat sheet for GGPlot2 is on this page:
 
-<https://www.rstudio.com/resources/cheatsheets/>
+<https://rstudio.github.io/cheatsheets/html/data-visualization.html>
 
 ## Create plot data using GGPlot
 
 We are going to create a scatterplot in GGPlot using data from ***Lansing2016NOAA.csv***
 
 ``` r
-  # read in CSV file and save the content to weatherData
-  weatherData = read.csv(file="data/Lansing2016NOAA.csv");
+# read in CSV file and save the content to weatherData
+weatherData = read.csv(file="data/Lansing2016NOAA.csv");
 ```
 
 The scatterplot will be average temperature *(**avgTemp** column)* vs. humidity (***relHum*** column).
@@ -69,10 +73,10 @@ The scatterplot will be average temperature *(**avgTemp** column)* vs. humidity 
 The code to create a scatterplot using GGPlot is:
 
 ``` r
-  #### Part 1: Create a scatterplot ####
-  plot1 = ggplot( data=weatherData ) +
-    geom_point( mapping=aes(x=avgTemp, y=relHum) );
-  plot(plot1);
+#### Part 1: Create a scatterplot ####
+plot1 = ggplot( data=weatherData ) +
+  geom_point( mapping=aes(x=avgTemp, y=relHum) );
+plot(plot1);
 ```
 
 ***Source*** the script and this plot appears:
@@ -85,27 +89,27 @@ Below, the argument names are highlighted:
 
 ::: {#fig-argumentName}
 ``` r
-  #### Part 1: Create a scatterplot ####
-  plot1 = ggplot( «data»=weatherData ) +
-          geom_point( «mapping»=aes(«x»=avgTemp, «y»=relHum) );
-  plot(plot1);
+#### Part 1: Create a scatterplot ####
+plot1 = ggplot( «data»=weatherData ) +
+        geom_point( «mapping»=aes(«x»=avgTemp, «y»=relHum) );
+plot(plot1);
 ```
 
 Argument names used in ggplot call
 :::
 
-We can remove the argument name and the script will execute exactly the same (i.e., the same plot will be rendered):
+We can remove the argument names and the script will execute exactly the same (i.e., the same plot will be rendered):
 
 ``` r
-  #### Part 2: Same scatterplot without argument names ####
-  plot2 = ggplot( weatherData ) +
-          geom_point( aes(avgTemp, relHum) );
-  plot(plot2);
+#### Part 2: Same scatterplot without argument names ####
+plot2 = ggplot( weatherData ) +
+        geom_point( aes(avgTemp, relHum) );
+plot(plot2);   # same as plot1
 ```
 
 ### Benefits of using argument names
 
-You will often see people not using the argument names and, for the example above, this works.  But it only works because we only used the default arguments for each function and used the arguments in the same order as they appeared in the function.
+You will often see people skip the argument names and, for the example above, this works.  But it only works because we only used the default arguments for each function and used the arguments in the same order as they appeared in the function.
 
  
 
@@ -122,20 +126,20 @@ In this class, [we will (almost always) use argument names]{.hl} because using a
 The one exception where we will not use argument names is:
 
 ``` r
-plot(plotData)   # no argument name used here
+plot(plot1)   # no argument name used here
 ```
 
 instead of
 
 ``` r
-plot(x=plotData) # x is the argument name
+plot(x=plot1) # x is the argument name
 ```
 
-There are multiple functions in R and GGPlot where the argument name ***x*** is used generically as the name for the first argument in a function.  This is not intuitive when plotting because ***x*** is also used to refer to data that goes on the x-axis.
+There are multiple functions in R and GGPlot where ***x*** is used as the first argument name in a function, and it often refers to the data being passed in to the function.  This is not intuitive when plotting because ***x*** is also used to refer to x-axis data.
 
  
 
-We will use the argument name ***x*** when ***x*** refers to an axis (e.g., ***x=avgTemp***) but not when ***x*** is a generic first-argument name (e.g., ***x=plotData***) as shown in @fig-argumentName.
+We will use the argument name ***x*** when ***x*** refers to an axis (e.g., ***x=avgTemp***) but not when ***x*** refers generically to data (e.g., ***x=plotData***) as shown in @fig-argumentName.
 
 ## Components of a GGPlot
 
@@ -143,28 +147,28 @@ Let's take a more detailed look at the three lines of code that created the scat
 
  
 
-The function ***ggplot()*** creates a canvas area where all the components will be drawn.  The argument ***data*** gives the data that will be used by the components.  The data is set to the data frame ***weatherData***:
+The function ***ggplot()*** creates a canvas area where all the components will be drawn.  The argument ***data*** gives the data that will be used by the components, which is set to the data frame ***weatherData***:
 
 ``` r
-  plot1 = «ggplot( data=weatherData )» +
-          geom_point( mapping=aes(x=avgTemp, y=relHum) );
-  plot(plot1);
+plot1 = «ggplot( data=weatherData )» +
+        geom_point( mapping=aes(x=avgTemp, y=relHum) );
+plot(plot1);
 ```
 
-Next, we add the component, ***geom_point()***, which adds a scatterplot component (***geom_point***) using the ***avgTemp*** and ***relHum*** columns from ***weatherData***:
+Next, we add the scapperplot component ***geom_point()***, and map the ***x*** and ***y*** axis to the ***avgTemp*** and ***relHum*** columns from ***weatherData***:
 
 ``` r
-  plot1 = ggplot( data=weatherData ) +
-          «geom_point( mapping=aes(x=avgTemp, y=relHum) )»;
-  plot(plot1);
+plot1 = ggplot( data=weatherData ) +
+        «geom_point( mapping=aes(x=avgTemp, y=relHum) )»;
+plot(plot1);
 ```
 
-The canvas is saved to a variable named ***plot1:***
+The canvas, which contains a scatterplot, is saved to a variable named ***plot1:***
 
 ``` r
-  «plot1» = ggplot( data=weatherData ) +
-          geom_point( mapping=aes(x=avgTemp, y=relHum) );
-  plot(plot1);
+«plot1» = ggplot( data=weatherData ) +
+        geom_point( mapping=aes(x=avgTemp, y=relHum) );
+plot(plot1);
 ```
 
 [note: **plot1** is a **List** variable -- **List** variable will be covered in a later lesson]{.note}
@@ -174,14 +178,14 @@ The canvas is saved to a variable named ***plot1:***
 And then ***plot()*** is used to display the canvas saved in ***plot1***:
 
 ``` r
-  plot1 = ggplot( data=weatherData ) +
-          geom_point( mapping=aes(x=avgTemp, y=relHum) );
-  «plot(plot1)»;
+plot1 = ggplot( data=weatherData ) +
+        geom_point( mapping=aes(x=avgTemp, y=relHum) );
+«plot(plot1)»;
 ```
 
 ### GGPlot components
 
-In GGPlot, you initialize a canvas and then add components to the canvas.  The ( ***+*** ) symbol is used to add components, and you can string multiple components together.  In the above example, there is the canvas initialization function (***ggplot()***) and one component (***geom_point()***):
+In GGPlot, you initialize a canvas and then add components to the canvas.  The ( ***+*** ) symbol is used to add components, and you can string multiple components together.  In the above example, there is the canvas initialization function, ***ggplot()***, and one component, ***geom_point()***:
 
  
 
@@ -201,14 +205,14 @@ plotData = ggplot( data=weatherData ) +
 
 ### GGPlot mapping and aesthetics (aes)
 
-[Most plotting components in GGPlot contain a subcomponent called **mapping**]{.hl}.  ***mapping*** is used to describe the relationship between the data and the plot.  Or, another way to put it, ***mapping*** describes what data gets represented on the plot (in the above case, ***avgTemp*** and ***relHum***) and how the data gets represented (e.g., ***avgTemp*** on x-axis, ***relHum*** on y-axis): 
+[Most plotting components in GGPlot contain a subcomponent called **mapping**]{.hl}.  ***mapping*** describes the relationship between the data and the plot.  Or, another way to put it, ***mapping*** describes what data gets represented on the plot (in the above case, ***avgTemp*** and ***relHum***) and how the data gets represented (***avgTemp*** on x-axis, ***relHum*** on y-axis): 
 
 ``` r
 plotData = ggplot( data=weatherData ) +
            geom_point( mapping=«aes(x=avgTemp, y=relHum)» );
 ```
 
-The ***mapping*** is set to a [mapping element]{.hl}called an aesthetic (***aes***).  The concept of an aesthetic comes into play when we are generating legends and creating data categories, which is a topic we delve much deeper into in the GGPlot class.
+The ***mapping*** is set to a [mapping element]{.hl} called an aesthetic (***aes***).  The concept of an aesthetic comes into play when we are generating legends and creating data categories, which is a topic we delve much deeper into in the GGPlot class.
 
 ## Adding more components to the canvas
 
@@ -224,43 +228,45 @@ Let's say we want to make the three following modifications to the plot:
 
 To do this we will add [three new components]{.hl} to the canvas:
 
-1.  ***labs()***                              \# label component
+1.  ***labs()*** – label component
 
-2.  ***scale_x_continuous()***     \# x-scaling component (there is a corresponding y-scaling component)
+2.  ***scale_x_continuous()*** – x-scaling component (there is a corresponding y-scaling component)
 
-3.  ***theme()***                          \# theme component
+3.  ***theme()*** – theme component
 
  
 
 We add components using ( ***+*** ) and subcomponents are the arguments within the components:
 
 ``` r
-  #### Part 3: Adding components to the plot ####
-  plot3 = ggplot( data=weatherData ) «+»
-    geom_point( mapping=aes(x=avgTemp, y=relHum) ) «+»
-    labs( title="Humidity vs Temperature",
-          subtitle="Lansing, MI -- 2016",
-          x = "Average Temperatures (Fahrenheit)",
-          y = "Relative Humidity") «+»
-    scale_x_continuous( breaks = seq(from=10, to=80, by=10) ) «+»
-    theme( axis.text.x=element_text(angle=90, vjust=0.5) );
-  plot(plot3);
+#### Part 3: Adding components to the plot ####
+plot3 = ggplot( data=weatherData ) «+»
+  geom_point( mapping=aes(x=avgTemp, y=relHum) ) «+»
+  labs( title="Humidity vs Temperature",
+        subtitle="Lansing, MI -- 2016",
+        x = "Average Temperatures (Fahrenheit)",
+        y = "Relative Humidity") «+»
+  scale_x_continuous( breaks = seq(from=10, to=80, by=10) ) «+»
+  theme( axis.text.x=element_text(angle=90, vjust=0.5) );
+plot(plot3);
 ```
 
 [Trap: Putting the ( + ) on the next line](#trap-putting-the-on-the-next-line)
+
+And ***plot3*** includes the three new components:
 
 ![Scatterplot with a few added components](images/GGP-1-01-Components.png){#fig-scatterplot .fs}
 
 ### The Components in detail
 
 ``` r
-    labs( title="Humidity vs Temperature",
-          subtitle="Lansing, MI -- 2016",
-          x = "Average Temperatures (Fahrenheit)",
-          y = "Relative Humidity") +
+  labs( title="Humidity vs Temperature",
+        subtitle="Lansing, MI -- 2016",
+        x = "Average Temperatures (Fahrenheit)",
+        y = "Relative Humidity") +
 ```
 
-When we search in the ***Help*** tab for ***labs()*** (@fig-help) we see that it has many subcomponents (or arguments) that can be changed including:
+When we search in the ***Help*** tab for ***labs()*** (@fig-help) we see that it has many subcomponents (or arguments) including:
 
 -   ***label***: the title
 
@@ -282,11 +288,11 @@ scale_x_continuous( breaks = seq(from=10, to=80, by=10) )
 
 ***scale_x_continuous()*** is the component used when you want to modify an x-axis that has continuous values. There are many subcomponents (@fig-scale_x_cont) that can be changed in ***scale_x_continuous()*** and the corresponding ***scale_y_continuous()***.  We modified one subcomponent, ***breaks**,* by setting it to a sequence from **10** to ***8*****0** with numeric values place at intervals of **10**.
 
-  
-
-[note: ***scale_x_discrete()*** is used to modify an x-axis with discrete values.  ]{.note}
+ 
 
 ![scale_x_continuous help page](images/GGP-01-02-ScaleYCont.PNG){#fig-scale_x_cont .fs}
+
+[note: ***scale_x_discrete()*** is used to modify an x-axis with discrete values.]{.note}
 
 ``` r
 theme( axis.text.x=element_text(angle=90, vjust=0.5) )
@@ -296,7 +302,7 @@ In this example we changed one subcomponent in ***theme()*** called ***axis.text
 
  
 
-Broadly speaking, ***theme()*** is used to make modifications to the canvas (the plots and the background) that are not data related.  ***theme()*** is probably the most used component in GGPlot, and we could spend many lessons going through all the subcomponents of ***theme()***. 
+Broadly speaking, ***theme()*** is used to make modifications that are not data related to the canvas (the plots and the background).  ***theme()*** is probably the most used component in GGPlot, and we could spend many lessons going through all the subcomponents of ***theme()***. 
 
 ![theme() component help page (yes, there is a lot there!)](images/GGP-01-02-Theme.PNG){#fig-theme .fs}
 
@@ -306,20 +312,20 @@ A good place to find more information about components in GGPlot is the **Help**
 
 ## Getting rid of the grey (themes)
 
-The default GGplot theme, which uses the gray background is not one of my favorite.  Luckily, GGPlot makes it easy to change the theme.  [The components that do this, called complete themes, are on this page.](https://ggplot2.tidyverse.org/reference/ggtheme.html)  I will change to the black-white theme:
+The default GGplot theme, which uses the gray background, is not my favorite.  Luckily, GGPlot makes it easy to change the theme.  [The components that do this, called ***complete themes***, are on this page.](https://ggplot2.tidyverse.org/reference/ggtheme.html)  I will change to the black-white theme:
 
 ``` r
-  #### Part 4: Changing the theme ####
-  plot5 = ggplot( data=weatherData ) +
-    geom_point( mapping=aes(x=avgTemp, y=relHum) ) +
-    labs( title="Humidity vs Temperature",
-          subtitle="Lansing, MI -- 2016",
-          x = "Average Temperatures (Fahrenheit)",
-          y = "Relative Humidity") +
-    scale_x_continuous( breaks = seq(from=10, to=80, by=10) ) +
-    «theme_bw()» +
-    theme( axis.text.x=element_text(angle=90, vjust=0.5) );
-  plot(plot4);
+#### Part 4: Changing the theme ####
+plot4 = ggplot( data=weatherData ) +
+  geom_point( mapping=aes(x=avgTemp, y=relHum) ) +
+  labs( title="Humidity vs Temperature",
+        subtitle="Lansing, MI -- 2016",
+        x = "Average Temperatures (Fahrenheit)",
+        y = "Relative Humidity") +
+  scale_x_continuous( breaks = seq(from=10, to=80, by=10) ) +
+  «theme_bw()» +
+  theme( axis.text.x=element_text(angle=90, vjust=0.5) );
+plot(plot4);
 ```
 
 ![Setting the GGPlot theme to black and white](images/GGP-1-01-ChangeTheme.png){#fig-theme_bw .fs}
@@ -329,17 +335,17 @@ The default GGplot theme, which uses the gray background is not one of my favori
 [A complete theme (e.g., **theme_bw()**) overwrites the whole theme for the canvas.]{.hl}  This means it will overwrite any ***theme*** changes you previously made.  In this code, ***theme_bw()*** overwrite the ***theme()*** on the line before:
 
 ``` r
-  #### Part 5: Changing the theme --- oops, undoes theme ####
-  plot5 = ggplot( data=weatherData ) +
-    geom_point( mapping=aes(x=avgTemp, y=relHum) ) +
-    labs( title="Humidity vs Temperature",
-          subtitle="Lansing, MI -- 2016",
-          x = "Average Temperatures (Fahrenheit)",
-          y = "Relative Humidity") +
-    scale_x_continuous( breaks = seq(from=10, to=80, by=10) ) +
-    «theme( axis.text.x=element_text(angle=90, vjust=0.5) )» +
-    «theme_bw()»;  # this complete theme change will remove the theme change above
-  plot(plot5);
+#### Part 5: Changing the complete theme --- oops, undoes theme ####
+plot5 = ggplot( data=weatherData ) +
+  geom_point( mapping=aes(x=avgTemp, y=relHum) ) +
+  labs( title="Humidity vs Temperature",
+        subtitle="Lansing, MI -- 2016",
+        x = "Average Temperatures (Fahrenheit)",
+        y = "Relative Humidity") +
+  scale_x_continuous( breaks = seq(from=10, to=80, by=10) ) +
+  «theme( axis.text.x=element_text(angle=90, vjust=0.5) )» +
+  «theme_bw()»;  # this complete theme change will remove the theme change above
+plot(plot5);
 ```
 
 ![The complete theme change removed the theme change above it (the axis labels are no longer at 90 degrees)](images/GGP-1-01-OverwriteTheme.png){#fig-theme_conflict .fs}
@@ -350,26 +356,26 @@ Next, we will add a regression line to the canvas.  This is done using the plot
 
  
 
-Since ***geom_smooth()*** adds data to the plot area, we need to use the ***mapping*** subcomponent to tell ***GGPlot*** what is being added to the plot area and how. In this case, we are mapping ***relHum*** vs. ***avgTemp***.
+***geom_smooth()*** adds data to the plot area so we need to use the ***mapping*** subcomponent to tell ***GGPlot*** what data is being added to the plot area and how. In this case, we are mapping ***relHum*** vs. ***avgTemp***.
 
  
 
 We also add the ***method*** subcomponent to ***geom_smooth()*** to set the smoothing method we will use on the data.  In this case, linear model (***lm***).
 
 ``` r
-  #### Part 6: Adding a regression line ####
-  plot6 = ggplot( data=weatherData ) +
-    «geom_point( mapping=aes(x=avgTemp, y=relHum) )» +
-    «geom_smooth( mapping=aes(x=avgTemp, y=relHum),» 
-                 «method="lm" )» +
-    labs( title="Humidity vs Temperature",
-          subtitle="Lansing, MI -- 2016",
-          x = "Average Temperatures (Fahrenheit)",
-          y = "Relative Humidity") +
-    scale_x_continuous( breaks = seq(from=10, to=80, by=10) ) +
-    theme_bw() +
-    theme( axis.text.x=element_text(angle=90, vjust=0.5) );
-  plot(plot6);
+#### Part 6: Adding a regression line ####
+plot6 = ggplot( data=weatherData ) +
+  geom_point( mapping=aes(x=avgTemp, y=relHum) ) +
+  «geom_smooth( mapping=aes(x=avgTemp, y=relHum),» 
+               «method="lm" )» +
+  labs( title="Humidity vs Temperature",
+        subtitle="Lansing, MI -- 2016",
+        x = "Average Temperatures (Fahrenheit)",
+        y = "Relative Humidity") +
+  scale_x_continuous( breaks = seq(from=10, to=80, by=10) ) +
+  theme_bw() +
+  theme( axis.text.x=element_text(angle=90, vjust=0.5) );
+plot(plot6);
 ```
 
 ![Adding a linear model component](images/R-2-04-LinearRegression.png){#fig-second_plot .fs}
@@ -383,19 +389,19 @@ When two plots overlap, as the linear model and the scatterplot do in @fig-secon
 To have the scatterplot overlap the linear model, just switch the two components around:
 
 ``` r
-  #### Part 7: Reversing the overlapping plots ####
-  plot7 = ggplot( data=weatherData ) +
-    geom_smooth( mapping=aes(x=avgTemp, y=relHum), 
-                 method="lm" ) +
-    geom_point( mapping=aes(x=avgTemp, y=relHum) ) +
-    labs( title="Humidity vs Temperature",
-          subtitle="Lansing, MI -- 2016",
-          x = "Average Temperatures (Fahrenheit)",
-          y = "Relative Humidity") +
-    scale_x_continuous( breaks = seq(from=10, to=80, by=10) ) +
-    theme_bw() +
-    theme( axis.text.x=element_text(angle=90, vjust=0.5) );
-  plot(plot7);
+#### Part 7: Reversing the overlapping plots ####
+plot7 = ggplot( data=weatherData ) +
+  geom_smooth( mapping=aes(x=avgTemp, y=relHum), 
+               method="lm" ) +
+  geom_point( mapping=aes(x=avgTemp, y=relHum) ) +
+  labs( title="Humidity vs Temperature",
+        subtitle="Lansing, MI -- 2016",
+        x = "Average Temperatures (Fahrenheit)",
+        y = "Relative Humidity") +
+  scale_x_continuous( breaks = seq(from=10, to=80, by=10) ) +
+  theme_bw() +
+  theme( axis.text.x=element_text(angle=90, vjust=0.5) );
+plot(plot7);
 ```
 
 ![Switching the order of the components to change which plot is on top](images/r-2-04-SwitchComponents.png){#fig-switchPlots .fs}
@@ -441,35 +447,36 @@ C\) Create a scatterplot in GGPlot in your script:
 The ( **+** ) commands strings together the components of a GGPlot.  A common mistake is to put the ( + ) at the beginning of the following line:
 
 ``` r
-source(file="scripts/reference.R");
-packageData = read.csv(file="data/CRANpackages.csv");
-
-plotData = ggplot( data=packageData )
-    + geom_point( mapping=aes(x=Date, y=Packages) )
-    + ggtitle(label="Packages in CRAN (2001-2014)")
-    + scale_y_continuous(breaks = seq(from=0, to=6000, by=500))
-    + theme(axis.text.x=element_text(angle=90, hjust=1));
-plot(plotData);
+#### Trap: Putting ( + ) is the wrong place ####
+plotA = ggplot( data=weatherData )
++ geom_point( mapping=aes(x=avgTemp, y=relHum) )
++ labs( title="Humidity vs Temperature",
+      subtitle="Lansing, MI -- 2016",
+      x = "Average Temperatures (Fahrenheit)",
+      y = "Relative Humidity")
++ scale_x_continuous( breaks = seq(from=10, to=80, by=10) )
++ theme( axis.text.x=element_text(angle=90, vjust=0.5) );
+plot(plotA);
 ```
 
-This will result in an error and a surprisingly wise assessment of the problem fro the R debugger.
+This will result in an error and a surprisingly wise assessment of the problem from the R debugger.
 
 ![Error when putting the ( + ) on the next line](images/GGP-01-02-NewLineError.PNG){#fig-plus_error .fs}
 
-The reason for this error is that R thinks that line 5:
+The reason for this error is that R thinks this line:
 
 ``` r
-plotData = ggplot( data=packageData )
+plotA = ggplot( data=weatherData )
 ```
 
 is a fully-formed and completed command
 
  
 
-And R does not understand why line 6 starts a new command with a ( **+** )
+And R does not understand why the next line starts a new command with a ( **+** )
 
 ``` r
- + geom_point( mapping=aes(x=Date, y=Packages) )
+ + geom_point( mapping=aes(x=avgTemp, y=relHum) )
 ```
 
 A ( **+** ) at the end of a line tells R to append the next line to the current line.  A ( **+** ) at the beginning of a line tells R to perform the mathematical operation addition.
