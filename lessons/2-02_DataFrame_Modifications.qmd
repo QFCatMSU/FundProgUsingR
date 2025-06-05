@@ -32,7 +32,7 @@ weatherData = read.csv(file="data/Lansing2016NOAA.csv",
               header=TRUE);
 ```
 
-In the ***Environment***, you can see that ***weatherData*** consists of 366 observations (366 days -- it was a Leap Year) of 23 variables.  In other words there are 23 different weather variables in the data (columns) for each of the 366 days (rows).
+In the ***Environment***, you can see that ***weatherData*** consists of 366 observations (366 days -- it was a leap year) of 23 variables.  In other words there are 23 different weather variables in the data (columns) for each of the 366 days (rows).
 
 ``` {.r tab="Environment"}
 weatherData:      366 obs. of 23 variables
@@ -93,7 +93,7 @@ Based on the 12 dates, we can see we have just the 2-digit month and date.
 
 Let's say we actually want the year in the column, but we want it at the end. 
 
-In other words, we want the format to be **MM-DD-YYYY**:
+In other words, we want the date format to be **MM-DD-YYYY**:
 
 -   **01-02-2016**
 
@@ -103,7 +103,7 @@ In other words, we want the format to be **MM-DD-YYYY**:
 
  
 
-You can use ***paste()*** to add (or, concatenate) string values together.
+You can use ***paste()*** to add (concatenate) string values together.
 
 ![The paste() function -- with ... as the first "argument"](images/R-1-14_Paste-01.png){#fig-paste .fs}
 
@@ -113,21 +113,21 @@ In the ***Help*** tab that the first argument in ***paste()*** is three dots ( .
 
  
 
-The three dots represents sort of a [pseudo-argument]{.hl}, meaning that for this function, [any argument that does not have a name]{.hl} will be assigned to the three dots (i.e., unnamed arguments are objects to be pasted).
+The three dots represents a [pseudo-argument]{.hl}, meaning that for this function, [any argument that does not have a name]{.hl} will be assigned to the three dots (i.e., unnamed arguments are objects to be pasted).
 
  
 
-This means that [you have to use argument names for everything else]{.hl} (e.g., ***sep***, ***collapse***).  If you do not use the argument name, then ***paste()*** will assume the object is to be pasted.
+This means that [you have to use argument names for everything else]{.hl} (e.g., ***sep***, ***collapse***) otherwise ***paste()*** will assume the object is to be pasted.
 
 ### Using paste()
 
-In this case we want to paste two objects: the ***dateOnly*** vector and the string **"-2016"** with no separator:
+In this case we want to paste two objects together: the ***dateOnly*** vector and the string **"-2016"** – and we want nothing in between (i.e., nothing separating them):
 
 ``` r
 dateYear = paste(dateOnly, "-2016", sep="");
 ```
 
-Looking at the first ten values in ***dateYear*** in the ***Console***:
+Let's look at the first ten values in ***dateYear*** in the ***Console***:
 
 ``` {.r tab="Console"}
 > dateYear[1:10]
@@ -140,7 +140,7 @@ Looking at the first ten values in ***dateYear*** in the ***Console***:
 The ***sep*** argument is the character that get placed in between the values being pasted. If you do not put the ***sep*** argument in, then ***sep*** defaults to one space, meaning an extra space between each object in the ***paste()*** -- in this case, the date and year: 
 
 ``` r
-dateYearMistake = paste(dateOnly, "-2016"); # sep default to " "
+dateYearDefaultSep = paste(dateOnly, "-2016"); # sep default to " "
 ```
 
 The results have a space after the date:
@@ -166,6 +166,8 @@ In general, it is best to set ***sep=""*** (i.e., to nothing) -- this gives you 
 ## Rounding numbers
 
 We have a column, ***windSpeed***, where there are more decimal places than necessary.
+
+ 
 
 Looking at the first ten values in the vector we can see three decimal places are used:
 
@@ -205,7 +207,7 @@ And look at 10 values in ***windSpeedRounded*** to make sure it worked (this tim
 Values rounded to 1 decimal
 :::
 
-In the ***Console***, we are looking at values 40-49 in ***windSpeedRounded*** but the output only has ten values -- the  \[1\] and the \[10\] reflect the index value of the output (the 10 values in windSpeedRounded\[40:49\].  [Extension: Index values in output]
+In the ***Console***, we are looking at values 40-49 in ***windSpeedRounded*** where \[1\] and the \[10\] reflects the index value of the output So, value **\[1\]** is ***windSpeedRounded\[40\]***, value **\[2\]** is ***windSpeedRounded\[41\]***, through value **\[10\]** which is ***windSpeedRounded\[49\]***.  [Extension: Index values in output]
 
 ## Adding vectors to the data frame
 
@@ -229,10 +231,14 @@ weatherData2 = weatherData;
 Let's add the ***dateYear*** vector to the data frame to a column called ***dateYear***:
 
 ``` r
-  weatherData2$dateYear = dateYear;
+weatherData2$dateYear = dateYear;
 ```
 
-Since there was no ***dateYear*** column in ***weatherData2***, the above code added a column called ***dateYear*** to the end of the data frame and populated it with the values in the vector ***dateYear***.  [Note that **weatherData2** now has one more column (**24**) than **weatherData** (**23**).]{.note}  Double-click on ***weatherData2*** in the ***Environment*** tab and scroll to the end to see the new ***dateYear*** column:
+Since there was no ***dateYear*** column in ***weatherData2***, the above code ads a column called ***dateYear*** to the end of the data frame and populates it with the values in the vector ***dateYear***.  [Note that **weatherData2** now has one more column (**24**) than **weatherData** (**23**).]{.note}
+
+ 
+
+Double-click on ***weatherData2*** in the ***Environment*** tab and scroll to the end to see the new ***dateYear*** column:
 
 ![A column was added to the end of the weatherData2 data frame](images/R-2-01-AddColumn.jpg){#fig-addColumn .fs}
 
@@ -254,21 +260,23 @@ Now the values in the ***windSpeed*** column reflect the rounded values from ***
 
 ## Deleting columns from a data frame
 
-The easiest way to delete a column from a data frame is just to set the column to **NULL**. 
+The easiest way to delete a column from a data frame is just to set the column to **NULL**.
 
-We will again create another copy of ***weatherData***:
+ 
+
+We will create another copy of ***weatherData***:
 
 ``` r
 weatherData3 = weatherData2;
 ```
 
-Now we will remove the ***dateTime*** column  from ***weatherData3*** by setting it to **NULL**:
+And remove the ***dateTime*** column from ***weatherData3*** by setting it to **NULL**:
 
 ``` r
 weatherData3$dateTime = NULL; 
 ```
 
-The ***dateTime*** column, which was the first column in the data frame, has now been removed and the number of columns has dropped by 1:
+The ***dateTime*** column, which was the first column in the data frame, has been removed and the number of columns has dropped by 1 (from 24 to 23):
 
 ![The dateTime column was removed from weatherData3](images/R-2-01-RemoveColumn.jpg){#fig-removeCol .fs}
 
@@ -280,13 +288,13 @@ Using ***within()*** to remove the ***dateTime*** column:
 
 ``` r
 # Within weatherData, remove the column dateTime
-# weatherData3 = within(weatherData, rm(dateTime));  
+weatherData3 = within(weatherData, rm(dateTime));  
 ```
 
-The advantage to this method, is that [you can delete multiple columns]{#hl} at a time:
+The advantage to this method, is that [you can delete multiple columns]{.hl} at a time:
 
 ``` r
-  # weatherData3 = within(weatherData, rm(maxTemp, minTemp, avgTemp));
+weatherData3 = within(weatherData, rm(maxTemp, minTemp, avgTemp));
 ```
 
 ## Moving columns
@@ -305,11 +313,11 @@ So, let's say we want to move the ***dateYear*** column we created earlier (@sec
 
 ### using sequences to create the column order
 
-Luckily, we do not have to write out all 23 column names because we are allowed to use sequences to refer to multiple columns:
+Luckily, we do not have to write out all 23 column names because we can use sequences to refer to multiple columns:
 
 ``` r
-  # Move the last column (dateYear) to the beginning:
-  weatherData4 = subset(weatherData2, select=c(dateYear, «maxTemp:windSusDir»));
+# Move the last column (dateYear) to the beginning:
+weatherData4 = subset(weatherData2, select=c(dateYear, «maxTemp:windSusDir»));
 ```
 
 ( : ) is the sequence operator and it says to take all the columns in between (and inclusive of) ***maxTemp*** and ***windSusDir***.  Since ***maxTemp*** was the first column and ***windSusDir*** was the second to last column (the last being ***dateYear***), this basically says all other columns except ***dateYear***.
@@ -325,7 +333,7 @@ So, ***select=c(dateYear, maxTemp:windSusDir))*** says to order the columns with
 We will create one last data frame:
 
 ``` r
-  weatherData5 = weatherData4;
+weatherData5 = weatherData4;
 ```
 
 It is trickier to move columns in the middle because you need to keep track of all the other columns.
@@ -372,7 +380,7 @@ We are going to use the ***weatherData4*** data frame in the next lesson, so let
 Quite often, people just call ***write.csv()***, pass in the data frame and the file name to save it to:
 
 ``` r
-  write.csv(weatherData5, file="data/Lansing2016Noaa-2-bad.csv");  
+write.csv(weatherData5, file="data/Lansing2016Noaa-2-bad.csv");  
 ```
 
 The above code will add an extra column populated by the row numbers.  This is because, by default, ***write.csv()*** assumes the row numbers are row names.
@@ -382,8 +390,8 @@ The above code will add an extra column populated by the row numbers.  This is 
 To stop ***write.csv()*** from assuming the row numbers are row names, we need to set the argument ***row.names*** to **FALSE**:
 
 ``` r
-  write.csv(weatherData5, file="data/Lansing2016Noaa-2.csv",
-            row.names = FALSE);  
+write.csv(weatherData5, file="data/Lansing2016Noaa-2.csv",
+          row.names = FALSE);  
 ```
 
 In the next lesson, we will open both of these CSV files and look at the difference.
@@ -416,13 +424,15 @@ E\) Change ***tempDept*** in ***weatherData_app*** to 2 significant digits -- do
 
 -   The function for significant digits can be found in the ***Help*** for ***round()***
 
--   You are overwriting the ***tempDept*** colu
+-   You are overwriting the ***tempDept*** column
 
 {{< include ../assets/_AppInstructions.qmd >}}
 
 ## Extension: Index values in output
 
-Let's take a closer look at how the index values work in the Console output.
+Let's take a closer look at how the index values work in the ***Console*** output.
+
+ 
 
 We are going to take a subset of the vector ***dateYear*** that goes backwards and only gives at every sixth value.
 
@@ -432,11 +442,11 @@ So, the subset will go: Dec 31, Dec 25, Dec 19, Dec 13...
 
 First, let's create the sequence:
 
--   start at the last value (from = 366)
+-   start at the last value (***from*** = 366)
 
--   ends at the first value (to = 1)
+-   ends at the first value (***to*** = 1)
 
--   moves backwards 6 values each time (by = -6)
+-   moves backwards 6 values each time (***by*** = -6)
 
 ``` {.r tab="Console"}
 > seq(from=366, to=1, by=-6)
@@ -467,4 +477,4 @@ When we use the sequence to subset dateYear, we also get 61 values, representing
 [61] "01-06-2016"
 ```
 
-Again, the index values in square brackets is just given you the index value of the first value on the row.  So, 12-31 is the first value, 12-01 is the 5^th^ value, 11-25 is the 7^th^ value, and 01-06 is the 61^st^ value.
+Again, the index values in square brackets is just given you the index value of the first value on the row.  So, ***12-31*** is the first value, ***12-01*** is the ***5^th^*** value, ***11-25*** is the ***7^th^*** value, and ***01-06*** is the ***61^st^*** value.

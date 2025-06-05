@@ -11,7 +11,7 @@ dateOnly = substr(weatherData$dateTime, start=6, stop=10);
 dateYear = paste(dateOnly, "-2016", sep="");
 
 # if you do not use the argument sep, then the default separator is a space
-dateYearMistake = paste(dateOnly, "-2016");     # sep default to " "
+dateYearDefaultSep = paste(dateOnly, "-2016");     # sep default to " "
 
 # rounding the wind speed to one decimal:
 windSpeedRounded = round(weatherData$windSpeed, digits=1);
@@ -33,8 +33,6 @@ weatherData3 = weatherData2;
 weatherData3$dateTime = NULL; 
 
 # Another way to remove a column
-# weatherData5[c("dateYear", "maxTemp", "minTemp")] = NULL 
-# weatherData5[,c("dateYear", "maxTemp", "minTemp")] = NULL 
 # weatherData3 = within(weatherData, rm(dateTime, maxTemp, minTemp));  
 
 # Could also use this method to remove multiple columns:
@@ -62,4 +60,5 @@ write.csv(weatherData5, file="data/Lansing2016Noaa-2-bad.csv");
 write.csv(weatherData5, file="data/Lansing2016Noaa-2.csv",
           row.names = FALSE);  
 
+### Using select in the negative to remove column (not in lesson)
 weatherData6 = subset(weatherData, select=c(-(maxTemp:minTemp)));
