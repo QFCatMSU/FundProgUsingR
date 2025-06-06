@@ -39,15 +39,15 @@ ages = c(25,47,13,59,76,33,45);
 animalNames = c("llama", "alpaca", "goat", "llama", "guanaco");
 ```
 
-We will ask four questions, using ***which()*** on the two vectors above:
+We will ask four questions, using ***which()***, on the two vectors above:
 
-1.  Which ages are greater than 40?
+1.  Which ***ages*** are greater than 40?
 
-2.  Which ages are less than or equal to 33?
+2.  Which ***ages*** are less than or equal to 33?
 
-3.  Which animals names are equal to llama?
+3.  Which ***animalsNames*** are equal to llama?
 
-4.  Which animals names are not equal to llama?
+4.  Which ***animalsNames*** are not equal to llama?
 
  
 
@@ -62,9 +62,9 @@ index4 = which(animalNames != "llama"); # index of animals not named "llama"
 
 ### which() produces an index vector
 
-The four index vectors [hold the index of the values that met the condition]{.hl} -- not the values itself.
+The four index vectors [contain the index of the values that met the condition]{.hl} -- not the values itself.
 
-The number of values in the vector that met the condition is given by the second number in brackets **\[1:X\]**
+The number of values in the vector that met the condition is given by the second number in brackets **\[1:[X]{.hl}\]**. The second number is also the length of the vector.
 
 ``` {.r tab="Environment"}
 index1: int [1:4] 2 4 5 7
@@ -77,9 +77,9 @@ index4: int [1:3] 2 3 5
 
 ***index2*** says there were ***3*** values in ***ages*** less than or equal to **33**: values 1, 3, and 6 (values: 25, 13, and 33)
 
-***index3*** says there were ***2*** values in ***animalNames*** that were *equal* to "llama": values 1 and 4
+***index3*** says there were ***2*** values in ***animalNames*** that were [equal]{.hl}to "llama": values 1 and 4
 
-***index4*** says there were ***3*** values in ***animalNames*** *not equal* to "llama": values  2,3 and 5 (alpaca, guanaco, and goat)
+***index4*** says there were ***3*** values in ***animalNames*** [not equal]{.hl} to "llama": values 2,3 and 5 (alpaca, guanaco, and goat)
 
  
 
@@ -99,9 +99,7 @@ We are going to use ***which()*** to
 
 2.  subset other columns (e.g., ***avgTemp***, ***relHum***) by these values
 
-```         
--   in other words, find the ***avgTemp*** on days where precipitation meets a certain condition
-```
+    -   in other words, find the \*\*\*avgTemp\*\*\* on days where precipitation meets a certain condition
 
 ### Finding the NA values using which()
 
@@ -152,9 +150,9 @@ precip3[naValues] = 0.005;
 Like last lesson, we see the progress from a ***chr*** vector (***precip***) to a numeric vector with **NA** values (***precip2***) to a numeric value with **NA** values replaced with **0.005** (***precip3***):
 
 ``` {.r tab="Environment"}
-precip:   chr[1:366]  "0.04" "0.00" «"T" "T"» "0.00" ...
-precip2:  num[1:366]  0.04 0 «NA NA» 0 ...
-precip3:  num[1:366]  0.04 0 «0.005 0.005» 0 ...
+precip:   chr[1:366]  "0.04" "0.00" «"T"» «"T"» "0.00" ...
+precip2:  num[1:366]  0.04 0 «NA» «NA» 0 ...
+precip3:  num[1:366]  0.04 0 «0.005» «0.005» 0 ...
 ```
 
 ### Subset based on numeric conditions
@@ -188,7 +186,7 @@ The first two scenarios have one condition, the third scenario has two condition
 
  
 
-As with ***if*** statements, each condition must be explicit:
+As with ***if*** statements, when you have multiple condition, each condition must be explicit:
 
 ``` r
 # explicit condition: days where precip is > 0.25 and precip < 0.5
@@ -233,7 +231,7 @@ rainyDates = weatherData$dateYear[highPrecipIndex];
 rainyDayWindSpeed = weatherData$windSpeed[highPrecipIndex];
 ```
 
-***rainyDates*** and ***rainyDayWindSpeed*** are both vector with 8 values, the 8 values are on the same rows as the precipitations that are greater than 1 inch.
+***rainyDates*** and ***rainyDayWindSpeed*** are both vector with 8 values, the 8 values are on the rows where the precipitations are greater than 1 inch.
 
  
 
@@ -251,22 +249,22 @@ We see in the ***Console*** the 8 dates that had a high amount of precipitation 
 Printing out the subsetted rainy dates to the Console
 :::
 
-[Extension: Data frame columns instead of vectors]
+[Extension: Subset using dataframe columns ]
 
 ## Plotting subsetted vectors
 
 In previous lesson, we created a scatterplot by initializing a data frame in ***ggplot()*** and mapping columns to the ***x*** and ***y*** axes:
 
 ``` r
-  plot1 = ggplot(«data=weatherData») +                # initialize data frame
-    geom_point( «mapping=aes(x=avgTemp, y=relHum)»,   # map the x and y axes
-                color = "blue") +
-    labs( title="Humidity vs. Temperature",
-          subtitle="Lansing, 2016",
-          x = "Temperature (F)",
-          y = "Humidity (%)") +
-    theme_bw();
-  plot(plot1);
+plot1 = ggplot(«data=weatherData») +                # initialize data frame
+  geom_point( «mapping=aes(x=avgTemp, y=relHum)»,   # map the x and y axes
+              color = "blue") +
+  labs( title="Humidity vs. Temperature",
+        subtitle="Lansing, 2016",
+        x = "Temperature (F)",
+        y = "Humidity (%)") +
+  theme_bw();
+plot(plot1);
 ```
 
 And we get a scatterplot of all 366 values:
@@ -323,22 +321,18 @@ subset2 = weatherData[daysHighPrecip,]  # subset rows given by daysHighPrecip
 To plot the data from the 8 rows with precipitation greater than one inch, we can initialize ***ggplot()*** with the subsetted data frame, ***subset2.***
 
 ``` r
-  plot2 = ggplot(data=«subset2») +      # initialize the cvanvas with subset2
-    geom_point( mapping=aes(x=«avgTemp», y=«relHum»), # avgTemp and relHum from subset2
-                color = "blue") +
-    labs( title="Humidity vs. Temperature",
-          subtitle="Precipiation greater than 1 inch",
-          x = "Temperature (F)",
-          y = "Humidity (%)") +
-    theme_bw();
-  plot(plot2);
+plot2 = ggplot(data=«subset2») +      # initialize the canvas with subset2
+  geom_point( mapping=aes(x=«avgTemp», y=«relHum»), # avgTemp and relHum from subset2
+              color = "blue") +
+  labs( title="Humidity vs. Temperature",
+        subtitle="Precipiation greater than 1 inch",
+        x = "Temperature (F)",
+        y = "Humidity (%)") +
+  theme_bw();
+plot(plot2);
 ```
 
-[note: Mappings within plot components will always search the columns in the data frame that was initialized with the canvas]{.note}
-
- 
-
-The data frame only has 8 rows, we will just get the 8 points representing the 8 days of high precipitation:
+Since the subsetted data frame only has 8 rows, the plot will have only 8 points representing the 8 days of high precipitation:
 
 ![Plot of subsetted humidity and temperature values](images/R-2-04-SubsetPlot.png){#fig-subsetPlot .fs}
 
@@ -346,7 +340,7 @@ The data frame only has 8 rows, we will just get the 8 points representing the 8
 
 The second way to plot the data is to:
 
--   [not initialize]{.hl} the ggplot canvas area with a data frame  (use ***ggplot()***)
+-   [not initialize]{.hl} the ggplot canvas area with a data frame  (use ***ggplot()*** without data)
 
 -   directly map the subset vectors -- in this case, ***avgTemp*** and ***relHum***.
 
@@ -361,41 +355,41 @@ If we subset ***relHum*** and ***avgTemp*** with the ***daysHighPrecip*** vector
 [1] 46 53 82 72 76 58 65 58
 ```
 
-If we subset the mapping the we can leave out the data frame initialization in ***ggplot()*** and add the subsetted vectors to the mappings:
+We can map the data inside the component ***geom_point()*** instead of the initializing the canvas with a dataframe inside ***ggplot()***:
 
 ``` r
-  plot3 = ggplot() +    «# no data frame was initialized for the ggplot canvas»
-    geom_point( mapping=aes(«x=weatherData$avgTemp[daysHighPrecip]»,  
-                            «y=weatherData$relHum[daysHighPrecip]»)) +
-    labs( title="Humidity vs. Temperature",
-          subtitle="Precipitation greater than 1 inch",
-          x = "Temperature (F)",
-          y = "Humidity (%)") +
-    theme_bw();
-  plot(plot3);
+plot3 = ggplot() +    «# no data frame was initialized for the ggplot canvas»
+  geom_point( mapping=aes(«x=weatherData$avgTemp[daysHighPrecip]»,  
+                          «y=weatherData$relHum[daysHighPrecip]»)) +
+  labs( title="Humidity vs. Temperature",
+        subtitle="Precipitation greater than 1 inch",
+        x = "Temperature (F)",
+        y = "Humidity (%)") +
+  theme_bw();
+plot(plot3);
 ```
 
 This code will produce the exact same plot as above (@fig-subsetPlot).
 
  
 
-[Warning: You will get an error if you mix the two method (initializing the canvas with a data frame and mapping subsetted vector).]{.note}
+[Warning: You will get an error if you mix the two method (initializing the canvas with a data frame and mapping subsetted vector).]{.hl}
 
 ### Manually entering values in mappings
 
-When you do not initialize a data frame in ***ggplot()***, then you are manually entering vectors in the mappings.  To be explicit about this fact, we could just put in vector values:
+When you do not initialize a data frame in ***ggplot()***, then you have manually enter vectors in the mappings.  To be explicit about this fact, we could just put in vector values:
 
 ``` r
-  plot4 = ggplot() +
-    geom_point( mapping=aes(x=c(46,53,82,72,76,58,65,58),
-                            y=c(85,85,82,78,77,90,88,83)),
-                color = "blue") +
-    labs( title="Humidity vs. Temperature",
-          subtitle="Precipiation greater than 1 inch",
-          x = "Temperature (F)",
-          y = "Humidity (%)") +
-    theme_bw();
-  plot(plot4);
+plot4 = ggplot() +
+  geom_point( mapping=aes(x=c(46,53,82,72,76,58,65,58),
+                          y=c(85,85,82,78,77,90,88,83)),
+              color = "blue") +
+  labs( title="Humidity vs. Temperature",
+        subtitle="Precipiation greater than 1 inch",
+        x = "Temperature (F)",
+        y = "Humidity (%)") +
+  theme_bw();
+plot(plot4);
 ```
 
 This code will, again, produce the exact same plot as above (@fig-subsetPlot).
@@ -403,18 +397,18 @@ This code will, again, produce the exact same plot as above (@fig-subsetPlot).
 ## Application
 
 1.  Find dates that had snow (so, snow \> 0)
+    -   snow, like precip, uses \*\*T\*\* values
 
-```         
--   snow, like precip, uses **T** values
-```
+ 
 
 2.  Find dates that had more than a trace of rain
 
-3.  Find the dates that had peak winds between 30 and 40 mph
+ 
 
-```         
--   Plot a rain vs temperature scatterplot for these date
-```
+3.  Find the dates that had peak winds between 30 and 40 mph
+    -   Create a rain vs temperature scatterplot for these date
+
+ 
 
 4.  Find the number of days the humidity was high (greater than 85%) and for these days output to the ***Console***:
 
@@ -438,76 +432,80 @@ The results of #4 would be best done with a ***for*** loop the cycles through al
 
 {{< include ../assets/_AppInstructions.qmd >}}
 
-## Extension: Data frame columns instead of vectors
+## Extension: Subset using dataframe columns 
 
 The line of code:
 
 ``` r
-humidity = lansing2016Weather[,"humidity"];
+humidity = weatherData[,"relHum"];
 ```
 
-saves all the values from the column "humidity" in the data frame ***lansing2016Weather*** to the vector ***humidity***.
+saves all the values from the column `relHum` in the data frame `weatherData` to the vector `humidity`.
 
  
 
-We then could use ***humidity*** to find which days had high humidity
+We then could use `humidity` to find which days had high humidity
 
 ``` r
 highHumidity = which(humidity > 80);  # days with high humidity
 ```
 
-But we could do the exact same thing with the column from the data frame
+But we could also directly use the `relHum` column from the data frame
 
 ``` r
-highHumidity = which(lansing2016Weather[,"humidity"] > 80);
+highHumidity = which(weatherData[,"relHum"] > 80);
 ```
 
-While we can use both ***humidity*** and ***lansing2016Weather\[,"humidity"\]*** in the ***which()***, there are two advantages to using ***humidity***
-
-1.  The code is easier to read
-
-2.  We can modify ***humidity*** without modifying the data frame, ***lansing2016Weather***
+While we can use both `humidity` and `weatherData[,"relHum"]` in the ***which()***, the former is preferred because it is easier to read.
 
 ## Extension: The TRUE/FALSE vector
 
 Let's take another look at the ***which()*** code:
 
 ``` r
-ages = c(2,7,3,9,6,3,5);
+ages = c(25,47,13,59,76,33,45);
 animals = c("llama", "alpaca", "goat", "llama", "guanaco");
 
-index1 = which(ages > 4);  # holds index of ages greater than 4
-index2 = which(ages < 4);  # holds index of ages less than 4
-
-index3 = which(animals == "llama"); # holds index of animals that are "llama"
-index4 = which(animals != "llama"); # holds index of animals that are not "llama"
+index1 = which(ages > 40);   # index of ages greater than 40
+index2 = which(ages <= 33);  # index of ages less than or equal to 33
+index3 = which(animalNames == "llama"); # index of animals named "llama"
+index4 = which(animalNames != "llama"); # index of animals not named "llama"
 ```
 
-There is an in between step that we skipped over here.  Each ***which()*** has a conditional statement inside.  That conditional statement gets evaluated by R first, and then ***which()*** is performed on the answer to the conditional statement.  Using the Console Window, let's look at how the conditional statement get evaluated by R:
+There is an in between step that we skipped over here.  Each ***which()*** has a conditional statement inside.  That conditional statement gets evaluated by R first, and then ***which()*** is performed on the answer to the conditional statement.  Using the ***Console***, let's look at how the conditional statements inside the ***which()*** get evaluated by R:
 
-![Looking at TRUE/FALSE vectors for conditional statements on a vector](images/R-03-07%20TF%20Vector.PNG){#fig-TF_Vector .fs}
+``` {.r tab="Console"}
+> ages > 40
+[1] FALSE  TRUE FALSE  TRUE  TRUE FALSE  TRUE
+> ages <= 33
+[1]  TRUE FALSE  TRUE FALSE FALSE  TRUE FALSE
+> animalNames == "llama"
+[1]  TRUE FALSE FALSE  TRUE FALSE
+> animalNames != "llama"
+[1] FALSE  TRUE  TRUE FALSE  TRUE
+```
 
-Each conditional statement produces a vector that has the same length as the number of values in the vector (@fig-TF_Vector).  The vector has only two vales: **TRUE** and **FALSE**.  The **TRUE** and **FALSE** values match the index of the values in the original index.
+Each conditional statement above produces a vector that has the same length as the number of values in the vector (***ages*** and ***animalNames***).  The vector produced has only two vales: **TRUE** and **FALSE**.  The **TRUE** and **FALSE** values match the index of the values in the original index.
 
  
 
 So if:
 
 ``` r
-ages = c(2,7,3,9,6,3,5);
+ages = c(25,47,13,59,76,33,45);
 ```
 
 then:
 
-***(ages*** **\> 4)**  is evaluated as:  **c(FALSE, TRUE, FALSE, TRUE, TRUE, FALSE, TRUE)**
+`(ages > 40)`  is evaluated as:  `c(FALSE, TRUE, FALSE, TRUE, TRUE, FALSE, TRUE)`
 
  
 
-This indicates that the **2^nd^**, **4^th^**, **5^th^**, and **7^th^** values of the vector ***ages*** are greater than **4**
+This indicates that the **2^nd^**, **4^th^**, **5^th^**, and **7^th^** values of the vector ***ages*** are greater than **40**
 
  
 
-***which()*** takes the **TRUE/FALSE** index and outputs the indices of the ***TRUE*** values
+***which()*** takes the **TRUE/FALSE** vector and outputs the indices of the ***TRUE*** values
 
 ``` r
 which(ages > 4);   # This evaluates to c(2, 4, 5, 7)

@@ -61,13 +61,12 @@ plot2 = ggplot(data=subset2) + # could also use weatherData[daysHighPrecip]
   theme_bw();
 plot(plot2);
 
-# Create blank plot first (no points)
-plot(x = subset2$avgTemp,
-     y = subset2$relHum,
-     main = "Humidity vs Temperature\nLansing, MI -- 2016",
-     xlab = "Average Temperatures (Fahrenheit)", 
-     ylab = "Relative Humidity")
-
+# # Base-R: Create blank plot first (no points)
+# plot(x = subset2$avgTemp,
+#      y = subset2$relHum,
+#      main = "Humidity vs Temperature\nLansing, MI -- 2016",
+#      xlab = "Average Temperatures (Fahrenheit)", 
+#      ylab = "Relative Humidity")
 
 plot3 = ggplot() +
   geom_point( mapping=aes(x=weatherData$avgTemp[daysHighPrecip],
@@ -80,12 +79,12 @@ plot3 = ggplot() +
   theme_bw();
 plot(plot3);
 
-# Create blank plot first (no points)
-plot(x = weatherData$avgTemp[daysHighPrecip],
-     y = weatherData$relHum[daysHighPrecip],
-     main = "Humidity vs Temperature\nLansing, MI -- 2016",
-     xlab = "Average Temperatures (Fahrenheit)", 
-     ylab = "Relative Humidity")
+# # Base-R: Create blank plot first (no points)
+# plot(x = weatherData$avgTemp[daysHighPrecip],
+#      y = weatherData$relHum[daysHighPrecip],
+#      main = "Humidity vs Temperature\nLansing, MI -- 2016",
+#      xlab = "Average Temperatures (Fahrenheit)", 
+#      ylab = "Relative Humidity")
 
 ### Explicit manual mapping:
 plot4 = ggplot() +
