@@ -6,8 +6,6 @@ short: "2-03"
 
 ### To-do
 
--   Add that, effectively, na.rm = TRUE changes an NA to a NULL
-
 ## Purpose
 
 -   Manipulations of a data frames
@@ -20,13 +18,13 @@ Like last lesson we will fixing some typical issues of columns in a data frame a
 
  
 
-The [script for this lesson](../scripts/2-03_DataTypesAndDataFrames_new.R) is here (right-click, Save link as)
+The [script for this lesson](../scripts/2-03_DataTypesAndDataFrames_new.R) is here
 
 We will be looking at two data frames in this lesson:
 
--   The [Lansing2016Noaa-2-bad.csv](../Data/Lansing2016Noaa-2-bad.csv) is here (left-click)
+-   The [Lansing2016Noaa-2-bad.csv](../Data/Lansing2016Noaa-2-bad.csv) is here
 
--   The [Lansing2016Noaa-2.csv](../Data/Lansing2016Noaa-2.csv) is here (left-click)
+-   The [Lansing2016Noaa-2.csv](../Data/Lansing2016Noaa-2.csv) is here
 
 ## Extra columns in data frames
 
@@ -45,15 +43,14 @@ Let's open up this file and see what happened:
 ``` r
 badData = read.csv(file="data/Lansing2016NOAA-2-bad.csv",
               sep=",",
-              header=TRUE,
-              stringsAsFactors = FALSE);
+              header=TRUE);
 ```
 
 After you double-click on ***badData*** in the ***Environment*** tab, you can see there is an extra column in the data frame at the beginning which has the row numbers in it.  This is because, by default, ***write.csv()*** [will treat the row numbers as a column of data]{.hl}.
 
 ![An extra column containing row numbers was added to the data frame](images/R-2-03-ExtraColumn.png){#fig-extraColumn .fs}
 
-This is not a big deal but each time you write to a CSV file without setting ***row.names = FALSE***, you are going to write another column of row numbers to the file.  If you keep writing to a CSV file without setting ***row.names*** to **FALSE**, you will get something like this:
+This is not a big deal but each time you write to a CSV file without setting ***row.names = FALSE***, you create another column of row numbers to the file.  If you keep writing to a CSV file without setting ***row.names*** to **FALSE**, you will get something like this:
 
 ![Multiple column containing row numbers...](images/2-03_MultipleBadColumns.png){#fig-multExtraColumns .fs}
 
@@ -92,7 +89,7 @@ There is one situation is which R will let you write a column to a data frame ev
 
  
 
-In this case, R will repeat the values provided until 366 values is reached.
+In these cases, R will repeat the values provided until 366 values is reached.
 
  
 
@@ -185,15 +182,14 @@ Now let's read in the "good" CSV file created in the last lesson:
 ``` r
   weatherData = read.csv(file="data/Lansing2016Noaa-2.csv",
                          sep=",",
-                         header=TRUE, 
-                         stringsAsFactors = FALSE);
+                         header=TRUE);
 ```
 
 If we look at the ***Environment*** (@fig-stringCol), there are a few columns in the ***weatherData*** data frame that R categorizes as string (***chr***) even though they are numeric by nature.  For instance, ***precip, snow,*** and ***snowDepth*** are all labelled as ***chr*** even though they have (mostly) numeric values.
 
  
 
-The issue is the ***"T"*** values used in these columns to indicate a ***trace*** of precipitation (less than 0.01 inches).  ***"T"*** is a ***chr/string*** values and, in R,[if any value in a vector or a column is a string then every value in the vector (or column) is treated as a string]{.hl}.
+The issue is the ***"T"*** values used in these columns to indicate a ***trace*** of precipitation (less than 0.01 inches).  ***"T"*** is a ***chr/string*** values and, in R, [if any value in a vector or a column is a string then every value in the vector (or column) is treated as a string]{.hl}.
 
 ![The precip column is seen as a string (chr) column by R](images/R-1-14_StringPrecip.png){#fig-stringCol .fs}
 
@@ -272,7 +268,7 @@ precip2:  num[1:366]  0.04 0 NA NA 0
 Using ***typeof()***  to find out what type of vector ***precip2*** is:
 
 ``` r
-> typeof(weatherData$precip2)
+> typeof(precip2)
 [1] "double"
 ```
 
@@ -301,8 +297,32 @@ totalPrecip = sum(precip2);
 ```
 
 ``` {.r tab="Environment"}
-  meanPrecip: NA_Real
-  totalPrecip: NA_Real
+meanPrecip: NA_Real
+totalPrecip: NA_Real
+```
+
+### Comparing NA to NULL
+
+***NA*** values are, in a sense, placeholder values for data that should exist but is unknown. Therefore are mathematical and statistical operations on ***NA*** will result in ***NA***:
+
+``` r
+> length(c(10, NA, NA, 20))
+[1] 4
+> sum(c(10, NA, NA, 20))
+[1] NA
+> mean(c(10, NA, NA, 20))
+[1] NA
+```
+
+Whereas the ***NULL*** values will be treated as if it does not exist:
+
+``` r
+> length(c(10, NULL, NULL, 20))
+[1] 2
+> sum(c(10, NULL, NULL, 20))
+[1] 30
+> mean(c(10, NULL, NULL, 20))
+[1] 15
 ```
 
 ### Finding the number of NA values
@@ -327,7 +347,7 @@ So, there are **60** ***NA*** values in ***precip2.***
 
 ### Removing NA values
 
-You can get around the **NA** issues by instructing R to remove the **NA** values from the calculation by setting the **NA** removal argument ***na.rm*** to **TRUE**:
+You can get around the **NA** issues by instructing R to remove the **NA** values from the calculation by setting the **NA** removal argument available in most mathematical and statistical function, ***na.rm***, to **TRUE**:
 
 ``` r
 meanPrecip2 = mean(precip2, na.rm = TRUE);
@@ -337,40 +357,40 @@ totalPrecip2 = sum(precip2, na.rm = TRUE);
 Without the ***NA*** values in the vector, the results are:
 
 ``` {.r tab="Environment"}
-  meanPrecip2: 0.1144...
-  totalPrecip2: 35.01
+meanPrecip2: 0.1144...
+totalPrecip2: 35.01
 ```
 
-[Note: most mathematical and statistical functions include the argument ***na.rm***]{.note}
+[Note: ***na.rm=TRUE*** effectively changes an ***NA*** to a ***NULL***]{.note}
 
 ### Replacing the NA values
 
-Using the argument ***na.rm=TRUE*** assumes that the ***NA*** values should be ignored.  However, that is not true in this case -- the **NA** values are the old "T" values, whichrepresented a trace or rain.  We need to keep these values in the vector.  Since a ***trace*** of precipitation is defined as less than **0.01** inches of precipitation -- so we will go halfway and change all ***NA*** values to **0.005***:*
+Using the argument ***na.rm=TRUE*** assumes that the ***NA*** values should be ignored.  However, that is not true in this case -- the **NA** values are the old ***T*** values and represented a trace or rain.  We need to keep these values in the vector.  Since a ***trace*** of precipitation is defined as less than **0.01** inches of precipitation -- so we will go halfway and change all ***NA*** values to **0.005***:*
 
  
 
 We will first make another copy of ***precip***:
 
 ``` r
-  precip3 = precip2;          # make another copy of precip
+precip3 = precip2;          # make another copy of precip
 ```
 
 And then cycle through all the values in ***precip3***, checking for ***NA*** values and changing them to **0.005**:
 
 ``` r
-  for(i in 1:length(precip3)) # go through every value in precip
+for(i in 1:length(precip3)) # go through every value in precip
+{
+  if(is.na(precip3[i]))     # if the value is NA
   {
-    if(is.na(precip3[i]))     # if the value is NA
-    {
-      precip[i] = 0.005;      # change it to 0.005
-    }
+    precip[i] = 0.005;      # change it to 0.005
   }
+}
 ```
 
 And we can see that ***precip3 now*** has **0.005** in place of **NA**:
 
 ``` {.r tab="Environment"}
-precip3 num [1:366] 0.04 0.00 «0.005 0.005» 0.00...
+precip3 num [1:366] 0.04 0.00 «0.005» «0.005» 0.00...
 ```
 
 ### Reserved Words in R
@@ -378,7 +398,8 @@ precip3 num [1:366] 0.04 0.00 «0.005 0.005» 0.00...
 ***NA*** is a [reserved word]{.hl} in R.  This means you cannot create a variable named ***NA*** in R:
 
 ``` {.r tab="Console"}
-«»
+> NA = 2
+Error in NA = 2 : invalid (do_set) left-hand side to assignment
 ```
 
 ***NA*** is not the same as the string value "N" followed by "A", so this ***if*** statement will not work:
@@ -387,7 +408,7 @@ precip3 num [1:366] 0.04 0.00 «0.005 0.005» 0.00...
 if(precip3[i] == "NA") # checking for the characters "N" and "A"
 ```
 
-And ***NA*** is not a variable name in R, so this  ***if*** statement does not work:
+And ***NA*** is not a variable name in R, so this ***if*** statement does not work:
 
 ``` r
 if(precip3[i] == NA) # checking for the variable named NA
@@ -403,14 +424,14 @@ if(is.na(precip3[i])) # checking if precip[i] is an NA value
 
 ### Mathematical operations on the new vector
 
-Now when we find the mean and the sum of the ***precip3*** vector with **0.005** in place of **NA**, we see values that reflect the fact that 60 days had a trace of rain:
+Let's find the mean and the sum of the ***precip3*** vector with **0.005** in place of **NA**,
 
 ``` r
 meanPrecip3 = mean(precip3);
 totalPrecip3 = sum(precip3);
 ```
 
-The mean precipitation was lowered a bit because we added 60 days that had trace precipitation to the calculation -- this also increased the total precipitation a bit:
+Adding 60 days with trace precipitation increased the sum by a little bit and lowered the mean a bit:
 
 ``` {.r tab="Environment"}
 meanPrecip2:   0.1144...
@@ -438,16 +459,16 @@ We are going to do some basic plots with the rainfall values.  For all of these
 The first plot will be a scatterplot with rainfall (***precipNum***) on the y-axis and day number on the x-axis.  Since day number is just the row number, we will map the y-axis to a sequence from ***1*** to the number of rows in ***weatherData*** (i.e., **366**)
 
 ``` r
-  plot1 = ggplot(data=weatherData ) +
-    geom_point( mapping=aes(x=1:nrow(weatherData),  # 1:366
-                            y=precipNum),
-                color = "red") +
-    labs( title="Daily Precipitation",
-          subtitle="Lansing, MI -- 2016",
-          x = "Day Number",
-          y = "Precipitation (inches)") +
-    theme_bw();
-  plot(plot1);
+plot1 = ggplot(data=weatherData ) +
+  geom_point( mapping=aes(x=1:nrow(weatherData),  # 1:366
+                          y=precipNum),
+              color = "red") +
+  labs( title="Daily Precipitation",
+        subtitle="Lansing, MI -- 2016",
+        x = "Day Number",
+        y = "Precipitation (inches)") +
+  theme_bw();
+plot(plot1);
 ```
 
 [Note: we could have used **366** instead of **nrow(weatherData**) but **nrow(weatherData)** is more robust as it can handle changes to the size of the data frame (e.g., a year that is not a leap year)]{.note}
@@ -471,7 +492,7 @@ GGPlot can also create a scatterplot from the precipitation values that are give
   plot(plot2);
 ```
 
-But, since ***precip*** contains ***chr***/string values (not numbers), GGPlot will output every unique ***precip*** value on the y-axis and put them in "alphabetical" order -- this is why ***T*** is at the top (it is alphabetically greater than the numbers)
+But, since ***precip*** contains ***chr***/string values (i.e., not numbers), GGPlot will output every unique ***precip*** value on the y-axis and put them in "alphabetical" order. This is why ***T*** is at the top of the y-axis – ***T*** is alphabetically greater than the numbers.
 
 ![A scatterplot using character values instead of numeric](images/R-2-03_ChrScatterplot.png){#fig-scatterplot_chr .fs}
 
@@ -479,9 +500,9 @@ But, since ***precip*** contains ***chr***/string values (not numbers), GGPlot w
 
 1\) Answer the following questions in comments at the top of your script:
 
--   In the ***weatherType*** column, there are a bunch of days without any conditions.  If you wanted to indicate that the lack of conditions is fine would you use ***NA*** or ***NULL***?  Why? 
+-   In the ***weatherType*** column, there are a bunch of days without any conditions.  Would you use NULL or NA to indicate that the lack of conditions can be ignored?  Why? 
 
--   What happens when you try to sum, using ***sum()***,  the following two vectors?  Why?
+-   What happens when you try to sum, using ***sum()***, the following two vectors?  Why?
 
     -   c(8, 10, 6, NULL, 4)
 
@@ -491,7 +512,7 @@ But, since ***precip*** contains ***chr***/string values (not numbers), GGPlot w
 
 2\) Find the total amount of snow was for the year and save it to the variable named ***snowTotal***
 
--   the snow column also uses "T" values, but trace in this case means snowfall between 0 and 0.5 inches
+-   the snow column also uses ***T*** values, but trace in this case means snowfall between 0 and 0.5 inches
 
  
 
@@ -499,7 +520,7 @@ But, since ***precip*** contains ***chr***/string values (not numbers), GGPlot w
 
  
 
-4\) Create a vector with **366** valuescalled ***seasons*** and add the vector to a column in the ***weatherData*** called ***season***
+4\) Create a vector with **366** values called ***seasons*** and add the vector to a column in the ***weatherData*** called ***season***
 
 -   March 21 June 21, and September 21 are approximate dates for the transition of the season -- it is OK for this application to be off by a few days
 
@@ -518,83 +539,3 @@ But, since ***precip*** contains ***chr***/string values (not numbers), GGPlot w
 -   Color the points blue and add appropriate labels and titles
 
 {{< include ../assets/_AppInstructions.qmd >}}
-
-**\#### Under here is material that will go in another lesson \####**
-
-## A scatterplot with a third mapping
-
-***x*** and ***y*** are calling mappings in R.  In the scatterplots above ***x*** is mapped to row numbers (1-366) and ***y*** is mapped to a precipitation column.
-
- 
-
-We can map more than just the axes in a plot.  We can map other physical properties of the plot like color, shape, and size to other columns in the data frame.
-
- 
-
-In this case, we will add the mapping of ***color*** to the ***avgTemp*** column:
-
-``` r
-  ## Mapping color to the temperature
-  plot3 = ggplot(data=weatherData ) +
-    geom_point( mapping=aes(x=1:nrow(weatherData),
-                            y=precipNum,
-                            color=avgTemp)) +
-    labs( title="Daily Precipitation",
-          subtitle="Lansing, MI -- 2016",
-          x = "Day Number",
-          y = "Precipitation (inches)") +
-    theme_bw();
-  plot(plot3);
-```
-
-And now the color of the dots represent the temperature values in ***avgTemp***.  As expected, the highest temperatures occur in the middle of the plot, which represents the summer months:
-
-![Mapping color to temperature](images/R-2-03-ColorMap.png){#fig-map_color .fs}
-
-[Note: We took out the subcomponent color="red" from the previous examples]{.note}*.* If we had not done that then the red color would have overridden the ***color*** mapping.
-
-### Customizing the colors
-
-R's default choice of colors does not have great contrast nor represents the data very well.  We can customize the color using a scale component called ***scale_color_gradientn***.
-
- 
-
-We will talk more about ***scale*** components in a later lesson but the name of the ***scale*** component basically says what it does.  ***scale_color_gradientn*** will customize the ***color*** mapping using a ***gradient*** with ***n*** number of values:
-
-``` r
-  ## Customizing the color of the temperature mapping
-  plot4 = ggplot(data=weatherData ) +
-    geom_point( mapping=aes(x=1:nrow(weatherData),
-                            y=precipNum,
-                            color=avgTemp)) +
-    «scale_color_gradientn(colors = c("blue", "green", "red"))» +
-    labs( title="Daily Precipitation",
-          subtitle="Lansing, MI -- 2016",
-          x = "Day Number",
-          y = "Precipitation (inches)") +
-    theme_bw();
-  plot(plot4);
-```
-
-In ***scale_color_gradientn***, the ***colors*** argument to a vector with 3 color values.  You can use as many color values as you want.  The result is a scatterplot with colors that make more intuitive sense:
-
-![Customizing colors in a mapping](images/R-2-03-CustomColors.png){#fig-custom_colors .fs}
-
-### Barplot
-
-If we want to use lines instead of points to represent the rainfall values, then we can switch to a bar plot by using ***geom_col()*** instead of ***geom_point()***:
-
-``` r
-  plot3 = ggplot(data=weatherData ) +
-    «geom_col»( mapping=aes(1:nrow(weatherData), 
-                          y=precipNum),
-              color = "red") +
-    labs( title="Daily Precipitation",
-          subtitle="Lansing, MI -- 2016",
-          x = "Precipitation (inches)",
-          y = "Number of Days") +
-    theme_bw();
-  plot(plot3);
-```
-
-![A barplot of precipitation vs day number](images/R-2-03-Barplot.png){#fig-barplot .fs}
