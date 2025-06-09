@@ -20,7 +20,7 @@ The [dateTimeData.csv](../data/dateTimeData.csv)
 
 ## Two new variable types: Date and POSIXct
 
-We have mostly worked with two variable types in R: ***numeric*** and ***string*** (also called ***characters*** or ***string of characters***).  Numeric values always appear outside of quotes and string values always appear in quotes. As a reminder, if a numeric value is in quotes, it is treated as a string.
+We have mostly worked with two variable types in R: ***numeric*** and ***string*** (also called ***characters*** or ***string of characters***).  Numeric values always appear outside of quotes and string values always appear in quotes. [Note: if a numeric value is in quotes, it is treated as a string.]{.note}
 
  
 
@@ -42,7 +42,7 @@ The first six columns in ***dateTimeData*** (@fig-dateTime_str) have values that
 
  
 
-In other words, R does not automatically assign values that look like dates and times to ***Date*** or ***POSIXct*** variables.  R just sees quotes and assign the values to a string variable.  We need to manually convert the string columns into ***Date*** or ***POSIXct*** variables.
+In other words, R does not automatically assign values that look like dates and times to variable types ***Date*** or ***POSIXct***.  R only sees quotes and assigns the values to a string variable.  We need to manually convert the string columns into ***Date*** or ***POSIXct*** variables.
 
 ![R sees the columns with date and time values as strings (chr)](images/R_2-03_DatetimeAndStrings.jpg){#fig-dateTime_str .fs}
 
@@ -52,26 +52,30 @@ We are going to start with converting strings that hold only date values to a **
 
  
 
-***as.Date()*** is the function that reads in a string and converts it to a Date variable.  However, if you pass a string into ***as.Date()***, you will likely get the following error:
+***as.Date()*** is the function that reads in a string and converts it to a Date variable.  However, if you pass a string column (in this case, ***date3*** from ***dateTimeData***) into ***as.Date()***, you will get the following error:
 
 ``` {.r tab="Console"}
-> as.Date(pseudoData$date3)
+> as.Date(dateTimeData$date3)
 Error in charToDate(x) : 
   character string is not in a standard unambiguous format
 ```
 
-This error occurs because dates can come in many different formats (e.g., April 15, 2022; 2022-04-15; 4/15/22).  ***as.Date()*** tries to figure out the format used in the string values but ***as.Date()*** often fails to figure out a format and it gives you the error above.
+This error occurs because dates can come in many different formats (e.g., April 15, 2022; 2022-04-15; 4/15/22).  ***as.Date()*** tries to figure out the format used in the string values but ***as.Date()*** often fails to figure out a format and it gives you an error.
 
  
 
 Even when ***as.Date()*** figures out a format, it is often the wrong format. In the following example, ***as.Date()*** assumes the first digits in the string represent the year even though, visually, the year is obviously the last four digits.
 
+::: {#fig-wrongDate}
 ``` {.r tab="Console"}
 > as.Date("12-10-2022")
 [1] "0012-10-20"
 ```
 
-### as.Date() breaking down the format argument
+as.Date thinks 12-10-2022 is October, 20 in the year 12
+:::
+
+### the format argument in as.Date()
 
 The solution is to explicitly tell ***as.Date()*** the format of the date values using the ***format*** argument.
 
@@ -105,7 +109,7 @@ Next, we to translate the above information into a language that ***as.Date()***
 
  
 
-The official term for the representation of the different parts of the datetime string is *conversion specifications*, which you can find here under the ***details*** section: <https://stat.ethz.ch/R-manual/R-devel/library/base/html/strptime.html>
+The official term for the representation of the different parts of the datetime string is [conversion specifications]{.hl}, which you can find under the ***details*** section here: <https://stat.ethz.ch/R-manual/R-devel/library/base/html/strptime.html>
 
 ![The beginning of the list of conversion specifications](images/R_2-03_ConversionSpecs.jpg){#fig-conversion_specs .fs}
 
@@ -115,17 +119,17 @@ The conversion specifications allow you to generalize the different components o
 
 Some other specifications:
 
-***%m***: Month -- given as a number between 00 and 12
+-   ***%m***: Month -- given as a number between 00 and 12
 
-***%M***: Minutes -- given as a number between 00 and 59
+-   ***%M***: Minutes -- given as a number between 00 and 59
 
-***%y***: Last two digits of the year
+-   ***%y***: Last two digits of the year
 
-***%Y***: Full year
+-   ***%Y***: Full year
 
 ### Using conversion specifications
 
-So, let's take our string that represents a datetime and replace the date-time components with a conversion specification using the example of string: "Apr 15, 2022"
+Let's take our string that represents a datetime and replace the date-time components with a conversion specification using the example of string: "Apr 15, 2022"
 
  
 
@@ -143,7 +147,7 @@ Broken down, each cell in the column ***date1*** has:
 
      
 
-[Note: the non-datetime characters in the specification (e.g., the spaces and the comma) need to be maintained]{.note}
+[The non-datetime characters in the specification (e.g., the spaces and the comma) need to be maintained]{.hl}
 
  
 
@@ -178,7 +182,7 @@ Formatting dates properly is vital when you are calculating or plotting date and
 
  
 
-If we take the original ***date1*** column and sort it, the sorting will be in *alphabetical order* with April dates followed by August, then July, June, and May (because R sees ***date1*** as a string).
+If we take the original ***date1*** column and sort it, the sorting will be in alphabetical order with April dates followed by August, then July, June, and May (because R sees ***date1*** as a string).
 
  
 
@@ -214,7 +218,7 @@ But, if we sort ***stnDate***, a ***Date*** object, we get the values in order o
 [28] "2022-08-06" "2022-08-06" "2022-08-06"
 ```
 
-You can also perform addition and subtraction on ***Date*** objects, whereas addition and subtraction on strings gives you an error:
+You can also perform addition and subtraction on ***Date*** objects to add or subtract days:
 
 ``` {.r tab="Console"}
 > stnDate[1:5]
@@ -233,7 +237,7 @@ Once you have date values properly formatted and saved as a ***Date*** object, y
 
  
 
-For instance, you can customize ***stnDate*** to the more familiar to American *month/date/2-digit year* format:
+For instance, you can customize ***stnDate*** to the more familiar to American [month/date/2-digit year]{.hl} format:
 
 ``` r
 date_formatted = format(stnDate, format="%m/%d/%y");  
@@ -250,7 +254,7 @@ date_formatted: chr[1:300] "4-15-22" "4-17-22"...
 date_weekOfDay: chr[1:300] "Friday" "Sunday"...
 ```
 
-[When you reformat, the object is no longer a Date object]{.hl}-- the reformatted object is a string object and behaves as a string object.  This is awkward behavior in R -- there is no way to create a ***Date*** variable with a customized format.  Instead, you use the ***Date*** variable in plots or calculation and then reformat afterwards when you want to display the values.
+[When you reformat, the object is no longer a Date object]{.hl} -- the reformatted object is a string object and behaves as a string object.  This is awkward behavior in R -- there is no way to create a ***Date*** variable with a customized format.  Instead, you use the ***Date*** variable in plots or calculation and then reformat afterwards when you want to display the values.
 
 ## POSIXct values
 
@@ -318,11 +322,11 @@ So, the general format of all the values in ***datetime1*** is:
 "%Y-%m-%d %I:%M%p"
 ```
 
-Once again, it is really important to maintain every non-dateTime component (e.g., spaces, dashes, commas).  The conversion specification is an instruction to a datetime function (***as.Date*** or ***as.POSIXct***) that gives the exact format of the string.  If the format is off even by a little, the function will likely not produce correct datetimes.
+Once again, it is really important to maintain every non-datetime component (e.g., spaces, dashes, commas).  The conversion specification is an instruction to a datetime function (***as.Date*** or ***as.POSIXct***) that gives the exact format of the string.  If the format is off even by a little, the function will likely not produce correct datetimes.
 
 ### Creating a POSIXct variable
 
-And we can create a ***POSIXct*** variable using ***as.POSIXct*** and the datetime conversion specification above:
+We can create a ***POSIXct*** variable using ***as.POSIXct*** and the datetime conversion specification above:
 
 ``` r
   stnDateTime = as.POSIXct(dateTimeData$dateTime1,
@@ -385,7 +389,7 @@ When we added and subtraction from a ***POSIXct*** object, each unit is 1 second
 
 ## Adding vectors to the data frame
 
-We can add the reformatted vector we created to the data frame:
+We can add the reformatted vectors we created to the data frame:
 
 ``` r
   dateTimeData$date_ref = date_formatted;
@@ -396,23 +400,21 @@ We can add the reformatted vector we created to the data frame:
 
 ## Application
 
-1.  Create a script file in your script folder named app2-06.r
+1.  Create a properly formatted ***Date*** object from the ***dateTimeData*** columns ***date2*** and ***date3***
 
-2.  Create a properly formatted ***Date*** object from the ***dateTimeData*** columns ***date2*** and ***date3***
+2.  Create a properly formatted ***POSIXct*** object from the ***dateTimeData*** columns ***dateTime2*** and ***dateTime3***
 
-3.  Create a properly formatted ***POSIXct*** object from the ***dateTimeData*** columns ***dateTime2*** and ***dateTime3***
-
-4.  Create a vector that has the dates in this format: **15-April, 2022**
+3.  Create a vector that has the dates in this format: **15-April, 2022**
 
     -   add this vector to a column named ***date_formatted*** in ***dateTimeData***
 
-5.  Create a vector that has the date-times in this format: **09:36pm on Fri 04/15/22** 
+4.  Create a vector that has the date-times in this format: **09:36pm on Fri 04/15/22** 
 
     -   add this vector to a column named ***dateTime_formatted*** in ***dateTimeData***
 
-6.  Create a vector that has date-times given by number of seconds since the epoch 
+5.  Create a vector that has date-times given by number of seconds since the epoch 
 
-    -   the epoch is Jan 1, 1970 at midnight GMT -- basically where UNIX starts counting time (you do not need to know the exact time...)
+    -   the [epoch ]{.hl}is Jan 1, 1970 at midnight GMT -- basically where UNIX starts counting time (you do not need to know the exact time...)
 
     -   you only need to use one conversion specification (i.e., one ***%\_***)
 
@@ -422,7 +424,7 @@ We can add the reformatted vector we created to the data frame:
 
 ## Extension: How Date and POSIXct objects tell time
 
-***Date*** and ***POSIXct*** objects, in the backend, stores datetimes as a single number.
+Behind the scenes, ***Date*** and ***POSIXct*** objects store datetimes as a single number.
 
  
 
@@ -446,11 +448,11 @@ If you want to go earlier than you subtract 1 so:
 
      
 
-The zero-point for POSIXct is Jan 1, 1970 at midnight Greenwich Mean Time.  To get any other time, you add 1 for every second after or subtract 1 for every second before.  This is called [epoch time]{.hl} and the current epoch time (as of this writing) is 1666830590, which means there have been 1666830590 seconds since Jan 1, 1970 at midnight GMT.
+The zero-point for POSIXct is Jan 1, 1970 at midnight Greenwich Mean Time.  To get any other time, you add 1 for every second after or subtract 1 for every second before.  This is called [epoch time]{.hl} and the [current epoch time](https://www.epochconverter.com/) (as of this writing) is 1749475799, which means there have been 1749475799 seconds since Jan 1, 1970 at midnight GMT.
 
  
 
-***as.Date()*** and ***as.POSIXct()*** take string values with conversion specifications and create numeric datetime values.  ***format()*** does the reverse and takes numeric datetime values and converts them into strings that are readable to the user.  This all works because the epoch time is fixed to a point in time that everyone can agree upon.  Everything else is a (very complicated) conversion.
+***as.Date()*** and ***as.POSIXct()*** take string values with conversion specifications and create numeric datetime values.  ***format()*** does the reverse and takes numeric datetime values and converts them into strings that are readable to the user.  This all works because the epoch time is fixed to a point in time that everyone has agree upon.  Everything else is a (very complicated) conversion.
 
  
 

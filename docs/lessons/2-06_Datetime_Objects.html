@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>2-06: Datetime objects</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-c5e6fd5a646752829aeb2af341632313.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link rel="shortcut icon" href="https://qfcatmsu.github.io/assets/images/qfc_icon.png">
+<script>mod=true; menuCollapse=true;</script>
+<script src="https://qfcatmsu.github.io/assets/quarto/qfc_styles.js"></script>
+ 
+
+
+<link rel="stylesheet" href="https://qfcatmsu.github.io/assets/quarto/qfc_styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+          <h1 class="quarto-secondary-nav-title">2-06: Datetime objects</h1>
+        </a>     
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text"><b>Fundamentals of Programming class</b></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/0-01-IntroductionAndSyllabus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction and Syllabus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Part 1</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-01-RStudioProjectsSetup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-01: RStudio Projects Setup</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-02-Variables.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-02: Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-03_Mathematical_Operations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-03: Mathematical Operations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-04_Vectors_And_Data_Frames.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-04: Vectors and Data Frames</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-05_Functions_Introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-05: Functions Introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-06_Run_and_Source.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-06: Run and Source</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-07_Outputs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-07: Outputs</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-08_Conditional_Operations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-08: Conditional Operations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-09_If_Else_Statements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-09: If-Else Statements</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-10_For_Loops.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-10: For Loops</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-11_For_Loops_and_State_Varibles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-11: For Loops and State Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-12_MultipleConditions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-12: Multiple Conditions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-13_Functions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-13: Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-14_Functions2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-14: Functions 2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-15_Nested_Loops_and _Matrices.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-15: Nested loops and Matrices</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Part 2</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-01_GGPlot_Intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-01: GGPlot Introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-02_DataFrame_Modifications.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-02: DataFrame Modifications</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-03_DataTypesAndDateFrames.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-03: Data Types and Data Frames</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-04_WhichStatements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-04: Which Statements</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-05_WhichAndRegularExpressions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-05: Which and Regular Expressions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-06_Datetime_Objects.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">2-06: Datetime objects</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-07_Matrices.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-07: Matrices</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-08_Binding_Sampling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-08: Binding and Sampling</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-09_Stacking_Mapping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-09: Stacking and Mapping</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-10_Statistical_Tests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-10: Statistical Tests</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-11_Objects_Attributes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-11: Objects and Attributes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-12_Lists.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-12: Lists</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-13_Breakpoints.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-13: Breakpoints</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title"><b>Lesson Content</b></h2>
+   
+  <ul>
+  <li><a href="#to-do" id="toc-to-do" class="nav-link active" data-scroll-target="#to-do"><span class="header-section-number">0.1</span> To-do</a></li>
+  <li><a href="#purpose" id="toc-purpose" class="nav-link" data-scroll-target="#purpose"><span class="header-section-number">1</span> Purpose</a></li>
+  <li><a href="#material" id="toc-material" class="nav-link" data-scroll-target="#material"><span class="header-section-number">2</span> Material</a></li>
+  <li><a href="#two-new-variable-types-date-and-posixct" id="toc-two-new-variable-types-date-and-posixct" class="nav-link" data-scroll-target="#two-new-variable-types-date-and-posixct"><span class="header-section-number">3</span> Two new variable types: Date and POSIXct</a>
+  <ul class="collapse">
+  <li><a href="#reading-datetime-objects-from-a-dataframe" id="toc-reading-datetime-objects-from-a-dataframe" class="nav-link" data-scroll-target="#reading-datetime-objects-from-a-dataframe"><span class="header-section-number">3.1</span> Reading datetime objects from a dataframe</a></li>
+  <li><a href="#using-as.date" id="toc-using-as.date" class="nav-link" data-scroll-target="#using-as.date"><span class="header-section-number">3.2</span> Using as.Date()</a></li>
+  <li><a href="#the-format-argument-in-as.date" id="toc-the-format-argument-in-as.date" class="nav-link" data-scroll-target="#the-format-argument-in-as.date"><span class="header-section-number">3.3</span> the format argument in as.Date()</a></li>
+  </ul></li>
+  <li><a href="#formatting-the-date" id="toc-formatting-the-date" class="nav-link" data-scroll-target="#formatting-the-date"><span class="header-section-number">4</span> Formatting the date</a>
+  <ul class="collapse">
+  <li><a href="#using-conversion-specifications" id="toc-using-conversion-specifications" class="nav-link" data-scroll-target="#using-conversion-specifications"><span class="header-section-number">4.1</span> Using conversion specifications</a></li>
+  <li><a href="#sorting-a-date-object" id="toc-sorting-a-date-object" class="nav-link" data-scroll-target="#sorting-a-date-object"><span class="header-section-number">4.2</span> Sorting a Date object</a></li>
+  </ul></li>
+  <li><a href="#reformatting-dates" id="toc-reformatting-dates" class="nav-link" data-scroll-target="#reformatting-dates"><span class="header-section-number">5</span> Reformatting Dates</a></li>
+  <li><a href="#posixct-values" id="toc-posixct-values" class="nav-link" data-scroll-target="#posixct-values"><span class="header-section-number">6</span> POSIXct values</a>
+  <ul class="collapse">
+  <li><a href="#posixct-example" id="toc-posixct-example" class="nav-link" data-scroll-target="#posixct-example"><span class="header-section-number">6.1</span> POSIXct example</a></li>
+  <li><a href="#creating-a-posixct-variable" id="toc-creating-a-posixct-variable" class="nav-link" data-scroll-target="#creating-a-posixct-variable"><span class="header-section-number">6.2</span> Creating a POSIXct variable</a></li>
+  <li><a href="#addition-and-subtraction-on-posixct" id="toc-addition-and-subtraction-on-posixct" class="nav-link" data-scroll-target="#addition-and-subtraction-on-posixct"><span class="header-section-number">6.3</span> Addition and Subtraction on POSIXct</a></li>
+  </ul></li>
+  <li><a href="#adding-vectors-to-the-data-frame" id="toc-adding-vectors-to-the-data-frame" class="nav-link" data-scroll-target="#adding-vectors-to-the-data-frame"><span class="header-section-number">7</span> Adding vectors to the data frame</a></li>
+  <li><a href="#application" id="toc-application" class="nav-link" data-scroll-target="#application"><span class="header-section-number">8</span> Application</a>
+  <ul class="collapse">
+  <li><a href="#questions-to-answer" id="toc-questions-to-answer" class="nav-link" data-scroll-target="#questions-to-answer"><span class="header-section-number">8.1</span> Questions to answer</a></li>
+  </ul></li>
+  <li><a href="#extension-how-date-and-posixct-objects-tell-time" id="toc-extension-how-date-and-posixct-objects-tell-time" class="nav-link" data-scroll-target="#extension-how-date-and-posixct-objects-tell-time"><span class="header-section-number">9</span> Extension: How Date and POSIXct objects tell time</a></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content column-page-right" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">2-06: Datetime objects</h1>
+</div>
+
+
+
+<div class="quarto-title-meta column-page-right">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="to-do" class="level3" data-number="0.1">
+<h3 data-number="0.1" class="anchored" data-anchor-id="to-do"><span class="header-section-number">0.1</span> To-do</h3>
+</section>
+<section id="purpose" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="purpose"><span class="header-section-number">1</span> Purpose</h2>
+<ul>
+<li><p>Convert a string into a Date or Datetime object</p></li>
+<li><p>Reformat Date and Datetime objects</p></li>
+</ul>
+</section>
+<section id="material" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="material"><span class="header-section-number">2</span> Material</h2>
+<p>The <a href="../scripts/2-06_DateTimeObjects_new.R">script for the lesson is here</a></p>
+<p>The <a href="../data/dateTimeData.csv">dateTimeData.csv</a></p>
+</section>
+<section id="two-new-variable-types-date-and-posixct" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="two-new-variable-types-date-and-posixct"><span class="header-section-number">3</span> Two new variable types: Date and POSIXct</h2>
+<p>We have mostly worked with two variable types in R: <strong><em>numeric</em></strong> and <strong><em>string</em></strong> (also called <strong><em>characters</em></strong> or <strong><em>string of characters</em></strong>).&nbsp; Numeric values always appear outside of quotes and string values always appear in quotes. <span class="note">Note: if a numeric value is in quotes, it is treated as a string.</span></p>
+<p>&nbsp;</p>
+<p>In this lesson we introduce two more variable type: <strong><em>Date</em></strong> and <strong><em>POSIXct</em></strong>.&nbsp; <strong><em>Date</em></strong>, as the name implies, holds information about the date whereas <strong><em>POSIXct</em></strong> holds information about both the date and the time.</p>
+<p>&nbsp;</p>
+<p><strong><em>POSIX</em></strong> is a system of standards developed for UNIX computers in the 1970s.&nbsp; <strong><em>ct</em></strong> means Calendar Time.&nbsp; So <strong><em>POSIXct</em></strong> is the UNIX standard for calendar time – and we continue to use this standard to this date (and maintain the unintuitive name).</p>
+<section id="reading-datetime-objects-from-a-dataframe" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="reading-datetime-objects-from-a-dataframe"><span class="header-section-number">3.1</span> Reading datetime objects from a dataframe</h3>
+<p>Let’s open the data file and save the contents to a data frame called <strong><em>dateTimeData</em></strong>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>  dateTimeData <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">"data/dateTimeData.csv"</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The first six columns in <strong><em>dateTimeData</em></strong> (<a href="#fig-dateTime_str" class="quarto-xref">Figure&nbsp;1</a>) have values that look like dates and times but R still sees these columns as strings (<strong><em>chr</em></strong>).</p>
+<p>&nbsp;</p>
+<p>In other words, R does not automatically assign values that look like dates and times to variable types <strong><em>Date</em></strong> or <strong><em>POSIXct</em></strong>.&nbsp; R only sees quotes and assigns the values to a string variable.&nbsp; We need to manually convert the string columns into <strong><em>Date</em></strong> or <strong><em>POSIXct</em></strong> variables.</p>
+<div id="fig-dateTime_str" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dateTime_str-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R_2-03_DatetimeAndStrings.jpg" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dateTime_str-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: R sees the columns with date and time values as strings (chr)
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="using-as.date" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="using-as.date"><span class="header-section-number">3.2</span> Using as.Date()</h3>
+<p>We are going to start with converting strings that hold only date values to a <strong><em>Date</em></strong> variables and later in the lesson we will convert strings that have time values to <strong><em>POSIXct</em></strong> variables.&nbsp; The process is very similar for both <strong><em>Date</em></strong> and <strong><em>POSIXct</em></strong>.</p>
+<p>&nbsp;</p>
+<p><strong><em>as.Date()</em></strong> is the function that reads in a string and converts it to a Date variable.&nbsp; However, if you pass a string column (in this case, <strong><em>date3</em></strong> from <strong><em>dateTimeData</em></strong>) into <strong><em>as.Date()</em></strong>, you will get the following error:</p>
+<div class="sourceCode" id="cb2" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">as.Date</span>(dateTimeData<span class="sc">$</span>date3)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> <span class="fu">charToDate</span>(x) <span class="sc">:</span> </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  character string is not <span class="cf">in</span> a standard unambiguous format</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This error occurs because dates can come in many different formats (e.g., April 15, 2022; 2022-04-15; 4/15/22).&nbsp; <strong><em>as.Date()</em></strong> tries to figure out the format used in the string values but <strong><em>as.Date()</em></strong> often fails to figure out a format and it gives you an error.</p>
+<p>&nbsp;</p>
+<p>Even when <strong><em>as.Date()</em></strong> figures out a format, it is often the wrong format. In the following example, <strong><em>as.Date()</em></strong> assumes the first digits in the string represent the year even though, visually, the year is obviously the last four digits.</p>
+<div id="fig-wrongDate" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-wrongDate-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="cb3" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">as.Date</span>(<span class="st">"12-10-2022"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"0012-10-20"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-wrongDate-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: as.Date thinks 12-10-2022 is October, 20 in the year 12
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="the-format-argument-in-as.date" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="the-format-argument-in-as.date"><span class="header-section-number">3.3</span> the format argument in as.Date()</h3>
+<p>The solution is to explicitly tell <strong><em>as.Date()</em></strong> the format of the date values using the <strong><em>format</em></strong> argument.</p>
+<div id="fig-asDate" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-asDate-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-1-14_asDate.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-asDate-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: The as.Date() function with the format argument
+</figcaption>
+</figure>
+</div>
+<p>First we need to break down the date values into their component parts.&nbsp;</p>
+<p>Let’s start with the first column (<a href="#fig-dateTime_str" class="quarto-xref">Figure&nbsp;1</a>) where the dates look like this: <strong>Apr 15, 2022</strong></p>
+<p>&nbsp;</p>
+<p><span class="hl">We need to explicitly tell <strong>as.Date()</strong> how the date is formatted</span> and this means breaking down every component of the string.</p>
+<p>&nbsp;</p>
+<p>Broken down, each cell in the column <strong><em>date1</em></strong> has:</p>
+<ul>
+<li><p>the abbreviation for the month&nbsp; (e.g., <strong>Apr</strong>)</p></li>
+<li><p>a space</p></li>
+<li><p>the day of the month (e.g., <strong>15</strong>)</p></li>
+<li><p>a comma and a space</p></li>
+<li><p>the 4-digit year (e.g., <strong>2022</strong>)</p></li>
+</ul>
+</section>
+</section>
+<section id="formatting-the-date" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="formatting-the-date"><span class="header-section-number">4</span> Formatting the date</h2>
+<p>Next, we to translate the above information into a language that <strong><em>as.Date()</em></strong> understands using the <strong><em>format</em></strong> argument.</p>
+<p>&nbsp;</p>
+<p>The official term for the representation of the different parts of the datetime string is <span class="hl">conversion specifications</span>, which you can find under the <strong><em>details</em></strong> section here: <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/strptime.html" class="uri">https://stat.ethz.ch/R-manual/R-devel/library/base/html/strptime.html</a></p>
+<div id="fig-conversion_specs" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-conversion_specs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R_2-03_ConversionSpecs.jpg" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-conversion_specs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: The beginning of the list of conversion specifications
+</figcaption>
+</figure>
+</div>
+<p>The conversion specifications allow you to generalize the different components of the datetime – and they all start with a <strong><em>%</em></strong>.&nbsp; When you declare the format of a datetime string, you replace the date and time components of the string with conversion specifications.&nbsp; For instance, <strong>Apr 15, 2022</strong> contains the abbreviated month so we know <strong><em>%b</em></strong> will be in the specification.</p>
+<p>&nbsp;</p>
+<p>Some other specifications:</p>
+<ul>
+<li><p><strong><em>%m</em></strong>: Month – given as a number between 00 and 12</p></li>
+<li><p><strong><em>%M</em></strong>: Minutes – given as a number between 00 and 59</p></li>
+<li><p><strong><em>%y</em></strong>: Last two digits of the year</p></li>
+<li><p><strong><em>%Y</em></strong>: Full year</p></li>
+</ul>
+<section id="using-conversion-specifications" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="using-conversion-specifications"><span class="header-section-number">4.1</span> Using conversion specifications</h3>
+<p>Let’s take our string that represents a datetime and replace the date-time components with a conversion specification using the example of string: “Apr 15, 2022”</p>
+<p>&nbsp;</p>
+<p>Broken down, each cell in the column <strong><em>date1</em></strong> has:</p>
+<ul>
+<li><p>the abbreviation for the month&nbsp; (<strong>%b</strong>)</p></li>
+<li><p>a space</p></li>
+<li><p>the day of the month (<strong>%d</strong>)</p></li>
+<li><p>a comma and a space</p></li>
+<li><p>the 4-digit year (<strong>%Y</strong>)&nbsp; <span class="note">note: %y would be the 2-digit year</span></p>
+<p>&nbsp;</p></li>
+</ul>
+<p><span class="hl">The non-datetime characters in the specification (e.g., the spaces and the comma) need to be maintained</span></p>
+<p>&nbsp;</p>
+<p>Now we have the general format for the dates in the <strong><em>date1</em></strong> column using conversion specifications and it is:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="st">"%b %d, %Y"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><span class="note">Note: This is still a string value, so we keep the quotes.</span></p>
+<p>&nbsp;</p>
+<p>And we can attach that conversion specification string using the <strong><em>format</em></strong> argument in <strong><em>as.Date()</em></strong>:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>  stnDate <span class="ot">=</span> <span class="fu">as.Date</span>(dateTimeData<span class="sc">$</span>date1,    <span class="co"># date1 is a chr (string) column</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">format=</span><span class="st">"%b %d, %Y"</span>);   <span class="co"># give the format of date1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In the <strong><em>Environment</em></strong> tab, we see that <strong><em>stnDate</em></strong> is a <strong><em>Date</em></strong> variable with <strong>300</strong> values in it.</p>
+<div class="sourceCode" id="cb6" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>stnDate Date[<span class="dv">1</span><span class="sc">:</span><span class="dv">300</span>], format<span class="sc">:</span> <span class="st">"2022-04-15"</span>...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong><em>stnDate</em></strong> is shown in the default method R uses to display <strong><em>Date</em></strong> variables, which is 4-digit year, 2-digit month, and 2-digit day.</p>
+</section>
+<section id="sorting-a-date-object" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="sorting-a-date-object"><span class="header-section-number">4.2</span> Sorting a Date object</h3>
+<p>Formatting dates properly is vital when you are calculating or plotting date and time data.&nbsp; When properly formatted, R understands the order of the value and the intervals between them.</p>
+<p>&nbsp;</p>
+<p>If we take the original <strong><em>date1</em></strong> column and sort it, the sorting will be in alphabetical order with April dates followed by August, then July, June, and May (because R sees <strong><em>date1</em></strong> as a string).</p>
+<p>&nbsp;</p>
+<p><span class="note">note: to save space, I am only outputting every 10th value</span></p>
+<div class="sourceCode" id="cb7" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">sort</span>(dateTimeData<span class="sc">$</span>date1[<span class="fu">seq</span>(<span class="at">from=</span><span class="dv">1</span>,<span class="at">to=</span><span class="dv">300</span>,<span class="at">by=</span><span class="dv">10</span>)])</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] <span class="st">"Apr 15, 2022"</span> <span class="st">"Apr 15, 2022"</span> <span class="st">"Apr 15, 2022"</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a> [<span class="dv">4</span>] <span class="st">"Apr 28, 2022"</span> <span class="st">"Apr 28, 2022"</span> <span class="st">"Apr 28, 2022"</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a> [<span class="dv">7</span>] <span class="st">"Aug 06, 2022"</span> <span class="st">"Aug 06, 2022"</span> <span class="st">"Aug 06, 2022"</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">10</span>] <span class="st">"Jul 12, 2022"</span> <span class="st">"Jul 12, 2022"</span> <span class="st">"Jul 12, 2022"</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>[<span class="dv">13</span>] <span class="st">"Jul 24, 2022"</span> <span class="st">"Jul 24, 2022"</span> <span class="st">"Jul 24, 2022"</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>[<span class="dv">16</span>] <span class="st">"Jun 04, 2022"</span> <span class="st">"Jun 04, 2022"</span> <span class="st">"Jun 04, 2022"</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>[<span class="dv">19</span>] <span class="st">"Jun 17, 2022"</span> <span class="st">"Jun 17, 2022"</span> <span class="st">"Jun 17, 2022"</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>[<span class="dv">22</span>] <span class="st">"Jun 29, 2022"</span> <span class="st">"Jun 29, 2022"</span> <span class="st">"Jun 29, 2022"</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>[<span class="dv">25</span>] <span class="st">"May 10, 2022"</span> <span class="st">"May 10, 2022"</span> <span class="st">"May 10, 2022"</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>[<span class="dv">28</span>] <span class="st">"May 23, 2022"</span> <span class="st">"May 23, 2022"</span> <span class="st">"May 23, 2022"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>But, if we sort <strong><em>stnDate</em></strong>, a <strong><em>Date</em></strong> object, we get the values in order of the date:</p>
+<div class="sourceCode" id="cb8" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">sort</span>(stnDate[<span class="fu">seq</span>(<span class="at">from=</span><span class="dv">1</span>,<span class="at">to=</span><span class="dv">300</span>,<span class="at">by=</span><span class="dv">10</span>)])</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] <span class="st">"2022-04-15"</span> <span class="st">"2022-04-15"</span> <span class="st">"2022-04-15"</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a> [<span class="dv">4</span>] <span class="st">"2022-04-28"</span> <span class="st">"2022-04-28"</span> <span class="st">"2022-04-28"</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a> [<span class="dv">7</span>] <span class="st">"2022-05-10"</span> <span class="st">"2022-05-10"</span> <span class="st">"2022-05-10"</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">10</span>] <span class="st">"2022-05-23"</span> <span class="st">"2022-05-23"</span> <span class="st">"2022-05-23"</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>[<span class="dv">13</span>] <span class="st">"2022-06-04"</span> <span class="st">"2022-06-04"</span> <span class="st">"2022-06-04"</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>[<span class="dv">16</span>] <span class="st">"2022-06-17"</span> <span class="st">"2022-06-17"</span> <span class="st">"2022-06-17"</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>[<span class="dv">19</span>] <span class="st">"2022-06-29"</span> <span class="st">"2022-06-29"</span> <span class="st">"2022-06-29"</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>[<span class="dv">22</span>] <span class="st">"2022-07-12"</span> <span class="st">"2022-07-12"</span> <span class="st">"2022-07-12"</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>[<span class="dv">25</span>] <span class="st">"2022-07-24"</span> <span class="st">"2022-07-24"</span> <span class="st">"2022-07-24"</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>[<span class="dv">28</span>] <span class="st">"2022-08-06"</span> <span class="st">"2022-08-06"</span> <span class="st">"2022-08-06"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You can also perform addition and subtraction on <strong><em>Date</em></strong> objects to add or subtract days:</p>
+<div class="sourceCode" id="cb9" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> stnDate[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"2022-04-15"</span> <span class="st">"2022-04-17"</span> <span class="st">"2022-04-18"</span> <span class="st">"2022-04-19"</span> <span class="st">"2022-04-20"</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> stnDate[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]<span class="sc">-</span><span class="dv">4</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"2022-04-11"</span> <span class="st">"2022-04-13"</span> <span class="st">"2022-04-14"</span> <span class="st">"2022-04-15"</span> <span class="st">"2022-04-16"</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> stnDate[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]<span class="sc">+</span><span class="dv">3</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"2022-04-18"</span> <span class="st">"2022-04-20"</span> <span class="st">"2022-04-21"</span> <span class="st">"2022-04-22"</span> <span class="st">"2022-04-23"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a href="#extension-how-date-and-posixct-objects-tell-time">Extension: How Date and POSIXct objects tell time</a></p>
+</section>
+</section>
+<section id="reformatting-dates" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="reformatting-dates"><span class="header-section-number">5</span> Reformatting Dates</h2>
+<p>Once you have date values properly formatted and saved as a <strong><em>Date</em></strong> object, you can then reformat the date to customize the output using <strong><em>format()</em></strong>.</p>
+<p>&nbsp;</p>
+<p>For instance, you can customize <strong><em>stnDate</em></strong> to the more familiar to American <span class="hl">month/date/2-digit year</span> format:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>date_formatted <span class="ot">=</span> <span class="fu">format</span>(stnDate, <span class="at">format=</span><span class="st">"%m/%d/%y"</span>);  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Or, you can get information from the dates, like the day of the week (<strong><em>%A</em></strong>):</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>date_weekOfDay <span class="ot">=</span> <span class="fu">format</span>(stnDate, <span class="at">format=</span><span class="st">"%A"</span>);      </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>date_formatted<span class="sc">:</span> chr[<span class="dv">1</span><span class="sc">:</span><span class="dv">300</span>] <span class="st">"4-15-22"</span> <span class="st">"4-17-22"</span>...</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>date_weekOfDay<span class="sc">:</span> chr[<span class="dv">1</span><span class="sc">:</span><span class="dv">300</span>] <span class="st">"Friday"</span> <span class="st">"Sunday"</span>...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><span class="hl">When you reformat, the object is no longer a Date object</span> – the reformatted object is a string object and behaves as a string object.&nbsp; This is awkward behavior in R – there is no way to create a <strong><em>Date</em></strong> variable with a customized format.&nbsp; Instead, you use the <strong><em>Date</em></strong> variable in plots or calculation and then reformat afterwards when you want to display the values.</p>
+</section>
+<section id="posixct-values" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="posixct-values"><span class="header-section-number">6</span> POSIXct values</h2>
+<p>Date variables and the corresponding <strong><em>as.Date()</em></strong> function work for values with only dates in them.&nbsp; Values that have dates and times (or just times) need to be saved as <strong><em>POSIXct</em></strong> variables and the corresponding function is <strong><em>as.POSIXct()</em></strong>.</p>
+<p>&nbsp;</p>
+<p>The only difference between <strong><em>Date</em></strong> and <strong><em>POSIXct</em></strong> variables is that there are a lot more conversion specifications that can be used for <strong><em>POSIXct</em></strong> (all of the specification used for dates and all of the specifications used for time). Otherwise, they operate the same.</p>
+<section id="posixct-example" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="posixct-example"><span class="header-section-number">6.1</span> POSIXct example</h3>
+<p>Let’s break down the <strong><em>datetime1</em></strong> column in <strong><em>dateTimeData</em></strong>, which has values that look like this: &nbsp;<strong>2022-04-15 09:42PM</strong></p>
+<p>&nbsp;</p>
+<p>There is:</p>
+<ul>
+<li><p>the 4-digit year (e.g., <strong>2022</strong>)</p></li>
+<li><p>a dash</p></li>
+<li><p>Month as a number (e.g., <strong>04</strong>)</p></li>
+<li><p>a dash</p></li>
+<li><p>the day of the month (e.g., <strong>15</strong>)</p></li>
+<li><p>a space</p></li>
+<li><p>Hour in 12-hour time (e.g., <strong>09</strong>)</p></li>
+<li><p>a colon</p></li>
+<li><p>minutes (e.g., <strong>42</strong>)</p></li>
+<li><p>AM/PM indicator (e.g., <strong>PM</strong>)</p>
+<p>&nbsp;</p></li>
+</ul>
+<p>Using the <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/strptime.html">conversion specifications</a>, this becomes:</p>
+<ul>
+<li><p>the 4-digit year (<strong>%Y</strong>)</p></li>
+<li><p>a dash</p></li>
+<li><p>Month as a number (<strong>%m</strong>)</p></li>
+<li><p>a dash</p></li>
+<li><p>the day of the month (<strong>%d</strong>)</p></li>
+<li><p>a space</p></li>
+<li><p>Hour in 12-hour time (<strong>%I</strong>)</p></li>
+<li><p>a colon</p></li>
+<li><p>minutes (<strong>%M</strong>)</p>
+<p>&nbsp;</p></li>
+</ul>
+<p>So, the general format of all the values in <strong><em>datetime1</em></strong> is:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="st">"%Y-%m-%d %I:%M%p"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Once again, it is really important to maintain every non-datetime component (e.g., spaces, dashes, commas).&nbsp; The conversion specification is an instruction to a datetime function (<strong><em>as.Date</em></strong> or <strong><em>as.POSIXct</em></strong>) that gives the exact format of the string.&nbsp; If the format is off even by a little, the function will likely not produce correct datetimes.</p>
+</section>
+<section id="creating-a-posixct-variable" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="creating-a-posixct-variable"><span class="header-section-number">6.2</span> Creating a POSIXct variable</h3>
+<p>We can create a <strong><em>POSIXct</em></strong> variable using <strong><em>as.POSIXct</em></strong> and the datetime conversion specification above:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>  stnDateTime <span class="ot">=</span> <span class="fu">as.POSIXct</span>(dateTimeData<span class="sc">$</span>dateTime1,</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">format=</span><span class="st">"%Y-%m-%d %I:%M%p"</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong><em>stnDateTime</em></strong> is a <strong><em>POSIXct</em></strong> object and R’s default method for displaying <strong><em>POSIXct</em></strong> value is the same as for <strong><em>Date –</em></strong> followed by a 24-hour time using colons.&nbsp;</p>
+<div class="sourceCode" id="cb15" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>stnDateTime<span class="sc">:</span> POSIXct[<span class="dv">1</span><span class="sc">:</span><span class="dv">300</span>], format <span class="st">"2022-04-15 21:42:00"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Like <strong><em>Date</em></strong> object, we can reformat a <strong><em>POSIXct</em></strong> object using <strong><em>format()</em></strong>:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>dateTime_formatted <span class="ot">=</span> <span class="fu">format</span>(stnDateTime, <span class="at">format=</span><span class="st">"%m-%d-%y %H%m"</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Or, pull some information out of it (in this case, the abbreviated day of the week <strong><em>%a</em></strong>):</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>dateTime_weekOfDay <span class="ot">=</span> <span class="fu">format</span>(stnDateTime, <span class="at">format=</span><span class="st">"%a"</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb18" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>dateTime_formatted<span class="sc">:</span> chr[<span class="dv">1</span><span class="sc">:</span><span class="dv">300</span>] <span class="st">"04-15-22 2104"</span> <span class="st">"04-17-22 2104"</span>...</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>dateTime_weekOfDay<span class="sc">:</span> chr[<span class="dv">1</span><span class="sc">:</span><span class="dv">300</span>] <span class="st">"Fri"</span> <span class="st">"Sun"</span> <span class="st">"Mon"</span>...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="addition-and-subtraction-on-posixct" class="level3" data-number="6.3">
+<h3 data-number="6.3" class="anchored" data-anchor-id="addition-and-subtraction-on-posixct"><span class="header-section-number">6.3</span> Addition and Subtraction on POSIXct</h3>
+<p>When we added and subtraction from a <strong><em>Date</em></strong> object, each unit is 1 day.&nbsp; So, adding 5 to a <strong><em>Date</em></strong> object adds 5 days.</p>
+<p>&nbsp;</p>
+<p>When we added and subtraction from a <strong><em>POSIXct</em></strong> object, each unit is 1 second.&nbsp; So, adding 5 to a <strong><em>POSIXct</em></strong> object adds 5 seconds.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> stnDateTime[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"2022-04-15 21:42:00 EDT"</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">2</span>] <span class="st">"2022-04-17 03:42:00 EDT"</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">3</span>] <span class="st">"2022-04-18 09:42:00 EDT"</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">4</span>] <span class="st">"2022-04-19 15:42:00 EDT"</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>[<span class="dv">5</span>] <span class="st">"2022-04-20 21:42:00 EDT"</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> stnDateTime[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="sc">+</span> <span class="dv">34</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"2022-04-15 21:42:34 EDT"</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>[<span class="dv">2</span>] <span class="st">"2022-04-17 03:42:34 EDT"</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>[<span class="dv">3</span>] <span class="st">"2022-04-18 09:42:34 EDT"</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>[<span class="dv">4</span>] <span class="st">"2022-04-19 15:42:34 EDT"</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>[<span class="dv">5</span>] <span class="st">"2022-04-20 21:42:34 EDT"</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> stnDateTime[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="sc">-</span> <span class="dv">12</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"2022-04-15 21:41:48 EDT"</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>[<span class="dv">2</span>] <span class="st">"2022-04-17 03:41:48 EDT"</span></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>[<span class="dv">3</span>] <span class="st">"2022-04-18 09:41:48 EDT"</span></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>[<span class="dv">4</span>] <span class="st">"2022-04-19 15:41:48 EDT"</span></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>[<span class="dv">5</span>] <span class="st">"2022-04-20 21:41:48 EDT"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a href="#extension-how-date-and-posixct-objects-tell-time">Extension: How Date and POSIXct objects tell time</a></p>
+</section>
+</section>
+<section id="adding-vectors-to-the-data-frame" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="adding-vectors-to-the-data-frame"><span class="header-section-number">7</span> Adding vectors to the data frame</h2>
+<p>We can add the reformatted vectors we created to the data frame:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>  dateTimeData<span class="sc">$</span>date_ref <span class="ot">=</span> date_formatted;</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  dateTimeData<span class="sc">$</span>weekOfDay <span class="ot">=</span> dateTime_weekOfDay;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-addRefomattedVec" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-addRefomattedVec-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R_2-03_AddColumns.jpg" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-addRefomattedVec-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: Adding two of the reformatted datetime vectors to the data frame
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="application" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="application"><span class="header-section-number">8</span> Application</h2>
+<ol type="1">
+<li><p>Create a properly formatted <strong><em>Date</em></strong> object from the <strong><em>dateTimeData</em></strong> columns <strong><em>date2</em></strong> and <strong><em>date3</em></strong></p></li>
+<li><p>Create a properly formatted <strong><em>POSIXct</em></strong> object from the <strong><em>dateTimeData</em></strong> columns <strong><em>dateTime2</em></strong> and <strong><em>dateTime3</em></strong></p></li>
+<li><p>Create a vector that has the dates in this format: <strong>15-April, 2022</strong></p>
+<ul>
+<li>add this vector to a column named <strong><em>date_formatted</em></strong> in <strong><em>dateTimeData</em></strong></li>
+</ul></li>
+<li><p>Create a vector that has the date-times in this format: <strong>09:36pm on Fri 04/15/22</strong>&nbsp;</p>
+<ul>
+<li>add this vector to a column named <strong><em>dateTime_formatted</em></strong> in <strong><em>dateTimeData</em></strong></li>
+</ul></li>
+<li><p>Create a vector that has date-times given by number of seconds since the epoch&nbsp;</p>
+<ul>
+<li><p>the <span class="hl">epoch</span>is Jan 1, 1970 at midnight GMT – basically where UNIX starts counting time (you do not need to know the exact time…)</p></li>
+<li><p>you only need to use one conversion specification (i.e., one <strong><em>%_</em></strong>)</p></li>
+<li><p>add this vector to a column named <strong><em>epoch</em></strong> in <strong><em>dateTimeData</em></strong></p></li>
+</ul></li>
+</ol>
+<p>&nbsp;</p>
+<p>Save the script as&nbsp;<strong><em>app2-06.r</em></strong> in your&nbsp;<strong><em>scripts</em></strong> folder and&nbsp; email your Project Folder to Charlie Belinsky at belinsky@msu.edu.</p>
+<p>&nbsp;</p>
+<p><a href="1-01-RStudioProjectsSetup.html#sec-zip-folder" target="_blank">Instructions for zipping the Project Folder are here.</a></p>
+<p>&nbsp;</p>
+<p>If you have any questions regarding this application, feel free to email them to Charlie Belinsky at belinsky@msu.edu.</p>
+<section id="questions-to-answer" class="level3" data-number="8.1">
+<h3 data-number="8.1" class="anchored" data-anchor-id="questions-to-answer"><span class="header-section-number">8.1</span> Questions to answer</h3>
+<p>Answer the following in comments inside your application script:</p>
+<ol type="1">
+<li><p>What was your level of comfort with the lesson/application?</p></li>
+<li><p>What areas of the lesson/application confused or still confuses you?</p></li>
+<li><p>What are some things you would like to know more about that is related to, but not covered in, this lesson?</p></li>
+</ol>
+</section>
+</section>
+<section id="extension-how-date-and-posixct-objects-tell-time" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="extension-how-date-and-posixct-objects-tell-time"><span class="header-section-number">9</span> Extension: How Date and POSIXct objects tell time</h2>
+<p>Behind the scenes, <strong><em>Date</em></strong> and <strong><em>POSIXct</em></strong> objects store datetimes as a single number.</p>
+<p>&nbsp;</p>
+<p>The zero-point for Date is Jan 1, 1970 and adds one for every day after:</p>
+<ul>
+<li><p>Jan 2, 1970 = 1</p></li>
+<li><p>Jan 3, 1970&nbsp; = 2</p></li>
+<li><p>Jan 30, 1970 = 31,</p></li>
+<li><p>Jan 1, 1971 = 366</p></li>
+</ul>
+<p>&nbsp;</p>
+<p>If you want to go earlier than you subtract 1 so:</p>
+<ul>
+<li><p>Dec 31, 1969 = -1</p></li>
+<li><p>Dec 30, 1969 = -2</p>
+<p>&nbsp;</p></li>
+</ul>
+<p>The zero-point for POSIXct is Jan 1, 1970 at midnight Greenwich Mean Time.&nbsp; To get any other time, you add 1 for every second after or subtract 1 for every second before.&nbsp; This is called <span class="hl">epoch time</span> and the <a href="https://www.epochconverter.com/">current epoch time</a> (as of this writing) is 1749475799, which means there have been 1749475799 seconds since Jan 1, 1970 at midnight GMT.</p>
+<p>&nbsp;</p>
+<p><strong><em>as.Date()</em></strong> and <strong><em>as.POSIXct()</em></strong> take string values with conversion specifications and create numeric datetime values.&nbsp; <strong><em>format()</em></strong> does the reverse and takes numeric datetime values and converts them into strings that are readable to the user.&nbsp; This all works because the epoch time is fixed to a point in time that everyone has agree upon.&nbsp; Everything else is a (very complicated) conversion.</p>
+<p>&nbsp;</p>
+<p>If you want to know more about how this system works then here is a video I really like discussing all the problems with dealing time zones:</p>
+<p><a href="https://www.youtube.com/watch?v=-5wpm-gesOY" class="uri">https://www.youtube.com/watch?v=-5wpm-gesOY</a></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

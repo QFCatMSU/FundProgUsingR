@@ -3972,5 +3972,113 @@
       "Part 2",
       "2-05: Which and Regular Expressions"
     ]
+  },
+  {
+    "objectID": "lessons/2-06_Datetime_Objects.html#purpose",
+    "href": "lessons/2-06_Datetime_Objects.html#purpose",
+    "title": "2-06: Datetime objects",
+    "section": "1 Purpose",
+    "text": "1 Purpose\n\nConvert a string into a Date or Datetime object\nReformat Date and Datetime objects",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "Part 2",
+      "2-06: Datetime objects"
+    ]
+  },
+  {
+    "objectID": "lessons/2-06_Datetime_Objects.html#material",
+    "href": "lessons/2-06_Datetime_Objects.html#material",
+    "title": "2-06: Datetime objects",
+    "section": "2 Material",
+    "text": "2 Material\nThe script for the lesson is here\nThe dateTimeData.csv",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "Part 2",
+      "2-06: Datetime objects"
+    ]
+  },
+  {
+    "objectID": "lessons/2-06_Datetime_Objects.html#two-new-variable-types-date-and-posixct",
+    "href": "lessons/2-06_Datetime_Objects.html#two-new-variable-types-date-and-posixct",
+    "title": "2-06: Datetime objects",
+    "section": "3 Two new variable types: Date and POSIXct",
+    "text": "3 Two new variable types: Date and POSIXct\nWe have mostly worked with two variable types in R: numeric and string (also called characters or string of characters).  Numeric values always appear outside of quotes and string values always appear in quotes. Note: if a numeric value is in quotes, it is treated as a string.\n \nIn this lesson we introduce two more variable type: Date and POSIXct.  Date, as the name implies, holds information about the date whereas POSIXct holds information about both the date and the time.\n \nPOSIX is a system of standards developed for UNIX computers in the 1970s.  ct means Calendar Time.  So POSIXct is the UNIX standard for calendar time – and we continue to use this standard to this date (and maintain the unintuitive name).\n\n3.1 Reading datetime objects from a dataframe\nLet’s open the data file and save the contents to a data frame called dateTimeData.\n  dateTimeData = read.csv(\"data/dateTimeData.csv\");\nThe first six columns in dateTimeData (Figure 1) have values that look like dates and times but R still sees these columns as strings (chr).\n \nIn other words, R does not automatically assign values that look like dates and times to variable types Date or POSIXct.  R only sees quotes and assigns the values to a string variable.  We need to manually convert the string columns into Date or POSIXct variables.\n\n\n\n\n\n\nFigure 1: R sees the columns with date and time values as strings (chr)\n\n\n\n\n\n3.2 Using as.Date()\nWe are going to start with converting strings that hold only date values to a Date variables and later in the lesson we will convert strings that have time values to POSIXct variables.  The process is very similar for both Date and POSIXct.\n \nas.Date() is the function that reads in a string and converts it to a Date variable.  However, if you pass a string column (in this case, date3 from dateTimeData) into as.Date(), you will get the following error:\n&gt; as.Date(dateTimeData$date3)\nError in charToDate(x) : \n  character string is not in a standard unambiguous format\nThis error occurs because dates can come in many different formats (e.g., April 15, 2022; 2022-04-15; 4/15/22).  as.Date() tries to figure out the format used in the string values but as.Date() often fails to figure out a format and it gives you an error.\n \nEven when as.Date() figures out a format, it is often the wrong format. In the following example, as.Date() assumes the first digits in the string represent the year even though, visually, the year is obviously the last four digits.\n\n\n\n&gt; as.Date(\"12-10-2022\")\n[1] \"0012-10-20\"\n\n\nFigure 2: as.Date thinks 12-10-2022 is October, 20 in the year 12\n\n\n\n\n\n3.3 the format argument in as.Date()\nThe solution is to explicitly tell as.Date() the format of the date values using the format argument.\n\n\n\n\n\n\nFigure 3: The as.Date() function with the format argument\n\n\n\nFirst we need to break down the date values into their component parts. \nLet’s start with the first column (Figure 1) where the dates look like this: Apr 15, 2022\n \nWe need to explicitly tell as.Date() how the date is formatted and this means breaking down every component of the string.\n \nBroken down, each cell in the column date1 has:\n\nthe abbreviation for the month  (e.g., Apr)\na space\nthe day of the month (e.g., 15)\na comma and a space\nthe 4-digit year (e.g., 2022)",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "Part 2",
+      "2-06: Datetime objects"
+    ]
+  },
+  {
+    "objectID": "lessons/2-06_Datetime_Objects.html#formatting-the-date",
+    "href": "lessons/2-06_Datetime_Objects.html#formatting-the-date",
+    "title": "2-06: Datetime objects",
+    "section": "4 Formatting the date",
+    "text": "4 Formatting the date\nNext, we to translate the above information into a language that as.Date() understands using the format argument.\n \nThe official term for the representation of the different parts of the datetime string is conversion specifications, which you can find under the details section here: https://stat.ethz.ch/R-manual/R-devel/library/base/html/strptime.html\n\n\n\n\n\n\nFigure 4: The beginning of the list of conversion specifications\n\n\n\nThe conversion specifications allow you to generalize the different components of the datetime – and they all start with a %.  When you declare the format of a datetime string, you replace the date and time components of the string with conversion specifications.  For instance, Apr 15, 2022 contains the abbreviated month so we know %b will be in the specification.\n \nSome other specifications:\n\n%m: Month – given as a number between 00 and 12\n%M: Minutes – given as a number between 00 and 59\n%y: Last two digits of the year\n%Y: Full year\n\n\n4.1 Using conversion specifications\nLet’s take our string that represents a datetime and replace the date-time components with a conversion specification using the example of string: “Apr 15, 2022”\n \nBroken down, each cell in the column date1 has:\n\nthe abbreviation for the month  (%b)\na space\nthe day of the month (%d)\na comma and a space\nthe 4-digit year (%Y)  note: %y would be the 2-digit year\n \n\nThe non-datetime characters in the specification (e.g., the spaces and the comma) need to be maintained\n \nNow we have the general format for the dates in the date1 column using conversion specifications and it is:\n\"%b %d, %Y\"\nNote: This is still a string value, so we keep the quotes.\n \nAnd we can attach that conversion specification string using the format argument in as.Date():\n  stnDate = as.Date(dateTimeData$date1,    # date1 is a chr (string) column\n                    format=\"%b %d, %Y\");   # give the format of date1\nIn the Environment tab, we see that stnDate is a Date variable with 300 values in it.\nstnDate Date[1:300], format: \"2022-04-15\"...\nstnDate is shown in the default method R uses to display Date variables, which is 4-digit year, 2-digit month, and 2-digit day.\n\n\n4.2 Sorting a Date object\nFormatting dates properly is vital when you are calculating or plotting date and time data.  When properly formatted, R understands the order of the value and the intervals between them.\n \nIf we take the original date1 column and sort it, the sorting will be in alphabetical order with April dates followed by August, then July, June, and May (because R sees date1 as a string).\n \nnote: to save space, I am only outputting every 10th value\n&gt; sort(dateTimeData$date1[seq(from=1,to=300,by=10)])\n [1] \"Apr 15, 2022\" \"Apr 15, 2022\" \"Apr 15, 2022\"\n [4] \"Apr 28, 2022\" \"Apr 28, 2022\" \"Apr 28, 2022\"\n [7] \"Aug 06, 2022\" \"Aug 06, 2022\" \"Aug 06, 2022\"\n[10] \"Jul 12, 2022\" \"Jul 12, 2022\" \"Jul 12, 2022\"\n[13] \"Jul 24, 2022\" \"Jul 24, 2022\" \"Jul 24, 2022\"\n[16] \"Jun 04, 2022\" \"Jun 04, 2022\" \"Jun 04, 2022\"\n[19] \"Jun 17, 2022\" \"Jun 17, 2022\" \"Jun 17, 2022\"\n[22] \"Jun 29, 2022\" \"Jun 29, 2022\" \"Jun 29, 2022\"\n[25] \"May 10, 2022\" \"May 10, 2022\" \"May 10, 2022\"\n[28] \"May 23, 2022\" \"May 23, 2022\" \"May 23, 2022\"\nBut, if we sort stnDate, a Date object, we get the values in order of the date:\n&gt; sort(stnDate[seq(from=1,to=300,by=10)])\n [1] \"2022-04-15\" \"2022-04-15\" \"2022-04-15\"\n [4] \"2022-04-28\" \"2022-04-28\" \"2022-04-28\"\n [7] \"2022-05-10\" \"2022-05-10\" \"2022-05-10\"\n[10] \"2022-05-23\" \"2022-05-23\" \"2022-05-23\"\n[13] \"2022-06-04\" \"2022-06-04\" \"2022-06-04\"\n[16] \"2022-06-17\" \"2022-06-17\" \"2022-06-17\"\n[19] \"2022-06-29\" \"2022-06-29\" \"2022-06-29\"\n[22] \"2022-07-12\" \"2022-07-12\" \"2022-07-12\"\n[25] \"2022-07-24\" \"2022-07-24\" \"2022-07-24\"\n[28] \"2022-08-06\" \"2022-08-06\" \"2022-08-06\"\nYou can also perform addition and subtraction on Date objects to add or subtract days:\n&gt; stnDate[1:5]\n[1] \"2022-04-15\" \"2022-04-17\" \"2022-04-18\" \"2022-04-19\" \"2022-04-20\"\n&gt; stnDate[1:5]-4\n[1] \"2022-04-11\" \"2022-04-13\" \"2022-04-14\" \"2022-04-15\" \"2022-04-16\"\n&gt; stnDate[1:5]+3\n[1] \"2022-04-18\" \"2022-04-20\" \"2022-04-21\" \"2022-04-22\" \"2022-04-23\"\nExtension: How Date and POSIXct objects tell time",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "Part 2",
+      "2-06: Datetime objects"
+    ]
+  },
+  {
+    "objectID": "lessons/2-06_Datetime_Objects.html#reformatting-dates",
+    "href": "lessons/2-06_Datetime_Objects.html#reformatting-dates",
+    "title": "2-06: Datetime objects",
+    "section": "5 Reformatting Dates",
+    "text": "5 Reformatting Dates\nOnce you have date values properly formatted and saved as a Date object, you can then reformat the date to customize the output using format().\n \nFor instance, you can customize stnDate to the more familiar to American month/date/2-digit year format:\ndate_formatted = format(stnDate, format=\"%m/%d/%y\");  \nOr, you can get information from the dates, like the day of the week (%A):\ndate_weekOfDay = format(stnDate, format=\"%A\");      \ndate_formatted: chr[1:300] \"4-15-22\" \"4-17-22\"...\ndate_weekOfDay: chr[1:300] \"Friday\" \"Sunday\"...\nWhen you reformat, the object is no longer a Date object – the reformatted object is a string object and behaves as a string object.  This is awkward behavior in R – there is no way to create a Date variable with a customized format.  Instead, you use the Date variable in plots or calculation and then reformat afterwards when you want to display the values.",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "Part 2",
+      "2-06: Datetime objects"
+    ]
+  },
+  {
+    "objectID": "lessons/2-06_Datetime_Objects.html#posixct-values",
+    "href": "lessons/2-06_Datetime_Objects.html#posixct-values",
+    "title": "2-06: Datetime objects",
+    "section": "6 POSIXct values",
+    "text": "6 POSIXct values\nDate variables and the corresponding as.Date() function work for values with only dates in them.  Values that have dates and times (or just times) need to be saved as POSIXct variables and the corresponding function is as.POSIXct().\n \nThe only difference between Date and POSIXct variables is that there are a lot more conversion specifications that can be used for POSIXct (all of the specification used for dates and all of the specifications used for time). Otherwise, they operate the same.\n\n6.1 POSIXct example\nLet’s break down the datetime1 column in dateTimeData, which has values that look like this:  2022-04-15 09:42PM\n \nThere is:\n\nthe 4-digit year (e.g., 2022)\na dash\nMonth as a number (e.g., 04)\na dash\nthe day of the month (e.g., 15)\na space\nHour in 12-hour time (e.g., 09)\na colon\nminutes (e.g., 42)\nAM/PM indicator (e.g., PM)\n \n\nUsing the conversion specifications, this becomes:\n\nthe 4-digit year (%Y)\na dash\nMonth as a number (%m)\na dash\nthe day of the month (%d)\na space\nHour in 12-hour time (%I)\na colon\nminutes (%M)\n \n\nSo, the general format of all the values in datetime1 is:\n\"%Y-%m-%d %I:%M%p\"\nOnce again, it is really important to maintain every non-datetime component (e.g., spaces, dashes, commas).  The conversion specification is an instruction to a datetime function (as.Date or as.POSIXct) that gives the exact format of the string.  If the format is off even by a little, the function will likely not produce correct datetimes.\n\n\n6.2 Creating a POSIXct variable\nWe can create a POSIXct variable using as.POSIXct and the datetime conversion specification above:\n  stnDateTime = as.POSIXct(dateTimeData$dateTime1,\n                           format=\"%Y-%m-%d %I:%M%p\");\nstnDateTime is a POSIXct object and R’s default method for displaying POSIXct value is the same as for Date – followed by a 24-hour time using colons. \nstnDateTime: POSIXct[1:300], format \"2022-04-15 21:42:00\"\nLike Date object, we can reformat a POSIXct object using format():\ndateTime_formatted = format(stnDateTime, format=\"%m-%d-%y %H%m\");\nOr, pull some information out of it (in this case, the abbreviated day of the week %a):\ndateTime_weekOfDay = format(stnDateTime, format=\"%a\");\ndateTime_formatted: chr[1:300] \"04-15-22 2104\" \"04-17-22 2104\"...\ndateTime_weekOfDay: chr[1:300] \"Fri\" \"Sun\" \"Mon\"...\n\n\n6.3 Addition and Subtraction on POSIXct\nWhen we added and subtraction from a Date object, each unit is 1 day.  So, adding 5 to a Date object adds 5 days.\n \nWhen we added and subtraction from a POSIXct object, each unit is 1 second.  So, adding 5 to a POSIXct object adds 5 seconds.\n&gt; stnDateTime[1:5]\n[1] \"2022-04-15 21:42:00 EDT\"\n[2] \"2022-04-17 03:42:00 EDT\"\n[3] \"2022-04-18 09:42:00 EDT\"\n[4] \"2022-04-19 15:42:00 EDT\"\n[5] \"2022-04-20 21:42:00 EDT\"\n&gt; stnDateTime[1:5] + 34\n[1] \"2022-04-15 21:42:34 EDT\"\n[2] \"2022-04-17 03:42:34 EDT\"\n[3] \"2022-04-18 09:42:34 EDT\"\n[4] \"2022-04-19 15:42:34 EDT\"\n[5] \"2022-04-20 21:42:34 EDT\"\n&gt; stnDateTime[1:5] - 12\n[1] \"2022-04-15 21:41:48 EDT\"\n[2] \"2022-04-17 03:41:48 EDT\"\n[3] \"2022-04-18 09:41:48 EDT\"\n[4] \"2022-04-19 15:41:48 EDT\"\n[5] \"2022-04-20 21:41:48 EDT\"\nExtension: How Date and POSIXct objects tell time",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "Part 2",
+      "2-06: Datetime objects"
+    ]
+  },
+  {
+    "objectID": "lessons/2-06_Datetime_Objects.html#adding-vectors-to-the-data-frame",
+    "href": "lessons/2-06_Datetime_Objects.html#adding-vectors-to-the-data-frame",
+    "title": "2-06: Datetime objects",
+    "section": "7 Adding vectors to the data frame",
+    "text": "7 Adding vectors to the data frame\nWe can add the reformatted vectors we created to the data frame:\n  dateTimeData$date_ref = date_formatted;\n  dateTimeData$weekOfDay = dateTime_weekOfDay;\n\n\n\n\n\n\nFigure 5: Adding two of the reformatted datetime vectors to the data frame",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "Part 2",
+      "2-06: Datetime objects"
+    ]
+  },
+  {
+    "objectID": "lessons/2-06_Datetime_Objects.html#application",
+    "href": "lessons/2-06_Datetime_Objects.html#application",
+    "title": "2-06: Datetime objects",
+    "section": "8 Application",
+    "text": "8 Application\n\nCreate a properly formatted Date object from the dateTimeData columns date2 and date3\nCreate a properly formatted POSIXct object from the dateTimeData columns dateTime2 and dateTime3\nCreate a vector that has the dates in this format: 15-April, 2022\n\nadd this vector to a column named date_formatted in dateTimeData\n\nCreate a vector that has the date-times in this format: 09:36pm on Fri 04/15/22 \n\nadd this vector to a column named dateTime_formatted in dateTimeData\n\nCreate a vector that has date-times given by number of seconds since the epoch \n\nthe epochis Jan 1, 1970 at midnight GMT – basically where UNIX starts counting time (you do not need to know the exact time…)\nyou only need to use one conversion specification (i.e., one %_)\nadd this vector to a column named epoch in dateTimeData\n\n\n \nSave the script as app2-06.r in your scripts folder and  email your Project Folder to Charlie Belinsky at belinsky@msu.edu.\n \nInstructions for zipping the Project Folder are here.\n \nIf you have any questions regarding this application, feel free to email them to Charlie Belinsky at belinsky@msu.edu.\n\n8.1 Questions to answer\nAnswer the following in comments inside your application script:\n\nWhat was your level of comfort with the lesson/application?\nWhat areas of the lesson/application confused or still confuses you?\nWhat are some things you would like to know more about that is related to, but not covered in, this lesson?",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "Part 2",
+      "2-06: Datetime objects"
+    ]
+  },
+  {
+    "objectID": "lessons/2-06_Datetime_Objects.html#extension-how-date-and-posixct-objects-tell-time",
+    "href": "lessons/2-06_Datetime_Objects.html#extension-how-date-and-posixct-objects-tell-time",
+    "title": "2-06: Datetime objects",
+    "section": "9 Extension: How Date and POSIXct objects tell time",
+    "text": "9 Extension: How Date and POSIXct objects tell time\nBehind the scenes, Date and POSIXct objects store datetimes as a single number.\n \nThe zero-point for Date is Jan 1, 1970 and adds one for every day after:\n\nJan 2, 1970 = 1\nJan 3, 1970  = 2\nJan 30, 1970 = 31,\nJan 1, 1971 = 366\n\n \nIf you want to go earlier than you subtract 1 so:\n\nDec 31, 1969 = -1\nDec 30, 1969 = -2\n \n\nThe zero-point for POSIXct is Jan 1, 1970 at midnight Greenwich Mean Time.  To get any other time, you add 1 for every second after or subtract 1 for every second before.  This is called epoch time and the current epoch time (as of this writing) is 1749475799, which means there have been 1749475799 seconds since Jan 1, 1970 at midnight GMT.\n \nas.Date() and as.POSIXct() take string values with conversion specifications and create numeric datetime values.  format() does the reverse and takes numeric datetime values and converts them into strings that are readable to the user.  This all works because the epoch time is fixed to a point in time that everyone has agree upon.  Everything else is a (very complicated) conversion.\n \nIf you want to know more about how this system works then here is a video I really like discussing all the problems with dealing time zones:\nhttps://www.youtube.com/watch?v=-5wpm-gesOY",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "Part 2",
+      "2-06: Datetime objects"
+    ]
   }
 ]

@@ -14,7 +14,7 @@ dateTimeData = read.csv("data/dateTimeData.csv");
 ### And a good video about why things are so complicated:
 # https://www.youtube.com/watch?v=-5wpm-gesOY
 
-# date1 column in pseudoData is chr and looks like this: Apr 15, 2022
+# date1 column in dateTimeData is chr and looks like this: Apr 15, 2022
 # broken down there is:
 #    - the abbreviation for the month (%b)
 #    - a space
@@ -60,17 +60,3 @@ dateTime_weekOfDay = format(stnDateTime, format="%a");             # a chr vecto
 ### If we want we can put the new date vectors in the data frame:
 dateTimeData$date_ref = date_formatted;
 dateTimeData$weekOfDay = dateTime_weekOfDay;
-
-### Application:
-# 1) Create a script file in your script folder named app13.r
-# 2) Create a properly formatted Date object from the dateTimeData 
-#    columns date2 and date3
-# 3) Create a properly formatted POSIXct object from the 
-#    dateTimeData columns dateTime2 and dateTime3
-# 4) Create a vector that has the dates in this format: 15-April, 2022
-#    - add this vector to a column named date_formatted in dateTimeData
-# 5) Create a vector that has the date-times in this format: 09:36 on Fri 04/15/22 
-#    - add this vector to a column named dateTime_formatted in dateTimeData
-# 6) Create a vector that has the number of seconds since the epoch 
-#    - this is since Jan 1, 1970 at midnight GMT (but you do not need this info)
-#    - add this vector to a column named epoch in dateTimeData
