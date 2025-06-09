@@ -18,7 +18,7 @@ vectorC = seq(from=-20, to=18, by=2);  # 20 values -20, -18,..., 18
 matrixABC = cbind(matrixAB, vectorC);  # matrix with 3 columns
 
 #### set.seed() is creates "random" values that are always the same
-#### set.seed() is a session variable... like the working directory
+#### the seed value is a session variable... like the working directory
 #### need to set to NULL to remove it
 set.seed(seed=NULL);  # remove seed value
 
@@ -40,7 +40,6 @@ randomTemps = sample(lansJanTempsMat, size=80, replace=TRUE);
 set.seed(54321);
 randomTempsSeeded = sample(lansJanTempsMat, size=80, replace=TRUE);
 
-
 #### get mean and sd of seeded random sample
 meanRandom = mean(randomTempsSeeded);  
 sdRandom = sd(randomTempsSeeded);      
@@ -55,7 +54,7 @@ plot1 = ggplot() +
   theme_bw();
 plot(plot1);
 
-# # Generate the histogram
+# # Generate the histogram in R-base
 # hist(randomTempsSeeded,
 #      col = "gray50",         # Fill color
 #      border = "blue",        # Border color
@@ -88,7 +87,7 @@ plot2 = ggplot() +
   theme_bw();
 plot(plot2);
 
-# # Generate the histogram
+# # Generate the histogram in R-base
 # hist(normalDist2,
 #      col = "gray50",         # Fill color
 #      border = "blue",        # Border color
