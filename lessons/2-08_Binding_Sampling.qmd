@@ -6,7 +6,7 @@ short: "2-08"
 
 ### To-do
 
--   Move 4.5 to extension and lesson in the Lists lesson- K
+-   test link in application
 
 ## Purpose
 
@@ -31,13 +31,13 @@ The [script for the lesson is here](../scripts/2-08_BindingAndSampling_new.R)
 We are going to start by opening the CSV file created in the last lesson, ***lansingJanTempsFixed.csv*** file, that contains temperatures in Fahrenheit for January 2011-2016:
 
 ``` r
-  lansJanTempsDF = read.csv(file = "data/lansingJanTempsFixed.csv"); 
+lansJanTempsDF = read.csv(file = "data/lansingJanTempsFixed.csv"); 
 ```
 
 Next, we are going to add January 2017 data from ***lansingJan2017Temps.csv***.  First, let's read the 2017 weather data into a data frame:
 
 ``` r
-  lansJanTemps2017DF = read.csv(file = "data/lansingJan2017Temps.csv"); 
+lansJanTemps2017DF = read.csv(file = "data/lansingJan2017Temps.csv"); 
 ```
 
 ***lansJanTems2017DF*** is a data frame with one column (named ***x***) -- ***x*** has 31 temperature values (in Fahrenheit), one for each day in January 2017.  If we click on the arrow to the left of  ***lansJanTemps2017DF*** in the ***Environment***, it looks like this:
@@ -56,7 +56,7 @@ colnames(lansJanTemps2017DF) = "Jan2017";   # there is only one column to name
 And then bind the 2017 data to the 2011-2016 data frame using ***cbind()***.  We will save the binded data to a new data frame, ***lansJanTempDF2***:
 
 ``` r
-  lansJanTempsDF2 = cbind(lansJanTempsDF, lansJanTemps2017DF);
+lansJanTempsDF2 = cbind(lansJanTempsDF, lansJanTemps2017DF);
 ```
 
 ***cbind()*** stands for column bind and it will bind two data frames together by their columns.  ***cbind()*** also will bind columns together between two matrices, or bind columns between a matrix and a data frame.  The only caveat is that the [columns need to be the same size]{.hl}.  In this example, the columns all have 31 rows:
@@ -109,14 +109,14 @@ matrixABC  = cbind(matrixAB, vectorC);  # 3 columns with 20 values in each
 
 ## Random values in programming
 
-We are going to pick random values from our temperature data frame but, [in programming there is no such thing as a truly random value]{.hl}.  There has to be some calculation that  determines the random number -- the calculations are just so complex that they seem random.  As we will see later, these calculations can be manipulated (or, [seeded]{.hl}) so you get the same "random" numbers every time you ***Source*** your script.  This is very helpful when you are sharing and documenting your results.
+We are going to pick random values from our temperature data frame but, [in programming there is no such thing as a truly random value]{.hl}.  There has to be some calculation that determines the random number -- the calculations are just so complex that they seem random. As we will see later, these calculations can be manipulated (or, [seeded]{.hl}) so you get the same "random" numbers every time you ***Source*** your script.  This is very helpful when you are sharing and documenting your results.
 
  
 
 For now, we are going to use unseeded calculations, which means that this part of the script will produce different results each time it is executed.  The following line enforces the unseeded random calculations:
 
 ``` r
-  set.seed(seed=NULL);  # remove seed value
+set.seed(seed=NULL);  # remove seed value
 ```
 
 ### sample of numbers
@@ -148,7 +148,7 @@ randomSample1 = sample( 1:10, size=8, replace=TRUE);
 randomSample2 = sample( 1:10, size=8, replace=FALSE);
 ```
 
-In @fig-random_sampling, ***randomSample1*** has two observations that were repeated **5** and **9**), whereas ***randomSample2*** has no repeated observations.  [Running the script again will produce different observations]{.hl}but ***randomSample2*** will always have eight unique observations because ***replace=FALSE***.
+In @fig-random_sampling, ***randomSample1*** has two observations that were repeated **5** and **9**), whereas ***randomSample2*** has no repeated observations.  [Running the script again will produce different observations]{.hl} but ***randomSample2*** will always have eight unique observations because ***replace=FALSE***.
 
  
 
@@ -159,10 +159,11 @@ In @fig-random_sampling, ***randomSample1*** has two observations that were repe
 You will get an error if the argument ***size*** is greater than the population size and ***replace=FALSE:***
 
 ``` r
-# randomSample3 = sample( c(1:10), size=12, replace=FALSE);  # will cause error randomSample4 = sample( c(1:10), size=12, replace=TRUE);   # will work
+# randomSample3 = sample( c(1:10), size=12, replace=FALSE);  # will cause error
+randomSample4 = sample( c(1:10), size=12, replace=TRUE);   # will work
 ```
 
-This is because you cannot take **12** *unique* samples from a population whose size is **10** (***replace=FALSE***), but you can take **12** samples from a population whose size is **10** (***replace=TRUE***) -- there will be at least two observations that are repeated.  In this case, observations 2 and 3 are repeated twice, observation 6 is repeated 3 times, and observations 4, 5, and 7 were never picked:
+This is because you cannot take **12** [unique ]{.hl}samples from a population whose size is **10** (***replace=FALSE***), but you can take **12** samples from a population whose size is **10** (***replace=TRUE***) -- there will be at least two observations that are repeated.  In this case, observations 2 and 3 are repeated twice, observation 6 is repeated 3 times, and observations 4, 5, and 7 were never picked:
 
 ``` {.r tab="Console"}
 > randomSample4
@@ -180,7 +181,7 @@ lansJanTempsMat = as.matrix(x=lansJanTempsDF2);
 And then randomly sample 80 values from the matrix:
 
 ``` r
-  randomTemps = sample(lansJanTempsMat, size=80, replace=TRUE);
+randomTemps = sample(lansJanTempsMat, size=80, replace=TRUE);
 ```
 
 The 80 samples will be different each time you ***Source*** your script...
@@ -192,6 +193,8 @@ The 80 samples will be different each time you ***Source*** your script...
 [51] 30 11 30 33 30 22 29 32 44 14 23 38 41 43 27 22 22 37 37 31 44 21 25 34 21
 [76] 40 29 55 42 29
 ```
+
+A data frame is multiple vectors (each column is a vector) and sampling has a different effect. For more information go to [Extension: Sampling from a data frame]
 
 ### Setting the seed value
 
@@ -235,8 +238,8 @@ The 80 sampled values from the ***lansJanTempsMat*** matrix:
 And let's find the mean and standard deviation of the sample, which we will use later in the lesson:
 
 ``` r
-  meanRandom = mean(randomSampleSeeded); 
-  sdRandom = sd(randomSampleSeeded);     
+meanRandom = mean(randomSampleSeeded); 
+sdRandom = sd(randomSampleSeeded);     
 ```
 
 ``` {.r tab="Environment"}
@@ -260,36 +263,6 @@ For instance, if we change the seed number from **12345** to **54321** then you 
 [76] 25.0 13.0 32.0 35.0 21.0
 ```
 
-### Sampling from a data frame \<make an extension instead?\>
-
-When you sample from a matrix, ***sample()*** sees each value in the matrix as an observation.
-
- 
-
-When you sample from a data frame, ***sample()*** sees each column as an observation.
-
-This means that ***sample()*** will choose random columns from a data frame -- not random values
-
- 
-
-If you try to sample 80 values from the data frame ***lansJanTempsDF2*** without replacement:
-
-``` {.r tab="Console"}
-> sample(lansJanTempsDF2, size=80, replace=«FALSE»)
-```
-
-You will get an error because there are only 7 columns in ***lansJanTempsDF2*** and you are asking for 80 values without replacement.
-
- 
-
-If you try to sample 80 values from the data frame ***lansJanTempsDF2***, with replacement:
-
-``` {.r tab="Console"}
-> sample(lansJanTempsDF2, size=80, replace=«TRUE»)
-```
-
-You will get the original 7 columns randomly repeated 80 times.
-
 ## A last note about seed numbers
 
 A seed number is the input to a very complex formula that generates seemingly random number.  Each time the formula executes (i.e., each time you ask R to pick a random number), a new number is generated that will be used as the input for the complex formula the next time a random number is requested.
@@ -304,15 +277,15 @@ When you set the seed to ***NULL***, R still uses the same formula to generate "
 
  
 
-The rules get more complicated if you pick random numbers without using ***set.seed()*** in your script -- you will get a situation in between setting seed to ***NULL*** and picking a seed number. 
+The rules get more complicated if you pick random numbers without using ***set.seed()*** in your script -- you will get a situation in between setting seed to ***NULL*** and picking a seed number.
 
 ## A Histogram in GGplot
 
-We can visualize the 80 sampled values using a histogram and add a vertical line to repreent the mean value.
+We can visualize the 80 sampled values using a histogram and add a vertical line to represent the mean value.
 
  
 
-The mean value, ***mean(randomTempsSeeded)***, isvery close to **30**.
+The mean value, ***mean(randomTempsSeeded)***, is very close to **30**.
 
 ``` {.r tab="Console"}
 > mean(randomTempsSeeded)
@@ -337,7 +310,7 @@ The ggplot component that creates a histogram is ***geom_histogram*** and you on
 
 ![Histogram of the 80 sampled values from the January temperature matrix](images/R-2-08-Histogram-Temps.png){#fig-histogram .fs}
 
-You will get this warning when plotting a histogram:[\`stat_bin()\` using \`bins = 30\`. Pick better value with \`binwidth\`]{.hl}.  This warning is kind of GGPlot bug -- GGPlot does not like it's own default of using 30 bins in a histogram.  You can change it if you want, but there is no need.
+You will get this warning when plotting a histogram: [\`stat_bin()\` using \`bins = 30\`. Pick better value with \`binwidth\`]{.hl}.  This warning is kind of GGPlot bug -- GGPlot does not like it's own default of using 30 bins in a histogram.  You can change this if you want, but there is no need.
 
 ## Sampling from a normal distribution
 
@@ -379,9 +352,9 @@ Looking at the first 20 random values, we can see their values are centered arou
 We can also create a normal distribution using the mean and standard deviation from the sampled temperature values (@fig-hist_bell):
 
 ``` r
-  normalDist2 = rnorm(n=200, 
-                      mean=mean(randomTempsSeeded), 
-                      sd=sd(randomTempsSeeded));
+normalDist2 = rnorm(n=200, 
+                    mean=mean(randomTempsSeeded), 
+                    sd=sd(randomTempsSeeded));
 ```
 
 In the code above, we generated 200 temperature observations from a normal distribution based on the mean and standard deviation of ***lansJanTempsMat.*** The data generated are saved in the vector ***normalDist2***.**\
@@ -390,14 +363,14 @@ In the code above, we generated 200 temperature observations from a normal distr
 Then we use a histogram to make a visual representation of ***normalTemp*** and, to the histogram, we add a vertical line at the mean value of the samples, ***mean(normalDist2)***:
 
 ``` r
-  plot2 = ggplot() +
-    geom_histogram(mapping=aes(x=normalDist2),
-                   fill="gray50",
-                   color="blue") +
-    geom_vline(xintercept = mean(normalDist2),
-               color="red") +
-    theme_bw();
-  plot(plot2);
+plot2 = ggplot() +
+  geom_histogram(mapping=aes(x=normalDist2),
+                 fill="gray50",
+                 color="blue") +
+  geom_vline(xintercept = mean(normalDist2),
+             color="red") +
+  theme_bw();
+plot(plot2);
 ```
 
 The result is a histogram that looks like a bell diagram -- and would look more so if you increased the sample size.
@@ -408,11 +381,11 @@ The result is a histogram that looks like a bell diagram -- and would look more 
 
 A\) In comments, answer the following:
 
--   What is the minimum number of *unique observations* you can get from this code?  Explain your answer.
+-   What is the minimum number of [unique observations]{.hl} you can get from this code?  Explain your answer.
 
     -   `sample(1:10, size=8, replace=TRUE)`
 
--   If you move the code ***set.seed(12345)*** from line **44** (right before ***randomTempSeeded*** was set) to line **39** (right before ***randomTemps*** is set):
+-   If you move the code ***set.seed(12345)*** from line **40** (right before ***randomTempSeeded*** was set) to line **35** (right before ***randomTemps*** is set):
 
     -   Will you get the same values for ***randomTempSeeded***?  (test it!)
 
@@ -422,7 +395,7 @@ A\) In comments, answer the following:
 
 B\) Get 50 non-repeating samples from the even numbers between 100 and 999
 
--   You probably want to use the ***seq()*** function \<lesson 1.4 section 7.4\>
+-   You probably want to use the [***seq()*** function](https://qfcatmsu.github.io/FundProgUsingR/lessons/1-04_Vectors_And_Data_Frames.html#sec-seq)
 
  
 
@@ -438,9 +411,9 @@ D\) Using the row binding function ***rbind()***, bind two more rows to ***lansJ
 
 E\) Using ***set.seed(seed=10)*** and ***rnorm()***:
 
--   create a vector that has *these exact 20 observations*.  
+-   create a vector that has [these exact 20 observations]{.hl}.  
 
--   the ***mean*** and ***sd*** used to in ***rnorm()*** to create these observationswere both whole numbers.
+-   the ***mean*** and ***sd*** used to in ***rnorm()*** to create these observations were both whole numbers.
 
 ``` {.r tab="Console"}
 > normExample
@@ -450,3 +423,33 @@ E\) Using ***set.seed(seed=10)*** and ***rnorm()***:
 ```
 
 {{< include ../assets/_AppInstructions.qmd >}}
+
+## Extension: Sampling from a data frame
+
+When you sample from a matrix, ***sample()*** sees each value in the matrix as an observation.
+
+ 
+
+When you sample from a data frame, [***sample()*** sees each column as an observation]{.hl}.
+
+This means that ***sample()*** will choose random columns from a data frame -- not random values
+
+ 
+
+If you try to sample 80 values from the data frame ***lansJanTempsDF2*** without replacement:
+
+``` {.r tab="Console"}
+> sample(lansJanTempsDF2, size=80, replace=«FALSE»)
+```
+
+You will get an error because there are only 7 columns in ***lansJanTempsDF2*** and you are asking for 80 values without replacement.
+
+ 
+
+If you try to sample 80 values from the data frame ***lansJanTempsDF2***, with replacement:
+
+``` {.r tab="Console"}
+> sample(lansJanTempsDF2, size=80, replace=«TRUE»)
+```
+
+You will get the original 7 columns randomly repeated 80 times.
