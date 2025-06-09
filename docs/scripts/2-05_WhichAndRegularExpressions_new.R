@@ -55,6 +55,7 @@ hazyDays = grep(weatherData$weatherType, pattern="HZ");
 hotDays = which(weatherData$maxTemp > 85);
 hazyOrHotDays = union(hazyDays, hotDays);
 
+## the and operator does not work in grep()
 # daysWithRainAndSnow = grep("RN&SN", weatherData$weatherType);  # this does not work!
 daysWithRainAndSnow = intersect(rainyDaysGrep, snowyDaysGrep);
 
