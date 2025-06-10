@@ -360,7 +360,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#objects-and-variables" id="toc-objects-and-variables" class="nav-link" data-scroll-target="#objects-and-variables"><span class="header-section-number">4</span> Objects and Variables</a>
   <ul class="collapse">
   <li><a href="#atomic-vectors-and-lists" id="toc-atomic-vectors-and-lists" class="nav-link" data-scroll-target="#atomic-vectors-and-lists"><span class="header-section-number">4.1</span> Atomic vectors and Lists</a></li>
-  <li><a href="#folder-and-file-analogy-for-lists-and-atomic-vectors" id="toc-folder-and-file-analogy-for-lists-and-atomic-vectors" class="nav-link" data-scroll-target="#folder-and-file-analogy-for-lists-and-atomic-vectors"><span class="header-section-number">4.2</span> Folder and file analogy for Lists and atomic vectors</a></li>
+  <li><a href="#atomic-vectors-vs-list" id="toc-atomic-vectors-vs-list" class="nav-link" data-scroll-target="#atomic-vectors-vs-list"><span class="header-section-number">4.2</span> Atomic vectors vs List</a></li>
+  <li><a href="#folder-and-file-analogy-for-lists-and-atomic-vectors" id="toc-folder-and-file-analogy-for-lists-and-atomic-vectors" class="nav-link" data-scroll-target="#folder-and-file-analogy-for-lists-and-atomic-vectors"><span class="header-section-number">4.3</span> Folder and file analogy for Lists and atomic vectors</a></li>
   </ul></li>
   <li><a href="#the-simplest-object-in-r-the-vector" id="toc-the-simplest-object-in-r-the-vector" class="nav-link" data-scroll-target="#the-simplest-object-in-r-the-vector"><span class="header-section-number">5</span> The simplest object in R: the vector</a>
   <ul class="collapse">
@@ -438,28 +439,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="terminology" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="terminology"><span class="header-section-number">3</span> Terminology</h2>
-<p>This lesson requires the use of terminology that has been inconsistently used in R or has morphed in meaning throughout the years, so you will find different definitions online.&nbsp; In general, I will be using the terminology used in the 2nd edition of <a href="https://adv-r.hadley.nz/">Hadley Wickham’s Advanced R book</a> and mention places where there is commonly used terminology that is different.</p>
+<p>This lesson requires the use of terminology that has been inconsistently used in R or has morphed in meaning throughout the years, so you will find different definitions online.&nbsp; In general, I will be using the terminology from the 2nd edition of <a href="https://adv-r.hadley.nz/">Hadley Wickham’s Advanced R book</a> and mention places where there is commonly used terminology that is different.</p>
 </section>
 <section id="objects-and-variables" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="objects-and-variables"><span class="header-section-number">4</span> Objects and Variables</h2>
-<p>In the programming world, anything stored in memory that has a value (or multiple values) associated with it is called a <strong><em>variable</em></strong>.&nbsp; This terms gets a bit confusing because values that do not change are still called <strong><em>variables</em></strong> (sometimes called <strong><em>constant variables</em></strong>).&nbsp; Also, variables has different meanings in different fields from mathematics to science to statistics.&nbsp; Maybe for this reason, R tends to use the term <strong><em>object</em></strong> to define anything that has a name and stores values. That means that <span class="hl">everything in the Environment tab in RStudio is an object</span>.</p>
+<p>In the programming world, anything stored in memory that has a value (or multiple values) associated with it is called a <strong><em>variable</em></strong>.&nbsp; This terms gets a bit confusing because values that do not change are still called <strong><em>variables</em></strong> (sometimes called <strong><em>constant variables</em></strong>).&nbsp; Also, variables has different meanings in different fields from mathematics to science to statistics.&nbsp; Perhaps, for this reason, R tends to use the term <strong><em>object</em></strong> to define anything that has a name and stores values. That means that, in R, <span class="hl">everything in the Environment tab in RStudio is an object</span>.</p>
 <p>&nbsp;</p>
 <p>Broadly speaking, in R there are two types of objects: Atomic Vectors (covered in this lesson) and Lists (covered in the next lesson).&nbsp;</p>
 <section id="atomic-vectors-and-lists" class="level3" data-number="4.1">
 <h3 data-number="4.1" class="anchored" data-anchor-id="atomic-vectors-and-lists"><span class="header-section-number">4.1</span> Atomic vectors and Lists</h3>
-<p><span class="hl">Atomic vectors are objects that hold values</span>and all the values are the same type (e.g., numeric, string).&nbsp; Atomic vectors are just vectors – but, in R, you will get error messages that use the word “atomic”, and it is important to know the error is referring to an (atomic) vectors.</p>
+<p><span class="hl">Atomic vectors are objects that hold values of the same type</span> (e.g., numeric, string).&nbsp; In other words, atomic vectors are just vectors. However, in R, you will get often get error messages that refer to an “atomic vector” (<a href="#fig-errorAtomicVec" class="quarto-xref">Figure&nbsp;6</a>).</p>
 <p>&nbsp;</p>
 <p>Anything you create with <strong><em>c()</em></strong> is an atomic vector and atomic vectors can have dimensions – a 2D atomic vector is called a matrix and a 3D atomic vector is called an array.</p>
-<p>&nbsp;</p>
+</section>
+<section id="atomic-vectors-vs-list" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="atomic-vectors-vs-list"><span class="header-section-number">4.2</span> Atomic vectors vs List</h3>
 <p>Whereas atomic vectors hold values, <span class="hl">a List is an object that holds other objects</span> – including other Lists.</p>
 <p>&nbsp;</p>
 <p>A data frame is an example of a List where each column is an atomic vector – and each column has the same number of values.</p>
 </section>
-<section id="folder-and-file-analogy-for-lists-and-atomic-vectors" class="level3" data-number="4.2">
-<h3 data-number="4.2" class="anchored" data-anchor-id="folder-and-file-analogy-for-lists-and-atomic-vectors"><span class="header-section-number">4.2</span> Folder and file analogy for Lists and atomic vectors</h3>
-<p>Lists and Atomic Vectors functionally play the same role as folder and files on your computer.&nbsp; Folders are used to create a tree-like structure for information on your computer. Folders do not directly contain information (i.e., you do not read or execute a folder) – folders contain more folders (hence, the tree-like structure) and files .&nbsp; It is the files that contains the information – and files are always at the end of the tree (a file cannot contain another folder or file).</p>
+<section id="folder-and-file-analogy-for-lists-and-atomic-vectors" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="folder-and-file-analogy-for-lists-and-atomic-vectors"><span class="header-section-number">4.3</span> Folder and file analogy for Lists and atomic vectors</h3>
+<p>Lists and Atomic Vectors functionally play the same role as folder and files on your computer.&nbsp; Folders are used to create a tree-like structure for information on your computer. Folders contain folders and files (the tree-like structure), folders do not directly contain information.&nbsp; It is the files that contains the information – and files are always at the end of the tree (a file cannot contain another folder or file).</p>
 <p>&nbsp;</p>
-<p>Lists are the folders of the R world – they create a tree-like structure for information.&nbsp; Lists can contain other Lists or Atomic Vector.&nbsp; The Atomic Vector are the file – they contain information and are always at the end of the tree (Atomic Vector cannot contain Lists nor other atomic vectors).</p>
+<p>Lists are the folders of the R world – they create a tree-like structure for information.&nbsp; Lists can contain other Lists or Atomic Vector.&nbsp; The Atomic Vector are the files – they contain information and are always at the end of the tree (Atomic Vector cannot contain Lists nor other atomic vectors).</p>
 <p>&nbsp;</p>
 <p>A data frame is a type of List (folder) that contains multiple columns/Atomic Vectors (files) of the same size.</p>
 <p>&nbsp;</p>
@@ -497,7 +500,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="integer-vectors" class="level3" data-number="5.2">
 <h3 data-number="5.2" class="anchored" data-anchor-id="integer-vectors"><span class="header-section-number">5.2</span> Integer vectors</h3>
-<p>Integer vectors can be useful when you need counting values because integer values take up less space in memory and can be processed faster than numeric vectors (i.e., decimal numbers).</p>
+<p>Integer vectors can be useful when you need counting values because integer values take up less space in memory and can be processed faster than numeric (i.e., decimal) vectors.</p>
 <p>&nbsp;</p>
 <p>The issue is that, R will often coerce integer vectors to numeric vectors, effectively taking away the memory and speed advantages.</p>
 <p>&nbsp;</p>
@@ -523,7 +526,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h4 data-number="5.3.1" class="anchored" data-anchor-id="manually-create-a-boolean-vector"><span class="header-section-number">5.3.1</span> Manually create a Boolean vector</h4>
 <p>We can use <strong><em>c()</em></strong> to create a vector with Boolean values.&nbsp; Let’s create a vector that tells whether it rained on the eight days in <strong><em>JulyTemps</em></strong>:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>rainyDaysInJuly <span class="ot">=</span> <span class="fu">c</span>(<span class="cn">FALSE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>In the Environment, <strong><em>rainyDaysInJuly</em></strong> is given as a <strong><em>logi</em></strong>, which stands for <strong><em>logical</em></strong> – which is just another name for Boolean:</p>
+<p>In the <strong><em>Environment</em></strong>, <strong><em>rainyDaysInJuly</em></strong> is given as a <strong><em>logi</em></strong>, which stands for <strong><em>logical</em></strong> – which is just another name for Boolean:</p>
 <div class="sourceCode" id="cb11" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>rainyDaysInJuly<span class="sc">:</span> logi [<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>] <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">TRUE</span> ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>and we can check which values are <strong><em>TRUE</em></strong> using <strong><em>which()</em></strong>:</p>
 <div class="sourceCode" id="cb12" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span>(rainyDaysInJuly)</span>
@@ -531,13 +534,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="conditional-statements-create-a-boolean-vector" class="level4" data-number="5.3.2">
 <h4 data-number="5.3.2" class="anchored" data-anchor-id="conditional-statements-create-a-boolean-vector"><span class="header-section-number">5.3.2</span> Conditional statements create a Boolean vector</h4>
-<p>A conditional statement always creates a Boolean vector.&nbsp; We have used conditional statements in <strong><em>if()</em></strong> statements:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(JulyTemps))</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  {</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Output Boolean value instead of executing the if() statement</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">#  if(JulyTemps[i] &gt; 85)</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"day"</span>, i, (JulyTemps[i] <span class="sc">&gt;</span> <span class="dv">85</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>);</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  }    </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>A conditional statement always creates a Boolean vector.&nbsp; We typically used conditional statements in <strong><em>if()</em></strong> statements:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(JulyTemps))</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Output Boolean value instead of executing the if() statement</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">#  if(JulyTemps[i] &gt; 85)</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"day"</span>, i, (JulyTemps[i] <span class="sc">&gt;</span> <span class="dv">85</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>);</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>}    </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The output from the above <strong><em>for</em></strong> loop is:</p>
 <div class="sourceCode" id="cb14" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>day <span class="dv">1</span> <span class="cn">TRUE</span> </span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>day <span class="dv">2</span> <span class="cn">TRUE</span> </span>
@@ -548,7 +551,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>day <span class="dv">7</span> <span class="cn">FALSE</span> </span>
 <span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>day <span class="dv">8</span> <span class="cn">FALSE</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This means that the first three days in <strong><em>JulyTemps</em></strong> were more than 85, the rest were less than or equal to 85.</p>
-<p>We could also save the Boolean results to a vector.&nbsp; <strong><em>(JulyTemps &gt; 85)</em></strong> instructs R to check the 8 values in <strong><em>JulyTemps</em></strong> against the number <strong>85</strong>:</p>
+<p>&nbsp;</p>
+<p>We could also save Boolean results to a vector.&nbsp; <strong><em>(JulyTemps &gt; 85)</em></strong> instructs R to check the 8 values in <strong><em>JulyTemps</em></strong> against the number <strong>85</strong>:</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>hotterThan85 <span class="ot">=</span> (JulyTemps <span class="sc">&gt;</span> <span class="dv">85</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>And the answer is given as a Boolean vector:</p>
 <div class="sourceCode" id="cb16" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> hotterThan85</span>
@@ -558,22 +562,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="attributes-of-a-objects" class="level2" data-number="6">
 <h2 data-number="6" class="anchored" data-anchor-id="attributes-of-a-objects"><span class="header-section-number">6</span> Attributes of a objects</h2>
-<p><span class="hl">Attributes</span>is a very broad term in R.&nbsp; All objects can have attributes and there are two distinct types of attributes in R.</p>
+<p><span class="hl">Attributes</span> is a very broad term in R.&nbsp; All objects can have attributes and there are two distinct types of attributes in R.</p>
 <p>&nbsp;</p>
-<p>1) Attributes that are <span class="hl">properties of the object</span> –&nbsp; these are defined by R and they include:</p>
+<p>1) Attributes that are <span class="hl">properties of the object</span> – these are defined by R and they include:</p>
 <ul>
 <li><p><strong><em>names</em></strong>: names for the <span class="hl">values inside an object</span> – not to be confused with the name of the object</p></li>
 <li><p><strong><em>class</em></strong>: the type of object is it (numeric, boolean…)</p></li>
 <li><p><strong><em>dim</em></strong>: dimension – this is how you create a 2D matrix, 3D array, or higher dimension arrays</p></li>
 </ul>
 <p>&nbsp;</p>
-<p>2) Attributes that act as <span class="hl">metadata for the object</span>.&nbsp; These attributes are defined by the user and are analogous to comments in a script.&nbsp;</p>
+<p>2) Attributes that act as <span class="hl">metadata for the object</span>.&nbsp; These attributes are defined by the user and are analogous to comments in a script.</p>
 <p>&nbsp;</p>
 <p>Attributes can be confusing because there is not a consistent way to apply or view them in R.&nbsp; In this lesson, we will look at attributes on vectors and next lesson look at attributes on Lists.</p>
 </section>
 <section id="names-attribute" class="level2" data-number="7">
 <h2 data-number="7" class="anchored" data-anchor-id="names-attribute"><span class="header-section-number">7</span> names attribute</h2>
-<p>All objects have a name and they can be assigned an attribute called <strong><em>names</em></strong>.&nbsp; <span class="hl">The name of the object and the <strong>names</strong> attribute are two different things</span><em>.</em> The attribute <strong><em>names</em></strong> refers to names given to the values <span class="hl">within the object</span>and are assigned using the <strong><em>names()</em></strong> function.</p>
+<p>All objects have a name and they can be assigned an attribute called <strong><em>names</em></strong>.&nbsp; <span class="hl">The name of the object and the <strong>names</strong> attribute are two different things</span><em>.</em> The attribute <strong><em>names</em></strong> refers to names given to the values <span class="hl">within the object</span> and are assigned using the <strong><em>names()</em></strong> function.</p>
 <p>&nbsp;</p>
 <p>Let’s first create a copy of our <strong><em>JulyTemps</em></strong> vector:</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>JulyTempsNamed <span class="ot">=</span> JulyTemps;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -613,7 +617,7 @@ Figure&nbsp;1: Subsetting a named vector with the position and the name – the 
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> JulyTempsNamed[<span class="fu">c</span>(<span class="st">"July23"</span>, <span class="st">"July25"</span>, <span class="st">"July27"</span>)]</span>
 <span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>July23 July25 July27 </span>
 <span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    <span class="dv">88</span>     <span class="dv">77</span>     <span class="dv">83</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>From a functional perspective, <span class="hl">named values and unnamed values will work exactly the same in any computation</span>.&nbsp; The difference between the two is only how they are displayed and can be referenced.&nbsp; Here we subtract all values in <strong><em>JulyTempsNamed</em></strong> by <strong>20</strong>:</p>
+<p>From a functional perspective, <span class="hl">named values and unnamed values will work exactly the same in any computation</span>.&nbsp; The difference between the two is only how they are displayed and how they can be referenced.&nbsp; Here we subtract all values in <strong><em>JulyTempsNamed</em></strong> by <strong>20</strong>:</p>
 <div id="fig-math_named_unamed" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-math_named_unamed-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -671,7 +675,7 @@ Figure&nbsp;4: using single brackets and double brackets to subset multiple valu
 <h3 data-number="8.1" class="anchored" data-anchor-id="multidimensional-objects"><span class="header-section-number">8.1</span> Multidimensional objects</h3>
 <p>We can use <strong><em>dim()</em></strong> to add more dimensions to a vector.</p>
 <p>&nbsp;</p>
-<p>We are going to make a two-dimensional vector (also called a matrix or a 2D array) using <strong><em>JulyTemps</em></strong>.&nbsp; First, we will create a copy and then set the dimensions of the copy to two values (<strong>4</strong> and <strong>2</strong>).&nbsp; Those two dimension values (which can be thought of as <strong>4</strong> rows and <strong>2</strong> columns) must multiply to the number of values in the vector (<strong>8</strong>).</p>
+<p>We are going to make a two-dimensional vector (also called a matrix or a 2D array) using <strong><em>JulyTemps</em></strong>.&nbsp; First, we will create a copy of <strong><em>JulyTemps</em></strong> and then set the dimensions of the copy to two values (<strong>4</strong> and <strong>2</strong>).&nbsp; Those two dimension values (which can be thought of as <strong>4</strong> rows and <strong>2</strong> columns) must multiply to the number of values in the vector (<strong>8</strong>).</p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>JulyTemps2D <span class="ot">=</span> July Temps;</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(JulyTemps2D) <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">2</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The <strong><em>Environment</em></strong> and <strong><em>Console</em></strong> reflect the dimensions in <strong><em>JulyTemps2D</em></strong>:</p>
@@ -745,9 +749,18 @@ Figure&nbsp;5: Displaying a 2D value in the Console and the Environment
 </section>
 <section id="the-operator" class="level3" data-number="8.4">
 <h3 data-number="8.4" class="anchored" data-anchor-id="the-operator"><span class="header-section-number">8.4</span> The $ operator</h3>
-<p>You cannot use <strong>$</strong> to subset any Atomic Vector (vector, matrix, or array). You will get the<span class="hl">$ operator is invalid for atomic vectors</span> error:</p>
+<p>You cannot use <strong>$</strong> to subset any Atomic Vector (vector, matrix, or array). You will get the <span class="hl">$ operator is invalid for atomic vectors</span> error:</p>
+<div id="fig-errorAtomicVec" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-errorAtomicVec-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="sourceCode" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> JulyTemps2DNamed<span class="sc">$</span>col2</span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> JulyTemps2DNamed<span class="sc">$</span>col2 <span class="sc">:</span> <span class="er">$</span> operator is invalid <span class="cf">for</span> atomic vectors</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-errorAtomicVec-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: R does not allow use of $ operator on vectors
+</figcaption>
+</figure>
+</div>
 </section>
 </section>
 <section id="class-attribute-and-typeof" class="level2" data-number="9">
@@ -759,22 +772,22 @@ Figure&nbsp;5: Displaying a 2D value in the Console and the Environment
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"matrix"</span> <span class="st">"array"</span> </span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">class</span>(JulyTemps)</span>
 <span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"numeric"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Instead of class, you should use<span class="hl">typeof()</span><strong><em>.</em></strong>It will always give you the class of the values:</p>
+<p>Instead of class, you should use <span class="hl">typeof()</span><em>.</em> It will always give you the class of the values:</p>
 <div class="sourceCode" id="cb40" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">typeof</span>(JulyTemps2D)</span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"double"</span></span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">typeof</span>(JulyTemps)</span>
 <span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"double"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><span class="note">Note: <strong>double</strong> means the values are <strong>numeric</strong>.&nbsp; In other programming languages (especially older ones), there is a corresponding <strong>single</strong> class, but not in R.&nbsp;</span></p>
+<p><span class="note">Note: <strong>double</strong> means the values are <strong>numeric</strong>.&nbsp; In other programming languages (especially older ones), there is a corresponding <strong>single</strong> class that does not exist in R.&nbsp;</span></p>
 </section>
 <section id="other-attributes-metadata-or-comments" class="level2" data-number="10">
 <h2 data-number="10" class="anchored" data-anchor-id="other-attributes-metadata-or-comments"><span class="header-section-number">10</span> Other attributes (metadata or comments)</h2>
-<p>You can create any attribute you want and add it an object using <strong><em>attr()</em></strong>.&nbsp; We are going to add 2 attributes using <strong><em>attr()</em></strong> to a copy of <strong><em>JulyTemps2DNamed</em></strong>.&nbsp; The attributes will be named <strong><em>timeChecked</em></strong> and <strong><em>unit</em></strong> and they will be set to <strong><em>noon</em></strong> and <strong><em>Fahrenheit</em></strong>:</p>
+<p>You can create any attribute you want and add it an object using <strong><em>attr()</em></strong>.&nbsp; We are going to add two attributes using <strong><em>attr()</em></strong> to a copy of <strong><em>JulyTemps2DNamed</em></strong>.&nbsp; The attributes will be named <strong><em>timeChecked</em></strong> and <strong><em>unit</em></strong> and they will be set to <strong><em>noon</em></strong> and <strong><em>Fahrenheit</em></strong>:</p>
 <div class="sourceCode" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>JulyTemps2DNamed_2 <span class="ot">=</span> JulyTemps2DNamed;</span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(JulyTemps2DNamed_2, <span class="st">"timeChecked"</span>) <span class="ot">=</span> <span class="st">"noon"</span>;</span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(JulyTemps2DNamed_2, <span class="st">"unit"</span>) <span class="ot">=</span> <span class="st">"Fahrenheit"</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><span class="note">note: while not enforced, attribute names should follow variable variable naming conventions</span></p>
 <p>&nbsp;</p>
-<p>We can also use <strong><em>attr()</em></strong>&nbsp; to get the attributes of an object:</p>
+<p>We can also use <strong><em>attr()</em></strong> to get the attributes of an object:</p>
 <div class="sourceCode" id="cb42" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">attr</span>(JulyTempsNamed_2, <span class="st">"timeChecked"</span>)</span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"noon"</span></span>
 <span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">attr</span>(JulyTempsNamed_2, <span class="st">"unit"</span>)</span>
@@ -814,30 +827,28 @@ Figure&nbsp;5: Displaying a 2D value in the Console and the Environment
 <h2 data-number="11" class="anchored" data-anchor-id="application"><span class="header-section-number">11</span> Application</h2>
 <p>A) In comment at the top of your script answer:</p>
 <ul>
-<li>What happens when you create this vector:&nbsp; <strong>c(1, “a”, 2, “b”)</strong>?&nbsp; Why?&nbsp; Explain in terms of atomic vectors and type (class).</li>
+<li>What happens when you create this vector:&nbsp; <strong>c(1, “a”, 2, “b”)</strong>?&nbsp; Why?&nbsp; Explain in terms of atomic vectors and class types.</li>
 </ul>
 <p>&nbsp;</p>
-<p>B) Save the data from <a href="../data/Lansing2016Noaa-3.csv">Lansing2016Noaa-3.csv</a> to a data frame names <strong><em>weatherData</em></strong></p>
-<p>&nbsp;</p>
-<p>C) Open the CSV file above and save it to the dataframe <strong><em>weatherData</em></strong></p>
+<p>B) Open the <a href="../data/Lansing2016Noaa-3.csv">Lansing2016Noaa-3.csv</a> CSV file above and save it to the dataframe <strong><em>weatherData</em></strong></p>
 <ul>
 <li><p>Add a logical/Boolean column to <strong><em>weatherData</em></strong> call <strong><em>wasPrecip</em></strong> that gives whether there was any precipitation for the day</p></li>
-<li><p>Add a logical/Boolean column to <strong><em>weatherData</em></strong> call <strong><em>wasMild</em></strong> that gives whether a day had high temperatures between 50 and 70&nbsp; &nbsp;</p></li>
+<li><p>Add a logical/Boolean column to <strong><em>weatherData</em></strong> call <strong><em>wasMild</em></strong> that gives whether a day had high temperatures between 50 and 70</p></li>
 <li><p>Add a logical/Boolean column to <strong><em>weatherData</em></strong> call <strong><em>wasMuggy</em></strong> that gives whether a day had high temperatures greater than 70 and humidity greater than 80</p></li>
 </ul>
 <p>&nbsp;</p>
-<p>D) Save the <strong><em>avgTemp</em></strong> column from <strong><em>weatherData</em></strong> to a vector named <strong><em>averageTemp</em></strong></p>
+<p>C) Save the <strong><em>windSpeed</em></strong> column from <strong><em>weatherData</em></strong> to a vector named <strong><em>windSpeed</em></strong></p>
 <ul>
-<li><p>Add two user-defined attributes to &nbsp;<strong><em>averageTemp</em></strong> – one that gives the temperature unit (Fahrenheit), the other that gives the year (2016)</p></li>
+<li><p>Add two user-defined attributes to <strong><em>windSpeed</em></strong>– one that gives the unit (miles/hour), the other that gives the year (2016)</p></li>
 <li><p>use variable naming conventions when naming the attributes</p></li>
 </ul>
 <p>&nbsp;</p>
-<p>E) Add a names attribute for the first five values in <strong><em>averageTemp</em></strong> that gives the day (Jan1, Jan2…)</p>
+<p>D) Add a names attribute for the first five values in <strong><em>averageTemp</em></strong> that gives the day (Jan1, Jan2…)</p>
 <ul>
 <li>Answer in comments: What happens to the other 361 unnamed values?</li>
 </ul>
 <p>&nbsp;</p>
-<p>F) Create a 4D array from this vector:&nbsp; c(1:64)</p>
+<p>E) Create a 4D array from this vector:&nbsp; c(1:256)</p>
 <ul>
 <li>subset two values in the 4D vector</li>
 </ul>
@@ -862,8 +873,8 @@ Figure&nbsp;5: Displaying a 2D value in the Console and the Environment
 <p>There are three rounding functions in R:</p>
 <ul>
 <li><p><strong><em>round()</em></strong> &nbsp; # rounds to nearest integer (<strong>5.3</strong> become <strong>5</strong> and <strong>5.7</strong> becomes <strong>6</strong>)</p></li>
-<li><p><strong><em>floor()</em></strong> # drops the decimal (<em>both</em> <strong>5.3</strong> and <strong>5.7</strong> become <strong>5</strong>)</p></li>
-<li><p><strong><em>ceiling()</em></strong>&nbsp; # increase decimal number to next integer&nbsp; (<em>both</em> <strong>5.3</strong> and <strong>5.7</strong> become <strong>6</strong>)</p>
+<li><p><strong><em>floor()</em></strong> # drops the decimal (both <strong>5.3</strong> and <strong>5.7</strong> become <strong>5</strong>)</p></li>
+<li><p><strong><em>ceiling()</em></strong>&nbsp; # increase decimal number to next integer&nbsp; (both <strong>5.3</strong> and <strong>5.7</strong> become <strong>6</strong>)</p>
 <p>&nbsp;</p></li>
 </ul>
 <p>Even though these function create integer-like values, R will still see the values as numeric:</p>
