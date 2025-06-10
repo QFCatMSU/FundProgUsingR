@@ -67,31 +67,31 @@ plot1 = ggplot(data=weatherData) +
   theme_bw();
 plot(plot1);
 
-# Create blank plot first (no points)
-plot(x = weatherData$avgTemp,
-     y = weatherData$relHum,
-     type = "n",  # don't draw points
-     main = "Humidity vs Temperature\nLansing, MI -- 2016",
-     col.main = "red",
-     xlab = "Average Temperatures (Fahrenheit)", 
-     ylab = "Relative Humidity",
-     col.lab="green",
-     xaxt = 'n')
-
-# Add custom axes
-axis(side = 1, at = seq(from = 10, to = 80, by = 10), col.axis = "brown")
-axis(side = 2, at = seq(from = 40, to = 90, by = 5), col.axis = "purple")
-
-# Draw regression line first (behind points)
-abline(lm(weatherData$relHum ~ weatherData$avgTemp), lwd = 3)
-
-# Now plot the actual points on top
-points(x = weatherData$avgTemp, y = weatherData$relHum,
-       col="red",
-       cex=2,
-       lwd=3,
-       pch=23,
-       bg="blue")
+# # Create blank plot first (no points) (R-base)
+# plot(x = weatherData$avgTemp,
+#      y = weatherData$relHum,
+#      type = "n",  # don't draw points
+#      main = "Humidity vs Temperature\nLansing, MI -- 2016",
+#      col.main = "red",
+#      xlab = "Average Temperatures (Fahrenheit)", 
+#      ylab = "Relative Humidity",
+#      col.lab="green",
+#      xaxt = 'n')
+# 
+# # Add custom axes
+# axis(side = 1, at = seq(from = 10, to = 80, by = 10), col.axis = "brown")
+# axis(side = 2, at = seq(from = 40, to = 90, by = 5), col.axis = "purple")
+# 
+# # Draw regression line first (behind points)
+# abline(lm(weatherData$relHum ~ weatherData$avgTemp), lwd = 3)
+# 
+# # Now plot the actual points on top
+# points(x = weatherData$avgTemp, y = weatherData$relHum,
+#        col="red",
+#        cex=2,
+#        lwd=3,
+#        pch=23,
+#        bg="blue")
 
 ### Calculate a linear regression
 tempHumLM = lm( formula = weatherData$relHum ~ weatherData$avgTemp );  
