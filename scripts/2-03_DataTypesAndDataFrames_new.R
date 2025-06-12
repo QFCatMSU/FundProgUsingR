@@ -81,7 +81,7 @@ plot1 = ggplot(data=weatherData ) +
   geom_point( mapping=aes(x=1:nrow(weatherData),  # 366
                           y=precipNum),
               color = "red") +
-  labs( title="Daily Precipitation",
+  labs( title="plot1: Daily Precipitation",
         subtitle="Lansing, MI -- 2016",
         x = "Day Number",
         y = "Precipitation (inches)") +
@@ -94,7 +94,7 @@ plot2 = ggplot(data=weatherData ) +
   geom_point( mapping=aes(x=1:nrow(weatherData),  
                           y=precip),  # chr values
               color = "red") +
-  labs( title="Daily Precipitation",
+  labs( title="plot2: Daily Precipitation",
         subtitle="Lansing, MI -- 2016",
         x = "Day Number",
         y = "Precipitation (inches)") +

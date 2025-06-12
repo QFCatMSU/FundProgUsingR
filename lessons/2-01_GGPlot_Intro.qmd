@@ -77,15 +77,28 @@ The scatterplot will be average temperature *(**avgTemp** column)* vs. humidity 
 The code to create a scatterplot using GGPlot is:
 
 ``` r
-#### Part 1: Create a scatterplot ####
-plot1 = ggplot( data=weatherData ) +
-  geom_point( mapping=aes(x=avgTemp, y=relHum) );
+#### Part 1: Create a scatterplot #### 
+plot1 = ggplot( data=weatherData ) +   
+  geom_point( mapping=aes(x=avgTemp, y=relHum) ); 
 plot(plot1);
 ```
 
 ***Source*** the script and this plot appears:
 
-![Our first plot using GGPlot -- note that the x and y-axis labels match the mapped name](images/GGP-1-01-scatterplot.png){#fig-first_plot .fs}
+```{r, echo=FALSE}
+library(ggplot2)
+weatherData = read.csv("data/Lansing2016NOAA.csv")   # changes link...
+```
+
+::: {#fig-plot1 .fs}
+```{r, echo=FALSE}
+plot1 = ggplot( data=weatherData ) +
+  geom_point( mapping=aes(x=avgTemp, y=relHum) );
+plot(plot1);
+```
+
+Our first plot using GGPlot -- note that the x and y-axis labels match the mapped name
+:::
 
 ### Taking out argument names
 
@@ -102,7 +115,7 @@ plot(plot1);
 Argument names used in ggplot call
 :::
 
-We can remove the argument names and the script will execute exactly the same (i.e., the same plot will be rendered):
+We can remove the argument names and, in this case, the script will render the same plot:
 
 ``` r
 #### Part 2: Same scatterplot without argument names ####
@@ -110,6 +123,15 @@ plot2 = ggplot( weatherData ) +
         geom_point( aes(avgTemp, relHum) );
 plot(plot2);   # same as plot1
 ```
+
+::: {#fig-noArgumentPlot .fs}
+```{r, echo=FALSE}
+ggplot( weatherData ) +
+  geom_point( aes(avgTemp, relHum) )
+```
+
+Taking out argument names, in this case, produces the same plot
+:::
 
 ### Benefits of using argument names
 
@@ -257,9 +279,24 @@ plot(plot3);
 
 [Trap: Putting the ( + ) on the next line](#trap-putting-the-on-the-next-line)
 
+ 
+
 And ***plot3*** includes the three new components:
 
-![Scatterplot with a few added components](images/GGP-1-01-Components.png){#fig-scatterplot .fs}
+::: {#fig-scatterplot .fs}
+```{r, echo=FALSE}
+ggplot( data=weatherData ) +
+  geom_point( mapping=aes(x=avgTemp, y=relHum) ) +
+  labs( title="plot3: Humidity vs Temperature",
+        subtitle="Lansing, MI -- 2016",
+        x = "Average Temperatures (Fahrenheit)",
+        y = "Relative Humidity") +
+  scale_x_continuous( breaks = seq(from=10, to=80, by=10) ) +
+  theme( axis.text.x=element_text(angle=90, vjust=0.5) )
+```
+
+Scatterplot with a few added components
+:::
 
 ### The Components in detail
 
@@ -332,7 +369,21 @@ plot4 = ggplot( data=weatherData ) +
 plot(plot4);
 ```
 
-![Setting the GGPlot theme to black and white](images/GGP-1-01-ChangeTheme.png){#fig-theme_bw .fs}
+::: {#fig-theme_bw .fs}
+```{r, echo=FALSE, message=FALSE}
+ggplot( data=weatherData ) +
+  geom_point( mapping=aes(x=avgTemp, y=relHum) ) +
+  labs( title="plot4: Humidity vs Temperature",
+        subtitle="Lansing, MI -- 2016",
+        x = "Average Temperatures (Fahrenheit)",
+        y = "Relative Humidity") +
+  scale_x_continuous( breaks = seq(from=10, to=80, by=10) ) +
+  theme_bw() +
+  theme( axis.text.x=element_text(angle=90, vjust=0.5) )
+```
+
+Setting the GGPlot theme to black and white
+:::
 
 ### Complete themes must come before theme changes
 
@@ -352,7 +403,21 @@ plot5 = ggplot( data=weatherData ) +
 plot(plot5);
 ```
 
-![The complete theme change removed the theme change above it (the axis labels are no longer at 90 degrees)](images/GGP-1-01-OverwriteTheme.png){#fig-theme_conflict .fs}
+::: {#fig-theme_conflict .fs}
+```{r, echo=FALSE, message=FALSE}
+ggplot( data=weatherData ) +
+  geom_point( mapping=aes(x=avgTemp, y=relHum) ) +
+  labs( title="plot5: Humidity vs Temperature",
+        subtitle="Lansing, MI -- 2016",
+        x = "Average Temperatures (Fahrenheit)",
+        y = "Relative Humidity") +
+  scale_x_continuous( breaks = seq(from=10, to=80, by=10) ) +
+  theme( axis.text.x=element_text(angle=90, vjust=0.5) ) +
+  theme_bw()
+```
+
+The complete theme change removed the theme change above it (the axis labels are no longer at 90 degrees)
+:::
 
 ## Adding a second plot (a linear regression)
 
@@ -382,7 +447,23 @@ plot6 = ggplot( data=weatherData ) +
 plot(plot6);
 ```
 
-![Adding a linear model component](images/R-2-04-LinearRegression.png){#fig-second_plot .fs}
+::: {#fig-second_plot .fs}
+```{r, echo=FALSE, message=FALSE}
+ggplot( data=weatherData ) +
+  geom_point( mapping=aes(x=avgTemp, y=relHum) ) +
+  geom_smooth( mapping=aes(x=avgTemp, y=relHum), 
+               method="lm" ) +
+  labs( title="plot6: Humidity vs Temperature",
+        subtitle="Lansing, MI -- 2016",
+        xlab = "Average Temperatures (Fahrenheit)",
+        y = "Relative Humidity") +
+  scale_x_continuous( breaks = seq(from=10, to=80, by=10) ) +
+  theme_bw() +
+  theme( axis.text.x=element_text(angle=90, vjust=0.5) )
+```
+
+Adding a linear model component
+:::
 
 ### Overlapping plots
 
@@ -408,7 +489,23 @@ plot7 = ggplot( data=weatherData ) +
 plot(plot7);
 ```
 
-![Switching the order of the components to change which plot is on top](images/r-2-04-SwitchComponents.png){#fig-switchPlots .fs}
+::: {#fig-switchPlots .fs}
+```{r, echo=FALSE, message=FALSE}
+ggplot( data=weatherData ) +
+  geom_smooth( mapping=aes(x=avgTemp, y=relHum), 
+               method="lm" ) +
+  geom_point( mapping=aes(x=avgTemp, y=relHum) ) +
+  labs( title="plot7: Humidity vs Temperature",
+        subtitle="Lansing, MI -- 2016",
+        xlab = "Average Temperatures (Fahrenheit)",
+        y = "Relative Humidity") +
+  scale_x_continuous( breaks = seq(from=10, to=80, by=10) ) +
+  theme_bw() +
+  theme( axis.text.x=element_text(angle=90, vjust=0.5) )
+```
+
+Switching the order of the components to change which plot is on top
+:::
 
 ## Application
 

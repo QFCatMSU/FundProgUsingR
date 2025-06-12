@@ -17,7 +17,7 @@ plot(plot2);  # same as plot1
 #### Part 3: Adding components to the plot ####
 plot3 = ggplot( data=weatherData ) +
   geom_point( mapping=aes(x=avgTemp, y=relHum) ) +
-  labs( title="Humidity vs Temperature",
+  labs( title="plot3: Humidity vs Temperature",
         subtitle="Lansing, MI -- 2016",
         x = "Average Temperatures (Fahrenheit)",
         y = "Relative Humidity") +
@@ -28,7 +28,7 @@ plot(plot3);
 #### Part 4: Changing the theme ####
 plot4 = ggplot( data=weatherData ) +
   geom_point( mapping=aes(x=avgTemp, y=relHum) ) +
-  labs( title="Humidity vs Temperature",
+  labs( title="plot4: Humidity vs Temperature",
         subtitle="Lansing, MI -- 2016",
         x = "Average Temperatures (Fahrenheit)",
         y = "Relative Humidity") +
@@ -41,7 +41,7 @@ plot(plot4);
 #### Part 5: Changing the cmoplete theme --- oops, undoes theme ####
 plot5 = ggplot( data=weatherData ) +
   geom_point( mapping=aes(x=avgTemp, y=relHum) ) +
-  labs( title="Humidity vs Temperature",
+  labs( title="plot5: Humidity vs Temperature",
         subtitle="Lansing, MI -- 2016",
         x = "Average Temperatures (Fahrenheit)",
         y = "Relative Humidity") +
@@ -55,7 +55,7 @@ plot6 = ggplot( data=weatherData ) +
   geom_point( mapping=aes(x=avgTemp, y=relHum) ) +
   geom_smooth( mapping=aes(x=avgTemp, y=relHum), 
                method="lm" ) +
-  labs( title="Humidity vs Temperature",
+  labs( title="plot6: Humidity vs Temperature",
         subtitle="Lansing, MI -- 2016",
         xlab = "Average Temperatures (Fahrenheit)",
         y = "Relative Humidity") +
@@ -69,20 +69,20 @@ plot7 = ggplot( data=weatherData ) +
   geom_smooth( mapping=aes(x=avgTemp, y=relHum), 
                method="lm" ) +
   geom_point( mapping=aes(x=avgTemp, y=relHum) ) +
-  labs( title="Humidity vs Temperature",
+  labs( title="plot7: Humidity vs Temperature",
         subtitle="Lansing, MI -- 2016",
         xlab = "Average Temperatures (Fahrenheit)",
         y = "Relative Humidity") +
   scale_x_continuous( breaks = seq(from=10, to=80, by=10) ) +
   theme_bw() +
   theme( axis.text.x=element_text(angle=90, vjust=0.5) );
-plot(plot7);
+print(plot7);
 
 
 #### Trap: Putting ( + ) is the wrong place ####
 # plotA = ggplot( data=weatherData )
 # + geom_point( mapping=aes(x=avgTemp, y=relHum) )
-# + labs( title="Humidity vs Temperature",
+# + labs( title="plotA: Humidity vs Temperature",
 #       subtitle="Lansing, MI -- 2016",
 #       x = "Average Temperatures (Fahrenheit)",
 #       y = "Relative Humidity")
