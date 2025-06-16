@@ -6,8 +6,6 @@ short: "2-12"
 
 ### To-do
 
--   Follow up on the sampling a dataframe info from the Sampling lesson the List lesson - K
-
 ## Purpose
 
 -   Creating you own List
@@ -28,7 +26,7 @@ As mentioned in last lesson, there are 2 types of objects (i.e., variables) in R
 
 -   Atomic vector (often just called vectors): objects that hold values of the same type (e.g., numeric, string, logical)
 
--   Lists: objects that hold other objects (and those objects include Lists)
+-   Lists: objects that hold other objects (including more Lists)
 
      
 
@@ -36,11 +34,11 @@ The relationship between Atomic Vectors and Lists is analogous to the relationsh
 
  
 
-Last lesson we talked mostly about atomic vectors. This lesson we will talk mostly about lists. As you will see in this lesson, Lists create a tree-like structure for your data.  At the end of the tree is the Atomic Vectors
+Last lesson we talked mostly about atomic vectors. This lesson we will talk mostly about Lists. As you will see in this lesson, Lists create a tree-like structure for your data.  At the end of the tree is the Atomic Vectors
 
 ## Lists
 
-A List is an object that holds other (usually related) objects. When you create a plot or perform a statistical test, the results are often stored as Lists as we will see later in the lesson.
+A List is an object that holds other (usually related) objects. When you create a plot or perform a statistical test, the results are often stored as Lists, as we will see later in the lesson.
 
  
 
@@ -64,7 +62,7 @@ weatherData = read.csv(file="data/Lansing2016NOAA.csv");
 
 ### Lists in the Environment tab
 
-Notice that, in the Environment, ***weatherData*** has an arrow to expand it whereas ***someAnimals*** and ***someNumbers*** contains all of their information in one line.  It is this expand arrow that indicates an object is a List (whereas the other objects are atomic vectors).  ***weatherData*** is a specialized List where all the objects inside are vectors of the same length (i.e., a data frame):
+Notice that, in the Environment, ***weatherData*** has an arrow to expand it whereas ***someAnimals*** and ***someNumbers*** contains all of their information in one line.  It is this expand arrow that indicates ***weatherData*** is a List, whereas ***someAnimals*** and ***SomeNumbers*** are atomic vectors.  ***weatherData*** is a specialized List where all the objects inside are vectors of the same length (i.e., ***weatherData*** is a data frame):
 
 ![The expand arrow in the Environment indicates that the object is a List (i.e., holds other objects)](images/R-2-11-ListExpandArrow.png){#fig-list_expand_env .fs}
 
@@ -245,7 +243,7 @@ You can use **\[ \]** to subset the List, but instead of getting the object, you
 anim4 = listDynamic5["animal"];
 ```
 
-In the ***Environment***, we can see that  ***anim1***, ***anim2***, and ***anim3*** (subsetted with either **\[\[ \]\]** or **\$**) are all character vectors with 4 values.  But, ***anim4*** (subsetted with **\[ \]**)is a List with a character vector that has 4 values:
+In the ***Environment***, we can see that  ***anim1***, ***anim2***, and ***anim3*** (subsetted with either **\[\[ \]\]** or **\$**) are all character vectors with 4 values.  But, ***anim4*** (subsetted with **\[ \]**) is a List with a character vector that has 4 values:
 
 ::: {#fig-double_single_brackets}
 ``` {.r tab="Environment"}
@@ -260,7 +258,7 @@ anim3:   chr [1:4] "llama" "guanaco" ...
 The difference between using \[\[ \]\] or \$ vs \[ \] for subsetting objects within a List
 :::
 
-This is not very useful so **\[ \]** is rarely used to subset a List.  **\[ \]** is mostly used to subset atomic vectors.
+This is not very useful so **\[ \]** is rarely used to subset a List.
 
 ## Returned List from functions
 
@@ -293,7 +291,7 @@ We can also create a linear regression model of humidity vs temperature using **
 «model1» = lm(formula=weatherData$avgTemp~weatherData$relHum);
 ```
 
-We can look at a summary of the model using ***print(summary(model1))***:
+And then look at a summary of the model using ***print(summary(model1))***:
 
 ::: {#fig-summary_linear_reg}
 ``` r
@@ -318,7 +316,7 @@ F-statistic: 19.68 on 1 and 364 DF,  p-value: 1.213e-05
 Summary of a model of a linear regression
 :::
 
-Both the ***plot1*** and ***model1*** are List objects and the information for the plot and summary of the linear model are either in the List, or calculated from values in the List.
+Both ***plot1*** and ***model1*** are List objects and the information for the plot and summary of the linear model are either in the List, or calculated from values in the List.
 
 ### The returned List: linear model
 
@@ -374,7 +372,7 @@ There are also a lot of other, more obscure, values in the List object which we 
 
 ### New variables types
 
-If you look through ***model1***, you will find three new variable types: ***language***, ***symbol***, and ***formula***.  These variables types are used by R programmers to store the code that created the List -- this is not something you will need to deal with at this level.
+If you look through ***model1***, you will find three new variable types: ***language***, ***symbol***, and ***formula***.  These variables types are used by R programmers to store the code that created the List -- this is not something you will need to deal with at this point.
 
 ![Some of the less common variable types appear in this List](images/R-2-11-OtherVariableTypes.png){#fig-less_common_var_types .fs}
 
