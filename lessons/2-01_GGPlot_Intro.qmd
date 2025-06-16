@@ -4,6 +4,15 @@ short: "2-01"
 # special characters for highlighting code : «»
 ---
 
+```{r, echo=FALSE, eval=FALSE, purl=FALSE}
+#knitr::current_input(dir=TRUE)
+full_path = rstudioapi::getSourceEditorContext()$path
+rel_path = sub(paste0("^", getwd(), "/?"), "", full_path)
+rel_path
+#knitr::purl("lessons/2-01_GGPlot_intro.qmd", output="scripts/2-01_GGPlot_intro.r", documentation=0)
+knitr::purl("lessons/2-01_GGPlot_intro.qmd", output="scripts/2-01_GGPlot_intro.r", documentation=0)
+```
+
 ### To-do
 
 -   handle ***Source*** issues (especially from plots people have to cycle through)
@@ -18,7 +27,7 @@ short: "2-01"
 
 ### Code for the lesson
 
-The [script for this lesson](../scripts/2-01_GGPlot_Intro_new.R) is here
+The [script for this lesson](../scripts/2-01_GGPlot_Intro.R) is here
 
 The [Lansing2016Noaa.csv](../data/Lansing2016Noaa.csv) is here
 
@@ -86,12 +95,16 @@ plot(plot1);
 ***Source*** the script and this plot appears:
 
 ```{r, echo=FALSE}
-library(ggplot2)
-weatherData = read.csv("data/Lansing2016NOAA.csv")   # changes link...
+rm(list=ls());                         # clear the Environment tab
+library(package=ggplot2);              # include all GGPlot2 functions
+
+# read in CSV file and save the content to weatherData
+weatherData = read.csv(file="data/Lansing2016NOAA.csv");
 ```
 
 ::: {#fig-plot1 .fs}
 ```{r, echo=FALSE}
+#### Part 1: Create a scatterplot ####
 plot1 = ggplot( data=weatherData ) +
   geom_point( mapping=aes(x=avgTemp, y=relHum) );
 plot(plot1);
@@ -126,8 +139,10 @@ plot(plot2);   # same as plot1
 
 ::: {#fig-noArgumentPlot .fs}
 ```{r, echo=FALSE}
-ggplot( weatherData ) +
-  geom_point( aes(avgTemp, relHum) )
+#### Part 2: Same scatterplot without argument names ####
+plot2 = ggplot( weatherData ) +
+  geom_point( aes(avgTemp, relHum) );
+plot(plot2);  # same as plot1
 ```
 
 Taking out argument names, in this case, produces the same plot
@@ -285,14 +300,16 @@ And ***plot3*** includes the three new components:
 
 ::: {#fig-scatterplot .fs}
 ```{r, echo=FALSE}
-ggplot( data=weatherData ) +
+#### Part 3: Adding components to the plot ####
+plot3 = ggplot( data=weatherData ) +
   geom_point( mapping=aes(x=avgTemp, y=relHum) ) +
   labs( title="plot3: Humidity vs Temperature",
         subtitle="Lansing, MI -- 2016",
         x = "Average Temperatures (Fahrenheit)",
         y = "Relative Humidity") +
   scale_x_continuous( breaks = seq(from=10, to=80, by=10) ) +
-  theme( axis.text.x=element_text(angle=90, vjust=0.5) )
+  theme( axis.text.x=element_text(angle=90, vjust=0.5) );
+plot(plot3);
 ```
 
 Scatterplot with a few added components
@@ -371,7 +388,8 @@ plot(plot4);
 
 ::: {#fig-theme_bw .fs}
 ```{r, echo=FALSE, message=FALSE}
-ggplot( data=weatherData ) +
+#### Part 4: Changing the theme ####
+plot4 = ggplot( data=weatherData ) +
   geom_point( mapping=aes(x=avgTemp, y=relHum) ) +
   labs( title="plot4: Humidity vs Temperature",
         subtitle="Lansing, MI -- 2016",
@@ -379,7 +397,8 @@ ggplot( data=weatherData ) +
         y = "Relative Humidity") +
   scale_x_continuous( breaks = seq(from=10, to=80, by=10) ) +
   theme_bw() +
-  theme( axis.text.x=element_text(angle=90, vjust=0.5) )
+  theme( axis.text.x=element_text(angle=90, vjust=0.5) );
+plot(plot4);
 ```
 
 Setting the GGPlot theme to black and white
@@ -405,7 +424,8 @@ plot(plot5);
 
 ::: {#fig-theme_conflict .fs}
 ```{r, echo=FALSE, message=FALSE}
-ggplot( data=weatherData ) +
+#### Part 5: Changing the complete theme --- oops, undoes theme ####
+plot5 = ggplot( data=weatherData ) +
   geom_point( mapping=aes(x=avgTemp, y=relHum) ) +
   labs( title="plot5: Humidity vs Temperature",
         subtitle="Lansing, MI -- 2016",
@@ -413,7 +433,8 @@ ggplot( data=weatherData ) +
         y = "Relative Humidity") +
   scale_x_continuous( breaks = seq(from=10, to=80, by=10) ) +
   theme( axis.text.x=element_text(angle=90, vjust=0.5) ) +
-  theme_bw()
+  theme_bw();  # this complete theme change will remove the theme change above
+plot(plot5);
 ```
 
 The complete theme change removed the theme change above it (the axis labels are no longer at 90 degrees)
@@ -449,7 +470,8 @@ plot(plot6);
 
 ::: {#fig-second_plot .fs}
 ```{r, echo=FALSE, message=FALSE}
-ggplot( data=weatherData ) +
+#### Part 6: Adding a regression line ####
+plot6 = ggplot( data=weatherData ) +
   geom_point( mapping=aes(x=avgTemp, y=relHum) ) +
   geom_smooth( mapping=aes(x=avgTemp, y=relHum), 
                method="lm" ) +
@@ -459,7 +481,8 @@ ggplot( data=weatherData ) +
         y = "Relative Humidity") +
   scale_x_continuous( breaks = seq(from=10, to=80, by=10) ) +
   theme_bw() +
-  theme( axis.text.x=element_text(angle=90, vjust=0.5) )
+  theme( axis.text.x=element_text(angle=90, vjust=0.5) );
+plot(plot6);
 ```
 
 Adding a linear model component
@@ -491,7 +514,8 @@ plot(plot7);
 
 ::: {#fig-switchPlots .fs}
 ```{r, echo=FALSE, message=FALSE}
-ggplot( data=weatherData ) +
+#### Part 7: Reversing the overlapping plots ####
+plot7 = ggplot( data=weatherData ) +
   geom_smooth( mapping=aes(x=avgTemp, y=relHum), 
                method="lm" ) +
   geom_point( mapping=aes(x=avgTemp, y=relHum) ) +
@@ -501,7 +525,8 @@ ggplot( data=weatherData ) +
         y = "Relative Humidity") +
   scale_x_continuous( breaks = seq(from=10, to=80, by=10) ) +
   theme_bw() +
-  theme( axis.text.x=element_text(angle=90, vjust=0.5) )
+  theme( axis.text.x=element_text(angle=90, vjust=0.5) );
+print(plot7);
 ```
 
 Switching the order of the components to change which plot is on top
@@ -558,6 +583,19 @@ plotA = ggplot( data=weatherData )
 + scale_x_continuous( breaks = seq(from=10, to=80, by=10) )
 + theme( axis.text.x=element_text(angle=90, vjust=0.5) );
 plot(plotA);
+```
+
+```{r, echo=FALSE}
+#### Trap: Putting ( + ) is the wrong place ####
+# plotA = ggplot( data=weatherData )
+# + geom_point( mapping=aes(x=avgTemp, y=relHum) )
+# + labs( title="plotA: Humidity vs Temperature",
+#       subtitle="Lansing, MI -- 2016",
+#       x = "Average Temperatures (Fahrenheit)",
+#       y = "Relative Humidity")
+# + scale_x_continuous( breaks = seq(from=10, to=80, by=10) )
+# + theme( axis.text.x=element_text(angle=90, vjust=0.5) );
+# plot(plotA);
 ```
 
 This will result in an error and a surprisingly wise assessment of the problem from the R debugger.
