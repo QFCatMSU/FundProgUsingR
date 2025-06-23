@@ -6,9 +6,15 @@ short: "2-13"
 
 ### To-do
 
--   switch to using browser() instead of RStudio breakpoints
+-   mention: cannot add/remove breakpoints while in debug mode (they do not take effect until you Source the script
 
 -   next lesson: use trace() to add browser() to functions
+
+-   mention: use debug commands only (no Source/Run)
+
+    -   might have to quit multiple times...
+
+-   mention remove all breakpoints (debug -\> Remove all)
 
 ## Purpose
 
@@ -22,21 +28,19 @@ The [data used for the lesson](../data/Lansing2016Noaa-3.csv) is here
 
 ## Debugging your code
 
-One of the most powerful debugging tools in any programming language, and a staple of all professional programmers, is the breakpoint.  Breakpoints allows you to pause the execution of your script at a specific line or command.  While paused, you can look at the ***Environment***, enter commands in the ***Console***, or move through your script one command at a time.
+One of the most powerful debugging tools in any programming language, and a staple of all professional programmers, is the breakpoint.  Breakpoints allows you to pause the execution of your script at a specific line or command, including inside a ***for*** loop at a specific cycle.  While paused, you can look at the ***Environment***, enter commands in the ***Console***, or move through your script one command at a time.
 
  
 
-One powerful use of a breakpoint is the ability to pause your code inside a for loop exactly when a variable goes out of expected bounds -- even if the for loop is executing 1000s of millions of times.
-
-In R, the implementation of breakpoints is far less robust than most programming languages. Even with this poor implementation, breakpoints are still a useful debugging tool in R -- and learning how to use breakpoints will transfer to any programming language.
+In R, the implementation of breakpoints is far less robust than most programming languages. Even with this poor implementation, breakpoints are still a useful debugging tool in R.
 
 ## Setting up a breakpoint
 
-A breakpoint is like a pause button in the execution your script.  In RStudio, you set a breakpoint by clicking to the left of the line number -- this is called the [gutter area]{.hl}.  A red dot representing the breakpoint appears in the gutter area.  Clicking again will get rid of the breakpoint.
+A breakpoint is like a pause button in the execution your script and there are multiple ways to set a breakpoint. In this lesson we will focus on using the Rstudio interface to set a breakpoint. In RStudio, you set a breakpoint by clicking to the left of the line number -- this is called the [gutter area]{.hl}.  A red dot representing the breakpoint appears in the gutter area.  Clicking again will get rid of the breakpoint.
 
-![Breakpoint (red dot) set on line 9 -- the left of the line is called the gutter area](images/R-2-12-SettingBreakpoint.png){#fig-set_breakpoint .fs}
+![Breakpoint (red dot) set on line 8](images/R_2-13_SetBreakpoint.jpg){#fig-set_breakpoint .fs}
 
-When you ***Source*** your code, the script will execute up to, *but not including*, the line with the breakpoint.  Your script is now paused at the line with a breakpoint, and you are in *debug mode*, which R calls ***Browse*** mode.
+When you ***Source*** your code, the script will execute up to, [but not including]{.hl}, the line with the breakpoint.  Your script is now paused at the line with a breakpoint, and you are in [debug mode]{.hl}, which R calls ***Browse*** mode.
 
  
 
@@ -60,7 +64,7 @@ There are 4 things in RStudio that will indicate you are in debug mode:
 
  
 
-![Sourcing a script with a breakpoint puts it into debug mode](images/R-2-12-DebugMode.png){#fig-source_with_bp .fs}
+![Sourcing a script with a breakpoint puts it into debug mode](images/R-2-13_SourceBP.png){#fig-source_with_bp .fs}
 
 ## Using the Browse in breakpoint
 
@@ -68,13 +72,13 @@ In this lesson I will put breakpoint instructions in comments like this so you c
 
 [\## In the lesson script:]{.note}
 
-[##    Place a breakpoint at line 9 in the lesson's script and click **Source**]{.note}
+[##    Place a breakpoint at line 8 in the lesson's script and click **Source**]{.note}
 
 ``` r
 diffTemp = highTemps - lowTemps;
 ```
 
-In @fig-source_with_bp, the script is currently paused at line 9, this means lines 1-8 has been executed.  In the ***Environment*** you can see ***weatherData***, ***highTemps***, and ***lowTemps,*** which were created between lines 1-8.
+In @fig-source_with_bp, the script is currently paused at line 8, this means all commands in lines 1-7 have been executed.  In the ***Environment*** you can see ***weatherData***, ***highTemps***, and ***lowTemps,*** which were created between lines 1-7.
 
 ``` {.r tab="Environment"}
 weatherData   366 obs. of 24 variables
@@ -85,17 +89,17 @@ lowTemps      int [1:366] 24 28 25 7 8 20...
 When in debug mode, you can enter commands in the ***Console***.  With these commands you can do things like view values in or execute functions on a vector:
 
 ``` {.r tab="Console"}
-Browse[2]> highTemps[1:20]
+Browse[1]> highTemps[1:20]
 [1] 29 35 33 27 29 36 42 39 42 38 16 23 18 34 42 33 26 15 21 22
-Browse[2]> max(highTemps)
+Browse[1]> max(highTemps)
 [1] 94
 ```
 
 Or, you can create a new variable and add it to the ***Environment***:
 
 ``` {.r tab="Console"}
-Browse[2]> highTemp_C = (5/9)*(highTemps-32)
-Browse[2]>
+Browse[1]> highTemp_C = (5/9)*(highTemps-32)
+Browse[1]>
 ```
 
 ``` {.r tab="Environment"}
@@ -104,9 +108,9 @@ highTemp_C     num [1:366] -1.667 1.667 0.556 -2.778...
 
 ## Moving through code in debug (browse) mode
 
-When your script arrives at a breakpoint (@fig-source_with_bp) , five controls appear in the ***Console*** tab:
+When your script arrives at a breakpoint (@fig-source_with_bp) , five buttons to control the flow of your script appear in the ***Console*** tab:
 
-1\) ***Next***: executes the command at the green arrow (in other languages, this is often called ***Step Over***)
+1\) ***Next***: executes the command at the green arrow (in other debuggers, this is often called ***Step Over***)
 
 2\) ***Step In***: moves into a function
 
@@ -118,49 +122,41 @@ When your script arrives at a breakpoint (@fig-source_with_bp) , five controls a
 
  
 
-[Examples will be given for each in this lesson.]{.note}
-
- 
-
-These buttons allow you to control the flow of you script. They are pretty universal -- you will see these same controls when you use breakpoints in other programming languages.
-
- 
-
 When in debug mode you should only use the buttons to control the flow of your script.  In debug mode, clicking ***Source*** will cause problems with your script.
 
 ![The five breakpoint control in debug mode](images/R-2-13-BPControls.png){#fig-five_bp_controls .fs}
 
 ### Stop
 
-Clicking ***Stop*** will take R out of debug mode and end the execution of the script.  In other words, no more commands in the script will be executed and the four components of debug mode (@fig-source_with_bp) will go away.
+Clicking ***Stop*** will take R out of debug mode and end the execution of the script.  In other words, no more commands in the script will be executed and all the components of debug mode (@fig-source_with_bp) will go away.
 
  
 
-There are situations where you need to click ***Stop*** multiple times to get out of debugger mode   The most common reason is that ***Source*** was clicked while in debug mode.  For example, if you click ***Source*** 5 times in debugger mode, then you will need to click ***Stop*** 5 extra times (6 in all) to escape debug mode.  
+When you click Stop, ***Q*** is put in the ***Console***. Q is the command to quit debug mode. You could directly type ***Q*** instead of clicking ***Stop***.
 
-![Stopping debug mode -- sometimes Stop has to be hit more than once.](images/R-2-12-StopWhen%20Sourced.png){#fig-bp_stop .fs}
+![Stopping debug mode](images/R-2-13-Stop.jpg){#fig-bp_stop .fs}
 
 ### Continue to next Breakpoint
 
 [\## In the lesson script:]{.note}
 
-``` r
-##   Add a second breakpoint on line 18 (so, now we have breakpoints at lines 9 and 18) and click SourcesunsetTimes_12Hour = c();
-```
-
-The script will pause at the first breakpoint (line 9).  If you click ***Continue***, the script will unpause and continue executing the script until the next breakpoint is reached on line 18 and pause there (green arrow).  Between the first and second pause, lines 9-17 are executed and the results of these commands are in the ***Environment***.
+[\## Add a second breakpoint on line 17 (so, now we have breakpoints at lines 8 and 17) and click **Source** ]{.note}
 
  
 
-[Note: In most programming langauge you can add or remove breakpoints while in debug mode -- but you cannot do this in R]{.note}
+The script will pause at the first breakpoint (line 8).  If you click ***Continue***, the script will unpause and continue executing the script until the next breakpoint is reached on line 17 and pause there (green arrow).  Between the first and second pause, lines 9-17 are executed and the results of these commands are in the ***Environment***.
 
-![Continue takes the script to the next breakpoint (if there is another one)](images/R-2-12-Continue.png){#fig-bp_continue .fs}
+ 
+
+In Console, the ***Continue*** command is ***c***.
+
+![Continue takes the script to the next breakpoint (if there is another one)](images/R-2-13-Continue.jpg){#fig-bp_continue .fs}
 
 ### Continue to end of script
 
-After line 18 there are no more breakpoints, so if you click ***Continue*** again, the rest of the script will be executed and you will be taken out of debug mode.
+After line 17 there are no more breakpoints, so if you click ***Continue*** again, the rest of the script will be executed and you will be taken out of debug mode.
 
-![Clicking Continue when there are no more breakpoint executes the rest of the script](images/R-2-12-ContinueToEnd.png){#fig-continue_to_end .fs}
+![Clicking Continue when there are no more breakpoint executes the rest of the script](images/R-2-13-ContinueToEnd.jpg){#fig-continue_to_end .fs}
 
 ### Continue if breakpoint is in for loop
 
@@ -168,23 +164,23 @@ After line 18 there are no more breakpoints, so if you click ***Continue*** agai
 
 [##   Remove the breakpoints at lines 9 and 18]{.note}
 
-[##   Add a breakpoint at line 25 (inside the ***for*** loop)]{.note}
+[##   Add a breakpoint at line 24 (inside the ***for*** loop)]{.note}
 
 ``` r
 sunsetTimes_12Hour[i] = convertTime(sunsetTimes[i]);
 ```
 
-If you put a **breakpoint inside a for loop** then ***Continue*** will stop at the breakpoint [every cycle of the **for** loop]{.hl}*.* 
+If you put a **breakpoint inside a for loop** then ***Continue*** will stop at the breakpoint [every cycle of the **for** loop]{.hl}*.* In @fig-continueFor I have click ***Continue*** 21 time and the ***for*** loop has cycled 20 times (and ***i = 20***)
 
-![Continue clicked 20 times (note: i=20) with a breakpoint inside the for loop](images/R-2-12-ContinueForLoop.png){#fig-continue_for_loop .fs}
+![Continue clicked 20 times (note: i=20) with a breakpoint inside the for loop](images/R-2-13-ContinueInFor.jpg){#fig-continue_for_loop .fs}
 
 ### Next
 
 [\## In lesson script:]{.note}
 
-[##   Remove breakpoint on line 25]{.note}
+[##   Remove breakpoint on line 24]{.note}
 
-[##   Add a breakpoint on line 15]{.note}
+[##   Add a breakpoint on line 14]{.note}
 
 ``` r
 sunsetTimes = weatherData$sunset;
@@ -204,15 +200,15 @@ Clicking ***Next*** executes the command on line 15 and moves the green arrow to
 
 So, ***sunset_times*** is created and put in the ***Environment*** and line 16, which creates ***sunriseTimes***, is highlighted with the green arrow..
 
-![Clicking Next executes the command at the green arrow and moves the green arrow to the next command](images/R-2-12-Next.png){#fig-bp_next .fs}
+![Clicking Next executes the command at the green arrow and moves the green arrow to the next command](images/R-2-13-Next.jpg){#fig-bp_next .fs}
 
 ### Multiple Commands on one line
 
 [\## In lesson script:]{.note}
 
-[\##   Click ***Next*** until you get to line 21]{.note}
+[\##   Click ***Next*** until you get to line 20]{.note}
 
-Lines 15-19 have one command each but line 21 has three commands:
+Lines 15-19 have one command each but line 20 has three commands:
 
 ``` r
 testCommand1=1; testCommand2=2; testCommand3=3;
@@ -224,19 +220,19 @@ testCommand1=1; testCommand2=2; testCommand3=3;
 
 When there are multiple commands on a line, the debugger in RStudio will highlight the current command.
 
-![Only the current command is highlighted -- clicking Next moves through the commands on the line.](images/R-2-12-MultipleCommandsOnLine.png){#fig-multiple_command_line .fs}
+![Only the current command is highlighted -- clicking Next moves through the commands on the line.](images/R-2-13-NextCommand.jpg){#fig-multiple_command_line .fs}
 
 ## Debugging in a for loop
 
 [\## In lesson script:]{.note}
 
-[##   Click **Next** until you get to line 23]{.note}
+[##   Click **Next** until you get to line 22]{.note}
 
  
 
 When the green arrow gets to a ***for*** loop, RStudio will highlight the whole ***for*** loop:
 
-![Highlighting the whole for loop in debug mode](images/R-2-12-ForLoop.png){#fig-whole_for_loop .fs}
+![Highlighting the whole for loop in debug mode](images/R-2-13_For.png){#fig-whole_for_loop .fs}
 
  
 
@@ -256,13 +252,13 @@ In this initialization command:
 
  
 
-The initialization command of a ***for*** loop only executes once whereas everything inside the ***for*** loop will executes *once per cycle* of the ***for*** loop.
+The initialization command of a ***for*** loop only executes once whereas everything inside the ***for*** loop will executes [once per cycle]{.hl} of the ***for*** loop.
 
  
 
 After the initialization command is executed, ***Next*** will move the control inside the ***for*** loop:
 
-![After executing the initialization command, the green arrow moves inside the for loop](images/R-2-12-ForLoopPostInit'.png){#fig-arrow_within_for_loop .fs}
+![After executing the initialization command, the green arrow moves inside the for loop](images/R-2-13-ForPostInit.jpg){#fig-arrow_within_for_loop .fs}
 
  
 
@@ -272,7 +268,7 @@ Continue to hit ***Next*** and debug mode will go through each command in the **
 
 If you are inside a ***for*** loop and want to finish executing the whole ***for*** loop (i.e., complete every cycle of the loop), you can click ***Step Out***.  This will execute the rest of the ***for*** loop and put the control on the next command [as long as you have no breakpoints in the **for** loop]{.hl}.
 
-![Clicking Step Out will execute the rest of the for loop and move control to the next command](images/R-2-12-SteopOutFor-01.png){#fig-step_out .fs}
+![Clicking Step Out will execute the rest of the for loop and move control to the next command](images/R-2-13-StepOut.jpg){#fig-step_out .fs}
 
 [Note: If you have a breakpoint inside the **for** loop then ***Step Out*** will just execute to the breakpoint -- similar to ***Continue*** (@fig-bp_continue).]{.note}
 
@@ -303,13 +299,13 @@ The breakpoint needs to be put on the line inside the codeblock attached to the 
 
  
 
-With the breakpoint on line 30, the script will pause on the 200^th^ cycle of the for loop:
+With the breakpoint on line 29, the script will pause on the 200^th^ cycle of the for loop:
 
-![Using an if statement as a conditional breakpoint inside a for loop](images/R-2-12-ConditinalBreakpoint'.png){#fig-if_null_bp .fs}
+![Using an if statement as a conditional breakpoint inside a for loop](images/R-2-13-ConditionalBP.jpg){#fig-if_null_bp .fs}
 
  
 
-Or, if you put a a breakpoint at line 34, you can conditionally break on some other value being used in the ***for*** loop:
+Or, if you put a a breakpoint at line 33, you can conditionally break on a value being used in the ***for*** loop:
 
 ``` r
 if(sunsetTimes[i] == 2000)
@@ -320,15 +316,15 @@ if(sunsetTimes[i] == 2000)
 
 The script will pause on the 141^st^ cycle of the ***for*** loop, which represent the day that sunset is at 8:00pm (2000 hours)
 
-![Conditional breakpoint based on a variable used in the for loop](images/R-2-12-ConditinalBreakpoint2.png){#fig-conditional_br .fs}
+![Conditional breakpoint based on a variable used in the for loop](images/R-2-13-ConditionalBP2.jpg){#fig-conditional_br .fs}
 
 ## If-else statements
 
 [\## In lesson script:]{.note}
 
-[##   Remove breakpoint on line 34]{.note}
+[##   Remove breakpoint on line 33]{.note}
 
-[##   Add a breakpoint on line 39]{.note}
+[##   Add a breakpoint on line 38]{.note}
 
  
 
@@ -338,13 +334,13 @@ Similar to ***for*** loops, the code inside the parentheses of ***if-else*** sta
 
 When you set a breakpoint at the ***if()*** line, the whole ***if-else*** is highlighted in RStudio when the code is stopped at the line. 
 
-![Debug mode when the control is at the beginning of an if-else structure](images/R-2-12-IfElse.png){#fig-if_else_debug .fs}
+![Debug mode when the control is at the beginning of an if-else structure](images/R-2-13-If-Else.jpg){#fig-if_else_debug .fs}
 
 As you click ***Next***, the control (green arrow) will either:
 
--   move to the next conditional statement (if the current conditional statement was **FALSE**)
+-   move to the next conditional statement (if the current conditional statement is **FALSE**)
 
--   move inside the codeblock (if the current conditional statement was **TRUE**)
+-   move inside the codeblock (if the current conditional statement is **TRUE**)
 
  
 
@@ -358,13 +354,13 @@ The following lines are not executed in an ***if-else*** structure so they will 
 
 ## Debugging within functions (Step In)
 
-Inside the ***for*** loop on lines 25 and 26, we call ***convertTime*** twice.  ***convertTime*** is a function inside the ***debugTest.R***.  If you click ***Next*** while on line 25, then the whole line is executed, along with the ***convertTime*** function, and control will go to the next line.
+Inside the ***for*** loop on lines 24 and 25, we call ***convertTime*** twice.  ***convertTime*** is a function inside the ***debugTest.R***.  If you click ***Next*** while on line 25, then the whole line is executed, along with the ***convertTime*** function, and control will go to the next line.
 
  
 
 You can debug inside the ***convertTime*** function by clicking ***Step-In*** while on the lines with the function -- this will move control to the function and the whole function will be highlighted:
 
-![After clicking Step-In on line 25, control is moved to the function](images/R-2-12-Functions.png){#fig-step_in .fs}
+![After clicking Step-In on line 24, control is moved to the function](images/R-2-13_StepIn.png){#fig-step_in .fs}
 
 ***Step-in*** works whether the function is inside the same script or in another script.  However, ***Step-in*** will not work if the function is inside a package -- in R, you cannot debug script within a package.
 

@@ -1,5 +1,5 @@
 rm(list=ls());  
-source("scripts/debugTest.r");
+debugSource("scripts/debugTest.r");
 
 weatherData = read.csv(file = "data/lansing2016Noaa-3.csv");
 highTemps = weatherData$maxTemp;
@@ -11,7 +11,7 @@ weatherData$diffTemp = diffTemp;
 
 highDiff = which(diffTemp > 30);
 
-sunsetTimes = weatherData$sunset;
+sunsetTimes = weatherData$sunset;   
 sunriseTimes = weatherData$sunrise;
 
 sunsetTimes_12Hour = c();
@@ -23,7 +23,7 @@ for(i in 1:length(sunsetTimes))
 {
   sunsetTimes_12Hour[i] = convertTime(sunsetTimes[i]);
   sunriseTimes_12Hour[i] = convertTime(sunriseTimes[i]);
-  
+
   if(i == 200)  # acts as conditional breakpoint
   {
     NULL;   # this line functionally does nothing
@@ -38,20 +38,20 @@ for(i in 1:length(sunsetTimes))
 if(testCommand3 == 1)       # FALSE
 {
   cat(1); 
-}
-else if(testCommand3 == 2)  # FALSE
+
+}else if(testCommand3 == 2)  # FALSE
 {
   cat(2);
-}
-else if(testCommand3 == 3)  # TRUE
+
+}else if(testCommand3 == 3)  # TRUE
 {
   cat(3);                   # only codeblock executed
-}
-else if(testCommand3 == 4)  # FALSE, will not be checked
+
+}else if(testCommand3 == 4)  # FALSE, will not be checked
 {
   cat(4);
-}
-else   
+
+}else   
 {
   cat(5); 
 }
@@ -59,7 +59,7 @@ else
 library(package=ggplot2);
 plot1 = ggplot( data=weatherData ) +
   geom_point( mapping=aes(x=avgTemp, y=relHum) ) +
-  geom_smooth( mapping=aes(x=avgTemp, y=relHum), 
+  geom_smooth( mapping=aes(x=avgTemp, y=relHum),
                method="lm" ) +
   labs( title="Humidity vs Temperature",
         subtitle="Lansing, MI -- 2016",
