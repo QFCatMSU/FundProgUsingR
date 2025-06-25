@@ -21,7 +21,7 @@ testCommand1=1; testCommand2=2; testCommand3=3;
 
 for(i in 1:length(sunsetTimes))
 {
-  sunsetTimes_12Hour[i] = convertTime(sunsetTimes[i]);   # sdkjhg
+  sunsetTimes_12Hour[i] = convertTime(sunsetTimes[i]); 
   sunriseTimes_12Hour[i] = convertTime(sunriseTimes[i]);
 
   if(i == 200)  # acts as conditional breakpoint
