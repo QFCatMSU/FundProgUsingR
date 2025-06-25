@@ -1,5 +1,5 @@
 rm(list=ls());  
-debugSource("scripts/debugTest.r");
+source("scripts/debugTest.r");
 
 weatherData = read.csv(file = "data/lansing2016Noaa-3.csv");
 highTemps = weatherData$maxTemp;
@@ -21,7 +21,7 @@ testCommand1=1; testCommand2=2; testCommand3=3;
 
 for(i in 1:length(sunsetTimes))
 {
-  sunsetTimes_12Hour[i] = convertTime(sunsetTimes[i]);
+  sunsetTimes_12Hour[i] = convertTime(sunsetTimes[i]);   # sdkjhg
   sunriseTimes_12Hour[i] = convertTime(sunriseTimes[i]);
 
   if(i == 200)  # acts as conditional breakpoint

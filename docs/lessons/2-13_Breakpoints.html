@@ -342,6 +342,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">2-13: Breakpoints</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-14_BroserAndTrace.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-14: Browser and Trace</span></a>
+  </div>
+</li>
       </ul>
   </li>
       </ul>
@@ -358,8 +364,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#debugging-your-code" id="toc-debugging-your-code" class="nav-link" data-scroll-target="#debugging-your-code"><span class="header-section-number">3</span> Debugging your code</a></li>
   <li><a href="#setting-up-a-breakpoint" id="toc-setting-up-a-breakpoint" class="nav-link" data-scroll-target="#setting-up-a-breakpoint"><span class="header-section-number">4</span> Setting up a breakpoint</a>
   <ul class="collapse">
-  <li><a href="#browser" id="toc-browser" class="nav-link" data-scroll-target="#browser"><span class="header-section-number">4.1</span> browser()</a></li>
-  <li><a href="#debug-mode" id="toc-debug-mode" class="nav-link" data-scroll-target="#debug-mode"><span class="header-section-number">4.2</span> Debug Mode</a></li>
+  <li><a href="#debug-mode" id="toc-debug-mode" class="nav-link" data-scroll-target="#debug-mode"><span class="header-section-number">4.1</span> Debug Mode</a></li>
   </ul></li>
   <li><a href="#using-the-browse-in-breakpoint" id="toc-using-the-browse-in-breakpoint" class="nav-link" data-scroll-target="#using-the-browse-in-breakpoint"><span class="header-section-number">5</span> Using the Browse in breakpoint</a></li>
   <li><a href="#moving-through-code-in-debug-browse-mode" id="toc-moving-through-code-in-debug-browse-mode" class="nav-link" data-scroll-target="#moving-through-code-in-debug-browse-mode"><span class="header-section-number">6</span> Moving through code in debug (browse) mode</a>
@@ -367,7 +372,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#stop" id="toc-stop" class="nav-link" data-scroll-target="#stop"><span class="header-section-number">6.1</span> Stop</a></li>
   <li><a href="#continue-to-next-breakpoint" id="toc-continue-to-next-breakpoint" class="nav-link" data-scroll-target="#continue-to-next-breakpoint"><span class="header-section-number">6.2</span> Continue to next Breakpoint</a></li>
   <li><a href="#continue-to-end-of-script" id="toc-continue-to-end-of-script" class="nav-link" data-scroll-target="#continue-to-end-of-script"><span class="header-section-number">6.3</span> Continue to end of script</a></li>
-  <li><a href="#continue-if-breakpoint-is-in-for-loop" id="toc-continue-if-breakpoint-is-in-for-loop" class="nav-link" data-scroll-target="#continue-if-breakpoint-is-in-for-loop"><span class="header-section-number">6.4</span> Continue if breakpoint is in for loop</a></li>
+  <li><a href="#breakpoint-inside-for-loop" id="toc-breakpoint-inside-for-loop" class="nav-link" data-scroll-target="#breakpoint-inside-for-loop"><span class="header-section-number">6.4</span> breakpoint inside for loop</a></li>
   <li><a href="#next" id="toc-next" class="nav-link" data-scroll-target="#next"><span class="header-section-number">6.5</span> Next</a></li>
   <li><a href="#multiple-commands-on-one-line" id="toc-multiple-commands-on-one-line" class="nav-link" data-scroll-target="#multiple-commands-on-one-line"><span class="header-section-number">6.6</span> Multiple Commands on one line</a></li>
   </ul></li>
@@ -387,13 +392,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#questions-to-answer" id="toc-questions-to-answer" class="nav-link" data-scroll-target="#questions-to-answer"><span class="header-section-number">11.1</span> Questions to answer</a></li>
   <li><a href="#end-of-class-survey" id="toc-end-of-class-survey" class="nav-link" data-scroll-target="#end-of-class-survey"><span class="header-section-number">11.2</span> End-of-class survey</a></li>
   </ul></li>
-  <li><a href="#extension-breakpoints-issues-under-construction" id="toc-extension-breakpoints-issues-under-construction" class="nav-link" data-scroll-target="#extension-breakpoints-issues-under-construction"><span class="header-section-number">12</span> Extension: Breakpoints Issues (under construction)</a>
+  <li><a href="#extension-clicking-source-in-debug-mode" id="toc-extension-clicking-source-in-debug-mode" class="nav-link" data-scroll-target="#extension-clicking-source-in-debug-mode"><span class="header-section-number">12</span> Extension: Clicking Source in debug mode</a></li>
+  <li><a href="#extension-breakpoints-issues-under-construction" id="toc-extension-breakpoints-issues-under-construction" class="nav-link" data-scroll-target="#extension-breakpoints-issues-under-construction"><span class="header-section-number">13</span> Extension: Breakpoints Issues (under construction)</a>
   <ul class="collapse">
-  <li><a href="#modifying-breakpoints-in-debug-mode" id="toc-modifying-breakpoints-in-debug-mode" class="nav-link" data-scroll-target="#modifying-breakpoints-in-debug-mode"><span class="header-section-number">12.1</span> Modifying breakpoints in debug mode</a></li>
-  <li><a href="#removing-all-breakpoints" id="toc-removing-all-breakpoints" class="nav-link" data-scroll-target="#removing-all-breakpoints"><span class="header-section-number">12.2</span> Removing all breakpoints</a></li>
-  <li><a href="#issues-with-breakpoints-in-rrstudio" id="toc-issues-with-breakpoints-in-rrstudio" class="nav-link" data-scroll-target="#issues-with-breakpoints-in-rrstudio"><span class="header-section-number">12.3</span> Issues with Breakpoints in R/RStudio</a></li>
+  <li><a href="#modifying-breakpoints-in-debug-mode" id="toc-modifying-breakpoints-in-debug-mode" class="nav-link" data-scroll-target="#modifying-breakpoints-in-debug-mode"><span class="header-section-number">13.1</span> Modifying breakpoints in debug mode</a></li>
+  <li><a href="#removing-all-breakpoints" id="toc-removing-all-breakpoints" class="nav-link" data-scroll-target="#removing-all-breakpoints"><span class="header-section-number">13.2</span> Removing all breakpoints</a></li>
   </ul></li>
-  <li><a href="#old-stuff-probably-to-be-deleted" id="toc-old-stuff-probably-to-be-deleted" class="nav-link" data-scroll-target="#old-stuff-probably-to-be-deleted"><span class="header-section-number">13</span> Old stuff (probably to be deleted)</a></li>
   </ul>
 </nav>
 </nav>
@@ -426,8 +430,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="to-do" class="level3" data-number="0.1">
 <h3 data-number="0.1" class="anchored" data-anchor-id="to-do"><span class="header-section-number">0.1</span> To-do</h3>
 <ul>
-<li><p>next lesson: use trace() to add browser() to functions</p></li>
-<li><p>mention: cannot add/remove browser() while in debug mode (they do not take effect until you Source the script</p></li>
+<li><p>mention: cannot add/remove breakpoints while in debug mode (they do not take effect until you Source the script</p></li>
+<li><p>mention remove all breakpoints (debug -&gt; Remove all)</p></li>
+<li><p>find a functional way to show what the number in &gt; Browse[#] does</p></li>
 </ul>
 </section>
 <section id="purpose" class="level2" data-number="1">
@@ -441,55 +446,49 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="debugging-your-code" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="debugging-your-code"><span class="header-section-number">3</span> Debugging your code</h2>
-<p>One of the most powerful debugging tools in any programming language, and a staple of all professional programmers, is the breakpoint.&nbsp; Breakpoints allows you to pause the execution of your script at a specific line or command, including inside a <strong><em>for</em></strong> loop at a specific cycle.&nbsp; While paused, you can look at the <strong><em>Environment</em></strong>, enter commands in the <strong><em>Console</em></strong>, or move through your script one command at a time.</p>
+<p>One of the most powerful debugging tools in any programming language, and a staple of all professional programmers, is the breakpoint.&nbsp; Breakpoints allows you to pause the execution of your script at a specific line or command.&nbsp; While paused, you can look at the <strong><em>Environment</em></strong>, enter commands in the <strong><em>Console</em></strong>, or move through your script one command at a time. This is a very useful tool when debugging for loop that and cycling thousands of times.</p>
 <p>&nbsp;</p>
-<p>In R, the implementation of breakpoints is far less robust than most programming languages. Even with this poor implementation, breakpoints are still a useful debugging tool in R.</p>
+<p>The implementation of breakpoints in R is far less robust than most programming languages. Even with this limitation, breakpoints are still a useful debugging tool in R.</p>
 </section>
 <section id="setting-up-a-breakpoint" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="setting-up-a-breakpoint"><span class="header-section-number">4</span> Setting up a breakpoint</h2>
-<p>A breakpoint is like a pause button in the execution your script and there are multiple ways to set a breakpoint. In this lesson, we will mostly focus on using the <strong><em>browser()</em></strong> function.</p>
+<p>A breakpoint is like a pause button in the execution your script and there are multiple ways to set a breakpoint.&nbsp;In this lesson we will focus on using the Rstudio interface to set a breakpoint. In RStudio, you set a breakpoint by clicking to the left of the line number – this is called the <span class="hl">gutter area</span>.&nbsp; A red dot representing the breakpoint appears in the gutter area.&nbsp; Clicking again will get rid of the breakpoint.</p>
+<div id="fig-set_breakpoint" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-set_breakpoint-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R_2-13_SetBreakpoint.jpg" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-set_breakpoint-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Breakpoint (red dot) set on line 8
+</figcaption>
+</figure>
+</div>
+<p>When you <strong><em>Source</em></strong> your code, the script will execute up to, <span class="hl">but not including</span>, the line with the breakpoint.&nbsp; Your script is now paused at the line with a breakpoint, and you are in <span class="hl">debug mode</span>, which R calls <strong><em>Browse</em></strong> mode (<a href="#fig-source_with_bp" class="quarto-xref">Figure&nbsp;2</a>).</p>
 <p>&nbsp;</p>
-<section id="browser" class="level3" data-number="4.1">
-<h3 data-number="4.1" class="anchored" data-anchor-id="browser"><span class="header-section-number">4.1</span> browser()</h3>
-<p><strong><em>browser()</em></strong> is a command that tell R to pause execution of a script. <strong><em>browser()</em></strong> is added temporarily to your code when you want to debug it.</p>
-<p>Let’s take the lesson script and add browser() to line 7:</p>
-<div class="sourceCode" id="cb1" data-tab="2-13_Breakpoints.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>());  </span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"scripts/debugTest.r"</span>);</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>weatherData <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">"data/lansing2016Noaa-3.csv"</span>);</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>highTemps <span class="ot">=</span> weatherData<span class="sc">$</span>maxTemp;</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>lowTemps <span class="ot">=</span> weatherData<span class="sc">$</span>minTemp;</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>«<span class="fu">browser</span>();»</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>diffTemp <span class="ot">=</span> highTemps <span class="sc">-</span> lowTemps;</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>weatherData<span class="sc">$</span>diffTemp <span class="ot">=</span> diffTemp;</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>highDiff <span class="ot">=</span> <span class="fu">which</span>(diffTemp <span class="sc">&gt;</span> <span class="dv">30</span>);</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>When you click Source, R will execute the script up until browser() and then put the execution in debug mode</p>
-</section>
-<section id="debug-mode" class="level3" data-number="4.2">
-<h3 data-number="4.2" class="anchored" data-anchor-id="debug-mode"><span class="header-section-number">4.2</span> Debug Mode</h3>
+<p><span class="note">Note: A breakpoint only works when you <strong><em>Source</em></strong> your script.&nbsp; It will not work if you use <strong>Run</strong> to execute lines of code.</span></p>
+<section id="debug-mode" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="debug-mode"><span class="header-section-number">4.1</span> Debug Mode</h3>
 <p>There are 4 things in RStudio that will indicate you are in debug mode:</p>
 <ol type="1">
 <li><p>A green arrow will appear at the code line the script is paused at – the green arrow shows you the line that will be executed next</p></li>
 <li><p>Breakpoint controls will appear in the <strong><em>Console</em></strong> tab</p></li>
-<li><p>The <strong><em>Console</em></strong> will indicate it is in browse mode&nbsp; with <strong><em>&gt; Browse</em></strong></p>
+<li><p>The <strong><em>Console</em></strong> will indicate it is in browse mode&nbsp; with <code>&gt; Browse</code></p>
 <ul>
-<li>The number (in this case, 2) is telling you how many levels deep you are.&nbsp; We will see this when we talk about functions.</li>
+<li>The number (in this case, <strong>1</strong>) is telling you how many levels deep you are.&nbsp; The functionality of this number has changed in recent versions of RStudio and this author is still not quite sure what it represents.</li>
 </ul></li>
 <li><p>A traceback window will appear at the bottom of the <strong><em>Environment</em></strong> tab</p>
 <ul>
 <li>traceback is a more advanced debugging tool that we will not get into in this lesson</li>
 </ul></li>
 </ol>
-<div id="fig-debugMode" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<p>&nbsp;</p>
+<div id="fig-source_with_bp" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-debugMode-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/2_13-DebugMode.jpg" class="fs img-fluid figure-img">
+<div aria-describedby="fig-source_with_bp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-2-13_SourceBP.png" class="fs img-fluid figure-img">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-debugMode-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Sourcing a script with browser() command puts it into debug mode
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-source_with_bp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Sourcing a script with a breakpoint puts it into debug mode
 </figcaption>
 </figure>
 </div>
@@ -499,58 +498,54 @@ Figure&nbsp;1: Sourcing a script with browser() command puts it into debug mode
 <h2 data-number="5" class="anchored" data-anchor-id="using-the-browse-in-breakpoint"><span class="header-section-number">5</span> Using the Browse in breakpoint</h2>
 <p>In this lesson I will put breakpoint instructions in comments like this so you can follow along:</p>
 <p><span class="note">## In the lesson script:</span></p>
-<p><span class="note">##&nbsp;&nbsp;&nbsp; Place a breakpoint at line 7 in the lesson’s script and click <strong>Source</strong></span></p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>diffTemp <span class="ot">=</span> highTemps <span class="sc">-</span> lowTemps;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>In <a href="#fig-debugMode" class="quarto-xref">Figure&nbsp;1</a>, the script is currently paused at line 8, this means lines 1-6 has been executed.&nbsp; In the <strong><em>Environment</em></strong> you can see <strong><em>weatherData</em></strong>, <strong><em>highTemps</em></strong>, and <strong><em>lowTemps,</em></strong> which were created between lines 1-6.</p>
-<div class="sourceCode" id="cb3" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>weatherData   <span class="dv">366</span> obs. of <span class="dv">24</span> variables</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>highTemps     int [<span class="dv">1</span><span class="sc">:</span><span class="dv">366</span>] <span class="dv">29</span> <span class="dv">35</span> <span class="dv">33</span> <span class="dv">27</span> <span class="dv">29</span>...</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>lowTemps      int [<span class="dv">1</span><span class="sc">:</span><span class="dv">366</span>] <span class="dv">24</span> <span class="dv">28</span> <span class="dv">25</span> <span class="dv">7</span> <span class="dv">8</span> <span class="dv">20</span>...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><span class="note">##&nbsp;&nbsp;&nbsp; Place a breakpoint at line 8 in the lesson’s script and click <strong>Source</strong></span></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">8</span> diffTemp <span class="ot">=</span> highTemps <span class="sc">-</span> lowTemps;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In <a href="#fig-source_with_bp" class="quarto-xref">Figure&nbsp;2</a>, the script is currently paused at line 8, this means all commands in lines 1-7 have been executed.&nbsp; In the <strong><em>Environment</em></strong> you can see <strong><em>weatherData</em></strong>, <strong><em>highTemps</em></strong>, and <strong><em>lowTemps,</em></strong> which were added between lines 1-7.</p>
+<div class="sourceCode" id="cb2" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>weatherData   <span class="dv">366</span> obs. of <span class="dv">24</span> variables</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>highTemps     int [<span class="dv">1</span><span class="sc">:</span><span class="dv">366</span>] <span class="dv">29</span> <span class="dv">35</span> <span class="dv">33</span> <span class="dv">27</span> <span class="dv">29</span>...</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>lowTemps      int [<span class="dv">1</span><span class="sc">:</span><span class="dv">366</span>] <span class="dv">24</span> <span class="dv">28</span> <span class="dv">25</span> <span class="dv">7</span> <span class="dv">8</span> <span class="dv">20</span>...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>When in debug mode, you can enter commands in the <strong><em>Console</em></strong>.&nbsp; With these commands you can do things like view values in or execute functions on a vector:</p>
-<div class="sourceCode" id="cb4" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Browse[<span class="dv">1</span>]<span class="sc">&gt;</span> highTemps[<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>]</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">29</span> <span class="dv">35</span> <span class="dv">33</span> <span class="dv">27</span> <span class="dv">29</span> <span class="dv">36</span> <span class="dv">42</span> <span class="dv">39</span> <span class="dv">42</span> <span class="dv">38</span> <span class="dv">16</span> <span class="dv">23</span> <span class="dv">18</span> <span class="dv">34</span> <span class="dv">42</span> <span class="dv">33</span> <span class="dv">26</span> <span class="dv">15</span> <span class="dv">21</span> <span class="dv">22</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>Browse[<span class="dv">1</span>]<span class="sc">&gt;</span> <span class="fu">max</span>(highTemps)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">94</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Browse[<span class="dv">1</span>]<span class="sc">&gt;</span> highTemps[<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>]</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">29</span> <span class="dv">35</span> <span class="dv">33</span> <span class="dv">27</span> <span class="dv">29</span> <span class="dv">36</span> <span class="dv">42</span> <span class="dv">39</span> <span class="dv">42</span> <span class="dv">38</span> <span class="dv">16</span> <span class="dv">23</span> <span class="dv">18</span> <span class="dv">34</span> <span class="dv">42</span> <span class="dv">33</span> <span class="dv">26</span> <span class="dv">15</span> <span class="dv">21</span> <span class="dv">22</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>Browse[<span class="dv">1</span>]<span class="sc">&gt;</span> <span class="fu">max</span>(highTemps)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">94</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Or, you can create a new variable and add it to the <strong><em>Environment</em></strong>:</p>
-<div class="sourceCode" id="cb5" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>Browse[<span class="dv">1</span>]<span class="sc">&gt;</span> highTemp_C <span class="ot">=</span> (<span class="dv">5</span><span class="sc">/</span><span class="dv">9</span>)<span class="sc">*</span>(highTemps<span class="dv">-32</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>Browse[<span class="dv">1</span>]<span class="sc">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb6" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>highTemp_C     num [<span class="dv">1</span><span class="sc">:</span><span class="dv">366</span>] <span class="sc">-</span><span class="fl">1.667</span> <span class="fl">1.667</span> <span class="fl">0.556</span> <span class="sc">-</span><span class="dv">2</span>.<span class="dv">778</span>...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Browse[<span class="dv">1</span>]<span class="sc">&gt;</span> highTemp_C <span class="ot">=</span> (<span class="dv">5</span><span class="sc">/</span><span class="dv">9</span>)<span class="sc">*</span>(highTemps<span class="dv">-32</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>Browse[<span class="dv">1</span>]<span class="sc">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>highTemp_C     num [<span class="dv">1</span><span class="sc">:</span><span class="dv">366</span>] <span class="sc">-</span><span class="fl">1.667</span> <span class="fl">1.667</span> <span class="fl">0.556</span> <span class="sc">-</span><span class="dv">2</span>.<span class="dv">778</span>...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="moving-through-code-in-debug-browse-mode" class="level2" data-number="6">
 <h2 data-number="6" class="anchored" data-anchor-id="moving-through-code-in-debug-browse-mode"><span class="header-section-number">6</span> Moving through code in debug (browse) mode</h2>
-<p>When your script arrives at a breakpoint, five controls appear in the <strong><em>Console</em></strong> tab:</p>
-<p>1) <strong><em>Next</em></strong>: executes the command at the green arrow (in other languages, this is often called <strong><em>Step Over</em></strong>)</p>
+<p>When your script arrives at a breakpoint (<a href="#fig-source_with_bp" class="quarto-xref">Figure&nbsp;2</a>) , five buttons to control the flow of your script appear in the <strong><em>Console</em></strong> tab:</p>
+<p>1) <strong><em>Next</em></strong>: executes the command at the green arrow (in other debuggers, this is often called <strong><em>Step Over</em></strong>)</p>
 <p>2) <strong><em>Step In</em></strong>: moves into a function</p>
 <p>3) <strong><em>Step Out</em></strong>: completes a <strong><em>for</em></strong> loop or function</p>
 <p>4) <strong><em>Continue</em></strong>: unpauses the execution of the script (like hitting the Play button when a video is paused)</p>
 <p>5) <strong><em>Stop</em></strong>: quits the script (no more code is executed)</p>
 <p>&nbsp;</p>
-<p><span class="note">Examples will be given for each in this lesson.</span></p>
-<p>&nbsp;</p>
-<p>These buttons allow you to control the flow of you script. They are pretty universal – you will see these same controls when you use breakpoints in other programming languages.</p>
-<p>&nbsp;</p>
-<p>When in debug mode you should only use the buttons to control the flow of your script.&nbsp; In debug mode, clicking <strong><em>Source</em></strong> will cause problems with your script.</p>
+<p>When in debug mode you should only use the buttons to control the flow of your script.&nbsp; In debug mode, clicking <strong><em>Source</em></strong> will cause problems with your script. <a href="#extension-clicking-source-in-debug-mode">Extension: Clicking Source in debug mode</a> (read next section on <strong><em>Stop</em></strong> first).</p>
 <div id="fig-five_bp_controls" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-five_bp_controls-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/R-2-13-BPControls.png" class="fs img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-five_bp_controls-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: The five breakpoint controls in debug mode
+Figure&nbsp;3: The five breakpoint control in debug mode
 </figcaption>
 </figure>
 </div>
 <section id="stop" class="level3" data-number="6.1">
 <h3 data-number="6.1" class="anchored" data-anchor-id="stop"><span class="header-section-number">6.1</span> Stop</h3>
-<p>Clicking <strong><em>Stop</em></strong> will take R out of debug mode and end the execution of the script.&nbsp; In other words, no more commands in the script will be executed and the four components of debug mode (<a href="#fig-debugMode" class="quarto-xref">Figure&nbsp;1</a>) will go away. The Environment will still reflect the execution of the command before the breakpoint.</p>
+<p>Clicking <strong><em>Stop</em></strong> will take R out of debug mode and end the execution of the script.&nbsp; In other words, no more commands in the script will be executed and all the components of debug mode (<a href="#fig-source_with_bp" class="quarto-xref">Figure&nbsp;2</a>) will go away.</p>
 <p>&nbsp;</p>
-<p><strong><em>Q</em></strong> is the <strong><em>Console</em></strong> command to quit debug mode. When you click the <strong><em>Stop</em></strong> button, it send the <strong><em>Q</em></strong> command to the <strong><em>Console</em></strong></p>
-<div id="fig-stop" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<p>When you click Stop, <strong><em>Q</em></strong> is put in the <strong><em>Console</em></strong>. Q is the command to quit debug mode. You could directly type <strong><em>Q</em></strong> instead of clicking <strong><em>Stop</em></strong>.</p>
+<div id="fig-bp_stop" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-stop-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/2_13-Stop.jpg" class="fs img-fluid figure-img">
+<div aria-describedby="fig-bp_stop-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-2-13-Stop.jpg" class="fs img-fluid figure-img">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-stop-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Stop ends the execution of the script
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bp_stop-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Stopping debug mode
 </figcaption>
 </figure>
 </div>
@@ -558,72 +553,50 @@ Figure&nbsp;3: Stop ends the execution of the script
 <section id="continue-to-next-breakpoint" class="level3" data-number="6.2">
 <h3 data-number="6.2" class="anchored" data-anchor-id="continue-to-next-breakpoint"><span class="header-section-number">6.2</span> Continue to next Breakpoint</h3>
 <p><span class="note">## In the lesson script:</span></p>
-<p>##Add a second <strong><em>browser()</em></strong> on line 16 (so, now we have breakpoints at lines 7 and 16) and click <strong><em>Source</em></strong></p>
-<p>sunsetTimes_12Hour = c();</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>());  </span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"scripts/debugTest.r"</span>);</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>weatherData <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">"data/lansing2016Noaa-3.csv"</span>);</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>highTemps <span class="ot">=</span> weatherData<span class="sc">$</span>maxTemp;</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>lowTemps <span class="ot">=</span> weatherData<span class="sc">$</span>minTemp;</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>«<span class="fu">browser</span>();»</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>diffTemp <span class="ot">=</span> highTemps <span class="sc">-</span> lowTemps;</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>weatherData<span class="sc">$</span>diffTemp <span class="ot">=</span> diffTemp;</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>highDiff <span class="ot">=</span> <span class="fu">which</span>(diffTemp <span class="sc">&gt;</span> <span class="dv">30</span>);</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>sunsetTimes <span class="ot">=</span> weatherData<span class="sc">$</span>sunset;</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>sunriseTimes <span class="ot">=</span> weatherData<span class="sc">$</span>sunrise;</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>«<span class="fu">browser</span>();»</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>sunsetTimes_12Hour <span class="ot">=</span> <span class="fu">c</span>();</span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>sunriseTimes_12Hour <span class="ot">=</span> <span class="fu">c</span>();</span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The script will pause at the first breakpoint (line 7).&nbsp; If you click <strong><em>Continue</em></strong>, the script will unpause and continue executing the script until the next breakpoint is reached on line 16 and pause there (green arrow).&nbsp; Between the first and second pause, lines 7-15 are executed and the results of these commands are added to the <strong><em>Environment</em></strong>.</p>
+<p><span class="note">## Add a second breakpoint on line 17 (so, now we have breakpoints at lines 8 and 17) and click <strong>Source</strong></span></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="dv">17</span> sunsetTimes_12Hour <span class="ot">=</span> <span class="fu">c</span>();</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The script will pause at the first breakpoint (line 8).&nbsp; If you click <strong><em>Continue</em></strong>, the script will unpause and continue executing the script until the next breakpoint is reached on line 17 and pause there (green arrow).&nbsp; Between the first and second pause, lines 9-17 are executed and the results of these commands are in the <strong><em>Environment</em></strong>.</p>
 <p>&nbsp;</p>
 <p>In Console, the <strong><em>Continue</em></strong> command is <strong><em>c</em></strong>.</p>
-<div id="fig-continue" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<div id="fig-bp_continue" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-continue-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/2_13-Continue.jpg" class="fs img-fluid figure-img">
+<div aria-describedby="fig-bp_continue-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-2-13-Continue.jpg" class="fs img-fluid figure-img">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-continue-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4: Click Continue and the script goes to the next breakpoint
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bp_continue-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: Continue takes the script to the next breakpoint (if there is another one)
 </figcaption>
 </figure>
 </div>
 </section>
 <section id="continue-to-end-of-script" class="level3" data-number="6.3">
 <h3 data-number="6.3" class="anchored" data-anchor-id="continue-to-end-of-script"><span class="header-section-number">6.3</span> Continue to end of script</h3>
-<p>After line 15 there are no more breakpoints, so if you click <strong><em>Continue</em></strong> again, the rest of the script will be executed and the script is taken out of debug mode.</p>
-<div class="quarto-figure quarto-figure-left">
-<figure class="figure">
-<p><img src="images/2_13-Continue2.jpg" class="img-fluid figure-img"></p>
-<figcaption>If there are no more breakpoints, Continue execute the rest of the script</figcaption>
+<p>After line 17 there are no more breakpoints, so if you click <strong><em>Continue</em></strong> again, the rest of the script will be executed and you will be taken out of debug mode.</p>
+<div id="fig-continue_to_end" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-continue_to_end-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-2-13-ContinueToEnd.jpg" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-continue_to_end-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: Clicking Continue when there are no more breakpoint executes the rest of the script
+</figcaption>
 </figure>
 </div>
 </section>
-<section id="continue-if-breakpoint-is-in-for-loop" class="level3" data-number="6.4">
-<h3 data-number="6.4" class="anchored" data-anchor-id="continue-if-breakpoint-is-in-for-loop"><span class="header-section-number">6.4</span> Continue if breakpoint is in for loop</h3>
+<section id="breakpoint-inside-for-loop" class="level3" data-number="6.4">
+<h3 data-number="6.4" class="anchored" data-anchor-id="breakpoint-inside-for-loop"><span class="header-section-number">6.4</span> breakpoint inside for loop</h3>
 <p><span class="note">## In lesson script:</span></p>
-<p><span class="note">##&nbsp;&nbsp; Remove the browser() at lines 7 and 16</span></p>
-<p><span class="note">##&nbsp;&nbsp; Add browser() at line 23 (first line in the <strong><em>for</em></strong> loop)</span></p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(sunsetTimes))</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>{ «<span class="fu">browser</span>();»</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  sunsetTimes_12Hour[i] <span class="ot">=</span> <span class="fu">convertTime</span>(sunsetTimes[i]);</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  sunriseTimes_12Hour[i] <span class="ot">=</span> <span class="fu">convertTime</span>(sunriseTimes[i]);</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>...</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><span class="note">Note: <strong><em>browser()</em></strong> is put on a line that I usually leave blank – this is because I plan to delete it in a bit.</span></p>
-<p>&nbsp;</p>
-<p>If you put a <strong><em>browser()</em></strong>inside a <strong><em>for</em></strong> loop then <strong><em>Continue</em></strong> will stop at the breakpoint <span class="hl">every cycle of the <strong>for</strong> loop</span><em>.</em>&nbsp;In <a href="#fig-continueFor" class="quarto-xref">Figure&nbsp;5</a> I have click <strong><em>Continue</em></strong> 21 time and the <strong><em>for</em></strong> loop has cycled 21 times (and <strong><em>i = 21</em></strong>)</p>
-<div id="fig-continueFor" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<p><span class="note">##&nbsp;&nbsp; Remove the breakpoints at lines 9 and 18</span></p>
+<p><span class="note">##&nbsp;&nbsp; Add a breakpoint at line 24 (inside the <strong><em>for</em></strong> loop)</span></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="dv">24</span> sunsetTimes_12Hour[i] <span class="ot">=</span> <span class="fu">convertTime</span>(sunsetTimes[i]);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you put a <strong>breakpoint inside a for loop</strong> then <strong><em>Continue</em></strong> will stop at the breakpoint <span class="hl">every cycle of the <strong>for</strong> loop</span><em>.</em>&nbsp;In <strong>?@fig-continueFor</strong> I clicked <strong><em>Continue</em></strong> 20 time and the <strong><em>for</em></strong> loop has cycled 20 times (and <strong><em>i = 20</em></strong>)</p>
+<div id="fig-continue_for_loop" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-continueFor-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/2_13-ContinueFor.jpg" class="fs img-fluid figure-img">
+<div aria-describedby="fig-continue_for_loop-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-2-13-ContinueInFor.jpg" class="fs img-fluid figure-img">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-continueFor-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5: Continue with a breakpoint inside the for loop
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-continue_for_loop-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7: Continue clicked 20 times (note: i=20) with a breakpoint inside the for loop
 </figcaption>
 </figure>
 </div>
@@ -631,44 +604,23 @@ Figure&nbsp;5: Continue with a breakpoint inside the for loop
 <section id="next" class="level3" data-number="6.5">
 <h3 data-number="6.5" class="anchored" data-anchor-id="next"><span class="header-section-number">6.5</span> Next</h3>
 <p><span class="note">## In lesson script:</span></p>
-<p><span class="note">##&nbsp;&nbsp; Remove browser() in <strong><em>for</em></strong> loop on line 23</span></p>
-<p><span class="note">##&nbsp;&nbsp; Add browser() at the end of line 13</span></p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>...</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>highDiff <span class="ot">=</span> <span class="fu">which</span>(diffTemp <span class="sc">&gt;</span> <span class="dv">30</span>);</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>sunsetTimes <span class="ot">=</span> weatherData<span class="sc">$</span>sunset;   «<span class="fu">browser</span>();»</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>sunriseTimes <span class="ot">=</span> weatherData<span class="sc">$</span>sunrise;</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>sunsetTimes_12Hour <span class="ot">=</span> <span class="fu">c</span>();</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>sunriseTimes_12Hour <span class="ot">=</span> <span class="fu">c</span>();</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>testCommand1<span class="ot">=</span><span class="dv">1</span>; testCommand2<span class="ot">=</span><span class="dv">2</span>; testCommand3<span class="ot">=</span><span class="dv">3</span>;</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>I will put <strong><em>browser()</em></strong> in non-standard places for a coding standards perspective because it is meant to be temporary and this way I maintain the line numbers for the rest of the script.</p>
+<p><span class="note">##&nbsp;&nbsp; Remove breakpoint on line 24</span></p>
+<p><span class="note">##&nbsp;&nbsp; Add a breakpoint on line 14</span></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="dv">14</span> sunsetTimes <span class="ot">=</span> weatherData<span class="sc">$</span>sunset;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If we <strong><em>Source</em></strong> the script, the code up until line 13 will execute and line 14 will have a green arrow in the gutter.</p>
 <p>&nbsp;</p>
-<p>If we <strong><em>Source</em></strong> the script, the code up until line 14 will execute and line 15 will have a green arrow next to it. In the Environment, we see that <strong><em>sunsetTimes</em></strong> is there (line 14) but <strong><em>sunriseTimes</em></strong> is not (line 15).</p>
-<div id="fig-endofline" class="fs quarto-float quarto-figure quarto-figure-left anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-endofline-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/2_13-endofline.jpg" class="fs img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-endofline-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6: browser() at the end of a line
-</figcaption>
-</figure>
-</div>
 <p>We can now execute one command at a time using <strong><em>Next</em></strong>.</p>
 <p>&nbsp;</p>
-<p>Clicking <strong><em>Next</em></strong> executes the command on line 15 and moves the green arrow to the next command on line 16.</p>
+<p>Clicking <strong><em>Next</em></strong> executes the command on line 14 and moves the green arrow to the next command on line 15.</p>
 <p>&nbsp;</p>
-<p>So, <strong><em>sunset_times</em></strong> is created and put in the <strong><em>Environment</em></strong> and line 16, which creates <strong><em>sunriseTimes</em></strong>, is highlighted with the green arrow..</p>
+<p>So, <strong><em>sunsetTimes</em></strong> is created and put in the <strong><em>Environment</em></strong> and line 15, which creates <strong><em>sunriseTimes</em></strong>, is highlighted with the green arrow..</p>
 <div id="fig-bp_next" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-bp_next-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/R-2-12-Next.png" class="fs img-fluid figure-img">
+<img src="images/R-2-13-Next.jpg" class="fs img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bp_next-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7: Clicking Next executes the command at the green arrow and moves the green arrow to the next command
+Figure&nbsp;8: Clicking Next executes the command at the green arrow and moves the green arrow to the next command
 </figcaption>
 </figure>
 </div>
@@ -676,19 +628,16 @@ Figure&nbsp;7: Clicking Next executes the command at the green arrow and moves t
 <section id="multiple-commands-on-one-line" class="level3" data-number="6.6">
 <h3 data-number="6.6" class="anchored" data-anchor-id="multiple-commands-on-one-line"><span class="header-section-number">6.6</span> Multiple Commands on one line</h3>
 <p><span class="note">## In lesson script:</span></p>
-<p><span class="note">## &nbsp; Click <strong><em>Next</em></strong> until you get to line 21</span></p>
-<p>Lines 15-19 have one command each but line 21 has three commands:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>testCommand1<span class="ot">=</span><span class="dv">1</span>; testCommand2<span class="ot">=</span><span class="dv">2</span>; testCommand3<span class="ot">=</span><span class="dv">3</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><strong><em>Next</em></strong> does not execute lines, <span class="hl"><strong>Next</strong> executes commands</span>.&nbsp; If there are multiple commands on one line then <strong><em>Next</em></strong> will execute them one at a time.</p>
-<p>&nbsp;</p>
-<p>When there are multiple commands on a line, the debugger in RStudio will highlight the current command.</p>
+<p><span class="note">## &nbsp; Click <strong><em>Next</em></strong> until you get to line 20</span></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="dv">20</span> testCommand1<span class="ot">=</span><span class="dv">1</span>; testCommand2<span class="ot">=</span><span class="dv">2</span>; testCommand3<span class="ot">=</span><span class="dv">3</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong><em>Next</em></strong> does not execute lines, <span class="hl"><strong>Next</strong> executes commands</span>.&nbsp; Lines 17 and 18 have one command each but line 20 has 3 commands. If there are multiple commands on one line then <strong><em>Next</em></strong> will execute them one at a time and the debugger will highlight the current command.</p>
 <div id="fig-multiple_command_line" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-multiple_command_line-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/R-2-12-MultipleCommandsOnLine.png" class="fs img-fluid figure-img">
+<img src="images/R-2-13-NextCommand.jpg" class="fs img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-multiple_command_line-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;8: Only the current command is highlighted – clicking Next moves through the commands on the line.
+Figure&nbsp;9: Only the current command is highlighted – clicking Next moves through the commands on the line.
 </figcaption>
 </figure>
 </div>
@@ -697,16 +646,16 @@ Figure&nbsp;8: Only the current command is highlighted – clicking Next moves t
 <section id="debugging-in-a-for-loop" class="level2" data-number="7">
 <h2 data-number="7" class="anchored" data-anchor-id="debugging-in-a-for-loop"><span class="header-section-number">7</span> Debugging in a for loop</h2>
 <p><span class="note">## In lesson script:</span></p>
-<p><span class="note">##&nbsp;&nbsp; Click <strong>Next</strong> until you get to line 23</span></p>
-<p>&nbsp;</p>
+<p><span class="note">##&nbsp;&nbsp; Click <strong>Next</strong> until you get to line 22</span></p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="dv">22</span> <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(sunsetTimes))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>When the green arrow gets to a <strong><em>for</em></strong> loop, RStudio will highlight the whole <strong><em>for</em></strong> loop:</p>
 <div id="fig-whole_for_loop" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-whole_for_loop-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/R-2-12-ForLoop.png" class="fs img-fluid figure-img">
+<img src="images/R-2-13_For.png" class="fs img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-whole_for_loop-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9: Highlighting the whole for loop in debug mode
+Figure&nbsp;10: Highlighting the whole for loop in debug mode
 </figcaption>
 </figure>
 </div>
@@ -715,81 +664,83 @@ Figure&nbsp;9: Highlighting the whole for loop in debug mode
 <div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(sunsetTimes))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>In this initialization command:</p>
 <ul>
-<li><p>the variable <strong><em>i</em></strong> is initialized to <strong>1</strong></p></li>
-<li><p>a rule is given for how <strong><em>i</em></strong> changes each time the <strong><em>for</em></strong> loop cycles (<strong><em>i</em></strong> increases by <strong>1</strong>)</p></li>
+<li><p>the variable <strong><em>i</em></strong> is set to <strong>1</strong></p></li>
+<li><p>a rule is given for how <strong><em>i</em></strong> changes each time the <strong><em>for</em></strong> loop cycles (i.e., <strong><em>i</em></strong> increases by <strong>1</strong>)</p></li>
 <li><p>the cycles end when <strong><em>i</em></strong> is equal to <strong><em>sunsetTime</em></strong></p></li>
 </ul>
 <p>&nbsp;</p>
-<p>The initialization command of a <strong><em>for</em></strong> loop only executes once whereas everything inside the <strong><em>for</em></strong> loop will executes <em>once per cycle</em> of the <strong><em>for</em></strong> loop.</p>
+<p>The initialization command of a <strong><em>for</em></strong> loop executes once whereas everything inside the <strong><em>for</em></strong> loop executes <span class="hl">once per cycle</span> of the <strong><em>for</em></strong> loop.</p>
 <p>&nbsp;</p>
 <p>After the initialization command is executed, <strong><em>Next</em></strong> will move the control inside the <strong><em>for</em></strong> loop:</p>
 <div id="fig-arrow_within_for_loop" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-arrow_within_for_loop-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/R-2-12-ForLoopPostInit'.png" class="fs img-fluid figure-img">
+<img src="images/R-2-13-ForPostInit.jpg" class="fs img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-arrow_within_for_loop-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;10: After executing the initialization command, the green arrow moves inside the for loop
+Figure&nbsp;11: After executing the initialization command, the green arrow moves inside the for loop
 </figcaption>
 </figure>
 </div>
-<p>&nbsp;</p>
-<p>Continue to hit <strong><em>Next</em></strong> and debug mode will go through each command in the <strong><em>for</em></strong> loop for each cycle of the <strong><em>for</em></strong> loop</p>
+<p>If you keep clicking <strong><em>Next</em></strong> and debug mode will go through each command in the <strong><em>for</em></strong> loop for each cycle of the <strong><em>for</em></strong> loop</p>
 <section id="step-out-of-the-for-loop" class="level3" data-number="7.1">
 <h3 data-number="7.1" class="anchored" data-anchor-id="step-out-of-the-for-loop"><span class="header-section-number">7.1</span> Step Out of the for loop</h3>
 <p>If you are inside a <strong><em>for</em></strong> loop and want to finish executing the whole <strong><em>for</em></strong> loop (i.e., complete every cycle of the loop), you can click <strong><em>Step Out</em></strong>.&nbsp; This will execute the rest of the <strong><em>for</em></strong> loop and put the control on the next command <span class="hl">as long as you have no breakpoints in the <strong>for</strong> loop</span>.</p>
 <div id="fig-step_out" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-step_out-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/R-2-12-SteopOutFor-01.png" class="fs img-fluid figure-img">
+<img src="images/R-2-13-StepOut.jpg" class="fs img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-step_out-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;11: Clicking Step Out will execute the rest of the for loop and move control to the next command
+Figure&nbsp;12: Clicking Step Out will execute the rest of the for loop and move control to the next command
 </figcaption>
 </figure>
 </div>
-<p><span class="note">Note: If you have a breakpoint inside the <strong>for</strong> loop then <strong><em>Step Out</em></strong> will just execute to the breakpoint – similar to <strong><em>Continue</em></strong> (<strong>?@fig-bp_continue</strong>).</span></p>
+<p><span class="note">Note: If you have a breakpoint inside the <strong>for</strong> loop then <strong><em>Step Out</em></strong> will just execute to the breakpoint – similar to <strong><em>Continue</em></strong> (<a href="#fig-bp_continue" class="quarto-xref">Figure&nbsp;5</a>).</span></p>
 </section>
 <section id="conditional-breakpoints" class="level3" data-number="7.2">
 <h3 data-number="7.2" class="anchored" data-anchor-id="conditional-breakpoints"><span class="header-section-number">7.2</span> Conditional breakpoints</h3>
 <p><span class="note">## In lesson script:</span></p>
 <p><span class="note">##&nbsp;&nbsp; Click <strong>Stop</strong></span></p>
-<p><span class="note">##&nbsp;&nbsp; Add breakpoint on line 30 and <strong>Source</strong> script</span></p>
-<p>&nbsp;</p>
-<p>A <strong><em>for</em></strong> loop can easily run thousands or millions of times and you often only want a breakpoint on specific cycles of the <strong><em>for</em></strong> loop.&nbsp; In most programming language, you can attach a condition to the breakpoint so that the breakpoint only activates when specified.</p>
+<p><span class="note">##&nbsp;&nbsp; Add breakpoint on line 29 and <strong>Source</strong> script</span></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="dv">27</span>  <span class="cf">if</span>(i <span class="sc">==</span> <span class="dv">200</span>)  <span class="co"># acts as conditional breakpoint</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="dv">28</span>  {</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="dv">29</span>    <span class="cn">NULL</span>;   <span class="co"># this line functionally does nothing</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="dv">30</span>  }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>A <strong><em>for</em></strong> loop can easily run thousands or millions of times and you often only want a breakpoint on a specific cycle of the <strong><em>for</em></strong> loop.&nbsp; In most programming language, you can attach a condition to the breakpoint so that the breakpoint only activates when specified.</p>
 <p>&nbsp;</p>
 <p>In R, you need to manually code this condition.&nbsp; You can pause at a specific cycle of the <strong><em>for</em></strong> loop using an <strong><em>if</em></strong> statement:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(i <span class="sc">==</span> <span class="dv">200</span>)     <span class="co"># NULL here?</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="cn">NULL</span>;  <span class="co"># this line functionally does nothing</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The breakpoint needs to be put on the line inside the codeblock attached to the <strong><em>if</em></strong> statement. Inside the codeblock is a NULL command – meaning it does nothing (it is only there to provide a space for the breakpoint).</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(i <span class="sc">==</span> <span class="dv">200</span>)    <span class="co"># acts as conditional breakpoint</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="cn">NULL</span>;  <span class="co"># this line functionally does nothing</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The breakpoint needs to be put inside the codeblock attached to the <strong><em>if</em></strong> statement. Inside the codeblock is a <strong>NULL</strong> command – meaning it does nothing (it is only there to provide a space for the breakpoint).</p>
 <p>&nbsp;</p>
-<p>With the breakpoint on line 30, the script will pause on the 200<sup>th</sup> cycle of the for loop:</p>
+<p>With the breakpoint on line 29, the script will pause on the 200<sup>th</sup> cycle of the for loop:</p>
 <div id="fig-if_null_bp" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-if_null_bp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/R-2-12-ConditinalBreakpoint'.png" class="fs img-fluid figure-img">
+<img src="images/R-2-13-ConditionalBP.jpg" class="fs img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-if_null_bp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;12: Using an if statement as a conditional breakpoint inside a for loop
+Figure&nbsp;13: Using an if statement as a conditional breakpoint inside a for loop
 </figcaption>
 </figure>
 </div>
 <p>&nbsp;</p>
-<p>Or, if you put a a breakpoint at line 34, you can conditionally break on some other value being used in the <strong><em>for</em></strong> loop:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(sunsetTimes[i] <span class="sc">==</span> <span class="dv">2000</span>)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="cn">NULL</span>; </span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The script will pause on the 141<sup>st</sup> cycle of the <strong><em>for</em></strong> loop, which represent the day that sunset is at 8:00pm (2000 hours)</p>
+<p>Or, if you put a a breakpoint at line 33, you can conditionally break on a value being used in the <strong><em>for</em></strong> loop:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(sunsetTimes[i] <span class="sc">==</span> <span class="dv">2000</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="cn">NULL</span>; </span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The script will pause on the 141<sup>st</sup> cycle of the <strong><em>for</em></strong> loop, which represents the first day that sunset is at exactly 8:00pm (2000 hours)</p>
 <div id="fig-conditional_br" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-conditional_br-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/R-2-12-ConditinalBreakpoint2.png" class="fs img-fluid figure-img">
+<img src="images/R-2-13-ConditionalBP2.jpg" class="fs img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-conditional_br-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;13: Conditional breakpoint based on a variable used in the for loop
+Figure&nbsp;14: Conditional breakpoint based on a variable used in the for loop
 </figcaption>
 </figure>
 </div>
@@ -798,29 +749,29 @@ Figure&nbsp;13: Conditional breakpoint based on a variable used in the for loop
 <section id="if-else-statements" class="level2" data-number="8">
 <h2 data-number="8" class="anchored" data-anchor-id="if-else-statements"><span class="header-section-number">8</span> If-else statements</h2>
 <p><span class="note">## In lesson script:</span></p>
-<p><span class="note">##&nbsp;&nbsp; Remove breakpoint on line 34</span></p>
-<p><span class="note">##&nbsp;&nbsp; Add a breakpoint on line 39</span></p>
-<p>&nbsp;</p>
-<p>Similar to <strong><em>for</em></strong> loops, the code inside the parentheses of <strong><em>if-else</em></strong> statements is a command.&nbsp; The command, which is a conditional statements, outputs a Boolean (TRUE/FALSE) value that is used to determined if the codeblock gets executed.</p>
+<p><span class="note">##&nbsp;&nbsp; Remove breakpoint on line 33</span></p>
+<p><span class="note">##&nbsp;&nbsp; Add a breakpoint on line 38</span></p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="dv">38</span> <span class="cf">if</span>(testCommand3 <span class="sc">==</span> <span class="dv">1</span>) <span class="co"># FALSE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Similar to the initialization of <strong><em>for</em></strong> loops, the code inside the parentheses of <strong><em>if-else</em></strong> statements is a command.&nbsp; The command, which is a conditional statements, outputs a Boolean (TRUE/FALSE) value that is used to determined if the codeblock gets executed.</p>
 <p>&nbsp;</p>
 <p>When you set a breakpoint at the <strong><em>if()</em></strong> line, the whole <strong><em>if-else</em></strong> is highlighted in RStudio when the code is stopped at the line.&nbsp;</p>
 <div id="fig-if_else_debug" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-if_else_debug-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/R-2-12-IfElse.png" class="fs img-fluid figure-img">
+<img src="images/R-2-13-If-Else.jpg" class="fs img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-if_else_debug-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;14: Debug mode when the control is at the beginning of an if-else structure
+Figure&nbsp;15: Debug mode when the control is at the beginning of an if-else structure
 </figcaption>
 </figure>
 </div>
 <p>As you click <strong><em>Next</em></strong>, the control (green arrow) will either:</p>
 <ul>
-<li><p>move to the next conditional statement (if the current conditional statement was <strong>FALSE</strong>)</p></li>
-<li><p>move inside the codeblock (if the current conditional statement was <strong>TRUE</strong>)</p></li>
+<li><p>move to the next conditional statement (if the current conditional statement is <strong>FALSE</strong>)</p></li>
+<li><p>move inside the codeblock (if the current conditional statement is <strong>TRUE</strong>)</p></li>
 </ul>
 <p>&nbsp;</p>
-<p>The following lines are not executed in an <strong><em>if-else</em></strong> structure so they will be skipped over in debug mode:</p>
+<p>The following lines are not executed in an <strong><em>if-else</em></strong> structure and ill be skipped over in debug mode:</p>
 <ul>
 <li><p>codeblocks attached to <strong><em>FALSE</em></strong> conditional statements</p></li>
 <li><p><strong><em>else</em></strong> statements that were preceded by a <strong>TRUE</strong> conditional statement</p>
@@ -831,30 +782,28 @@ Figure&nbsp;14: Debug mode when the control is at the beginning of an if-else st
 </section>
 <section id="debugging-within-functions-step-in" class="level2" data-number="9">
 <h2 data-number="9" class="anchored" data-anchor-id="debugging-within-functions-step-in"><span class="header-section-number">9</span> Debugging within functions (Step In)</h2>
-<p>Inside the <strong><em>for</em></strong> loop on lines 25 and 26, we call <strong><em>convertTime</em></strong> twice.&nbsp; <strong><em>convertTime</em></strong> is a function inside the <strong><em>debugTest.R</em></strong>.&nbsp; If you click <strong><em>Next</em></strong> while on line 25, then the whole line is executed, along with the <strong><em>convertTime</em></strong> function, and control will go to the next line.</p>
+<p>Inside the <strong><em>for</em></strong> loop on lines 24 and 25, we call <strong><em>convertTime</em></strong> twice.&nbsp; <strong><em>convertTime</em></strong> is a function inside <strong><em>debugTest.R</em></strong>.&nbsp; If you click <strong><em>Next</em></strong> while on line 24, then the whole line is executed, along with the <strong><em>convertTime</em></strong> function, and control will go to the next line.</p>
 <p>&nbsp;</p>
 <p>You can debug inside the <strong><em>convertTime</em></strong> function by clicking <strong><em>Step-In</em></strong> while on the lines with the function – this will move control to the function and the whole function will be highlighted:</p>
 <div id="fig-step_in" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-step_in-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/R-2-12-Functions.png" class="fs img-fluid figure-img">
+<img src="images/R-2-13_StepIn.png" class="fs img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-step_in-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;15: After clicking Step-In on line 25, control is moved to the function
+Figure&nbsp;16: After clicking Step-In on line 24, control is moved to the function
 </figcaption>
 </figure>
 </div>
-<p><strong><em>Step-in</em></strong> works whether the function is inside the same script or in another script.&nbsp; However, <strong><em>Step-in</em></strong> will not work if the function is inside a package – in R, you cannot debug script within a package.</p>
-<p>&nbsp;</p>
-<p><span class="note">Note: when you Stepped In the function, the Browse number increased by 1 (from 2 to 3)</span><em>.</em> The Browse number of sort of a measurement of how many levels deep you are in code.&nbsp;</p>
+<p><strong><em>Step-in</em></strong> works whether the function is inside the same script or in another script.&nbsp; However, <strong><em>Step-in</em></strong> will not work if the function is inside a package – for packages that we need to use <strong><em>trace()</em></strong> (next lesson).</p>
 <section id="executing-command-within-the-function" class="level3" data-number="9.1">
 <h3 data-number="9.1" class="anchored" data-anchor-id="executing-command-within-the-function"><span class="header-section-number">9.1</span> Executing command within the function</h3>
-<p>Once inside the function you can use the debug buttons like before. <strong><em>Next</em></strong> will execute one command at a time inside the function.&nbsp; Click <strong><em>Step Out</em></strong> to complete the whole function and return to the main script.</p>
+<p>Once inside the function you can use the debug buttons like before. <strong><em>Next</em></strong> will execute one command at a time inside the function.&nbsp; <strong><em>Step Out</em></strong> will complete the whole function and return to the next command in the main script.</p>
 </section>
 </section>
 <section id="other-ways-to-add-breakpoints" class="level2" data-number="10">
 <h2 data-number="10" class="anchored" data-anchor-id="other-ways-to-add-breakpoints"><span class="header-section-number">10</span> Other ways to add breakpoints</h2>
-<p>This lesson only goes through the fundamentals of breakpoints – these fundamentals apply to breakpoints in just about any programming language.&nbsp; However, breakpoints are not implemented well in R – this methods taught in the lesson will not work for adding breakpoints to script files outside of your main script (the one you <strong><em>Source</em></strong>) or functions within packages.&nbsp; Other strategies are needed to add breakpoints to these location.</p>
+<p>This lesson only goes through the fundamentals of breakpoints and debugging that apply to just about any programming language.&nbsp; However, the methods in this lesson will not work for adding breakpoints to script files outside of your main script (the one you <strong><em>Source</em></strong>) or functions within packages.&nbsp; Other strategies are needed to add breakpoints to these location.</p>
 <p>&nbsp;</p>
 <p>The functions that can add breakpoints to external script files and packages are (in order of complexity) are:</p>
 <ul>
@@ -864,24 +813,22 @@ Figure&nbsp;15: After clicking Step-In on line 25, control is moved to the funct
 <li><p><strong><em>trace()</em></strong></p></li>
 </ul>
 <p>&nbsp;</p>
-<p>Going through all of these would require another full lesson – something that is, for now, outside the scope of this class.</p>
+<p>In the next lesson, we will look at these debug commands.</p>
 </section>
 <section id="application" class="level2" data-number="11">
 <h2 data-number="11" class="anchored" data-anchor-id="application"><span class="header-section-number">11</span> Application</h2>
-<p>A) In Comments at the end of the script answer the following questions:</p>
+<p>In Comments at the end of the script answer the following questions:</p>
 <ol type="1">
 <li><p>Why might it be a bad idea to put breakpoint without a condition inside a <strong><em>for</em></strong> loop?</p></li>
 <li><p>What happens when you try to put a breakpoint on a line with only comments?&nbsp;</p></li>
-<li><p>What happens if you put a breakpoint at line 45 and click <strong><em>Source</em></strong>?&nbsp; How about line 43?&nbsp; Why is there a difference?</p></li>
+<li><p>What happens if you put a breakpoint at line 48 and click <strong><em>Source</em></strong>?&nbsp; How about line 44?&nbsp; Why is there a difference?</p></li>
 <li><p>What happens if you put a breakpoint in the middle of the <strong><em>ggplot()</em></strong> call?&nbsp;</p></li>
-</ol>
-<p>Add the following code to the script:</p>
-<p>B) Set up a conditional breakpoint within the <strong><em>for</em></strong> loop that pauses the script every 30<sup>th</sup> cycle.</p>
+<li><p>Set up a conditional breakpoint within the <strong><em>for</em></strong> loop that pauses the script every 30<sup>th</sup> cycle.</p>
 <ul>
 <li>A good way to to do this involves using <a href="..\content/DEVELOPMENT/2020/courses/DEV-belinsky-2020-ProgrammingFundamentalsUsingR/R/Lessons/1-13_Functions.html#modulus">modulus division</a></li>
-</ul>
-<p>&nbsp;</p>
-<p>C) Set up a conditional breakpoint within a <strong><em>for</em></strong> loop to pause the code when <strong><em>windSpeed</em></strong> is between 35 and 40mph.</p>
+</ul></li>
+<li><p>Set up a conditional breakpoint within a <strong><em>for</em></strong> loop to pause the code when <strong><em>windSpeed</em></strong> is between 35 and 40mph.</p></li>
+</ol>
 <p>&nbsp;</p>
 <p>Save the script as&nbsp;<strong><em>app2-13.r</em></strong> in your&nbsp;<strong><em>scripts</em></strong> folder and&nbsp; email your Project Folder to Charlie Belinsky at belinsky@msu.edu.</p>
 <p>&nbsp;</p>
@@ -902,11 +849,35 @@ Figure&nbsp;15: After clicking Step-In on line 25, control is moved to the funct
 <p><a href="https://msu.co1.qualtrics.com/jfe/form/SV_b9I3VPJ2We28Qzs?online=true&amp;sync=false&amp;class=ggplot">Please take this short (less than 5 minutes) survey regarding this class.</a></p>
 </section>
 </section>
-<section id="extension-breakpoints-issues-under-construction" class="level2" data-number="12">
-<h2 data-number="12" class="anchored" data-anchor-id="extension-breakpoints-issues-under-construction"><span class="header-section-number">12</span> Extension: Breakpoints Issues (under construction)</h2>
-<p>This section will provide examples for bugs when using breakpoints in RStudio</p>
-<section id="modifying-breakpoints-in-debug-mode" class="level3" data-number="12.1">
-<h3 data-number="12.1" class="anchored" data-anchor-id="modifying-breakpoints-in-debug-mode"><span class="header-section-number">12.1</span> Modifying breakpoints in debug mode</h3>
+<section id="extension-clicking-source-in-debug-mode" class="level2" data-number="12">
+<h2 data-number="12" class="anchored" data-anchor-id="extension-clicking-source-in-debug-mode"><span class="header-section-number">12</span> Extension: Clicking Source in debug mode</h2>
+<p>Sourcing a script when it is in debug mode is never a good idea. When you click <strong><em>Source</em></strong> while in debug mode, you are creating a new instance of your script with all the breakpoints attached. What this effectively means is that you are in multiple debug modes for the same script. When you want to quit debug mode, you have to quit for each instance. Something like this:</p>
+<div id="fig-SourceInDebug" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-SourceInDebug-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Browse[<span class="dv">1</span>]<span class="sc">&gt;</span> Q</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>Browse[<span class="dv">1</span>]<span class="sc">&gt;</span> Q</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>Browse[<span class="dv">1</span>]<span class="sc">&gt;</span> Q</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>Browse[<span class="dv">1</span>]<span class="sc">&gt;</span> Q</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>Browse[<span class="dv">1</span>]<span class="sc">&gt;</span> Q</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>Browse[<span class="dv">1</span>]<span class="sc">&gt;</span> Q</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>Browse[<span class="dv">1</span>]<span class="sc">&gt;</span> Q</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>Browse[<span class="dv">1</span>]<span class="sc">&gt;</span> Q</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>Browse[<span class="dv">1</span>]<span class="sc">&gt;</span> Q</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>Browse[<span class="dv">1</span>]<span class="sc">&gt;</span> Q</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-SourceInDebug-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;17: Had to quit 10 times because Source was clicked 9 times while in debug mode
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="extension-breakpoints-issues-under-construction" class="level2" data-number="13">
+<h2 data-number="13" class="anchored" data-anchor-id="extension-breakpoints-issues-under-construction"><span class="header-section-number">13</span> Extension: Breakpoints Issues (under construction)</h2>
+<p>This section will explain issues that occur when using breakpoints in RStudio</p>
+<section id="modifying-breakpoints-in-debug-mode" class="level3" data-number="13.1">
+<h3 data-number="13.1" class="anchored" data-anchor-id="modifying-breakpoints-in-debug-mode"><span class="header-section-number">13.1</span> Modifying breakpoints in debug mode</h3>
 <p><span class="hl">Breakpoints added in debug mode will not work until the next time the script is Sourced</span><em>.</em> You will see an outlined red dot and a message about how breakpoints will not be active.</p>
 <div id="fig-add_bp_debug_mode" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -914,72 +885,20 @@ Figure&nbsp;15: After clicking Step-In on line 25, control is moved to the funct
 <img src="images/R-2-12-BreakPointInDebugMode-01.png" class="fs img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-add_bp_debug_mode-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;16: Adding a breakpoint on line 18 while in debug mode
+Figure&nbsp;18: Adding a breakpoint on line 18 while in debug mode
 </figcaption>
 </figure>
 </div>
 <p>If you remove a breakpoint in debug mode, the red dot will disappear but the breakpoint remains in effect until you exit debug mode.</p>
 </section>
-<section id="removing-all-breakpoints" class="level3" data-number="12.2">
-<h3 data-number="12.2" class="anchored" data-anchor-id="removing-all-breakpoints"><span class="header-section-number">12.2</span> Removing all breakpoints</h3>
-<ul>
-<li><p>Remove all breakpoints (<strong><em>Debug –&gt; Remove all…</em></strong>)</p>
-<ul>
-<li>do this if you get an error in fbody[[i]]</li>
-</ul></li>
-</ul>
+<section id="removing-all-breakpoints" class="level3" data-number="13.2">
+<h3 data-number="13.2" class="anchored" data-anchor-id="removing-all-breakpoints"><span class="header-section-number">13.2</span> Removing all breakpoints</h3>
+<p>Sometimes breakpoints will not go away even after you click to remove the red dot. This is a bug in RStudio. To fix this you can tell RStudio to remove all breakpoints <strong><em>Menu -&gt; Debug -&gt; Remove All</em></strong></p>
 <p>&nbsp;</p>
-<p>R can sometimes get into a weird state when you have put multiple breakpoints in.&nbsp; For instance this error</p>
-<p>Error in fBody[[i]] : no such index at level 5&nbsp; &lt;show image&gt;</p>
-<p>- green arrow not showing up</p>
-<p>&nbsp;</p>
-<p>When that happens go through these steps in order to fix the problem:</p>
-<ol type="1">
-<li><p>Remove all breakpoints by clicking <strong><em>Debug -&gt; Remove all breakpoints</em></strong></p></li>
-<li><p>Right-click anywhere in RStudio and click <strong><em>Reload</em></strong></p></li>
-<li><p>Restart the R Session: <strong><em>Session -&gt; Restart R</em></strong></p></li>
-</ol>
-</section>
-<section id="issues-with-breakpoints-in-rrstudio" class="level3" data-number="12.3">
-<h3 data-number="12.3" class="anchored" data-anchor-id="issues-with-breakpoints-in-rrstudio"><span class="header-section-number">12.3</span> Issues with Breakpoints in R/RStudio</h3>
-<p>Breakpoints are, unfortunately, not well implemented in R/RStudio.&nbsp; Here are a couple of the issue:</p>
-<ul>
-<li><p>Breakpoints will not work on lines that have (a) an inline comment and are (b) inside a <strong><em>for</em></strong> loops of <strong><em>if()</em></strong> statement</p>
-<p>&nbsp;</p></li>
-</ul>
-<p>So, a breakpoint will not work on this line:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(highTemps[i] <span class="sc">&gt;</span> <span class="dv">50</span>)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># put a breakpoint on the line below</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"highTemp greater than 50"</span>);  <span class="co"># but... this comment breaks the breakpoint</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>But will work if you take out the breakpoint</p>
-<p>So, a breakpoint will work on this line:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(highTemps[i] <span class="sc">&gt;</span> <span class="dv">50</span>)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># put a breakpoint on the line below (now it will work)</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"highTemp greater than 50"</span>); </span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-</section>
-<section id="old-stuff-probably-to-be-deleted" class="level2" data-number="13">
-<h2 data-number="13" class="anchored" data-anchor-id="old-stuff-probably-to-be-deleted"><span class="header-section-number">13</span> Old stuff (probably to be deleted)</h2>
-<p>In RStudio, you set a breakpoint by clicking to the left of the line number – this is called the <span class="hl">gutter area</span>.&nbsp; A red dot representing the breakpoint appears in the gutter area.&nbsp; Clicking again will get rid of the breakpoint.</p>
-<div id="fig-set_breakpoint" class="fs quarto-float quarto-figure quarto-figure-left anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-set_breakpoint-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/R-2-12-SettingBreakpoint.png" class="fs img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-set_breakpoint-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;17: Breakpoint (red dot) set on line 9 – the left of the line is called the gutter area
-</figcaption>
-</figure>
-</div>
-<p>When you <strong><em>Source</em></strong> your code, the script will execute up to, <span class="hl">but not including</span>, the line with the breakpoint.&nbsp; Your script is now paused at the line with a breakpoint, and you are in <span class="hl">debug mode</span>, which R calls <strong><em>Browse</em></strong> mode.</p>
-<p>&nbsp;</p>
-<p><span class="note">Note: A breakpoint only works when you <strong><em>Source</em></strong> your script.&nbsp; It will not work if you use <strong>Run</strong> to execute lines of code.</span></p>
+<p>If the problem persists, you will need to close and reopen RStudio.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
