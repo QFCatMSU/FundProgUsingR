@@ -1,7 +1,7 @@
-rm(list=ls()); 
+#rm(list=ls()); 
 
 # get the functions from the function script and put them in the Environment
-source("scripts/1-14_myFunctions.R");
+debugSource("scripts/1-14_myFunctions.R");
 
 # Modulus tests:
 print(11 %% 4); 
