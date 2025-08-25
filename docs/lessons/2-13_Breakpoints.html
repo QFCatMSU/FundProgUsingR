@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.31">
+<meta name="generator" content="quarto-1.8.20">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -67,14 +67,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta name="quarto:offset" content="../">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-bd0f20613ab34a035844aaae9062fb4e.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-c5e6fd5a646752829aeb2af341632313.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-fac7000a542ad838aabeb25de73c93bf.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -103,17 +104,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 <link rel="shortcut icon" href="https://qfcatmsu.github.io/assets/images/qfc_icon.png">
-<script>
-  // code to add lesson name to table -- will add to JS later
-  document.addEventListener("DOMContentLoaded", function() {
-    const titleEl = document.querySelector("h1.title");     // Quarto adds this class
-    const tocTitleEl = document.querySelector("h2#toc-title"); // TOC heading
-    if (titleEl && tocTitleEl) {
-      const lessonTitle = titleEl.innerText.trim();
-      tocTitleEl.innerHTML = "<b>" + lessonTitle + "</b>";
-    }
-  });
-</script>
 <script>mod=true; menuCollapse=true;</script>
 <script src="https://qfcatmsu.github.io/assets/quarto/qfc_styles.js"></script>
 
@@ -143,6 +133,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="../index.html" class="sidebar-logo-link">
+      </a>
+      </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
@@ -355,8 +349,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../lessons/2-14_BrowserAndTrace.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">2-14: Browser and Trace</span></a>
+  <a href="../lessons/2-14_Debug_External_Scripts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-14: Debugging External Scripts</span></a>
   </div>
 </li>
       </ul>
@@ -507,20 +501,20 @@ Figure&nbsp;2: Sourcing a script with a breakpoint puts it into debug mode
 <p>In this lesson I will put breakpoint instructions in comments like this so you can follow along:</p>
 <p><span class="note">## In the lesson script:</span></p>
 <p><span class="note">##&nbsp;&nbsp;&nbsp; Place a breakpoint at line 8 in the lesson’s script and click <strong>Source</strong></span></p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">8</span> diffTemp <span class="ot">=</span> highTemps <span class="sc">-</span> lowTemps;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">8</span> diffTemp <span class="ot">=</span> highTemps <span class="sc">-</span> lowTemps;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>In <a href="#fig-source_with_bp" class="quarto-xref">Figure&nbsp;2</a>, the script is currently paused at line 8, this means all commands in lines 1-7 have been executed.&nbsp; In the <strong><em>Environment</em></strong> you can see <strong><em>weatherData</em></strong>, <strong><em>highTemps</em></strong>, and <strong><em>lowTemps,</em></strong> which were added between lines 1-7.</p>
-<div class="sourceCode" id="cb2" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>weatherData   <span class="dv">366</span> obs. of <span class="dv">24</span> variables</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>weatherData   <span class="dv">366</span> obs. of <span class="dv">24</span> variables</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>highTemps     int [<span class="dv">1</span><span class="sc">:</span><span class="dv">366</span>] <span class="dv">29</span> <span class="dv">35</span> <span class="dv">33</span> <span class="dv">27</span> <span class="dv">29</span>...</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>lowTemps      int [<span class="dv">1</span><span class="sc">:</span><span class="dv">366</span>] <span class="dv">24</span> <span class="dv">28</span> <span class="dv">25</span> <span class="dv">7</span> <span class="dv">8</span> <span class="dv">20</span>...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>lowTemps      int [<span class="dv">1</span><span class="sc">:</span><span class="dv">366</span>] <span class="dv">24</span> <span class="dv">28</span> <span class="dv">25</span> <span class="dv">7</span> <span class="dv">8</span> <span class="dv">20</span>...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>When in debug mode, you can enter commands in the <strong><em>Console</em></strong>.&nbsp; With these commands you can do things like view values in or execute functions on a vector:</p>
-<div class="sourceCode" id="cb3" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Browse[<span class="dv">1</span>]<span class="sc">&gt;</span> highTemps[<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>]</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Browse[<span class="dv">1</span>]<span class="sc">&gt;</span> highTemps[<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>]</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">29</span> <span class="dv">35</span> <span class="dv">33</span> <span class="dv">27</span> <span class="dv">29</span> <span class="dv">36</span> <span class="dv">42</span> <span class="dv">39</span> <span class="dv">42</span> <span class="dv">38</span> <span class="dv">16</span> <span class="dv">23</span> <span class="dv">18</span> <span class="dv">34</span> <span class="dv">42</span> <span class="dv">33</span> <span class="dv">26</span> <span class="dv">15</span> <span class="dv">21</span> <span class="dv">22</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>Browse[<span class="dv">1</span>]<span class="sc">&gt;</span> <span class="fu">max</span>(highTemps)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">94</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">94</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Or, you can create a new variable and add it to the <strong><em>Environment</em></strong>:</p>
-<div class="sourceCode" id="cb4" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Browse[<span class="dv">1</span>]<span class="sc">&gt;</span> highTemp_C <span class="ot">=</span> (<span class="dv">5</span><span class="sc">/</span><span class="dv">9</span>)<span class="sc">*</span>(highTemps<span class="dv">-32</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>Browse[<span class="dv">1</span>]<span class="sc">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb5" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>highTemp_C     num [<span class="dv">1</span><span class="sc">:</span><span class="dv">366</span>] <span class="sc">-</span><span class="fl">1.667</span> <span class="fl">1.667</span> <span class="fl">0.556</span> <span class="sc">-</span><span class="dv">2</span>.<span class="dv">778</span>...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Browse[<span class="dv">1</span>]<span class="sc">&gt;</span> highTemp_C <span class="ot">=</span> (<span class="dv">5</span><span class="sc">/</span><span class="dv">9</span>)<span class="sc">*</span>(highTemps<span class="dv">-32</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>Browse[<span class="dv">1</span>]<span class="sc">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>highTemp_C     num [<span class="dv">1</span><span class="sc">:</span><span class="dv">366</span>] <span class="sc">-</span><span class="fl">1.667</span> <span class="fl">1.667</span> <span class="fl">0.556</span> <span class="sc">-</span><span class="dv">2</span>.<span class="dv">778</span>...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="moving-through-code-in-debug-browse-mode" class="level2" data-number="6">
 <h2 data-number="6" class="anchored" data-anchor-id="moving-through-code-in-debug-browse-mode"><span class="header-section-number">6</span> Moving through code in debug (browse) mode</h2>
@@ -562,7 +556,7 @@ Figure&nbsp;4: Stopping debug mode
 <h3 data-number="6.2" class="anchored" data-anchor-id="continue-to-next-breakpoint"><span class="header-section-number">6.2</span> Continue to next Breakpoint</h3>
 <p><span class="note">## In the lesson script:</span></p>
 <p><span class="note">## Add a second breakpoint on line 17 (so, now we have breakpoints at lines 8 and 17) and click <strong>Source</strong></span></p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="dv">17</span> sunsetTimes_12Hour <span class="ot">=</span> <span class="fu">c</span>();</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="dv">17</span> sunsetTimes_12Hour <span class="ot">=</span> <span class="fu">c</span>();</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The script will pause at the first breakpoint (line 8).&nbsp; If you click <strong><em>Continue</em></strong>, the script will unpause and continue executing the script until the next breakpoint is reached on line 17 and pause there (green arrow).&nbsp; Between the first and second pause, lines 9-17 are executed and the results of these commands are in the <strong><em>Environment</em></strong>.</p>
 <p>&nbsp;</p>
 <p>In Console, the <strong><em>Continue</em></strong> command is <strong><em>c</em></strong>.</p>
@@ -596,7 +590,7 @@ Figure&nbsp;6: Clicking Continue when there are no more breakpoint executes the 
 <p><span class="note">## In lesson script:</span></p>
 <p><span class="note">##&nbsp;&nbsp; Remove the breakpoints at lines 9 and 18</span></p>
 <p><span class="note">##&nbsp;&nbsp; Add a breakpoint at line 24 (inside the <strong><em>for</em></strong> loop)</span></p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="dv">24</span> sunsetTimes_12Hour[i] <span class="ot">=</span> <span class="fu">convertTime</span>(sunsetTimes[i]);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="dv">24</span> sunsetTimes_12Hour[i] <span class="ot">=</span> <span class="fu">convertTime</span>(sunsetTimes[i]);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>If you put a <strong>breakpoint inside a for loop</strong> then <strong><em>Continue</em></strong> will stop at the breakpoint <span class="hl">every cycle of the <strong>for</strong> loop</span><em>.</em>&nbsp;In <a href="#fig-continue_for_loop" class="quarto-xref">Figure&nbsp;7</a> I clicked <strong><em>Continue</em></strong> 20 time and the <strong><em>for</em></strong> loop has cycled 20 times (and <strong><em>i = 20</em></strong>)</p>
 <div id="fig-continue_for_loop" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -614,7 +608,7 @@ Figure&nbsp;7: Continue clicked 20 times (note: i=20) with a breakpoint inside t
 <p><span class="note">## In lesson script:</span></p>
 <p><span class="note">##&nbsp;&nbsp; Remove breakpoint on line 24</span></p>
 <p><span class="note">##&nbsp;&nbsp; Add a breakpoint on line 14</span></p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="dv">14</span> sunsetTimes <span class="ot">=</span> weatherData<span class="sc">$</span>sunset;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="dv">14</span> sunsetTimes <span class="ot">=</span> weatherData<span class="sc">$</span>sunset;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>If we <strong><em>Source</em></strong> the script, the code up until line 13 will execute and line 14 will have a green arrow in the gutter.</p>
 <p>&nbsp;</p>
 <p>We can now execute one command at a time using <strong><em>Next</em></strong>.</p>
@@ -637,7 +631,7 @@ Figure&nbsp;8: Clicking Next executes the command at the green arrow and moves t
 <h3 data-number="6.6" class="anchored" data-anchor-id="multiple-commands-on-one-line"><span class="header-section-number">6.6</span> Multiple Commands on one line</h3>
 <p><span class="note">## In lesson script:</span></p>
 <p><span class="note">## &nbsp; Click <strong><em>Next</em></strong> until you get to line 20</span></p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="dv">20</span> testCommand1<span class="ot">=</span><span class="dv">1</span>; testCommand2<span class="ot">=</span><span class="dv">2</span>; testCommand3<span class="ot">=</span><span class="dv">3</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="dv">20</span> testCommand1<span class="ot">=</span><span class="dv">1</span>; testCommand2<span class="ot">=</span><span class="dv">2</span>; testCommand3<span class="ot">=</span><span class="dv">3</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong><em>Next</em></strong> does not execute lines, <span class="hl"><strong>Next</strong> executes commands</span>.&nbsp; Lines 17 and 18 have one command each but line 20 has 3 commands. If there are multiple commands on one line then <strong><em>Next</em></strong> will execute them one at a time and the debugger will highlight the current command.</p>
 <div id="fig-multiple_command_line" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -655,7 +649,7 @@ Figure&nbsp;9: Only the current command is highlighted – clicking Next moves t
 <h2 data-number="7" class="anchored" data-anchor-id="debugging-in-a-for-loop"><span class="header-section-number">7</span> Debugging in a for loop</h2>
 <p><span class="note">## In lesson script:</span></p>
 <p><span class="note">##&nbsp;&nbsp; Click <strong>Next</strong> until you get to line 22</span></p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="dv">22</span> <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(sunsetTimes))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="dv">22</span> <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(sunsetTimes))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>When the green arrow gets to a <strong><em>for</em></strong> loop, RStudio will highlight the whole <strong><em>for</em></strong> loop:</p>
 <div id="fig-whole_for_loop" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -669,7 +663,7 @@ Figure&nbsp;10: Highlighting the whole for loop in debug mode
 </div>
 <p>&nbsp;</p>
 <p>Clicking <strong><em>Next</em></strong> executes the initialization command for the <strong><em>for</em></strong> loop:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(sunsetTimes))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(sunsetTimes))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>In this initialization command:</p>
 <ul>
 <li><p>the variable <strong><em>i</em></strong> is set to <strong>1</strong></p></li>
@@ -711,17 +705,17 @@ Figure&nbsp;12: Clicking Step Out will execute the rest of the for loop and move
 <p><span class="note">## In lesson script:</span></p>
 <p><span class="note">##&nbsp;&nbsp; Click <strong>Stop</strong></span></p>
 <p><span class="note">##&nbsp;&nbsp; Add breakpoint on line 29 and <strong>Source</strong> script</span></p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="dv">27</span>  <span class="cf">if</span>(i <span class="sc">==</span> <span class="dv">200</span>)  <span class="co"># acts as conditional breakpoint</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="dv">27</span>  <span class="cf">if</span>(i <span class="sc">==</span> <span class="dv">200</span>)  <span class="co"># acts as conditional breakpoint</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="dv">28</span>  {</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="dv">29</span>    <span class="cn">NULL</span>;   <span class="co"># this line functionally does nothing</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="dv">30</span>  }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="dv">30</span>  }</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>A <strong><em>for</em></strong> loop can easily run thousands or millions of times and you often only want a breakpoint on a specific cycle of the <strong><em>for</em></strong> loop.&nbsp; In most programming language, you can attach a condition to the breakpoint so that the breakpoint only activates when specified.</p>
 <p>&nbsp;</p>
 <p>In R, you need to manually code this condition.&nbsp; You can pause at a specific cycle of the <strong><em>for</em></strong> loop using an <strong><em>if</em></strong> statement:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(i <span class="sc">==</span> <span class="dv">200</span>)    <span class="co"># acts as conditional breakpoint</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(i <span class="sc">==</span> <span class="dv">200</span>)    <span class="co"># acts as conditional breakpoint</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>{</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="cn">NULL</span>;  <span class="co"># this line functionally does nothing</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The breakpoint needs to be put inside the codeblock attached to the <strong><em>if</em></strong> statement. Inside the codeblock is a <strong>NULL</strong> command – meaning it does nothing (it is only there to provide a space for the breakpoint).</p>
 <p>&nbsp;</p>
 <p>With the breakpoint on line 29, the script will pause on the 200<sup>th</sup> cycle of the for loop:</p>
@@ -737,10 +731,10 @@ Figure&nbsp;13: Using an if statement as a conditional breakpoint inside a for l
 </div>
 <p>&nbsp;</p>
 <p>Or, if you put a a breakpoint at line 33, you can conditionally break on a value being used in the <strong><em>for</em></strong> loop:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(sunsetTimes[i] <span class="sc">==</span> <span class="dv">2000</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(sunsetTimes[i] <span class="sc">==</span> <span class="dv">2000</span>)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>{</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="cn">NULL</span>; </span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The script will pause on the 141<sup>st</sup> cycle of the <strong><em>for</em></strong> loop, which represents the first day that sunset is at exactly 8:00pm (2000 hours)</p>
 <div id="fig-conditional_br" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -759,7 +753,7 @@ Figure&nbsp;14: Conditional breakpoint based on a variable used in the for loop
 <p><span class="note">## In lesson script:</span></p>
 <p><span class="note">##&nbsp;&nbsp; Remove breakpoint on line 33</span></p>
 <p><span class="note">##&nbsp;&nbsp; Add a breakpoint on line 38</span></p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="dv">38</span> <span class="cf">if</span>(testCommand3 <span class="sc">==</span> <span class="dv">1</span>) <span class="co"># FALSE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="dv">38</span> <span class="cf">if</span>(testCommand3 <span class="sc">==</span> <span class="dv">1</span>) <span class="co"># FALSE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Similar to the initialization of <strong><em>for</em></strong> loops, the code inside the parentheses of <strong><em>if-else</em></strong> statements is a command.&nbsp; The command, which is a conditional statements, outputs a Boolean (TRUE/FALSE) value that is used to determined if the codeblock gets executed.</p>
 <p>&nbsp;</p>
 <p>When you set a breakpoint at the <strong><em>if()</em></strong> line, the whole <strong><em>if-else</em></strong> is highlighted in RStudio when the code is stopped at the line.&nbsp;</p>
@@ -863,7 +857,7 @@ Figure&nbsp;16: After clicking Step-In on line 24, control is moved to the funct
 <div id="fig-SourceInDebug" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-SourceInDebug-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Browse[<span class="dv">1</span>]<span class="sc">&gt;</span> Q</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Browse[<span class="dv">1</span>]<span class="sc">&gt;</span> Q</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>Browse[<span class="dv">1</span>]<span class="sc">&gt;</span> Q</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>Browse[<span class="dv">1</span>]<span class="sc">&gt;</span> Q</span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>Browse[<span class="dv">1</span>]<span class="sc">&gt;</span> Q</span>
@@ -873,7 +867,7 @@ Figure&nbsp;16: After clicking Step-In on line 24, control is moved to the funct
 <span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>Browse[<span class="dv">1</span>]<span class="sc">&gt;</span> Q</span>
 <span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>Browse[<span class="dv">1</span>]<span class="sc">&gt;</span> Q</span>
 <span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>Browse[<span class="dv">1</span>]<span class="sc">&gt;</span> Q</span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-SourceInDebug-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;17: Had to quit 10 times because Source was clicked 9 times while in debug mode
