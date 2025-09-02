@@ -12,13 +12,11 @@ short: "2-14"
 
 ## Purpose
 
--   browser()
+-   Use browser() to degub external script
 
--   ***Source*** and set breakpoint
+-   Alternate ways to debug script
 
--   set breakpoint and ***debugSource()***
-
-not going to do ***setBreakpoint()*** – cannot come up with a good use for it because it does not give a visual of the script
+-   Downloading package script and debugging those
 
 ## Material
 
@@ -35,6 +33,10 @@ In last lesson, we learned how to add breakpoints to a script using the RStudio 
 ## browser()
 
 The most straightforward way to add a breakpoint is to add the command browser() to the location in your script where you want the breakpoint. browser() acts just like a breakpoint by pausing your script and putting your script in debug mode. We can take examples from the last lesson and replace the breakpoint with browser(). [Note: browser() is added to your script and needs to be removed after debugging.]{.hl}
+
+### RStudio breakpoint is an injected browser()
+
+Almost... because RStudio cannot see the injected browser() until after commands have been executed
 
 ### add browser to code
 
@@ -62,9 +64,59 @@ The main reason to use browser() is that it work in script files outside of scri
 
 ### Example 2: for loop
 
+You do not have editting access to script inside of a package so you cannot easily add browser(). The way around this is to download the package and add it to your library directly.
+
+### Downloading package script
+
+### Including downloaded package scripts
+
+### Modifying downloaded scripts
+
+## Alternate ways to add breakpoints
+
+### source() outside script first, add breakpoints
+
+-   do not source() or rm(list=lm()) in main script
+
+-   only works when Run
+
+### source() from main script, add breakpoints, run function
+
+-   do not source() or rm(list=lm()) in main script
+
+-   only works when Run
+
+-   does it work if you put the bp on the function??
+
+    -   No, because source()
+
+### add breakpoints, debugSource() from main script, run function
+
+-   do not source() or rm(list=lm()) in main script
+
+-   only works when Run
+
+-   does it work if you put the bp on the function??
+
+    -   no, it gets really weird!
+
 ## Package scripts
 
-You do not have editting access to script inside of a package so you cannot easily add browser(). The way around this is to download the package and add it to your library directly.
+## Application
+
+code to put a pause in the function ?? in package ??
+
+code to put a pause in the for loop at 10 iteration in function ?? in package ??
+
+code to put a pause in the for loop when x=?? in function ?? in package ??
+
+code to put a pause inside if-if
+
+code to print x every 10th iteration of a for loop
+
+cat each factor
+
+[**Below here is older ideas that I do not think will be in the class**]{.underline}
 
 ## debug() debugonce()
 
@@ -129,25 +181,3 @@ trace() can inject any code into your function
 \<inject cat() in for loop\>
 
 \<inject if(i==1) { } in for loop\>
-
-## Viewing package functions
-
-So far, we have only paused within scripts we created. If you want to pause within a function inside a package, you need to first view the function and figure out the command/subcommand where you want the pause.
-
-\<1-13 extention section 9 – choose a better function??\>
-
-\<do pracma: isprime...\>
-
-## Application
-
-code to put a pause in the function ?? in package ??
-
-code to put a pause in the for loop at 10 iteration in function ?? in package ??
-
-code to put a pause in the for loop when x=?? in function ?? in package ??
-
-code to put a pause inside if-if
-
-code to print x every 10th iteration of a for loop
-
-cat each factor

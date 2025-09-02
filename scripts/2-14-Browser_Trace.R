@@ -1,11 +1,11 @@
-rm(list=ls()); 
+#rm(list=ls()); 
 
 # install.packages("pkgload")
-library(pkgload)
-pkgload::load_all("c:/users/charlie/desktop/pracma")
+#library(pkgload)
+#pkgload::load_all("c:/users/charlie/desktop/pracma")
 
 
-source("scripts/2-14-myFunctions.R");
+#source("scripts/2-14-myFunctions.R");
 debugSource("scripts/2-14-myFunctions.R");
 # setBreakpoint("scripts/2-14-myFunctions.R", 9)
 # trace(what=isPrime, at=4, tracer=browser); 
@@ -15,5 +15,7 @@ debugSource("scripts/2-14-myFunctions.R");
 # trace(what=isPrime, at=list(c(5,4)), tracer=browser); 
 
 # 
-bits(12);
+#bits(12);
 isPrime(c(1,2,3,4));
+
+cat("done")
