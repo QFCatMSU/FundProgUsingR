@@ -5,6 +5,7 @@ temps10To30 = temps > 10 & temps < 30;
 tempsExtreme = temps < 10 | temps > 90;
 
 # will produce one TRUE/FALSE values based on only the first value in each vector
+#### Many years later -- this is now an error in R
 temps10To30_2 = temps > 10 && temps < 30;
 tempsExtreme_2 = temps < 10 || temps > 90;
 
