@@ -433,14 +433,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="to-do" class="level3" data-number="0.1">
 <h3 data-number="0.1" class="anchored" data-anchor-id="to-do"><span class="header-section-number">0.1</span> To-do</h3>
-<ul>
-<li><p>mention: cannot add/remove breakpoints while in debug mode (they do not take effect until you Source the script</p></li>
-<li><p>mention remove all breakpoints (debug -&gt; Remove all)</p></li>
-<li><p>find a functional way to show what the number in &gt; Browse[#] does</p></li>
-</ul>
 </section>
 <section id="purpose" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="purpose"><span class="header-section-number">1</span> Purpose</h2>
+<ul>
+<li><p>set up breakpoints</p></li>
+<li><p>pausing execution of script for debugging</p></li>
+<li><p>use breakpoints inside for loops</p></li>
+<li><p>set up a conditional breakpoint</p></li>
+</ul>
 </section>
 <section id="material" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="material"><span class="header-section-number">2</span> Material</h2>
@@ -450,13 +451,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="debugging-your-code" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="debugging-your-code"><span class="header-section-number">3</span> Debugging your code</h2>
-<p>One of the most powerful debugging tools in any programming language, and a staple of all professional programmers, is the breakpoint.&nbsp; Breakpoints allows you to pause the execution of your script at a specific line or command.&nbsp; While paused, you can look at the <strong><em>Environment</em></strong>, enter commands in the <strong><em>Console</em></strong>, or move through your script one command at a time. This is a very useful tool when debugging for loop that and cycling thousands of times.</p>
+<p>One of the most powerful debugging tools in any programming language, and a staple of most professional programmers, is the breakpoint.&nbsp; Breakpoints allows you to pause the execution of your script at a specific line or command.&nbsp; While paused, you can look at the <strong><em>Environment</em></strong>, enter commands in the <strong><em>Console</em></strong>, or move through your script one command at a time. This is a very useful tool when debugging <strong><em>for</em></strong> loop that cycles thousands of times.</p>
 <p>&nbsp;</p>
-<p>The implementation of breakpoints in R is far less robust than most programming languages. Even with this limitation, breakpoints are still a useful debugging tool in R.</p>
+<p>The implementation of breakpoints in R is far less robust than most programming languages. Even with R’s limitations, breakpoints are still a useful debugging tool in R.</p>
 </section>
 <section id="setting-up-a-breakpoint" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="setting-up-a-breakpoint"><span class="header-section-number">4</span> Setting up a breakpoint</h2>
-<p>A breakpoint is like a pause button in the execution your script and there are multiple ways to set a breakpoint.&nbsp;In this lesson we will focus on using the Rstudio interface to set a breakpoint. In RStudio, you set a breakpoint by clicking to the left of the line number – this is called the <span class="hl">gutter area</span>.&nbsp; A red dot representing the breakpoint appears in the gutter area.&nbsp; Clicking again will get rid of the breakpoint.</p>
+<p>A breakpoint is like a pause button in the execution your script. There are multiple ways to set a breakpoint.&nbsp;In this lesson we will focus on using the Rstudio interface to set a breakpoint. In RStudio, you set a breakpoint by clicking to the left of the line number – this space is called the <span class="hl">gutter area</span>.&nbsp; A red dot representing the breakpoint appears in the gutter area.&nbsp; Clicking again will get rid of the breakpoint.</p>
 <div id="fig-set_breakpoint" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-set_breakpoint-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -474,11 +475,11 @@ Figure&nbsp;1: Breakpoint (red dot) set on line 8
 <h3 data-number="4.1" class="anchored" data-anchor-id="debug-mode"><span class="header-section-number">4.1</span> Debug Mode</h3>
 <p>There are 4 things in RStudio that will indicate you are in debug mode:</p>
 <ol type="1">
-<li><p>A green arrow will appear at the code line the script is paused at – the green arrow shows you the line that will be executed next</p></li>
+<li><p>A green arrow will appear at the code line the script is paused at. The green arrow shows you the line that will be executed next</p></li>
 <li><p>Breakpoint controls will appear in the <strong><em>Console</em></strong> tab</p></li>
 <li><p>The <strong><em>Console</em></strong> will indicate it is in browse mode&nbsp; with <code>&gt; Browse</code></p>
 <ul>
-<li>The number (in this case, <strong>1</strong>) is telling you how many levels deep you are.&nbsp; The functionality of this number has changed in recent versions of RStudio and this author is still not quite sure what it represents.</li>
+<li>The number (in this case, <strong>1</strong>) is supposed to tell you how many browsers you are inside. This is tough to explain, not meaningful at the point, and it does not even seem like it works. So, don’t worry about it!</li>
 </ul></li>
 <li><p>A traceback window will appear at the bottom of the <strong><em>Environment</em></strong> tab</p>
 <ul>
@@ -527,7 +528,7 @@ Figure&nbsp;2: Sourcing a script with a breakpoint puts it into debug mode
 <p>4) <strong><em>Continue</em></strong>: unpauses the execution of the script (like hitting the Play button when a video is paused)</p>
 <p>5) <strong><em>Stop</em></strong>: quits the script (no more code is executed)</p>
 <p>&nbsp;</p>
-<p>When in debug mode you should only use the buttons to control the flow of your script.&nbsp; In debug mode, clicking <strong><em>Source</em></strong> will cause problems with your script. <a href="#extension-clicking-source-in-debug-mode">Extension: Clicking Source in debug mode</a> (read next section on <strong><em>Stop</em></strong> first).</p>
+<p>When in debug mode<span class="hl">you should only use the buttons to control the flow of your script</span>.&nbsp; Clicking <strong><em>Source</em></strong> while in debug mode will cause problems with your script. <a href="#extension-clicking-source-in-debug-mode">Extension: Clicking Source in debug mode</a> (read next section on <strong><em>Stop</em></strong> first).</p>
 <div id="fig-five_bp_controls" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-five_bp_controls-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -559,9 +560,9 @@ Figure&nbsp;4: Stopping debug mode
 <p><span class="note">## In the lesson script:</span></p>
 <p><span class="note">## Add a second breakpoint on line 17 (so, now we have breakpoints at lines 8 and 17) and click <strong>Source</strong></span></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="dv">17</span> sunsetTimes_12Hour <span class="ot">=</span> <span class="fu">c</span>();</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The script will pause at the first breakpoint (line 8).&nbsp; If you click <strong><em>Continue</em></strong>, the script will unpause and continue executing the script until the next breakpoint is reached on line 17 and pause there (green arrow).&nbsp; Between the first and second pause, lines 9-17 are executed and the results of these commands are in the <strong><em>Environment</em></strong>.</p>
+<p>The script will pause at the first breakpoint (line 8).&nbsp; If you click <strong><em>Continue</em></strong>, the script will unpause and continue executing the script until the next breakpoint is reached on line 17 and pause there.&nbsp; Between the first and second pause, lines 8-16 are executed and the results of these commands are in the <strong><em>Environment</em></strong>.</p>
 <p>&nbsp;</p>
-<p>In Console, the <strong><em>Continue</em></strong> command is <strong><em>c</em></strong>.</p>
+<p>In <strong><em>Console</em></strong>, the <strong><em>Continue</em></strong> command is <strong><em>c</em></strong>.</p>
 <div id="fig-bp_continue" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-bp_continue-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -590,10 +591,10 @@ Figure&nbsp;6: Clicking Continue when there are no more breakpoint executes the 
 <section id="breakpoint-inside-for-loop" class="level3" data-number="6.4">
 <h3 data-number="6.4" class="anchored" data-anchor-id="breakpoint-inside-for-loop"><span class="header-section-number">6.4</span> breakpoint inside for loop</h3>
 <p><span class="note">## In lesson script:</span></p>
-<p><span class="note">##&nbsp;&nbsp; Remove the breakpoints at lines 9 and 18</span></p>
+<p><span class="note">##&nbsp;&nbsp; Remove the breakpoints at lines 8 and 17</span></p>
 <p><span class="note">##&nbsp;&nbsp; Add a breakpoint at line 24 (inside the <strong><em>for</em></strong> loop)</span></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="dv">24</span> sunsetTimes_12Hour[i] <span class="ot">=</span> <span class="fu">convertTime</span>(sunsetTimes[i]);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>If you put a <strong>breakpoint inside a for loop</strong> then <strong><em>Continue</em></strong> will stop at the breakpoint <span class="hl">every cycle of the <strong>for</strong> loop</span><em>.</em>&nbsp;In <a href="#fig-continue_for_loop" class="quarto-xref">Figure&nbsp;7</a> I clicked <strong><em>Continue</em></strong> 20 time and the <strong><em>for</em></strong> loop has cycled 20 times (and <strong><em>i = 20</em></strong>)</p>
+<p>If you put a breakpoint inside a <strong><em>for</em></strong> loop then <strong><em>Continue</em></strong> will stop at the breakpoint <span class="hl">every cycle of the <strong>for</strong> loop</span><em>.</em>&nbsp;In <a href="#fig-continue_for_loop" class="quarto-xref">Figure&nbsp;7</a> I clicked <strong><em>Continue</em></strong> 20 time and the <strong><em>for</em></strong> loop has cycled 20 times (and <strong><em>i = 20</em></strong>)</p>
 <div id="fig-continue_for_loop" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-continue_for_loop-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -670,12 +671,12 @@ Figure&nbsp;10: Highlighting the whole for loop in debug mode
 <ul>
 <li><p>the variable <strong><em>i</em></strong> is set to <strong>1</strong></p></li>
 <li><p>a rule is given for how <strong><em>i</em></strong> changes each time the <strong><em>for</em></strong> loop cycles (i.e., <strong><em>i</em></strong> increases by <strong>1</strong>)</p></li>
-<li><p>the cycles end when <strong><em>i</em></strong> is equal to <strong><em>sunsetTime</em></strong></p></li>
+<li><p>the cycles end when <strong><em>i</em></strong> is equal to the length of <strong><em>sunsetTime</em></strong></p></li>
 </ul>
 <p>&nbsp;</p>
 <p>The initialization command of a <strong><em>for</em></strong> loop executes once whereas everything inside the <strong><em>for</em></strong> loop executes <span class="hl">once per cycle</span> of the <strong><em>for</em></strong> loop.</p>
 <p>&nbsp;</p>
-<p>After the initialization command is executed, <strong><em>Next</em></strong> will move the control inside the <strong><em>for</em></strong> loop:</p>
+<p>After the initialization command is executed, <strong><em>Next</em></strong> will move to the commands inside the <strong><em>for</em></strong> loop codeblock:</p>
 <div id="fig-arrow_within_for_loop" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-arrow_within_for_loop-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -706,6 +707,7 @@ Figure&nbsp;12: Clicking Step Out will execute the rest of the for loop and move
 <h3 data-number="7.2" class="anchored" data-anchor-id="conditional-breakpoints"><span class="header-section-number">7.2</span> Conditional breakpoints</h3>
 <p><span class="note">## In lesson script:</span></p>
 <p><span class="note">##&nbsp;&nbsp; Click <strong>Stop</strong></span></p>
+<p><span class="note">##&nbsp;&nbsp; Remove all previous breakpoints</span></p>
 <p><span class="note">##&nbsp;&nbsp; Add breakpoint on line 29 and <strong>Source</strong> script</span></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="dv">27</span>  <span class="cf">if</span>(i <span class="sc">==</span> <span class="dv">200</span>)  <span class="co"># acts as conditional breakpoint</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="dv">28</span>  {</span>
@@ -718,7 +720,7 @@ Figure&nbsp;12: Clicking Step Out will execute the rest of the for loop and move
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>{</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="cn">NULL</span>;  <span class="co"># this line functionally does nothing</span></span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The breakpoint needs to be put inside the codeblock attached to the <strong><em>if</em></strong> statement. Inside the codeblock is a <strong>NULL</strong> command – meaning it does nothing (it is only there to provide a space for the breakpoint).</p>
+<p>The breakpoint needs to be put inside the codeblock attached to the <strong><em>if</em></strong> statement. Inside the codeblock is a <strong>NULL</strong> command – meaning it does nothing. <strong><em>NULL</em></strong> is only there to provide a space for the breakpoint.</p>
 <p>&nbsp;</p>
 <p>With the breakpoint on line 29, the script will pause on the 200<sup>th</sup> cycle of the for loop:</p>
 <div id="fig-if_null_bp" class="fs quarto-float quarto-figure quarto-figure-left anchored">
@@ -753,7 +755,7 @@ Figure&nbsp;14: Conditional breakpoint based on a variable used in the for loop
 <section id="if-else-statements" class="level2" data-number="8">
 <h2 data-number="8" class="anchored" data-anchor-id="if-else-statements"><span class="header-section-number">8</span> If-else statements</h2>
 <p><span class="note">## In lesson script:</span></p>
-<p><span class="note">##&nbsp;&nbsp; Remove breakpoint on line 33</span></p>
+<p><span class="note">##&nbsp;&nbsp; Remove all previous breakpoints</span></p>
 <p><span class="note">##&nbsp;&nbsp; Add a breakpoint on line 38</span></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="dv">38</span> <span class="cf">if</span>(testCommand3 <span class="sc">==</span> <span class="dv">1</span>) <span class="co"># FALSE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Similar to the initialization of <strong><em>for</em></strong> loops, the code inside the parentheses of <strong><em>if-else</em></strong> statements is a command.&nbsp; The command, which is a conditional statements, outputs a Boolean (TRUE/FALSE) value that is used to determined if the codeblock gets executed.</p>
@@ -775,7 +777,7 @@ Figure&nbsp;15: Debug mode when the control is at the beginning of an if-else st
 <li><p>move inside the codeblock (if the current conditional statement is <strong>TRUE</strong>)</p></li>
 </ul>
 <p>&nbsp;</p>
-<p>The following lines are not executed in an <strong><em>if-else</em></strong> structure and ill be skipped over in debug mode:</p>
+<p>The following lines are not executed in an <strong><em>if-else</em></strong> structure and will be skipped over in debug mode:</p>
 <ul>
 <li><p>codeblocks attached to <strong><em>FALSE</em></strong> conditional statements</p></li>
 <li><p><strong><em>else</em></strong> statements that were preceded by a <strong>TRUE</strong> conditional statement</p>
@@ -786,9 +788,9 @@ Figure&nbsp;15: Debug mode when the control is at the beginning of an if-else st
 </section>
 <section id="debugging-within-functions-step-in" class="level2" data-number="9">
 <h2 data-number="9" class="anchored" data-anchor-id="debugging-within-functions-step-in"><span class="header-section-number">9</span> Debugging within functions (Step In)</h2>
-<p>Inside the <strong><em>for</em></strong> loop on lines 24 and 25, we call <strong><em>convertTime</em></strong> twice.&nbsp; <strong><em>convertTime</em></strong> is a function inside <strong><em>debugTest.R</em></strong>.&nbsp; If you click <strong><em>Next</em></strong> while on line 24, then the whole line is executed, along with the <strong><em>convertTime</em></strong> function, and control will go to the next line.</p>
+<p>Inside the <strong><em>for</em></strong> loop on lines 24 and 25, we call <strong><em>convertTime()</em></strong> twice.&nbsp; <strong><em>convertTime()</em></strong> is a function inside <strong><em>debugTest.R</em></strong>.&nbsp; If you click <strong><em>Next</em></strong> while on line 24, then the whole line is executed, along with the <strong><em>convertTime</em></strong> function, and control will go to the next line.</p>
 <p>&nbsp;</p>
-<p>You can debug inside the <strong><em>convertTime</em></strong> function by clicking <strong><em>Step-In</em></strong> while on the lines with the function – this will move control to the function and the whole function will be highlighted:</p>
+<p>You can debug inside the <strong><em>convertTime</em></strong> function by clicking <strong><em>Step-In</em></strong> while on the lines 24 or 25 (the lines with the function) – this will move control to the function and the whole function will be highlighted:</p>
 <div id="fig-step_in" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-step_in-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -814,12 +816,12 @@ Figure&nbsp;16: After clicking Step-In on line 24, control is moved to the funct
 <p>In Comments at the end of the script answer the following questions:</p>
 <ol type="1">
 <li><p>Why might it be a bad idea to put breakpoint without a condition inside a <strong><em>for</em></strong> loop?</p></li>
-<li><p>What happens when you try to put a breakpoint on a line with only comments?&nbsp;</p></li>
+<li><p>What happens when you try to put a breakpoint on a line with only comments?&nbsp;(try it)</p></li>
 <li><p>What happens if you put a breakpoint at line 48 and click <strong><em>Source</em></strong>?&nbsp; How about line 44?&nbsp; Why is there a difference?</p></li>
 <li><p>What happens if you put a breakpoint in the middle of the <strong><em>ggplot()</em></strong> call?&nbsp;</p></li>
 <li><p>Set up a conditional breakpoint within the <strong><em>for</em></strong> loop that pauses the script every 30<sup>th</sup> cycle.</p>
 <ul>
-<li>A good way to to do this involves using <a href="..\content/DEVELOPMENT/2020/courses/DEV-belinsky-2020-ProgrammingFundamentalsUsingR/R/Lessons/1-13_Functions.html#modulus">modulus division</a></li>
+<li>A good way to to do this involves using <a href="1-14_Functions2.html#sec-mod">modulus division</a></li>
 </ul></li>
 <li><p>Set up a conditional breakpoint within a <strong><em>for</em></strong> loop to pause the code when <strong><em>windSpeed</em></strong> is between 35 and 40mph.</p></li>
 </ol>
