@@ -2,7 +2,7 @@ rm(list=ls());                         # clear Console Window
 options(show.error.locations = TRUE);  # show line numbers on error
 library(package=ggplot2);              # include all GGPlot2 functions
 
-weatherData = read.csv(file="data/lesson01-Setup.csv");
+weatherData = read.csv(file="data/RSProj_Setup.csv");
 
 #### Labels for the facets of the plot
 windLabels = c(Low = "Light Winds",
@@ -10,7 +10,7 @@ windLabels = c(Low = "Light Winds",
                High = "Strong Winds");
 
 #### Boxplots of Change in Temperature vs. Wind Direction 
-#           at different wind speeds
+#    at different wind speeds
 thePlot = ggplot(data=weatherData) +
   geom_boxplot(mapping=aes(x=windDir, y=changeMaxTemp), 
                na.rm=TRUE,

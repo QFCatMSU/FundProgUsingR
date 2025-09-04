@@ -10,7 +10,7 @@ windLabels = c(Low = "Light Winds",
                High = "Strong Winds");
 
 #### Boxplots of Change in Temperature vs. Wind Direction 
-#           at different wind speeds
+#    at different wind speeds
 thePlot = ggplot(data=weatherData) +
   geom_boxplot(mapping=aes(x=windDir, y=changeMaxTemp), 
                na.rm=TRUE,
