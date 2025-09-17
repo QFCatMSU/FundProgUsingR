@@ -70,7 +70,7 @@ In programming, the values you pass into a function(e.g., ***file, sep,*** and *
 
  
 
-The majority of the programming world uses the term [parameters]{.hl} instead of [arguments]{.hl}.  I tend to like ***parameters*** better as I think it better indicates that these values are properties of the function.  But, R is a programming language for statisticians and ***arguments*** is a mathematical term, so R chose to go with ***arguments***. Just note you will occasionally see the term parameters, and it means the same thing as arguments.
+[Note: The majority of the programming world uses the term **parameters** instead of **arguments**.]{.note}  I tend to like ***parameters*** better as I think it better indicates how these are properties of the function.  But, R is a programming language for statisticians and ***arguments*** is a mathematical term, so R chose to go with ***arguments***. Just note you will occasionally see the term parameters, and it means the same thing as arguments.
 
 ## A simpler function: median()
 
@@ -116,7 +116,7 @@ The Help page shows that ***median()*** has two arguments:
 
 -   ***x***: the vector that you want to find the median for
 
--   ***na.rm***: a TRUE/FALSE value that determines how to handle ***NA*** values in the vector. **NA** means Not Available and usually indicating a problem with the data
+-   ***na.rm***: a TRUE/FALSE value that determines how to handle ***NA*** values in the vector. **NA** means Not Available and usually indicates a problem with the data
 
  
 
@@ -149,7 +149,7 @@ medianVal1b:  6
 
 ### Default argument values {#sec-median-NA}
 
-The other argument in ***median()***, ***na.rm***, has a default value of ***FALSE*** . This means that [you do not have to supply a value for the argument]{.hl} ***na.rm*** when you call the function.  You only need to supply a value if you want to change ***na.rm*** to something other than **FALSE** (e.g., **TRUE**).
+The other argument in ***median()***, ***na.rm***, has a default value of ***FALSE*** . This means that [you do not have to supply a value for the argument]{.hl} ***na.rm*** when you call the function.  You only need to supply a value if you want to change ***na.rm*** to something other than the default, **FALSE** (e.g., **TRUE**).
 
  
 
@@ -165,7 +165,7 @@ And then use that as an argument for ***median()***:
 medianVal2 = median(x=vec2);
 ```
 
-If there is an **NA** value in a vector then, for most mathenatical functions in R, the return value will be of type **NA**. The median of a vector with **NA** values will always be **NA_real\_**. **NA_real\_** says that median cannot be determined but would be a real number.
+If there is an **NA** value in a vector then, for most mathematical functions in R, the return value will be **NA**. The median of a vector with **NA** values is always **NA_real\_**. **NA_real\_** means that median cannot be determined but would be a real number if it could be determined.
 
 ``` {.r tab="Environment"}
 medianVal2:   NA_real_
@@ -218,7 +218,7 @@ When you see ***Default S3 Method***, that is most likely the version of the fun
 
 ### The arguments and defaults
 
-***seq()*** has 5 arguments: ***from, to, by, length.out,*** and ***along.with***.  We are going to ignore ***along.with***, which complicates matters and is not needed, nor very useful.
+***seq()*** has 5 arguments: ***from, to, by, length.out,*** and ***along.with***.  We are going to ignore ***along.with***, which is not needed nor very useful.
 
  
 
@@ -270,17 +270,17 @@ seq2:   num[1:5] 1 3.25 5.5 7.75 10
 
 ## read.csv() expanded
 
-When you go to the ***Help*** page for ***read.csv()*** , you are taken to the ***Help*** page for ***read.table()***. This is because ***read.csv()*** is a version of the function ***read.table()***.  In other words, ***read.csv()*** is ***read.table()*** with different default values for the arguments. The different argument values are underlined in @fig-readcsv.
+When you go to the ***Help*** page for ***read.csv()***, you are taken to the ***Help*** page for ***read.table()***. This is because ***read.csv()*** is a version of the function ***read.table()***.  In other words, ***read.csv()*** is ***read.table()*** with different default values for the arguments. The different argument values are underlined in @fig-readcsv.
 
  
 
-For instance, the default value for ***sep*** (the separator between data) is a space in ***read.table()*** and a comma in ***read.csv()***.  ***read.csv()*** uses all the arguments from ***read.table()*** (e.g., ***row.names***, ***col.names***), ***read.csv()*** just changes some of the values for default arguments (underlined below).
+For instance, the default value for ***sep*** (the separator between data) is a space in ***read.table()*** and a comma in ***read.csv()***.  ***read.csv()*** uses all the argument from ***read.table()*** and changes some of argument value (the arguments underlined below).
 
 ![Using the Help tab in RStudio to look up functions (and a remainder that arguments are sometimes called parameters)](images/R-1-04_ReadCsv_Help.png){#fig-readcsv .fs}
 
 ### read.csv arguments
 
-When you call ***read.csv()***, you can use any of the argument from ***read.table()***.
+When you call ***read.csv()***, you can use any of the argument from ***read.table()***. For instance ***allowEscapes*** and ***stringsAsFactors*** are arguments listed only in ***read.table()***, but they can be used in ***read.csv().***
 
  
 
@@ -298,11 +298,11 @@ Most of the arguments in ***read.table()*** look cryptic and you will probably n
 
 ### Required arguments and default arguments
 
-***file*** is an argument that is not set equal to anything in ***read.table()*** / ***read.csv()***.  This is because ***file*** must be supplied by the user --[**file** is the only required argument]{.hl}*.*  This should make sense as there is no point in calling ***read.table()*** / ***read.csv()*** without any data.
+***file*** is an argument that is not set equal to anything in ***read.table()*** or ***read.csv()***.  This is because ***file*** must be supplied by the user --[**file** is the only required argument ]{.hl}in either of these functions*.*  This should make sense as there is no point in calling ***read.table()*** / ***read.csv()*** without a data file.
 
  
 
-Most other argument in ***read.table()*** / ***read.csv()*** has a default value (except row.names and col.names – there is a question about this in the application). This means you can execute the function without using any argument except ***file***.
+Most other argument in ***read.table()*** / ***read.csv()*** has a default value (except ***row.names*** and ***col.names*** – there is a question about this in the application). This means you can execute the function without using any argument except ***file***.
 
  
 
@@ -364,7 +364,15 @@ Save the data to a dataframe name ***WD_Comma***
 
  
 
-6\. In comments, answer: How many factors levels does the ***noonCondition*** column have?  How about the ***date*** column?
+6\. In comments, answer:
+
+-   How many factors levels does the ***noonCondition*** column have? 
+
+-   How many factors levels does the ***date*** column have?
+
+-   What is a factor level?
+
+You can use the function ***factor()*** and pass in the column as an argument to get the answer for the first two parts.
 
  
 

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.20">
+<meta name="generator" content="quarto-1.8.24">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -72,10 +72,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-bd0f20613ab34a035844aaae9062fb4e.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-fac7000a542ad838aabeb25de73c93bf.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-0ee72de42c60dbd072a9e85558b70db9.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -1061,7 +1061,7 @@ Figure&nbsp;21: Stop RStudio from automatically ending your parenthesis and quot
 <section id="how-rstudio-projects-handle-working-directory-the-least-worst-option" class="level3" data-number="12.3">
 <h3 data-number="12.3" class="anchored" data-anchor-id="how-rstudio-projects-handle-working-directory-the-least-worst-option"><span class="header-section-number">12.3</span> How RStudio Projects handle working directory (the least-worst option)</h3>
 <p>An RStudio Project sets the working directory to the Project Folder.&nbsp; So, for <strong><em>weather.r</em></strong> to find <strong><em>weather.csv</em></strong> inside an RStudio Project, it just needs to know where <strong><em>weather.csv</em></strong> is located relative to the project folder.&nbsp; Most likely this will be something like: <strong><em>Data\weather.csv</em></strong>. This makes it far easier to share your project because the path to <strong><em>weather.csv</em></strong> will be the same on any computer.</p>
-<p>While I believe this is by far the best method for handling working directory issues, it comes with a major caveat:<span class="hl">You need to open script files from within the RStudio Project.</span>&nbsp; Opening the project sets the working directory for all script files used in the session.&nbsp; If you a file outside of the Project session, then the working directory is not set by the project.</p>
+<p>While I believe this is by far the best method for handling working directory issues, it comes with a major caveat: <span class="hl">You need to open script files from within the RStudio Project.</span>&nbsp; Opening the project sets the working directory for all script files used in the session.&nbsp; If you a file outside of the Project session, then the working directory is not set by the project.</p>
 </section>
 <section id="the-default-working-directory" class="level3" data-number="12.4">
 <h3 data-number="12.4" class="anchored" data-anchor-id="the-default-working-directory"><span class="header-section-number">12.4</span> The default working directory</h3>
@@ -1222,13 +1222,14 @@ Figure&nbsp;24: The R plot help page in the online documentation.
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.20">
+<meta name="generator" content="quarto-1.8.24">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -19,6 +19,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -37,10 +72,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-bd0f20613ab34a035844aaae9062fb4e.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-fac7000a542ad838aabeb25de73c93bf.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-0ee72de42c60dbd072a9e85558b70db9.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -330,15 +365,16 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title"><b>Lesson Content</b></h2>
    
   <ul>
-  <li><a href="#to-do" id="toc-to-do" class="nav-link active" data-scroll-target="#to-do"><span class="header-section-number">0.1</span> To-do</a></li>
+  <li><a href="#using-gutter-breakpoints-in-external-scripts" id="toc-using-gutter-breakpoints-in-external-scripts" class="nav-link active" data-scroll-target="#using-gutter-breakpoints-in-external-scripts"><span class="header-section-number">0.1</span> Using gutter breakpoints in external scripts</a></li>
   <li><a href="#purpose" id="toc-purpose" class="nav-link" data-scroll-target="#purpose"><span class="header-section-number">1</span> Purpose</a></li>
   <li><a href="#material" id="toc-material" class="nav-link" data-scroll-target="#material"><span class="header-section-number">2</span> Material</a></li>
   <li><a href="#adding-breakpoints-to-external-scripts" id="toc-adding-breakpoints-to-external-scripts" class="nav-link" data-scroll-target="#adding-breakpoints-to-external-scripts"><span class="header-section-number">3</span> Adding breakpoints to external scripts</a></li>
   <li><a href="#browser" id="toc-browser" class="nav-link" data-scroll-target="#browser"><span class="header-section-number">4</span> browser()</a>
   <ul class="collapse">
-  <li><a href="#rstudio-breakpoint-is-an-injected-browser" id="toc-rstudio-breakpoint-is-an-injected-browser" class="nav-link" data-scroll-target="#rstudio-breakpoint-is-an-injected-browser"><span class="header-section-number">4.1</span> RStudio breakpoint is an injected browser()</a></li>
+  <li><a href="#browser-in-the-main-script" id="toc-browser-in-the-main-script" class="nav-link" data-scroll-target="#browser-in-the-main-script"><span class="header-section-number">4.1</span> browser() in the main script</a></li>
   <li><a href="#add-browser-to-code" id="toc-add-browser-to-code" class="nav-link" data-scroll-target="#add-browser-to-code"><span class="header-section-number">4.2</span> add browser to code</a></li>
   <li><a href="#add-browser-to-for-loop" id="toc-add-browser-to-for-loop" class="nav-link" data-scroll-target="#add-browser-to-for-loop"><span class="header-section-number">4.3</span> add browser to for loop</a></li>
+  <li><a href="#dont-forget-to-remove-browser" id="toc-dont-forget-to-remove-browser" class="nav-link" data-scroll-target="#dont-forget-to-remove-browser"><span class="header-section-number">4.4</span> Don’t forget to remove browser()</a></li>
   </ul></li>
   <li><a href="#browser-in-function-scripts" id="toc-browser-in-function-scripts" class="nav-link" data-scroll-target="#browser-in-function-scripts"><span class="header-section-number">5</span> browser() in function scripts</a>
   <ul class="collapse">
@@ -356,16 +392,6 @@ ul.task-list li input[type="checkbox"] {
   </ul></li>
   <li><a href="#package-scripts" id="toc-package-scripts" class="nav-link" data-scroll-target="#package-scripts"><span class="header-section-number">7</span> Package scripts</a></li>
   <li><a href="#application" id="toc-application" class="nav-link" data-scroll-target="#application"><span class="header-section-number">8</span> Application</a></li>
-  <li><a href="#debug-debugonce" id="toc-debug-debugonce" class="nav-link" data-scroll-target="#debug-debugonce"><span class="header-section-number">9</span> debug() debugonce()</a>
-  <ul class="collapse">
-  <li><a href="#debug-function-script" id="toc-debug-function-script" class="nav-link" data-scroll-target="#debug-function-script"><span class="header-section-number">9.1</span> debug function script</a></li>
-  <li><a href="#undebug" id="toc-undebug" class="nav-link" data-scroll-target="#undebug"><span class="header-section-number">9.2</span> undebug</a></li>
-  <li><a href="#debugonce" id="toc-debugonce" class="nav-link" data-scroll-target="#debugonce"><span class="header-section-number">9.3</span> debugonce</a></li>
-  <li><a href="#debug-within-package" id="toc-debug-within-package" class="nav-link" data-scroll-target="#debug-within-package"><span class="header-section-number">9.4</span> debug within package</a></li>
-  </ul></li>
-  <li><a href="#trace" id="toc-trace" class="nav-link" data-scroll-target="#trace"><span class="header-section-number">10</span> trace()</a></li>
-  <li><a href="#trace-with-loops-and-if-statements" id="toc-trace-with-loops-and-if-statements" class="nav-link" data-scroll-target="#trace-with-loops-and-if-statements"><span class="header-section-number">11</span> trace() with loops and if statements</a></li>
-  <li><a href="#inject-code-beyond-browser" id="toc-inject-code-beyond-browser" class="nav-link" data-scroll-target="#inject-code-beyond-browser"><span class="header-section-number">12</span> Inject code beyond browser()</a></li>
   </ul>
 </nav>
 </nav>
@@ -395,18 +421,28 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="to-do" class="level3" data-number="0.1">
-<h3 data-number="0.1" class="anchored" data-anchor-id="to-do"><span class="header-section-number">0.1</span> To-do</h3>
+<section id="using-gutter-breakpoints-in-external-scripts" class="level3" data-number="0.1">
+<h3 data-number="0.1" class="anchored" data-anchor-id="using-gutter-breakpoints-in-external-scripts"><span class="header-section-number">0.1</span> Using gutter breakpoints in external scripts</h3>
 <ul>
-<li><p>create functions script with embedded if-else statements within for loops</p></li>
-<li><p>multiple commands on one line?</p></li>
-<li><p>get into traceback?? mentioned in 2-13</p></li>
+<li><p>Adding breakpoints (gutter) to external script (probably not a good idea…)</p>
+<ul>
+<li><p>if using source(), bp must be added after</p>
+<ul>
+<li>source() removes bp</li>
+</ul></li>
+<li><p>if using debugsource(), bp can be added before or after</p></li>
+<li><p>either way: you must then Run the function</p>
+<ul>
+<li><p>bp will not work on source()/debugsource() execution</p></li>
+<li><p>be careful with rm(list=…)</p></li>
+</ul></li>
+</ul></li>
 </ul>
 </section>
 <section id="purpose" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="purpose"><span class="header-section-number">1</span> Purpose</h2>
 <ul>
-<li><p>Use browser() to degub external script</p></li>
+<li><p>Use browser() to debug external script (don’t forget to remove browser()</p></li>
 <li><p>Alternate ways to debug script</p></li>
 <li><p>Downloading package script and debugging those</p></li>
 </ul>
@@ -419,27 +455,47 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="adding-breakpoints-to-external-scripts" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="adding-breakpoints-to-external-scripts"><span class="header-section-number">3</span> Adding breakpoints to external scripts</h2>
-<p>In last lesson, we learned how to add breakpoints to a script using the RStudio inteface to add a red dot to the gutter area of the scrtipt. This method works well if you are working in just one script. However, you will likely find yourself wanting to add a breakpoint to a script that is called by your main script. This could either be a functions script or a script from a package. Adding breakpoints to external scripts called from your main script is not quite as simple. In this lesson we will go over the ways to add breakpoints to scripts outside of your main script</p>
+<p>In last lesson, we learned how to put an R script in debug mode using the RStudio interface to add a breakpoint in the gutter area of the script. This method works well for debugging your main script (the script you Source). However, you will likely find yourself wanting to add a breakpoint to a external script called by your main script. This could either be a functions script or a script from a package. Adding breakpoints to external scripts called from your main script is not quite as simple. In this lesson we will go over the ways to add breakpoints to scripts outside of your main script</p>
 </section>
 <section id="browser" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="browser"><span class="header-section-number">4</span> browser()</h2>
-<p>The most straightforward way to add a breakpoint is to add the command browser() to the location in your script where you want the breakpoint. browser() acts just like a breakpoint by pausing your script and putting your script in debug mode. We can take examples from the last lesson and replace the breakpoint with browser(). <span class="hl">Note: browser() is added to your script and needs to be removed after debugging.</span></p>
-<section id="rstudio-breakpoint-is-an-injected-browser" class="level3" data-number="4.1">
-<h3 data-number="4.1" class="anchored" data-anchor-id="rstudio-breakpoint-is-an-injected-browser"><span class="header-section-number">4.1</span> RStudio breakpoint is an injected browser()</h3>
-<p>Almost… because RStudio cannot see the injected browser() until after commands have been executed</p>
+<p>As a general rule, it is easiest to use breakpoints in the script you are Sourcing and browser() in scripts that</p>
+<p>&nbsp;</p>
+<p>The most universal way to add a breakpoint is to add the command <strong><em>browser()</em></strong> to the location in your script where you want the breakpoint. <strong><em>browser()</em></strong> acts just like a breakpoint by pausing your script and putting your script in debug mode. We can take examples from the last lesson and replace the breakpoint with <strong><em>browser()</em></strong>. <span class="hl">Note: browser() is added to your script and needs to be removed after debugging.</span></p>
+<section id="browser-in-the-main-script" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="browser-in-the-main-script"><span class="header-section-number">4.1</span> browser() in the main script</h3>
+<p>In last lesson, the first breakpoint we set was on line 8. Instead of a breakpoint, we can put a browser() command to put the script in debug mode:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>());  </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"scripts/debugTest.r"</span>);</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>weatherData <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">"data/lansing2016Noaa-3.csv"</span>);</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>highTemps <span class="ot">=</span> weatherData<span class="sc">$</span>maxTemp;</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>lowTemps <span class="ot">=</span> weatherData<span class="sc">$</span>minTemp;</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>«<span class="fu">browser</span>()»</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>diffTemp <span class="ot">=</span> highTemps <span class="sc">-</span> lowTemps;</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>weatherData<span class="sc">$</span>diffTemp <span class="ot">=</span> diffTemp;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The breakpoints in RStudio call broswer(), so putting browser() in the code is skipping the middle man …Almost… because RStudio cannot see the injected browser() until after commands have been executed</p>
+<ul>
+<li><p>do examples from last lesson</p></li>
+<li><p>then put the script in a functionand call from a seconf script [or, use 1-15 function’s script?]</p></li>
+<li><p>mention that most external scripts contain functions</p></li>
+</ul>
 </section>
 <section id="add-browser-to-code" class="level3" data-number="4.2">
 <h3 data-number="4.2" class="anchored" data-anchor-id="add-browser-to-code"><span class="header-section-number">4.2</span> add browser to code</h3>
 <p>We can add browser() to line 7 of the script from last lesson and click Source. You will see the familiar debug features</p>
 <p>&nbsp;</p>
 <p>&lt;image of browser() with green arrow&gt;</p>
-<p>&nbsp;</p>
 </section>
 <section id="add-browser-to-for-loop" class="level3" data-number="4.3">
 <h3 data-number="4.3" class="anchored" data-anchor-id="add-browser-to-for-loop"><span class="header-section-number">4.3</span> add browser to for loop</h3>
 <p>Instead of putting a NULL command in a for loop so that a breakpoint can be put on the line, we can put browser(). Don’t forget to remove or comment out browser() when you are done debugging</p>
 <p>&lt;link back to last lesson’s NULL in for loops&gt;</p>
 <p>&lt;image for loop with two browser() instead of NULL&gt;</p>
+</section>
+<section id="dont-forget-to-remove-browser" class="level3" data-number="4.4">
+<h3 data-number="4.4" class="anchored" data-anchor-id="dont-forget-to-remove-browser"><span class="header-section-number">4.4</span> Don’t forget to remove browser()</h3>
 </section>
 </section>
 <section id="browser-in-function-scripts" class="level2" data-number="5">
@@ -496,64 +552,13 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="package-scripts" class="level2" data-number="7">
 <h2 data-number="7" class="anchored" data-anchor-id="package-scripts"><span class="header-section-number">7</span> Package scripts</h2>
+<ul>
+<li>once package scripts are downloaded, bp/browser() will work as above</li>
+</ul>
 </section>
 <section id="application" class="level2" data-number="8">
 <h2 data-number="8" class="anchored" data-anchor-id="application"><span class="header-section-number">8</span> Application</h2>
-<p>code to put a pause in the function ?? in package ??</p>
-<p>code to put a pause in the for loop at 10 iteration in function ?? in package ??</p>
-<p>code to put a pause in the for loop when x=?? in function ?? in package ??</p>
-<p>code to put a pause inside if-if</p>
-<p>code to print x every 10th iteration of a for loop</p>
-<p>cat each factor</p>
-<p><u><strong>Below here is older ideas that I do not think will be in the class</strong></u></p>
-</section>
-<section id="debug-debugonce" class="level2" data-number="9">
-<h2 data-number="9" class="anchored" data-anchor-id="debug-debugonce"><span class="header-section-number">9</span> debug() debugonce()</h2>
-<p>script must be in Environment to debug???</p>
-<p>browser() does not work for functions that you cannot edit. In other words, you cannot use browser() to pause a function within a package. If you need to debug a function in a package, then you can use debug() or debugonce(). Both of these function will inject a browser() command to the beginning of a function.</p>
-<p>&nbsp;</p>
-<p>It is easiest to see how debug() works using a function within your script and then apply it to a function from</p>
-<section id="debug-function-script" class="level3" data-number="9.1">
-<h3 data-number="9.1" class="anchored" data-anchor-id="debug-function-script"><span class="header-section-number">9.1</span> debug function script</h3>
-</section>
-<section id="undebug" class="level3" data-number="9.2">
-<h3 data-number="9.2" class="anchored" data-anchor-id="undebug"><span class="header-section-number">9.2</span> undebug</h3>
-</section>
-<section id="debugonce" class="level3" data-number="9.3">
-<h3 data-number="9.3" class="anchored" data-anchor-id="debugonce"><span class="header-section-number">9.3</span> debugonce</h3>
-<p>same as before – don’t need to undebug (issue with not undebugging…)</p>
-</section>
-<section id="debug-within-package" class="level3" data-number="9.4">
-<h3 data-number="9.4" class="anchored" data-anchor-id="debug-within-package"><span class="header-section-number">9.4</span> debug within package</h3>
-<p>find package function that’s relatively easy to debug</p>
-<p>pause is at beginning of script (not convenient)</p>
-<p>&lt;pracma package?&gt;</p>
-</section>
-</section>
-<section id="trace" class="level2" data-number="10">
-<h2 data-number="10" class="anchored" data-anchor-id="trace"><span class="header-section-number">10</span> trace()</h2>
-<p>The disadvantage of debug() is that it always pauses at the beginning of a function. That is often not …. If you want to control where the pause is put then you need to use trace(). trace() can be used to inject browser() anywhere in the function. This is done by telling trace() which command inside the function, by number, you want to pause before.</p>
-<p>This command would acts just like the debug() above:</p>
-<p>&lt;trace, first command&gt;</p>
-<p>This command would put the pause on the third command:</p>
-<p>&lt;trace, third command&gt;</p>
-<p>The number is not the line number, but the command number</p>
-</section>
-<section id="trace-with-loops-and-if-statements" class="level2" data-number="11">
-<h2 data-number="11" class="anchored" data-anchor-id="trace-with-loops-and-if-statements"><span class="header-section-number">11</span> trace() with loops and if statements</h2>
-<p>Complete if-else statements and for loops are counted as one command. So, if you want to put a pause after, you need to</p>
-<p>&lt;trace, command after for loop&gt;</p>
-<p>If you want to put a pause within an if-else statement or for loop, that you need to subset the command number with a second command number</p>
-<p>&lt;trace, command in for loop&gt;</p>
-<p>&lt;trace, command in if-else statement&gt;</p>
-<p>Every time there is an embedded if-else statement or for loop, you need to subset trace()</p>
-<p>&lt;trace, command in for loop, in if-else, in for loop&gt;</p>
-</section>
-<section id="inject-code-beyond-browser" class="level2" data-number="12">
-<h2 data-number="12" class="anchored" data-anchor-id="inject-code-beyond-browser"><span class="header-section-number">12</span> Inject code beyond browser()</h2>
-<p>trace() can inject any code into your function</p>
-<p>&lt;inject cat() in for loop&gt;</p>
-<p>&lt;inject if(i==1) { } in for loop&gt;</p>
+<p>Add a br</p>
 
 
 </section>
@@ -610,13 +615,14 @@ ul.task-list li input[type="checkbox"] {
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

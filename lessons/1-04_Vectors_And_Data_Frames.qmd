@@ -6,10 +6,6 @@ short: "1-04"
 
 ### Changes...
 
--   extension about why I added arguments when reading the CSV file
-
--   add some more images for early examples?
-
 ## Purpose
 
 -   Introducing vectors
@@ -61,7 +57,7 @@ The script for this lesson will not execute correctly if it is treated as a stan
 
 ### Set Working Directory (a cautionary statement)
 
-Many people still treat all R scripts as standalone scripts (i.e., they do not use RStudio Project). This causes all sorts of problems when script file look for other files.  The old way to get around this is to set the Working Directories using ***setwd()***.  This is a mess because Working Directories change when file are moved between computers or even within a computer.  [Scripts that set working directories are much harder to share and maintain.]{.hl}  This author strongly suggests that you use RStudio Projects and avoid the working directory mess.
+Many people still treat all R scripts as standalone scripts (i.e., they do not use RStudio Project). This causes all sorts of problems when a script file look for other files.  The old way to get around this is to set the Working Directories using ***setwd()***.  This is a mess because Working Directories change when file are moved between computers or even within a computer.  [Scripts that set working directories are much harder to share and maintain.]{.hl}  This author strongly suggests that you use RStudio Projects and avoid the working directory mess.
 
 ## Vector Variables
 
@@ -117,7 +113,7 @@ tempMean:    61.2
 
 ### Indexing values in a vector
 
-Putting values into vectors also allows us to associate values between vectors.  If we have a vector of high temperature values, then we could also have a vector of low temperature values.
+Putting values into vectors also allows us to associate values between vectors.  If we have a vector of high temperature values, then we could also have a corresponding vector of low temperature values.
 
 ``` r
 tempLow = c(45, 40, 55, 37, 42);
@@ -152,13 +148,13 @@ tempDiff_5:  17
 
  
 
-In @fig-weatherdataframe there is a weather data frame ([note: we are using this data frame in future lessons, not this one]{.note}) where each column has a measured daily weather value (e.g., ***minTemp***, ***maxTemp, relHum***).  Each row gives the measured weather values for a specific day (e.g., row 1 is Jan 1, row 2 is Jan 2).
+In @fig-weatherdataframe there is a weather data frame ([note: this data frame will be used in future lessons]{.note}) where each column has a measured daily weather value (e.g., ***minTemp***, ***maxTemp, relHum***).  Each row gives the measured weather values for a specific day (e.g., row 1 is Jan 1, row 2 is Jan 2).
 
 ![A data frame viewed in RStudio with 23 variables (i.e., the 23 columns, which are vector variables)](images/clipboard-2481776937.png){#fig-weatherdataframe .fs}
 
 ## CSV files
 
-In the first couple of lessons we were using data from inside the script but most of the data you will use will come from outside the script -- often from a data frame. The data frames themselves often come from a CSV file. CSV stands for Comma Separated Values, meaning that the values in the file are separated by commas.
+In the first couple of lessons we were using data from inside the script but most of the data you will use will come from outside the script -- often from a data frame. The data frames are often stores in a CSV file. CSV stands for Comma Separated Values, meaning that the values in the file are separated by commas.
 
  
 
@@ -170,7 +166,7 @@ Let's look at a small data set we downloaded in the @sec-lesson-files section ca
 
 ### Opening a CSV file
 
-[Note: CSV files are often opened by default in Excel and this can problematic]{.note}: [Trap: Opening CSV files in Excel]
+[Note: CSV files are often opened by default in Excel and this is problematic]{.note}: [Trap: Opening CSV files in Excel]
 
  
 
@@ -233,7 +229,7 @@ In ***weatherData*** there are three types of values:
 
  
 
-[Note: the **date** column has date values but it is not formatted properly so R does not recognize it as a Date -- something we will cover much later.]{.note}
+[Note: the **date** column has date values but it is not formatted properly so R does not recognize it as a Date -- something we will cover much later in the class.]{.note}
 
 ## Functions and arguments
 
@@ -249,7 +245,7 @@ Inside the function ***read.csv()***, I included three arguments (***file, sep, 
 
 ### file
 
-***file = "data/twoWeekWeatherData.csv"*** means that the script opens the file called **twoWeekWeatherData*.csv*** located in the ***data*** folder of your RStudio Project
+***file = "data/twoWeekWeatherData.csv"*** means that the script opens the file called **twoWeekWeatherData*.csv*** located in the ***data*** folder inside your RStudio Project Folder.
 
  
 
@@ -289,7 +285,7 @@ But I like to keep ***sep*** and ***header*** in my code because you often do ne
 
 ## Getting data
 
-We now have a data frame with weather information stored in a variable called ***weatherData***.  But, we usually do not want to deal with the whole data frame at once.  So, our next trick will be to extract parts of the data from the data frame.  We might want to work with one column in the data frame (e.g., ***highTemp*** or ***precipitation***).  We can see all the columns in the data frame by expanding the data frame in the ***Environment*** or looking at the headers in the ***File Viewer*** (both views are in @fig-view-dataframe). 
+We now have a data frame with weather information stored in a variable called ***weatherData***.  But we usually do not want to deal with the whole data frame at once.  So, our next trick will be to extract parts of the data from the data frame.  We might want to work with one column in the data frame (e.g., ***highTemp*** or ***precipitation***).  We can see all the columns in the data frame by expanding the data frame in the ***Environment*** or looking at the headers in the ***File Viewer*** (both views are in @fig-view-dataframe). 
 
 ### Pulling out a column
 
@@ -303,7 +299,7 @@ We start with ***weatherData*** and, use the dollar sign operator ( ***\$*** ) t
 highTemps = weatherData$highTemp;
 ```
 
-In the ***Environment*** square brackets (**\[ \]** ) indicates the variable is a **vector**.  ***highTemps*** appears in the ***Environment*** as a ***vector***.  ***highTemps*** has 14 ( ***\[1:14\]*** ) integer (***int***) values, representing the temperature for each of the 14 days. 
+In the ***Environment*** square brackets ( **\[ \]** ) indicates the variable is a **vector**.  ***highTemps*** appears in the ***Environment*** as a ***vector***.  ***highTemps*** has 14 ( ***\[1:14\]*** ) integer (***int***) values, representing the temperature for each of the 14 days. 
 
 ![The highTemps vector variable in the Environment tab](images/R-1-04-Vector-from-dataframe.png){#fig-high-temps .fs}
 
@@ -328,7 +324,7 @@ We could go back to the original data frame (***weatherData***) and subset the 7
 highTempDay7b = weatherData$highTemp[7];
 ```
 
-Or, we can use a row/column (e.g., X/Y) operation on ***weatherData*** to get the value:
+Or, we can use a row/column (e.g., X,Y) operation on ***weatherData*** to get the value:
 
 ``` r
 highTempDay7c = weatherData[7, "highTemp"];  # think of this as [X,Y] notation
@@ -393,7 +389,7 @@ The three values we pulled from **highTemps** individually saved and combined (*
 
 ### Pulling out consecutive values
 
-If we want to get the high temperature for consecutive days, we can use the simple sequencing ( **:** ) operator -- simple refers to the fact that we are sequencing by 1:
+If we want to get the high temperature for consecutive days, we can use the sequence-by-one ( **:** ) operator -- often called the simple sequencing operator. The sequence-by-one operator ( **:** ) gives you every integer number between the two values.
 
 ``` r
 consecVals = highTemps[3:11];  # same as highTemps[c(3,4,5,6,7,8,9,10,11)]
@@ -428,7 +424,7 @@ The ***Environment*** tab is good for quickly looking at values, but it only sho
 
  
 
-These two values, ***consecVals*** and ***consecValRev***, are shown in the ***Console*** window in @fig-console-variables. In the future I will present the Console like this:
+These two values, ***consecVals*** and ***consecValRev***, are shown in the ***Console*** window in @fig-console-variables. In the future I will present the ***Console*** like this:
 
 ``` {.r tab="Console"}
 > consecVals 
@@ -539,7 +535,7 @@ highTempSeq3b = highTemps[seq(from=1, to=10, by=3)];
 
 #### Note about combining steps in R
 
-While it might seem like combining steps is a good idea because it reduces the amount of code, this needs to be balanced with the fact that [combining code usually makes it harder to read]{.hl}.  One of the big problems I see when looking at people's code is that they cram too much code into one command and it becomes really difficult to debug if anything goes wrong.  If you are going to err on one side then this author recommends you err on the side of breaking up code rather than combining it.
+While it might seem like combining steps is a good idea because it reduces the amount of code, this needs to be balanced with the fact that combining code usually [makes it harder to read and debug]{.hl}.  One of the big problems I see when looking at people's code is that they cram too much code into one command and it becomes really difficult to debug if anything goes wrong.  If you are going to err on one side then this author recommends you err on the side of breaking up code rather than combining it.
 
 ## Application
 
@@ -608,7 +604,7 @@ F\) Opening Data Frames:
 
 If you have Excel on your computer, then it is probable that Excel is the default program for opening CSV files.  This means double-clicking on a CSV file will open it in Excel.  The danger with opening CSV files in Excel is that Excel will sometimes reformat the data (especially date and money columns) and then give a message saying how the data needs to be saved to be preserved.  [Do not save the file -- it will change the format of your data]{.hl}*.*  If you are editing a CSV file in Excel then I would save the results to a test file first to make sure Excel did not do anything untoward.
 
-![Opening a CSV file in Excel -- the possible data loss warning is not something you want to heed](images/R-1-04_Excel.png){#fig-excel .fs}
+![Opening a CSV file in Excel -- the possible data loss warning is something you want to heed](images/R-1-04_Excel.png){#fig-excel .fs}
 
 ## Extension: Long and Short Integers
 

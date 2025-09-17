@@ -4,17 +4,25 @@ short: "2-14"
 # special characters for highlighting code : «»
 ---
 
-### To-do
+### Using gutter breakpoints in external scripts
 
--   create functions script with embedded if-else statements within for loops
+-   Adding breakpoints (gutter) to external script (probably not a good idea...)
 
--   multiple commands on one line?
+    -   if using source(), bp must be added after
 
--   get into traceback?? mentioned in 2-13
+        -   source() removes bp
+
+    -   if using debugsource(), bp can be added before or after
+
+    -   either way: you must then Run the function
+
+        -   bp will not work on source()/debugsource() execution
+
+        -   be careful with rm(list=...)
 
 ## Purpose
 
--   Use browser() to degub external script
+-   Use browser() to debug external script (don't forget to remove browser()
 
 -   Alternate ways to debug script
 
@@ -30,15 +38,40 @@ The [data used for the lesson](../data/Lansing2016Noaa-3.csv) is here
 
 ## Adding breakpoints to external scripts
 
-In last lesson, we learned how to add breakpoints to a script using the RStudio inteface to add a red dot to the gutter area of the scrtipt. This method works well if you are working in just one script. However, you will likely find yourself wanting to add a breakpoint to a script that is called by your main script. This could either be a functions script or a script from a package. Adding breakpoints to external scripts called from your main script is not quite as simple. In this lesson we will go over the ways to add breakpoints to scripts outside of your main script
+In last lesson, we learned how to put an R script in debug mode using the RStudio interface to add a breakpoint in the gutter area of the script. This method works well for debugging your main script (the script you Source). However, you will likely find yourself wanting to add a breakpoint to a external script called by your main script. This could either be a functions script or a script from a package. Adding breakpoints to external scripts called from your main script is not quite as simple. In this lesson we will go over the ways to add breakpoints to scripts outside of your main script
 
 ## browser()
 
-The most straightforward way to add a breakpoint is to add the command browser() to the location in your script where you want the breakpoint. browser() acts just like a breakpoint by pausing your script and putting your script in debug mode. We can take examples from the last lesson and replace the breakpoint with browser(). [Note: browser() is added to your script and needs to be removed after debugging.]{.hl}
+As a general rule, it is easiest to use breakpoints in the script you are Sourcing and browser() in scripts that
 
-### RStudio breakpoint is an injected browser()
+ 
 
-Almost... because RStudio cannot see the injected browser() until after commands have been executed
+The most universal way to add a breakpoint is to add the command ***browser()*** to the location in your script where you want the breakpoint. ***browser()*** acts just like a breakpoint by pausing your script and putting your script in debug mode. We can take examples from the last lesson and replace the breakpoint with ***browser()***. [Note: browser() is added to your script and needs to be removed after debugging.]{.hl}
+
+### browser() in the main script
+
+In last lesson, the first breakpoint we set was on line 8. Instead of a breakpoint, we can put a browser() command to put the script in debug mode:
+
+``` r
+rm(list=ls());  
+source("scripts/debugTest.r");
+
+weatherData = read.csv(file = "data/lansing2016Noaa-3.csv");
+highTemps = weatherData$maxTemp;
+lowTemps = weatherData$minTemp;
+«browser()»
+diffTemp = highTemps - lowTemps;
+
+weatherData$diffTemp = diffTemp;
+```
+
+The breakpoints in RStudio call broswer(), so putting browser() in the code is skipping the middle man ...Almost... because RStudio cannot see the injected browser() until after commands have been executed
+
+-   do examples from last lesson
+
+-   then put the script in a functionand call from a seconf script \[or, use 1-15 function's script?\]
+
+-   mention that most external scripts contain functions
 
 ### add browser to code
 
@@ -48,8 +81,6 @@ We can add browser() to line 7 of the script from last lesson and click Source. 
 
 \<image of browser() with green arrow\>
 
- 
-
 ### add browser to for loop
 
 Instead of putting a NULL command in a for loop so that a breakpoint can be put on the line, we can put browser(). Don't forget to remove or comment out browser() when you are done debugging
@@ -57,6 +88,8 @@ Instead of putting a NULL command in a for loop so that a breakpoint can be put 
 \<link back to last lesson's NULL in for loops\>
 
 \<image for loop with two browser() instead of NULL\>
+
+### Don't forget to remove browser()
 
 ## browser() in function scripts
 
@@ -104,82 +137,8 @@ You do not have editting access to script inside of a package so you cannot easi
 
 ## Package scripts
 
+-   once package scripts are downloaded, bp/browser() will work as above
+
 ## Application
 
-code to put a pause in the function ?? in package ??
-
-code to put a pause in the for loop at 10 iteration in function ?? in package ??
-
-code to put a pause in the for loop when x=?? in function ?? in package ??
-
-code to put a pause inside if-if
-
-code to print x every 10th iteration of a for loop
-
-cat each factor
-
-[**Below here is older ideas that I do not think will be in the class**]{.underline}
-
-## debug() debugonce()
-
-`script must be in Environment to debug???`{=html}
-
-browser() does not work for functions that you cannot edit. In other words, you cannot use browser() to pause a function within a package. If you need to debug a function in a package, then you can use debug() or debugonce(). Both of these function will inject a browser() command to the beginning of a function.
-
- 
-
-It is easiest to see how debug() works using a function within your script and then apply it to a function from
-
-### debug function script
-
-### undebug
-
-### debugonce
-
-same as before – don't need to undebug (issue with not undebugging...)
-
-### debug within package
-
-find package function that's relatively easy to debug
-
-pause is at beginning of script (not convenient)
-
-\<pracma package?\>
-
-## trace()
-
-The disadvantage of debug() is that it always pauses at the beginning of a function. That is often not .... If you want to control where the pause is put then you need to use trace(). trace() can be used to inject browser() anywhere in the function. This is done by telling trace() which command inside the function, by number, you want to pause before.
-
-This command would acts just like the debug() above:
-
-\<trace, first command\>
-
-This command would put the pause on the third command:
-
-\<trace, third command\>
-
-The number is not the line number, but the command number
-
-## trace() with loops and if statements
-
-Complete if-else statements and for loops are counted as one command. So, if you want to put a pause after, you need to
-
-\<trace, command after for loop\>
-
-If you want to put a pause within an if-else statement or for loop, that you need to subset the command number with a second command number
-
-\<trace, command in for loop\>
-
-\<trace, command in if-else statement\>
-
-Every time there is an embedded if-else statement or for loop, you need to subset trace()
-
-\<trace, command in for loop, in if-else, in for loop\>
-
-## Inject code beyond browser()
-
-trace() can inject any code into your function
-
-\<inject cat() in for loop\>
-
-\<inject if(i==1) { } in for loop\>
+Add a br

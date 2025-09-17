@@ -101,7 +101,7 @@ for(i in 1:numDays)
   {
     # this day's value is higher -- set highestTemp to this value
     highestTemp = highTemps[i];
-    browser(); # uncomment to pause the script's execution at this point
+    # browser(); # uncomment to pause the script's execution at this point
   }
 }
 
