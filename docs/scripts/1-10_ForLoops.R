@@ -16,18 +16,18 @@ for(i in 1:5)
 }
 
 cat("---------\nUsing the indexing variable as a counter:\n");
-for(i in 1:5) # repeat 5 times
+for(i in 1:5) # cycle 5 times
 {
   cat("The count is:", i, "\n");
 }
 
 cat("---------\nAny sequence of 5 number cycles the for loop 5 times:\n");
-for(i in 15:19) # repeat 5 times
+for(i in 15:19) # cycle 5 times
 {
   cat("The count is:", i, "\n");
 }
 
-cat("---------\n#Changing the sequence numbers -- length is still 5:\n");
+cat("---------\n#Sequences can go backwards -- length is still 5:\n");
 for(i in 12:8) # 12, 11, 10, 9, 8 (five values in sequence)
 {
   cat("The count is:", i, "\n");
@@ -75,7 +75,7 @@ for(i in 1:numDays)
   }
 }
 
-cat("---------\nUsing a sequence to subset the values:\n");
+cat("---------\nUsing a vector to subset the values:\n");
 for(i in c(8,2,13))
 {
   if(noonCond[i] == "Sunny")
