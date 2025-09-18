@@ -22,7 +22,7 @@ The files for this lesson:
 
 If you have any questions about the material in this lesson, feel free to email them to the instructor, {{< var instructor.name >}}, at {{< var instructor.email >}}.
 
-## For loops -- a vital skill
+## for loops -- a vital skill
 
 In this lesson, we will be using ***for*** loops and ***if()*** statements to do common calculations on a vector (e.g., finding the sum, finding maximum value, checking if any value meets a condition).  There are functions for all of these calculations in R that are easier to use than a ***for*** loop.  However, the best way to learn ***for*** loops is to use them in applications that are easy to understand.  You are going to have many situations where you cannot rely on an R function or package -- and ***for*** loops with embedded ***if-else*** statements are often the best solution.
 
@@ -32,15 +32,11 @@ Understanding how to effectively use ***for*** loops is perhaps the most vital s
 
 ## Multiple state variables
 
-We ended last lesson by introducing you to the concept of a state variable -- a [state variable]{.hl} is a variable that updates information (e.g., the state of some value) as the ***for*** loops cycles.  The state variable is always declared outside of the ***for*** loop and modified within the ***for*** loop.
+We ended last lesson by introducing you to the concept of a state variable -- a [state variable]{.hl} is a variable that updates information (e.g., the state of some value) as the ***for*** loops cycles.  The state variable is always declared outside of the ***for*** loop and modified in the codeblock attached to the ***for*** loop.
 
  
 
-[Note: if the state variable was declared inside the **for** loop then it would be re-initialized every time the **for** loop cycles.]{.note}
-
- 
-
-The state variable needs to be initialized to some default value -- or the value the state variable should be if the ***for*** loop has no cycles (an empty vector).  In the last example from last lesson, the state variable ***sunnyDays*** was initialized to **0**, which is the correct value if the condition inside the ***for*** loop is **FALSE** every cycle..
+The state variable needs to be initialized to some default value. You can think of the default value as the value the state variable should be if the ***for*** loop has no cycles.  In the last example from last lesson, the state variable ***sunnyDays*** was initialized to **0**, which is the correct value if the ***for*** loop never cycles (**0** days checked means **0** sunny days)
 
 ::: {#fig-sunnyDaysWithStateVar}
 ``` r
@@ -105,7 +101,7 @@ In @fig-multStateVar we used an ***if-else*** structure to separate the two cond
 if(noonCond[i] == "Rain")
 ```
 
-But then we would be checking for **Rain** on days that we already know is **Sunny**.  ***noonCond*** on a specific day cannot be both **Sunny** and **Rain** (i.e., they are mutually exclusive) -- so the extra checks are not needed.  The code would still work, just not be as efficient.  Efficiency becomes more important as the number of values in your vector increases -- and efficiency means quicker execution time.
+But then we would be checking for **Rain** on days that we already know is **Sunny**.  ***noonCond*** on a specific day cannot be both **Sunny** and **Rain** (i.e., they are mutually exclusive) so the extra checks are not needed.  The code would still work, just not be as efficient (and harder to debug, a more advanced topic).
 
 ## State variables uses
 
@@ -121,7 +117,7 @@ In this case, we will look at how many time
 
  
 
-We are looking at two situations so we need two state variables.  Again, we initialize the values of the state variables to **0** because **0** would be the correct answer if the conditions inside the ***if-else*** statement were **FALSE** for every day.
+We are looking at two situations so we need two state variables.  Again, we initialize the values of the state variables to **0** because **0** would be the correct answer if the ***for*** loop never cycled (0 days checked means 0 days above 60 or below 50).
 
 ::: {#fig-mult-tempValues}
 ``` r
@@ -198,7 +194,7 @@ The difference is that, instead of adding 1 to the state variable, [we add the p
 
  
 
-[Note: there are no **if()** statements in this **for** loop because we are unconditionally adding every days' precipitation to the total precipitation]{.note}
+[Note: there are no **if()** statements in this **for** loop because we are always (i.e., unconditionally) adding every days' precipitation to the total precipitation]{.note}
 
 ::: {#fig-state-add-values}
 ``` r
@@ -240,11 +236,25 @@ for(i in 1:numDays)
 Using for loops to find out if any value in a vectors meets a condition
 :::
 
-After executing the script, we see that ***anyDayLT40*** in **TRUE** in the ***Environment***.  You can easily test other scenarios by changing the ***if()*** condition.  For example:
+After executing the script, we see that ***anyDayLT40*** in **TRUE** in the ***Environment*** meaning at least one value in ***highTemps*** was less than **40**.
+
+ 
+
+You can easily test other scenarios by changing the ***if()*** condition.  For example:
 
 ``` r
-  if(highTemps[i] < 30)  # this will produce a FALSE result
+# Check if any value in highTemps is less than 30
+anyDayLT30 = FALSE;     # initialize state variable to FALSE
+for(i in 1:numDays) 
+{
+  if(highTemps[i] < 30)
+  {
+    anyDayLT30 = TRUE;  # will never be executed -- anyDayLT30 remains FALSE
+  }
+}
 ```
+
+After executing this script, we see that ***anyDayLT30*** in **FALSE** in the ***Environment*** meaning no value in ***highTemps*** was less than **30**.
 
 ### The break statement
 
@@ -267,7 +277,7 @@ To make the code more efficient, we can add a ***break*** statement to the codeb
   }
 ```
 
-A break statement in the above code will not meaningfully speed up this script, but it will speed up script that is cycling through 1000s or 10000s of times through a for loop.
+A break statement in the above code will not meaningfully speed up this script, but it will speed up script that is cycling through 1000s or 10000s of times through a ***for*** loop.
 
 ## Finding the highest (or lowest) value
 
@@ -287,7 +297,7 @@ for (i in 1:numDays)
   {
     # this day's value is higher -- set highestTemp to this value
     highestTemp = highTemps[i]; 
-    # browser();  # uncomment to pause the script's execution at this point
+    cat("Day", i, "has a new high temp", highestTemp, "\n");
   }
 }
 ```
@@ -297,11 +307,11 @@ Finding the highest value in a vector
 
 ### Using browser() to pause your script
 
-The ***for*** loop above is going through every value in the ***highTemps*** in order.  Each time a new high temperature is found, ***highestTemp*** is set top that value.  So, ***highestTemp*** is going to start at 0 (the initial value), and change multiple times.
+The ***for*** loop above is going through every value in the vector ***highTemps*** in order.  Each time a new high temperature is found, ***highestTemp*** is set top that value.  So, ***highestTemp*** is going to start at 0 (the initial value), and change multiple times.
 
  
 
-If we put ***highTemps*** in the ***Console***, we can see each time a new highest temperature will occur:
+If we put ***highTemps*** in the ***Console***, we can see each time a new highest temperature should occur:
 
 ``` {.r tab="Console"}
 > highTemps
@@ -312,27 +322,17 @@ A new highest temperature will be discovered 5 times: 57, 58, 60, 61, and 75 (cy
 
  
 
-We can use ***browser()*** to see this, too.  ***browser()*** is an instruction to pause the script in the middle of execution and put it in debug mode.
-
- 
-
-If we uncomment the ***browser()*** line in @fig-highValue:
+When we execute the code, the ***cat()*** command tells us the same thing:
 
 ``` r
-   # browser();  # uncomment to pause the script's execution at this point
+Day 1 has a new high temp 57 
+Day 6 has a new high temp 58 
+Day 7 has a new high temp 60 
+Day 13 has a new high temp 61 
+Day 14 has a new high temp 75 
 ```
 
 Then the script will pause at that line when the condition ***if(highestTemp \> highTemps\[i\])*** is **TRUE**, which happens 5 times (out of 14 cycles) when ***i*** = 1, 6, 7, 13, and 14.
-
- 
-
-***browser()*** will initially pause the script when ***i*** = 1 and you can click ***Continue*** to pause the script when ***i*** = 6, 7, 13, and 14.  For now, the only other button you should know is ***Stop***, which ends debug mode.
-
-![The script Sourced with browser() uncommented after Continue is clicked twice](images/R-1-10-Browser.jpg){#fig-browser .fs}
-
- 
-
-Debug mode is a complicated topic that will be more fully explored in future lessons.
 
 ### Initializing the state variable
 
@@ -340,7 +340,7 @@ I initialized the state variable, ***highestTemp***, to **0** -- and that works 
 
  
 
-A better solution is to set the state variable to the first value in the vector (***highTemps\[1\]***).  This makes the first value in the ***highTemps*** vector the default answer.  In other words, if every condition check is ***FALSE*** (i.e., no temperature is greater than the first) then the first temperature is the highest temperature.
+A better solution is to set the state variable to the first value in the vector (***highTemps\[1\]***).  This makes the first value in the ***highTemps*** vector the default answer.  In other words, if every conditional check is ***FALSE*** (i.e., no temperature is greater than the first) then the first temperature is the highest temperature.
 
  
 
@@ -355,7 +355,6 @@ for(i in 1:numDays) # could be (i in 2:numDays)
   if(highTemps[i] > highestTemp2) # is this day's value greater than the current high
   {
     highestTemp2 = highTemps[i];  # set the state variable to the current day's value
-    ### another way to debug your script...
     cat("Day ", i, " the highest temp changed to ", highTemps[i], "\n", sep="");
   }
 }
@@ -366,38 +365,29 @@ Using a for loop to find the highest value in a vector
 
 Whenever you are looking for the most extreme value in a vector, it is best to set the state variable to the first value in the vector.  By doing this, you do not have to guess what kind of values you are going to get.
 
-### Debug with cat()
-
-Using ***cat()*** to output information to the Console is a quick-and-dirty, if not the most robust, way to debug your script. In this case, ***cat()*** shows the four time the highest temperature was changed in the 14 cycles of the ***for*** loop.
-
-``` {.default tab="Console"}
-Day 6 the highest temp changed to 58
-Day 7 the highest temp changed to 60
-Day 13 the highest temp changed to 61
-Day 14 the highest temp changed to 75
-```
-
-Remember to remove or comment out your ***cat()*** statements that are used for debugging before sharing your script.
-
 ## Application
 
-1\) In comments answer: What happens if you set the state variable to 0 when trying to find the highest temperature if all temperatures are negative.
+1\) In comments answer:
+
+-   What happens if you set the state variable to **0** when trying to find the highest temperature if all temperatures are negative?
 
  
 
-2\) Find out ***if any*** of the odd days low teperatures were less than 40 degrees. Hint: use ***seq()***
+2\) Find out ***if any*** of the even days low temperatures were at least 50 degrees.
 
--   add code to exit the for loop as soon as the condition is met
+-   add code that outputs to ***Console*** which day met the condition
 
--   add code that outputs to ***Console*** whether any days meet the condition and, if so, which day
-
- 
-
-3\) Find the mean low temperature using ***for*** loops: get the total and divide by the number of values.
+-   add code to exit the ***for*** loop when the condition is first met
 
  
 
-4\) In one for loop find out how many days had:
+3\) Find the mean of the low temperatures using ***for*** loops
+
+-   get the total and divide by the number of values.
+
+ 
+
+4\) In one ***for*** loop find out how many days had:
 
 -   1 inch or more rain
 
