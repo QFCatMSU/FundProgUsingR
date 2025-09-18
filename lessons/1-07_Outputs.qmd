@@ -113,7 +113,7 @@ I am
 Message with line feeds
 :::
 
-In @fig-lineFeed we have our text on multiple lines.  Notice that the ***\\n*** does not get printed to the screen.  [**\\n** is an instruction to R to add a line feed, sometimes called a **n**ewline character]{.hl}*,* and **\\n** needs to be put inside the quotes.
+In @fig-lineFeed we have our text on multiple lines.  Notice that the ***\\n*** does not get printed to the screen.  [**\\n** is an instruction to R to add a line feed, **\\n** is sometimes called a **n**ewline character]{.hl}*,* and **\\n** needs to be put inside the quotes.
 
  
 
@@ -146,9 +146,11 @@ Backslash can be used to
 
 -   print a character that has a functional meaning like a double quote ( ***\\"*** ). In other words, treat the double quote as a character for output, not as the start or end of a string. This also works if you want to output a backslash ( **\\\\** )
 
--   use Unicode to print our characters not on the keyboard using Unicode.  Here is a [link to a partial list of Unicode characters](https://www.rapidtables.com/code/text/unicode-characters.html).  Use the **Escape sequence** given on the page.  [Note: [according to Wikipedia](https://en.wikipedia.org/wiki/List_of_Unicode_characters), there are around 150,000 Unicode characters -- and just recently Unicode has added lots of emojis.]{.note}
+-   print our characters not on the keyboard using Unicode.  Here is a [link to a partial list of Unicode characters](https://www.rapidtables.com/code/text/unicode-characters.html).  Use the **Escape sequence** given on the page.  [Note: [according to Wikipedia](https://en.wikipedia.org/wiki/List_of_Unicode_characters), as of Sept 2025, there are almost 300,000 Unicode characters -- including an insane number of emojis (a recent addition).]{.note}
 
- 
+### Using backslash in Console
+
+Here is an example of outputting special character using the backslash. This output includes tab (\\t), double quotes (\\"), newlines (\\n), backslash (\\\\), and a few Unicode characters.
 
 ``` r
 cat("\tAnd the boy said, \"Hello\" \n");
@@ -266,7 +268,7 @@ cat(lowTemps[c(4, 8, 3, 11)], "\n");  # 4th, 8th, 3rd, and 11th values in lowTem
 38 50 46 36 
 ```
 
-Or, we can use the sequencing operators to output multiple values in a vector:
+Or, we can use the sequencing operator ( **:** ) and the sequencing function ***seq()*** to output multiple values in a vector:
 
 ``` r
   cat(lowTemps[5:9], "\n");   # simple sequence: 5th through 9th value
@@ -324,11 +326,11 @@ Let's search for **cat** in the search bar of the ***Help*** tab:
 
 ![Information about the cat() function in the Help tab.](images/R-01-06%20Cat%20function.PNG){#fig-catHelp .fs}
 
-The first part of ***cat()*** is the three dots "**...**".  When the 3 dots are at the beginning of a function, the three dots say that [**cat()** will accept any number of objects]{.hl}as inputs.  The objects can be text in quotes, string variables, numeric variables, or other objects we have not discussed yet like ***Dates***.
+The first part of ***cat()*** is the three dots "**...**".  When the 3 dots are at the beginning of a function, the three dots say that the function [will accept any number of objects]{.hl} as inputs.  The objects can be text in quotes, string variables, numeric variables, or other objects we have not discussed yet like ***Dates***.
 
  
 
-[Note: the three dots in ***cat()*** has a different meaning from the three dots in ***read.csv()***.]{.note}  When three dots are at the first argument of a function (e.g., ***cat()***) it means that any number of inputs are accepted.  When the three dots are elsewhere (e.g., ***read.csv()***) it means the function can be extended with arguments that are not on the list.
+[Note: the three dots in ***cat()*** has a different meaning from the three dots in ***read.csv()***.]{.note}  When three dots are at the first argument of a function (e.g., ***cat()***) it means that any number of inputs are accepted.  When the three dots are elsewhere (e.g., ***read.csv()***) it means the function can be extended with arguments that are not on the list (something that is pretty advanced).
 
  
 
@@ -367,7 +369,7 @@ Using the **sep** argument in **cat()**
 
 ### The **file** argument
 
-By default, ***cat()*** will output to the ***Console***. But, you could have ***cat()*** output to a file by using the ***file*** argument.  The ***file*** argument in ***cat()*** works just like the ***file*** argument in ***read.csv()*** with one exception:  if the file does not exist yet then R will create the file.
+By default, ***cat()*** will output to the ***Console***. But, you can have ***cat()*** output to a file by using the ***file*** argument.  The ***file*** argument in ***cat()*** works just like the ***file*** argument in ***read.csv()*** with one exception:  if the file does not exist yet then R will create the file.
 
  
 
@@ -389,7 +391,7 @@ A. Line 47 in the [script downloaded for this lesson](../scripts/1-07_Outputs.R 
 
  
 
-B. In the Help for the function ***c()***, the S3 method has 3 dots as the first argument. In comments answer: What does the three dots tell you about the ***c()*** function?
+B. In the ***Help*** for the function ***c()***, the S3 method has 3 dots ( **...** ) as the first argument. In comments answer: What does the three dots tell you about the ***c()*** function?
 
  
 
@@ -409,14 +411,16 @@ Make sure you use newlines (***\\n***) to make the output readable.
 
  
 
-D. Using ***cat()***, output the data from part B to a file named ***output.txt*** in your ***data*** folder (instead of the ***Console***)
+D. Using ***cat()***, output the data from part C to a file named ***output.txt*** in your ***data*** folder (instead of the ***Console***)
 
--   Use the ***file*** argument in ***cat()***-- the ***file*** format is the same as the ***file*** format in ***read.csv()***
+-   Use the ***Help*** for ***cat()*** to figure out how to output to a file.
 
  
 
-E. Challenge: Using ***cat()***, append your name and three different Unicode characters to the text in the ***output.txt*** file created in part C.  Hint: look at the arguments in ***cat()*** -- you need to change one of them.\
- 
+E. Challenge: Using ***cat()***, append your name and three different Unicode characters to the text in the ***output.txt*** file created in part D. 
+
+-   Again, use the ***Help*** for ***cat()*** to figure out how to add text to a file.\
+     
 
 {{< include ../assets/_AppInstructions.qmd >}}
 
@@ -426,10 +430,10 @@ The two main functions used to output to the ***Console*** are ***cat()*** and *
 
 ## Trap: Misplacing (or forgetting) quotes {#trap-misplacing-or-forgetting-quotes}
 
-It is easy to accidentally forget a quote, add a quote, or simply move a quote to a place it does not belong. The following code has a missing quote on line 8 right after "*The values are...*
+It is easy to accidentally forget a quote, add a quote, or simply move a quote to a place it does not belong. The following code has a missing quote on line 7 right after "*The values are...*
 
 ``` r
-rm(list=ls());  options(show.error.locations = TRUE);
+rm(list=ls());
 
 distance = 100;
 time = 50;
@@ -437,6 +441,8 @@ velocity = distance/time;
 
 cat("The values are..., "\nDistance: ", distance, "\ntime: ",
     time, "\nvelocity: ", velocity);
+    
+cat("The End");
 ```
 
 If you execute the script above, you will get the following message in the ***Console***:
@@ -454,17 +460,17 @@ The error is [unexpected '\\\\']{.hl} on line **7**, character **26**. R is tell
 
  
 
-However, RStudio has a built-in feature to help you find misplaced quotes -- the color scheme.  The quoted text is in a different color than other parts of the code.  For example, in the XCode color scheme -- text in quotes is colored red.
+However, RStudio has a built-in feature to help you find misplaced quotes -- the color scheme.  The quoted text is in a different color than other parts of the code.  For example, in the XCode color scheme -- text that R sees in quotes is colored red.
 
  
 
-![Missing quote in cat()](images/R-01-06%20Missing%20Quote.PNG){#fig-missing-quote .fs}
+![Missing quote in cat()](images/R-1-06_MissingQuote.png){.fs}
 
 @fig-missing-quote shows that, right after "The value are... , the variables are all treated as if they are in quotes and the messages are outside the quotes. Since one quote was missing, the error propagated and assumed characters to be variables/numbers and variables/numbers to be characters.
 
  
 
-We will add the missing quote to line 8:
+We will add the missing quote to line 7:
 
 ``` r
 cat("The values are...«"», "\nDistance: ", distance, "\ntime: ",
@@ -479,6 +485,7 @@ The values are...
 Distance:  100 
 time:  50 
 velocity:  2
+The End
 ```
 
 ## Extension: Sending Console info directly to file
@@ -489,7 +496,7 @@ velocity:  2
 sink(file="data/output2.txt") # send Console content to data
 ```
 
-By "all future output", RStudio will send the output from all script execution (no matter the script file) to the file until you undo the command like this:
+This means RStudio will [send the output from all script execution]{.hl} (no matter the script file) to the ***output2.txt*** file until you undo the command like this:
 
 ``` r
 sink(file=NULL)

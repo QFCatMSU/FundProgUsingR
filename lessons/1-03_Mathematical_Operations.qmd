@@ -72,14 +72,22 @@ The line of code above says that ***velocity*** [will be assigned]{.hl} the valu
 
 ### Other ways to assign values
 
-In most programming languages the equal sign is used to assign values, and the equal sign always evaluates what is on the right side and assigns it to the variable on the left.  In R, you can use arrows to assign values:
+In most programming languages the equal sign ( **=** ) is used to assign values. The equal sign always evaluates what is on the right side and assigns it to the variable on the left. 
+
+ 
+
+In R, you can also use arrows to assign values and the arrow can be on either side:
 
 ``` r
 «velocity <-» (finalDist - initDist) / (finalTime - initTime); # commonly used
 (finalDist - initDist) / (finalTime - initTime) «-> velocity»; # rarely used
 ```
 
-The top ( **\<-** ) is the most commonly used in R and the bottom ( **-\>** ) works but is rarely used anymore.  I prefer using ( **=** ) to ( **\<-** ) because ( **=** ) is used in most programming languages whereas ( **\<-** ) is not. 
+The top ( **\<-** ) is the most common method used to assign values in R.
+
+The bottom method ( **-\>** ) works but is rarely used anymore. 
+
+I prefer using ( **=** ) to ( **\<-** ) because ( **=** ) is used in most programming languages whereas ( **\<-** ) is not. 
 
  
 
@@ -91,7 +99,7 @@ Here is the full script with a small error on the line calculating ***velocity**
 
 ``` r
 rm(list=ls());   # Clear out environment
-options(show.error.locations = TRUE); # give line number of error*
+options(show.error.locations = TRUE); # give line number of error
 
 finalDistance = 100;
 initDistance = 50;
@@ -118,7 +126,7 @@ Every variable on the right side of the ***velocity*** equation must be given a 
 
 ``` r
 rm(list=ls());           # clean out the environment
-options(show.error.locations = TRUE); # give line number of error*
+options(show.error.locations = TRUE); # give line number of error
  
 finalDistance = 100;
 initDistance = 50;
@@ -151,7 +159,7 @@ $$
 E_{k}=1 / 2 m v^{2}
 $$
 
-We need to be more explicit because this formula could be misinterpreted by the reader as $E_{k}=1 /\left(2 m v^{2}\right)$, so we need to put the one-half in parenthesis:
+We need to be more explicit because this formula could be misinterpreted by R as $E_{k}=1 /\left(2 m v^{2}\right)$, so we need to put the one-half in parenthesis:
 
 $$
 E_{k}=(1 / 2) m v^{2}
@@ -175,7 +183,7 @@ $$
 
 ### Dealing with square power
 
-In R the ( \^ ) is the power operator.  So ***\^2*** means raise to the power of 2 (i.e., square):
+In R the ( **\^** ) is the power operator.  So ***\^2*** means raise to the power of 2 (i.e., square):
 
 ``` r
 # this formula works...
@@ -241,7 +249,7 @@ velocity = (2*kineticEnergy / mass)^1/2; # still a problem here!
 
 ![Incorrect answer for velocity because the power is missing parentheses](images/R-1-03_KineticFormulaIssue.png){#fig-paretheses-pwer .fs}
 
-### Correcting the power with parenthses
+### Correcting the power with parentheses
 
 The ***Environment*** tab (@fig-paretheses-pwer) shows that ***v*** is, unexpectedly, ***10***.  This is because of the order-of-operations. Instead of raising the ***(2\*kineticEnergy/mass)*** to the ***1/2*** power, the above code raised ***(2\*kineticEnergy/mass)*** to the ***first (1)*** power and then divided everything by ***2***.  We need to be more explicit and put the ***1/2*** in parenthesis.
 
@@ -257,7 +265,7 @@ velocity = (2*kineticEnergy / mass)^«(1/2)»; # now we are good!
 
 ### More power and roots
 
-This style will work for all powers and roots:
+This method will work for all powers and roots:
 
 ``` r
 rm(list=ls());          # clean out the environment
@@ -281,7 +289,7 @@ In R, you will usually see square roots done using the ***sqrt()*** function:
 velocity = «sqrt»(2*kineticEnergy / mass);  # how square roots are usually done
 ```
 
-***sqrt()*** works just fine but there is no equivalent for all the other types of powers and roots.  That is why I prefer to use the ( ***\^*** ) operator -- it is easy to remember and you can use it for every power and root situation -- you just need to attach the appropriate number.
+***sqrt()*** works just fine but there is no equivalent for all the other powers and roots.  That is why I prefer to use the ( ***\^*** ) operator -- it is easy to remember and you can use it everytime you need a power or a root.
 
 ``` r
 velocity = (2*kineticEnergy / mass)^(1/2); # how I prefer to do them
@@ -289,7 +297,7 @@ velocity = (2*kineticEnergy / mass)^(1/2); # how I prefer to do them
 
 ## Random values
 
-In @fig-mixed-powers we hardcoded the values for ***kineticEnergy*** and ***mass***, which just means we directly provided a values for the two variables.  We can also randomly pick values for variables using ***sample()***.
+In @fig-mixed-powers we hardcoded the values for ***kineticEnergy*** and ***mass***. [Harcoded ]{.hl}means we directly provided a values for the two variables.  Now we will randomly pick values for variables using ***sample()***.
 
  
 
@@ -297,7 +305,7 @@ In @fig-mixed-powers we hardcoded the values for ***kineticEnergy*** and ***mass
 
 -   the range of numbers you want to randomly sample from
 
--   the number of values you want to randomly sample (for now we will just do one)
+-   the number of values you want to randomly sample (for now we will just do one value)
 
  
 
@@ -317,17 +325,17 @@ The code to pick a random number between -100 and -50 is:
 randomNum2 = sample(-100:-50, size=1);
 ```
 
-***sample()*** always returns a whole number. 
+***sample()*** always returns an integer – in the above case there are 151 possible integers between -100 and 50.  
 
 ### normal values
 
-***sample()*** treats every number the same.  If there are 100 numbers in the range then every number has a 1% chance of being picked.  If you want to pick a random value, but weigh the value (e.g., a normally distributed random values) then you can use ***rnorm()***.
+***sample()*** gives every number an equal chance.  If there are 100 numbers in the range then every number has a 1% chance of being picked.  If you want to pick a random value, but weigh the value (e.g., a normally distributed random values) then you can use ***rnorm()***.
 
  
 
 ***rnorm()*** requires three arguments:
 
--   the number of values you want to randomly pick (for now, we will just pick 1 at a time)
+-   the number of values you want to randomly pick (for now, we will just choose 1 value)
 
 -   the mean of the normal distribution you want to pick randomly from
 
@@ -389,7 +397,8 @@ The above line will make sure that you get the same "random" number every time y
 
 5\) Challenge: Pick a random two-digit decimal number between 0 and 1 (e.g., 0.23, 0.89, 0.10)
 
--   you will need to use ***sample()*** and then manipulate the number
+-   each two-digit decimal number should have an equal chance of being chosen
+-   neither ***sample()*** nor rnorm() can solve the problem by itself – you need to use one of them and then mathematically manipulate the result
 
  
 
@@ -404,34 +413,34 @@ If you have a long mathematical formula to execute in code, there is a good chan
 To keep it simple, let's add 5 values together across multiple lines:
 
 ``` r
-c = 10 + 10 + 10 +
-    10 + 10;
+c1 = 10 + 10 + 10 +
+     10 + 10;
 ```
 
-If you put the above code in you script, then you will get ***c = 50*** in the ***Environment.***
+If you put the above code in you script, then you will get ***c1 = 50*** in the ***Environment.***
 
  
 
 However, this code:
 
 ``` r
-d = 10 + 10 + 10
-    + 10 + 10;
+c2 = 10 + 10 + 10
+     + 10 + 10;
 ```
 
-will put ***d=30*** in the ***Environment***.
+will put ***c2=30*** in the ***Environment***.
 
  
 
-This is because R did not know the continue the equation for ***d*** to the second line.  R treated the first line as the complete command/equation.  By putting the ( + ) at the end of the first line for ***c***, R knew it needed to continue the command to the next line.
+This is because R did not know the continue the equation for ***c2*** to the second line.  R treated the first line as the complete command/equation.  By putting the ( + ) at the end of the first line for ***c1***, R knew it needed to continue the command on the next line.
 
  
 
-By the way, R does do something with the second line for ***d*** -- it prints the answer to ***Console*** if you click ***Run***:
+By the way, R does do something with the second line for ***c2*** -- it prints the answer to ***Console*** if you click ***Run***:
 
 ``` r
-> d = 10 + 10 + 10
->     + 10 + 10;
+> c2 = 10 + 10 + 10
+>      + 10 + 10;
 [1] 20
 ```
 
@@ -467,7 +476,7 @@ If you code ***KE*** like this::
 KE = 1/2*mv^2;
 ```
 
-Then you will get the error: [object 'mv' not found]{.hl} in the ***Console*** tab because R does not realize you want to multiply the variables ***m*** and ***v***, it thinks you are trying to use a variable named ***mv***, and the variable ***mv*** does not exist.
+Then you will get the error: [object 'mv' not found]{.hl} in the ***Console*** tab because R does not realize you want to multiply the variables ***m*** and ***v***, R thinks you are trying to use a variable named ***mv***, and the variable ***mv*** does not exist.
 
  
 
@@ -483,7 +492,7 @@ you will get the error: [unexpected symbol]{.hl} (@fig-unexpected-symbol) and th
 
  
 
-In this case, R is expecting an operation (symbol) after **(1/2)**.  ***m*** is a variable, not a operation, hence the error.
+In this case, R is expecting an operation after **(1/2)** -- R does not assume multiplication.  ***m*** is a variable, not a operation, hence the [unexpected symbol]{.hl} error.
 
 ## Trap: Units, or lack thereof, in programming
 
@@ -532,13 +541,13 @@ Otherwise, you risk a situation like the [Mars Climate Orbiter](https://en.wikip
 
 ## Extension: The show.error.location line
 
-The second line of code in @fig-naming-error tells R to provide a line number where an error occurs:
+The second line of code in @fig-naming-error tells R to provide the line number where an error occurs:
 
 ``` r
 options(show.error.locations = TRUE);
 ```
 
-In @fig-naming-error, in the ***Console*** tab the error includes the line number, 9, because of the line above. This seems like a great idea except that this line only works in a few limited situations. As you get into more complex code, this line will not work and R will not show you the line number for the error.
+In @fig-naming-error, the ***Console*** tab message indicates the error is at line 9 because of the ***options()*** command above. This seems like a great idea except that this command only works in very limited situations, not enough for me to justify keeping it in the script.
 
  
 
