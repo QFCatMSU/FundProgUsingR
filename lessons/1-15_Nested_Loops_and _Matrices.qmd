@@ -6,8 +6,6 @@ short: "1-15"
 
 ### To-Do {#sec-first}
 
--   nested for loop and breakpoints
-
 ## Purpose
 
 -   embedded for loops
@@ -30,15 +28,15 @@ If you have any questions about the material in this lesson, feel free to email 
 
 ## Functions within a script
 
-In the previous two lessons, we created a separate script for the functions used in the lesson. For this lesson, the function ***isPrime3()*** has been put inside the main script. It is not usually best practice to put functions inside the calling script (why this is true will be an application question). However, there are many occasions where you will see functions put directly inside a script, so it is good to be familiar with this practice.
+In the previous two lessons, we created a separate script for the functions used in the lesson. For this lesson, the function ***isPrime3()*** has been put inside the main script. It is not usually best practice to put functions inside the calling script (why this is true is an application question). However, there are many occasions where you will see functions put directly inside a script, so it is good to be familiar with this practice.
 
 ### functions need to be declared
 
-Functions are like variables in that they store information to a named objects – and objects must be declared before they are used. If you are going to code a function directly in a script then [you need to declare the function before you call the function]{.hl}.
+Functions are like variables in that they store information to a named objects – and objects must be declared before they are used. If you are going to code a function directly in the script that calls the function then [you need to declare the function before you call the function]{.hl}.
 
 ## Nesting for loops: isPrime3()
 
-In the function ***isPrime2()***, the ***for*** loop cycles through all of the possible divisors for the dividend supplied by the caller. If none of the modulus calculations are zero (i.e., there is always a remainder when dividing), then we know the dividend is prime. ***isPrime3()*** extends ***isPrime2()*** so that it can check multiple dividends for prime instead of one.
+In the function ***isPrime2()***, the ***for*** loop cycles through all of the possible divisors for the dividend given by the caller. If none of the modulus calculations are zero (i.e., every division has a remainder), then we know the dividend is prime. ***isPrime3()*** extends ***isPrime2()*** so that it can check multiple dividends for prime instead of one.
 
  
 
@@ -99,11 +97,11 @@ FALSE
 
 -   inner loop: indexes through the range of divisors that will be used to check the dividend for prime
 
-    -   the range will be from 2 to one less than the dividend
+    -   like last lesson, the range will be from 2 to one less than the dividend
 
 ### Outer loop
 
-The job of the outer loop is cycle through each ***dividends***. The index value, ***i***, determines the current dividend, indexed from the ***dividends*** vector. The indexed dividend gets used inside the inner ***for*** loop.
+The job of the outer loop is cycle through each ***dividends***. The index value, ***i***, determines the current dividend, indexed from the ***dividends*** vector. The current dividend gets used inside the inner ***for*** loop.
 
  
 
@@ -134,7 +132,7 @@ primeNum\[6\] = 17;
 
 ### Inner loop
 
-***isPrime2()*** used a ***for*** loop to check all the possible divisors for the dividend. That ***for*** loop is now the inner ***for*** loop in ***isPrime3()***. The inner ***for*** loop cycles through every single value from 2 to one less that the current dividend, except the index variable is now ***j,*** because ***i*** was used by the outer loop.
+***isPrime2()*** uses a ***for*** loop to check all the possible divisors for the dividend. That ***for*** loop is now the inner ***for*** loop in ***isPrime3()***. The inner ***for*** loop cycles through every single value from 2 to one less that the current dividend, except the index variable is now ***j,*** because ***i*** was used by the outer loop.
 
 ``` r
   for(i in 1:length(dividends))   
@@ -151,23 +149,23 @@ primeNum\[6\] = 17;
   }
 ```
 
-The return value needs to specific if each dividend is prime (***TRUE***) or not (***FALSE***). This means a vector of Boolean value needs to be set and returned to the caller. The vector returned to the caller needs to have the same number of values as ***dividends***.
+The return value needs to specify if each dividend is prime (***TRUE***) or not (***FALSE***). This means a vector of Boolean values needs to be set and returned to the caller so the return vector returned has the same number of values as the vector ***dividends***.
 
 ### Set up the return value
 
-The function returns a Boolean vector to the caller that is the same length as ***dividends*** passed in by the caller. The vector is created in the first line of the function:
+The function returns a Boolean vector to the caller that is the same length as ***dividends*** passed in by the caller. The return vector is created in the first line of the function:
 
 ``` r
 primeNum = c();
 ```
 
-Like before, we assume that the dividend is prime until proven otherwise, so at the beginning of the outer for loop, we set the current ***primeNum*** to **TRUE**:
+Like before, we assume that the dividend is prime until proven otherwise, so at the beginning of the outer ***for*** loop, we set the current ***primeNum*** to **TRUE**:
 
 ``` r
 primeNum[i] = TRUE;
 ```
 
-The inner ***for*** loop goes through all possible divisors and tries to prove the dividend is not prime. If one of the divisors divides the dividend evenly then the dividend is not prime and switches the single value in the vector ***primeNum*** to **FALSE**.
+The inner ***for*** loop goes through all possible divisors. If one of the divisors divides the dividend evenly then the dividend is not prime and then switches the single value in the vector ***primeNum*** to **FALSE**.
 
 ``` r
 primeNum[i] = FALSE;
@@ -226,7 +224,7 @@ FALSE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE
  TRUE FALSE  TRUE  TRUE FALSE 
 ```
 
-If the `names(primeNum) = dividends;` was taken out of the function then the return values would look like this:
+If `names(primeNum) = dividends;` was taken out of the function then the return values would look like this:
 
 ``` {.r tab="Console"}
 > isPrime3(30:39)
@@ -245,7 +243,7 @@ A matrix is somewhat of a cross between a vector and a data frame. A matrix has 
 
 ### Matrix creation
 
-Just like ***c()*** can be used to create a vector, ***matrix()*** can be used to create a matrix, with the arguments ***nrow*** and ***ncol*** giving the dimensions of the matrix.
+Just like ***c()*** is used to create a vector, ***matrix()*** isused to create a matrix, with the arguments ***nrow*** and ***ncol*** giving the dimensions of the matrix.
 
  
 
@@ -273,13 +271,13 @@ Or fill the matrix with values:
 
 ### Subsetting a matrix
 
-Let's save the matrix as the variable, ***testMatrix***, so that we can subset the matrix:
+Let's save the matrix as the variable, ***testMatrix***, so that we can use the matrix:
 
 ``` r
 > testMatrix = matrix(data=1:12, nrow=4, ncol=3)
 ```
 
-To get a specific cell from the matrix, you need two values, a row and a column:
+To get a specific value from the matrix, you need two values, a row and a column:
 
 ``` r
 > testMatrix[1,2]
