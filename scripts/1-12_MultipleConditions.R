@@ -132,4 +132,7 @@ precipBool = (noonCond == "Rain" | noonCond == "Snow");
 sunnyDayWD = weatherData[sunnyDayBool,];  # subset rows where sunnyDayBool is TRUE
 
 ### Masking rows and columns
-sunnyDayWD2 = weatherData[sunnyDayBool, c(-4)];  # remove precipitation column (4)
+sunnyDayWD2 = weatherData[sunnyDayBool, c(1,2,3,5)]; # subset columns 1,2,3, and 5
+
+### Masking rows and columns using negative indexes
+sunnyDayWD3 = weatherData[sunnyDayBool, c(-4,-6)];  # remove columns 4 and 6

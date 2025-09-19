@@ -93,6 +93,16 @@ for(i in 1:numDays)
   }
 }
 
+# Check if any value in highTemps is less than 30
+anyDayLT30 = FALSE;     # initialize state variable to FALSE
+for(i in 1:numDays) 
+{
+  if(highTemps[i] < 30)
+  {
+    anyDayLT30 = TRUE;  # will never be executed -- anyDayLT30 remains FALSE
+  }
+}
+
 # Find the highest value in a vector
 highestTemp = 0;  # initialize the high temp to 0 (this will be surpassed!)
 for(i in 1:numDays)  
@@ -101,7 +111,7 @@ for(i in 1:numDays)
   {
     # this day's value is higher -- set highestTemp to this value
     highestTemp = highTemps[i];
-    # browser(); # uncomment to pause the script's execution at this point
+    cat("Day", i, "has a new high temp", highestTemp, "\n");
   }
 }
 
@@ -112,5 +122,6 @@ for(i in 1:numDays)  # could be 2:numDays
   if(highTemps[i] > highestTemp2)
   {
     highestTemp2 = highTemps[i];
+    cat("Day ", i, " the highest temp changed to ", highTemps[i], "\n", sep="");
   }
 }

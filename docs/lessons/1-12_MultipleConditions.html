@@ -391,6 +391,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#masking-a-dataframe" id="toc-masking-a-dataframe" class="nav-link" data-scroll-target="#masking-a-dataframe"><span class="header-section-number">7.1</span> Masking a dataframe</a></li>
   <li><a href="#masking-rows-and-columns" id="toc-masking-rows-and-columns" class="nav-link" data-scroll-target="#masking-rows-and-columns"><span class="header-section-number">7.2</span> Masking rows and columns</a></li>
+  <li><a href="#masking-with-negative-indexes" id="toc-masking-with-negative-indexes" class="nav-link" data-scroll-target="#masking-with-negative-indexes"><span class="header-section-number">7.3</span> Masking with negative indexes</a></li>
   </ul></li>
   <li><a href="#application" id="toc-application" class="nav-link" data-scroll-target="#application"><span class="header-section-number">8</span> Application</a>
   <ul class="collapse">
@@ -448,7 +449,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>Data: <a href="../data/twoWeekWeatherData2.csv">download the data file here</a></p></li>
 </ul>
 <p>&nbsp;</p>
-<p>This lesson data has two new columns in it compared to the previous lesson’s data – so 14 obs. of <strong><em>7</em></strong> variables (instead of 5).&nbsp; The new columns (<strong><em>noonCondMessy</em></strong> and <strong><em>precipBad</em></strong>) are copies of the previous columns with some issues added that are addressed in this lesson.</p>
+<p>This lesson’s data has two new columns in it compared to the previous lesson’s data – so 14 obs. of <strong><em>7</em></strong> variables (instead of 5).&nbsp; The new columns (<strong><em>noonCondMessy</em></strong> and <strong><em>precipBad</em></strong>) are copies of the previous columns with some issues added that are addressed in this lesson.</p>
 <div id="fig-newDataframe" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-newDataframe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -464,30 +465,29 @@ Figure&nbsp;1: The new weatherData data frame with two new columns
 </section>
 <section id="logical-operators-and-or" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="logical-operators-and-or"><span class="header-section-number">3</span> Logical Operators: AND (&amp;), OR (|)</h2>
-<p>In this lesson we are going to learn how to combine conditional statements in <strong><em>if()</em></strong> statements using two new operators: <strong><em>AND</em></strong>, <strong><em>OR</em></strong>.&nbsp; The symbol for the <strong><em>AND</em></strong> operator is the ampersand ( <strong><em>&amp;</em></strong> ) and the symbol for the <strong><em>OR</em></strong> operator is the vertical pipe ( <strong>|</strong> ).&nbsp; For situations where you are checking one value at a time, the single and double operators have the same functionality.&nbsp; We will cover the other situation later in this lesson.</p>
+<p>In this lesson we are going to learn how to creaste conditional statements with multiple conditions using two new operators: <strong><em>AND</em></strong>, <strong><em>OR</em></strong>.&nbsp; The symbol for the <strong><em>AND</em></strong> operator is the ampersand ( <strong><em>&amp;</em></strong> ) and the symbol for the <strong><em>OR</em></strong> operator is the vertical pipe ( <strong>|</strong> ).</p>
 <p>&nbsp;</p>
-<p><a href="#extension-vs-and-vs">Extension: &amp; vs &amp;&amp; and | vs ||</a></p>
+<p><span class="note">Note: In R, there are corresponding <strong>&amp;&amp;</strong> and <strong>||</strong> operators.</span> For beginners in R, you almost always want to use <strong><em>&amp;</em></strong> and <strong><em>|</em></strong>. For a detailed, and somewhat advanced, explanation of the difference go here: <a href="#extension-vs-and-vs">Extension: &amp; vs &amp;&amp; and | vs ||</a></p>
 <p>&nbsp;</p>
-<p>The <strong><em>AND</em></strong> operator combines two conditional statements into one conditional statement with the rule:</p>
+<p>The <strong><em>AND</em></strong> operator combines two conditions into one conditional statement with the rule:</p>
 <ul>
-<li>if <span class="hl">both</span> of the conditional statements are <strong>TRUE</strong> then the whole conditional statement is <strong>TRUE</strong></li>
+<li>if <span class="hl">both</span> of the conditions are <strong>TRUE</strong> then the whole conditional statement is <strong>TRUE</strong></li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (condition1 <span class="sc">&amp;</span> condition2)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (condition1 <span class="sc">&amp;</span> condition2) <span class="co"># if both condition1 and condition2 are TRUE</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>{</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Execute the code between these curly brackets</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>   <span class="co">#   if both condition1 and condition2 are TRUE</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The <strong>OR</strong> operator combines two conditional statements into one conditional statement with the rule:</p>
 <ul>
 <li>if <span class="hl">either</span> of the conditional statements are <strong>TRUE</strong> then the whole conditional statement is <strong>TRUE</strong></li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (condition1 <span class="sc">|</span> condition2)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (condition1 <span class="sc">|</span> condition2)  <span class="co"># if either condition1 or condition2 is TRUE</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>{</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Execute the code between these curly brackets</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>   <span class="co">#   if either condition1 or condition2 is TRUE</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <section id="operators-we-have-learned-so-far" class="level3" data-number="3.1">
 <h3 data-number="3.1" class="anchored" data-anchor-id="operators-we-have-learned-so-far"><span class="header-section-number">3.1</span> Operators we have learned so far</h3>
+<p><strong><em>&amp;</em></strong> and <strong><em>|</em></strong> are R <span class="hl">logical operators</span> and now would probably be a good time to take a quick step back and look at all the operators we have learned in this class.</p>
 <div id="tbl-operators" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-operators-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -567,7 +567,7 @@ Table&nbsp;1: All of the operators taught in the class so far
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>rainyDays<span class="sc">:</span>   <span class="dv">3</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <section id="using-the-or-operator" class="level3" data-number="4.1">
 <h3 data-number="4.1" class="anchored" data-anchor-id="using-the-or-operator"><span class="header-section-number">4.1</span> Using the OR operator</h3>
-<p>We can also combine the two conditional statements and ask: <em>Is the day sunny <strong>OR</strong>&nbsp; rainy?</em></p>
+<p>We can also combine the two conditional statements and ask: <span class="hl">Is the day sunny <strong><em>OR</em></strong> rainy?</span></p>
 <p>&nbsp;</p>
 <p>Just replace <strong><em>OR</em></strong> with the symbol that represents <strong><em>OR</em></strong>, which is |:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(noonCond[i] <span class="sc">==</span> <span class="st">"Sunny"</span> <span class="sc">|</span> noonCond[i] <span class="sc">==</span> <span class="st">"Rain"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -594,21 +594,21 @@ Figure&nbsp;2: Using logical operator | to test two conditions
 </section>
 <section id="conditions-must-be-explicit" class="level3" data-number="4.2">
 <h3 data-number="4.2" class="anchored" data-anchor-id="conditions-must-be-explicit"><span class="header-section-number">4.2</span> Conditions must be explicit</h3>
-<p>In programming we need to be explicit when using multiple conditional statement:</p>
+<p>In programming we need to be explicit with each condition in a conditional statement:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(noonCond[i] <span class="sc">==</span> <span class="st">"Sunny"</span> <span class="sc">|</span> noonCond[i] <span class="sc">==</span> <span class="st">"Rainy"</span>)  <span class="co"># this is correct</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>In English, it makes sense to ask: Is the day sunny or rainy?</p>
 <p>&nbsp;</p>
-<p>And, naively, the code for this sentence would look like this:</p>
+<p>And, naively, the code for this English sentence would look like this:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(noonCond[i] <span class="sc">==</span> <span class="st">"Sunny"</span> <span class="sc">|</span> <span class="st">"Rain"</span>)  <span class="co"># this in incorrect</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>If you do this, you will get the error:</p>
 <p><span class="hl">Error in noonCond[i] == “Sunny” | “Rain” : invalid ‘y’ type in ‘x | y’</span></p>
-<p>where <strong><em>x</em></strong> represent <code>noonCond[i] == "Sunny"</code> and <strong><em>y</em></strong> represents <code>"Rain"</code></p>
+<p>where <strong><em>x</em></strong> represents <code>noonCond[i] == "Sunny"</code> and <strong><em>y</em></strong> represents <code>"Rain"</code></p>
 <p>&nbsp;</p>
-<p>The error is telling you that “Rain” (the invalid ‘y’) is not a conditional statement.&nbsp; Both conditions (‘x | y’) must be <span class="hl">explicitly</span> written out (i.e., both must have a conditional operator with a value on both sides).</p>
+<p>The error is telling you that “Rain” (the invalid ‘y’) is not a valid conditional statement.&nbsp; <span class="hl">Both conditions (‘x | y’) must be explicitly written out</span> (i.e., both conditions must have a conditional operator comparing two values).</p>
 </section>
 <section id="more-than-2-conditions" class="level3" data-number="4.3">
 <h3 data-number="4.3" class="anchored" data-anchor-id="more-than-2-conditions"><span class="header-section-number">4.3</span> More than 2 conditions</h3>
-<p>You can also use the <strong><em>OR</em></strong> operator to string together multiple conditional statements.</p>
+<p>You can also use the <strong><em>OR</em></strong> operator to put multiple conditions in a conditional statements.</p>
 <p>&nbsp;</p>
 <p>We will use the new column in our data, called <strong><em>noonCondMessy</em></strong> in which the weather conditions are not consistently spelled – as often happens when people are manually inputting data:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>noonCondMess <span class="ot">=</span> weatherData<span class="sc">$</span>noonCondMessy;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -644,8 +644,8 @@ Figure&nbsp;3: Using OR operator to check for multiple spellings
 </section>
 <section id="the-and-operator" class="level2" data-number="5">
 <h2 data-number="5" class="anchored" data-anchor-id="the-and-operator"><span class="header-section-number">5</span> The AND operator</h2>
-<p>The <strong><em>OR</em></strong> operator says: if one condition is <strong>TRUE</strong> then the whole condition is <strong>TRUE</strong></p>
-<p>The <strong><em>AND</em></strong> operator says that ALL conditions need to be <strong>TRUE</strong> for the whole condition to be <strong>TRUE</strong>.</p>
+<p>The <strong><em>OR</em></strong> operator says: if one condition is <strong>TRUE</strong> then the conditional statement is <strong>TRUE</strong></p>
+<p>The <strong><em>AND</em></strong> operator says that all conditions need to be <strong>TRUE</strong> for the conditional statement to be <strong>TRUE</strong>.</p>
 <p>&nbsp;</p>
 <p>The <strong><em>AND</em></strong> operator can be used to check conditions in two different weather columns.</p>
 <p>&nbsp;</p>
@@ -699,7 +699,7 @@ Figure&nbsp;5: Reversing the conditional statements from the last loop
 </section>
 <section id="mutually-exclusive-if-statement" class="level3" data-number="5.2">
 <h3 data-number="5.2" class="anchored" data-anchor-id="mutually-exclusive-if-statement"><span class="header-section-number">5.2</span> Mutually exclusive if() statement</h3>
-<p>Since the two <strong><em>if()</em></strong> statements above (<a href="#fig-and-op-two-columns" class="quarto-xref">Figure&nbsp;4</a> and <a href="#fig-reverse-cond-statement" class="quarto-xref">Figure&nbsp;5</a>) have mutually exclusive conditions (i.e., there are no situations where both can be <strong>TRUE</strong>), we can (and should) combine them into one <strong><em>if-else-if</em></strong> statement.&nbsp; The following code is functionally the same but more efficient (i.e., faster):</p>
+<p>Since the two <strong><em>if()</em></strong> statements above (<a href="#fig-and-op-two-columns" class="quarto-xref">Figure&nbsp;4</a> and <a href="#fig-reverse-cond-statement" class="quarto-xref">Figure&nbsp;5</a>) have mutually exclusive conditional statements (i.e., there are no situations where both can be <strong>TRUE</strong>), we can (and should) combine them into one <strong><em>if-else-if</em></strong> statement.&nbsp; The following code is functionally the same but more efficient:</p>
 <div id="fig-mutually-exclusive-mult-cond" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-mutually-exclusive-mult-cond-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -731,15 +731,15 @@ Figure&nbsp;6: Checking mutually exclusive multiple conditions with an if-else-i
 </section>
 <section id="finding-ranges-of-numbers" class="level2" data-number="6">
 <h2 data-number="6" class="anchored" data-anchor-id="finding-ranges-of-numbers"><span class="header-section-number">6</span> Finding Ranges of numbers</h2>
-<p>So far when we has used conditional operators on numbers that are bounded on one side but go off to infinity of the other.</p>
+<p>So far when we have used conditional operators on numbers that are bounded on one side but go off to infinity on the other.</p>
 <ul>
 <li><p><strong><em>highTemp &gt; 60</em></strong> means anything from 60 <span class="hl">up to positive infinity</span></p></li>
 <li><p><strong><em>highTemp &lt; 50</em></strong> means anything from 50 <span class="hl">down to negative infinity</span></p></li>
 </ul>
 <p>&nbsp;</p>
-<p>But, we often want to limit the range we are checking to something less than infinity!</p>
+<p>However, we often want to limit the range we are checking to something less than infinity!</p>
 <p>&nbsp;</p>
-<p>For instance we might want all values between 50 and 60 (in this case, we will include 50 but not 60).</p>
+<p>For instance we might want all values between 50 and 60.</p>
 <p>&nbsp;</p>
 <p>In other words, we want:</p>
 <ul>
@@ -747,7 +747,7 @@ Figure&nbsp;6: Checking mutually exclusive multiple conditions with an if-else-i
 <li><p><strong><em>AND</em></strong> values <strong><em>less than</em></strong> 60 (<strong><em>highTemps</em></strong> &lt; 60)</p></li>
 </ul>
 <p>&nbsp;</p>
-<p>In order for the value to be between 50 and 60 <span class="hl">both of the above conditional statements must be <strong>TRUE</strong></span>, so we use <strong><em>AND</em></strong> to combine the conditional statements:</p>
+<p>In order for the value to be between 50 and 60 <span class="hl">both of the above conditions must be <strong>TRUE</strong></span>, so we use <strong><em>AND</em></strong> to combine the conditions:</p>
 <div id="fig-and-limit-range" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-and-limit-range-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -765,7 +765,7 @@ Figure&nbsp;7: Using AND operator to limit the range to values between two numbe
 </figcaption>
 </figure>
 </div>
-<p>The 7 days between 50 and 60 (includes 50 but not 60):</p>
+<p>The 7 days between 50 and 60 (includes 50, exclude 60):</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>It was <span class="dv">57</span> degrees on day <span class="dv">1</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>It was <span class="dv">50</span> degrees on day <span class="dv">2</span></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>It was <span class="dv">54</span> degrees on day <span class="dv">3</span></span>
@@ -775,11 +775,11 @@ Figure&nbsp;7: Using AND operator to limit the range to values between two numbe
 <span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>It was <span class="dv">54</span> degrees on day <span class="dv">12</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <section id="values-outside-a-range" class="level3" data-number="6.1">
 <h3 data-number="6.1" class="anchored" data-anchor-id="values-outside-a-range"><span class="header-section-number">6.1</span> Values outside a range</h3>
-<p>Sometimes we want to check for values outside an expected range – often to check for errors.&nbsp; For instance, <strong><em>precipBad</em></strong> has some values that seem to be in error:</p>
+<p>Sometimes we want to check for values outside an expected range, usually this in an error check.&nbsp; For instance, <strong><em>precipBad</em></strong> has some values that seem problematic:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> precipBad</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">0.010</span> <span class="fl">0.005</span> <span class="fl">0.040</span> <span class="fl">1.110</span> <span class="fl">0.120</span> <span class="fl">0.000</span> «<span class="sc">-</span><span class="fl">0.005</span>» «<span class="fl">49.000</span>» <span class="fl">0.450</span> <span class="fl">0.300</span></span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">11</span>] <span class="fl">1.130</span> <span class="fl">0.004</span> <span class="fl">0.000</span> <span class="fl">0.000</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Since rain is in inches, we are going to assume that any negative value (less than 0) or value above 10 is in error.</p>
+<p>Since rain is in inches, we are going to assume that any negative value (less than 0) or value above 10 is an error.</p>
 <p>&nbsp;</p>
 <p>In this case we are looking for&nbsp; <strong><em>precipBad</em></strong> values that are less than 0 <strong><em>OR</em></strong> greater than 10:</p>
 <div id="fig-values-beyond-range" class="quarto-float quarto-figure quarto-figure-left anchored">
@@ -807,36 +807,37 @@ Figure&nbsp;8: Checking for values beyond the expected range
 </section>
 <section id="sec-booleanVec" class="level2" data-number="7">
 <h2 data-number="7" class="anchored" data-anchor-id="sec-booleanVec"><span class="header-section-number">7</span> Boolean vectors</h2>
-<p>Up until this point. we have been using conditional operators to check values individually.&nbsp; We can also use conditional operators to check every value in a vector at once and create a TRUE/FALSE (Boolean) vector from the result.</p>
+<p>Up until this point. we have been using conditional operators to check one value at a time.&nbsp; We can also use conditional operators to check every value in a vector at once. The result will be a TRUE/FALSE (Boolean) vector of the same length as the vector checked.</p>
 <p>&nbsp;</p>
-<p>For instance, we only might care about sunny days:</p>
+<p>For instance, we might want to know which days were sunny:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>sunnyDayBool <span class="ot">=</span> (noonCondition <span class="sc">==</span> <span class="st">"Sunny"</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Or, whether the day was both sunny and warm:</p>
+<p>Or, which days were both sunny and warm:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>niceDayBool <span class="ot">=</span> (highTemps <span class="sc">&gt;</span> <span class="dv">60</span> <span class="sc">&amp;</span> noonCondition <span class="sc">==</span> <span class="st">"Sunny"</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Or, whether the was rain or snow:</p>
+<p>Or, which days had any precipitation (rain or snow):</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>precipBool <span class="ot">=</span> (precipitation <span class="sc">==</span> <span class="st">"Rain"</span> <span class="sc">|</span> precipitation <span class="sc">==</span> <span class="st">"Snow"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The result for all three of these commands is a 14-value <strong><em>Boolean</em></strong> (also called <strong><em>logical</em></strong>) vector:</p>
+<p>The result for all three of these commands is a <strong><em>Boolean</em></strong> (a.k.a., <strong><em>logical</em></strong>) vector with 14 values:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>sunnyDayBool  logi [<span class="dv">1</span><span class="sc">:</span><span class="dv">14</span>] <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">TRUE</span> FALSE...</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>niceDayBool   logi [<span class="dv">1</span><span class="sc">:</span><span class="dv">14</span>] <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span> FALSE...</span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>precipBool    logi [<span class="dv">1</span><span class="sc">:</span><span class="dv">14</span>] <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span> TRUE...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>We can look at <strong><em>sunnyDayBool</em></strong> and see that the index of <strong>the</strong> <strong>TRUE</strong> values match the index of “Sunny” days in <strong><em>noonCond</em></strong> (values 3, 6, 7, 12, 13, and 14):</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> sunnyDayBool</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] <span class="cn">FALSE</span> <span class="cn">FALSE</span>  <span class="cn">TRUE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span>  <span class="cn">TRUE</span>  <span class="cn">TRUE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">12</span>] <span class="cn">TRUE</span>  <span class="cn">TRUE</span>  <span class="cn">TRUE</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] <span class="cn">FALSE</span> <span class="cn">FALSE</span>  «TRUE» <span class="cn">FALSE</span> <span class="cn">FALSE</span>  «TRUE»  «TRUE» <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">12</span>] «TRUE»  «TRUE»  «TRUE»</span>
 <span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> noonCond</span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] <span class="st">"Cloudy"</span> <span class="st">"Cloudy"</span> <span class="st">"Sunny"</span>  <span class="st">"Rain"</span>   <span class="st">"Fog"</span>    <span class="st">"Sunny"</span>  <span class="st">"Sunny"</span>  <span class="st">"Cloudy"</span></span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a> [<span class="dv">9</span>] <span class="st">"Rain"</span>   <span class="st">"Rain"</span>   <span class="st">"Snow"</span>  <span class="st">"Sunny"</span>  <span class="st">"Sunny"</span>  <span class="st">"Sunny"</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Or, that only the last two days were both Sunny and over 60 degrees:</p>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] <span class="st">"Cloudy"</span> <span class="st">"Cloudy"</span> «<span class="st">"Sunny"</span>»  <span class="st">"Rain"</span>   <span class="st">"Fog"</span>    «<span class="st">"Sunny"</span>»  «<span class="st">"Sunny"</span>»  <span class="st">"Cloudy"</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a> [<span class="dv">9</span>] <span class="st">"Rain"</span>   <span class="st">"Rain"</span>   <span class="st">"Snow"</span>  «<span class="st">"Sunny"</span>»  «<span class="st">"Sunny"</span>»  «<span class="st">"Sunny"</span>» </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong><em>niceDayBool</em></strong> shows that only the last two days were both Sunny and over 60 degrees:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> niceDayBool</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">12</span>] <span class="cn">FALSE</span>  <span class="cn">TRUE</span>  <span class="cn">TRUE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Or, that 4 of the 14 days had some precipitation (rain or snow):</p>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">12</span>] <span class="cn">FALSE</span>  «TRUE»  «TRUE»</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong><em>precipBool</em></strong> shows that 4 of the 14 days had some precipitation (rain or snow):</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> precipBool</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span>  <span class="cn">TRUE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span>  <span class="cn">TRUE</span>  <span class="cn">TRUE</span>  <span class="cn">TRUE</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span>  «TRUE» <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span>  «TRUE»  «TRUE»  «TRUE»</span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">12</span>] <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <section id="masking-a-dataframe" class="level3" data-number="7.1">
 <h3 data-number="7.1" class="anchored" data-anchor-id="masking-a-dataframe"><span class="header-section-number">7.1</span> Masking a dataframe</h3>
-<p>A common use for a Boolean vector is to reduce (or mask) a dataframe to rows that meet a condition. We can create a dataframe that contains only the rows with sunny days using the Boolean vector <strong><em>sunnyDayBool</em></strong>.</p>
+<p>A common use for a Boolean vector is to reduce (or mask) a dataframe to rows that meet a condition.</p>
+<p>We can create a dataframe that only contains the rows with sunny days using the Boolean vector <strong><em>sunnyDayBool</em></strong>:</p>
 <div id="fig-maskdf" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-maskdf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -850,11 +851,11 @@ Figure&nbsp;9: Masking a dataframe using [X,Y] subset notation
 </div>
 <p>In <a href="#fig-maskdf" class="quarto-xref">Figure&nbsp;9</a>, we use [X,Y] notation to subset the dataframe with:</p>
 <ul>
-<li><p><strong><em>sunnyDayBool</em></strong> subsets <strong><em>X</em></strong> (the rows) – so only rows where sunnyDayBool is TRUE will be in the subsetted dataframe</p></li>
+<li><p><strong><em>sunnyDayBool</em></strong> subsets <strong><em>X</em></strong> (the rows) – so only rows where <strong><em>sunnyDayBool</em></strong> is <strong>TRUE</strong> will be in the subsetted dataframe</p></li>
 <li><p>nothing subsets <strong><em>Y</em></strong> (the columns) – so all columns will be in the subsetted dataframe</p></li>
 </ul>
 <p>&nbsp;</p>
-<p>The subsetted dataframe, <strong><em>sunnyDayWD</em></strong> has 6 rows, representing the 6 of the 14 rows (rows 3, 6, 7, 12, 13, and 14) from the original dataframe where <strong><em>noonCondition</em></strong> was <strong>Sunny</strong>:</p>
+<p>The subsetted dataframe, <strong><em>sunnyDayWD</em></strong> has 6 rows, representing the 6 (of the 14) rows from the original dataframe where <strong><em>noonCondition</em></strong> was <strong>Sunny</strong>:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33" data-tag="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> sunnyDayWD</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    date highTemp lowTemp precipitation «noonCondition» noonCondMessy precipBad</span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span>  Mar29       <span class="dv">54</span>      <span class="dv">46</span>         <span class="fl">0.040</span>         Sunny           sun     <span class="fl">0.040</span></span>
@@ -863,26 +864,42 @@ Figure&nbsp;9: Masking a dataframe using [X,Y] subset notation
 <span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="dv">12</span>  Apr7       <span class="dv">54</span>      <span class="dv">43</span>         <span class="fl">0.004</span>         Sunny         SUNNY     <span class="fl">0.004</span></span>
 <span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="dv">13</span>  Apr8       <span class="dv">61</span>      <span class="dv">45</span>         <span class="fl">0.000</span>         Sunny           Sun     <span class="fl">0.000</span></span>
 <span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="dv">14</span>  Apr9       <span class="dv">75</span>      <span class="dv">63</span>         <span class="fl">0.000</span>         Sunny           sun     <span class="fl">0.000</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><span class="note">note: The row numbers (3,6,7,12,13,14) match theindex of TRUE values in <strong><em>sunnyDayBool</em></strong></span></p>
 </section>
 <section id="masking-rows-and-columns" class="level3" data-number="7.2">
 <h3 data-number="7.2" class="anchored" data-anchor-id="masking-rows-and-columns"><span class="header-section-number">7.2</span> Masking rows and columns</h3>
-<p>We can use the [X,Y] notation to subset columns. The following code will also remove the precipitation column, which is column 4.</p>
+<p>We can use the <strong><em>[X,Y]</em></strong> notation to subset columns. The following code will keep column 1,2,3, and 5.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Masking rows and columns</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>sunnyDayWD2 <span class="ot">=</span> weatherData[sunnyDayBool, <span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>)];  <span class="co"># remove precipitation column (4)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>And in the <strong><em>Console</em></strong>, we see the same data with the <strong><em>precipitation</em></strong> column removed:</p>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>sunnyDayWD2 <span class="ot">=</span> weatherData[sunnyDayBool, <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">5</span>)]; <span class="co"># subset columns 1,2,3, and 5</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>And in the <strong><em>Console</em></strong>, we see the same data with only columns 1, 2, 3, and 5:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35" data-tag="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>sunnyDayWD2                                                          <span class="st">")</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="st">    date highTemp lowTemp noonCondition noonCondMessy precipBad</span></span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="st">3  Mar29       54      46         Sunny           sun     0.040</span></span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="st">6   Apr1       58      45         Sunny         Sunny     0.000</span></span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="st">7   Apr2       60      32         Sunny         sunny    -0.005</span></span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="st">12  Apr7       54      43         Sunny         SUNNY     0.004</span></span>
-<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="st">13  Apr8       61      45         Sunny           Sun     0.000</span></span>
-<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="st">14  Apr9       75      63         Sunny           sun     0.000</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="st">    date highTemp lowTemp noonCondition</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="st">3  Mar29       54      46         Sunny</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="st">6   Apr1       58      45         Sunny</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="st">7   Apr2       60      32         Sunny</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="st">12  Apr7       54      43         Sunny</span></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="st">13  Apr8       61      45         Sunny</span></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="st">14  Apr9       75      63         Sunny</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="masking-with-negative-indexes" class="level3" data-number="7.3">
+<h3 data-number="7.3" class="anchored" data-anchor-id="masking-with-negative-indexes"><span class="header-section-number">7.3</span> Masking with negative indexes</h3>
+<p>We can also use negative indexes to remove columns. The following code will remove columns 4 and 6.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Masking rows and columns using negative indexes</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>sunnyDayWD3 <span class="ot">=</span> weatherData[sunnyDayBool, <span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>,<span class="sc">-</span><span class="dv">6</span>)];  <span class="co"># remove columns 4 and 6</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>And in the <strong><em>Console</em></strong>, we see the same data with the <strong><em>precipitation</em></strong> and <strong><em>noonCondMessy</em></strong> columns removed:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> sunnyDayWD3</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>    date highTemp lowTemp noonCondition precipBad</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span>  Mar29       <span class="dv">54</span>      <span class="dv">46</span>         Sunny     <span class="fl">0.040</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span>   Apr1       <span class="dv">58</span>      <span class="dv">45</span>         Sunny     <span class="fl">0.000</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="dv">7</span>   Apr2       <span class="dv">60</span>      <span class="dv">32</span>         Sunny    <span class="sc">-</span><span class="fl">0.005</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="dv">12</span>  Apr7       <span class="dv">54</span>      <span class="dv">43</span>         Sunny     <span class="fl">0.004</span></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="dv">13</span>  Apr8       <span class="dv">61</span>      <span class="dv">45</span>         Sunny     <span class="fl">0.000</span></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a><span class="dv">14</span>  Apr9       <span class="dv">75</span>      <span class="dv">63</span>         Sunny     <span class="fl">0.000</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 </section>
 <section id="application" class="level2" data-number="8">
 <h2 data-number="8" class="anchored" data-anchor-id="application"><span class="header-section-number">8</span> Application</h2>
-<p>A) Create <em>one</em> <span class="hl"><strong>if-else-if</strong></span> structure that checks for:</p>
+<p>A) Create <span class="hl">one</span><span class="hl"><strong>if-else-if</strong></span> structure that checks for:</p>
 <ul>
 <li><p>Sunny days greater than 54</p></li>
 <li><p>Non-Sunny less than or equal to 54</p></li>
@@ -891,15 +908,15 @@ Figure&nbsp;9: Masking a dataframe using [X,Y] subset notation
 </ul>
 <p>In comments answer: Why do this as one <strong><em>if-else-if</em></strong> structure instead of 4 separate <strong><em>if</em></strong> statements?</p>
 <p>&nbsp;</p>
-<p>B) Create a Boolean (logical) vector that finds all cloudy days in <strong><em>noonCondMessy</em></strong> (note different spellings)</p>
+<p>B) Create a Boolean (logical) vector that finds all cloudy days in <strong><em>noonCondMessy</em></strong> (include all the different spellings)</p>
 <p>&nbsp;</p>
 <p>C) Create a <strong><em>cloudyDays</em></strong> dataframe that:</p>
 <ul>
-<li><p>Only has the rows from weatherData where weather conditions were cloudy</p></li>
+<li><p>Only has the rows from <strong><em>weatherData</em></strong> where weather conditions were cloudy</p></li>
 <li><p>Removes the last 2 columns from <strong><em>weatherData</em></strong> (<strong><em>noonCondMessy</em></strong> and <strong><em>precipBad</em></strong>)</p></li>
 </ul>
 <p>&nbsp;</p>
-<p>D) Create an <strong><em>if()</em></strong> that combines all rainy, cloudy, and snowy days from <strong><em>noonCondition</em></strong>.</p>
+<p>D) Create a Boolean vector for <strong><em>noonCondition</em></strong> that is <strong>TRUE</strong> for all rainy, cloudy, and snowy days and <strong>FALSE</strong> for everything else.</p>
 <p>&nbsp;</p>
 <p>E) Find which days meet <span class="hl">all three</span> of these conditions:</p>
 <ul>
@@ -909,7 +926,7 @@ Figure&nbsp;9: Masking a dataframe using [X,Y] subset notation
 </ul>
 <p>&nbsp;</p>
 <p>F) Use the following random number generator:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>randomTemp <span class="ot">=</span> <span class="fu">sample</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>, <span class="at">size=</span><span class="dv">1</span>);  <span class="co"># pick 1 random from 0 to 100</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>randomTemp <span class="ot">=</span> <span class="fu">sample</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>, <span class="at">size=</span><span class="dv">1</span>);  <span class="co"># pick 1 random from 0 to 100</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>and create one <strong><em>if-else-if</em></strong> structure that outputs:</p>
 <ul>
 <li><p>“error” if <strong><em>randomTemp</em></strong> is less than 20 or greater than 80</p></li>
@@ -936,29 +953,29 @@ Figure&nbsp;9: Masking a dataframe using [X,Y] subset notation
 </section>
 <section id="extension-vs-and-vs" class="level2" data-number="9">
 <h2 data-number="9" class="anchored" data-anchor-id="extension-vs-and-vs"><span class="header-section-number">9</span> Extension: &amp; vs &amp;&amp; and | vs ||</h2>
-<p>R has two <strong>AND</strong> operators (<strong>&amp;</strong> and <strong>&amp;&amp;</strong>) and two <strong>OR</strong> operators (<strong>|</strong> and <strong>||</strong>), which I will refer to as the <span class="hl">singles</span>and <span class="hl">doubles</span>operators.</p>
+<p>R has two <strong>AND</strong> operators (<strong>&amp;</strong> and <strong>&amp;&amp;</strong>) and two <strong>OR</strong> operators (<strong>|</strong> and <strong>||</strong>), which I will refer to as the <span class="hl">singles</span> and <span class="hl">doubles</span> operators.</p>
 <p>&nbsp;</p>
-<p>The big difference is that <strong><em>singles</em></strong> work on one or multiple values, whereas <strong><em>doubles</em></strong> only work on one vaule. In other words, you can replace <strong><em>singles</em></strong> with <strong><em>doubles</em></strong> for the whole lesson except in <a href="#sec-booleanVec" class="quarto-xref">Section&nbsp;7</a>, where we are working with a vector of values. In <a href="#sec-booleanVec" class="quarto-xref">Section&nbsp;7</a>, switching the <strong><em>singles</em></strong> with <strong><em>doubles</em></strong> will cause an error.</p>
+<p>The big difference is that <strong><em>singles</em></strong> work on one or multiple values, whereas <strong><em>doubles</em></strong> only work on one value. In other words, you can replace <strong><em>singles</em></strong> with <strong><em>doubles</em></strong> for the whole lesson except in <a href="#sec-booleanVec" class="quarto-xref">Section&nbsp;7</a>, where we are working with a vector of values (<strong><em>doubles</em></strong> will cause an error here).</p>
 <p>&nbsp;</p>
-<p>At this point it seems there is no reason to use <strong><em>doubles</em></strong> if <strong><em>singles</em></strong> do everything and more. And for a beginner, this is enough information. However, as you get into more advanced programming, there are benefits to using <strong><em>doubles</em></strong>.</p>
+<p>At this point it seems there is no reason to use <strong><em>doubles</em></strong> if <strong><em>singles</em></strong> do everything and more. And for a beginner, that is good enough. However, as you get into more advanced programming, there are benefits to using <strong><em>doubles</em></strong>.</p>
 <section id="doubles-are-more-efficient" class="level3" data-number="9.1">
 <h3 data-number="9.1" class="anchored" data-anchor-id="doubles-are-more-efficient"><span class="header-section-number">9.1</span> doubles are more efficient</h3>
-<p>In the following code, <strong><em>&amp;</em></strong> will <strong><em>always</em></strong> check both if <strong><em>highTemps</em></strong> &gt; 50 and <strong><em>noonCond</em></strong> is Sunny:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(highTemps <span class="sc">&gt;</span> <span class="dv">50</span> «<span class="sc">&amp;</span>» noonCond <span class="sc">==</span> <span class="st">"Sunny"</span>) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>But if <strong><em>highTemps</em></strong> is less than 50 then there is no point to checking <strong><em>noonCond</em></strong> because the condition is already <strong><em>FALSE</em></strong>.</p>
+<p>In the following code, <strong><em>&amp;</em></strong> will <strong><em>always</em></strong> check both condition (1) <strong><em>highTemps</em></strong> &gt; 50 and (2) <strong><em>noonCond</em></strong> is Sunny:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(highTemps <span class="sc">&gt;</span> <span class="dv">50</span> «<span class="sc">&amp;</span>» noonCond <span class="sc">==</span> <span class="st">"Sunny"</span>) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>But if <strong><em>highTemps</em></strong> is less than 50 then there is no point to checking <strong><em>noonCond</em></strong> because the conditional statement has to be <strong><em>FALSE</em></strong>.</p>
 <p>&nbsp;</p>
-<p><strong><em>&amp;&amp;</em></strong> will only check what is necessary to get the condition:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(highTemps <span class="sc">&gt;</span> <span class="dv">50</span> «<span class="sc">&amp;&amp;</span>» noonCond <span class="sc">==</span> <span class="st">"Sunny"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>if <strong><em>highTemps</em></strong> is less than 50, &amp;&amp; will not bother to check <strong><em>noonCond</em></strong>.</p>
+<p><strong><em>&amp;&amp;</em></strong> will only check what is necessary to get the condition making this code slightly more efficient:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(highTemps <span class="sc">&gt;</span> <span class="dv">50</span> «<span class="sc">&amp;&amp;</span>» noonCond <span class="sc">==</span> <span class="st">"Sunny"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>if <strong><em>highTemps</em></strong> is less than 50, <strong><em>&amp;&amp;</em></strong> will not bother to check <strong><em>noonCond</em></strong>.</p>
 </section>
 <section id="doubles-can-used-to-avoid-errors" class="level3" data-number="9.2">
 <h3 data-number="9.2" class="anchored" data-anchor-id="doubles-can-used-to-avoid-errors"><span class="header-section-number">9.2</span> doubles can used to avoid errors</h3>
 <p>Another common usage of <strong><em>doubles</em></strong> is to check if a variable exists before checking the value of the variable. Here we are checking first to see if <strong><em>highTemps</em></strong> exists, then we will check if the value is greater than 50:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>( <span class="fu">exists</span>(highTemps) «<span class="sc">&amp;&amp;</span>» highTemps <span class="sc">&gt;</span> <span class="dv">50</span> )  <span class="co"># will avoid errors</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Because we are using <strong><em>&amp;&amp;</em></strong>, if <code>exists(highTemps)</code> is <strong><em>FALSE</em></strong>, the value of <strong><em>highTemps</em></strong> will not be checked.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>( <span class="fu">exists</span>(highTemps) «<span class="sc">&amp;&amp;</span>» highTemps <span class="sc">&gt;</span> <span class="dv">50</span> )  <span class="co"># will avoid errors</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Because we are using <strong><em>&amp;&amp;</em></strong>, when <code>exists(highTemps)</code> is <strong><em>FALSE</em></strong>, the value of <strong><em>highTemps</em></strong> will not be checked.</p>
 <p>&nbsp;</p>
 <p>If we use <strong><em>&amp;</em></strong>, then the value of <strong><em>highTemps</em></strong> will be checked even if <strong><em>highTemps</em></strong> does not exist, causing an error in your script.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a> <span class="cf">if</span>( <span class="fu">exists</span>(highTemps) «<span class="sc">&amp;</span>» highTemps <span class="sc">&gt;</span> <span class="dv">50</span> ) <span class="co"># error if highTemps does not exist</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a> <span class="cf">if</span>( <span class="fu">exists</span>(highTemps) «<span class="sc">&amp;</span>» highTemps <span class="sc">&gt;</span> <span class="dv">50</span> ) <span class="co"># error if highTemps does not exist</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="singles-and-double-in-other-programming-languages" class="level3" data-number="9.3">
 <h3 data-number="9.3" class="anchored" data-anchor-id="singles-and-double-in-other-programming-languages"><span class="header-section-number">9.3</span> singles and double in other programming languages</h3>
