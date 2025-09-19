@@ -6,8 +6,6 @@ short: "1-13"
 
 ### Future changes
 
--   4 parts of programming
-
 ## Purpose
 
 -   Create reusable code (a function)
@@ -26,11 +24,27 @@ The files for this lesson:
 
  
 
-[Function scripts should never include `rm(list=ls())`.]{.hl} The reason is that function scripts are called from other script and `rm(list=ls())` would clear the Environment of the calling script.
+[Function scripts should never include `rm(list=ls())`.]{.hl} Function scripts are extensions of the main script. Calling `rm(list=ls())` from the function script would clear the ***Environment*** on variables and function the main script put in.
 
  
 
 If you have any questions about the material in this lesson, feel free to email them to the instructor, {{< var instructor.name >}}, at {{< var instructor.email >}}.
+
+## Four structures in porgramming
+
+Once again, there are basically 4 main structures that cover almost every aspect of programming:
+
+1.  Variables
+
+2.  If-Else Statements
+
+3.  For Loops
+
+4.  Functions
+
+ 
+
+And now we have reached the last structure: functions, which we will cover in the next few lessons. Functions allow you to write code once and reuse it as opposed to writing the same code multiple times. 
 
 ## Reusable scripts
 
@@ -52,9 +66,9 @@ All functions, whether base-R, in packages, or user-created, have the same four 
 
  
 
-In the ***Help*** tab we can see all components except the codeblock for the statistical function, ***mean()***:
+The ***Help*** tab for a function shows all components except the codeblock. In this case, the statistical function, ***mean()***:
 
-![Info about the function mean() in the Help tab](images/clipboard-662320927.png){#fig-meanFunction .fs}
+![Name, arguments, and return value for the function mean() in the Help tab](images/clipboard-662320927.png){#fig-meanFunction .fs}
 
 ### Name
 
@@ -70,7 +84,7 @@ The name of the function in @fig-meanFunction is ***mean()***. When referring to
 
  
 
-In the ***Help*** tab (@fig-meanFunction) we see that the ***Default S3 Method*** (the most commonly used method) for ***mean()*** has three arguments (***x***, ***trim***, ***na.rm***). [Note: the ( **...** ) indicates that ***mean()*** can be extended with more arguments.]{.note}
+In the ***Help*** tab (@fig-meanFunction) we see that the ***Default S3 Method*** (the most commonly used method) for ***mean()*** has three arguments (***x***, ***trim***, ***na.rm***).
 
 ``` r
 mean(x, trim = 0, na.rm = FALSE, ...)
@@ -88,11 +102,11 @@ The other two arguments, ***trim*** and ***na.rm***, are tweaks to ***mean()*** 
 
 ### Codeblock
 
-In order to interact with a function, the caller needs to know the functions' (1) name, (2) arguments, and (3) return value. The caller generally does not need to know the rest of the code inside the codeblock, and this code is usually hidden from the caller.
+In order to interact with a function, the caller needs to know the functions' (1) name, (2) arguments, and (3) return value. The caller generally does not need to know the code inside the codeblock, so this code is usually hidden from the caller.
 
  
 
-The ***Help*** tab does not show the codeblock for ***mean()***. However, you can see the codeblock for ***mean()*** using this code in ***Console***:
+You can see the codeblock for ***mean()*** using this code in ***Console***:
 
 `> getAnywhere("mean.default");`
 
@@ -131,7 +145,7 @@ The main takeaway is that, like ***if-else*** statements and ***for*** loops, al
 
 ### Return value (output of a function)
 
-When a caller calls a function, they usually expect to get some information back from the function. In the case of ***mean()***, the caller is expecting the mean value of the vector provided as an argument. The ***Value*** section of @fig-meanFunction gives information about what the function is returning to the caller. ***mean()*** returns a[length-one object]{.hl}.
+When a caller calls a function, they usually expect to get some information back from the function. In the case of ***mean()***, the caller is expecting the mean value of the vector provided as an argument. The ***Value*** section of @fig-meanFunction gives information about what the function is returning to the caller. ***mean()*** returns a [length-one object]{.hl}.
 
  
 
@@ -162,7 +176,7 @@ ret1c: -12
 ret1d: 10
 ```
 
--   ***ret1*** and ***ret2*** are ***NA_real*** because there was an unignored ***NA*** value in the vector and we did not choose to remove the ***NA***. [note: ***NA_real\_*** means the value is ***NA*** but should be a real number (as opposed to a string value).]{.note}
+-   ***ret1*** and ***ret2*** are ***NA_real*** because there was an unignored ***NA*** value in the vector and we did not choose to remove the ***NA***. [note: ***NA_real\_*** means the value is ***NA*** but would be a real number if it was not ***NA***.]{.note}
 
 -   ***ret3*** is **-12**, the mean of the values when the ***NA*** is removed
 
@@ -170,11 +184,11 @@ ret1d: 10
 
 ## Using a function script
 
-So far we have used base-R functions. Now we will use functions from script for the lesson named ***1-13_myFunctions.R*** (in @sec-downloads).
+So far we have used base-R functions. Now we will use the user-generated functions from script for the lesson named ***1-13_myFunctions.R*** (in @sec-downloads).
 
 ### Function header
 
-In ***1-13_myFunctions.R***, there are two functions that calculate mean called ***mean_class()*** and ***mean_adv()***. Both functions have an argument named ***vec***, which is the values that the caller want to find the mean of. ***mean_adv()*** has a second argument called ***removeNA***, which is set to a default value of ***FALSE***.
+In ***1-13_myFunctions.R***, there are two functions that calculate mean called ***mean_class()*** and ***mean_adv()***. Both functions have an argument named ***vec***, which contains the values that the caller want to find the mean for. ***mean_adv()*** has a second argument called ***removeNA***, which is set to a default value of ***FALSE***.
 
  
 
@@ -192,7 +206,7 @@ Headers for the two functions in 1-13_myFunctions.R
 
 ### Sources the functions script
 
-Since the functions are in a separate script, we must first read in the functions script to gain access to the functions. In the main lesson script, ***1-13_Functions.R***. we read in the functions script using ***source()*** and the path to the function script as the argument (in this case: ***scripts/myFunctions.R***):
+Since the functions are in a separate script, we must first read (***source***) the functions script before we can use the functions inside. In the main lesson script, ***1-13_Functions.R***. we read in the functions script using ***source()*** and the path to the function script as the argument (in this case: ***scripts/myFunctions.R***):
 
 ``` {.r tab="1-13_Functions.R"}
 source("scripts/1-13_myFunctions.R");
@@ -248,7 +262,7 @@ Functions, just like ***if()*** and ***for()***, have codeblocks attached to the
 
 ``` r
 mean_class = function(«vec»)
-{ # start function codeblock
+«{» # start function codeblock
   vecAdded = 0; ### state variable -- starts at 0
 
   ### Use the for loop to cycle through all the values in vec and add them to vecAdded
@@ -263,14 +277,14 @@ mean_class = function(«vec»)
 
   ### return the mean value to the caller
   «return(meanVal)»;
-} # end function codeblock
+«}» # end function codeblock
 ```
 
 A function codeblock operates like any other R code with two exceptions:
 
-1.  [The arguments in the function call are variables used in the codeblock]{.hl}. So, the caller gives a value to ***vec*** and the codeblock uses this value.
+1.  [The arguments in the function call are variables used in the codeblock]{.hl}. So, the caller supplies the values for ***vec*** and the codeblock uses these value.
 
-2.  [Functions explicitly return a value to the caller]{.hl}using ***return()***. In this case, ***meanVal*** is returned.
+2.  [Functions usually return a value to the caller]{.hl} using ***return()***. In this case, ***meanVal*** is returned to the caller.
 
 ### Return value
 
@@ -303,7 +317,7 @@ anotherVec = c(7, -7, 10, -8);
 ret2e = mean_class(vec=anotherVec);        # can use a predefined vector
 ```
 
-Each call to the function ***mean()*** passes in values for one or more arguments and saves the return value to a variable (***ret2a***, ***ret2b***...). In the ***Environment*** we can see the return values stored in the variables.
+Each call to the function ***mean()*** passes in a vector of values for the ***vec*** argument and saves the return value to a variable (***ret2a***, ***ret2b***...). In the ***Environment*** we can see the return values stored in the variables.
 
 ``` {.r tab="Environment"}
 ret2a: 4.75 
@@ -316,7 +330,7 @@ ret2e: 1
 
 ## mean_adv
 
-Just like ***mean_class()***, the function, ***mean_adv()*** solves for the mean by going through all the values, adding them up, and then dividing that answer by the number of values in ***vec***. The difference is that ***mean_adv()*** checks for ***NA*** values and gives the caller the option to remove them.
+Just like ***mean_class()***, the function, ***mean_adv()*** solves for the mean by going through all the values in the supplied vector, adding them up, and then dividing that answer by the number of values in ***vec***. The difference is that ***mean_adv()*** checks for ***NA*** values and gives the caller the option to remove them.
 
 ### Header line of a function
 
@@ -366,11 +380,11 @@ mean_adv = function(vec, removeNA = FALSE)
 There are three possible situations, hence three parts to the ***if-else-if*** structure:
 
 1.  `if(is.na(vec[i]) == FALSE)  # The current vec value is not NA`
-    -   The i^th^ value is not ***NA*** (i.e., it's a number), so add the number to the total
+    -   The ***i***^th^ value is not ***NA*** (i.e., it's a number), so add the number to the total
 2.  `else if (removeNA == TRUE)  # We have a NA value and want to remove it`
     -   ignore the ***NA*** value and add 1 to the number of ***NA*** values
 3.  `else if (removeNA == FALSE) # We have a NA value and don't want to remove it`
-    -   we know the return value has to be ***NA*** – so return ***NA***
+    -   at this point, we know the return value has to be ***NA*** – so return ***NA***
 
 ### return value
 
@@ -398,7 +412,7 @@ ret3d = mean_adv(vec=c(6,2, NA, 8,3), removeNA = TRUE);  # 4.75
 ret3e = mean_adv(vec=c(6,2,8,3, 75,200)); # 49
 ```
 
-Each line of code above calls the function ***mean()***, passes in values for one or more arguments, and saves the return value from the function to a variable. In the ***Environment*** we can see the return values stored in the variables.
+Each line of code above calls the function ***mean_adv()***, passes in values for one or more arguments, and saves the return value from the function to a variable (***ret3a***, ***ret3b***...). In the ***Environment*** we can see the return values stored in the variables.
 
 ``` {.r tab="Environment"}
 ret3a:  4.75 
@@ -411,15 +425,17 @@ ret3e:  49
 
 ## Application
 
-1\) For this application you need to create two scripts:
+1\) Setup your scripts
 
--   a functions script named ***app1-13_functions.r*** that contains the functions created in this application
+a.  For this application you need to create two scripts:
 
--   a main script named ***app1-13.r*** where you will answer questions in comments and test the functions created in ***app1-13_functions.r***
+    -   a functions script named ***app1-13_functions.r*** that contains the functions created in this application
 
--   ***source()*** your functions script from the main script
+    -   a main script named ***app1-13.r*** where you will answer questions in comments and test the functions created in ***app1-13_functions.r***
 
--   [Make sure you test all the functions thoroughly in your main script.]{.hl} I want to see the test code in ***app1-13.r***.
+b.  ***source()*** your functions script from the main script
+
+c.  [Make sure you thoroughly test all the functions you create in your main script.]{.hl} I want to see the test code in ***app1-13.r***.
 
  
 
@@ -427,7 +443,7 @@ ret3e:  49
 
 a.  Why do we count the number of ***NA***s?
 
-b.  For the two ***else if*** statements, what assumption can be made about the i^th^ value being checked? Why can we make this assumption?
+b.  For the two ***else if*** statements, what assumption can be made about the ***i***^th^ value being checked? Why can we make this assumption?
 
 c.  Why does ***removeNA*** have a default value but ***vec*** does not?
 
@@ -437,9 +453,7 @@ d.  Under what circumstances, if any, will this line ***not*** be executed?
 meanVal = vecAdded / ( length(vec) - numNA);
 ```
 
- 
-
-3\) Create a function that returns either the standard deviation or variance of a vector:
+3\) Create a function that returns either the standard deviation (default) or variance of a vector:
 
 -   There should be two arguments: (1) the vector and (2) something that allows the caller choose whether they want the standard deviation or the variance of the vector.
 
@@ -447,7 +461,7 @@ meanVal = vecAdded / ( length(vec) - numNA);
 
  
 
-4\) Create a function that converts a temperature from either Celsius to Fahrenheit or Fahrenheit to Celsius
+4\) Create a function that converts a temperature from either Celsius to Fahrenheit (default) or Fahrenheit to Celsius
 
 -   The conversion from Celsius to Fahrenheit is: $F=\frac{9}{5} C+32$
 
@@ -461,19 +475,19 @@ meanVal = vecAdded / ( length(vec) - numNA);
 
  
 
-6\) Create a function that takes multiple numbers from 0 to 100 and return the percentage of values that are above 60.
+6\) Create a function that takes a vector of numbers and returns the percentage of values that are above 60.
 
--   Do not count numbers less than 0 or greater than 100
+-   Have the function ignore values less than 0 or greater than 100
 
--   Test the function with 10 random numbers from -20 to 120
+-   Test the function with 25 random numbers from -20 to 120
 
-    -   `sample(-20:120, size=10);`
+    -   `sample(-20:120, size=25);`
 
 {{< include ../assets/_AppInstructions.qmd >}}
 
 ## Extension: getAnywhere() and mean() {#sec-meanCodeblock .extension}
 
-***getAnywhere()*** is a base R function that allows you to see the codeblock associated with other base-R functions. But if you pass in ***mean*** as the argument you get this:
+***getAnywhere()*** is a base-R function that allows you to see the codeblock attached to any base-R function. But if you pass in ***mean*** as the argument you get this:
 
 ``` {.r tab="Console"}
 > getAnywhere("mean") 
@@ -487,18 +501,18 @@ UseMethod("mean") <bytecode: 0x000001c00fe2d450>
 <environment: namespace:base>
 ```
 
-This is because ***mean()*** is a function that calls other functions (sometimes called a [generic function]{.hl}) depending on the argument type (e.g., numeric, string, date).
+This is because ***mean()*** is a function that calls other functions depending on the argument type (e.g., numeric, string, date). This is sometimes called a [generic function]{.hl}.
 
  
 
-To find the possible functions that ***mean()*** calls, we use ***methods()***
+To find the functions that ***mean()*** calls, we use ***methods()***
 
 ``` {.r tab="Console"}
 > methods("mean") 
 [1] mean.Date     mean.default  mean.difftime mean.POSIXct  mean.POSIXlt 
 ```
 
-There are five possible calls. Four of the calls are related to times and dates. Only the second function, ***mean.default()***, handles number (you can look this up in the ***Help*** tab). To see the codeblock for the function that handles numeric values, we need to pass ***mean.default*** into the argument of ***getAnywhere()***:
+There are five possible calls. Four of the calls are related to times and dates. Only the second function, ***mean.default()***, handles numbers (you can look this up in the ***Help*** tab). To see the codeblock for the function that handles numeric values, we need to pass ***mean.default*** into the argument of ***getAnywhere()***:
 
 ``` {.r tab="Console"}
 > getAnywhere("mean.default");
@@ -539,18 +553,32 @@ function (x, trim = 0, na.rm = FALSE, ...)
 
 ## Extension: Functions without arguments
 
-Most of the time when you call a function, including the ones above, an argument is needed inside the parentheses.
+Most of the time you need to include arguments when you call a function.
 
  
 
-This is not always true, for instance ***c()***, which creates a vector, is often used without an argument, which means the vector initially has no values, also called a ***NULL*** vector:
+There are exceptions. For instance ***c()***, which creates a vector, is often used without an argument, which means the vector initially has no values (i.e., a ***NULL*** vector):
 
 ``` r
 vec1 = c();         # a vector that initially has no values (an empty vector) 
 vec2 = c(5,2,9,1);  # a vector with four values
 ```
 
-``` r
+``` {.r tab="Environment"}
 vec1: NULL
 vec2: num [1:4] 5 2 9 1
+```
+
+You could also call ***cat()*** without any arguments, and R will display nothing:
+
+``` {.r tab="Console"}
+> cat()
+> 
+```
+
+***date()*** is a simple enough function that you do not need any arguments:
+
+``` {.r tab="Console"}
+> date()
+[1] "Fri Sep 19 10:17:29 2025"
 ```
