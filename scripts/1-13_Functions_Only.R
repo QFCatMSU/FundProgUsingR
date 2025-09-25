@@ -1,12 +1,32 @@
 ### You do not want to put this code in a function script
 ## rm(list=ls());  # cleans out the Environment 
 
+
+
+#### Say hello to someone
+##   name: hello_you()
+##   argument: who, feeling
+##   return: message to person
+hello_you = function(who, feeling_good=TRUE)
+{ 
+  msg = paste0("Hello, ", who); 
+  
+  if(feeling_good == FALSE)
+  {
+    msg = paste0(msg, ", I'm sorry you are not feeling well today!");
+  }
+  
+  return(msg);
+} 
+
+
+
 #### Find the mean of a vector of values:
-### name: mean_class()
-### arguments: vec 
-### return value: a single numeric value
-mean_class = function(vec)
-{ # start function codeblock
+##   name: mean_simple()
+##   arguments: vec 
+##   return value: a single numeric value
+mean_simple = function(vec)
+{ 
   vecAdded = 0; ### state variable -- starts at 0
 
   ### Use the for loop to cycle through all the values in vec and add them to vecAdded
@@ -21,13 +41,13 @@ mean_class = function(vec)
 
   ### return the mean value to the caller
   return(meanVal);
-} # end function codeblock
+} 
 
 #### Find the mean of a vector of values:
-### name: mean_class()
+### name: mean_advanced()
 ### arguments: vec, removeNA
 ### return value: a single numeric value or NA
-mean_adv = function(vec, removeNA = FALSE)
+mean_advanced = function(vec, removeNA = FALSE)
 {
   vecAdded = 0; ### state variable -- starts at 0
   numNA = 0;    ### second state variable that counts the number of NA values
