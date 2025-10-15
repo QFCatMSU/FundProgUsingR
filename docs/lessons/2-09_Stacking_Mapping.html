@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.24">
+<meta name="generator" content="quarto-1.7.17">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -21,9 +21,8 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 /* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -34,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -67,15 +66,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta name="quarto:offset" content="../">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-da03d714c310c60cec1d83284c92da2c.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-0ee72de42c60dbd072a9e85558b70db9.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-5f39cfd1aee7e7785011fc5df168ee92.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -133,12 +131,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="quarto-sidebar-header"><div class="sidebar-header-item">
-<p>I, Charlie, will be on vacation from Sept 28 - Oct 8. I will occasionally check email but don’t expect quick responses during this time!</p>
+<p>I, Charlie, am in Vietnam until Nov 25. I am working but you will be getting emails from me at weird times.</p>
 </div></div>
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
-      <a href="../index.html" class="sidebar-logo-link">
-      </a>
-      </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
@@ -448,14 +442,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="reading-in-the-data-frame" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="reading-in-the-data-frame"><span class="header-section-number">4</span> Reading in the data frame</h2>
 <p>We will be using the data from <strong><em>lansingJanTempsFixed.csv</em></strong> that has 6 years of January temperatures in Fahrenheit.&nbsp; First we need to read in the file, <strong><em>lansJanTempsFixed.csv</em></strong>, and save the temperature data to a data frame:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>lansJanTempsDF <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">"data/lansingJanTempsFixed.csv"</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>lansJanTempsDF <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">"data/lansingJanTempsFixed.csv"</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="line-plots" class="level2" data-number="5">
 <h2 data-number="5" class="anchored" data-anchor-id="line-plots"><span class="header-section-number">5</span> Line Plots</h2>
 <p>We are going to go over the multiple ways in GGPlot to make a line plot for each of the 6 temperature column in one canvas area.&nbsp; The ggplot component that creates a line plot is <strong><em>geom_line()</em></strong>.</p>
 <p>&nbsp;</p>
 <p>The simplest way to do it is to create six <strong><em>geom_line()</em></strong> components – one for each column in the data frame:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>plot1 <span class="ot">=</span> <span class="fu">ggplot</span>( <span class="at">data=</span>(lansJanTempsDF), </span>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>plot1 <span class="ot">=</span> <span class="fu">ggplot</span>( <span class="at">data=</span>(lansJanTempsDF), </span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                «<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">31</span>)») <span class="sc">+</span> </span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>( <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">y=</span>Jan2011),</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
@@ -474,7 +468,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">x =</span> <span class="st">"January Days"</span>,</span>
 <span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> <span class="st">"temperature (F)"</span>) <span class="sc">+</span></span>
 <span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>();</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(plot1);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(plot1);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Since the x-axis gets mapped to the same date values (1 to 31) for each line plot, we can place the <strong><em>x</em></strong> mapping in <strong><em>ggplot()</em></strong> call.&nbsp; This makes the <strong><em>x</em></strong> mapping of <strong>1:31</strong> universal for all components in the canvas area.</p>
 <p>&nbsp;</p>
 <p>Each <strong><em>geom_line</em></strong> component is also customized with a <strong><em>color</em></strong> subcomponent.</p>
@@ -492,7 +486,7 @@ Figure&nbsp;1: A line plot for the six temperature columns
 <section id="adding-a-legend" class="level2" data-number="6">
 <h2 data-number="6" class="anchored" data-anchor-id="adding-a-legend"><span class="header-section-number">6</span> Adding a legend</h2>
 <p>The problem with <a href="#fig-line_plot" class="quarto-xref">Figure&nbsp;1</a> is that the individual line plots are not labelled. We would like to add a legend to the plot that maps the color to the year and adding a legend in GGPlot is awkward.&nbsp; Generally speaking <span class="hl">GGPlot will put a legend on the plot when something is <strong>mapped</strong> other than <strong>x</strong> or <strong>y</strong></span>.&nbsp; We are going to <strong><em>map</em></strong> color.&nbsp; To do this, we move <strong><em>color</em></strong> from being a subcomponent of the <strong><em>geom_line</em></strong> to being a mapped element of the <strong><em>geom_line</em></strong>.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>plot2 <span class="ot">=</span> <span class="fu">ggplot</span>( <span class="at">data=</span>(lansJanTempsDF), </span>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>plot2 <span class="ot">=</span> <span class="fu">ggplot</span>( <span class="at">data=</span>(lansJanTempsDF), </span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">31</span>)) <span class="sc">+</span>  </span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>( <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">y=</span>Jan2011, <span class="at">color =</span> <span class="st">"Jan2011"</span>) ) <span class="sc">+</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>( <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">y=</span>Jan2012, <span class="at">color =</span> <span class="st">"Jan2012"</span>) ) <span class="sc">+</span></span>
@@ -505,7 +499,7 @@ Figure&nbsp;1: A line plot for the six temperature columns
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">x =</span> <span class="st">"January Days"</span>,</span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> <span class="st">"temperature (F)"</span>) <span class="sc">+</span></span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>();</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(plot2);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(plot2);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>In this plot, we moved <strong><em>color</em></strong> to the mapping of the <strong><em>geom_line</em></strong> and set <strong><em>color</em></strong> to the text we want displayed in the legend.&nbsp; This solution adds a legend with the text but the line colors are chosen by GGPlot.&nbsp; <span class="note">Note: There is a way to customize these color but that is beyond the scope of this class.</span></p>
 <div id="fig-legend" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -523,7 +517,7 @@ Figure&nbsp;2: Line plots with a legend – note that the legend text matches th
 <p>The most common (and pretty ugly) technique used to plot multiple line plots on one canvas is to create a new data frame that has all the data you want to plot in two columns – this process is often called <span class="hl">melting</span> or <span class="hl">stacking</span> the data frame.</p>
 <p>&nbsp;</p>
 <p>We can use <strong><em>stack()</em></strong> to create a stacked data frame:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>stackedDF <span class="ot">=</span> <span class="fu">stack</span>(lansJanTempsDF);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>stackedDF <span class="ot">=</span> <span class="fu">stack</span>(lansJanTempsDF);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The stacked data frame has the same data as the original data frame but everything is put in two columns:</p>
 <div id="fig-two_col_stacked" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -553,14 +547,14 @@ Figure&nbsp;3: A stacked dataframe of the six years of temperature data put into
 <p>The x-axis represents the days from 1 to 31.&nbsp; We have 186 rows but every 31 rows represents a new line plot (31 * 6 = 186).&nbsp; So, we want to repeat the values 1 to 31 six times.</p>
 <p>&nbsp;</p>
 <p>The <strong><em>y</em></strong> mapping is the temperature values from the original data frame put into one long <strong><em>values</em></strong> column.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>plot3 <span class="ot">=</span> <span class="fu">ggplot</span>( <span class="at">data=</span>(stackedDF)) <span class="sc">+</span>  </span>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>plot3 <span class="ot">=</span> <span class="fu">ggplot</span>( <span class="at">data=</span>(stackedDF)) <span class="sc">+</span>  </span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>( <span class="at">mapping=</span>«<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">31</span>, <span class="at">times=</span><span class="dv">6</span>)», <span class="at">y=</span>values, <span class="at">color=</span>ind) ) <span class="sc">+</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>( <span class="at">title=</span><span class="st">"January Temperature"</span>,</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">subtitle=</span><span class="st">"Lansing, MI -- 2011-2016"</span>,</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">x =</span> <span class="st">"January Days"</span>,</span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> <span class="st">"temperature (F)"</span>) <span class="sc">+</span></span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>();</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(plot3);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(plot3);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="fig-plot_stacked" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-plot_stacked-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -576,7 +570,7 @@ Figure&nbsp;4: Plotting using a stacked dataframe
 <section id="using-for-loops-to-plot-6-columns" class="level2" data-number="8">
 <h2 data-number="8" class="anchored" data-anchor-id="using-for-loops-to-plot-6-columns"><span class="header-section-number">8</span> Using for loops to plot 6 columns</h2>
 <p>I consider using for loops to be the most robust solution because it gives you more control over what to plot and it maintains the integrity of the original data frame.&nbsp; It is also probably the most difficult method:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>  plot4 <span class="ot">=</span> <span class="fu">ggplot</span>( <span class="at">data=</span>(lansJanTempsDF));  <span class="co"># create a canvas</span></span>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>  plot4 <span class="ot">=</span> <span class="fu">ggplot</span>( <span class="at">data=</span>(lansJanTempsDF));  <span class="co"># create a canvas</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(lansJanTempsDF))         <span class="co"># add plots to canvas one at a time</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  {</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># replace i by with !!(i) -- avoids Lazy Evaluation</span></span>
@@ -590,7 +584,7 @@ Figure&nbsp;4: Plotting using a stacked dataframe
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>          <span class="at">x =</span> <span class="st">"January Days"</span>,</span>
 <span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>          <span class="at">y =</span> <span class="st">"temperature (F)"</span>) <span class="sc">+</span></span>
 <span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>();</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(plot4);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(plot4);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>In this example, the <strong><em>for</em></strong> loop adds the six plot components to the <strong><em>plot4</em></strong> canvas one at a time.&nbsp; When mapping in a <strong><em>for</em></strong> loop, you need to replace the index variable, in this case <strong><em>i</em></strong>, with <strong><em>!!(i)</em></strong>.&nbsp; The reason is here: <a href="#extension-lazy-evaluation">Extension: Lazy Evaluation</a></p>
 <p>&nbsp;</p>
 <p>After the plot components are added, we then add the labels and theme to <strong><em>plot4</em></strong>.</p>
@@ -608,7 +602,7 @@ Figure&nbsp;5: Using for loops to plot 6 column – this authors believes this i
 <section id="unstacking-the-data-frame" class="level2" data-number="9">
 <h2 data-number="9" class="anchored" data-anchor-id="unstacking-the-data-frame"><span class="header-section-number">9</span> Unstacking the data frame</h2>
 <p>You can take a stacked data frame and return it to original state using <strong><em>unstack()</em></strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>origDF <span class="ot">=</span> <span class="fu">unstack</span>(stackedDF);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>origDF <span class="ot">=</span> <span class="fu">unstack</span>(stackedDF);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>And <strong><em>origDF</em></strong> looks just like the original <strong><em>lansJanTempDF</em></strong></p>
 <div id="fig-unstacking" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -630,11 +624,11 @@ Figure&nbsp;6: Unstacking a dataframe return you to the original dataframe
 <p>Like all plotting components in GGPlot, <strong><em>geom_boxplot</em></strong> needs to be mapped.&nbsp; The y-axis represents the temperatures so we can map <strong><em>y</em></strong> to the columns, <strong><em>Jan2011</em></strong> in one box and <strong><em>Jan2012</em></strong> in the other.</p>
 <p>&nbsp;</p>
 <p>We also need to map <strong><em>x</em></strong> to something otherwise the two boxplots will appear right on top of each other (try it!). We can start by mapping the boxplot to the years they represent:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>plot5 <span class="ot">=</span> <span class="fu">ggplot</span>(<span class="at">data=</span>lansJanTempsDF) <span class="sc">+</span></span>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>plot5 <span class="ot">=</span> <span class="fu">ggplot</span>(<span class="at">data=</span>lansJanTempsDF) <span class="sc">+</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span><span class="dv">2011</span>, <span class="at">y=</span>Jan2011)) <span class="sc">+</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span><span class="dv">2012</span>, <span class="at">y=</span>Jan2012)) <span class="sc">+</span></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>();</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(plot5);  </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(plot5);  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This code successfully creates two boxplots but the x-axis is a bit weird:</p>
 <div id="fig-boxplot1" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -648,11 +642,11 @@ Figure&nbsp;7: The boxes for January temperatures in 2011 and 2012
 </div>
 <p>&nbsp;</p>
 <p>Because we used numbers to map the x-axis, GGPlot assumed a continuous and numeric x-axis.&nbsp; But, the <span class="hl">x-axis in a boxplot is really a discrete axis</span> – we are not plotting value in between 2011 and 2012.&nbsp; If we want a discrete axis, then we need to put the years in quotes (i.e., make the year a string value):</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>  plot6 <span class="ot">=</span> <span class="fu">ggplot</span>(<span class="at">data=</span>lansJanTempsDF) <span class="sc">+</span></span>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>  plot6 <span class="ot">=</span> <span class="fu">ggplot</span>(<span class="at">data=</span>lansJanTempsDF) <span class="sc">+</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">mapping=</span><span class="fu">aes</span>(«<span class="at">x=</span><span class="st">"2011"</span>», <span class="at">y=</span>Jan2011)) <span class="sc">+</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">mapping=</span><span class="fu">aes</span>(«<span class="at">x=</span><span class="st">"2012"</span>», <span class="at">y=</span>Jan2012)) <span class="sc">+</span></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>();</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(plot6);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(plot6);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Now, we have a discrete x-axis:</p>
 <div id="fig-boxplot_discrete" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -672,10 +666,10 @@ Figure&nbsp;8: The same boxplots with a discrete x-axis
 <p>The most common technique used for plotting multiple columns is to use a stacked dataframe.</p>
 <p>&nbsp;</p>
 <p>Using the stacked dataframe, we can plot all 6 years using one <strong><em>geom_boxplot</em></strong> component.&nbsp; The works by mapping <strong><em>x</em></strong> to the <strong><em>ind</em></strong> column (which has the years) and mapping <strong><em>y</em></strong> to the <strong><em>values</em></strong> column (which has all the temperature values).</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>plot7 <span class="ot">=</span> <span class="fu">ggplot</span>(<span class="at">data=</span>stackedDF) <span class="sc">+</span></span>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>plot7 <span class="ot">=</span> <span class="fu">ggplot</span>(<span class="at">data=</span>stackedDF) <span class="sc">+</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>ind, <span class="at">y=</span>values)) <span class="sc">+</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>();</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(plot7);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(plot7);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The x-axis of the boxplot is labelled with the names of the columns and the y-axis has the box for each year:</p>
 <div id="fig-six_boxes_stacked" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -693,23 +687,23 @@ Figure&nbsp;9: Boxes for all six columns using the stacked data frame
 <p>We might not want all of the data from the original dataframe. We can create a stacked dataframe that only has a subset of the columns from the original data frame.</p>
 <p>&nbsp;</p>
 <p>This stacked dataframe only has the values from <strong>2</strong> columns, the3<sup>rd</sup> and 6<sup>th</sup> (2013 and 2016– <strong>62</strong> values in all):</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>stackedDF2 <span class="ot">=</span> <span class="fu">stack</span>(lansJanTempsDF[,<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">6</span>)]); <span class="co"># 2013 and 2016</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>stackedDF2 <span class="ot">=</span> <span class="fu">stack</span>(lansJanTempsDF[,<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">6</span>)]); <span class="co"># 2013 and 2016</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>And this stacked dataframe has the values from <strong>4</strong> columns: the1<sup>st</sup>, 2<sup>nd</sup>, 5<sup>th</sup>, and 6<sup>th</sup> (2011, 2012, 2015, &amp; 2016 – <strong>124</strong> values in all):</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>stackedDF3 <span class="ot">=</span> <span class="fu">stack</span>(lansJanTempsDF[,<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">5</span>,<span class="dv">6</span>)]); <span class="co"># 2011, 2012, 2015, &amp; 2016</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>stackedDF3 <span class="ot">=</span> <span class="fu">stack</span>(lansJanTempsDF[,<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">5</span>,<span class="dv">6</span>)]); <span class="co"># 2011, 2012, 2015, &amp; 2016</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>In the <strong><em>Environment</em></strong> tab we see the two new stacked dataframes, both with 2 columns (<strong><em>values</em></strong> and <strong><em>ind</em></strong>) and 62 values (for two Januaries) and 124 values (for four Januaries)</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>🞃 stackedDF2<span class="sc">:</span>   <span class="dv">62</span> obs. of <span class="dv">2</span> variables</span>
+<div class="sourceCode" id="cb13" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>🞃 stackedDF2<span class="sc">:</span>   <span class="dv">62</span> obs. of <span class="dv">2</span> variables</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="sc">$</span> values<span class="sc">:</span> num <span class="dv">25</span> <span class="dv">26</span> <span class="dv">29</span> <span class="dv">33</span> <span class="dv">35</span> <span class="dv">35</span> ...</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="sc">$</span> ind    <span class="sc">:</span>  Factor w<span class="sc">/</span> <span class="dv">2</span> levels <span class="st">"Jan2013"</span>,...</span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>🞃 stackedDF3<span class="sc">:</span>   <span class="dv">124</span> obs. of <span class="dv">4</span> variables</span>
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="sc">$</span> values<span class="sc">:</span> num <span class="dv">54</span> <span class="dv">25</span> <span class="dv">33</span> <span class="dv">32</span> <span class="dv">23</span> ...</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="sc">$</span> ind    <span class="sc">:</span>  Factor w<span class="sc">/</span> <span class="dv">4</span> levels <span class="st">"Jan2011"</span>,...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="sc">$</span> ind    <span class="sc">:</span>  Factor w<span class="sc">/</span> <span class="dv">4</span> levels <span class="st">"Jan2011"</span>,...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <section id="plotting-the-subset-stacked-dataframe" class="level3" data-number="12.1">
 <h3 data-number="12.1" class="anchored" data-anchor-id="plotting-the-subset-stacked-dataframe"><span class="header-section-number">12.1</span> Plotting the subset stacked dataframe</h3>
 <p>We can plot the four boxes from dataframe <strong><em>stackedDF3</em></strong> just like we plotting all six boxes using <strong><em>stackedDF</em></strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>plot8 <span class="ot">=</span> <span class="fu">ggplot</span>(<span class="at">data=</span>«stackedDF3») <span class="sc">+</span></span>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>plot8 <span class="ot">=</span> <span class="fu">ggplot</span>(<span class="at">data=</span>«stackedDF3») <span class="sc">+</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>ind, <span class="at">y=</span>values)) <span class="sc">+</span></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>();</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(plot8);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(plot8);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="fig_box_subset_stacked" class="quarto-figure quarto-figure-left anchored">
 <figure class="figure">
 <p><img src="images/R-2-09-StackedSubsetBox.png" class="fs img-fluid figure-img"></p>
@@ -720,7 +714,7 @@ Figure&nbsp;9: Boxes for all six columns using the stacked data frame
 <section id="plotting-a-subset-using-for-loops" class="level3" data-number="12.2">
 <h3 data-number="12.2" class="anchored" data-anchor-id="plotting-a-subset-using-for-loops"><span class="header-section-number">12.2</span> Plotting a subset using for loops</h3>
 <p>Again, this author believes the most robust way to plot the subset data is to use <strong><em>for</em></strong> loop.&nbsp; Once again, this allows you to work with the original data frame – there is no need to create a stacked data frame.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>plot9 <span class="ot">=</span> <span class="fu">ggplot</span>( <span class="at">data=</span>(lansJanTempsDF)); </span>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>plot9 <span class="ot">=</span> <span class="fu">ggplot</span>( <span class="at">data=</span>(lansJanTempsDF)); </span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> «<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">5</span>,<span class="dv">6</span>)»)   <span class="co"># cycle through the four columns</span></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>{</span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="do">## map the column names to x and the column values to y</span></span>
@@ -728,7 +722,7 @@ Figure&nbsp;9: Boxes for all six columns using the stacked data frame
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>                                            <span class="at">y=</span>lansJanTempsDF[,<span class="sc">!!</span>(i)] ))</span>
 <span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>plot9 <span class="ot">=</span> plot9 <span class="sc">+</span> <span class="fu">theme_bw</span>();</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(plot9);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(plot9);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>In this code,</p>
 <ul>
 <li><p>the <strong><em>for</em></strong> loops only cycles through the four columns we want to plot <strong><em>c(1,2,5,6)</em></strong>.&nbsp;</p></li>
@@ -761,10 +755,10 @@ Figure&nbsp;10: Using for loops to create a boxplot of four of the columns from 
 <p>We are going to use these data frames in the next lesson.&nbsp; In the next lesson, we could just reopen the <strong><em>lansingJanTempsFixed.csv</em></strong> file, save the data to a data frame and then create the stacked dataframes.&nbsp; But, since we have already done that work, it would be easier to pass the data frames from this lesson to the next lesson.</p>
 <p>&nbsp;</p>
 <p>We will create one object that holds all four data frame using <strong><em>list()</em></strong>.&nbsp; The object is a <strong><em>List</em></strong> object (we will be talking a lot more about List object in the next few lessons):</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>temperatureDFs<span class="ot">=</span> <span class="fu">list</span>(<span class="st">"origDF"</span> <span class="ot">=</span> lansJanTempsDF,</span>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>temperatureDFs<span class="ot">=</span> <span class="fu">list</span>(<span class="st">"origDF"</span> <span class="ot">=</span> lansJanTempsDF,</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"stackedDF"</span> <span class="ot">=</span> stackedDF,</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"stackDF_3_6"</span> <span class="ot">=</span> stackedDF2,</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"stackedDF_1_2_5_6"</span> <span class="ot">=</span> stackedDF3);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"stackedDF_1_2_5_6"</span> <span class="ot">=</span> stackedDF3);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The value in quotes is the name of the object – you can choose the name but you should use variable naming conventions.</p>
 <p>&nbsp;</p>
 <p><strong><em>temperatureDFs</em></strong> appear in the <strong><em>Environment</em></strong> as a <strong><em>List</em></strong> object with four data frames inside it.&nbsp; We can view the data frames in the list by clicking on the arrow in the <strong><em>Environment</em></strong> tab or double-clicking on <strong><em>temperatureDFs</em></strong> to see it in a viewer tab:</p>
@@ -781,7 +775,7 @@ Figure&nbsp;11: The List object in the Environment and the viewer tab
 <section id="saving-the-list-object-to-a-file" class="level3" data-number="13.1">
 <h3 data-number="13.1" class="anchored" data-anchor-id="saving-the-list-object-to-a-file"><span class="header-section-number">13.1</span> Saving the List object to a file</h3>
 <p>We want to use the <strong><em>List</em></strong> object with four data frames in the next lesson.&nbsp; To do this, <span class="hl">we need to save the <strong>List</strong> to a file</span> – a file we will open in the next lesson:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(temperatureDFs, <span class="at">file =</span> <span class="st">"data/tempDFs.rdata"</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(temperatureDFs, <span class="at">file =</span> <span class="st">"data/tempDFs.rdata"</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>There should now be a file named <strong><em>tempDFs.rdata</em></strong> in the <strong><em>data</em></strong> folder of your Project that contains <strong><em>temperatureDFs</em></strong>.</p>
 </section>
 </section>
@@ -825,16 +819,16 @@ Figure&nbsp;11: The List object in the Environment and the viewer tab
 <p>This is probably the one programming topic that has caused the most agony in this authors life as it is unintuitive and happens unexpectedly in many programming languages…</p>
 <p>&nbsp;</p>
 <p>There are <strong>7</strong> columns in <strong><em>lansJanTempsDF</em></strong>, which means the <strong><em>for</em></strong> loop will cycle <strong>7</strong> times. Each time with a different value for <strong><em>i</em></strong> (1, 2, 3, 4, 5, 6, and 7).</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(lansJanTempsDF))         <span class="co"># add plots to canvas one at a time</span></span>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(lansJanTempsDF))         <span class="co"># add plots to canvas one at a time</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>{</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  plot4 <span class="ot">=</span> plot4 <span class="sc">+</span> <span class="fu">geom_line</span>( <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(lansJanTempsDF), </span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">y=</span>lansJanTempsDF[,i], </span>
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">color=</span><span class="fu">colnames</span>(lansJanTempsDF)[i]) )</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>However, if you execute the code above you will only see one plot – the plot for the seventh cycle (when <strong><em>i=7</em></strong>). Actually, the seventh plot got plotted seven times but they overlap each other so you only see one.</p>
 <p>&nbsp;</p>
 <p>The reason this happens is that R, in the background, will first stack up the code from all seven cycles of the <strong><em>for</em></strong> loop like this:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>plot4 <span class="ot">=</span> plot4 <span class="sc">+</span> <span class="fu">geom_line</span>( <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(lansJanTempsDF), </span>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>plot4 <span class="ot">=</span> plot4 <span class="sc">+</span> <span class="fu">geom_line</span>( <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(lansJanTempsDF), </span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">y=</span>lansJanTempsDF[,«i»], </span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">color=</span><span class="fu">colnames</span>(lansJanTempsDF)[«i»])</span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="at">plot4 =</span> plot4 <span class="sc">+</span> <span class="fu">geom_line</span>( <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(lansJanTempsDF), </span>
@@ -843,11 +837,11 @@ Figure&nbsp;11: The List object in the Environment and the viewer tab
 <span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="at">plot4 =</span> plot4 <span class="sc">+</span> <span class="fu">geom_line</span>( <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(lansJanTempsDF), </span>
 <span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">y=</span>lansJanTempsDF[,«i»], </span>
 <span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">color=</span><span class="fu">colnames</span>(lansJanTempsDF)[«i»])</span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="fu">...</span> (<span class="dv">4</span> more) ...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="fu">...</span> (<span class="dv">4</span> more) ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>And then execute each command in the stack. This happens all the time when programming <strong><em>for</em></strong> loops and it is normally not an issue. Except, in this case, R does not realize that <strong><em>i</em></strong> is the index variable. R assumes that <strong><em>i=7</em></strong> because that is the value of <strong><em>i</em></strong> at the end of the <strong><em>for</em></strong> loop (i.e., after the seventh cycle). So, R replaces <strong><em>i</em></strong> with 7 for every command. This is called <span class="hl">Lazy Evaluation</span> and I cannot explain why it happens here, but I can say that I have experienced it many times in many programming languages in my career.</p>
 <p>&nbsp;</p>
 <p><strong><em>!!()</em></strong> is a function that forces R to immediately evaluate what is inside the parentheses (i.e., before R stacks the commands). This means the stacked commands will look like this and execute properly:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>plot4 <span class="ot">=</span> plot4 <span class="sc">+</span> <span class="fu">geom_line</span>( <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(lansJanTempsDF), </span>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>plot4 <span class="ot">=</span> plot4 <span class="sc">+</span> <span class="fu">geom_line</span>( <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(lansJanTempsDF), </span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">y=</span>lansJanTempsDF[,«<span class="dv">1</span>»], </span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">color=</span><span class="fu">colnames</span>(lansJanTempsDF)[«<span class="dv">1</span>»])</span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="at">plot4 =</span> plot4 <span class="sc">+</span> <span class="fu">geom_line</span>( <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(lansJanTempsDF), </span>
@@ -856,7 +850,7 @@ Figure&nbsp;11: The List object in the Environment and the viewer tab
 <span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="at">plot4 =</span> plot4 <span class="sc">+</span> <span class="fu">geom_line</span>( <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(lansJanTempsDF), </span>
 <span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">y=</span>lansJanTempsDF[,«<span class="dv">3</span>»], </span>
 <span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">color=</span><span class="fu">colnames</span>(lansJanTempsDF)[«<span class="dv">3</span>»])</span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="fu">...</span> (<span class="dv">4</span> more) ...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="fu">...</span> (<span class="dv">4</span> more) ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 </section>
@@ -913,14 +907,13 @@ Figure&nbsp;11: The List object in the Environment and the viewer tab
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-      const outerScaffold = trigger.parentElement.cloneNode(true);
-      const codeEl = outerScaffold.querySelector('code');
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
         }
-      }
-      return codeEl.innerText;
+        return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

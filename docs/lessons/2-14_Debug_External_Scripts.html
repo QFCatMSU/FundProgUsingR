@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.24">
+<meta name="generator" content="quarto-1.7.17">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -21,9 +21,8 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 /* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -34,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -67,15 +66,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta name="quarto:offset" content="../">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-da03d714c310c60cec1d83284c92da2c.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-0ee72de42c60dbd072a9e85558b70db9.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-5f39cfd1aee7e7785011fc5df168ee92.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -133,12 +131,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="quarto-sidebar-header"><div class="sidebar-header-item">
-<p>I, Charlie, will be on vacation from Sept 28 - Oct 8. I will occasionally check email but don’t expect quick responses during this time!</p>
+<p>I, Charlie, am in Vietnam until Nov 25. I am working but you will be getting emails from me at weird times.</p>
 </div></div>
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
-      <a href="../index.html" class="sidebar-logo-link">
-      </a>
-      </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
@@ -366,6 +360,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#using-gutter-breakpoints-in-external-scripts" id="toc-using-gutter-breakpoints-in-external-scripts" class="nav-link active" data-scroll-target="#using-gutter-breakpoints-in-external-scripts"><span class="header-section-number">0.1</span> Using gutter breakpoints in external scripts</a></li>
+  <li><a href="#debugging-4-scenarios" id="toc-debugging-4-scenarios" class="nav-link" data-scroll-target="#debugging-4-scenarios"><span class="header-section-number">0.2</span> Debugging 4 scenarios</a></li>
   <li><a href="#purpose" id="toc-purpose" class="nav-link" data-scroll-target="#purpose"><span class="header-section-number">1</span> Purpose</a></li>
   <li><a href="#material" id="toc-material" class="nav-link" data-scroll-target="#material"><span class="header-section-number">2</span> Material</a></li>
   <li><a href="#adding-breakpoints-to-external-scripts" id="toc-adding-breakpoints-to-external-scripts" class="nav-link" data-scroll-target="#adding-breakpoints-to-external-scripts"><span class="header-section-number">3</span> Adding breakpoints to external scripts</a></li>
@@ -439,6 +434,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul></li>
 </ul>
 </section>
+<section id="debugging-4-scenarios" class="level3" data-number="0.2">
+<h3 data-number="0.2" class="anchored" data-anchor-id="debugging-4-scenarios"><span class="header-section-number">0.2</span> Debugging 4 scenarios</h3>
+<p>1) Within main (sourced) script</p>
+<ul>
+<li><p>breakpoint</p></li>
+<li><p>browser</p>
+<ul>
+<li>but, browser() needs to be encapsulated between { }</li>
+</ul></li>
+</ul>
+<p>2) Function outside your main (sourced) script</p>
+<ul>
+<li><p>browser() – works well</p></li>
+<li><p>source functions script from main, add breakpoint, Run function from main</p>
+<ul>
+<li>external breakpoint are broken when file is sourced</li>
+</ul></li>
+</ul>
+<p>3) External script (not a function script)</p>
+<ul>
+<li>done rarely and bad practice, and a pain to debug, so probably not going to teach</li>
+</ul>
+<p>4) Function in package</p>
+<ul>
+<li><p>download package to computer</p></li>
+<li><p>load with pkgload</p></li>
+<li><p>can use browser() as if this were scenario 2</p></li>
+</ul>
+</section>
 <section id="purpose" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="purpose"><span class="header-section-number">1</span> Purpose</h2>
 <ul>
@@ -465,7 +489,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="browser-in-the-main-script" class="level3" data-number="4.1">
 <h3 data-number="4.1" class="anchored" data-anchor-id="browser-in-the-main-script"><span class="header-section-number">4.1</span> browser() in the main script</h3>
 <p>In last lesson, the first breakpoint we set was on line 8. Instead of a breakpoint, we can put a browser() command to put the script in debug mode:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>());  </span>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>());  </span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"scripts/debugTest.r"</span>);</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>weatherData <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">"data/lansing2016Noaa-3.csv"</span>);</span>
@@ -474,7 +498,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>«<span class="fu">browser</span>()»</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>diffTemp <span class="ot">=</span> highTemps <span class="sc">-</span> lowTemps;</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>weatherData<span class="sc">$</span>diffTemp <span class="ot">=</span> diffTemp;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>weatherData<span class="sc">$</span>diffTemp <span class="ot">=</span> diffTemp;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The breakpoints in RStudio call broswer(), so putting browser() in the code is skipping the middle man …Almost… because RStudio cannot see the injected browser() until after commands have been executed</p>
 <ul>
 <li><p>do examples from last lesson</p></li>
@@ -615,14 +639,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-      const outerScaffold = trigger.parentElement.cloneNode(true);
-      const codeEl = outerScaffold.querySelector('code');
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
         }
-      }
-      return codeEl.innerText;
+        return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
