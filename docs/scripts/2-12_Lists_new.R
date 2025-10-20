@@ -45,33 +45,10 @@ dewPoint4 = listDynamic5[[3]][[7]];
 #### Subsetting using [ ] -- this returns a List, which is not very useful:
 anim4 = listDynamic5["animal"];
 
-#### A Humidity vs. Temperature plot with linear regression ####
-### <have a base-R version of this... but does not work with list below ###
-plot1 = ggplot( data=weatherData ) +
-  geom_point( mapping=aes(x=avgTemp, y=relHum) ) +
-  geom_smooth( mapping=aes(x=avgTemp, y=relHum), 
-               method="lm" ) +
-  labs( title="Humidity vs Temperature",
-        subtitle="Lansing, MI -- 2016",
-        x = "Average Temperatures (Fahrenheit)",
-        y = "Relative Humidity") +
-  scale_x_continuous( breaks = seq(from=10, to=80, by=10) ) +
-  theme_bw() +
-  theme( axis.text.x=element_text(angle=90, vjust=0.5) );
-plot(plot1);
-
+#### lm() creates a List
 model1 = lm(formula=weatherData$avgTemp~weatherData$relHum);    
 
 #### Subsetting model1 
 intercept = model1$coefficients["(Intercept)"];
 first10Residuals = model1$residuals[1:10];
 every20thFitted = model1$fitted.values[seq(from=1, to=366, by=20)];
-
-#### Changing values in the plot
-plot2 = plot1;
-
-plot2$theme$text$colour = "red";
-plot2$labels$x = "Average Temperature (\u00B0F)"; # \u00B0 is Unicode for the degree symbol
-plot2$theme$line$linetype = 2;
-plot2$theme$line$size = 0.8;
-plot(plot2);
