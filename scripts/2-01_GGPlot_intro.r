@@ -37,7 +37,7 @@ plot4 = ggplot( data=weatherData ) +
   theme( axis.text.x=element_text(angle=90, vjust=0.5) );
 plot(plot4);
 
-#### Part 5: Changing the cmoplete theme --- oops, undoes theme ####
+#### Part 5: Changing the complete theme --- oops, undoes theme ####
 plot5 = ggplot( data=weatherData ) +
   geom_point( mapping=aes(x=avgTemp, y=relHum) ) +
   labs( title="plot5: Humidity vs Temperature",
@@ -56,7 +56,7 @@ plot6 = ggplot( data=weatherData ) +
                method="lm" ) +
   labs( title="plot6: Humidity vs Temperature",
         subtitle="Lansing, MI -- 2016",
-        xlab = "Average Temperatures (Fahrenheit)",
+        x = "Average Temperatures (Fahrenheit)",
         y = "Relative Humidity") +
   scale_x_continuous( breaks = seq(from=10, to=80, by=10) ) +
   theme_bw() +
@@ -70,7 +70,7 @@ plot7 = ggplot( data=weatherData ) +
   geom_point( mapping=aes(x=avgTemp, y=relHum) ) +
   labs( title="plot7: Humidity vs Temperature",
         subtitle="Lansing, MI -- 2016",
-        xlab = "Average Temperatures (Fahrenheit)",
+        x = "Average Temperatures (Fahrenheit)",
         y = "Relative Humidity") +
   scale_x_continuous( breaks = seq(from=10, to=80, by=10) ) +
   theme_bw() +

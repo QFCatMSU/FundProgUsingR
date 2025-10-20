@@ -6,6 +6,8 @@ short: "2-12"
 
 ### To-do
 
+-   expand lesson to include reading/writing Lists to RData file
+
 ## Purpose
 
 -   Creating you own List
@@ -62,7 +64,7 @@ weatherData = read.csv(file="data/Lansing2016NOAA.csv");
 
 ### Lists in the Environment tab
 
-Notice that, in the Environment, ***weatherData*** has an arrow to expand it whereas ***someAnimals*** and ***someNumbers*** contains all of their information in one line.  It is this expand arrow that indicates ***weatherData*** is a List, whereas ***someAnimals*** and ***SomeNumbers*** are atomic vectors.  ***weatherData*** is a specialized List where all the objects inside are vectors of the same length (i.e., ***weatherData*** is a data frame):
+Notice that, in the Environment, ***weatherData*** has an arrow to expand it whereas ***someAnimals*** and ***someNumbers*** contains all of their information in one line.  It is this expand arrow that indicates ***weatherData*** is a List, whereas ***someAnimals*** and ***SomeNumbers*** are atomic vectors.  ***weatherData*** is a data frame, which is List where all the objects inside are vectors of the same length:
 
 ![The expand arrow in the Environment indicates that the object is a List (i.e., holds other objects)](images/R-2-11-ListExpandArrow.png){#fig-list_expand_env .fs}
 
@@ -136,7 +138,7 @@ Somewhat unintuitively, ***append()*** does not append the object ***someAnimals
 
 ### Appending whole objects
 
-The solution is also a bit unintutive.  We want is to append ***someAnimals*** to the List as vector and, to do this, we need to wrap ***someAnimals*** inside its own List:
+We want is to append ***someAnimals*** to the List as vector and, to do this, we need to (unintuitively) wrap ***someAnimals*** inside its own List:
 
 ``` r
 listDynamic3 = append(listDynamic, list(someAnimals));
@@ -177,7 +179,7 @@ If you click the document icon with an arrow on the right-side, RStudio will put
 
 ![Opening an object within a List from the Viewer tab](images/R-2-11-SubsetInViewer.png){#fig-viewer_to_Console .fs}
 
-### Subsetting with \$ and \[\[  \]\]
+### Subsetting with \$ and \[\[ \]\]
 
 Every object in the List Viewer with a value under ***Name*** in @fig-viewer_to_Console can be accessed with both the **\$** and **\[\[ \]\]** subset operators -- RStudio always uses **\[\[ \]\]**.
 
@@ -262,30 +264,11 @@ This is not very useful so **\[ \]** is rarely used to subset a List.
 
 ## Returned List from functions
 
-We are going to move from creating our own Lists to looking at Lists that are returned when you call certain functions, specifically ***ggplot()*** and ***lm()***.
+We are going to move from creating our own Lists to looking at Lists that are returned when you call certain functions, specifically ***lm()***.
 
  
 
-First, we will copy the scatterplot and linear regression of humidity vs. temperature from lesson 2-1 and save the results, which will be a List, to ***plot1***:
-
-``` r
-  «plot1» = ggplot( data=weatherData ) +
-    geom_point( mapping=aes(x=avgTemp, y=relHum) ) +
-    geom_smooth( mapping=aes(x=avgTemp, y=relHum), 
-                 method="lm" ) +
-    labs( title="Humidity vs Temperature",
-          subtitle="Lansing, MI -- 2016",
-          x = "Average Temperatures (Fahrenheit)",
-          y = "Relative Humidity") +
-    scale_x_continuous( breaks = seq(from=10, to=80, by=10) ) +
-    theme_bw() +
-    theme( axis.text.x=element_text(angle=90, vjust=0.5) );
-  plot(plot1);
-```
-
-![Scatterplot of humidity vs. temperature with a linear regression](images/R-2-04-LinearRegression-01.png){#fig-scatterplot_linear_reg .fs}
-
-We can also create a linear regression model of humidity vs temperature using ***lm()*** and save the results to a list named ***model1***:
+When we create a linear regression model of humidity vs temperature using ***lm()***, the results are saved to a list, in this case named ***model1***:
 
 ``` r
 «model1» = lm(formula=weatherData$avgTemp~weatherData$relHum);
@@ -316,15 +299,9 @@ F-statistic: 19.68 on 1 and 364 DF,  p-value: 1.213e-05
 Summary of a model of a linear regression
 :::
 
-Both ***plot1*** and ***model1*** are List objects and the information for the plot and summary of the linear model are either in the List, or calculated from values in the List.
-
 ### The returned List: linear model
 
-The plot (@fig-scatterplot_linear_reg) and the summary (@fig-summary_linear_reg) above are both ways of getting at the data that comes back from the corresponding functions calls ***ggplot()*** and ***lm()***.  But, both of these calls also return a List that contains a lot of information.
-
- 
-
-Let's first look at ***model1***, which is the List returned from the ***lm()*** call:
+***model1*** is a List object and the information for the linear model is stored in the List:
 
 ![The List returned from a lm() call](images/R-2-11-modelList.png){#fig-returned_list .fs}
 
@@ -342,7 +319,7 @@ Let's first look at ***model1***, which is the List returned from the ***lm()***
 
  
 
-We need to use **\[  \]** to subset ***coefficients*** because ***coefficients*** is an atomic vector.  [Note: Subsetting operators are a bit inconsistent in R and it is just something you need to get used to.]{.note}
+We need to use **\[ \]** to subset ***coefficients*** because ***coefficients*** is an atomic vector.  [Note: Subsetting operators are a bit inconsistent in R.]{.note}
 
  
 
@@ -376,57 +353,6 @@ If you look through ***model1***, you will find three new variable types: ***lan
 
 ![Some of the less common variable types appear in this List](images/R-2-11-OtherVariableTypes.png){#fig-less_common_var_types .fs}
 
-### Return list: plot1
-
-The List returned when ***ggplot()*** is called is far more complex than the one returned with ***lm()***.  Inside the ***ggplot()*** List are many embedded Lists that contain everything required to make the plot, including all the data used in the plot and the styling.
-
- 
-
-There is a also a new object type called ***environment***, which is sort of a modern version of a List.  The name is confusing because it is structurally related to, but not the same thing as, the ***Environment*** tab in RStudio.  This is not something we will explore in this class -- just know that an ***environment*** object, like Lists, holds other objects and is also analogous to folders on your computer.
-
-![The List generated by ggplot() contains environment objects](images/R-2-11-EnvVariable.png){#fig-ggplot_list .fs}
-
-### Changing values in the plot List
-
-We can both extract values from a List and change the values.  In this case, we can make changes to the plot by changing values within the List.
-
- 
-
-Let's first make a copy of the plot and makes changes on the copy:
-
-``` r
-plot2 = plot1;
-```
-
-The changes we will make are:
-
-1.  change the text color to red
-
-2.  change the x-axis label to use the degree symbol instead of "degree"
-
-    -   ***\\u00B0*** means get the [Unicode character](https://en.wikipedia.org/wiki/List_of_Unicode_characters#Latin-1_Supplement) designated **00B0** (which is a degree symbol)
-
-3.  change the axis lines to dashed lines
-
-4.  increase the size of the axis lines
-
-``` r
-plot2$theme$text$colour = "red";
-plot2$labels$x = "Average Temperature (\u00B0 F)"; 
-plot2$theme$line$linetype = 2;
-plot2$theme$line$size = 0.8;
-```
-
-And plot the results
-
-``` r
-plot(plot2);
-```
-
-![The plot after changes were made to the List](images/R-2-11-PlotChanges.png){#fig-list_plot_changes .fs}
-
-Of course, all of these changes can be made within the ***ggplot()*** function call, which is most likely what you would want to do.  But, the List object contains everything that went into making the plot so it can be modified to tweak the plot.
-
 ## Application
 
 A\) Why is it better to subset objects by name instead of position numbers?
@@ -453,32 +379,12 @@ C\) Using only values in ***linearModel1***, find and save:
 
 -   the most extreme residual value (i.e., furthest from 0 -- could be positive or negative)
 
-     
+ 
 
-D\) Using the data from ***Lansing2016Noaa.csv***, create a scatterplot of dewpoint vs average temperature
-
--   include a linear regression of dewpoint vs. average temperature
-
--   save the plot information to a List named ***scatterPlot1***
+D\) Create one List named ***app2_12_List*** that contains the objects from parts A, B, and C in this application
 
  
 
-E\) Make a copy of the List variable ***scatterPlot1*** named ***scatterPlot2***
-
--   make 1 text change and 2 style changes by changing values in the List variable ***scatterPlot2***
-
--   do not make the same changes that were made in the lesson
-
- 
-
-F\) Subset an object in the GGPlot list that is exactly 6 levels deep. 
-
--   [avoid subsetting any Name that are italicized]{.hl}
-
--   save the object to a variable named ***ggplotObj***
-
- 
-
-G\) Create one List named ***app2_12_List*** that contains the objects from parts A-F in this application
+E\) Write the List to an RData file named ***app2-12List.RData*** in the ***data*** folder.
 
 {{< include ../assets/_AppInstructions.qmd >}}
