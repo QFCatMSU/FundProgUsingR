@@ -194,12 +194,7 @@ Default values are generally what the programmer consider to be the most common 
 
 If someone is not feeling good, they change the value for the ***feeling_good*** argument:
 
-``` {.r 1-13_Functions_Main.R=""}
-hi3 = hello_you("David", feeling_good=FALSE);
-hi4 = hello_you(who="Evelyn", feeling_good=FALSE);
-hi5 = hello_you("Frank", FALSE);
-hi6 = hello_you(feeling_good=FALSE, who="George");
-```
+`{.r 1-13_Functions_Main.R=""} hi3 = hello_you("David", feeling_good=FALSE); hi4 = hello_you(who="Evelyn", feeling_good=FALSE); hi5 = hello_you("Frank", FALSE); hi6 = hello_you(feeling_good=FALSE, who="George");`
 
 ``` {.r tab="Environment"}
 hi3: "Hello, David, I'm sorry you are not feeling well today!"
@@ -317,7 +312,7 @@ meanSimp3: 49
 meanSimp4: 1
 ```
 
-[note: the mean value of a vector with ***NA*** values is ***NA***.]{.note} This is similar to ***median()*** in lesson 1-05. More about that here: [Extension: The R-base mean() function]
+[note: the mean value of a vector with ***NA*** values is ***NA***.]{.note} This is similar to ***median()*** in lesson 1-05. More about that here: [Extension: The R-base mean() function](#sec-r-base-mean)
 
 ------------------------------------------------------------------------
 
@@ -346,28 +341,29 @@ mean_advanced = function(vec, removeNA = FALSE)
   ### Use the for loop to cycle through all the values in vec and add them to vecAdded
   for(i in 1:length(vec))
   {
-    «if»(is.na(vec[i]) == FALSE)  ### If the value is not NA
+    if(is.na(vec[i]) == FALSE)  ### If the value is not NA
     {
       ### Adds the next value in vec
       vecAdded = vecAdded + vec[i];
 
-    }«else if» (removeNA == TRUE)   ## we have a NA value and want to remove it
+    }else if (removeNA == TRUE)   ## we have a NA value and want to remove it
     {
       ### Don't add the value, instead increase the number of NA by 1
       numNA = numNA +1;
     
-    }«else if» (removeNA == FALSE)  ## we have a NA value and don't want to remove it
+    }else if (removeNA == FALSE)  ## we have a NA value and don't want to remove it
     {
       ### We cannot solve for a mean with an NA so the return value has to be NA
-      return(NA);  # this will end the function
+      return(NA_real_);  # return() ends the function -- just like break() ends a for loop
     }
-    
-    ### Divide the total value by the number of values that are not NA to get the mean
-    meanVal = vecAdded / ( length(vec) - numNA);
-  
-    ### return the mean value to the caller
-    return(meanVal);
   }
+
+  ### Divide the total value by the number of values that are not NA to get the mean
+  meanVal = vecAdded / ( length(vec) - numNA);
+
+  ### return the mean value to the caller
+  return(meanVal);
+}
 ```
 
 There are three possible situations, hence three parts to the ***if-else-if*** structure:

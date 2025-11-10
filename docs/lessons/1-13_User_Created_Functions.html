@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.17">
+<meta name="generator" content="quarto-1.9.9">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -21,8 +21,9 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 /* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -33,7 +34,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -66,14 +67,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta name="quarto:offset" content="../">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-da03d714c310c60cec1d83284c92da2c.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-5d254f1e278c2921d96b26102a150bb1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-5f39cfd1aee7e7785011fc5df168ee92.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-0ee72de42c60dbd072a9e85558b70db9.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -119,7 +121,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -326,6 +328,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../lessons/2-05b_RegularExpressions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-05b: Regular Expressions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../lessons/2-06_Datetime_Objects.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">2-06: Datetime objects</span></a>
   </div>
@@ -516,16 +524,16 @@ window.Quarto = {
 <p>Because the functions are in a separate script, we must first read (<strong><em>source</em></strong>) the functions script from the main script before we can use the functions:</p>
 <p>&nbsp;</p>
 <p>This line in <strong><em>1-13_Functions_Main.R</em></strong> executes all code within the script <strong><em>1-13_Functions_Only.R</em></strong> (assuming it is in the <strong><em>scripts</em></strong> folder inside your project folder):</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"scripts/1-13_Functions_Only.R"</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"scripts/1-13_Functions_Only.R"</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>R will put the three functions from <strong><em>1-13_Functions_Only.R</em></strong> into the <strong><em>Environment</em></strong>:</p>
-<div class="sourceCode" id="cb2" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>hello_you<span class="sc">:</span>   <span class="cf">function</span> (who, <span class="at">feeling_good =</span> <span class="cn">TRUE</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>hello_you<span class="sc">:</span>   <span class="cf">function</span> (who, <span class="at">feeling_good =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>mean_advanced<span class="sc">:</span>    <span class="cf">function</span> (vec, <span class="at">removeNA =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>mean_simple<span class="sc">:</span>  <span class="cf">function</span> (vec)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>mean_simple<span class="sc">:</span>  <span class="cf">function</span> (vec)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Functions, like variables, are named objects that store information. The difference is that <span class="hl">variables store values</span> whereas <span class="hl">functions store script</span>. User-generated functions must be in the <strong><em>Environment</em></strong> before they can be used.</p>
 <section id="clearing-the-environment" class="level3" data-number="5.1">
 <h3 data-number="5.1" class="anchored" data-anchor-id="clearing-the-environment"><span class="header-section-number">5.1</span> Clearing the Environment</h3>
 <p>In all the precious lessons, every script includes this code at the top:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a> <span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a> <span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The purpose of this code is to clear out your <strong><em>Environment</em></strong> so that your script has a clean slate. In reality, it is to force programmers to include all the resources they need to run a script inside the script they are running (i.e., make the script self-contained). However, function scripts are resources for the main script and calling <code>rm(list=ls())</code> from the function script would clear the <strong><em>Environment</em></strong> of variables declared in the main script. <span class="hl">A function script should never clear the Environment</span>.</p>
 </section>
 </section>
@@ -534,7 +542,7 @@ window.Quarto = {
 <p>All functions, whether base-R, in packages, or user-created, have the same four components: <strong>name</strong>, <strong>arguments</strong>, <strong><em>codeblock</em></strong>, and <strong>return value</strong>.&nbsp;</p>
 <p>&nbsp;</p>
 <p>Let’s start with the simplest function in <strong><em>1-13_Functions_Only.R</em></strong>. This function is named <strong><em>hello_you()</em></strong>, has two arguments: <strong><em>who</em></strong> and <strong><em>feeling_good</em></strong>, and returns <strong><em>msg</em></strong> to the caller.</p>
-<div class="sourceCode" id="cb4" data-tag="1-13_Functions_Only.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>«hello_you» <span class="ot">=</span> <span class="cf">function</span>(«who», «feeling_good»<span class="ot">=</span><span class="cn">TRUE</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" data-tag="1-13_Functions_Only.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>«hello_you» <span class="ot">=</span> <span class="cf">function</span>(«who», «feeling_good»<span class="ot">=</span><span class="cn">TRUE</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>{ <span class="co"># start codeblock</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  msg <span class="ot">=</span> <span class="fu">paste0</span>(<span class="st">"Hello, "</span>, who)</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  </span>
@@ -544,7 +552,7 @@ window.Quarto = {
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(«msg»);</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>} <span class="co"># end codeblock</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>} <span class="co"># end codeblock</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><span class="note">note: when referring to a function name, we usually add <strong>( )</strong> to differentiate it from a variable</span></p>
 <section id="function-codeblock" class="level3" data-number="6.1">
 <h3 data-number="6.1" class="anchored" data-anchor-id="function-codeblock"><span class="header-section-number">6.1</span> function codeblock</h3>
@@ -559,19 +567,19 @@ window.Quarto = {
 <section id="setting-argument-values" class="level3" data-number="6.2">
 <h3 data-number="6.2" class="anchored" data-anchor-id="setting-argument-values"><span class="header-section-number">6.2</span> Setting argument values</h3>
 <p><strong><em>hello_you()</em></strong> is in the Environment so we can now call it in <strong><em>1-13_Functions_Main.R</em></strong>. Let’s first call the function using only the <strong><em>who</em></strong> argument:</p>
-<div class="sourceCode" id="cb5" data-tag="1-13_Functions_Main.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>hi1 <span class="ot">=</span> <span class="fu">hello_you</span>(<span class="st">"Bob"</span>);</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>hi2 <span class="ot">=</span> <span class="fu">hello_you</span>(<span class="at">who=</span><span class="st">"Charlie"</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb6" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>hi1<span class="sc">:</span> <span class="st">"Hello, Bob"</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>hi2<span class="sc">:</span> <span class="st">"Hello, Charlie"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" data-tag="1-13_Functions_Main.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>hi1 <span class="ot">=</span> <span class="fu">hello_you</span>(<span class="st">"Bob"</span>);</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>hi2 <span class="ot">=</span> <span class="fu">hello_you</span>(<span class="at">who=</span><span class="st">"Charlie"</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>hi1<span class="sc">:</span> <span class="st">"Hello, Bob"</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>hi2<span class="sc">:</span> <span class="st">"Hello, Charlie"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Since <strong><em>who</em></strong> is the first argument in <strong><em>hello_you()</em></strong>, R assumes the first value (i.e., “Bob”), if unnamed, is for the first argument . We can also explicitly name the argument (i.e., <strong><em>who</em></strong>=“Charlie”).</p>
 <p>&nbsp;</p>
 <p>In both cases, the function call is assigned to a variable (<strong><em>hi1</em></strong>, <strong><em>hi2</em></strong>). This means that <span class="hl">the return value of the function is assigned to the variable</span> (e.g., <strong><em>msg</em></strong>).</p>
 <p>&nbsp;</p>
 <p><span class="note">Note: if <strong><em>hello_you()</em></strong> is in the <strong><em>Environment</em></strong>, then you can also call it in the <strong><em>Console</em></strong>:</span></p>
-<div class="sourceCode" id="cb7" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">hello_you</span>(<span class="st">"Brad"</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">hello_you</span>(<span class="st">"Brad"</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"Hello, Brad"</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">hello_you</span>(<span class="at">who=</span><span class="st">"Chuck"</span>)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"Hello, Chuck"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"Hello, Chuck"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>In this case, the return value, <strong><em>msg</em></strong>, in outputted to the <strong><em>Console</em></strong></p>
 </section>
 <section id="default-values" class="level3" data-number="6.3">
@@ -579,12 +587,12 @@ window.Quarto = {
 <p>Most functions in R have default values for some of the argument. In <strong><em>hello_you()</em></strong>, <strong><em>feeling_good</em></strong> has the default value of <strong><em>TRUE</em></strong>. The caller must provide values for arguments that do not have default values and functions often have numerous arguments. In order to avoid overwhelming the caller, default values are provided for most arguments.</p>
 <p>&nbsp;</p>
 <p>Looking at the <strong><em>Help</em></strong> for <strong><em>boxplot()</em></strong>, we see that the <strong>Default S3 Method</strong> has many arguments but all of them, except <strong><em>x</em></strong>, has a default value. <strong><em>x</em></strong> is the data and the rest of the argument are tweaks to the function.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Default S3 method:</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Default S3 method:</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(«x», ..., <span class="at">range =</span> <span class="fl">1.5</span>, <span class="at">width =</span> <span class="cn">NULL</span>, <span class="at">varwidth =</span> <span class="cn">FALSE</span>,</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">notch =</span> <span class="cn">FALSE</span>, <span class="at">outline =</span> <span class="cn">TRUE</span>, names, <span class="at">plot =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">border =</span> <span class="fu">par</span>(<span class="st">"fg"</span>), <span class="at">col =</span> <span class="st">"lightgray"</span>, <span class="at">log =</span> <span class="st">""</span>,</span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">pars =</span> <span class="fu">list</span>(<span class="at">boxwex =</span> <span class="fl">0.8</span>, <span class="at">staplewex =</span> <span class="fl">0.5</span>, <span class="at">outwex =</span> <span class="fl">0.5</span>),</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">ann =</span> <span class="sc">!</span>add, <span class="at">horizontal =</span> <span class="cn">FALSE</span>, <span class="at">add =</span> <span class="cn">FALSE</span>, <span class="at">at =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">ann =</span> <span class="sc">!</span>add, <span class="at">horizontal =</span> <span class="cn">FALSE</span>, <span class="at">add =</span> <span class="cn">FALSE</span>, <span class="at">at =</span> <span class="cn">NULL</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="changing-default-values" class="level3" data-number="6.4">
 <h3 data-number="6.4" class="anchored" data-anchor-id="changing-default-values"><span class="header-section-number">6.4</span> Changing default values</h3>
@@ -592,21 +600,21 @@ window.Quarto = {
 <p>&nbsp;</p>
 <p>If someone is not feeling good, they change the value for the <strong><em>feeling_good</em></strong> argument:</p>
 <p><code>{.r 1-13_Functions_Main.R=""} hi3 = hello_you("David", feeling_good=FALSE); hi4 = hello_you(who="Evelyn", feeling_good=FALSE); hi5 = hello_you("Frank", FALSE); hi6 = hello_you(feeling_good=FALSE, who="George");</code></p>
-<div class="sourceCode" id="cb9" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>hi3<span class="sc">:</span> <span class="st">"Hello, David, I'm sorry you are not feeling well today!"</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>hi3<span class="sc">:</span> <span class="st">"Hello, David, I'm sorry you are not feeling well today!"</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>hi4<span class="sc">:</span> <span class="st">"Hello, Evelyn, I'm sorry you are not feeling well today!"</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>hi5<span class="sc">:</span> <span class="st">"Hello, Frank, I'm sorry you are not feeling well today!"</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>hi6<span class="sc">:</span> <span class="st">"Hello, George, I'm sorry you are not feeling well today!"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>hi6<span class="sc">:</span> <span class="st">"Hello, George, I'm sorry you are not feeling well today!"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><span class="note">note: the caller could set <strong><em>feeling_good</em></strong> to <strong><em>TRUE</em></strong>. It does not change the argument value but it makes the function call more explicit.</span></p>
 </section>
 <section id="argument-order" class="level3" data-number="6.5">
 <h3 data-number="6.5" class="anchored" data-anchor-id="argument-order"><span class="header-section-number">6.5</span> Argument order</h3>
 <p>In our last example, every function call uses both arguments: <strong><em>who</em></strong> and <strong><em>feeling_good</em></strong>. The argument names are not needed if the arguments are presented in the same order as given in the function:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>hi5 <span class="ot">=</span> <span class="fu">hello_you</span>(<span class="st">"Frank"</span>, <span class="cn">FALSE</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>hi5 <span class="ot">=</span> <span class="fu">hello_you</span>(<span class="st">"Frank"</span>, <span class="cn">FALSE</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>On the flip side, using all argument names makes the function call more readable and you do not have to worry about order:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>hi4 <span class="ot">=</span> <span class="fu">hello_you</span>(<span class="at">who=</span><span class="st">"Evelyn"</span>, <span class="at">feeling_good=</span><span class="cn">FALSE</span>);</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>hi6 <span class="ot">=</span> <span class="fu">hello_you</span>(<span class="at">feeling_good=</span><span class="cn">FALSE</span>, <span class="at">who=</span><span class="st">"George"</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>hi4 <span class="ot">=</span> <span class="fu">hello_you</span>(<span class="at">who=</span><span class="st">"Evelyn"</span>, <span class="at">feeling_good=</span><span class="cn">FALSE</span>);</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>hi6 <span class="ot">=</span> <span class="fu">hello_you</span>(<span class="at">feeling_good=</span><span class="cn">FALSE</span>, <span class="at">who=</span><span class="st">"George"</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>For many R functions, the first argument is the data, and often left unnamed, whereas the rest of the arguments are typically named:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>hi3 <span class="ot">=</span> <span class="fu">hello_you</span>(<span class="st">"David"</span>, <span class="at">feeling_good=</span><span class="cn">FALSE</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>hi3 <span class="ot">=</span> <span class="fu">hello_you</span>(<span class="st">"David"</span>, <span class="at">feeling_good=</span><span class="cn">FALSE</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>In general, I would argue that arguments beyond the first should be named for readability – especially when you have functions with many arguments.</p>
 </section>
 </section>
@@ -631,7 +639,7 @@ window.Quarto = {
 <p>In the <strong><em>Environment</em></strong>, we see that <strong><em>mean_simple()</em></strong> has one argument, <strong><em>vec</em></strong>, that does not have a default value.</p>
 <p>&nbsp;</p>
 <p><strong><em>mean_simple()</em></strong> solves for the mean by cycling through all the values in <strong><em>vec</em></strong> using a <strong><em>for</em></strong> loop, adds the values, and then divides that by the number of values in <strong><em>vec</em></strong>.</p>
-<div class="sourceCode" id="cb13" data-tab="1-13_Functions_Only.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>mean_simple <span class="ot">=</span> <span class="cf">function</span>(«vec»)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13" data-tab="1-13_Functions_Only.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>mean_simple <span class="ot">=</span> <span class="cf">function</span>(«vec»)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>{</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  vecAdded <span class="ot">=</span> <span class="dv">0</span>; <span class="do">### state variable -- starts at 0</span></span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -647,28 +655,28 @@ window.Quarto = {
 <span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>  <span class="do">### return the mean value to the caller</span></span>
 <span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(«meanVal»);</span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>} </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>} </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <section id="return-value" class="level3" data-number="8.1">
 <h3 data-number="8.1" class="anchored" data-anchor-id="return-value"><span class="header-section-number">8.1</span> Return value</h3>
 <p>From the caller’s perspective, a function takes arguments as input and returns a values as output. The return value is sent to the caller using the function <strong><em>return()</em></strong>:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">return</span>(meanVal);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">return</span>(meanVal);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>When the caller calls the function, they often set a variable equal to the function (e.g., <strong><em>retVal</em></strong> in the code below). The return value is stored in the variable set equal to the function:</p>
-<div class="sourceCode" id="cb15" data-tab="1-13_Functions_Main.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>meanSimp1 <span class="ot">=</span> <span class="fu">mean_simple</span>(<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">7</span>));  <span class="co"># saves the return value (4.25) to the variable retVal</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15" data-tab="1-13_Functions_Main.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>meanSimp1 <span class="ot">=</span> <span class="fu">mean_simple</span>(<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">7</span>));  <span class="co"># saves the return value (4.25) to the variable retVal</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="calling-the-function" class="level3" data-number="8.2">
 <h3 data-number="8.2" class="anchored" data-anchor-id="calling-the-function"><span class="header-section-number">8.2</span> Calling the function</h3>
 <p>We will call <strong><em>mean_simple()</em></strong> multiple times and save the results to four different variables:</p>
-<div class="sourceCode" id="cb16" data-tab="1-13_Functions_Main.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>meanSimp1 <span class="ot">=</span> <span class="fu">mean_simple</span>(<span class="at">vec=</span><span class="fu">c</span>(<span class="dv">6</span>,<span class="dv">2</span>,<span class="dv">8</span>,<span class="dv">3</span>));        <span class="co"># 4.75</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16" data-tab="1-13_Functions_Main.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>meanSimp1 <span class="ot">=</span> <span class="fu">mean_simple</span>(<span class="at">vec=</span><span class="fu">c</span>(<span class="dv">6</span>,<span class="dv">2</span>,<span class="dv">8</span>,<span class="dv">3</span>));        <span class="co"># 4.75</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># meanSimp2 = mean_simple();                    # error because argument not provided</span></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>meanSimp3 <span class="ot">=</span> <span class="fu">mean_simple</span>(<span class="at">vec=</span><span class="fu">c</span>(<span class="dv">6</span>,<span class="dv">2</span>, <span class="cn">NA</span>, <span class="dv">8</span>,<span class="dv">3</span>));   <span class="co"># NA_Real because of the NA </span></span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>meanSimp4 <span class="ot">=</span> <span class="fu">mean_simple</span>(<span class="at">vec=</span><span class="fu">c</span>(<span class="dv">6</span>,<span class="dv">2</span>,<span class="dv">8</span>,<span class="dv">3</span>,<span class="dv">75</span>,<span class="dv">200</span>)); <span class="co"># 49</span></span>
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>anotherVec <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">7</span>, <span class="sc">-</span><span class="dv">7</span>, <span class="dv">10</span>, <span class="sc">-</span><span class="dv">8</span>);</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>meanSimp5 <span class="ot">=</span> <span class="fu">mean_simple</span>(<span class="at">vec=</span>anotherVec);        <span class="co"># can use a predefined vector</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>meanSimp5 <span class="ot">=</span> <span class="fu">mean_simple</span>(<span class="at">vec=</span>anotherVec);        <span class="co"># can use a predefined vector</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Each call to the function <strong><em>mean()</em></strong> passes in a vector of values for the <strong><em>vec</em></strong> argument and saves the return value to a variable (<strong><em>ret2a</em></strong>, <strong><em>ret2b</em></strong>…). In the <strong><em>Environment</em></strong> we can see the return values stored in the variables.</p>
-<div class="sourceCode" id="cb17" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>meanSimp1<span class="sc">:</span> <span class="fl">4.75</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>meanSimp1<span class="sc">:</span> <span class="fl">4.75</span> </span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>meanSimp2<span class="sc">:</span> <span class="cn">NA_real_</span></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>meanSimp3<span class="sc">:</span> <span class="dv">49</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>meanSimp4<span class="sc">:</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>meanSimp4<span class="sc">:</span> <span class="dv">1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><span class="note">note: the mean value of a vector with <strong><em>NA</em></strong> values is <strong><em>NA</em></strong>.</span> This is similar to <strong><em>median()</em></strong> in lesson 1-05. More about that here: <a href="#sec-r-base-mean">Extension: The R-base mean() function</a></p>
 <hr>
 </section>
@@ -679,12 +687,12 @@ window.Quarto = {
 <section id="header-line-of-a-function" class="level3" data-number="9.1">
 <h3 data-number="9.1" class="anchored" data-anchor-id="header-line-of-a-function"><span class="header-section-number">9.1</span> Header line of a function</h3>
 <p>The header for <strong><em>mean_advanced()</em></strong> looks similar to <strong><em>mean_simple()</em></strong> except there is a second argument, <strong><em>removeNA</em></strong>, and this argument has a default value of <strong>FALSE</strong>. This means if the caller does not set <strong><em>removeNA</em></strong>, it will be <strong>FALSE</strong> (i.e., <strong><em>NA</em></strong> values will <strong>not</strong> be removed).</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>mean_advanced <span class="ot">=</span> <span class="cf">function</span>(vec, <span class="at">removeNA =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>mean_advanced <span class="ot">=</span> <span class="cf">function</span>(vec, <span class="at">removeNA =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="sec-mean_adv_code" class="level3" data-number="9.2">
 <h3 data-number="9.2" class="anchored" data-anchor-id="sec-mean_adv_code"><span class="header-section-number">9.2</span> Codeblock</h3>
 <p>In the codeblock attached to <strong><em>mean_advanced()</em></strong>, we need to conditionally handle the situation where <strong><em>NA</em></strong> values are to be removed, based on the value of the argument <strong><em>removeNA</em></strong>. We do this using an <code>if-else-if</code> structure inside the <code>for</code> loop.</p>
-<div class="sourceCode" id="cb19" data-tab="1-13_Functions_Only.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>mean_advanced <span class="ot">=</span> <span class="cf">function</span>(vec, <span class="at">removeNA =</span> <span class="cn">FALSE</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19" data-tab="1-13_Functions_Only.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>mean_advanced <span class="ot">=</span> <span class="cf">function</span>(vec, <span class="at">removeNA =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>{</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  vecAdded <span class="ot">=</span> <span class="dv">0</span>; <span class="do">### state variable -- starts at 0</span></span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  numNA <span class="ot">=</span> <span class="dv">0</span>;    <span class="do">### second state variable that counts the number of NA values</span></span>
@@ -692,28 +700,29 @@ window.Quarto = {
 <span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="do">### Use the for loop to cycle through all the values in vec and add them to vecAdded</span></span>
 <span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(vec))</span>
 <span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  {</span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    «if»(<span class="fu">is.na</span>(vec[i]) <span class="sc">==</span> <span class="cn">FALSE</span>)  <span class="do">### If the value is not NA</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">is.na</span>(vec[i]) <span class="sc">==</span> <span class="cn">FALSE</span>)  <span class="do">### If the value is not NA</span></span>
 <span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>    {</span>
 <span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>      <span class="do">### Adds the next value in vec</span></span>
 <span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>      vecAdded <span class="ot">=</span> vecAdded <span class="sc">+</span> vec[i];</span>
 <span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>    }«else if» (removeNA <span class="sc">==</span> <span class="cn">TRUE</span>)   <span class="do">## we have a NA value and want to remove it</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>    }<span class="cf">else</span> <span class="cf">if</span> (removeNA <span class="sc">==</span> <span class="cn">TRUE</span>)   <span class="do">## we have a NA value and want to remove it</span></span>
 <span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>    {</span>
 <span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>      <span class="do">### Don't add the value, instead increase the number of NA by 1</span></span>
 <span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>      numNA <span class="ot">=</span> numNA <span class="sc">+</span><span class="dv">1</span>;</span>
 <span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>    }«else if» (removeNA <span class="sc">==</span> <span class="cn">FALSE</span>)  <span class="do">## we have a NA value and don't want to remove it</span></span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>    }<span class="cf">else</span> <span class="cf">if</span> (removeNA <span class="sc">==</span> <span class="cn">FALSE</span>)  <span class="do">## we have a NA value and don't want to remove it</span></span>
 <span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>    {</span>
 <span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>      <span class="do">### We cannot solve for a mean with an NA so the return value has to be NA</span></span>
-<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>      <span class="fu">return</span>(<span class="cn">NA</span>);  <span class="co"># this will end the function</span></span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>      <span class="fu">return</span>(<span class="cn">NA_real_</span>);  <span class="co"># return() ends the function -- just like break() ends a for loop</span></span>
 <span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>    <span class="do">### Divide the total value by the number of values that are not NA to get the mean</span></span>
-<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>    meanVal <span class="ot">=</span> vecAdded <span class="sc">/</span> ( <span class="fu">length</span>(vec) <span class="sc">-</span> numNA);</span>
-<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a>    <span class="do">### return the mean value to the caller</span></span>
-<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(meanVal);</span>
-<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a>  }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>  <span class="do">### Divide the total value by the number of values that are not NA to get the mean</span></span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a>  meanVal <span class="ot">=</span> vecAdded <span class="sc">/</span> ( <span class="fu">length</span>(vec) <span class="sc">-</span> numNA);</span>
+<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a>  <span class="do">### return the mean value to the caller</span></span>
+<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(meanVal);</span>
+<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>There are three possible situations, hence three parts to the <strong><em>if-else-if</em></strong> structure:</p>
 <ol type="1">
 <li><code>if(is.na(vec[i]) == FALSE)  # The current vec value is not NA</code>
@@ -744,16 +753,16 @@ window.Quarto = {
 </section>
 <section id="using-the-function" class="level3" data-number="9.4">
 <h3 data-number="9.4" class="anchored" data-anchor-id="using-the-function"><span class="header-section-number">9.4</span> Using the function</h3>
-<div class="sourceCode" id="cb20" data-tab="1-13_Functions_Script.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>meanAdv1 <span class="ot">=</span> <span class="fu">mean_advanced</span>(<span class="at">vec=</span><span class="fu">c</span>(<span class="dv">6</span>,<span class="dv">2</span>,<span class="dv">8</span>,<span class="dv">3</span>));       <span class="co"># 4.75</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20" data-tab="1-13_Functions_Script.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>meanAdv1 <span class="ot">=</span> <span class="fu">mean_advanced</span>(<span class="at">vec=</span><span class="fu">c</span>(<span class="dv">6</span>,<span class="dv">2</span>,<span class="dv">8</span>,<span class="dv">3</span>));       <span class="co"># 4.75</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co"># meanAdv2 = mean_advanced();                   # will cause error because argument not provided </span></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>meanAdv3 <span class="ot">=</span> <span class="fu">mean_advanced</span>(<span class="at">vec=</span><span class="fu">c</span>(<span class="dv">6</span>,<span class="dv">2</span>, <span class="cn">NA</span>, <span class="dv">8</span>,<span class="dv">3</span>));  <span class="co"># will be NA (removeNA default is FALSE)</span></span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>meanAdv4 <span class="ot">=</span> <span class="fu">mean_advanced</span>(<span class="at">vec=</span><span class="fu">c</span>(<span class="dv">6</span>,<span class="dv">2</span>, <span class="cn">NA</span>, <span class="dv">8</span>,<span class="dv">3</span>), <span class="at">removeNA =</span> <span class="cn">TRUE</span>);  <span class="co"># 4.75</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>meanAdv5 <span class="ot">=</span> <span class="fu">mean_advanced</span>(<span class="at">vec=</span><span class="fu">c</span>(<span class="dv">6</span>,<span class="dv">2</span>,<span class="dv">8</span>,<span class="dv">3</span>, <span class="dv">75</span>,<span class="dv">200</span>)); <span class="co"># 49</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>meanAdv5 <span class="ot">=</span> <span class="fu">mean_advanced</span>(<span class="at">vec=</span><span class="fu">c</span>(<span class="dv">6</span>,<span class="dv">2</span>,<span class="dv">8</span>,<span class="dv">3</span>, <span class="dv">75</span>,<span class="dv">200</span>)); <span class="co"># 49</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Each line of code above calls the function <strong><em>mean_advanced()</em></strong>, passes in values for one or more arguments, and saves the return value from the function to a variable (<strong><em>ret3a</em></strong>, <strong><em>ret3b</em></strong>…). In the <strong><em>Environment</em></strong> we can see the return values stored in the variables.</p>
-<div class="sourceCode" id="cb21" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>meanAdv1<span class="sc">:</span>  <span class="fl">4.75</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>meanAdv1<span class="sc">:</span>  <span class="fl">4.75</span> </span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>meanAdv3<span class="sc">:</span>  <span class="cn">NA_real_</span></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>meanAdv4<span class="sc">:</span>  <span class="fl">4.75</span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>meanAdv5<span class="sc">:</span>  <span class="dv">49</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>meanAdv5<span class="sc">:</span>  <span class="dv">49</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
 </section>
@@ -777,7 +786,7 @@ window.Quarto = {
 <li><p>Why does <strong><em>removeNA</em></strong> have a default value but <strong><em>vec</em></strong> does not?</p></li>
 <li><p>Under what circumstances, if any, will this line <strong><em>not</em></strong> be executed?</p></li>
 </ol>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>meanVal <span class="ot">=</span> vecAdded <span class="sc">/</span> ( <span class="fu">length</span>(vec) <span class="sc">-</span> numNA);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>meanVal <span class="ot">=</span> vecAdded <span class="sc">/</span> ( <span class="fu">length</span>(vec) <span class="sc">-</span> numNA);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>3) Create a function that returns either the standard deviation (default) or variance of a vector:</p>
 <ul>
 <li><p>There should be two arguments: (1) the vector and (2) something that allows the caller choose whether they want the standard deviation or the variance of the vector.</p></li>
@@ -824,16 +833,16 @@ window.Quarto = {
 <p>Most of the time you need to include arguments when you call a function.</p>
 <p>&nbsp;</p>
 <p>There are exceptions. For instance <strong><em>c()</em></strong>, which creates a vector, is often used without an argument, which means the vector initially has no values (i.e., a <strong><em>NULL</em></strong> vector):</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>vec1 <span class="ot">=</span> <span class="fu">c</span>();         <span class="co"># a vector that initially has no values (an empty vector) </span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>vec2 <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">9</span>,<span class="dv">1</span>);  <span class="co"># a vector with four values</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb24" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>vec1<span class="sc">:</span> <span class="cn">NULL</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>vec2<span class="sc">:</span> num [<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="dv">5</span> <span class="dv">2</span> <span class="dv">9</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>vec1 <span class="ot">=</span> <span class="fu">c</span>();         <span class="co"># a vector that initially has no values (an empty vector) </span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>vec2 <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">9</span>,<span class="dv">1</span>);  <span class="co"># a vector with four values</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>vec1<span class="sc">:</span> <span class="cn">NULL</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>vec2<span class="sc">:</span> num [<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="dv">5</span> <span class="dv">2</span> <span class="dv">9</span> <span class="dv">1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>You could also call <strong><em>cat()</em></strong> without any arguments, and R will display nothing:</p>
-<div class="sourceCode" id="cb25" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">cat</span>()</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">cat</span>()</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong><em>date()</em></strong> is a simple enough function that you do not need any arguments:</p>
-<div class="sourceCode" id="cb26" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">date</span>()</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"Fri Sep 19 10:17:29 2025"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">date</span>()</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"Fri Sep 19 10:17:29 2025"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="sec-r-base-mean" class="level2" data-number="12">
 <h2 data-number="12" class="anchored" data-anchor-id="sec-r-base-mean"><span class="header-section-number">12</span> Extension: The R-base mean() function</h2>
@@ -859,7 +868,7 @@ Figure&nbsp;1: Name, arguments, and return value for the function mean() in the 
 <p><span class="hl">Arguments are variables</span> whose values are supplied by the caller and used by the function.</p>
 <p>&nbsp;</p>
 <p>In the <strong><em>Help</em></strong> tab (<a href="#fig-meanFunction" class="quarto-xref">Figure&nbsp;1</a>) we see that the <strong><em>Default S3 Method</em></strong> (the most commonly used method) for <strong><em>mean()</em></strong> has three arguments (<strong><em>x</em></strong>, <strong><em>trim</em></strong>, <strong><em>na.rm</em></strong>).</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x, <span class="at">trim =</span> <span class="dv">0</span>, <span class="at">na.rm =</span> <span class="cn">FALSE</span>, ...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x, <span class="at">trim =</span> <span class="dv">0</span>, <span class="at">na.rm =</span> <span class="cn">FALSE</span>, ...)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>In this case, <strong><em>x</em></strong> is the vector of values that the caller want to find the mean for. <span class="note">Note: <strong><em>x</em></strong> is often used by R as a generic argument for input values.</span></p>
 <p>&nbsp;</p>
 <p>The other two arguments, <strong><em>trim</em></strong> and <strong><em>na.rm</em></strong>, are tweaks to <strong><em>mean()</em></strong> that give <strong><em>mean()</em></strong> more functionality. <strong><em>trim</em></strong> can be used to remove extreme values and <strong><em>na.rm</em></strong> can be used to ignore <strong>NA</strong> values. <strong><em>trim</em></strong> and <strong><em>na.rm</em></strong> have <span class="hl">default values</span> <code>(trim = 0, na.rm= FALSE)</code> meaning the caller does not need to provide values for these arguments unless they want to change the default functionality of <strong><em>mean()</em></strong>.</p>
@@ -877,16 +886,16 @@ Figure&nbsp;1: Name, arguments, and return value for the function mean() in the 
 <p>We will call <strong><em>mean()</em></strong> multiple times with the same vector of values but changing the arguments. One value in the vector is <strong><em>NA</em></strong>, which we need to deal with because the mean of any vector with an <strong><em>NA</em></strong> value is <strong><em>NA</em></strong>. <span class="note">Note: this was covered in more detail in <a href="1-05_Functions_Introduction.html#sec-median-NA">lesson 5 with <strong><em>median()</em></strong></a>.</span></p>
 <p>&nbsp;</p>
 <p>There are four calls below to the function <strong><em>mean()</em></strong>. Each call passes in one or more argument value, and saves the return value from the function to the variables named <strong><em>meanBase1</em></strong>, <strong><em>meanBase2</em></strong>, <strong><em>meanBase3</em></strong>, and <strong><em>meanBase4</em></strong>.</p>
-<div class="sourceCode" id="cb28" data-tab="1-13_Functions_Main.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>testVector <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">5</span>, <span class="cn">NA</span>, <span class="sc">-</span><span class="dv">100</span>, <span class="dv">10</span>); <span class="co"># has an NA value</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28" data-tab="1-13_Functions_Main.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>testVector <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">5</span>, <span class="cn">NA</span>, <span class="sc">-</span><span class="dv">100</span>, <span class="dv">10</span>); <span class="co"># has an NA value</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>meanBase1 <span class="ot">=</span> <span class="fu">mean</span>(<span class="at">x=</span>testVector);               <span class="co"># uses default for na.rm, which is FALSE</span></span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>meanBase2 <span class="ot">=</span> <span class="fu">mean</span>(<span class="at">x=</span>testVector, <span class="at">na.rm=</span><span class="cn">FALSE</span>);  <span class="co"># same as above</span></span>
 <span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>meanBase3 <span class="ot">=</span> <span class="fu">mean</span>(<span class="at">x=</span>testVector, <span class="at">na.rm=</span><span class="cn">TRUE</span>);   <span class="co"># remove NAs</span></span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>meanBase4 <span class="ot">=</span> <span class="fu">mean</span>(<span class="at">x=</span>testVector, <span class="at">na.rm=</span><span class="cn">TRUE</span>, <span class="at">trim=</span><span class="fl">0.1</span>);  <span class="co"># remove NAs and trims high and low value</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>meanBase4 <span class="ot">=</span> <span class="fu">mean</span>(<span class="at">x=</span>testVector, <span class="at">na.rm=</span><span class="cn">TRUE</span>, <span class="at">trim=</span><span class="fl">0.1</span>);  <span class="co"># remove NAs and trims high and low value</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>In the <strong><em>Environment</em></strong> we can see the return values stored in the variables.</p>
-<div class="sourceCode" id="cb29" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>meanBase1<span class="sc">:</span> <span class="cn">NA_real_</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>meanBase1<span class="sc">:</span> <span class="cn">NA_real_</span> </span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>meanBase2<span class="sc">:</span> <span class="cn">NA_real_</span> </span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>meanBase3<span class="sc">:</span> <span class="sc">-</span><span class="dv">12</span> </span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>meanBase4<span class="sc">:</span> <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>meanBase4<span class="sc">:</span> <span class="dv">10</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li><p><strong><em>meanBase1</em></strong> and <strong><em>meanBase2</em></strong> are <strong><em>NA_real</em></strong> because there was an unignored <strong><em>NA</em></strong> value in the vector and we did not choose to remove the <strong><em>NA</em></strong>. <span class="note">note: <strong><em>NA_real_</em></strong> means the value is <strong><em>NA</em></strong> but would be a real number if it was not <strong><em>NA</em></strong>.</span></p></li>
 <li><p><strong><em>meanBase3</em></strong> is <strong>-12</strong>, the mean of the values when the <strong><em>NA</em></strong> is removed</p></li>
@@ -949,13 +958,14 @@ Figure&nbsp;1: Name, arguments, and return value for the function mean() in the 
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

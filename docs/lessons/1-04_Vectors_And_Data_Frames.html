@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.17">
+<meta name="generator" content="quarto-1.9.8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -21,8 +21,9 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 /* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -33,7 +34,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -66,14 +67,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta name="quarto:offset" content="../">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-da03d714c310c60cec1d83284c92da2c.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-095e6f6405c331e3b33229e03003579f.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-5f39cfd1aee7e7785011fc5df168ee92.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-0ee72de42c60dbd072a9e85558b70db9.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -297,6 +299,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../lessons/2-05b_RegularExpressions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-05b: Regular Expressions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../lessons/2-06_Datetime_Objects.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">2-06: Datetime objects</span></a>
   </div>
@@ -486,27 +494,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="vector-variables" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="vector-variables"><span class="header-section-number">3</span> Vector Variables</h2>
 <p>Vector variables, or <strong><em>vector</em></strong> for short, are <span class="hl">variables that hold multiple related values</span><em>.</em>&nbsp; For instance if we have temperature values for 5 days, we could create 5 variables and assign each one a temperature value:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>tempHigh1 <span class="ot">=</span> <span class="dv">65</span>;</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>tempHigh1 <span class="ot">=</span> <span class="dv">65</span>;</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>tempHigh2 <span class="ot">=</span> <span class="dv">57</span>;</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>tempHigh3 <span class="ot">=</span> <span class="dv">61</span>;</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>tempHigh4 <span class="ot">=</span> <span class="dv">64</span>;</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>tempHigh5 <span class="ot">=</span> <span class="dv">59</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>tempHigh5 <span class="ot">=</span> <span class="dv">59</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>And, in the last lesson’s application, we averaged the 5 values like this:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>tempAvg <span class="ot">=</span> (tempHigh1 <span class="sc">+</span> tempHigh2 <span class="sc">+</span> tempHigh3 <span class="sc">+</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>           tempHigh4 <span class="sc">+</span> tempHigh5) <span class="sc">/</span> <span class="dv">5</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>tempAvg <span class="ot">=</span> (tempHigh1 <span class="sc">+</span> tempHigh2 <span class="sc">+</span> tempHigh3 <span class="sc">+</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>           tempHigh4 <span class="sc">+</span> tempHigh5) <span class="sc">/</span> <span class="dv">5</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <section id="grouping-values" class="level3" data-number="3.1">
 <h3 data-number="3.1" class="anchored" data-anchor-id="grouping-values"><span class="header-section-number">3.1</span> Grouping values</h3>
 <p>But, in programming we want to group related values together.&nbsp; So, instead of creating 5 different variables, <span class="hl">we create one vector that has 5 values:</span></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>tempHigh <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">65</span>, <span class="dv">57</span>, <span class="dv">61</span>, <span class="dv">64</span>, <span class="dv">59</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>tempHigh <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">65</span>, <span class="dv">57</span>, <span class="dv">61</span>, <span class="dv">64</span>, <span class="dv">59</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>One of the main reasons to create a vector is that <span class="hl">the values in the vector are all associated</span> and we can perform mathematical operations on the whole vector.&nbsp; For instance, the vector might consist of multiple temperatures in Fahrenheit and want to convert all the temperatures to Celsius:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>tempHighCel <span class="ot">=</span> (<span class="dv">5</span><span class="sc">/</span><span class="dv">9</span>) <span class="sc">*</span> (tempHigh <span class="sc">-</span> <span class="dv">32</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>tempHighCel <span class="ot">=</span> (<span class="dv">5</span><span class="sc">/</span><span class="dv">9</span>) <span class="sc">*</span> (tempHigh <span class="sc">-</span> <span class="dv">32</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Or, we can use one of R’s many, many statistical functions, <strong><em>mean()</em></strong>, on the vector:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>tempMean <span class="ot">=</span> <span class="fu">mean</span>(tempHigh); </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>tempMean <span class="ot">=</span> <span class="fu">mean</span>(tempHigh); </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>After executing the code in this section, we can see in the <strong><em>Environment</em></strong> tab that <strong><em>tempHighCel</em></strong> has 5 converted temperatures and that <strong><em>tempMean</em></strong> is the same as <strong><em>tempAvg</em></strong>:</p>
-<div class="sourceCode" id="cb6" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>tempAvg<span class="sc">:</span>     <span class="fl">61.2</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>tempAvg<span class="sc">:</span>     <span class="fl">61.2</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>tempHigh<span class="sc">:</span>    num [<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="dv">65</span> <span class="dv">57</span> <span class="dv">61</span> <span class="dv">64</span> <span class="dv">59</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>tempHighCel<span class="sc">:</span> num [<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="fl">18.3</span> <span class="dv">139</span> <span class="fl">16.1</span> <span class="fl">17.5</span> <span class="dv">15</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>tempMean<span class="sc">:</span>    <span class="fl">61.2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>tempMean<span class="sc">:</span>    <span class="fl">61.2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div id="fig-environment-view" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-environment-view-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -522,18 +530,18 @@ Figure&nbsp;1: View of temperature values in Environment
 <section id="indexing-values-in-a-vector" class="level3" data-number="3.2">
 <h3 data-number="3.2" class="anchored" data-anchor-id="indexing-values-in-a-vector"><span class="header-section-number">3.2</span> Indexing values in a vector</h3>
 <p>Putting values into vectors also allows us to associate values between vectors.&nbsp; If we have a vector of high temperature values, then we could also have a corresponding vector of low temperature values.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>tempLow <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">45</span>, <span class="dv">40</span>, <span class="dv">55</span>, <span class="dv">37</span>, <span class="dv">42</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>tempLow <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">45</span>, <span class="dv">40</span>, <span class="dv">55</span>, <span class="dv">37</span>, <span class="dv">42</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>We can directly subtract <strong><em>tempLow</em></strong> values from <strong><em>tempHigh</em></strong> to get the difference in temperature for all values:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>tempDiff <span class="ot">=</span> tempHigh <span class="sc">-</span> tempLow;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>tempDiff <span class="ot">=</span> tempHigh <span class="sc">-</span> tempLow;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>We can index individual values.&nbsp; You could think of the vector as 5 days.&nbsp; And if you want, you can find the change in temperature for any day using the index 1 through 5:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>tempDiff_3 <span class="ot">=</span> tempHigh[<span class="dv">3</span>] <span class="sc">-</span> tempLow[<span class="dv">3</span>];</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>tempDiff_5 <span class="ot">=</span> tempHigh[<span class="dv">5</span>] <span class="sc">-</span> tempLow[<span class="dv">5</span>];</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>tempDiff_3 <span class="ot">=</span> tempHigh[<span class="dv">3</span>] <span class="sc">-</span> tempLow[<span class="dv">3</span>];</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>tempDiff_5 <span class="ot">=</span> tempHigh[<span class="dv">5</span>] <span class="sc">-</span> tempLow[<span class="dv">5</span>];</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The <strong><em>Environment</em></strong> shows:</p>
-<div class="sourceCode" id="cb10" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>tempHigh<span class="sc">:</span>    num [<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="dv">65</span> <span class="dv">57</span> <span class="dv">61</span> <span class="dv">64</span> <span class="dv">59</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>tempHigh<span class="sc">:</span>    num [<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="dv">65</span> <span class="dv">57</span> <span class="dv">61</span> <span class="dv">64</span> <span class="dv">59</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>tempLow<span class="sc">:</span>     num [<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="dv">45</span> <span class="dv">40</span> <span class="dv">55</span> <span class="dv">37</span> <span class="dv">42</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>tempDiff<span class="sc">:</span>    num [<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="dv">20</span> <span class="dv">17</span> <span class="dv">6</span> <span class="dv">27</span> <span class="dv">17</span></span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>tempDiff_3<span class="sc">:</span>  <span class="dv">6</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>tempDiff_5<span class="sc">:</span>  <span class="dv">17</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>tempDiff_5<span class="sc">:</span>  <span class="dv">17</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="vectors-and-columns-in-a-data-frame" class="level3" data-number="3.3">
 <h3 data-number="3.3" class="anchored" data-anchor-id="vectors-and-columns-in-a-data-frame"><span class="header-section-number">3.3</span> Vectors and columns in a data frame</h3>
@@ -588,10 +596,10 @@ Figure&nbsp;3: The twoWeekWeatherData.csv file opened in RStudio
 <p>We can see that the CSV file has a header row and each row has five values representing: <strong><em>date</em></strong>, <strong><em>highTemp</em></strong>, <strong><em>lowTemp</em></strong>, <strong><em>precipitation, noonCondition</em></strong>.</p>
 <p>&nbsp;</p>
 <p>To use the data in a script we need to read the data into a script file – and for that we will use the <strong><em>read.csv()</em></strong> function.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the data from the twoWeekWeatherData CSV file</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the data from the twoWeekWeatherData CSV file</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>weatherData <span class="ot">=</span> «read.csv»(<span class="at">file=</span><span class="st">"data/twoWeekWeatherData.csv"</span>, </span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">sep=</span><span class="st">","</span>,</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">header=</span><span class="cn">TRUE</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">header=</span><span class="cn">TRUE</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong><em>read.csv()</em></strong> reads in the data from the CSV file – and saves the data to a variable called <strong><em>weatherData</em></strong>.</p>
 <p>&nbsp;</p>
 <p><strong><em>weatherData</em></strong> is a <span class="hl">data frame variable</span> and it appears in the <strong><em>Environment</em></strong> tab under <strong><em>Data</em></strong> as <span class="hl">14 obs. of 5 variables</span>. (i.e., 14 rows and 5 columns), which matches what we saw in the CSV file (<a href="#fig-openCSV-RStudio" class="quarto-xref">Figure&nbsp;3</a>).&nbsp;</p>
@@ -664,7 +672,7 @@ Figure&nbsp;5: You get a cannot open file error if you try to execute the script
 <section id="default-values-for-arguments" class="level3" data-number="5.4">
 <h3 data-number="5.4" class="anchored" data-anchor-id="default-values-for-arguments"><span class="header-section-number">5.4</span> Default values for arguments</h3>
 <p>By default, <strong><em>read.csv()</em></strong> assumes <strong><em>sep=“,”</em></strong> and <strong><em>header=TRUE</em></strong>. For the data in this example, <strong><em>sep</em></strong> and <strong><em>header</em></strong> are not needed and this code would work:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>weatherData <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="at">file=</span><span class="st">"data/twoWeekWeatherData.csv"</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>weatherData <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="at">file=</span><span class="st">"data/twoWeekWeatherData.csv"</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>But I like to keep <strong><em>sep</em></strong> and <strong><em>header</em></strong> in my code because you often do need to change them (e.g., you have data without a header or spaces between values instead of commas) and it is easier to deal with if you already have <strong><em>sep</em></strong> and <strong><em>header</em></strong> when copying code from one script to another.</p>
 </section>
 </section>
@@ -676,7 +684,7 @@ Figure&nbsp;5: You get a cannot open file error if you try to execute the script
 <p>Columns in a data frame are vectors (i.e., a variable with multiple values) and we can save the columns to a vector.&nbsp; We can access the columns from a data frame using the <strong><em>$</em></strong> operator.</p>
 <p>&nbsp;</p>
 <p>We start with <strong><em>weatherData</em></strong> and, use the dollar sign operator ( <strong><em>$</em></strong> ) to access the <strong><em>highTemp</em></strong> column, and save the results to the vector called <strong><em>highTemps</em></strong>:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>highTemps <span class="ot">=</span> weatherData<span class="sc">$</span>highTemp;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>highTemps <span class="ot">=</span> weatherData<span class="sc">$</span>highTemp;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>In the <strong><em>Environment</em></strong> square brackets ( <strong>[ ]</strong> ) indicates the variable is a <strong>vector</strong>.&nbsp; <strong><em>highTemps</em></strong> appears in the <strong><em>Environment</em></strong> as a <strong><em>vector</em></strong>.&nbsp; <strong><em>highTemps</em></strong> has 14 ( <strong><em>[1:14]</em></strong> ) integer (<strong><em>int</em></strong>) values, representing the temperature for each of the 14 days.&nbsp;</p>
 <div id="fig-high-temps" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -696,19 +704,19 @@ Figure&nbsp;6: The highTemps vector variable in the Environment tab
 <p>There are multiple ways to access that individual value.&nbsp; I will present three, but for the rest of this lesson, we are going to use the first method.<br>
 &nbsp;</p>
 <p>We could subset using the subset operator ( <strong>[ ]</strong> ) the 7<sup>th</sup> value from <strong><em>highTemps</em></strong>:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>highTempDay7a <span class="ot">=</span> highTemps[<span class="dv">7</span>];</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>highTempDay7a <span class="ot">=</span> highTemps[<span class="dv">7</span>];</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>We could go back to the original data frame (<strong><em>weatherData</em></strong>) and subset the 7<sup>th</sup> value from the column <strong><em>highTemp</em></strong>:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>highTempDay7b <span class="ot">=</span> weatherData<span class="sc">$</span>highTemp[<span class="dv">7</span>];</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>highTempDay7b <span class="ot">=</span> weatherData<span class="sc">$</span>highTemp[<span class="dv">7</span>];</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Or, we can use a row/column (e.g., X,Y) operation on <strong><em>weatherData</em></strong> to get the value:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>highTempDay7c <span class="ot">=</span> weatherData[<span class="dv">7</span>, <span class="st">"highTemp"</span>];  <span class="co"># think of this as [X,Y] notation</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>highTempDay7c <span class="ot">=</span> weatherData[<span class="dv">7</span>, <span class="st">"highTemp"</span>];  <span class="co"># think of this as [X,Y] notation</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The last method is functionally the same as the previous two – but <span class="hl">the X,Y notation is the most robust</span> as it can best handle more complex subsetting situations (e.g., subsetting multiple rows and columns), which will be discussed in a future lesson.</p>
 </section>
 <section id="the-environment-and-the-l-value" class="level3" data-number="6.3">
 <h3 data-number="6.3" class="anchored" data-anchor-id="the-environment-and-the-l-value"><span class="header-section-number">6.3</span> The Environment and the L value</h3>
 <p>I will be referring quite often to the <strong><em>Environment</em></strong> tab as it looks after the script has been sourced (as in <a href="#fig-high-temps" class="quarto-xref">Figure&nbsp;6</a>) .&nbsp; Instead of taking a screenshot of the <strong><em>Environment</em></strong> tab (which is hard to maintain), I will display the variables I am focused on like this:</p>
-<div class="sourceCode" id="cb17" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>highTemp7a<span class="sc">:</span>  <span class="dv">60</span>L</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>highTemp7a<span class="sc">:</span>  <span class="dv">60</span>L</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>highTemp7b<span class="sc">:</span>  <span class="dv">60</span>L</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>highTemp7c<span class="sc">:</span>  <span class="dv">60</span>L</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>highTemp7c<span class="sc">:</span>  <span class="dv">60</span>L</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The <strong><em>Environment</em></strong> tab shows that <strong><em>highTemp7a</em></strong>, <strong><em>highTemp7b</em></strong>, and <strong><em>highTemp7c</em></strong> are all equal to <strong>60L</strong></p>
 <p>&nbsp;</p>
 <p>The <strong>L</strong> indicates that the number is explicitly an integer, not just a numeric values that happens to have all zeros in its decimal.</p>
@@ -725,19 +733,19 @@ Figure&nbsp;6: The highTemps vector variable in the Environment tab
 <section id="using-a-numeric-vector-to-pull-multiple-values" class="level3" data-number="7.1">
 <h3 data-number="7.1" class="anchored" data-anchor-id="using-a-numeric-vector-to-pull-multiple-values"><span class="header-section-number">7.1</span> Using a numeric vector to pull multiple values</h3>
 <p><strong><em>highTemps</em></strong> is a vector with <strong>14</strong> values and each of these values can be accessed by their numeric placement:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>val_01 <span class="ot">=</span> highTemps[<span class="dv">1</span>];</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>val_01 <span class="ot">=</span> highTemps[<span class="dv">1</span>];</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>val_05 <span class="ot">=</span> highTemps[<span class="dv">5</span>];</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>val_12 <span class="ot">=</span> highTemps[<span class="dv">12</span>];</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>val_12 <span class="ot">=</span> highTemps[<span class="dv">12</span>];</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Or, we might want to combine the temperatures from these three days into one variable.&nbsp; <strong><em>c()</em></strong> creates a vector of the three values (1, 5, and 12) and that vector is used to subset <strong><em>highTemps</em></strong>:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>valComb <span class="ot">=</span> highTemps[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">12</span>)];  <span class="co"># a vector with 3 values</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>valComb <span class="ot">=</span> highTemps[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">12</span>)];  <span class="co"># a vector with 3 values</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong><em>valComb</em></strong> is a vector with 3 values, the high temperature for days <strong>1</strong>, <strong>5</strong>, and <strong>12</strong>:</p>
 <div id="fig-subsetValues" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-subsetValues-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="sourceCode" id="fig-subsetValues" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="fig-subsetValues-1"><a href="#fig-subsetValues-1" aria-hidden="true" tabindex="-1"></a>val_01<span class="sc">:</span>    <span class="dv">57</span>L</span>
-<span id="fig-subsetValues-2"><a href="#fig-subsetValues-2" aria-hidden="true" tabindex="-1"></a>val_05<span class="sc">:</span>    <span class="dv">39</span>L</span>
-<span id="fig-subsetValues-3"><a href="#fig-subsetValues-3" aria-hidden="true" tabindex="-1"></a>val_12<span class="sc">:</span>    <span class="dv">54</span>L</span>
-<span id="fig-subsetValues-4"><a href="#fig-subsetValues-4" aria-hidden="true" tabindex="-1"></a>valComb<span class="sc">:</span>   int [<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>] <span class="dv">57</span> <span class="dv">39</span> <span class="dv">54</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>val_01<span class="sc">:</span>    <span class="dv">57</span>L</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>val_05<span class="sc">:</span>    <span class="dv">39</span>L</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>val_12<span class="sc">:</span>    <span class="dv">54</span>L</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>valComb<span class="sc">:</span>   int [<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>] <span class="dv">57</span> <span class="dv">39</span> <span class="dv">54</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-subsetValues-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;7: The three values we pulled from <strong>highTemps</strong> individually saved and combined (<strong>valComb</strong>)
@@ -748,17 +756,17 @@ Figure&nbsp;7: The three values we pulled from <strong>highTemps</strong> indivi
 <section id="pulling-out-consecutive-values" class="level3" data-number="7.2">
 <h3 data-number="7.2" class="anchored" data-anchor-id="pulling-out-consecutive-values"><span class="header-section-number">7.2</span> Pulling out consecutive values</h3>
 <p>If we want to get the high temperature for consecutive days, we can use the sequence-by-one ( <strong>:</strong> ) operator – often called the simple sequencing operator. The sequence-by-one operator ( <strong>:</strong> ) gives you every integer number between the two values.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>consecVals <span class="ot">=</span> highTemps[<span class="dv">3</span><span class="sc">:</span><span class="dv">11</span>];  <span class="co"># same as highTemps[c(3,4,5,6,7,8,9,10,11)]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>consecVals <span class="ot">=</span> highTemps[<span class="dv">3</span><span class="sc">:</span><span class="dv">11</span>];  <span class="co"># same as highTemps[c(3,4,5,6,7,8,9,10,11)]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong><em>consecVals</em></strong> is a vector with 9 values – the high temperatures from days <strong>3</strong> through <strong>11</strong>.&nbsp; <span class="note">Note: <strong>9</strong> values, not <strong>8</strong> – we include both the 3 and the 11.</span></p>
 <p>&nbsp;</p>
 <p>The ( : ) operator also works in reverse</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>consecValsRev <span class="ot">=</span> highTemps[<span class="dv">11</span><span class="sc">:</span><span class="dv">3</span>];</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>consecValsRev <span class="ot">=</span> highTemps[<span class="dv">11</span><span class="sc">:</span><span class="dv">3</span>];</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong><em>consecValsRev</em></strong> is a vector with 9 values – the high temperatures from days <strong>11</strong> <span class="hl">down to</span> <strong>3</strong>.</p>
 <div id="fig-subsetDown" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-subsetDown-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="sourceCode" id="fig-subsetDown" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="fig-subsetDown-1"><a href="#fig-subsetDown-1" aria-hidden="true" tabindex="-1"></a>consecVals<span class="sc">:</span>     int [<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>] <span class="dv">54</span> <span class="dv">40</span> <span class="dv">39</span> ...</span>
-<span id="fig-subsetDown-2"><a href="#fig-subsetDown-2" aria-hidden="true" tabindex="-1"></a>consecValsRev<span class="sc">:</span>  int [<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>] <span class="dv">39</span> <span class="dv">44</span> <span class="dv">55</span> ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>consecVals<span class="sc">:</span>     int [<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>] <span class="dv">54</span> <span class="dv">40</span> <span class="dv">39</span> ...</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>consecValsRev<span class="sc">:</span>  int [<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>] <span class="dv">39</span> <span class="dv">44</span> <span class="dv">55</span> ...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-subsetDown-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;8: int [1:9] means 9 values are in each vector – the first few values are shown
@@ -781,10 +789,10 @@ Figure&nbsp;9: Using the Console tab to view variables
 </div>
 <p>&nbsp;</p>
 <p>These two values, <strong><em>consecVals</em></strong> and <strong><em>consecValRev</em></strong>, are shown in the <strong><em>Console</em></strong> window in <a href="#fig-console-variables" class="quarto-xref">Figure&nbsp;9</a>. In the future I will present the <strong><em>Console</em></strong> like this:</p>
-<div class="sourceCode" id="cb22" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> consecVals </span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">54</span> <span class="dv">40</span> <span class="dv">39</span> <span class="dv">58</span> <span class="dv">60</span> <span class="dv">53</span> <span class="dv">55</span> <span class="dv">44</span> <span class="dv">39</span> </span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> consecValsRev </span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">39</span> <span class="dv">44</span> <span class="dv">55</span> <span class="dv">53</span> <span class="dv">60</span> <span class="dv">58</span> <span class="dv">39</span> <span class="dv">40</span> <span class="dv">54</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> consecVals </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">54</span> <span class="dv">40</span> <span class="dv">39</span> <span class="dv">58</span> <span class="dv">60</span> <span class="dv">53</span> <span class="dv">55</span> <span class="dv">44</span> <span class="dv">39</span> </span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> consecValsRev </span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">39</span> <span class="dv">44</span> <span class="dv">55</span> <span class="dv">53</span> <span class="dv">60</span> <span class="dv">58</span> <span class="dv">39</span> <span class="dv">40</span> <span class="dv">54</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="sec-seq" class="level3" data-number="7.4">
 <h3 data-number="7.4" class="anchored" data-anchor-id="sec-seq"><span class="header-section-number">7.4</span> Using a sequence to get values</h3>
@@ -805,32 +813,32 @@ Figure&nbsp;9: Using the Console tab to view variables
 </ul>
 <p>&nbsp;</p>
 <p>We can create a sequence that lists every other number from 1-14</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>seq1 <span class="ot">=</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">1</span>, <span class="at">to=</span><span class="dv">14</span>, <span class="at">by=</span><span class="dv">2</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>seq1 <span class="ot">=</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">1</span>, <span class="at">to=</span><span class="dv">14</span>, <span class="at">by=</span><span class="dv">2</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>We can reverse the sequence by switching the <strong><em>to</em></strong> and <strong><em>from</em></strong> and inverting the <strong><em>by</em></strong></p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>seq2 <span class="ot">=</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">14</span>, <span class="at">to=</span><span class="dv">1</span>, <span class="at">by=</span><span class="sc">-</span><span class="dv">2</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>seq2 <span class="ot">=</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">14</span>, <span class="at">to=</span><span class="dv">1</span>, <span class="at">by=</span><span class="sc">-</span><span class="dv">2</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>We can get every 3rd number for the first 10 numbers:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>seq3 <span class="ot">=</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">1</span>, <span class="at">to=</span><span class="dv">10</span>, <span class="at">by=</span><span class="dv">3</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>seq3 <span class="ot">=</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">1</span>, <span class="at">to=</span><span class="dv">10</span>, <span class="at">by=</span><span class="dv">3</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The 3 sequences we created are just vectors of numbers:</p>
-<div class="sourceCode" id="cb26" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>seq1<span class="sc">:</span>   <span class="dv">1</span> <span class="dv">3</span> <span class="dv">5</span> <span class="dv">7</span> <span class="dv">9</span> <span class="dv">11</span> <span class="dv">13</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>seq2<span class="sc">:</span>   <span class="dv">14</span> <span class="dv">12</span> <span class="dv">10</span> <span class="dv">8</span> <span class="dv">6</span> <span class="dv">4</span> <span class="dv">2</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>seq3<span class="sc">:</span>   <span class="dv">1</span> <span class="dv">4</span> <span class="dv">7</span> <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>seq1<span class="sc">:</span>   <span class="dv">1</span> <span class="dv">3</span> <span class="dv">5</span> <span class="dv">7</span> <span class="dv">9</span> <span class="dv">11</span> <span class="dv">13</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>seq2<span class="sc">:</span>   <span class="dv">14</span> <span class="dv">12</span> <span class="dv">10</span> <span class="dv">8</span> <span class="dv">6</span> <span class="dv">4</span> <span class="dv">2</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>seq3<span class="sc">:</span>   <span class="dv">1</span> <span class="dv">4</span> <span class="dv">7</span> <span class="dv">10</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="using-the-sequences-as-indexes" class="level4" data-number="7.4.2">
 <h4 data-number="7.4.2" class="anchored" data-anchor-id="using-the-sequences-as-indexes"><span class="header-section-number">7.4.2</span> Using the sequences as indexes</h4>
 <p>We can use the 3 sequences above as index vectors to index the <strong><em>highTemps</em></strong> vector:</p>
 <p>&nbsp;</p>
 <p>Get <span class="hl">every other</span> high temperature:</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>highTempSeq1 <span class="ot">=</span> highTemps[seq1];</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>highTempSeq1 <span class="ot">=</span> highTemps[seq1];</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Get every other high temperature <span class="hl">in reverse</span>:</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>highTempSeq2 <span class="ot">=</span> highTemps[seq2];</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>highTempSeq2 <span class="ot">=</span> highTemps[seq2];</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Get <span class="hl">every 3rd</span> high temperature value in the first 10 values:</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>highTempSeq3 <span class="ot">=</span> highTemps[seq3];</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>highTempSeq3 <span class="ot">=</span> highTemps[seq3];</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div id="fig-sequences" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-sequences-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="sourceCode" id="fig-sequences" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="fig-sequences-1"><a href="#fig-sequences-1" aria-hidden="true" tabindex="-1"></a>highTempSeq1<span class="sc">:</span>  int [<span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>] <span class="dv">57</span> <span class="dv">54</span> <span class="dv">39</span> <span class="dv">60</span> ...</span>
-<span id="fig-sequences-2"><a href="#fig-sequences-2" aria-hidden="true" tabindex="-1"></a>highTempSeq2<span class="sc">:</span>  int [<span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>] <span class="dv">75</span> <span class="dv">54</span> <span class="dv">44</span> <span class="dv">53</span> ...</span>
-<span id="fig-sequences-3"><a href="#fig-sequences-3" aria-hidden="true" tabindex="-1"></a>highTempSeq3<span class="sc">:</span>  int [<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="dv">57</span> <span class="dv">40</span> <span class="dv">60</span> <span class="dv">44</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>highTempSeq1<span class="sc">:</span>  int [<span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>] <span class="dv">57</span> <span class="dv">54</span> <span class="dv">39</span> <span class="dv">60</span> ...</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>highTempSeq2<span class="sc">:</span>  int [<span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>] <span class="dv">75</span> <span class="dv">54</span> <span class="dv">44</span> <span class="dv">53</span> ...</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>highTempSeq3<span class="sc">:</span>  int [<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="dv">57</span> <span class="dv">40</span> <span class="dv">60</span> <span class="dv">44</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sequences-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;10: There are 7 values in the first two sequences and 4 in the third
@@ -843,9 +851,9 @@ Figure&nbsp;10: There are 7 values in the first two sequences and 4 in the third
 <p>You can combine the above two steps in 1 command.</p>
 <p>&nbsp;</p>
 <p>The following command will give you the same high temperature values:</p>
-<div class="sourceCode" id="cb30" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>highTempSeq1b <span class="ot">=</span> highTemps[<span class="fu">seq</span>(<span class="at">from=</span><span class="dv">1</span>, <span class="at">to=</span><span class="dv">14</span>, <span class="at">by=</span><span class="dv">2</span>)];  </span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>highTempSeq2b <span class="ot">=</span> highTemps[<span class="fu">seq</span>(<span class="at">from=</span><span class="dv">14</span>, <span class="at">to=</span><span class="dv">1</span>, <span class="at">by=</span><span class="sc">-</span><span class="dv">2</span>)];  </span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>highTempSeq3b <span class="ot">=</span> highTemps[<span class="fu">seq</span>(<span class="at">from=</span><span class="dv">1</span>, <span class="at">to=</span><span class="dv">10</span>, <span class="at">by=</span><span class="dv">3</span>)];</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>highTempSeq1b <span class="ot">=</span> highTemps[<span class="fu">seq</span>(<span class="at">from=</span><span class="dv">1</span>, <span class="at">to=</span><span class="dv">14</span>, <span class="at">by=</span><span class="dv">2</span>)];  </span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>highTempSeq2b <span class="ot">=</span> highTemps[<span class="fu">seq</span>(<span class="at">from=</span><span class="dv">14</span>, <span class="at">to=</span><span class="dv">1</span>, <span class="at">by=</span><span class="sc">-</span><span class="dv">2</span>)];  </span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>highTempSeq3b <span class="ot">=</span> highTemps[<span class="fu">seq</span>(<span class="at">from=</span><span class="dv">1</span>, <span class="at">to=</span><span class="dv">10</span>, <span class="at">by=</span><span class="dv">3</span>)];</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><a href="#extension-square-brackets-vs.-round-brackets">Extension: Square brackets [ ] vs.&nbsp;Round Brackets ( )</a></p>
 </section>
 <section id="note-about-combining-steps-in-r" class="level4" data-number="7.4.4">
@@ -864,7 +872,7 @@ Figure&nbsp;10: There are 7 values in the first two sequences and 4 in the third
 </em></p>
 <p>C) Subsetting:</p>
 <ol type="1">
-<li><p>Pull out two columns <strong><em>precipitation</em></strong> and <strong><em>lowTemp</em></strong> from <strong>weatherData</strong> and save each to a variable</p></li>
+<li><p>Save each of the two columns <strong><em>precipitation</em></strong> and <strong><em>lowTemp</em></strong> from <strong>weatherData</strong> to a variable</p></li>
 <li><p>Save the 4<sup>th</sup> value of <strong><em>precipitation</em></strong> to a variable</p>
 <ul>
 <li>Repeat the previous step for the other two methods given in <a href="#sec-subsetValues" class="quarto-xref">Section&nbsp;6.2</a></li>
@@ -948,14 +956,14 @@ Figure&nbsp;12: Opening a CSV file in Excel – the possible data loss warning i
 <section id="extension-statistical-functions-on-vectors" class="level2" data-number="11">
 <h2 data-number="11" class="anchored" data-anchor-id="extension-statistical-functions-on-vectors"><span class="header-section-number">11</span> Extension: Statistical functions on vectors</h2>
 <p>One huge advantage to using vectors is that most statistical function take vectors.&nbsp; So, you can easily perform statistical functions on a vector:</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>tempHigh <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">65</span>, <span class="dv">57</span>, <span class="dv">61</span>, <span class="dv">64</span>, <span class="dv">59</span>);</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>tempMean <span class="ot">=</span> <span class="fu">mean</span>(tempHigh);</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>tempSD <span class="ot">=</span> <span class="fu">sd</span>(tempHigh);</span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>tempVar <span class="ot">=</span> <span class="fu">var</span>(tempHigh);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb32" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>tempMean<span class="sc">:</span>   <span class="fl">61.2</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>tempSD<span class="sc">:</span>     <span class="dv">3</span>.<span class="dv">346</span>...</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>tempVar<span class="sc">:</span>    <span class="fl">11.2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>tempHigh <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">65</span>, <span class="dv">57</span>, <span class="dv">61</span>, <span class="dv">64</span>, <span class="dv">59</span>);</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>tempMean <span class="ot">=</span> <span class="fu">mean</span>(tempHigh);</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>tempSD <span class="ot">=</span> <span class="fu">sd</span>(tempHigh);</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>tempVar <span class="ot">=</span> <span class="fu">var</span>(tempHigh);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>tempMean<span class="sc">:</span>   <span class="fl">61.2</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>tempSD<span class="sc">:</span>     <span class="dv">3</span>.<span class="dv">346</span>...</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>tempVar<span class="sc">:</span>    <span class="fl">11.2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>We will be doing more with this in later lessons…</p>
 </section>
 <section id="extension-square-brackets-vs.-round-brackets" class="level2" data-number="12">
@@ -963,23 +971,23 @@ Figure&nbsp;12: Opening a CSV file in Excel – the possible data loss warning i
 <p><span class="hl">Square</span> brackets are used when you are <span class="hl">subsetting</span> or indexing a variable.</p>
 <p><span class="hl">Round</span> brackets are used when you are <span class="hl">calling a function</span> and contain the arguments for that function.</p>
 <p>… and the two types of brackets are often used in the same command</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>lowTemps [<span class="fu">seq</span>(<span class="at">from=</span><span class="dv">12</span>, <span class="at">to=</span><span class="dv">2</span>, <span class="at">by=</span><span class="sc">-</span><span class="dv">2</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>lowTemps [<span class="fu">seq</span>(<span class="at">from=</span><span class="dv">12</span>, <span class="at">to=</span><span class="dv">2</span>, <span class="at">by=</span><span class="sc">-</span><span class="dv">2</span>)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>says you are going to subset <strong><em>lowTemps</em></strong> using the function <strong><em>seq()</em></strong>.&nbsp;</p>
-<div class="sourceCode" id="cb34" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> lowTemps [<span class="fu">seq</span>(<span class="at">from=</span><span class="dv">12</span>, <span class="at">to=</span><span class="dv">2</span>, <span class="at">by=</span><span class="sc">-</span><span class="dv">2</span>)]</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">43</span> <span class="dv">40</span> <span class="dv">50</span> <span class="dv">45</span> <span class="dv">38</span> <span class="dv">43</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> lowTemps [<span class="fu">seq</span>(<span class="at">from=</span><span class="dv">12</span>, <span class="at">to=</span><span class="dv">2</span>, <span class="at">by=</span><span class="sc">-</span><span class="dv">2</span>)]</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">43</span> <span class="dv">40</span> <span class="dv">50</span> <span class="dv">45</span> <span class="dv">38</span> <span class="dv">43</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong><em>seq()</em></strong> is a function and produces a vector of numbers:</p>
-<div class="sourceCode" id="cb35" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">12</span>, <span class="at">to=</span><span class="dv">2</span>, <span class="at">by=</span><span class="sc">-</span><span class="dv">2</span>)</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">12</span> <span class="dv">10</span> <span class="dv">8</span> <span class="dv">6</span> <span class="dv">4</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">12</span>, <span class="at">to=</span><span class="dv">2</span>, <span class="at">by=</span><span class="sc">-</span><span class="dv">2</span>)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">12</span> <span class="dv">10</span> <span class="dv">8</span> <span class="dv">6</span> <span class="dv">4</span> <span class="dv">2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong><em>c()</em></strong> is also a function – <strong><em>c</em></strong> stands, unintuitively, for concatenate and will also produce a vector of numbers:</p>
-<div class="sourceCode" id="cb36" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">c</span>(<span class="dv">12</span>,<span class="dv">10</span>,<span class="dv">8</span>,<span class="dv">6</span>,<span class="dv">4</span>,<span class="dv">2</span>)</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">12</span> <span class="dv">10</span> <span class="dv">8</span> <span class="dv">6</span> <span class="dv">4</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">c</span>(<span class="dv">12</span>,<span class="dv">10</span>,<span class="dv">8</span>,<span class="dv">6</span>,<span class="dv">4</span>,<span class="dv">2</span>)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">12</span> <span class="dv">10</span> <span class="dv">8</span> <span class="dv">6</span> <span class="dv">4</span> <span class="dv">2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong><em>lowTemps [c(12,10,8,6,4,2)]</em></strong> and <strong><em>lowTemps [seq(from=12, to=2, by=-2)]</em></strong> produce the same results.</p>
 <p>&nbsp;</p>
 <p>You can also subset <strong><em>lowTemps</em></strong> without calling a function:</p>
-<div class="sourceCode" id="cb37" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> lowTemps[<span class="dv">5</span>]</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">36</span></span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> lowTemps[<span class="dv">4</span><span class="sc">:</span><span class="dv">8</span>]</span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">38</span> <span class="dv">36</span> <span class="dv">45</span> <span class="dv">32</span> <span class="dv">50</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> lowTemps[<span class="dv">5</span>]</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">36</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> lowTemps[<span class="dv">4</span><span class="sc">:</span><span class="dv">8</span>]</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">38</span> <span class="dv">36</span> <span class="dv">45</span> <span class="dv">32</span> <span class="dv">50</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Technically, <strong><em>4:8</em></strong> still calls the sequence <strong><em>seq(from=4, to=8, by=1)</em></strong> in the background – but that is really getting into the weeds!</p>
 <p>&nbsp;</p>
 <p><strong><em>read.csv(), ggplot(), plot(), rm()</em></strong> are all functions.&nbsp; There will be a lot more about functions in this class starting with next lesson.</p>
@@ -1039,13 +1047,14 @@ Figure&nbsp;12: Opening a CSV file in Excel – the possible data loss warning i
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

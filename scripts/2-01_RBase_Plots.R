@@ -6,7 +6,7 @@ library(package=ggplot2);              # include all GGPlot2 functions
 weatherData = read.csv(file="data/Lansing2016NOAA.csv");
 
 #### Part 1: Create a scatterplot ####
-plot1 = ggplot( data=weatherData ) +
+plot1 = gplot2::ggplot( data=weatherData ) +
   geom_point( mapping=aes(x=avgTemp, y=relHum) );
 plot(plot1);
 
