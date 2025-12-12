@@ -52,3 +52,5 @@ model1 = lm(formula=weatherData$avgTemp~weatherData$relHum);
 intercept = model1$coefficients["(Intercept)"];
 first10Residuals = model1$residuals[1:10];
 every20thFitted = model1$fitted.values[seq(from=1, to=366, by=20)];
+
+
