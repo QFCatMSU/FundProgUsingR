@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.17">
+<meta name="generator" content="quarto-1.9.12">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -21,8 +21,9 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 /* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -33,7 +34,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -66,14 +67,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta name="quarto:offset" content="../">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-da03d714c310c60cec1d83284c92da2c.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-cdaacfc258cb6f151192107f105ac881.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-5f39cfd1aee7e7785011fc5df168ee92.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-0ee72de42c60dbd072a9e85558b70db9.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -131,7 +133,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="quarto-sidebar-header"><div class="sidebar-header-item">
-<p>I, Charlie, am in Vietnam until Nov 25. I am working but you will be getting emails from me at weird times.</p>
+<p>I, Charlie, will be on vacation from Dec 23-Jan 2. I will catch up with all questions and grading on Jan 5</p>
 </div></div>
         <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
@@ -444,11 +446,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>For this lesson we are going to use weather data for Lansing, Michigan for all of 2016.&nbsp; The weather data comes from NCDC/NOAA.</p>
 <p>&nbsp;</p>
 <p>To open the data:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>weatherData <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="at">file=</span><span class="st">"data/Lansing2016NOAA.csv"</span>,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>weatherData <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="at">file=</span><span class="st">"data/Lansing2016NOAA.csv"</span>,</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">sep=</span><span class="st">","</span>,</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">header=</span><span class="cn">TRUE</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">header=</span><span class="cn">TRUE</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>In the <strong><em>Environment</em></strong>, you can see that <strong><em>weatherData</em></strong> consists of 366 observations (366 days – it was a leap year) of 23 variables.&nbsp; In other words there are 23 different weather variables in the data (columns) for each of the 366 days (rows).</p>
-<div class="sourceCode" id="cb2" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>weatherData<span class="sc">:</span> &nbsp;&nbsp;&nbsp;&nbsp; <span class="dv">366</span> obs. of <span class="dv">23</span> variables</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>weatherData<span class="sc">:</span> &nbsp;&nbsp;&nbsp;&nbsp; <span class="dv">366</span> obs. of <span class="dv">23</span> variables</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>If we double-click on <strong><em>weatherData</em></strong> in the <strong><em>Environment</em></strong>, we can look at the data frame in the file viewer section of RStudio:</p>
 <div id="fig-weatherData" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -490,14 +492,14 @@ Figure&nbsp;2: The substr() function
 <li><p><strong><em>start</em></strong>: the position we want the substring to start at (the 6<sup>th</sup> character)</p></li>
 <li><p><strong><em>stop</em></strong>: the position that we want the substring to end at (the 10<sup>th</sup> character)</p></li>
 </ul>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dateOnly <span class="ot">=</span> <span class="fu">substr</span>(<span class="at">x=</span>weatherData<span class="sc">$</span>dateTime, <span class="at">start=</span><span class="dv">6</span>, <span class="at">stop=</span><span class="dv">10</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dateOnly <span class="ot">=</span> <span class="fu">substr</span>(<span class="at">x=</span>weatherData<span class="sc">$</span>dateTime, <span class="at">start=</span><span class="dv">6</span>, <span class="at">stop=</span><span class="dv">10</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This removes the the values between characters 6 and 10 and saves the results to <strong><em>dateOnly</em></strong>.</p>
 <p>&nbsp;</p>
 <p>We can look at the first six values of <strong><em>dateOnly</em></strong> in the <strong><em>Console</em></strong> using <strong><em>head()</em></strong>&nbsp; and the last 6 values using <strong><em>tail()</em></strong>:</p>
-<div class="sourceCode" id="cb4" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">head</span>(dateOnly)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">head</span>(dateOnly)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"01-01"</span> <span class="st">"01-02"</span> <span class="st">"01-03"</span> <span class="st">"01-04"</span> <span class="st">"01-05"</span> <span class="st">"01-06"</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">tail</span>(dateOnly)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"12-26"</span> <span class="st">"12-27"</span> <span class="st">"12-28"</span> <span class="st">"12-29"</span> <span class="st">"12-30"</span> <span class="st">"12-31"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"12-26"</span> <span class="st">"12-27"</span> <span class="st">"12-28"</span> <span class="st">"12-29"</span> <span class="st">"12-30"</span> <span class="st">"12-31"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Based on the 12 dates, we can see we have just the 2-digit month and date.</p>
 </section>
 <section id="pasting-values" class="level3" data-number="4.2">
@@ -533,25 +535,25 @@ Figure&nbsp;3: The paste() function – with … as the first “argument”
 <section id="using-paste" class="level3" data-number="4.4">
 <h3 data-number="4.4" class="anchored" data-anchor-id="using-paste"><span class="header-section-number">4.4</span> Using paste()</h3>
 <p>In this case we want to paste two objects together: the <strong><em>dateOnly</em></strong> vector and the string <strong>“-2016”</strong> – and we want nothing in between (i.e., nothing separating them):</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>dateYear <span class="ot">=</span> <span class="fu">paste</span>(dateOnly, <span class="st">"-2016"</span>, <span class="at">sep=</span><span class="st">""</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>dateYear <span class="ot">=</span> <span class="fu">paste</span>(dateOnly, <span class="st">"-2016"</span>, <span class="at">sep=</span><span class="st">""</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Let’s look at the first ten values in <strong><em>dateYear</em></strong> in the <strong><em>Console</em></strong>:</p>
-<div class="sourceCode" id="cb6" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> dateYear[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> dateYear[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"01-01-2016"</span> <span class="st">"01-02-2016"</span> <span class="st">"01-03-2016"</span> <span class="st">"01-04-2016"</span> <span class="st">"01-05-2016"</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">6</span>] <span class="st">"01-06-2016"</span> <span class="st">"01-07-2016"</span> <span class="st">"01-08-2016"</span> <span class="st">"01-09-2016"</span> <span class="st">"01-10-2016"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">6</span>] <span class="st">"01-06-2016"</span> <span class="st">"01-07-2016"</span> <span class="st">"01-08-2016"</span> <span class="st">"01-09-2016"</span> <span class="st">"01-10-2016"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <section id="the-sep-argument" class="level4" data-number="4.4.1">
 <h4 data-number="4.4.1" class="anchored" data-anchor-id="the-sep-argument"><span class="header-section-number">4.4.1</span> The <strong><em>sep</em></strong> argument</h4>
 <p>The <strong><em>sep</em></strong> argument is the character that get placed in between the values being pasted. If you do not put the <strong><em>sep</em></strong> argument in, then <strong><em>sep</em></strong> defaults to one space, meaning an extra space between each object in the <strong><em>paste()</em></strong> – in this case, the date and year:&nbsp;</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>dateYearDefaultSep <span class="ot">=</span> <span class="fu">paste</span>(dateOnly, <span class="st">"-2016"</span>); <span class="co"># sep default to " "</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>dateYearDefaultSep <span class="ot">=</span> <span class="fu">paste</span>(dateOnly, <span class="st">"-2016"</span>); <span class="co"># sep default to " "</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The results have a space after the date:</p>
-<div class="sourceCode" id="cb8" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> dateYearMistake</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> dateYearMistake</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="dv">01-02</span> <span class="sc">-</span><span class="dv">2016</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="dv">01-14</span> <span class="sc">-</span><span class="dv">2016</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="dv">01-26</span> <span class="sc">-</span><span class="dv">2016</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="dv">01-26</span> <span class="sc">-</span><span class="dv">2016</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Or, you can set <strong><em>sep</em></strong> to some value, and those characters appear between the date and year:</p>
-<div class="sourceCode" id="cb9" data-tab="Console"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>&gt; paste(dateOnly, "-2016", sep="«@!@»")</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9" data-tab="Console"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>&gt; paste(dateOnly, "-2016", sep="«@!@»")</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>01-02«@!@»-2016</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>01-14«@!@»-2016</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>01-26«@!@»-2016</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>01-26«@!@»-2016</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>In general, it is best to set <strong><em>sep=““</em></strong> (i.e., to nothing) – this gives you more control of the output.&nbsp;</p>
 </section>
 </section>
@@ -561,9 +563,9 @@ Figure&nbsp;3: The paste() function – with … as the first “argument”
 <p>We have a column, <strong><em>windSpeed</em></strong>, where there are more decimal places than necessary.</p>
 <p>&nbsp;</p>
 <p>Looking at the first ten values in the vector we can see three decimal places are used:</p>
-<div class="sourceCode" id="cb10" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> weatherData<span class="sc">$</span>windSpeed[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> weatherData<span class="sc">$</span>windSpeed[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">15.539</span> <span class="fl">14.614</span> <span class="fl">9.986</span> <span class="fl">7.742</span> <span class="fl">7.586</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">6</span>] <span class="fl">7.601</span> <span class="fl">4.823</span> <span class="fl">6.720</span> <span class="fl">7.294</span> <span class="fl">17.758</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">6</span>] <span class="fl">7.601</span> <span class="fl">4.823</span> <span class="fl">6.720</span> <span class="fl">7.294</span> <span class="fl">17.758</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>One decimal place is probably enough in this case and we can round the values using the <strong><em>round()</em></strong> function:</p>
 <div id="fig-round" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -583,14 +585,14 @@ Figure&nbsp;4: The round() function
 <section id="using-round" class="level3" data-number="5.1">
 <h3 data-number="5.1" class="anchored" data-anchor-id="using-round"><span class="header-section-number">5.1</span> Using round()</h3>
 <p>Let’s round <strong><em>windSpeed</em></strong> to one decimal place and save it to the vector <strong><em>windSpeedRounded</em></strong>:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>windSpeedRounded <span class="ot">=</span> <span class="fu">round</span>(weatherData<span class="sc">$</span>windSpeed, <span class="at">digits=</span><span class="dv">1</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>windSpeedRounded <span class="ot">=</span> <span class="fu">round</span>(weatherData<span class="sc">$</span>windSpeed, <span class="at">digits=</span><span class="dv">1</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>And look at 10 values in <strong><em>windSpeedRounded</em></strong> to make sure it worked (this time I’ll look at values 40-49):</p>
 <div id="fig-rounding" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-rounding-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="sourceCode" id="fig-rounding" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="fig-rounding-1"><a href="#fig-rounding-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> windSpeedRounded[<span class="dv">40</span><span class="sc">:</span><span class="dv">49</span>]</span>
-<span id="fig-rounding-2"><a href="#fig-rounding-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">12.9</span> <span class="fl">13.8</span> <span class="fl">8.9</span> <span class="fl">14.5</span> <span class="fl">9.5</span> <span class="fl">8.1</span> <span class="fl">6.9</span> <span class="fl">3.8</span> <span class="fl">5.9</span></span>
-<span id="fig-rounding-3"><a href="#fig-rounding-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">10</span>] <span class="fl">10.7</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> windSpeedRounded[<span class="dv">40</span><span class="sc">:</span><span class="dv">49</span>]</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">12.9</span> <span class="fl">13.8</span> <span class="fl">8.9</span> <span class="fl">14.5</span> <span class="fl">9.5</span> <span class="fl">8.1</span> <span class="fl">6.9</span> <span class="fl">3.8</span> <span class="fl">5.9</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">10</span>] <span class="fl">10.7</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rounding-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;5: Values rounded to 1 decimal
@@ -609,12 +611,12 @@ Figure&nbsp;5: Values rounded to 1 decimal
 </ul>
 <p>&nbsp;</p>
 <p>First, we will make a copy of <strong><em>weatherData</em></strong> called <strong><em>weatherData2</em></strong>.&nbsp; We will be creating multiple copies of <strong><em>weatherData</em></strong> so that we can see the progress of the data frames in the <strong><em>Environment</em></strong> tab.&nbsp; You could just manipulate the original <strong><em>weatherData</em></strong> data frame.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># copy the original data frame</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>weatherData2 <span class="ot">=</span> weatherData;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># copy the original data frame</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>weatherData2 <span class="ot">=</span> weatherData;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <section id="sec-add_column" class="level3" data-number="6.1">
 <h3 data-number="6.1" class="anchored" data-anchor-id="sec-add_column"><span class="header-section-number">6.1</span> Adding a new column</h3>
 <p>Let’s add the <strong><em>dateYear</em></strong> vector to the data frame to a column called <strong><em>dateYear</em></strong>:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>weatherData2<span class="sc">$</span>dateYear <span class="ot">=</span> dateYear;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>weatherData2<span class="sc">$</span>dateYear <span class="ot">=</span> dateYear;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Since there was no <strong><em>dateYear</em></strong> column in <strong><em>weatherData2</em></strong>, the above code ads a column called <strong><em>dateYear</em></strong> to the end of the data frame and populates it with the values in the vector <strong><em>dateYear</em></strong>.&nbsp; <span class="note">Note that <strong>weatherData2</strong> now has one more column (<strong>24</strong>) than <strong>weatherData</strong> (<strong>23</strong>).</span></p>
 <p>&nbsp;</p>
 <p>Double-click on <strong><em>weatherData2</em></strong> in the <strong><em>Environment</em></strong> tab and scroll to the end to see the new <strong><em>dateYear</em></strong> column:</p>
@@ -634,7 +636,7 @@ Figure&nbsp;6: A column was added to the end of the weatherData2 data frame
 <p>When you use a column name that does not currently exist (e.g., <strong><em>dateYear</em></strong>), R will create a new column with that name.&nbsp; If you use a column name that already exists (e.g., <strong><em>windSpeed</em></strong>), then R will overwrite the column with the values in the vector.</p>
 <p>&nbsp;</p>
 <p>We are going to put the <strong><em>windSpeedRounded</em></strong> vector in the <strong><em>weatherData2</em></strong> data frame, but this time we are going to overwrite the <strong><em>windSpeed</em></strong> column:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>weatherData2<span class="sc">$</span>windSpeed <span class="ot">=</span> windSpeedRounded;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>weatherData2<span class="sc">$</span>windSpeed <span class="ot">=</span> windSpeedRounded;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now the values in the <strong><em>windSpeed</em></strong> column reflect the rounded values from <strong><em>windSpeedRounded</em></strong> and there are still 24 columns:</p>
 <div id="fig-overwriteColumn" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -653,9 +655,9 @@ Figure&nbsp;7: the windSpeed column was overwritten with the values from the win
 <p>The easiest way to delete a column from a data frame is just to set the column to <strong>NULL</strong>.</p>
 <p>&nbsp;</p>
 <p>We will create another copy of <strong><em>weatherData</em></strong>:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>weatherData3 <span class="ot">=</span> weatherData2;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>weatherData3 <span class="ot">=</span> weatherData2;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>And remove the <strong><em>dateTime</em></strong> column from <strong><em>weatherData3</em></strong> by setting it to <strong>NULL</strong>:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>weatherData3<span class="sc">$</span>dateTime <span class="ot">=</span> <span class="cn">NULL</span>; </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>weatherData3<span class="sc">$</span>dateTime <span class="ot">=</span> <span class="cn">NULL</span>; </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The <strong><em>dateTime</em></strong> column, which was the first column in the data frame, has been removed and the number of columns has dropped by 1 (from 24 to 23):</p>
 <div id="fig-removeCol" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -671,24 +673,24 @@ Figure&nbsp;8: The dateTime column was removed from weatherData3
 <h3 data-number="7.1" class="anchored" data-anchor-id="alternate-ways-to-delete-columns"><span class="header-section-number">7.1</span> Alternate ways to delete columns</h3>
 <p>You can also use the <strong><em>within()</em></strong> function to remove columns.&nbsp;</p>
 <p>Using <strong><em>within()</em></strong> to remove the <strong><em>dateTime</em></strong> column:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Within weatherData, remove the column dateTime</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>weatherData3 <span class="ot">=</span> <span class="fu">within</span>(weatherData, <span class="fu">rm</span>(dateTime));  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Within weatherData, remove the column dateTime</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>weatherData3 <span class="ot">=</span> <span class="fu">within</span>(weatherData, <span class="fu">rm</span>(dateTime));  </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The advantage to this method, is that <span class="hl">you can delete multiple columns</span> at a time:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>weatherData3 <span class="ot">=</span> <span class="fu">within</span>(weatherData, <span class="fu">rm</span>(maxTemp, minTemp, avgTemp));</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>weatherData3 <span class="ot">=</span> <span class="fu">within</span>(weatherData, <span class="fu">rm</span>(maxTemp, minTemp, avgTemp));</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 </section>
 <section id="moving-columns" class="level2" data-number="8">
 <h2 data-number="8" class="anchored" data-anchor-id="moving-columns"><span class="header-section-number">8</span> Moving columns</h2>
 <p>We will make another copy of <strong><em>weatherData</em></strong> here:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>weatherData4 <span class="ot">=</span> weatherData3;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>weatherData4 <span class="ot">=</span> weatherData3;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>There is no great way to move data frame columns around in R because you cannot just say “move column X to position Y”.&nbsp; Instead, <span class="hl">you need to recreate the whole column order of the data frame</span> to reflect the new position of every column – taking care to include every column.</p>
 <p>&nbsp;</p>
 <p>So, let’s say we want to move the <strong><em>dateYear</em></strong> column we created earlier (<a href="#sec-add_column" class="quarto-xref">Section&nbsp;6.1</a>) from the end of the data frame to the beginning.&nbsp; We essentially need to recreate the 23 columns starting with <strong><em>dateYear</em></strong> first and then have the other 22 columns follow <strong><em>dateYear</em></strong>.</p>
 <section id="using-sequences-to-create-the-column-order" class="level3" data-number="8.1">
 <h3 data-number="8.1" class="anchored" data-anchor-id="using-sequences-to-create-the-column-order"><span class="header-section-number">8.1</span> using sequences to create the column order</h3>
 <p>Luckily, we do not have to write out all 23 column names because we can use sequences to refer to multiple columns:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Move the last column (dateYear) to the beginning:</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>weatherData4 <span class="ot">=</span> <span class="fu">subset</span>(weatherData2, <span class="at">select=</span><span class="fu">c</span>(dateYear, «maxTemp<span class="sc">:</span>windSusDir»));</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Move the last column (dateYear) to the beginning:</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>weatherData4 <span class="ot">=</span> <span class="fu">subset</span>(weatherData2, <span class="at">select=</span><span class="fu">c</span>(dateYear, «maxTemp<span class="sc">:</span>windSusDir»));</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>( : ) is the sequence operator and it says to take all the columns in between (and inclusive of) <strong><em>maxTemp</em></strong> and <strong><em>windSusDir</em></strong>.&nbsp; Since <strong><em>maxTemp</em></strong> was the first column and <strong><em>windSusDir</em></strong> was the second to last column (the last being <strong><em>dateYear</em></strong>), this basically says all other columns except <strong><em>dateYear</em></strong>.</p>
 <p>&nbsp;</p>
 <p>So, <strong><em>select=c(dateYear, maxTemp:windSusDir))</em></strong> says to order the columns with <strong><em>dateYear</em></strong> first and every other column after that.</p>
@@ -706,7 +708,7 @@ Figure&nbsp;9: the dateYear column moves from the end to the beginning
 <section id="a-more-complex-moving-example" class="level3" data-number="8.2">
 <h3 data-number="8.2" class="anchored" data-anchor-id="a-more-complex-moving-example"><span class="header-section-number">8.2</span> A more complex moving example</h3>
 <p>We will create one last data frame:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>weatherData5 <span class="ot">=</span> weatherData4;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>weatherData5 <span class="ot">=</span> weatherData4;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>It is trickier to move columns in the middle because you need to keep track of all the other columns.</p>
 <p>&nbsp;</p>
 <p>Let’s says we want to move <strong><em>heatDays</em></strong> and <strong><em>coolDays</em></strong> right after <strong><em>tempDept.</em></strong> These are all columns in the middle of the data frame so you need to break the columns up more to order them the way you want.</p>
@@ -732,10 +734,10 @@ Figure&nbsp;10: The four column sequences when moving columns in the middle of t
 <section id="multiple-column-sequences" class="level3" data-number="8.3">
 <h3 data-number="8.3" class="anchored" data-anchor-id="multiple-column-sequences"><span class="header-section-number">8.3</span> Multiple column sequences</h3>
 <p>The column sequences above get used in the <strong><em>select</em></strong> argument:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>  weatherData5 <span class="ot">=</span> <span class="fu">subset</span>(weatherData5, <span class="at">select=</span><span class="fu">c</span>(dateYear<span class="sc">:</span>tempDept, </span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>                                               heatDays<span class="sc">:</span>coolDays,</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>                                               relHum<span class="sc">:</span>wetBulbTemp,</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>                                               sunrise<span class="sc">:</span>windSusDir));</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>  weatherData5 <span class="ot">=</span> <span class="fu">subset</span>(weatherData5, <span class="at">select=</span><span class="fu">c</span>(dateYear<span class="sc">:</span>tempDept, </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>                                               heatDays<span class="sc">:</span>coolDays,</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>                                               relHum<span class="sc">:</span>wetBulbTemp,</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>                                               sunrise<span class="sc">:</span>windSusDir));</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>And now we have the reordered columns:</p>
 <div id="fig-afterMove" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -754,12 +756,12 @@ Figure&nbsp;11: After the middle columns were moved
 <p>We are going to use the <strong><em>weatherData4</em></strong> data frame in the next lesson, so let’s save it to a CSV file.</p>
 <p>&nbsp;</p>
 <p>Quite often, people just call <strong><em>write.csv()</em></strong>, pass in the data frame and the file name to save it to:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(weatherData5, <span class="at">file=</span><span class="st">"data/Lansing2016Noaa-2-bad.csv"</span>);  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(weatherData5, <span class="at">file=</span><span class="st">"data/Lansing2016Noaa-2-bad.csv"</span>);  </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The above code will add an extra column populated by the row numbers.&nbsp; This is because, by default, <strong><em>write.csv()</em></strong> assumes the row numbers are row names.</p>
 <p>&nbsp;</p>
 <p>To stop <strong><em>write.csv()</em></strong> from assuming the row numbers are row names, we need to set the argument <strong><em>row.names</em></strong> to <strong>FALSE</strong>:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(weatherData5, <span class="at">file=</span><span class="st">"data/Lansing2016Noaa-2.csv"</span>,</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">row.names =</span> <span class="cn">FALSE</span>);  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(weatherData5, <span class="at">file=</span><span class="st">"data/Lansing2016Noaa-2.csv"</span>,</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">row.names =</span> <span class="cn">FALSE</span>);  </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>In the next lesson, we will open both of these CSV files and look at the difference.</p>
 </section>
 <section id="application" class="level2" data-number="10">
@@ -811,26 +813,26 @@ Figure&nbsp;11: After the middle columns were moved
 <li><p>ends at the first value (<strong><em>to</em></strong> = 1)</p></li>
 <li><p>moves backwards 6 values each time (<strong><em>by</em></strong> = -6)</p></li>
 </ul>
-<div class="sourceCode" id="cb25" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">366</span>, <span class="at">to=</span><span class="dv">1</span>, <span class="at">by=</span><span class="sc">-</span><span class="dv">6</span>)</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] <span class="dv">366</span> <span class="dv">360</span> <span class="dv">354</span> <span class="dv">348</span> <span class="dv">342</span> <span class="dv">336</span> <span class="dv">330</span> <span class="dv">324</span> <span class="dv">318</span> <span class="dv">312</span> <span class="dv">306</span> <span class="dv">300</span> <span class="dv">294</span> <span class="dv">288</span> <span class="dv">282</span> <span class="dv">276</span> <span class="dv">270</span></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">18</span>] <span class="dv">264</span> <span class="dv">258</span> <span class="dv">252</span> <span class="dv">246</span> <span class="dv">240</span> <span class="dv">234</span> <span class="dv">228</span> <span class="dv">222</span> <span class="dv">216</span> <span class="dv">210</span> <span class="dv">204</span> <span class="dv">198</span> <span class="dv">192</span> <span class="dv">186</span> <span class="dv">180</span> <span class="dv">174</span> <span class="dv">168</span></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">35</span>] <span class="dv">162</span> <span class="dv">156</span> <span class="dv">150</span> <span class="dv">144</span> <span class="dv">138</span> <span class="dv">132</span> <span class="dv">126</span> <span class="dv">120</span> <span class="dv">114</span> <span class="dv">108</span> <span class="dv">102</span>  <span class="dv">96</span>  <span class="dv">90</span>  <span class="dv">84</span>  <span class="dv">78</span>  <span class="dv">72</span>  <span class="dv">66</span></span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">52</span>]  <span class="dv">60</span>  <span class="dv">54</span>  <span class="dv">48</span>  <span class="dv">42</span>  <span class="dv">36</span>  <span class="dv">30</span>  <span class="dv">24</span>  <span class="dv">18</span>  <span class="dv">12</span>   <span class="dv">6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">366</span>, <span class="at">to=</span><span class="dv">1</span>, <span class="at">by=</span><span class="sc">-</span><span class="dv">6</span>)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] <span class="dv">366</span> <span class="dv">360</span> <span class="dv">354</span> <span class="dv">348</span> <span class="dv">342</span> <span class="dv">336</span> <span class="dv">330</span> <span class="dv">324</span> <span class="dv">318</span> <span class="dv">312</span> <span class="dv">306</span> <span class="dv">300</span> <span class="dv">294</span> <span class="dv">288</span> <span class="dv">282</span> <span class="dv">276</span> <span class="dv">270</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">18</span>] <span class="dv">264</span> <span class="dv">258</span> <span class="dv">252</span> <span class="dv">246</span> <span class="dv">240</span> <span class="dv">234</span> <span class="dv">228</span> <span class="dv">222</span> <span class="dv">216</span> <span class="dv">210</span> <span class="dv">204</span> <span class="dv">198</span> <span class="dv">192</span> <span class="dv">186</span> <span class="dv">180</span> <span class="dv">174</span> <span class="dv">168</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">35</span>] <span class="dv">162</span> <span class="dv">156</span> <span class="dv">150</span> <span class="dv">144</span> <span class="dv">138</span> <span class="dv">132</span> <span class="dv">126</span> <span class="dv">120</span> <span class="dv">114</span> <span class="dv">108</span> <span class="dv">102</span>  <span class="dv">96</span>  <span class="dv">90</span>  <span class="dv">84</span>  <span class="dv">78</span>  <span class="dv">72</span>  <span class="dv">66</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">52</span>]  <span class="dv">60</span>  <span class="dv">54</span>  <span class="dv">48</span>  <span class="dv">42</span>  <span class="dv">36</span>  <span class="dv">30</span>  <span class="dv">24</span>  <span class="dv">18</span>  <span class="dv">12</span>   <span class="dv">6</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The output has 61 values (366 / 6 = 61).&nbsp; The first value is 366, the 18<sup>th</sup> value is 264, the 52<sup>nd</sup> value is 60, and the 61<sup>st</sup> value is 6.</p>
 <p>&nbsp;</p>
 <p>When we use the sequence to subset dateYear, we also get 61 values, representing the 61 dates on the 61 rows indexed:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> dateYear[<span class="fu">seq</span>(<span class="at">from=</span><span class="dv">366</span>, <span class="at">to=</span><span class="dv">1</span>, <span class="at">by=</span><span class="sc">-</span><span class="dv">6</span>)]</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] <span class="st">"12-31-2016"</span> <span class="st">"12-25-2016"</span> <span class="st">"12-19-2016"</span> <span class="st">"12-13-2016"</span> <span class="st">"12-07-2016"</span> <span class="st">"12-01-2016"</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a> [<span class="dv">7</span>] <span class="st">"11-25-2016"</span> <span class="st">"11-19-2016"</span> <span class="st">"11-13-2016"</span> <span class="st">"11-07-2016"</span> <span class="st">"11-01-2016"</span> <span class="st">"10-26-2016"</span></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">13</span>] <span class="st">"10-20-2016"</span> <span class="st">"10-14-2016"</span> <span class="st">"10-08-2016"</span> <span class="st">"10-02-2016"</span> <span class="st">"09-26-2016"</span> <span class="st">"09-20-2016"</span></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">19</span>] <span class="st">"09-14-2016"</span> <span class="st">"09-08-2016"</span> <span class="st">"09-02-2016"</span> <span class="st">"08-27-2016"</span> <span class="st">"08-21-2016"</span> <span class="st">"08-15-2016"</span></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>[<span class="dv">25</span>] <span class="st">"08-09-2016"</span> <span class="st">"08-03-2016"</span> <span class="st">"07-28-2016"</span> <span class="st">"07-22-2016"</span> <span class="st">"07-16-2016"</span> <span class="st">"07-10-2016"</span></span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>[<span class="dv">31</span>] <span class="st">"07-04-2016"</span> <span class="st">"06-28-2016"</span> <span class="st">"06-22-2016"</span> <span class="st">"06-16-2016"</span> <span class="st">"06-10-2016"</span> <span class="st">"06-04-2016"</span></span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>[<span class="dv">37</span>] <span class="st">"05-29-2016"</span> <span class="st">"05-23-2016"</span> <span class="st">"05-17-2016"</span> <span class="st">"05-11-2016"</span> <span class="st">"05-05-2016"</span> <span class="st">"04-29-2016"</span></span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>[<span class="dv">43</span>] <span class="st">"04-23-2016"</span> <span class="st">"04-17-2016"</span> <span class="st">"04-11-2016"</span> <span class="st">"04-05-2016"</span> <span class="st">"03-30-2016"</span> <span class="st">"03-24-2016"</span></span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>[<span class="dv">49</span>] <span class="st">"03-18-2016"</span> <span class="st">"03-12-2016"</span> <span class="st">"03-06-2016"</span> <span class="st">"02-29-2016"</span> <span class="st">"02-23-2016"</span> <span class="st">"02-17-2016"</span></span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>[<span class="dv">55</span>] <span class="st">"02-11-2016"</span> <span class="st">"02-05-2016"</span> <span class="st">"01-30-2016"</span> <span class="st">"01-24-2016"</span> <span class="st">"01-18-2016"</span> <span class="st">"01-12-2016"</span></span>
-<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>[<span class="dv">61</span>] <span class="st">"01-06-2016"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> dateYear[<span class="fu">seq</span>(<span class="at">from=</span><span class="dv">366</span>, <span class="at">to=</span><span class="dv">1</span>, <span class="at">by=</span><span class="sc">-</span><span class="dv">6</span>)]</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] <span class="st">"12-31-2016"</span> <span class="st">"12-25-2016"</span> <span class="st">"12-19-2016"</span> <span class="st">"12-13-2016"</span> <span class="st">"12-07-2016"</span> <span class="st">"12-01-2016"</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a> [<span class="dv">7</span>] <span class="st">"11-25-2016"</span> <span class="st">"11-19-2016"</span> <span class="st">"11-13-2016"</span> <span class="st">"11-07-2016"</span> <span class="st">"11-01-2016"</span> <span class="st">"10-26-2016"</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">13</span>] <span class="st">"10-20-2016"</span> <span class="st">"10-14-2016"</span> <span class="st">"10-08-2016"</span> <span class="st">"10-02-2016"</span> <span class="st">"09-26-2016"</span> <span class="st">"09-20-2016"</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">19</span>] <span class="st">"09-14-2016"</span> <span class="st">"09-08-2016"</span> <span class="st">"09-02-2016"</span> <span class="st">"08-27-2016"</span> <span class="st">"08-21-2016"</span> <span class="st">"08-15-2016"</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>[<span class="dv">25</span>] <span class="st">"08-09-2016"</span> <span class="st">"08-03-2016"</span> <span class="st">"07-28-2016"</span> <span class="st">"07-22-2016"</span> <span class="st">"07-16-2016"</span> <span class="st">"07-10-2016"</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>[<span class="dv">31</span>] <span class="st">"07-04-2016"</span> <span class="st">"06-28-2016"</span> <span class="st">"06-22-2016"</span> <span class="st">"06-16-2016"</span> <span class="st">"06-10-2016"</span> <span class="st">"06-04-2016"</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>[<span class="dv">37</span>] <span class="st">"05-29-2016"</span> <span class="st">"05-23-2016"</span> <span class="st">"05-17-2016"</span> <span class="st">"05-11-2016"</span> <span class="st">"05-05-2016"</span> <span class="st">"04-29-2016"</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>[<span class="dv">43</span>] <span class="st">"04-23-2016"</span> <span class="st">"04-17-2016"</span> <span class="st">"04-11-2016"</span> <span class="st">"04-05-2016"</span> <span class="st">"03-30-2016"</span> <span class="st">"03-24-2016"</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>[<span class="dv">49</span>] <span class="st">"03-18-2016"</span> <span class="st">"03-12-2016"</span> <span class="st">"03-06-2016"</span> <span class="st">"02-29-2016"</span> <span class="st">"02-23-2016"</span> <span class="st">"02-17-2016"</span></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>[<span class="dv">55</span>] <span class="st">"02-11-2016"</span> <span class="st">"02-05-2016"</span> <span class="st">"01-30-2016"</span> <span class="st">"01-24-2016"</span> <span class="st">"01-18-2016"</span> <span class="st">"01-12-2016"</span></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>[<span class="dv">61</span>] <span class="st">"01-06-2016"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Again, the index values in square brackets is just given you the index value of the first value on the row.&nbsp; So, <strong><em>12-31</em></strong> is the first value, <strong><em>12-01</em></strong> is the <strong><em>5<sup>th</sup></em></strong> value, <strong><em>11-25</em></strong> is the <strong><em>7<sup>th</sup></em></strong> value, and <strong><em>01-06</em></strong> is the <strong><em>61<sup>st</sup></em></strong> value.</p>
 
 
@@ -888,13 +890,14 @@ Figure&nbsp;11: After the middle columns were moved
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

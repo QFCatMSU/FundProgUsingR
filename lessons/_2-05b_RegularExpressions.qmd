@@ -1,5 +1,5 @@
 ---
-title: "2-05b: Regular Expressions"
+title: "2-05b: Regular Expressions (Unfinished)"
 short: "2-05b"
 # special characters for highlighting code : «»
 ---
@@ -12,7 +12,7 @@ short: "2-05b"
 
 -   Use baby names file
 
--   Find substring within string
+-   Find substring anywhere within string
 
     -   How many Rebeccas are there
 
@@ -22,7 +22,7 @@ short: "2-05b"
 
     -   names ending with
 
--   escape string (\\\\)
+-   escape string (\\\\) – create a vector in script that has \^, \$, \\
 
     -   R sees "\\\\" as one backslash and send that to regex
 
@@ -48,13 +48,13 @@ short: "2-05b"
 
         -   names without the letters "a" or "e"
 
-    -   any char: .
-
     -   any letter: \[a-zA-Z\]
 
     -   any number: \[0-9\]
 
     -   any letter or number: \[a-zA-Z0-9\]
+
+    -   any char: . (every character except \\n)
 
 -   How many characters:
 
@@ -69,6 +69,375 @@ short: "2-05b"
     -   ab{3} or a(b){3} matches abbb
 
         -   there are reasons to do the latter (not covered in this lesson)
+
+## Purpose
+
+-   finding complex string pattern within a vector
+
+## Script and data for this lesson
+
+The script for this lesson [can be downloaded here](../scripts/2-05_WhichAndRegularExpressions_new.R)
+
+The data for this lesson [can be downloaded here](../data/Lansing2016Noaa-3.csv)
+
+Regex cheat sheet (very useful):
+
+<https://github.com/rstudio/cheatsheets/blob/main/regex.pdf>
+
+-   click Download Raw button
+
+## What is Regex
+
+-   \<what regex can do\>
+
+ 
+
+ 
+
+## Finding substrings within strings
+
+The simplest regex example is to find which strings have a substring in it. We did a few examples of this is the last lesson. Let's take a look at the dataset for this lesson, which has over 45000 baby names.
+
+ 
+
+We will store the data in babyNameData:
+
+``` r
+babyNameData = read.csv(file="data/Popular_Baby_Names.csv");
+```
+
+ 
+
+And looking, at the head(), we see the column with the names is called Name:
+
+``` {.r tab="Console"}
+> head(babyNameData)
+  Year.of.Birth Gender Ethnicity      Name Count Rank
+1          2011 FEMALE  HISPANIC GERALDINE    13   75
+2          2011 FEMALE  HISPANIC       GIA    21   67
+3          2011 FEMALE  HISPANIC    GIANNA    49   42
+4          2011 FEMALE  HISPANIC   GISELLE    38   51
+5          2011 FEMALE  HISPANIC     GRACE    36   53
+6          2011 FEMALE  HISPANIC GUADALUPE    26   62
+```
+
+Let's find which of the names have "Liz" or "Beth" is in:
+
+``` r
+has_Beth = grep("beth", babyNameData$Name, ignore.case=TRUE);
+has_Liz = grep("liz", babyNameData$Name, ignore.case=TRUE);
+```
+
+In the ***Environment***, we see that 121 names have the substring "beth" and 191 that have the substring "liz". We can now extract the names that contain the substrings:
+
+``` r
+beth_name =  babyNameData$Name[has_Beth];
+liz_name =  babyNameData$Name[has_Liz];
+```
+
+And we get a vector of the same size with the names:
+
+``` {.r tab="Environment"}
+beth_name: chr [1:121] "LIZBETH" "ELIZABETH" "ELIZABETH" ... 
+liz_name:  chr [1:191] "LIZBETH" "ALIZA" "ELIZ" ...
+```
+
+We can also find the unique name using ***unique()***:
+
+``` {.r tab="Console"}
+> unique(beth_name)
+[1] "LIZBETH"   "ELIZABETH" "Elizabeth" "Lizbeth"   "Bethany"  
+> unique(liz_name)
+ [1] "LIZBETH"   "ALIZA"     "ELIZA"     "ELIZABETH" "LIZ"       "Elizabeth" "Eliza"     "Aliza"    
+ [9] "Lizbeth"   "Lizeth"  
+```
+
+If we want a vector that maintains all the values and has information about the unique values, we can use ***factor()***. The ***levels*** are the unique values
+
+``` {.r tab="Console"}
+> factor(liz_name)
+  [1] LIZBETH   ALIZA     ELIZA     ELIZABETH ELIZABETH ELIZABETH ELIZABETH ELIZABETH ELIZABETH
+ [10] LIZBETH   ALIZA     ELIZA     ELIZABETH ELIZABETH ELIZABETH ELIZABETH LIZ       LIZBETH  
+ ... 
+[190] Aliza     Elizabeth
+Levels: Aliza ALIZA Eliza ELIZA Elizabeth ELIZABETH LIZ Lizbeth LIZBETH Lizeth
+```
+
+### Advantages of factors
+
+-   used in stat functions \<give some\>
+
+-   more efficient than vectors
+
+    -   vectors stored as numbers
+
+ 
+
+## Start and End of string
+
+Finding substrings within a string is the most basic thing RegEx can do. We are going to step up in difficulty and check for something at the beginning and the end of a string. In RegEx, ( \^ ) indicates the beginning of a string and ( \$ ) indicates the end of a string.
+
+So, to say "starts with liz" or "starts with beth", we add \^ at the beginning:
+
+``` r
+ ### Starts with
+start_liz = grep("^liz", babyNameData$Name, ignore.case=TRUE);
+start_beth = grep("^beth", babyNameData$Name, ignore.case=TRUE);
+```
+
+And to say "ends with liz" or "ends with beth", we add \$ to the end
+
+``` r
+### Ends with
+end_liz = grep("liz$", babyNameData$Name, ignore.case=TRUE);
+end_beth = grep("beth$", babyNameData$Name, ignore.case=TRUE);
+```
+
+30 names start with liz, while only 1 starts with Beth(value 30473). 5 names end with Liz and 120 end with beth.
+
+``` {.r tab="Environment"}
+start_liz:  int [1:30] 103 2967 4504 ...
+start_beth: 30473L
+end_liz:    int [1:5] 4504 9481 18429 ...
+end_beth:   int [1:120] 103 311 1008 ..
+```
+
+In the Console, let's look at the one names that start with beth and the 5 that end with liz:
+
+``` r
+> babyNameData$Name[start_beth]
+[1] "Bethany"
+> babyNameData$Name[end_liz]
+[1] "LIZ" "LIZ" "LIZ" "LIZ" "LIZ"
+```
+
+So, the only name in the whole dataset that starts with liz is.. liz
+
+## Special characters in RegEx
+
+We have introduction two special character in RegEx, or character that have a specific meaning in RegEx: \^ and \$. There are times when we need to to look through a string for a special character. For instance, we might want to find which of these string values contain a \^.
+
+``` r
+testVector = c("^aaa", "bbb", "ccc", "d^\\d", "e\\ee");
+```
+
+We cannot directly put \^ in a string because \^ means "starts with" to RegEx. We want to tell Regex to ignore the meaning and treat is as an actual character, called [escaping]{.hl}. To do that we [escape]{.hl} the character with two backslashes:
+
+``` r
+has_carrot = grep("\\^", testVector);
+```
+
+The two backslashes tell RegEx to ignore the meaning of (i.e., [escape]{.hl}) the \^ and treat it as a character. In the Environment, we see that string values 1 and 4 had carrots ( \^ ).
+
+``` {.r tab="Environment"}
+has_carrot:  int [1:2] 1 4
+```
+
+Extension: escaping backslashes
+
+## Choosing from character set \[ \]
+
+Up until now, we have looked for a exclusive pattern within a string. Regex allows you to look for a varying string by listing which permitted characters are allowed. For instance, we might want to look for multiple spellings of a name like Layla and Laila. To do that, we tell Regex that the third character can be a y or i using square brackets:
+
+``` r
+layla = grep("La[iy]la", babyNameData$Name, ignore.case=TRUE);
+layla_names = unique(babyNameData$Name[layla]);
+```
+
+\<App: capture only Laila and Layla\>
+
+```         
+> layla_names
+[1] "LAILA"  "LAYLA"  "Layla"  "Laila"  "Lailah"
+```
+
+We can do multiple checks from a character set. This example will check if the second letter comes from the set a or e and if the third character comes from the set i or y
+
+``` r
+### Check twice for one character in many
+layla2 = grep("l[ae][iy]la", babyNameData$Name, ignore.case=TRUE);
+layla_name2 = unique(babyNameData$Name[layla2]);   ### act: get rid of Leilani
+```
+
+``` r
+layla_names2
+[1]  <show 5 names here>
+```
+
+\<app Q: beth, Beth, BETH\>
+
+### Choosing case
+
+We have been using ignore.case=TRUE because the names is the list are not consistent with case
+
+``` r
+### Do not allow for uppercase/lowercase (ignore.case=FALSE by default)
+layla3 = grep("La[iy]la", babyNameData$Name, ignore.case=FALSE);
+layla3_names = unique(babyNameData$Name[layla3]);
+```
+
+And we lose the 2 names in all-caps
+
+``` r
+> layla3_names
+[1] "Layla"  "Laila"  "Lailah"
+```
+
+If we want those names back without using `ignore.case`, then we case put the variations in square brackets:
+
+``` r
+layla4 = grep("L[aA][iIyY][lL][aA]", babyNameData$Name, ignore.case=FALSE);
+layla4_names = unique(babyNameData$Name[layla4]);
+```
+
+And we have the original results
+
+``` r
+> layla4_names
+[1] "LAILA"  "LAYLA"  "Layla"  "Laila"  "Lailah"
+```
+
+### Check for any more letters
+
+When using a square bracket, RegEx will allow for any character within the bracket. We can look for names that begin with 4 vowels \[aeiou\]:
+
+``` r
+### Looking through larger groups of characters:
+fourVowelStart2 = grep("^[aeiouy][aeiouy][aeiouy][aeiouy]", babyNameData$Name, ignore.case=TRUE);
+fourVowelStart2_names = babyNameData$Name[fourVowelStart]
+```
+
+``` r
+> fourVowelStart_names
+[1] "AYAAN" "AYAAN" "AAYAN" "AYAAN" "Aayan" "AYAAN" "Aayan" "Ayaan" "AAYAN" "Ayaan"
+[11] "Ayaan" "Aayan" "Ayaan" "AYAAN" "AAYAN" "AYAAN" "Aayan" "Ayaan" "Aayan" "Ayaan"
+[21] "Ayaan" "Aayan" "AYAAN" "AAYAN" "AYAAN" "Ayaan" "Aayan" "Aayan" "Ayaan" "Aayan"
+[31] "Ayaan" "Aayan" "Ayaan" "Ayaan" "Aayan" "AYAAN" "AAYAN" "AYAAN" "Aayan" "Ayaan"
+[41] "Aayan" "Ayaan" "Ayaan" "Aayan" "Aayat"
+```
+
+## Repeating previous command {X,Y}
+
+In the last example we did the same thing four times in a row, instead of repeating \[aeiouy\] 4 times, we can use curly brackets to indicate we want to repeat the previous command 4 time:
+
+``` r
+### Looking through larger groups of characters:
+fourVowelStart2 = grep("^[aeiouy]{4}", babyNameData$Name, ignore.case=TRUE);
+fourVowelStart2_names = babyNameData$Name[fourVowelStart2]
+```
+
+And we get the same results as before:
+
+``` r
+> fourVowelStart2_names
+[1] "AYAAN" "AYAAN" "AAYAN" "AYAAN" "Aayan" "AYAAN" "Aayan" "Ayaan" "AAYAN" "Ayaan"
+[11] "Ayaan" "Aayan" "Ayaan" "AYAAN" "AAYAN" "AYAAN" "Aayan" "Ayaan" "Aayan" "Ayaan"
+[21] "Ayaan" "Aayan" "AYAAN" "AAYAN" "AYAAN" "Ayaan" "Aayan" "Aayan" "Ayaan" "Aayan"
+[31] "Ayaan" "Aayan" "Ayaan" "Ayaan" "Aayan" "AYAAN" "AAYAN" "AYAAN" "Aayan" "Ayaan"
+[41] "Aayan" "Ayaan" "Ayaan" "Aayan" "Aayat"
+```
+
+## Range of characters
+
+Let's say we only want to only names that are in uppercase. We can use the range \[A-Z\] to indication that we will accept any uppercase letter from A to Z. [note: this means - is a special character]{.note}
+
+ 
+
+Let's look for any name in uppercase that is 11 characters long \<App Q: why \^ and \$?\>
+
+``` r
+longNames = grep("^[A-Z]{11}$", babyNameData$Name);
+cat(c("11 character names:", unique(babyNameData$Name[longNames])));
+```
+
+``` {.r tab="Console"}
+11 character names: CHRISTOPHER MAXIMILIANO
+```
+
+If we want all uppercase and lowercase, we can add to the range:
+
+``` r
+longNames2 = grep("^[A-Za-z]{11}$", babyNameData$Name);
+cat(c("11 character names:", unique(babyNameData$Name[longNames2])));
+```
+
+{x}: repeat x times
+
+{x,}: repeats a min of X times
+
+{x,y}: repeats between x and y timesnote: {,y} does not work
+
+### Any letter/number/character
+
+\[A-Za-z\]
+
+\[0-9\]
+
+.
+
+ 
+
+ 
+
+ 
+
+### Ranges/ combined ranges
+
+\[a-e0-3\]
+
+ 
+
+ 
+
+ 
+
+## Groupings
+
+(l){1,3} == l{1,3} \<assumed parenthesis\>
+
+(li){2}
+
+ 
+
+### Shortcuts
+
+?: {0,1}
+
+\*: {0,}
+
++: {1,}
+
+ 
+
+## Regex only see characters
+
+\<keep for application... have student regex weatherdata\>
+
+ 
+
+When you have regex search through numeric values, regex does not see numbers, regex see characters. So 127 is the character 1 followed by 2, followed by 7.
+
+ 
+
+Let's take the temperature departture column from weatherData. What this code does is look for any string that:
+
+-   starts with 0 or 1 minus sign (\^\\\\-{0,1})
+
+    -   the \\\\ is needed because - has a function in RegEx, so we tell Regex that we want the character "-", not the function of -.
+
+-   The optional minus sign is followed by a number between 2 and 9
+
+-   The number between 2 and 9 is followed by any number
+
+``` r
+high_temp_dept = grep("^\\-{0,1}[2-9][0-9]", weatherData$tempDept);
+```
+
+So high_temp_dept is an index of any number \>= 20 or \<=-20
+
+\<Make escaping the backslashes an Extension because of the unique nature of the backslash in R\>
+
+[note: I added the argument ignore.case = TRUE because the dataframe switches between uppercase and lowercase, whereas I do not care what case the name is in.]{.note}
 
 Challenge: Use ***grep()*** on the ***precip*** column in ***weatherType*** to ([note: **precip** is a string column]{.note}):
 

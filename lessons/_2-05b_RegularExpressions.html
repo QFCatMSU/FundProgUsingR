@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.17">
+<meta name="generator" content="quarto-1.9.8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -20,20 +20,56 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
 <script src="_2-05b_RegularExpressions_files/libs/clipboard/clipboard.min.js"></script>
 <script src="_2-05b_RegularExpressions_files/libs/quarto-html/quarto.js" type="module"></script>
 <script src="_2-05b_RegularExpressions_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="_2-05b_RegularExpressions_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="_2-05b_RegularExpressions_files/libs/quarto-html/popper.min.js"></script>
 <script src="_2-05b_RegularExpressions_files/libs/quarto-html/tippy.umd.min.js"></script>
 <script src="_2-05b_RegularExpressions_files/libs/quarto-html/anchor.min.js"></script>
 <link href="_2-05b_RegularExpressions_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="_2-05b_RegularExpressions_files/libs/quarto-html/quarto-syntax-highlighting-da03d714c310c60cec1d83284c92da2c.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="_2-05b_RegularExpressions_files/libs/quarto-html/quarto-syntax-highlighting-095e6f6405c331e3b33229e03003579f.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="_2-05b_RegularExpressions_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="_2-05b_RegularExpressions_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="_2-05b_RegularExpressions_files/libs/bootstrap/bootstrap-c55efa1fd218a545ebab9e5bcab7af02.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="_2-05b_RegularExpressions_files/libs/bootstrap/bootstrap-9e3ffae467580fdb927a41352e75a2e0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
 
 </head>
@@ -71,7 +107,7 @@ ul.task-list li input[type="checkbox"] {
 <li>clear way to do RegEx but it can be tricky to keep track of</li>
 </ul></li>
 <li><p>Use baby names file</p></li>
-<li><p>Find substring within string</p>
+<li><p>Find substring anywhere within string</p>
 <ul>
 <li>How many Rebeccas are there</li>
 </ul></li>
@@ -80,7 +116,7 @@ ul.task-list li input[type="checkbox"] {
 <li><p>names starting with</p></li>
 <li><p>names ending with</p></li>
 </ul></li>
-<li><p>escape string (\\)</p>
+<li><p>escape string (\\) – create a vector in script that has ^, $, \</p>
 <ul>
 <li><p>R sees “\\” as one backslash and send that to regex</p></li>
 <li><p>let’s say you want to find ^ or $ within a string</p></li>
@@ -102,10 +138,10 @@ ul.task-list li input[type="checkbox"] {
 <ul>
 <li>names without the letters “a” or “e”</li>
 </ul></li>
-<li><p>any char: .</p></li>
 <li><p>any letter: [a-zA-Z]</p></li>
 <li><p>any number: [0-9]</p></li>
 <li><p>any letter or number: [a-zA-Z0-9]</p></li>
+<li><p>any char: . (every character except \n)</p></li>
 </ul></li>
 <li><p>How many characters:</p>
 <ul>
@@ -121,6 +157,87 @@ ul.task-list li input[type="checkbox"] {
 </ul></li>
 </ul></li>
 </ul>
+</section>
+<section id="purpose" class="level2">
+<h2 class="anchored" data-anchor-id="purpose">Purpose</h2>
+</section>
+<section id="script-and-data-for-this-lesson" class="level2">
+<h2 class="anchored" data-anchor-id="script-and-data-for-this-lesson">Script and data for this lesson</h2>
+<p>The script for this lesson <a href="../scripts/2-05_WhichAndRegularExpressions_new.R">can be downloaded here</a></p>
+<p>The data for this lesson <a href="../data/Lansing2016Noaa-3.csv">can be downloaded here</a></p>
+</section>
+<section id="finding-substrings-within-strings" class="level2">
+<h2 class="anchored" data-anchor-id="finding-substrings-within-strings">Finding substrings within strings</h2>
+<p>The simplest regex example is to find which strings have a substring in it. We did a few examples of this is the last lesson. Let’s take a look at the dataset for this lesson, which has over 45000 baby names.</p>
+<p>&nbsp;</p>
+<p>We will store the data in babyNameData:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>babyNameData <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="at">file=</span><span class="st">"data/Popular_Baby_Names.csv"</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>&nbsp;</p>
+<p>And looking, at the head(), we see the column with the names is called Name:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">head</span>(babyNameData)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  Year.of.Birth Gender Ethnicity      Name Count Rank</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span>          <span class="dv">2011</span> FEMALE  HISPANIC GERALDINE    <span class="dv">13</span>   <span class="dv">75</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span>          <span class="dv">2011</span> FEMALE  HISPANIC       GIA    <span class="dv">21</span>   <span class="dv">67</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span>          <span class="dv">2011</span> FEMALE  HISPANIC    GIANNA    <span class="dv">49</span>   <span class="dv">42</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span>          <span class="dv">2011</span> FEMALE  HISPANIC   GISELLE    <span class="dv">38</span>   <span class="dv">51</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span>          <span class="dv">2011</span> FEMALE  HISPANIC     GRACE    <span class="dv">36</span>   <span class="dv">53</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span>          <span class="dv">2011</span> FEMALE  HISPANIC GUADALUPE    <span class="dv">26</span>   <span class="dv">62</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Let’s find which of the names have “Liz” or “Beth” is in:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>has_Beth <span class="ot">=</span> <span class="fu">grep</span>(<span class="st">"beth"</span>, babyNameData<span class="sc">$</span>Name, <span class="at">ignore.case=</span><span class="cn">TRUE</span>);</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>has_Liz <span class="ot">=</span> <span class="fu">grep</span>(<span class="st">"liz"</span>, babyNameData<span class="sc">$</span>Name, <span class="at">ignore.case=</span><span class="cn">TRUE</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>In the <strong><em>Environment</em></strong>, we see that 121 names have the substring “beth” and 191 that have the substring “liz”. We can now extract the names that contain the substrings:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>beth_name <span class="ot">=</span>  babyNameData<span class="sc">$</span>Name[has_Beth];</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>liz_name <span class="ot">=</span>  babyNameData<span class="sc">$</span>Name[has_Liz];</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>And we get a vector of the same size with the names:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>beth_name<span class="sc">:</span> chr [<span class="dv">1</span><span class="sc">:</span><span class="dv">121</span>] <span class="st">"LIZBETH"</span> <span class="st">"ELIZABETH"</span> <span class="st">"ELIZABETH"</span> ... </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>liz_name<span class="sc">:</span>  chr [<span class="dv">1</span><span class="sc">:</span><span class="dv">191</span>] <span class="st">"LIZBETH"</span> <span class="st">"ALIZA"</span> <span class="st">"ELIZ"</span> ...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>We can also find the unique name using <strong><em>unique()</em></strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">unique</span>(beth_name)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"LIZBETH"</span>   <span class="st">"ELIZABETH"</span> <span class="st">"Elizabeth"</span> <span class="st">"Lizbeth"</span>   <span class="st">"Bethany"</span>  </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">unique</span>(liz_name)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] <span class="st">"LIZBETH"</span>   <span class="st">"ALIZA"</span>     <span class="st">"ELIZA"</span>     <span class="st">"ELIZABETH"</span> <span class="st">"LIZ"</span>       <span class="st">"Elizabeth"</span> <span class="st">"Eliza"</span>     <span class="st">"Aliza"</span>    </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a> [<span class="dv">9</span>] <span class="st">"Lizbeth"</span>   <span class="st">"Lizeth"</span>  </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If we want a vector that maintains all the values and has information about the unique values, we can use <strong><em>factor()</em></strong>. The <strong><em>levels</em></strong> are the unique values</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">factor</span>(liz_name)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  [<span class="dv">1</span>] LIZBETH   ALIZA     ELIZA     ELIZABETH ELIZABETH ELIZABETH ELIZABETH ELIZABETH ELIZABETH</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a> [<span class="dv">10</span>] LIZBETH   ALIZA     ELIZA     ELIZABETH ELIZABETH ELIZABETH ELIZABETH LIZ       LIZBETH  </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a> ... </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">190</span>] Aliza     Elizabeth</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>Levels<span class="sc">:</span> Aliza ALIZA Eliza ELIZA Elizabeth ELIZABETH LIZ Lizbeth LIZBETH Lizeth</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="start-and-end-of-string" class="level2">
+<h2 class="anchored" data-anchor-id="start-and-end-of-string">Start and End of string</h2>
+<p>Finding substrings within a string is the most basic thing RegEx can do. We are going to step up in difficulty ans check for something at the beginning and the end of a string. In RegEx, ^ indicates the beginning of a string and $ indicates the end of a string.</p>
+<p>So, to say “starts with liz” or “starts with beth”, we add ^ at the beginning:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a> <span class="do">### Starts with</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>start_liz <span class="ot">=</span> <span class="fu">grep</span>(<span class="st">"^liz"</span>, babyNameData<span class="sc">$</span>Name, <span class="at">ignore.case=</span><span class="cn">TRUE</span>);</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>start_beth <span class="ot">=</span> <span class="fu">grep</span>(<span class="st">"^beth"</span>, babyNameData<span class="sc">$</span>Name, <span class="at">ignore.case=</span><span class="cn">TRUE</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>And to say “ends with liz” or “ends with beth”, we add $ to the end</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Starts and End with</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>end_liz <span class="ot">=</span> <span class="fu">grep</span>(<span class="st">"liz$"</span>, babyNameData<span class="sc">$</span>Name, <span class="at">ignore.case=</span><span class="cn">TRUE</span>);</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>end_beth <span class="ot">=</span> <span class="fu">grep</span>(<span class="st">"beth$"</span>, babyNameData<span class="sc">$</span>Name, <span class="at">ignore.case=</span><span class="cn">TRUE</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>30 names start with liz, while only 1 starts with Beth(value 30473). 5 names end with Liz and 120 end with beth.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>start_liz<span class="sc">:</span>  int [<span class="dv">1</span><span class="sc">:</span><span class="dv">30</span>] <span class="dv">103</span> <span class="dv">2967</span> <span class="dv">4504</span> ...</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>start_beth<span class="sc">:</span> <span class="dv">30473</span>L</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>end_liz<span class="sc">:</span>    int [<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="dv">4504</span> <span class="dv">9481</span> <span class="dv">18429</span> ...</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>end_beth<span class="sc">:</span>   int [<span class="dv">1</span><span class="sc">:</span><span class="dv">120</span>] <span class="dv">103</span> <span class="dv">311</span> <span class="dv">1008</span> ..</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>In the Console, let’s look at the one names that start with beth and the 5 that end with liz:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> babyNameData<span class="sc">$</span>Name[start_beth]</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"Bethany"</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> babyNameData<span class="sc">$</span>Name[end_liz]</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"LIZ"</span> <span class="st">"LIZ"</span> <span class="st">"LIZ"</span> <span class="st">"LIZ"</span> <span class="st">"LIZ"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>So, the only name in the whole dataset that starts with liz is.. liz</p>
+</section>
+<section id="special-characters-in-regex" class="level2">
+<h2 class="anchored" data-anchor-id="special-characters-in-regex">Special characters in RegEx</h2>
+<p>We have introduction two special character in RegEx, or character that have a specific meaning in RegEx: ^ and $. There are times when we need to to look through a string for a special character. For instance, we might want to find which of these string values contain a ^.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>testVector <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"^aaa"</span>, <span class="st">"bbb"</span>, <span class="st">"ccc"</span>, <span class="st">"d^</span><span class="sc">\\</span><span class="st">d"</span>, <span class="st">"e</span><span class="sc">\\</span><span class="st">ee"</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>We cannot directly put ^ in a string because ^ “starts with” to RegEx. We want to tell Regex to ignore the meaning and just look for the actual chracter. To do that we <span class="hl">escape</span>the character with two backslashes:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>has_carrot <span class="ot">=</span> <span class="fu">grep</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">^"</span>, testVector);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The two backslashes to ignore the meaning of (i.e., <span class="hl">escape</span>) the ^ and treat it as a character. In the Environment, we see that string values 1 and 4 had carrots ( ^ ).</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>has_carrot<span class="sc">:</span>  int [<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>] <span class="dv">1</span> <span class="dv">4</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>&lt;Make escaping the backslashes an Extension because of the unique nature of the backslash in R&gt;</p>
+<p><span class="note">note: I added the argument ignore.case = TRUE because the dataframe switches between uppercase and lowercase, whereas I do not care what case the name is in.</span></p>
 <p>Challenge: Use <strong><em>grep()</em></strong> on the <strong><em>precip</em></strong> column in <strong><em>weatherType</em></strong> to (<span class="note">note: <strong>precip</strong> is a string column</span>):</p>
 <ol type="1">
 <li><p>find all precipitation values greater than or equal to 1.0 (hint: what is a unique substring for values &gt;= 1)</p></li>
@@ -136,7 +253,6 @@ ul.task-list li input[type="checkbox"] {
 <p><a href="1-01-RStudioProjectsSetup.html#sec-zip-folder" target="_blank">Instructions for zipping the Project Folder are here.</a></p>
 <p>&nbsp;</p>
 <p>If you have any questions regarding this application, feel free to email them to <strong>?var:instructor.name</strong> at <strong>?var:instructor.email</strong>.</p>
-</section>
 <section id="questions-to-answer" class="level3">
 <h3 class="anchored" data-anchor-id="questions-to-answer">Questions to answer</h3>
 <p>Answer the following in comments inside your application script:</p>
@@ -145,6 +261,7 @@ ul.task-list li input[type="checkbox"] {
 <li><p>What areas of the lesson/application confused or still confuses you?</p></li>
 <li><p>What are some things you would like to know more about that is related to, but not covered in, this lesson?</p></li>
 </ol>
+</section>
 </section>
 
 </main>
@@ -200,13 +317,14 @@ ul.task-list li input[type="checkbox"] {
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
