@@ -7,6 +7,7 @@ short: "1-10"
 ### Changes...
 
 -   Put find difference in vector values application here.
+-   Improve extensions regarding the different ways to cycle values in a for loop
 
 ## Purpose
 
@@ -106,6 +107,8 @@ for(i in 1:5)
   cat("Hello," helloVector[i], "\n");
 }
 ```
+
+Cycling through values in a vector using their index number
 :::
 
 ``` {.r tab="Console"}
@@ -549,3 +552,80 @@ If ***sunnyDays*** is **4**, then ***sunnyDays +1*** evaluates to **5**, and ***
  
 
 {{< include ../assets/_AppInstructions.qmd >}}
+
+## Extension: Two methods of cycling
+
+There are two method used to cycle the values in a vector
+
+-   directly accessing the values
+
+-   using their index value
+
+In this lesson , I have exclusively used the second method. However, you will often see the first method, especially if you ask AI to solve the problem. I am going to take a couple of examples from this lesson and show the other method. The main reason I only teach the second method is that it has more ultility, especially when you are working with data frames.
+
+### Cycle through vector values
+
+We can cycle through a vector using index values. In this case, there are 5 values in the values and we cycle through the numbers from 1 to 5.
+
+``` r
+helloVector = c("Ann", "Bob", "Charlie", "Dave", "Eve");
+
+cat("---------\nGoing through each value in a vector by changing the index value:\n");
+for(i in 1:5)
+{
+  # i takes on the values 1 through 5 through the 5 cycles of the for loop
+  cat("Hello," helloVector[i], "\n");
+}
+```
+
+We can also cycle through the values in the vector and get the same result:
+
+``` r
+helloVector = c("Ann", "Bob", "Charlie", "Dave", "Eve");
+
+cat("---------\nGoing through each value in a vector:\n");
+for(val in helloVector)
+{
+  # val sequentially takes on the values in helloVector
+  cat("Hello," val, "\n");
+}
+```
+
+``` {.r tab="Console"}
+Going through each value in a vector:
+Hello, Ann 
+Hello, Bob 
+Hello, Charlie 
+Hello, Dave 
+Hello, Eve 
+```
+
+The latter method is simpler, but has less utility, especially when working with data frame.
+
+### Cycle through values in a column
+
+Earlier in the lesson, we output the 14 values using a for loop, cycle through the column using the index values 1-14:
+
+``` r
+highTemps = weatherData$highTemp;
+
+cat("---------\nThe 14 values in the vector highTemps in order:\n"); 
+for(day in 1:numDays) # numDays, in this case, is 14 (sequence is 1:14) 
+{  
+  cat(highTemp[day], "\n"); # day will take the values 1-14 
+}
+```
+
+We can produce the same results by just cycling through the values in the column:
+
+``` r
+highTemps = weatherData$highTemp;
+
+cat("---------\nThe 14 values in the vector highTemps in order:\n"); 
+for(temp in highTemps) # go through the 14 values in highTemps
+{  
+  cat(temp, "\n"); # temp will take the values in highTemps 
+}
+```
+
+While this solution has less code, the problem is that you do not have enough information to access other columns in the data frame. For that you need the index value.

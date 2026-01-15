@@ -24,72 +24,31 @@ A [second script that contains a function to debug](../scripts/debugTest.r)
 
 The [data used for the lesson](../data/Lansing2016Noaa-3.csv) is here
 
+## Sourcing external scripts
+
+In R, we can call other script files using `source()`. Any external files that are sourced should be treated like library packages and therefore should only contain functions. This is because any code that exists outside of a function is executed immediately when the file is sourced, which can lead to unintended side effects such as modifying objects in the Environment, changing global options, or producing unexpected output. By placing all executable code inside functions, we force the user to be explicit about when and how that code is run. In addition, functions are designed to be reusable, testable, and easier to debug, which improves code organization, readability, and long-term maintainability.
+
 ## Adding breakpoints to external scripts
-
-\<talk about how external script should only contain functions – why is an app question\>
-
-\<often need to clear all bp\>
-
-note: bp works under some circumstances in external script
-
-source main, sources external: no
-
-source main, debugSource external: yes
-
-source external, put in breakpoint, run from main: yes
-
-put in breakpoint, source external, run from main: yes
-
- 
 
 In last lesson, we learned how to put an R script in debug mode using the RStudio interface to add a breakpoint in the gutter area of the script. This method works well for debugging your main script (the script you Source). However, you will likely find yourself wanting to add a breakpoint to a external script called by your main script. This could either be a functions script or a script from a package. Adding breakpoints to external scripts called from your main script is not quite as simple. In this lesson we will learn how to add breakpoints to scripts outside of your main script
 
--   Adding breakpoints (gutter) to external script (probably not a good idea...)
+### breakpoints and browser()
 
-    -   if using source(), bp must be added after
+R has a command to pause a script: broowser(), which you can add directly to your script. `browser()` will function very similiarly to an RStudio breakpoint: it will pause your script and open an interactive debugging environment. browser() is a bit harder to manage than breakpoints because you need to remove them from your code but `browser()`, unlike breakpoints, work more consistently in external scripts.
 
-        -   source() removes bp
+![browser() in the Help tab](images/R-2-15_Browser_Help.png){#fig-browser-help .fs}
 
-    -   you must then Run the function
+### Adding a breakpoint to the main script
 
-        -   bp will not work on source()
+\<no, browser() is too inconsistent in the main script\>
 
-        -   be careful with rm(list=...)
-
-## browser()
-
-As a general rule, it is easiest to use breakpoints in the script you are Sourcing and browser() in scripts that
+Let's test `browser()` using an example from last lesson
 
  
 
 The most universal way to add a breakpoint is to add the command ***browser()*** to the location in your script where you want the breakpoint. ***browser()*** acts just like a breakpoint by pausing your script and putting your script in debug mode. We can take examples from the last lesson and replace the breakpoint with ***browser()***. [Note: browser() is added to your script and needs to be removed after debugging.]{.hl}
 
 ### browser() in the main script
-
-In last lesson, the first breakpoint we set was on line 8. Instead of a breakpoint, we can put a browser() command to put the script in debug mode:
-
-``` r
-rm(list=ls());  
-source("scripts/debugTest.r");
-
-weatherData = read.csv(file = "data/lansing2016Noaa-3.csv");
-highTemps = weatherData$maxTemp;
-lowTemps = weatherData$minTemp;
-«browser()»
-diffTemp = highTemps - lowTemps;
-
-weatherData$diffTemp = diffTemp;
-```
-
-Note: bp essentially injected browser() into script. Almost... because RStudio cannot see the injected browser() until after commands have been executed
-
--   do examples from last lesson
-
--   then put the script in a function and call from a second script \[or, use 1-15 function's script?\]
-
--   mention that most external scripts contain functions
-
-\<bad regarding browser in main script: does not work in Run\>
 
 ### add browser to code
 
@@ -224,3 +183,17 @@ Create a function that returns a named list with attributes
 -   load with pkgload
 
 -   can use browser() as if this were scenario 2
+
+## Extension: Using breakpoints in external scripts
+
+\<often need to clear all bp\>
+
+note: bp works under some circumstances in external script
+
+source main, sources external: no
+
+source main, debugSource external: yes
+
+source external, put in breakpoint, run from main: yes
+
+put in breakpoint, source external, run from main: yes

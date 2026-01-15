@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.12">
+<meta name="generator" content="quarto-1.9.16">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -72,10 +72,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-cdaacfc258cb6f151192107f105ac881.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a67ac2868200dddf7a4f0e3ae403775c.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-0ee72de42c60dbd072a9e85558b70db9.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-a7befa1e3a9a8deea7757a856f929fc6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -105,6 +105,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 <link rel="shortcut icon" href="https://qfcatmsu.github.io/assets/images/qfc_icon.png">
 <script>mod=true; // menuCollapse=true;</script>
+<!--script src="/assets/quarto/qfc_styles.js"></script-->
 <script src="https://qfcatmsu.github.io/assets/quarto/qfc_styles.js"></script>
 
 
@@ -783,7 +784,7 @@ Figure&nbsp;11: The List object in the Environment and the viewer tab
 </section>
 <section id="application" class="level2" data-number="14">
 <h2 data-number="14" class="anchored" data-anchor-id="application"><span class="header-section-number">14</span> Application</h2>
-<p>A) Open the file&nbsp;<a href="..\content/DEVELOPMENT/2020/courses/DEV-belinsky-2020-ProgrammingFundamentalsUsingR/R/Lessons/../Data/Lansing2016Noaa.csv?isCourseFile=true"><strong><em>LansingNOAA2016.csv</em></strong></a> and save the contents of the file to a data frame named <strong><em>weatherData</em></strong></p>
+<p>A) <a href="../data/Lansing2016NOAA.csv">Open the file&nbsp;Lansing2016NOAA.csv</a> and save the contents of the file to a data frame named <strong><em>weatherData</em></strong></p>
 <p>&nbsp;</p>
 <p>B) Create a stacked data frame named <strong><em>stackedWD</em></strong> that only contains the three temperature columns from <strong><em>weatherData</em></strong> (<strong><em>maxTemp</em></strong>, <strong><em>avgTemp</em></strong>, and <strong><em>minTemp</em></strong>).&nbsp;</p>
 <ul>
@@ -818,7 +819,7 @@ Figure&nbsp;11: The List object in the Environment and the viewer tab
 </section>
 <section id="extension-lazy-evaluation" class="level2" data-number="15">
 <h2 data-number="15" class="anchored" data-anchor-id="extension-lazy-evaluation"><span class="header-section-number">15</span> Extension: Lazy Evaluation</h2>
-<p>This is probably the one programming topic that has caused the most agony in this authors life as it is unintuitive and happens unexpectedly in many programming languages…</p>
+<p>This is probably the one programming topic that has caused the most agony in this author’s life as it is unintuitive and happens unexpectedly in many programming languages…</p>
 <p>&nbsp;</p>
 <p>There are <strong>7</strong> columns in <strong><em>lansJanTempsDF</em></strong>, which means the <strong><em>for</em></strong> loop will cycle <strong>7</strong> times. Each time with a different value for <strong><em>i</em></strong> (1, 2, 3, 4, 5, 6, and 7).</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(lansJanTempsDF))         <span class="co"># add plots to canvas one at a time</span></span>
@@ -827,7 +828,7 @@ Figure&nbsp;11: The List object in the Environment and the viewer tab
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">y=</span>lansJanTempsDF[,i], </span>
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">color=</span><span class="fu">colnames</span>(lansJanTempsDF)[i]) )</span>
 <span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>However, if you execute the code above you will only see one plot – the plot for the seventh cycle (when <strong><em>i=7</em></strong>). Actually, the seventh plot got plotted seven times but they overlap each other so you only see one.</p>
+<p>However, if you execute the code above you will only see one plot – the plot for the seventh cycle (when <strong><em>i=7</em></strong>). Actually, <span class="hl">the seventh plot got plotted seven times</span> but they overlap each other so you only see one.</p>
 <p>&nbsp;</p>
 <p>The reason this happens is that R, in the background, will first stack up the code from all seven cycles of the <strong><em>for</em></strong> loop like this:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>plot4 <span class="ot">=</span> plot4 <span class="sc">+</span> <span class="fu">geom_line</span>( <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(lansJanTempsDF), </span>
