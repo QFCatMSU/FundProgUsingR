@@ -295,6 +295,35 @@ velocity = «sqrt»(2*kineticEnergy / mass);  # how square roots are usually don
 velocity = (2*kineticEnergy / mass)^(1/2); # how I prefer to do them
 ```
 
+## Mathematics on multiple lines
+
+You need to be careful when putting mathematics on multiple lines in R. For instance if you command:
+
+``` r
+num = 1 + 1 + 1 + 1
+      + 1 + 1 + 1;
+```
+
+will set ***num = 4*** because R thinks that `num  = 1 + 1 + 1 + 1` is the complete command.
+
+ 
+
+If the command is meant to go to the next line, you need to give R a reason to continue to the next line. This can be done by moving the operation to the end of the line so that R looks on the next line for the operand:
+
+``` r
+ num = 1 + 1 + 1 + 1 + 
+       1 + 1 + 1;
+```
+
+Or by wrapping the values in parentheses so that R knows it needs to continue until the end parenthesis is found:
+
+``` r
+num = (1 + 1 + 1 + 1 
+       + 1 + 1 + 1);
+```
+
+The latter two examples will both set `num = 7`.
+
 ## Random values
 
 In @fig-mixed-powers we hardcoded the values for ***kineticEnergy*** and ***mass***. [Harcoded]{.hl} means we directly provided a values for the two variables.  Now we will randomly pick values for variables using ***sample()***.
