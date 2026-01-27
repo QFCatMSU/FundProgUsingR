@@ -2,13 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.16">
+<meta name="generator" content="quarto-1.9.17">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>2-14: Debugging External Scripts (Unfinished)</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -19,6 +22,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -37,7 +75,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a67ac2868200dddf7a4f0e3ae403775c.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ce4278342a015d016477ed09bce942c5.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-a7befa1e3a9a8deea7757a856f929fc6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -327,25 +365,32 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title"><b>Lesson Content</b></h2>
    
   <ul>
-  <li><a href="#this-lesson-is-not-yet-fit-for-student-consumption" id="toc-this-lesson-is-not-yet-fit-for-student-consumption" class="nav-link active" data-scroll-target="#this-lesson-is-not-yet-fit-for-student-consumption"><span class="header-section-number">0.1</span> This lesson is not yet fit for student consumption</a></li>
+  <li><a href="#this-lesson-is-not-complete" id="toc-this-lesson-is-not-complete" class="nav-link active" data-scroll-target="#this-lesson-is-not-complete"><span class="header-section-number">0.1</span> This lesson is not complete</a></li>
   <li><a href="#purpose" id="toc-purpose" class="nav-link" data-scroll-target="#purpose"><span class="header-section-number">1</span> Purpose</a></li>
   <li><a href="#material" id="toc-material" class="nav-link" data-scroll-target="#material"><span class="header-section-number">2</span> Material</a></li>
-  <li><a href="#sourcing-external-scripts" id="toc-sourcing-external-scripts" class="nav-link" data-scroll-target="#sourcing-external-scripts"><span class="header-section-number">3</span> Sourcing external scripts</a></li>
-  <li><a href="#adding-breakpoints-to-external-scripts" id="toc-adding-breakpoints-to-external-scripts" class="nav-link" data-scroll-target="#adding-breakpoints-to-external-scripts"><span class="header-section-number">4</span> Adding breakpoints to external scripts</a>
+  <li><a href="#external-scripts-in-r" id="toc-external-scripts-in-r" class="nav-link" data-scroll-target="#external-scripts-in-r"><span class="header-section-number">3</span> External Scripts in R</a></li>
+  <li><a href="#debugging-scripts" id="toc-debugging-scripts" class="nav-link" data-scroll-target="#debugging-scripts"><span class="header-section-number">4</span> Debugging Scripts</a>
   <ul class="collapse">
-  <li><a href="#breakpoints-and-browser" id="toc-breakpoints-and-browser" class="nav-link" data-scroll-target="#breakpoints-and-browser"><span class="header-section-number">4.1</span> breakpoints and browser()</a></li>
-  <li><a href="#adding-a-breakpoint-to-the-main-script" id="toc-adding-a-breakpoint-to-the-main-script" class="nav-link" data-scroll-target="#adding-a-breakpoint-to-the-main-script"><span class="header-section-number">4.2</span> Adding a breakpoint to the main script</a></li>
-  <li><a href="#browser-in-the-main-script" id="toc-browser-in-the-main-script" class="nav-link" data-scroll-target="#browser-in-the-main-script"><span class="header-section-number">4.3</span> browser() in the main script</a></li>
-  <li><a href="#add-browser-to-code" id="toc-add-browser-to-code" class="nav-link" data-scroll-target="#add-browser-to-code"><span class="header-section-number">4.4</span> add browser to code</a></li>
-  <li><a href="#add-browser-to-for-loop-need-just-need-to-say-it-can-replace-bp" id="toc-add-browser-to-for-loop-need-just-need-to-say-it-can-replace-bp" class="nav-link" data-scroll-target="#add-browser-to-for-loop-need-just-need-to-say-it-can-replace-bp"><span class="header-section-number">4.5</span> add browser to for loop &lt;need?? – just need to say it can replace bp&gt;</a></li>
-  <li><a href="#dont-forget-to-remove-browser" id="toc-dont-forget-to-remove-browser" class="nav-link" data-scroll-target="#dont-forget-to-remove-browser"><span class="header-section-number">4.6</span> Don’t forget to remove browser()</a></li>
+  <li><a href="#debugging-external-scripts-with-browser" id="toc-debugging-external-scripts-with-browser" class="nav-link" data-scroll-target="#debugging-external-scripts-with-browser"><span class="header-section-number">4.1</span> Debugging External Scripts with <code>browser()</code></a></li>
   </ul></li>
-  <li><a href="#named-lists" id="toc-named-lists" class="nav-link" data-scroll-target="#named-lists"><span class="header-section-number">5</span> Named lists</a></li>
-  <li><a href="#browser-in-function-scripts" id="toc-browser-in-function-scripts" class="nav-link" data-scroll-target="#browser-in-function-scripts"><span class="header-section-number">6</span> browser() in function scripts</a></li>
-  <li><a href="#downloading-package-script" id="toc-downloading-package-script" class="nav-link" data-scroll-target="#downloading-package-script"><span class="header-section-number">7</span> Downloading package script</a>
+  <li><a href="#adding-browser-to-function" id="toc-adding-browser-to-function" class="nav-link" data-scroll-target="#adding-browser-to-function"><span class="header-section-number">5</span> Adding browser() to function &nbsp;</a>
   <ul class="collapse">
-  <li><a href="#including-downloaded-package-scripts" id="toc-including-downloaded-package-scripts" class="nav-link" data-scroll-target="#including-downloaded-package-scripts"><span class="header-section-number">7.1</span> Including downloaded package scripts</a></li>
-  <li><a href="#added-browser-to-downloaded-scripts" id="toc-added-browser-to-downloaded-scripts" class="nav-link" data-scroll-target="#added-browser-to-downloaded-scripts"><span class="header-section-number">7.2</span> added browser() to downloaded scripts</a></li>
+  <li><a href="#components-of-debug-mode" id="toc-components-of-debug-mode" class="nav-link" data-scroll-target="#components-of-debug-mode"><span class="header-section-number">5.1</span> Components of debug mode</a></li>
+  <li><a href="#the-function-environment" id="toc-the-function-environment" class="nav-link" data-scroll-target="#the-function-environment"><span class="header-section-number">5.2</span> The function Environment</a></li>
+  <li><a href="#debugging-controls" id="toc-debugging-controls" class="nav-link" data-scroll-target="#debugging-controls"><span class="header-section-number">5.3</span> Debugging controls</a></li>
+  <li><a href="#conditional-browser" id="toc-conditional-browser" class="nav-link" data-scroll-target="#conditional-browser"><span class="header-section-number">5.4</span> conditional browser()</a></li>
+  <li><a href="#browser-is-only-for-debugging" id="toc-browser-is-only-for-debugging" class="nav-link" data-scroll-target="#browser-is-only-for-debugging"><span class="header-section-number">5.5</span> browser() is only for debugging</a></li>
+  </ul></li>
+  <li><a href="#functions-from-packages" id="toc-functions-from-packages" class="nav-link" data-scroll-target="#functions-from-packages"><span class="header-section-number">6</span> Functions from packages</a>
+  <ul class="collapse">
+  <li><a href="#downloading-package-script" id="toc-downloading-package-script" class="nav-link" data-scroll-target="#downloading-package-script"><span class="header-section-number">6.1</span> Downloading package script</a></li>
+  <li><a href="#unzipping-package" id="toc-unzipping-package" class="nav-link" data-scroll-target="#unzipping-package"><span class="header-section-number">6.2</span> Unzipping package</a></li>
+  <li><a href="#install-pkgload" id="toc-install-pkgload" class="nav-link" data-scroll-target="#install-pkgload"><span class="header-section-number">6.3</span> Install pkgload</a></li>
+  <li><a href="#load-the-local-library" id="toc-load-the-local-library" class="nav-link" data-scroll-target="#load-the-local-library"><span class="header-section-number">6.4</span> load the local library</a></li>
+  </ul></li>
+  <li><a href="#debugging-package-script" id="toc-debugging-package-script" class="nav-link" data-scroll-target="#debugging-package-script"><span class="header-section-number">7</span> Debugging package script</a>
+  <ul class="collapse">
+  <li><a href="#debugging" id="toc-debugging" class="nav-link" data-scroll-target="#debugging"><span class="header-section-number">7.1</span> Debugging</a></li>
   </ul></li>
   <li><a href="#application" id="toc-application" class="nav-link" data-scroll-target="#application"><span class="header-section-number">8</span> Application</a></li>
   <li><a href="#extension-next-in-advanced-class" id="toc-extension-next-in-advanced-class" class="nav-link" data-scroll-target="#extension-next-in-advanced-class"><span class="header-section-number">9</span> Extension: Next in advanced class</a></li>
@@ -386,34 +431,37 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="this-lesson-is-not-yet-fit-for-student-consumption" class="level3" data-number="0.1">
-<h3 data-number="0.1" class="anchored" data-anchor-id="this-lesson-is-not-yet-fit-for-student-consumption"><span class="header-section-number">0.1</span> This lesson is not yet fit for student consumption</h3>
-<p>Hopefully, it will be in January 2026</p>
+<section id="this-lesson-is-not-complete" class="level3" data-number="0.1">
+<h3 data-number="0.1" class="anchored" data-anchor-id="this-lesson-is-not-complete"><span class="header-section-number">0.1</span> This lesson is not complete</h3>
+<p>However, it is fit for student consumption.</p>
 </section>
 <section id="purpose" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="purpose"><span class="header-section-number">1</span> Purpose</h2>
 <ul>
-<li><p>Use browser() to debug external script (don’t forget to remove browser()</p></li>
-<li><p>Alternate ways to debug script</p></li>
+<li><p>Use browser() to debug external script</p></li>
 <li><p>Downloading package script and debugging those</p></li>
 </ul>
 </section>
 <section id="material" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="material"><span class="header-section-number">2</span> Material</h2>
-<p>The <a href="../scripts/2-13_Breakpoints_new.R">script for the lesson is here</a></p>
-<p>A <a href="../scripts/debugTest.r">second script that contains a function to debug</a></p>
+<p>The <a href="../scripts/2-14_DebugExternalScripts.R">script for the lesson is here</a></p>
+<p>A <a href="../scripts/2-14_myFunctions.R">second script that contains a function to debug</a></p>
 <p>The <a href="../data/Lansing2016Noaa-3.csv">data used for the lesson</a> is here</p>
 </section>
-<section id="sourcing-external-scripts" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="sourcing-external-scripts"><span class="header-section-number">3</span> Sourcing external scripts</h2>
-<p>In R, we can call other script files using <code>source()</code>. Any external files that are sourced should be treated like library packages and therefore should only contain functions. This is because any code that exists outside of a function is executed immediately when the file is sourced, which can lead to unintended side effects such as modifying objects in the Environment, changing global options, or producing unexpected output. By placing all executable code inside functions, we force the user to be explicit about when and how that code is run. In addition, functions are designed to be reusable, testable, and easier to debug, which improves code organization, readability, and long-term maintainability.</p>
+<section id="external-scripts-in-r" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="external-scripts-in-r"><span class="header-section-number">3</span> External Scripts in R</h2>
+<p>In R, we run external script files using <code>source()</code>. Ideally, external scripts should contain only function definitions. This is because any code that exists outside of a function is executed immediately when the file is sourced, which can lead to unintended side effects such as modifying objects in the Environment, changing global options, or producing unexpected output. By placing all executable code inside functions, we force the user to be explicit about when and how that code is run. In addition, functions are reusable, testable, and easier to debug, which improves code organization, readability, and long-term maintainability.</p>
 </section>
-<section id="adding-breakpoints-to-external-scripts" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="adding-breakpoints-to-external-scripts"><span class="header-section-number">4</span> Adding breakpoints to external scripts</h2>
-<p>In last lesson, we learned how to put an R script in debug mode using the RStudio interface to add a breakpoint in the gutter area of the script. This method works well for debugging your main script (the script you Source). However, you will likely find yourself wanting to add a breakpoint to a external script called by your main script. This could either be a functions script or a script from a package. Adding breakpoints to external scripts called from your main script is not quite as simple. In this lesson we will learn how to add breakpoints to scripts outside of your main script</p>
-<section id="breakpoints-and-browser" class="level3" data-number="4.1">
-<h3 data-number="4.1" class="anchored" data-anchor-id="breakpoints-and-browser"><span class="header-section-number">4.1</span> breakpoints and browser()</h3>
-<p>R has a command to pause a script: broowser(), which you can add directly to your script. <code>browser()</code> will function very similiarly to an RStudio breakpoint: it will pause your script and open an interactive debugging environment. browser() is a bit harder to manage than breakpoints because you need to remove them from your code but <code>browser()</code>, unlike breakpoints, work more consistently in external scripts.</p>
+<section id="debugging-scripts" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="debugging-scripts"><span class="header-section-number">4</span> Debugging Scripts</h2>
+<p>In the last lesson, we used breakpoints in RStudio to debug our main script. Breakpoints work by pausing execution and giving you an interactive environment to step through the script and inspect objects at that point in time. This method works very well when debugging your main script.</p>
+<p>&nbsp;</p>
+<p>However, breakpoints do not work reliably in external scripts called using <code>source()</code>. For external scripts, we instead use the R command <code>browser()</code> to pause execution and enter a debugging environment.</p>
+<section id="debugging-external-scripts-with-browser" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="debugging-external-scripts-with-browser"><span class="header-section-number">4.1</span> Debugging External Scripts with <code>browser()</code></h3>
+<p>The <code>browser()</code> function can be placed directly inside an external script or function. When R reaches <code>browser()</code>, it pauses execution and opens an interactive debugging session, similar to a breakpoint. Unlike RStudio breakpoints, <code>browser()</code> works consistently inside sourced scripts and functions.</p>
+<p>&nbsp;</p>
+<p>The main drawback of <code>browser()</code> is that it must be added and removed from the code manually, whereas breakpoints can be turned on and off using the RStudio interface. For this reason, breakpoints are best for debugging your main script, and <code>browser()</code> is best for debugging external scripts and functions.</p>
 <div id="fig-browser-help" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-browser-help-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -425,64 +473,147 @@ Figure&nbsp;1: browser() in the Help tab
 </figure>
 </div>
 </section>
-<section id="adding-a-breakpoint-to-the-main-script" class="level3" data-number="4.2">
-<h3 data-number="4.2" class="anchored" data-anchor-id="adding-a-breakpoint-to-the-main-script"><span class="header-section-number">4.2</span> Adding a breakpoint to the main script</h3>
-<p>&lt;no, browser() is too inconsistent in the main script&gt;</p>
-<p>Let’s test <code>browser()</code> using an example from last lesson</p>
-<p>&nbsp;</p>
-<p>The most universal way to add a breakpoint is to add the command <strong><em>browser()</em></strong> to the location in your script where you want the breakpoint. <strong><em>browser()</em></strong> acts just like a breakpoint by pausing your script and putting your script in debug mode. We can take examples from the last lesson and replace the breakpoint with <strong><em>browser()</em></strong>. <span class="hl">Note: browser() is added to your script and needs to be removed after debugging.</span></p>
 </section>
-<section id="browser-in-the-main-script" class="level3" data-number="4.3">
-<h3 data-number="4.3" class="anchored" data-anchor-id="browser-in-the-main-script"><span class="header-section-number">4.3</span> browser() in the main script</h3>
-</section>
-<section id="add-browser-to-code" class="level3" data-number="4.4">
-<h3 data-number="4.4" class="anchored" data-anchor-id="add-browser-to-code"><span class="header-section-number">4.4</span> add browser to code</h3>
-<p>We can add browser() to line 7 of the script from last lesson and click Source. You will see the familiar debug features</p>
-<p>&nbsp;</p>
-<p>&lt;image of browser() with green arrow – controls are the same as bp&gt;</p>
-</section>
-<section id="add-browser-to-for-loop-need-just-need-to-say-it-can-replace-bp" class="level3" data-number="4.5">
-<h3 data-number="4.5" class="anchored" data-anchor-id="add-browser-to-for-loop-need-just-need-to-say-it-can-replace-bp"><span class="header-section-number">4.5</span> add browser to for loop &lt;need?? – just need to say it can replace bp&gt;</h3>
-<p>Instead of putting a NULL command in a for loop so that a breakpoint can be put on the line, we can put browser(). Don’t forget to remove or comment out browser() when you are done debugging</p>
-<p>&lt;link back to last lesson’s NULL in for loops&gt;</p>
-<p>&lt;image for loop with two browser() instead of NULL&gt;</p>
-</section>
-<section id="dont-forget-to-remove-browser" class="level3" data-number="4.6">
-<h3 data-number="4.6" class="anchored" data-anchor-id="dont-forget-to-remove-browser"><span class="header-section-number">4.6</span> Don’t forget to remove browser()</h3>
-</section>
-</section>
-<section id="named-lists" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="named-lists"><span class="header-section-number">5</span> Named lists</h2>
-<p>&lt;pass in named List to function … with high, low, and dates&gt;</p>
-<p>&lt;highest high external script&gt;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-</section>
-<section id="browser-in-function-scripts" class="level2" data-number="6">
-<h2 data-number="6" class="anchored" data-anchor-id="browser-in-function-scripts"><span class="header-section-number">6</span> browser() in function scripts</h2>
-<p>&nbsp;</p>
-<p>The main reason to use browser() is that it work in script files outside of script being Sourced. In the script files, we call a second script named &lt; &gt;. This script has functions in used by the main script. Adding breakpoints to the functions script will not work if you Source the main script. However, adding browser() will work.</p>
-</section>
-<section id="downloading-package-script" class="level2" data-number="7">
-<h2 data-number="7" class="anchored" data-anchor-id="downloading-package-script"><span class="header-section-number">7</span> Downloading package script</h2>
+<section id="adding-browser-to-function" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="adding-browser-to-function"><span class="header-section-number">5</span> Adding browser() to function &nbsp;</h2>
+<p>When you add browser() to a function, this tells R to pause the execution and put the scritpt in debug mode. We will add browser() rightbefore the for loop in the high_and_low() function. When the high_and_low function is called the RStudio tab will switch to the 2-14_function.R script and</p>
+<div id="fig-debugMode" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-debugMode-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-2-14_DebugMode.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-debugMode-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Debug mode inside a function
+</figcaption>
+</figure>
+</div>
+<section id="components-of-debug-mode" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="components-of-debug-mode"><span class="header-section-number">5.1</span> Components of debug mode</h3>
+<p>Most of <a href="#fig-debugMode" class="quarto-xref">Figure&nbsp;2</a> should look familiar from the last lesson. There is</p>
 <ul>
-<li><p>packages are external scripts</p></li>
-<li><p>unzip to project folder</p></li>
-<li><p>show function folder</p></li>
+<li><p>A green arrow will appear at the code line the script is paused at. The green arrow shows you the line that will be executed next</p></li>
+<li><p>Debug controls will appear in the <strong><em>Console</em></strong> tab</p></li>
+<li><p>The <strong><em>Console</em></strong> will indicate it is in browse mode&nbsp; with <code>Browse[1]&gt;</code></p></li>
+<li><p>A traceback window will appear at the bottom of the <strong><em>Environment</em></strong> tab</p></li>
 </ul>
-<section id="including-downloaded-package-scripts" class="level3" data-number="7.1">
-<h3 data-number="7.1" class="anchored" data-anchor-id="including-downloaded-package-scripts"><span class="header-section-number">7.1</span> Including downloaded package scripts</h3>
+<p>One important difference in highlighted in the <strong><em>Environment</em></strong> tab, where it says <strong><em>high_and_low</em></strong>. This means that the <strong><em>Environment</em></strong> is giving you the view from the function high_and_low – so you will only see the variables that are known to the function.</p>
+<p>&nbsp;</p>
+<p>When you are in you main script, you will see the <strong><em>Global Environment</em></strong> view – in fact, you can switch if you click the down arrow.</p>
+</section>
+<section id="the-function-environment" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="the-function-environment"><span class="header-section-number">5.2</span> The function Environment</h3>
+<p>Arguments in a function are essentially variables that the function can see that are set by the caller. In this case: high, low, and dates are variables set by the caller and inside the Environment of the function.</p>
+<p>&nbsp;</p>
+<p>The other variables in the function (highest_high, highest_low) were declared before <strong><em>browser()</em></strong> so those lines how already been executed.</p>
+</section>
+<section id="debugging-controls" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="debugging-controls"><span class="header-section-number">5.3</span> Debugging controls</h3>
+<p>All of the debugging control work the same as in last lesson.</p>
 <ul>
-<li><p>load with pkgload</p></li>
-<li><p>does not show in Environment</p></li>
+<li><p><strong><em>Next</em></strong> will execute the next command and move the green arrow</p></li>
+<li><p><strong><em>Step In</em></strong> will move into a function (if there is one)</p>
+<ul>
+<li>If there is no function, <strong><em>Step In</em></strong> acts like <strong><em>Next</em></strong></li>
+</ul></li>
+<li><p><strong><em>Step Out</em></strong> will complete the execution of the function</p></li>
+<li><p><strong><em>Continue</em></strong> will unpause script execution until the next <strong><em>browser()</em></strong></p>
+<ul>
+<li>If there are no more <strong><em>browser()</em></strong>, then <strong><em>Continue</em></strong> complete the function</li>
+</ul></li>
+<li><p><strong><em>Stop</em></strong> will quit the script – no more code gets executed.</p></li>
 </ul>
 </section>
-<section id="added-browser-to-downloaded-scripts" class="level3" data-number="7.2">
-<h3 data-number="7.2" class="anchored" data-anchor-id="added-browser-to-downloaded-scripts"><span class="header-section-number">7.2</span> added browser() to downloaded scripts</h3>
+<section id="conditional-browser" class="level3" data-number="5.4">
+<h3 data-number="5.4" class="anchored" data-anchor-id="conditional-browser"><span class="header-section-number">5.4</span> conditional browser()</h3>
+<p>It is often useful to put a conditional <strong><em>browser()</em></strong> within a <strong><em>for</em></strong> loop, especially if you for loop is cycling many times. The <strong><em>for</em></strong> loop already has for conditional statement, each checking the extreme value against the current value. You could put a browser() there if you want to see each time a value was changed.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> <span class="cf">if</span>(highs[i] <span class="sc">&lt;</span> lowest_high<span class="sc">$</span>temp)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    { </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>      <span class="fu">browser</span>()</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>      lowest_high<span class="sc">$</span>temp <span class="ot">=</span> highs[i];</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>      lowest_high<span class="sc">$</span>date <span class="ot">=</span> dates[i];</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    }</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>You could add a condition that pauses on a certain cycle:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="fu">length</span>(highs))</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  { </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(i <span class="sc">==</span> <span class="dv">10</span>) <span class="fu">browser</span>()  <span class="co"># brackets are not needed here</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(highs[i] <span class="sc">&gt;</span> highest_high<span class="sc">$</span>temp)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>      highest_high<span class="sc">$</span>temp <span class="ot">=</span> highs[i];</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>      highest_high<span class="sc">$</span>date <span class="ot">=</span> dates[i];</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    ...    </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>or based on a variable</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>   <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="fu">length</span>(highs))</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  { </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(highs[i] <span class="sc">&gt;</span> <span class="dv">90</span>) <span class="fu">browser</span>()  <span class="co"># brackets are not needed here</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(highs[i] <span class="sc">&gt;</span> highest_high<span class="sc">$</span>temp)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>      highest_high<span class="sc">$</span>temp <span class="ot">=</span> highs[i];</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>      highest_high<span class="sc">$</span>date <span class="ot">=</span> dates[i];</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    ...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="browser-is-only-for-debugging" class="level3" data-number="5.5">
+<h3 data-number="5.5" class="anchored" data-anchor-id="browser-is-only-for-debugging"><span class="header-section-number">5.5</span> browser() is only for debugging</h3>
+<p>Don’t forget to remove them</p>
+</section>
+</section>
+<section id="functions-from-packages" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="functions-from-packages"><span class="header-section-number">6</span> Functions from packages</h2>
+<p>R Packages are essentially script files with function in them. However, you cannot use breakpoints or <strong><em>browser()</em></strong> to debug them because you do not have access to the script file. So we are going to download packages script to your computer where they can be seen and used just like any other external script.</p>
+<p>&nbsp;</p>
+<p>We are going to download the pracma package to</p>
+<p>The steps are:</p>
 <ul>
-<li><p>can now debug</p></li>
-<li><p>note: you can also modify the package function</p></li>
+<li><p>download the package (in this case, pracma)</p></li>
+<li><p>unzip the package</p></li>
+<li><p>install pkgload library</p></li>
+<li><p>load downloaded library</p></li>
+<li><p>now you can debug scripts in the library just like before</p></li>
 </ul>
+<section id="downloading-package-script" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="downloading-package-script"><span class="header-section-number">6.1</span> Downloading package script</h3>
+<p>The command to download the package to your computer is:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">download.packages</span>(<span class="st">"pracma"</span>, <span class="at">destdir =</span> <span class="st">"C:/Users/Charlie/Desktop"</span>, <span class="at">type =</span> <span class="st">"source"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>You do need to change the <strong><em>destdir</em></strong> to a legitimate folder on your computer. <span class="note">Note: On Windows, <code>destdir = "~"</code> will likely download to your Document directory.</span></p>
+</section>
+<section id="unzipping-package" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="unzipping-package"><span class="header-section-number">6.2</span> Unzipping package</h3>
+<p>The package will be download as a *.gz file. These files can be unzipped just like a *.zip file. I save the <strong><em>pracma</em></strong> folder, to the <strong><em>scripts</em></strong> folder in my project</p>
+</section>
+<section id="install-pkgload" class="level3" data-number="6.3">
+<h3 data-number="6.3" class="anchored" data-anchor-id="install-pkgload"><span class="header-section-number">6.3</span> Install pkgload</h3>
+<p>pkgload is an R package that allows you to load a local library folder, which pracma now is.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"pkgload"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="load-the-local-library" class="level3" data-number="6.4">
+<h3 data-number="6.4" class="anchored" data-anchor-id="load-the-local-library"><span class="header-section-number">6.4</span> load the local library</h3>
+<p>You need to know where your library folder is. I saved the folder within my project folder:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>pkgload<span class="sc">::</span><span class="fu">load_all</span>(<span class="st">"scripts/pracma"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="debugging-package-script" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="debugging-package-script"><span class="header-section-number">7</span> Debugging package script</h2>
+<p>All the script files are inside the R folder. When you load the package, you are loading all of the function from all of these script files.</p>
+<p>&nbsp;</p>
+<p>You can now open the script file in RStudio and edit it – in this case I added <strong><em>browser()</em></strong> to line 11 of the <strong><em>isprime()</em></strong> function in the <strong><em>isprime.R</em></strong> script:</p>
+<div id="fig-debugpackage" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-debugpackage-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-2-14_DebugPAckage.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-debugpackage-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Debugging a function from a package
+</figcaption>
+</figure>
+</div>
+<section id="debugging" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="debugging"><span class="header-section-number">7.1</span> Debugging</h3>
+<p>Now you can call <strong><em>isprime()</em></strong> from your main script and <strong><em>browser()</em></strong> will put the function in debug mode:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">isprime</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">71</span>,<span class="dv">88</span>,<span class="dv">2131</span>, <span class="dv">3287</span>, <span class="dv">7819</span>));</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Debug mode will work exactly as is did before for your own external scripts.</p>
 </section>
 </section>
 <section id="application" class="level2" data-number="8">

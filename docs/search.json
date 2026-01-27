@@ -4,7 +4,7 @@
     "href": "lessons/2-14_Debug_External_Scripts.html",
     "title": "2-14: Debugging External Scripts (Unfinished)",
     "section": "",
-    "text": "Hopefully, it will be in January 2026",
+    "text": "However, it is fit for student consumption.",
     "crumbs": [
       "<b>Fundamentals of Programming class</b>",
       "Part 2: Data Programming",
@@ -16,7 +16,7 @@
     "href": "lessons/2-14_Debug_External_Scripts.html#purpose",
     "title": "2-14: Debugging External Scripts (Unfinished)",
     "section": "1 Purpose",
-    "text": "1 Purpose\n\nUse browser() to debug external script (don’t forget to remove browser()\nAlternate ways to debug script\nDownloading package script and debugging those",
+    "text": "1 Purpose\n\nUse browser() to debug external script\nDownloading package script and debugging those",
     "crumbs": [
       "<b>Fundamentals of Programming class</b>",
       "Part 2: Data Programming",
@@ -36,11 +36,11 @@
     ]
   },
   {
-    "objectID": "lessons/2-14_Debug_External_Scripts.html#sourcing-external-scripts",
-    "href": "lessons/2-14_Debug_External_Scripts.html#sourcing-external-scripts",
+    "objectID": "lessons/2-14_Debug_External_Scripts.html#external-scripts-in-r",
+    "href": "lessons/2-14_Debug_External_Scripts.html#external-scripts-in-r",
     "title": "2-14: Debugging External Scripts (Unfinished)",
-    "section": "3 Sourcing external scripts",
-    "text": "3 Sourcing external scripts\nIn R, we can call other script files using source(). Any external files that are sourced should be treated like library packages and therefore should only contain functions. This is because any code that exists outside of a function is executed immediately when the file is sourced, which can lead to unintended side effects such as modifying objects in the Environment, changing global options, or producing unexpected output. By placing all executable code inside functions, we force the user to be explicit about when and how that code is run. In addition, functions are designed to be reusable, testable, and easier to debug, which improves code organization, readability, and long-term maintainability.",
+    "section": "3 External Scripts in R",
+    "text": "3 External Scripts in R\nIn R, we run external script files using source(). Ideally, external scripts should contain only function definitions. This is because any code that exists outside of a function is executed immediately when the file is sourced, which can lead to unintended side effects such as modifying objects in the Environment, changing global options, or producing unexpected output. By placing all executable code inside functions, we force the user to be explicit about when and how that code is run. In addition, functions are reusable, testable, and easier to debug, which improves code organization, readability, and long-term maintainability.",
     "crumbs": [
       "<b>Fundamentals of Programming class</b>",
       "Part 2: Data Programming",
@@ -48,11 +48,11 @@
     ]
   },
   {
-    "objectID": "lessons/2-14_Debug_External_Scripts.html#adding-breakpoints-to-external-scripts",
-    "href": "lessons/2-14_Debug_External_Scripts.html#adding-breakpoints-to-external-scripts",
+    "objectID": "lessons/2-14_Debug_External_Scripts.html#debugging-scripts",
+    "href": "lessons/2-14_Debug_External_Scripts.html#debugging-scripts",
     "title": "2-14: Debugging External Scripts (Unfinished)",
-    "section": "4 Adding breakpoints to external scripts",
-    "text": "4 Adding breakpoints to external scripts\nIn last lesson, we learned how to put an R script in debug mode using the RStudio interface to add a breakpoint in the gutter area of the script. This method works well for debugging your main script (the script you Source). However, you will likely find yourself wanting to add a breakpoint to a external script called by your main script. This could either be a functions script or a script from a package. Adding breakpoints to external scripts called from your main script is not quite as simple. In this lesson we will learn how to add breakpoints to scripts outside of your main script\n\n4.1 breakpoints and browser()\nR has a command to pause a script: broowser(), which you can add directly to your script. browser() will function very similiarly to an RStudio breakpoint: it will pause your script and open an interactive debugging environment. browser() is a bit harder to manage than breakpoints because you need to remove them from your code but browser(), unlike breakpoints, work more consistently in external scripts.\n\n\n\n\n\n\nFigure 1: browser() in the Help tab\n\n\n\n\n\n4.2 Adding a breakpoint to the main script\n&lt;no, browser() is too inconsistent in the main script&gt;\nLet’s test browser() using an example from last lesson\n \nThe most universal way to add a breakpoint is to add the command browser() to the location in your script where you want the breakpoint. browser() acts just like a breakpoint by pausing your script and putting your script in debug mode. We can take examples from the last lesson and replace the breakpoint with browser(). Note: browser() is added to your script and needs to be removed after debugging.\n\n\n4.3 browser() in the main script\n\n\n4.4 add browser to code\nWe can add browser() to line 7 of the script from last lesson and click Source. You will see the familiar debug features\n \n&lt;image of browser() with green arrow – controls are the same as bp&gt;\n\n\n4.5 add browser to for loop &lt;need?? – just need to say it can replace bp&gt;\nInstead of putting a NULL command in a for loop so that a breakpoint can be put on the line, we can put browser(). Don’t forget to remove or comment out browser() when you are done debugging\n&lt;link back to last lesson’s NULL in for loops&gt;\n&lt;image for loop with two browser() instead of NULL&gt;\n\n\n4.6 Don’t forget to remove browser()",
+    "section": "4 Debugging Scripts",
+    "text": "4 Debugging Scripts\nIn the last lesson, we used breakpoints in RStudio to debug our main script. Breakpoints work by pausing execution and giving you an interactive environment to step through the script and inspect objects at that point in time. This method works very well when debugging your main script.\n \nHowever, breakpoints do not work reliably in external scripts called using source(). For external scripts, we instead use the R command browser() to pause execution and enter a debugging environment.\n\n4.1 Debugging External Scripts with browser()\nThe browser() function can be placed directly inside an external script or function. When R reaches browser(), it pauses execution and opens an interactive debugging session, similar to a breakpoint. Unlike RStudio breakpoints, browser() works consistently inside sourced scripts and functions.\n \nThe main drawback of browser() is that it must be added and removed from the code manually, whereas breakpoints can be turned on and off using the RStudio interface. For this reason, breakpoints are best for debugging your main script, and browser() is best for debugging external scripts and functions.\n\n\n\n\n\n\nFigure 1: browser() in the Help tab",
     "crumbs": [
       "<b>Fundamentals of Programming class</b>",
       "Part 2: Data Programming",
@@ -60,11 +60,11 @@
     ]
   },
   {
-    "objectID": "lessons/2-14_Debug_External_Scripts.html#named-lists",
-    "href": "lessons/2-14_Debug_External_Scripts.html#named-lists",
+    "objectID": "lessons/2-14_Debug_External_Scripts.html#adding-browser-to-function",
+    "href": "lessons/2-14_Debug_External_Scripts.html#adding-browser-to-function",
     "title": "2-14: Debugging External Scripts (Unfinished)",
-    "section": "5 Named lists",
-    "text": "5 Named lists\n&lt;pass in named List to function … with high, low, and dates&gt;\n&lt;highest high external script&gt;",
+    "section": "5 Adding browser() to function  ",
+    "text": "5 Adding browser() to function  \nWhen you add browser() to a function, this tells R to pause the execution and put the scritpt in debug mode. We will add browser() rightbefore the for loop in the high_and_low() function. When the high_and_low function is called the RStudio tab will switch to the 2-14_function.R script and\n\n\n\n\n\n\nFigure 2: Debug mode inside a function\n\n\n\n\n5.1 Components of debug mode\nMost of Figure 2 should look familiar from the last lesson. There is\n\nA green arrow will appear at the code line the script is paused at. The green arrow shows you the line that will be executed next\nDebug controls will appear in the Console tab\nThe Console will indicate it is in browse mode  with Browse[1]&gt;\nA traceback window will appear at the bottom of the Environment tab\n\nOne important difference in highlighted in the Environment tab, where it says high_and_low. This means that the Environment is giving you the view from the function high_and_low – so you will only see the variables that are known to the function.\n \nWhen you are in you main script, you will see the Global Environment view – in fact, you can switch if you click the down arrow.\n\n\n5.2 The function Environment\nArguments in a function are essentially variables that the function can see that are set by the caller. In this case: high, low, and dates are variables set by the caller and inside the Environment of the function.\n \nThe other variables in the function (highest_high, highest_low) were declared before browser() so those lines how already been executed.\n\n\n5.3 Debugging controls\nAll of the debugging control work the same as in last lesson.\n\nNext will execute the next command and move the green arrow\nStep In will move into a function (if there is one)\n\nIf there is no function, Step In acts like Next\n\nStep Out will complete the execution of the function\nContinue will unpause script execution until the next browser()\n\nIf there are no more browser(), then Continue complete the function\n\nStop will quit the script – no more code gets executed.\n\n\n\n5.4 conditional browser()\nIt is often useful to put a conditional browser() within a for loop, especially if you for loop is cycling many times. The for loop already has for conditional statement, each checking the extreme value against the current value. You could put a browser() there if you want to see each time a value was changed.\n    else if(highs[i] &lt; lowest_high$temp)\n    { \n      browser()\n      lowest_high$temp = highs[i];\n      lowest_high$date = dates[i];\n    }\nYou could add a condition that pauses on a certain cycle:\n  for(i in 2:length(highs))\n  { \n    if(i == 10) browser()  # brackets are not needed here\n    \n    if(highs[i] &gt; highest_high$temp)\n    {\n      highest_high$temp = highs[i];\n      highest_high$date = dates[i];\n    }\n    ...    \nor based on a variable\n   for(i in 2:length(highs))\n  { \n    if(highs[i] &gt; 90) browser()  # brackets are not needed here\n    \n    if(highs[i] &gt; highest_high$temp)\n    {\n      highest_high$temp = highs[i];\n      highest_high$date = dates[i];\n    }\n    ...\n\n\n5.5 browser() is only for debugging\nDon’t forget to remove them",
     "crumbs": [
       "<b>Fundamentals of Programming class</b>",
       "Part 2: Data Programming",
@@ -72,11 +72,11 @@
     ]
   },
   {
-    "objectID": "lessons/2-14_Debug_External_Scripts.html#browser-in-function-scripts",
-    "href": "lessons/2-14_Debug_External_Scripts.html#browser-in-function-scripts",
+    "objectID": "lessons/2-14_Debug_External_Scripts.html#functions-from-packages",
+    "href": "lessons/2-14_Debug_External_Scripts.html#functions-from-packages",
     "title": "2-14: Debugging External Scripts (Unfinished)",
-    "section": "6 browser() in function scripts",
-    "text": "6 browser() in function scripts\n \nThe main reason to use browser() is that it work in script files outside of script being Sourced. In the script files, we call a second script named &lt; &gt;. This script has functions in used by the main script. Adding breakpoints to the functions script will not work if you Source the main script. However, adding browser() will work.",
+    "section": "6 Functions from packages",
+    "text": "6 Functions from packages\nR Packages are essentially script files with function in them. However, you cannot use breakpoints or browser() to debug them because you do not have access to the script file. So we are going to download packages script to your computer where they can be seen and used just like any other external script.\n \nWe are going to download the pracma package to\nThe steps are:\n\ndownload the package (in this case, pracma)\nunzip the package\ninstall pkgload library\nload downloaded library\nnow you can debug scripts in the library just like before\n\n\n6.1 Downloading package script\nThe command to download the package to your computer is:\ndownload.packages(\"pracma\", destdir = \"C:/Users/Charlie/Desktop\", type = \"source\")\nYou do need to change the destdir to a legitimate folder on your computer. Note: On Windows, destdir = \"~\" will likely download to your Document directory.\n\n\n6.2 Unzipping package\nThe package will be download as a *.gz file. These files can be unzipped just like a *.zip file. I save the pracma folder, to the scripts folder in my project\n\n\n6.3 Install pkgload\npkgload is an R package that allows you to load a local library folder, which pracma now is.\ninstall.packages(\"pkgload\")\n\n\n6.4 load the local library\nYou need to know where your library folder is. I saved the folder within my project folder:\npkgload::load_all(\"scripts/pracma\")",
     "crumbs": [
       "<b>Fundamentals of Programming class</b>",
       "Part 2: Data Programming",
@@ -84,11 +84,11 @@
     ]
   },
   {
-    "objectID": "lessons/2-14_Debug_External_Scripts.html#downloading-package-script",
-    "href": "lessons/2-14_Debug_External_Scripts.html#downloading-package-script",
+    "objectID": "lessons/2-14_Debug_External_Scripts.html#debugging-package-script",
+    "href": "lessons/2-14_Debug_External_Scripts.html#debugging-package-script",
     "title": "2-14: Debugging External Scripts (Unfinished)",
-    "section": "7 Downloading package script",
-    "text": "7 Downloading package script\n\npackages are external scripts\nunzip to project folder\nshow function folder\n\n\n7.1 Including downloaded package scripts\n\nload with pkgload\ndoes not show in Environment\n\n\n\n7.2 added browser() to downloaded scripts\n\ncan now debug\nnote: you can also modify the package function",
+    "section": "7 Debugging package script",
+    "text": "7 Debugging package script\nAll the script files are inside the R folder. When you load the package, you are loading all of the function from all of these script files.\n \nYou can now open the script file in RStudio and edit it – in this case I added browser() to line 11 of the isprime() function in the isprime.R script:\n\n\n\n\n\n\nFigure 3: Debugging a function from a package\n\n\n\n\n7.1 Debugging\nNow you can call isprime() from your main script and browser() will put the function in debug mode:\nisprime(c(1,2,4,71,88,2131, 3287, 7819));\nDebug mode will work exactly as is did before for your own external scripts.",
     "crumbs": [
       "<b>Fundamentals of Programming class</b>",
       "Part 2: Data Programming",
@@ -328,7 +328,7 @@
     "href": "lessons/2-10_Statistical_Tests.html#application",
     "title": "2-10: Statistical Tests",
     "section": "7 Application",
-    "text": "7 Application\n1) Subset the first 10 values from column 6 of lansJanDF four times using four different methods (Section 4.3).\n \n2) Based on the boxplot of all 6 years ( Figure 2 ), which three years would most likely come form the same distribution (i.e., the ANOVA would not reject the NULL hypothesis).\n\ncreate a stacked frame with just these three years\nperform an ANOVA on the three years\nprint the result to the Console\n\n \n3) Using t-tests, find which year’s January temperatures is most statistically similar to the temperatures from January 2014 (other than itself!).\n \n4) Perform four linear models:\n\nstnPressure vs. windSpeed,\nstnPressure vs. precipNum\nstnPressure vs. avgTemp\nstnPressure vs. relHum\n \n\n5) Using only the linear model from #4 that shows the most correlation:\n\nprint the summary to the Console and explain the summary in comments\ncreate a scatterplot of the two variables\nplace a regression line on the scatterplot\ncreate a histogram of the residuals\n\n \nSave the script as app2-10.r in your scripts folder and  email your Project Folder to Charlie Belinsky at belinsky@msu.edu.\n \nInstructions for zipping the Project Folder are here.\n \nIf you have any questions regarding this application, feel free to email them to Charlie Belinsky at belinsky@msu.edu.\n\n7.1 Questions to answer\nAnswer the following in comments inside your application script:\n\nWhat was your level of comfort with the lesson/application?\nWhat areas of the lesson/application confused or still confuses you?\nWhat are some things you would like to know more about that is related to, but not covered in, this lesson?",
+    "text": "7 Application\n1) Subset the first 10 values from column 6 of lansJanTempsDF four times using four different methods (Section 4.3).\n \n2) Based on the boxplot of all 6 years ( Figure 2 ), which three years would most likely come form the same distribution (i.e., the ANOVA would not reject the NULL hypothesis).\n\ncreate a stacked frame with just these three years\nperform an ANOVA on the three years\nprint the result to the Console\n\n \n3) Using t-tests, find which year’s January temperatures is most statistically similar to the temperatures from January 2014 (other than itself!).\n \n4) Perform four linear models:\n\nstnPressure vs. windSpeed,\nstnPressure vs. precipNum\nstnPressure vs. avgTemp\nstnPressure vs. relHum\n \n\n5) Using only the linear model from #4 that shows the most correlation:\n\nprint the summary to the Console and explain the summary in comments\ncreate a scatterplot of the two variables\nplace a regression line on the scatterplot\ncreate a histogram of the residuals\n\n \nSave the script as app2-10.r in your scripts folder and  email your Project Folder to Charlie Belinsky at belinsky@msu.edu.\n \nInstructions for zipping the Project Folder are here.\n \nIf you have any questions regarding this application, feel free to email them to Charlie Belinsky at belinsky@msu.edu.\n\n7.1 Questions to answer\nAnswer the following in comments inside your application script:\n\nWhat was your level of comfort with the lesson/application?\nWhat areas of the lesson/application confused or still confuses you?\nWhat are some things you would like to know more about that is related to, but not covered in, this lesson?",
     "crumbs": [
       "<b>Fundamentals of Programming class</b>",
       "Part 2: Data Programming",
@@ -3965,7 +3965,7 @@
     "href": "lessons/2-13_Breakpoints.html#setting-up-a-breakpoint",
     "title": "2-13: Breakpoints",
     "section": "4 Setting up a breakpoint",
-    "text": "4 Setting up a breakpoint\nA breakpoint is like a pause button in the execution your script. There are multiple ways to set a breakpoint. In this lesson we will focus on using the Rstudio interface to set a breakpoint. In RStudio, you set a breakpoint by clicking to the left of the line number – this space is called the gutter area.  A red dot representing the breakpoint appears in the gutter area.  Clicking again will get rid of the breakpoint.\n\n\n\n\n\n\nFigure 1: Breakpoint (red dot) set on line 8\n\n\n\nWhen you Source your code, the script will execute up to, but not including, the line with the breakpoint.  Your script is now paused at the line with a breakpoint, and you are in debug mode, which R calls Browse mode (Figure 2).\n \nNote: A breakpoint only works when you Source your script.  It will not work if you use Run to execute lines of code.\n\n4.1 Debug Mode\nThere are 4 things in RStudio that will indicate you are in debug mode:\n\nA green arrow will appear at the code line the script is paused at. The green arrow shows you the line that will be executed next\nBreakpoint controls will appear in the Console tab\nThe Console will indicate it is in browse mode  with &gt; Browse\n\nThe number (in this case, 1) is supposed to tell you how many browsers you are inside. This is tough to explain, not meaningful at the point, and it does not even seem like it works. So, don’t worry about it!\n\nA traceback window will appear at the bottom of the Environment tab\n\ntraceback is a more advanced debugging tool that we will not get into in this lesson\n\n\n \n\n\n\n\n\n\nFigure 2: Sourcing a script with a breakpoint puts it into debug mode",
+    "text": "4 Setting up a breakpoint\nA breakpoint is like a pause button in the execution your script. There are multiple ways to set a breakpoint. In this lesson we will focus on using the Rstudio interface to set a breakpoint. In RStudio, you set a breakpoint by clicking to the left of the line number – this space is called the gutter area.  A red dot representing the breakpoint appears in the gutter area.  Clicking again will get rid of the breakpoint.\n\n\n\n\n\n\nFigure 1: Breakpoint (red dot) set on line 8\n\n\n\nWhen you Source your code, the script will execute up to, but not including, the line with the breakpoint.  Your script is now paused at the line with a breakpoint, and you are in debug mode, which R calls Browse mode (Figure 2).\n \nNote: A breakpoint only works when you Source your script.  It will not work if you use Run to execute lines of code.\n\n4.1 Debug Mode\nThere are 4 things in RStudio that will indicate you are in debug mode:\n\nA green arrow will appear at the code line the script is paused at. The green arrow shows you the line that will be executed next\nDebug controls will appear in the Console tab\nThe Console will indicate it is in browse mode  with Browse[1]&gt;\n\nThe number (in this case, 1) is supposed to tell you how many browsers you are inside. This is tough to explain, not meaningful at the point, and it does not even seem like it works. So, don’t worry about it!\n\nA traceback window will appear at the bottom of the Environment tab\n\ntraceback is a more advanced debugging tool that we will not get into in this lesson\n\n\n \n\n\n\n\n\n\nFigure 2: Sourcing a script with a breakpoint puts it into debug mode",
     "crumbs": [
       "<b>Fundamentals of Programming class</b>",
       "Part 2: Data Programming",
