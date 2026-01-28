@@ -9,7 +9,7 @@ high_and_low = function(highs, lows, dates)
   lowest_high = lowest_low = list();
   lowest_high$temp = lowest_low$temp = highs[1];  
   lowest_high$date = lowest_low$date = dates[1];  
-  browser()
+
   ### Add code to handle multiple dates that have the same extreme temp
   for(i in 2:length(highs))
   { 

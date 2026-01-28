@@ -16,7 +16,7 @@
     "href": "lessons/2-14_Debug_External_Scripts.html#purpose",
     "title": "2-14: Debugging External Scripts (Unfinished)",
     "section": "1 Purpose",
-    "text": "1 Purpose\n\nUse browser() to debug external script\nDownloading package script and debugging those",
+    "text": "1 Purpose\n\nDebug external scripts with browser()\nAccess scripts from packagesand debug",
     "crumbs": [
       "<b>Fundamentals of Programming class</b>",
       "Part 2: Data Programming",
@@ -40,7 +40,7 @@
     "href": "lessons/2-14_Debug_External_Scripts.html#external-scripts-in-r",
     "title": "2-14: Debugging External Scripts (Unfinished)",
     "section": "3 External Scripts in R",
-    "text": "3 External Scripts in R\nIn R, we run external script files using source(). Ideally, external scripts should contain only function definitions. This is because any code that exists outside of a function is executed immediately when the file is sourced, which can lead to unintended side effects such as modifying objects in the Environment, changing global options, or producing unexpected output. By placing all executable code inside functions, we force the user to be explicit about when and how that code is run. In addition, functions are reusable, testable, and easier to debug, which improves code organization, readability, and long-term maintainability.",
+    "text": "3 External Scripts in R\nIn R, we run external script files using source(). Ideally, external scripts should contain only function definitions. This is because any code that exists outside of a function is executed immediately when the file is sourced, which can lead to unintended side effects such as modifying objects in the Environment, changing global options, or producing unexpected output. By placing all executable code inside functions, we force the user to be explicit about when and how that code is run. In addition, functions are reusable and easier to test and debug, which improves readability, and long-term script maintenance.",
     "crumbs": [
       "<b>Fundamentals of Programming class</b>",
       "Part 2: Data Programming",
@@ -52,7 +52,7 @@
     "href": "lessons/2-14_Debug_External_Scripts.html#debugging-scripts",
     "title": "2-14: Debugging External Scripts (Unfinished)",
     "section": "4 Debugging Scripts",
-    "text": "4 Debugging Scripts\nIn the last lesson, we used breakpoints in RStudio to debug our main script. Breakpoints work by pausing execution and giving you an interactive environment to step through the script and inspect objects at that point in time. This method works very well when debugging your main script.\n \nHowever, breakpoints do not work reliably in external scripts called using source(). For external scripts, we instead use the R command browser() to pause execution and enter a debugging environment.\n\n4.1 Debugging External Scripts with browser()\nThe browser() function can be placed directly inside an external script or function. When R reaches browser(), it pauses execution and opens an interactive debugging session, similar to a breakpoint. Unlike RStudio breakpoints, browser() works consistently inside sourced scripts and functions.\n \nThe main drawback of browser() is that it must be added and removed from the code manually, whereas breakpoints can be turned on and off using the RStudio interface. For this reason, breakpoints are best for debugging your main script, and browser() is best for debugging external scripts and functions.\n\n\n\n\n\n\nFigure 1: browser() in the Help tab",
+    "text": "4 Debugging Scripts\nIn the last lesson, we used breakpoints in RStudio to debug our main script. Breakpoints work by pausing execution of the script and giving you an interactive environment to step through the script and inspect objects while paused.\n \nBreakpoints work very well when debugging your main script but they do not work reliably in external scripts called with source(). For external scripts, we instead use the R command browser() to pause execution and enter a debugging environment.\n\n4.1 Debugging External Scripts with browser()\nThe browser() function can be placed directly inside an external script or function. When R reaches browser(), it pauses execution and opens an interactive debugging session, similar to a breakpoint. For reasons beyond this class, browser() works consistently inside sourced scripts and functions but does not work well in the main script (where breakpoints work best).\n \nThe main drawback of browser() is that it must be added and removed from the code manually, whereas breakpoints can be turned on and off using the RStudio interface.\n\n\n\n\n\n\nFigure 1: -browser() in the Help tab",
     "crumbs": [
       "<b>Fundamentals of Programming class</b>",
       "Part 2: Data Programming",
@@ -64,7 +64,7 @@
     "href": "lessons/2-14_Debug_External_Scripts.html#adding-browser-to-function",
     "title": "2-14: Debugging External Scripts (Unfinished)",
     "section": "5 Adding browser() to function  ",
-    "text": "5 Adding browser() to function  \nWhen you add browser() to a function, this tells R to pause the execution and put the scritpt in debug mode. We will add browser() rightbefore the for loop in the high_and_low() function. When the high_and_low function is called the RStudio tab will switch to the 2-14_function.R script and\n\n\n\n\n\n\nFigure 2: Debug mode inside a function\n\n\n\n\n5.1 Components of debug mode\nMost of Figure 2 should look familiar from the last lesson. There is\n\nA green arrow will appear at the code line the script is paused at. The green arrow shows you the line that will be executed next\nDebug controls will appear in the Console tab\nThe Console will indicate it is in browse mode  with Browse[1]&gt;\nA traceback window will appear at the bottom of the Environment tab\n\nOne important difference in highlighted in the Environment tab, where it says high_and_low. This means that the Environment is giving you the view from the function high_and_low – so you will only see the variables that are known to the function.\n \nWhen you are in you main script, you will see the Global Environment view – in fact, you can switch if you click the down arrow.\n\n\n5.2 The function Environment\nArguments in a function are essentially variables that the function can see that are set by the caller. In this case: high, low, and dates are variables set by the caller and inside the Environment of the function.\n \nThe other variables in the function (highest_high, highest_low) were declared before browser() so those lines how already been executed.\n\n\n5.3 Debugging controls\nAll of the debugging control work the same as in last lesson.\n\nNext will execute the next command and move the green arrow\nStep In will move into a function (if there is one)\n\nIf there is no function, Step In acts like Next\n\nStep Out will complete the execution of the function\nContinue will unpause script execution until the next browser()\n\nIf there are no more browser(), then Continue complete the function\n\nStop will quit the script – no more code gets executed.\n\n\n\n5.4 conditional browser()\nIt is often useful to put a conditional browser() within a for loop, especially if you for loop is cycling many times. The for loop already has for conditional statement, each checking the extreme value against the current value. You could put a browser() there if you want to see each time a value was changed.\n    else if(highs[i] &lt; lowest_high$temp)\n    { \n      browser()\n      lowest_high$temp = highs[i];\n      lowest_high$date = dates[i];\n    }\nYou could add a condition that pauses on a certain cycle:\n  for(i in 2:length(highs))\n  { \n    if(i == 10) browser()  # brackets are not needed here\n    \n    if(highs[i] &gt; highest_high$temp)\n    {\n      highest_high$temp = highs[i];\n      highest_high$date = dates[i];\n    }\n    ...    \nor based on a variable\n   for(i in 2:length(highs))\n  { \n    if(highs[i] &gt; 90) browser()  # brackets are not needed here\n    \n    if(highs[i] &gt; highest_high$temp)\n    {\n      highest_high$temp = highs[i];\n      highest_high$date = dates[i];\n    }\n    ...\n\n\n5.5 browser() is only for debugging\nDon’t forget to remove them",
+    "text": "5 Adding browser() to function  \nLet’s first Run the first seven line of the script 2-14_DebugExternalScripts.R.\nrm(list=ls());\nsource(\"scripts/2-14_myFunctions.R\");\n\n# read in CSV file and save the content to weatherData\nweatherData = read.csv(file=\"data/Lansing2016NOAA-3.csv\");\n\ntemps = high_and_low(weatherData$maxTemp, \n                     weatherData$minTemp, \n                     weatherData$dateYear);\nhigh_and_low() is a function inside the script 2-14_myFunctions.R. On line 7, it is called with three arguments: the max temps, min temps, and dates columns from weatherData. After the function is called, temps appears in the Environment as a List of 4 (the return value from high_and_low).\n\n5.1 Pause execution of function\nWe can directly pause the function high_and_low by adding browser() to the script. In Figure 2, I added browser() right before the for() loop in the high_and_low() function. When the browser() command is reached, R will pause the execution and put the script in debug mode. When you modify an external script, you need to save the changes and resource the file (otherwise the old version of the function will be in the Environment).\n \nThis time when we Run the first seven line of the script 2-14_DebugExternalScripts.R, RStudio switches the file viewer to 2-14_myFunctions.R and enter debug mode:\n\n\n\n\n\n\nFigure 2: Debug mode inside a function\n\n\n\n\n\n5.2 Components of debug mode\nMost of Figure 2 should look familiar from the last lesson. There is\n\nA green arrow will appear at the code line the script is paused at. The green arrow shows you the line that will be executed next\nDebug controls will appear in the Console tab\nThe Console will indicate it is in browse mode  with Browse[1]&gt;\nA traceback window will appear at the bottom of the Environment tab\n\nOne important difference in highlighted in the Environment tab, where it says high_and_low. This means that the Environment is giving you the view from the function high_and_low – so you will only see the variables that are known to the function.\n \nWhen you are in you main script, you will see the Global Environment view – in fact, you can switch if you click the down arrow.\n\n\n5.3 The function Environment\nArguments in a function are variables in the function’s Environment that are set by the caller. In this case: high, low, and dates, are variables set by the caller to three columns from weatherData and inside the high_and_low() Environment .\n \nThe other variables in the function (highest_high, highest_low, lowest_high, and lowest_low) and in the Environment because the commands to set the values were executed before browser() .\n\n\n5.4 Debugging controls\nAll of the debugging control work the same as in last lesson.\n\nNext will execute the next command and move the green arrow\nStep In will move into a function (if there is one)\n\nIf there is no function, Step In acts like Next\n\nStep Out will complete the execution of the function\nContinue will unpause the script’s execution until the next browser()\n\nIf there are no more browser(), then Continue complete the function (like Step Out)\n\nStop will quit the script – no more code gets executed.\n\n\n\n5.5 conditional browser()\nIt is often useful to put a conditional browser() within a for loop, especially if you for loop is cycling many times. The for loop already has four conditional statement, each checking the extreme value against the current value. You could put a browser() there if you want to see each time a value was changed.\n    else if(highs[i] &lt; lowest_high$temp)\n    { \n      browser()\n      lowest_high$temp = highs[i];\n      lowest_high$date = dates[i];\n    }\nOr you could add a conditional browser() that pauses on a certain cycle (in this case, the tenth cycle):\n  for(i in 2:length(highs))\n  { \n    if(i == 10) browser()  # brackets are not needed here\n    \n    if(highs[i] &gt; highest_high$temp)\n    {\n      highest_high$temp = highs[i];\n      highest_high$date = dates[i];\n    }\n    ...    \nOr pause based on the value of a variable (in this case, when highs is more than 90)\n  for(i in 2:length(highs))\n  { \n    if(highs[i] &gt; 90) browser()  # brackets are not needed here\n    \n    if(highs[i] &gt; highest_high$temp)\n    {\n      highest_high$temp = highs[i];\n      highest_high$date = dates[i];\n    }\n    ...\n\n\n5.6 browser() is only for debugging\nDon’t forget to remove them!",
     "crumbs": [
       "<b>Fundamentals of Programming class</b>",
       "Part 2: Data Programming",
@@ -76,7 +76,7 @@
     "href": "lessons/2-14_Debug_External_Scripts.html#functions-from-packages",
     "title": "2-14: Debugging External Scripts (Unfinished)",
     "section": "6 Functions from packages",
-    "text": "6 Functions from packages\nR Packages are essentially script files with function in them. However, you cannot use breakpoints or browser() to debug them because you do not have access to the script file. So we are going to download packages script to your computer where they can be seen and used just like any other external script.\n \nWe are going to download the pracma package to\nThe steps are:\n\ndownload the package (in this case, pracma)\nunzip the package\ninstall pkgload library\nload downloaded library\nnow you can debug scripts in the library just like before\n\n\n6.1 Downloading package script\nThe command to download the package to your computer is:\ndownload.packages(\"pracma\", destdir = \"C:/Users/Charlie/Desktop\", type = \"source\")\nYou do need to change the destdir to a legitimate folder on your computer. Note: On Windows, destdir = \"~\" will likely download to your Document directory.\n\n\n6.2 Unzipping package\nThe package will be download as a *.gz file. These files can be unzipped just like a *.zip file. I save the pracma folder, to the scripts folder in my project\n\n\n6.3 Install pkgload\npkgload is an R package that allows you to load a local library folder, which pracma now is.\ninstall.packages(\"pkgload\")\n\n\n6.4 load the local library\nYou need to know where your library folder is. I saved the folder within my project folder:\npkgload::load_all(\"scripts/pracma\")",
+    "text": "6 Functions from packages\nR Packages essentially collections of script files with functions. However, it can be difficult to debug a function inside a package because you typically do not have access to the script files. To work around this, we are going to download the package to your computer and set it up locally. Once installed locally, you can view, use, and modify the package’s script files just like any other external scripts.\n \nThe steps are:\n\ndownload the package (in this case, pracma)\nunzip the package\ninstall pkgload library\nload the local package in your script\n\n\n6.1 Downloading package script\nThe utils package in R (installed with R) includes the function download.packages) that lets you save a package to your computer. The command to download the pracma package is:\ndownload.packages(pkgs=\"pracma\", destdir = \"C:/Users/Charlie/Desktop\", type = \"source\")\nYou do need to change the destdir to a legitimate folder on your computer. Note: On Windows, destdir = \"~\" will likely download to your Documents directory.\n\n\n6.2 Unzipping package\nThe package will be download as a *.tar.gz file. These files can be unzipped like a *.zip file. Save the unzipped pracma folder to the scripts folder in your project.\n\n\n6.3 Install pkgload\npkgload is the R package that lets you use a package directly from a local folder:\ninstall.packages(\"pkgload\")\n\n\n6.4 load the local library\nTo use the functions from pracma, you would normally call:\nlibrary(pracma)\nThe equivalent command for the local package in scripts/pracma is:\npkgload::load_all(\"scripts/pracma\")\nThis command will make all the functions in the local pracma folder available.",
     "crumbs": [
       "<b>Fundamentals of Programming class</b>",
       "Part 2: Data Programming",
@@ -88,7 +88,7 @@
     "href": "lessons/2-14_Debug_External_Scripts.html#debugging-package-script",
     "title": "2-14: Debugging External Scripts (Unfinished)",
     "section": "7 Debugging package script",
-    "text": "7 Debugging package script\nAll the script files are inside the R folder. When you load the package, you are loading all of the function from all of these script files.\n \nYou can now open the script file in RStudio and edit it – in this case I added browser() to line 11 of the isprime() function in the isprime.R script:\n\n\n\n\n\n\nFigure 3: Debugging a function from a package\n\n\n\n\n7.1 Debugging\nNow you can call isprime() from your main script and browser() will put the function in debug mode:\nisprime(c(1,2,4,71,88,2131, 3287, 7819));\nDebug mode will work exactly as is did before for your own external scripts.",
+    "text": "7 Debugging package script\nAll the script files are inside the R folder in the local pracma folder.\n \nYou can now open the local pracma script file in RStudio and edit them – in this case I added browser() to line 11 of the isprime() function in the isprime.R script:\n\n\n\n\n\n\nFigure 3: Debugging a function from a package\n\n\n\n\n7.1 Debugging\nNow you can call isprime() from your main script and browser() will put the function in debug mode:\nisprime(c(1,2,4,71,88,2131, 3287, 7819));\nDebug mode will work exactly as is did before for your own external scripts.\n\n\n\n\n\n\nFigure 4: Debug mode on a local package function",
     "crumbs": [
       "<b>Fundamentals of Programming class</b>",
       "Part 2: Data Programming",
@@ -100,7 +100,7 @@
     "href": "lessons/2-14_Debug_External_Scripts.html#application",
     "title": "2-14: Debugging External Scripts (Unfinished)",
     "section": "8 Application",
-    "text": "8 Application\nWhy should external scripts only contain functions?\nCreate a function that returns a named list with attributes",
+    "text": "8 Application",
     "crumbs": [
       "<b>Fundamentals of Programming class</b>",
       "Part 2: Data Programming",
@@ -111,8 +111,8 @@
     "objectID": "lessons/2-14_Debug_External_Scripts.html#extension-next-in-advanced-class",
     "href": "lessons/2-14_Debug_External_Scripts.html#extension-next-in-advanced-class",
     "title": "2-14: Debugging External Scripts (Unfinished)",
-    "section": "9 Extension: Next in advanced class",
-    "text": "9 Extension: Next in advanced class\n\ntrace() to inject code\nfunctional programming\nobject-oriented programming (S3 vs S7 objects)\nEnvironment and variable scope\n\nwhy if-else works in f() and for loops\n\ncommands and subcommands in R { }\nRcpp",
+    "section": "11 Extension: Next in advanced class",
+    "text": "11 Extension: Next in advanced class\n\ntrace() to inject code\nfunctional programming\nobject-oriented programming (S3 vs S7 objects)\nRcpp",
     "crumbs": [
       "<b>Fundamentals of Programming class</b>",
       "Part 2: Data Programming",
@@ -4090,6 +4090,30 @@
       "<b>Fundamentals of Programming class</b>",
       "Part 2: Data Programming",
       "2-13: Breakpoints"
+    ]
+  },
+  {
+    "objectID": "lessons/2-14_Debug_External_Scripts.html#extension-namespaces-and-environments",
+    "href": "lessons/2-14_Debug_External_Scripts.html#extension-namespaces-and-environments",
+    "title": "2-14: Debugging External Scripts (Unfinished)",
+    "section": "9 Extension: Namespaces and Environments",
+    "text": "9 Extension: Namespaces and Environments\n… how packages are loaded into R",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "Part 2: Data Programming",
+      "2-14: Debugging External Scripts (Unfinished)"
+    ]
+  },
+  {
+    "objectID": "lessons/2-14_Debug_External_Scripts.html#extension-scope",
+    "href": "lessons/2-14_Debug_External_Scripts.html#extension-scope",
+    "title": "2-14: Debugging External Scripts (Unfinished)",
+    "section": "10 Extension: Scope",
+    "text": "10 Extension: Scope\n…Why breakpoints work in main script and browser() in external script… but not vice-versa. Similar to the reason if-else structures are a little strange in R…",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "Part 2: Data Programming",
+      "2-14: Debugging External Scripts (Unfinished)"
     ]
   }
 ]

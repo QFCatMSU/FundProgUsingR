@@ -10,9 +10,9 @@ However, it is fit for student consumption.
 
 ## Purpose
 
--   Use browser() to debug external script
+-   Debug external scripts with browser()
 
--   Downloading package script and debugging those
+-   Access scripts from packagesand debug
 
 ## Material
 
@@ -24,29 +24,51 @@ The [data used for the lesson](../data/Lansing2016Noaa-3.csv) is here
 
 ## External Scripts in R
 
-In R, we run external script files using `source()`. Ideally, external scripts should contain only function definitions. This is because any code that exists outside of a function is executed immediately when the file is sourced, which can lead to unintended side effects such as modifying objects in the Environment, changing global options, or producing unexpected output. By placing all executable code inside functions, we force the user to be explicit about when and how that code is run. In addition, functions are reusable, testable, and easier to debug, which improves code organization, readability, and long-term maintainability.
+In R, we run external script files using `source()`. Ideally, external scripts should contain only function definitions. This is because any code that exists outside of a function is executed immediately when the file is sourced, which can lead to unintended side effects such as modifying objects in the Environment, changing global options, or producing unexpected output. By placing all executable code inside functions, we force the user to be explicit about when and how that code is run. In addition, functions are reusable and easier to test and debug, which improves readability, and long-term script maintenance.
 
 ## Debugging Scripts
 
-In the last lesson, we used breakpoints in RStudio to debug our main script. Breakpoints work by pausing execution and giving you an interactive environment to step through the script and inspect objects at that point in time. This method works very well when debugging your main script.
+In the last lesson, we used breakpoints in RStudio to debug our main script. Breakpoints work by pausing execution of the script and giving you an interactive environment to step through the script and inspect objects while paused.
 
  
 
-However, breakpoints do not work reliably in external scripts called using `source()`. For external scripts, we instead use the R command `browser()` to pause execution and enter a debugging environment.
+Breakpoints work very well when debugging your main script but they do not work reliably in external scripts called with `source()`. For external scripts, we instead use the R command `browser()` to pause execution and enter a debugging environment.
 
-### Debugging External Scripts with `browser()`
+### Debugging External Scripts with browser()
 
-The `browser()` function can be placed directly inside an external script or function. When R reaches `browser()`, it pauses execution and opens an interactive debugging session, similar to a breakpoint. Unlike RStudio breakpoints, `browser()` works consistently inside sourced scripts and functions.
+The `browser()` function can be placed directly inside an external script or function. When R reaches `browser()`, it pauses execution and opens an interactive debugging session, similar to a breakpoint. For reasons beyond this class, `browser()` works consistently inside sourced scripts and functions but does not work well in the main script (where breakpoints work best).
 
  
 
-The main drawback of `browser()` is that it must be added and removed from the code manually, whereas breakpoints can be turned on and off using the RStudio interface. For this reason, breakpoints are best for debugging your main script, and `browser()` is best for debugging external scripts and functions.
+The main drawback of `browser()` is that it must be added and removed from the code manually, whereas breakpoints can be turned on and off using the RStudio interface.
 
-![browser() in the Help tab](images/R-2-15_Browser_Help.png){#fig-browser-help .fs}
+![-browser() in the Help tab](images/R-2-15_Browser_Help.png){#fig-browser-help .fs}
 
 ## Adding browser() to function  
 
-When you add browser() to a function, this tells R to pause the execution and put the scritpt in debug mode. We will add browser() rightbefore the for loop in the high_and_low() function. When the high_and_low function is called the RStudio tab will switch to the 2-14_function.R script and
+Let's first ***Run*** the first seven line of the script ***2-14_DebugExternalScripts.R***.
+
+``` r
+rm(list=ls());
+source("scripts/2-14_myFunctions.R");
+
+# read in CSV file and save the content to weatherData
+weatherData = read.csv(file="data/Lansing2016NOAA-3.csv");
+
+temps = high_and_low(weatherData$maxTemp, 
+                     weatherData$minTemp, 
+                     weatherData$dateYear);
+```
+
+high_and_low() is a function inside the script 2-14_myFunctions.R. On line 7, it is called with three arguments: the max temps, min temps, and dates columns from ***weatherData***. After the function is called, temps appears in the Environment as a List of 4 (the return value from ***high_and_low***).
+
+### Pause execution of function
+
+We can directly pause the function high_and_low by adding browser() to the script. In @fig-debugMode, I added ***browser()*** right before the ***for()*** loop in the ***high_and_low()*** function. When the ***browser()*** command is reached, R will pause the execution and put the script in debug mode. When you modify an external script, you need to save the changes and resource the file (otherwise the old version of the function will be in the Environment).
+
+ 
+
+This time when we ***Run*** the first seven line of the script ***2-14_DebugExternalScripts.R***, RStudio switches the file viewer to 2-14_myFunctions.R and enter debug mode:
 
 ![Debug mode inside a function](images/R-2-14_DebugMode.png){#fig-debugMode .fs}
 
@@ -70,11 +92,11 @@ When you are in you main script, you will see the ***Global Environment*** view 
 
 ### The function Environment
 
-Arguments in a function are essentially variables that the function can see that are set by the caller. In this case: high, low, and dates are variables set by the caller and inside the Environment of the function.
+Arguments in a function are variables in the function's Environment that are set by the caller. In this case: ***high***, ***low***, and ***dates***, are variables set by the caller to three columns from ***weatherData*** and inside the ***high_and_low()*** Environment .
 
  
 
-The other variables in the function (highest_high, highest_low) were declared before ***browser()*** so those lines how already been executed.
+The other variables in the function (***highest_high***, ***highest_low***, ***lowest_high***, and ***lowest_low***) and in the Environment because the commands to set the values were executed before ***browser()*** .
 
 ### Debugging controls
 
@@ -84,19 +106,19 @@ All of the debugging control work the same as in last lesson.
 
 -   ***Step In*** will move into a function (if there is one)
 
-    -    If there is no function, ***Step In*** acts like ***Next***
+    -   If there is no function, ***Step In*** acts like ***Next***
 
 -   ***Step Out*** will complete the execution of the function
 
--   ***Continue*** will unpause script execution until the next ***browser()***
+-   ***Continue*** will unpause the script's execution until the next ***browser()***
 
-    -   If there are no more ***browser()***, then ***Continue*** complete the function
+    -   If there are no more ***browser()***, then ***Continue*** complete the function (like ***Step Out***)
 
 -   ***Stop*** will quit the script – no more code gets executed.
 
 ### conditional browser()
 
-It is often useful to put a conditional ***browser()*** within a ***for*** loop, especially if you for loop is cycling many times. The ***for*** loop already has for conditional statement, each checking the extreme value against the current value. You could put a browser() there if you want to see each time a value was changed.
+It is often useful to put a conditional ***browser()*** within a ***for*** loop, especially if you ***for*** loop is cycling many times. The ***for*** loop already has four conditional statement, each checking the extreme value against the current value. You could put a ***browser()*** there if you want to see each time a value was changed.
 
 ``` r
     else if(highs[i] < lowest_high$temp)
@@ -107,7 +129,7 @@ It is often useful to put a conditional ***browser()*** within a ***for*** loop,
     }
 ```
 
-You could add a condition that pauses on a certain cycle:
+Or you could add a conditional ***browser()*** that pauses on a certain cycle (in this case, the tenth cycle):
 
 ``` r
   for(i in 2:length(highs))
@@ -122,10 +144,10 @@ You could add a condition that pauses on a certain cycle:
     ...    
 ```
 
-or based on a variable
+Or pause based on the value of a variable (in this case, when ***highs*** is more than 90)
 
 ``` r
-   for(i in 2:length(highs))
+  for(i in 2:length(highs))
   { 
     if(highs[i] > 90) browser()  # brackets are not needed here
     
@@ -139,15 +161,13 @@ or based on a variable
 
 ### browser() is only for debugging
 
-Don't forget to remove them
+Don't forget to remove them!
 
 ## Functions from packages
 
-R Packages are essentially script files with function in them. However, you cannot use breakpoints or ***browser()*** to debug them because you do not have access to the script file. So we are going to download packages script to your computer where they can be seen and used just like any other external script.
+R Packages essentially collections of script files with functions. However, it can be difficult to debug a function inside a package because you typically do not have access to the script files. To work around this, we are going to download the package to your computer and set it up locally. Once installed locally, you can view, use, and modify the package’s script files just like any other external scripts.
 
  
-
-We are going to download the pracma package to
 
 The steps are:
 
@@ -157,27 +177,25 @@ The steps are:
 
 -   install pkgload library
 
--   load downloaded library
-
--   now you can debug scripts in the library just like before
+-   load the local package in your script
 
 ### Downloading package script
 
-The command to download the package to your computer is:
+The utils package in R (installed with R) includes the function ***download.packages)*** that lets you save a package to your computer. The command to download the pracma package is:
 
 ``` r
-download.packages("pracma", destdir = "C:/Users/Charlie/Desktop", type = "source")
+download.packages(pkgs="pracma", destdir = "C:/Users/Charlie/Desktop", type = "source")
 ```
 
-You do need to change the ***destdir*** to a legitimate folder on your computer. [Note: On Windows, `destdir = "~"` will likely download to your Document directory.]{.note}
+You do need to change the ***destdir*** to a legitimate folder on your computer. [Note: On Windows, `destdir = "~"` will likely download to your Documents directory.]{.note}
 
 ### Unzipping package
 
-The package will be download as a \*.gz file. These files can be unzipped just like a \*.zip file. I save the ***pracma*** folder, to the ***scripts*** folder in my project
+The package will be download as a \*.tar.gz file. These files can be unzipped like a \*.zip file. Save the unzipped ***pracma*** folder to the ***scripts*** folder in your project.
 
 ### Install pkgload
 
-pkgload is an R package that allows you to load a local library folder, which pracma now is.
+***pkgload*** is the R package that lets you use a package directly from a local folder:
 
 ``` r
 install.packages("pkgload")
@@ -185,19 +203,27 @@ install.packages("pkgload")
 
 ### load the local library
 
-You need to know where your library folder is. I saved the folder within my project folder:
+To use the functions from ***pracma***, you would normally call:
+
+``` r
+library(pracma)
+```
+
+The equivalent command for the local package in scripts/pracma is:
 
 ``` r
 pkgload::load_all("scripts/pracma")
 ```
 
+This command will make all the functions in the local ***pracma*** folder available.
+
 ## Debugging package script
 
-All the script files are inside the R folder. When you load the package, you are loading all of the function from all of these script files.
+All the script files are inside the R folder in the local ***pracma*** folder.
 
  
 
-You can now open the script file in RStudio and edit it – in this case I added ***browser()*** to line 11 of the ***isprime()*** function in the ***isprime.R*** script:
+You can now open the local ***pracma*** script file in RStudio and edit them – in this case I added ***browser()*** to line 11 of the ***isprime()*** function in the ***isprime.R*** script:
 
 ![Debugging a function from a package](images/R-2-14_DebugPAckage.png){#fig-debugpackage .fs}
 
@@ -211,11 +237,17 @@ isprime(c(1,2,4,71,88,2131, 3287, 7819));
 
 Debug mode will work exactly as is did before for your own external scripts.
 
+![Debug mode on a local package function](images/2-14_Debug_Pkg.png){#fig-local_package .fs}
+
 ## Application
 
-Why should external scripts only contain functions?
+## Extension: Namespaces and Environments
 
-Create a function that returns a named list with attributes
+... how packages are loaded into R
+
+## Extension: Scope
+
+...Why breakpoints work in main script and browser() in external script... but not vice-versa. Similar to the reason if-else structures are a little strange in R...
 
 ## Extension: Next in advanced class
 
@@ -225,82 +257,4 @@ Create a function that returns a named list with attributes
 
 -   object-oriented programming (S3 vs S7 objects)
 
--   Environment and variable scope
-
-    -   why if-else works in f() and for loops
-
--   commands and subcommands in R { }
-
 -   Rcpp
-
-## Extension: Different approaches to breakpoints
-
-### source() outside script first, add breakpoints
-
--   do not source() or rm(list=lm()) in main script
-
--   only works when Run
-
-### source() from main script, add breakpoints, run function
-
--   do not source() or rm(list=lm()) in main script
-
--   only works when Run
-
--   does it work if you put the bp on the function??
-
-    -   No, because source()
-
-### add breakpoints, debugSource() from main script, run function
-
--   do not source() or rm(list=lm()) in main script
-
--   only works when Run
-
--   does it work if you put the bp on the function??
-
-    -   no, it gets really weird!
-
-### Debugging 4 scenarios
-
-1\) Within main (sourced) script
-
--   breakpoint
-
--   browser
-
-    -   but, browser() needs to be encapsulated between { }
-
-2\) Function outside your main (sourced) script
-
--   browser() : inconsistent in main script, works in functions
-
--   source functions script from main, add breakpoint, Run function from main
-
-    -   external breakpoint are broken when file is sourced
-
-3\) External script (not a function script) – No!
-
--   done rarely and bad practice, and a pain to debug, so probably not going to teach
-
-4\) Function in package
-
--   download package to computer
-
--   load with pkgload
-
--   can use browser() as if this were scenario 2
-
-## Extension: Using breakpoints in external scripts
-
-\<often need to clear all bp\>
-
-note: bp works under some circumstances in external script
-
-source main, sources external: no
-
-source main, debugSource external: yes
-
-source external, put in breakpoint, run from main: yes
-
-put in breakpoint, source external, run from main: yes
