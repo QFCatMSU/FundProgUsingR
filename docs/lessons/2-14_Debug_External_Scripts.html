@@ -367,7 +367,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#this-lesson-is-not-complete" id="toc-this-lesson-is-not-complete" class="nav-link active" data-scroll-target="#this-lesson-is-not-complete"><span class="header-section-number">0.1</span> This lesson is not complete</a></li>
   <li><a href="#purpose" id="toc-purpose" class="nav-link" data-scroll-target="#purpose"><span class="header-section-number">1</span> Purpose</a></li>
-  <li><a href="#material" id="toc-material" class="nav-link" data-scroll-target="#material"><span class="header-section-number">2</span> Material</a></li>
+  <li><a href="#material" id="toc-material" class="nav-link" data-scroll-target="#material"><span class="header-section-number">2</span> Material</a>
+  <ul class="collapse">
+  <li><a href="#gitignore-for-those-using-github-to-hand-in-applications" id="toc-gitignore-for-those-using-github-to-hand-in-applications" class="nav-link" data-scroll-target="#gitignore-for-those-using-github-to-hand-in-applications"><span class="header-section-number">2.1</span> gitignore (for those using GitHub to hand in applications)</a></li>
+  </ul></li>
   <li><a href="#external-scripts-in-r" id="toc-external-scripts-in-r" class="nav-link" data-scroll-target="#external-scripts-in-r"><span class="header-section-number">3</span> External Scripts in R</a></li>
   <li><a href="#debugging-scripts" id="toc-debugging-scripts" class="nav-link" data-scroll-target="#debugging-scripts"><span class="header-section-number">4</span> Debugging Scripts</a>
   <ul class="collapse">
@@ -434,7 +437,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="1" class="anchored" data-anchor-id="purpose"><span class="header-section-number">1</span> Purpose</h2>
 <ul>
 <li><p>Debug external scripts with browser()</p></li>
-<li><p>Access scripts from packagesand debug</p></li>
+<li><p>Access scripts from packages and debug</p></li>
 </ul>
 </section>
 <section id="material" class="level2" data-number="2">
@@ -442,6 +445,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The <a href="../scripts/2-14_DebugExternalScripts.R">script for the lesson is here</a></p>
 <p>A <a href="../scripts/2-14_myFunctions.R">second script that contains a function to debug</a></p>
 <p>The <a href="../data/Lansing2016Noaa-3.csv">data used for the lesson</a> is here</p>
+<section id="gitignore-for-those-using-github-to-hand-in-applications" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="gitignore-for-those-using-github-to-hand-in-applications"><span class="header-section-number">2.1</span> gitignore (for those using GitHub to hand in applications)</h3>
+<p>In this lesson you will be downloading a package named <strong><em>pracma</em></strong> and saving it to your project folder. This means that, without intervention, the <strong><em>pracma</em></strong> package will be added to your Git repository. This is not something you want to do because it is not really part of your project and it takes up a lot of space. To avoid adding <strong><em>pracma</em></strong> to your Git repository, open the <strong><em>.gitignore</em></strong> file in the root project folder and add the following line:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pracma/</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Now Git will ignore (i.e., never allow you to Stage) the <strong><em>pracma</em></strong> folder and everything in it.</p>
+</section>
 </section>
 <section id="external-scripts-in-r" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="external-scripts-in-r"><span class="header-section-number">3</span> External Scripts in R</h2>
@@ -472,15 +481,15 @@ Figure&nbsp;1: -browser() in the Help tab
 <section id="adding-browser-to-function" class="level2" data-number="5">
 <h2 data-number="5" class="anchored" data-anchor-id="adding-browser-to-function"><span class="header-section-number">5</span> Adding browser() to function &nbsp;</h2>
 <p>Let’s first <strong><em>Run</em></strong> the first seven line of the script <strong><em>2-14_DebugExternalScripts.R</em></strong>.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>());</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"scripts/2-14_myFunctions.R"</span>);</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># read in CSV file and save the content to weatherData</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>weatherData <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="at">file=</span><span class="st">"data/Lansing2016NOAA-3.csv"</span>);</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>temps <span class="ot">=</span> <span class="fu">high_and_low</span>(weatherData<span class="sc">$</span>maxTemp, </span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>                     weatherData<span class="sc">$</span>minTemp, </span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>                     weatherData<span class="sc">$</span>dateYear);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>());</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"scripts/2-14_myFunctions.R"</span>);</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># read in CSV file and save the content to weatherData</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>weatherData <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="at">file=</span><span class="st">"data/Lansing2016NOAA-3.csv"</span>);</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>temps <span class="ot">=</span> <span class="fu">high_and_low</span>(weatherData<span class="sc">$</span>maxTemp, </span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                     weatherData<span class="sc">$</span>minTemp, </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>                     weatherData<span class="sc">$</span>dateYear);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>high_and_low() is a function inside the script 2-14_myFunctions.R. On line 7, it is called with three arguments: the max temps, min temps, and dates columns from <strong><em>weatherData</em></strong>. After the function is called, temps appears in the Environment as a List of 4 (the return value from <strong><em>high_and_low</em></strong>).</p>
 <section id="pause-execution-of-function" class="level3" data-number="5.1">
 <h3 data-number="5.1" class="anchored" data-anchor-id="pause-execution-of-function"><span class="header-section-number">5.1</span> Pause execution of function</h3>
@@ -537,34 +546,34 @@ Figure&nbsp;2: Debug mode inside a function
 <section id="conditional-browser" class="level3" data-number="5.5">
 <h3 data-number="5.5" class="anchored" data-anchor-id="conditional-browser"><span class="header-section-number">5.5</span> conditional browser()</h3>
 <p>It is often useful to put a conditional <strong><em>browser()</em></strong> within a <strong><em>for</em></strong> loop, especially if you <strong><em>for</em></strong> loop is cycling many times. The <strong><em>for</em></strong> loop already has four conditional statement, each checking the extreme value against the current value. You could put a <strong><em>browser()</em></strong> there if you want to see each time a value was changed.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> <span class="cf">if</span>(highs[i] <span class="sc">&lt;</span> lowest_high<span class="sc">$</span>temp)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    { </span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>      <span class="fu">browser</span>()</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>      lowest_high<span class="sc">$</span>temp <span class="ot">=</span> highs[i];</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>      lowest_high<span class="sc">$</span>date <span class="ot">=</span> dates[i];</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    }</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> <span class="cf">if</span>(highs[i] <span class="sc">&lt;</span> lowest_high<span class="sc">$</span>temp)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    { </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>      <span class="fu">browser</span>()</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>      lowest_high<span class="sc">$</span>temp <span class="ot">=</span> highs[i];</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>      lowest_high<span class="sc">$</span>date <span class="ot">=</span> dates[i];</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    }</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Or you could add a conditional <strong><em>browser()</em></strong> that pauses on a certain cycle (in this case, the tenth cycle):</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="fu">length</span>(highs))</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  { </span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(i <span class="sc">==</span> <span class="dv">10</span>) <span class="fu">browser</span>()  <span class="co"># brackets are not needed here</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(highs[i] <span class="sc">&gt;</span> highest_high<span class="sc">$</span>temp)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>      highest_high<span class="sc">$</span>temp <span class="ot">=</span> highs[i];</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>      highest_high<span class="sc">$</span>date <span class="ot">=</span> dates[i];</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    ...    </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Or pause based on the value of a variable (in this case, when <strong><em>highs</em></strong> is more than 90)</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="fu">length</span>(highs))</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  { </span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(highs[i] <span class="sc">&gt;</span> <span class="dv">90</span>) <span class="fu">browser</span>()  <span class="co"># brackets are not needed here</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(i <span class="sc">==</span> <span class="dv">10</span>) <span class="fu">browser</span>()  <span class="co"># brackets are not needed here</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(highs[i] <span class="sc">&gt;</span> highest_high<span class="sc">$</span>temp)</span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    {</span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>      highest_high<span class="sc">$</span>temp <span class="ot">=</span> highs[i];</span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>      highest_high<span class="sc">$</span>date <span class="ot">=</span> dates[i];</span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    ...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    ...    </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Or pause based on the value of a variable (in this case, when <strong><em>highs</em></strong> is more than 90)</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="fu">length</span>(highs))</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  { </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(highs[i] <span class="sc">&gt;</span> <span class="dv">90</span>) <span class="fu">browser</span>()  <span class="co"># brackets are not needed here</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(highs[i] <span class="sc">&gt;</span> highest_high<span class="sc">$</span>temp)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>      highest_high<span class="sc">$</span>temp <span class="ot">=</span> highs[i];</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>      highest_high<span class="sc">$</span>date <span class="ot">=</span> dates[i];</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    ...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="browser-is-only-for-debugging" class="level3" data-number="5.6">
 <h3 data-number="5.6" class="anchored" data-anchor-id="browser-is-only-for-debugging"><span class="header-section-number">5.6</span> browser() is only for debugging</h3>
@@ -585,7 +594,7 @@ Figure&nbsp;2: Debug mode inside a function
 <section id="downloading-package-script" class="level3" data-number="6.1">
 <h3 data-number="6.1" class="anchored" data-anchor-id="downloading-package-script"><span class="header-section-number">6.1</span> Downloading package script</h3>
 <p>The utils package in R (installed with R) includes the function <strong><em>download.packages)</em></strong> that lets you save a package to your computer. The command to download the pracma package is:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">download.packages</span>(<span class="at">pkgs=</span><span class="st">"pracma"</span>, <span class="at">destdir =</span> <span class="st">"C:/Users/Charlie/Desktop"</span>, <span class="at">type =</span> <span class="st">"source"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">download.packages</span>(<span class="at">pkgs=</span><span class="st">"pracma"</span>, <span class="at">destdir =</span> <span class="st">"C:/Users/Charlie/Desktop"</span>, <span class="at">type =</span> <span class="st">"source"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>You do need to change the <strong><em>destdir</em></strong> to a legitimate folder on your computer. <span class="note">Note: On Windows, <code>destdir = "~"</code> will likely download to your Documents directory.</span></p>
 </section>
 <section id="unzipping-package" class="level3" data-number="6.2">
@@ -595,14 +604,14 @@ Figure&nbsp;2: Debug mode inside a function
 <section id="install-pkgload" class="level3" data-number="6.3">
 <h3 data-number="6.3" class="anchored" data-anchor-id="install-pkgload"><span class="header-section-number">6.3</span> Install pkgload</h3>
 <p><strong><em>pkgload</em></strong> is the R package that lets you use a package directly from a local folder:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"pkgload"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"pkgload"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="load-the-local-library" class="level3" data-number="6.4">
 <h3 data-number="6.4" class="anchored" data-anchor-id="load-the-local-library"><span class="header-section-number">6.4</span> load the local library</h3>
 <p>To use the functions from <strong><em>pracma</em></strong>, you would normally call:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pracma)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pracma)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The equivalent command for the local package in scripts/pracma is:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>pkgload<span class="sc">::</span><span class="fu">load_all</span>(<span class="st">"scripts/pracma"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>pkgload<span class="sc">::</span><span class="fu">load_all</span>(<span class="st">"scripts/pracma"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This command will make all the functions in the local <strong><em>pracma</em></strong> folder available.</p>
 </section>
 </section>
@@ -624,7 +633,7 @@ Figure&nbsp;3: Debugging a function from a package
 <section id="debugging" class="level3" data-number="7.1">
 <h3 data-number="7.1" class="anchored" data-anchor-id="debugging"><span class="header-section-number">7.1</span> Debugging</h3>
 <p>Now you can call <strong><em>isprime()</em></strong> from your main script and <strong><em>browser()</em></strong> will put the function in debug mode:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">isprime</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">71</span>,<span class="dv">88</span>,<span class="dv">2131</span>, <span class="dv">3287</span>, <span class="dv">7819</span>));</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">isprime</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">71</span>,<span class="dv">88</span>,<span class="dv">2131</span>, <span class="dv">3287</span>, <span class="dv">7819</span>));</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Debug mode will work exactly as is did before for your own external scripts.</p>
 <div id="fig-local_package" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
