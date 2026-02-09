@@ -4,8 +4,13 @@ library(package="ggplot2");
 ### The code used in the last lesson to save data frames to a file:
 # save(temperatureDFs, file = "data/tempDFs.rdata");
 
-### Get the four data frames saved to a List at the end of the last lesson
+### Get the four data frames saved to a List from the rdata file in last lesson
+#   Note: objects in rdata files get loaded directly into the Environment
 load(file = "data/tempDFs.rdata"); 
+
+### Get the four data frames saved to a List from the rds file in last lesson
+#   Note: objects in RDS files must be save to a variable
+tempDFs2 = readRDS(file="data/tempDFs.rds");
 
 ### Extract the data frames from the List 
 lansJanTempsDF = temperatureDFs$origDF;

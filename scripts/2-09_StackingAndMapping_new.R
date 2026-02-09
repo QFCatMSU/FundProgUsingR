@@ -247,5 +247,6 @@ temperatureDFs = list("origDF" = lansJanTempsDF,
                       "stackDF_3_6" = stackedDF2,
                       "stackedDF_1_2_5_6" = stackedDF3);
 
-## save the list to an rdata file to be used next lesson:
+## save the list to an rdata and RDS file to be used next lesson:
 save(temperatureDFs, file = "data/tempDFs.rdata");
+saveRDS(temperatureDFs, file = "data/tempDFs.rds");

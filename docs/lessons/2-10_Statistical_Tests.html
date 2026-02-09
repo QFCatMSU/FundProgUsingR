@@ -393,6 +393,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#questions-to-answer" id="toc-questions-to-answer" class="nav-link" data-scroll-target="#questions-to-answer"><span class="header-section-number">7.1</span> Questions to answer</a></li>
   </ul></li>
+  <li><a href="#extension-rds-and-rdata-files" id="toc-extension-rds-and-rdata-files" class="nav-link" data-scroll-target="#extension-rds-and-rdata-files"><span class="header-section-number">8</span> Extension: rds and rdata files</a>
+  <ul class="collapse">
+  <li><a href="#pro-and-cons" id="toc-pro-and-cons" class="nav-link" data-scroll-target="#pro-and-cons"><span class="header-section-number">8.1</span> Pro and cons</a></li>
+  </ul></li>
   </ul>
 </nav>
 </nav>
@@ -424,6 +428,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="to-do" class="level3" data-number="0.1">
 <h3 data-number="0.1" class="anchored" data-anchor-id="to-do"><span class="header-section-number">0.1</span> to-do</h3>
+<ul>
+<li>more on the difference between rdata and rds files</li>
+</ul>
 </section>
 <section id="purpose" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="purpose"><span class="header-section-number">1</span> Purpose</h2>
@@ -445,6 +452,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>&nbsp;</p>
 <p>From last lesson:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># save(temperatureDFs, file = "data/tempDFs.rdata");</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><a href="#extension-rds-and-rdata-files">Extension: rds and rdata files</a></p>
+<p>&nbsp;</p>
 <p>Now, let’s open up the file using <strong><em>load()</em></strong>:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="at">file =</span> <span class="st">"data/tempDFs.rdata"</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Inside the <strong><em>rdata</em></strong> file is a <strong><em>List</em></strong> object, <strong><em>temperatureDFs</em></strong>,&nbsp; with four data frames.&nbsp; In the next couple lessons we will be dealing a lot more with navigating and creating <strong><em>List</em></strong> objects.&nbsp; For now, a <strong><em>List</em></strong> object is a container for other object (like data frames). <strong><em>load()</em></strong> takes the objects from the <strong><em>rdata</em></strong> file and puts in the <strong><em>Environment</em></strong>:</p>
@@ -789,6 +798,23 @@ Figure&nbsp;7: Scatterplot of humidity vs.&nbsp;temperature with a linear regres
 <li><p>What areas of the lesson/application confused or still confuses you?</p></li>
 <li><p>What are some things you would like to know more about that is related to, but not covered in, this lesson?</p></li>
 </ol>
+</section>
+</section>
+<section id="extension-rds-and-rdata-files" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="extension-rds-and-rdata-files"><span class="header-section-number">8</span> Extension: rds and rdata files</h2>
+<p>In the last lesson, we saved the List object <strong><em>temperatureDFs</em></strong> to two different types of files: rdata and rds.</p>
+<p>&nbsp;</p>
+<p>The two types of files serve a similar purpose: saving objects from your Environment to your Project Folder to be used later. The big difference between the two is how they are later loaded into your Environment.</p>
+<p>&nbsp;</p>
+<p>When you load an rdata file, the objects in the rdata file get loaded directly into you Environment exactly as they previously were (i.e., same name as values). In this case, the List <strong><em>temperatureDFs</em></strong> is directly loaded into the Environment:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="at">file =</span> <span class="st">"data/tempDFs.rdata"</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>When you load an rds file, the object in the rds file need to be saved to a variable to get loaded into you Environment. This means the values are the same but the name could be different. In this case, the information from <strong><em>temperatureDFs</em></strong> is save to a variable named <strong><em>tempDFs2</em></strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>tempDFs2 <span class="ot">=</span> <span class="fu">readRDS</span>(<span class="at">file=</span><span class="st">"data/tempDFs.rds"</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="pro-and-cons" class="level3" data-number="8.1">
+<h3 data-number="8.1" class="anchored" data-anchor-id="pro-and-cons"><span class="header-section-number">8.1</span> Pro and cons</h3>
+<p>RData files are the quick-and-dirty way to save R objects and reload them later. A single <code>.RData</code> file can store multiple objects, and you can even save an entire Environment at once. This is convenient for short-term work, for example restoring your Environment the next morning. However, loading an <code>.RData</code> file restores objects directly into the Environment, which can have unintended consequences: existing objects with the same names will be overwritten. This makes <code>.RData</code> files risky in larger scripts and collaborative settings.</p>
+<p>&nbsp;</p>
+<p>RDS files are the safer and more collaborator-friendly way to save objects. An <code>.rds</code> file stores exactly one object. The file contains the object’s data, but not its name. When loading the file, the user explicitly assigns the object to a variable name of their choosing. This explicit assignment avoids accidental overwrites, and leads to workflows that are easier to reproduce and maintain.</p>
 
 
 </section>

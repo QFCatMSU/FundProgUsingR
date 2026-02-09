@@ -6,6 +6,8 @@ short: "2-10"
 
 ### to-do
 
+-   more on the difference between rdata and rds files
+
 ## Purpose
 
 -   Opening , and using data from, rdata files
@@ -33,6 +35,10 @@ From last lesson:
 ``` r
 # save(temperatureDFs, file = "data/tempDFs.rdata");
 ```
+
+[Extension: rds and rdata files]
+
+ 
 
 Now, let's open up the file using ***load()***:
 
@@ -465,3 +471,33 @@ The slope and intercept are in this summary.  The R-squared value tells us that
 -   create a histogram of the residuals
 
 {{< include ../assets/_AppInstructions.qmd >}}
+
+## Extension: rds and rdata files
+
+In the last lesson, we saved the List object ***temperatureDFs*** to two different types of files: rdata and rds.
+
+ 
+
+The two types of files serve a similar purpose: saving objects from your Environment to your Project Folder to be used later. The big difference between the two is how they are later loaded into your Environment.
+
+ 
+
+When you load an rdata file, the objects in the rdata file get loaded directly into you Environment exactly as they previously were (i.e., same name as values). In this case, the List ***temperatureDFs*** is directly loaded into the Environment:
+
+``` r
+load(file = "data/tempDFs.rdata");
+```
+
+When you load an rds file, the object in the rds file need to be saved to a variable to get loaded into you Environment. This means the values are the same but the name could be different. In this case, the information from ***temperatureDFs*** is save to a variable named ***tempDFs2***:
+
+``` r
+tempDFs2 = readRDS(file="data/tempDFs.rds");
+```
+
+### Pro and cons
+
+RData files are the quick-and-dirty way to save R objects and reload them later. A single `.RData` file can store multiple objects, and you can even save an entire Environment at once. This is convenient for short-term work, for example restoring your Environment the next morning. However, loading an `.RData` file restores objects directly into the Environment, which can have unintended consequences: existing objects with the same names will be overwritten. This makes `.RData` files risky in larger scripts and collaborative settings.
+
+ 
+
+RDS files are the safer and more collaborator-friendly way to save objects. An `.rds` file stores exactly one object. The file contains the object’s data, but not its name. When loading the file, the user explicitly assigns the object to a variable name of their choosing. This explicit assignment avoids accidental overwrites, and leads to workflows that are easier to reproduce and maintain.
