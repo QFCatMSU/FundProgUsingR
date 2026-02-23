@@ -1,5 +1,58 @@
 rm(list=ls()); 
 
+### to-do:
+#  - make files a little more randomly ordered
+#  - more example where name has something not in beginning or end
+#  - caret, dollar examples with more text and//^, 
+
+file_names = read.csv(file="data/filenames.csv")[[1]];
+
+#### Subsets
+station = grep("station", file_names)
+station_names = file_names[station]
+
+year_2023 = grep("2023", file_names)
+year_2023_names = file_names[year_2023]
+
+#### Starts and Ends with
+start_backup = grep("^backup", file_names)  # other names with backup elsewhere
+start_backup_names = file_names[start_backup]
+
+end_txt = grep("txt$", file_names)   
+end_txt_names = file_names[end_txt]
+
+#### Special character ^, $, .
+has_caret = grep("\\^old", file_names)  
+has_caret_names = file_names[has_caret]
+
+has_dollar = grep("_\\$Q", file_names)
+has_dollar_names = file_names[has_dollar]
+
+# dot is also a special character (should not be used much as it's too expansive ...  better options in a bit)
+dot = grep(".plot", file_names)
+dot_names = file_names[dot]
+
+dot2 = grep("\\.plot", file_names)
+dot2_names = file_names[dot2]
+
+### List all special characters and their meanings
+#   note that not all special characters are special all the time
+
+### Choose from characters 
+# any number (note: this means that dash is also a special character)
+numbers = grep("00[0-9]", file_names);  # could be reduced to [1-4]
+number_names = file_names[numbers]
+
+# any capital letter
+cap_letter = grep("^image_[A-Z][A-Z]", file_names)
+cap_letter_names = file_names[cap_letter]
+
+# any letter
+
+# any character
+# some upper or lowercase
+# KDEN/KSEA 
+
 babyNameData = read.csv(file="data/Popular_Baby_Names.csv");
 babyNames = babyNameData$Name;
 

@@ -108,35 +108,35 @@
     ]
   },
   {
+    "objectID": "lessons/2-14_Debug_External_Scripts.html#extension-namespaces-and-environments",
+    "href": "lessons/2-14_Debug_External_Scripts.html#extension-namespaces-and-environments",
+    "title": "2-14: Debugging External Scripts (Unfinished)",
+    "section": "9 Extension: Namespaces and Environments",
+    "text": "9 Extension: Namespaces and Environments\n… how packages are loaded into R",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "Part 2: Data Programming",
+      "2-14: Debugging External Scripts (Unfinished)"
+    ]
+  },
+  {
+    "objectID": "lessons/2-14_Debug_External_Scripts.html#extension-scope",
+    "href": "lessons/2-14_Debug_External_Scripts.html#extension-scope",
+    "title": "2-14: Debugging External Scripts (Unfinished)",
+    "section": "10 Extension: Scope",
+    "text": "10 Extension: Scope\n…Why breakpoints work in main script and browser() in external script… but not vice-versa. Similar to the reason if-else structures are a little strange in R…",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "Part 2: Data Programming",
+      "2-14: Debugging External Scripts (Unfinished)"
+    ]
+  },
+  {
     "objectID": "lessons/2-14_Debug_External_Scripts.html#extension-next-in-advanced-class",
     "href": "lessons/2-14_Debug_External_Scripts.html#extension-next-in-advanced-class",
     "title": "2-14: Debugging External Scripts (Unfinished)",
     "section": "11 Extension: Next in advanced class",
     "text": "11 Extension: Next in advanced class\n\ntrace() to inject code\nfunctional programming\nobject-oriented programming (S3 vs S7 objects)\nRcpp",
-    "crumbs": [
-      "<b>Fundamentals of Programming class</b>",
-      "Part 2: Data Programming",
-      "2-14: Debugging External Scripts (Unfinished)"
-    ]
-  },
-  {
-    "objectID": "lessons/2-14_Debug_External_Scripts.html#extension-different-approaches-to-breakpoints",
-    "href": "lessons/2-14_Debug_External_Scripts.html#extension-different-approaches-to-breakpoints",
-    "title": "2-14: Debugging External Scripts (Unfinished)",
-    "section": "10 Extension: Different approaches to breakpoints",
-    "text": "10 Extension: Different approaches to breakpoints\n\n10.1 source() outside script first, add breakpoints\n\ndo not source() or rm(list=lm()) in main script\nonly works when Run\n\n\n\n10.2 source() from main script, add breakpoints, run function\n\ndo not source() or rm(list=lm()) in main script\nonly works when Run\ndoes it work if you put the bp on the function??\n\nNo, because source()\n\n\n\n\n10.3 add breakpoints, debugSource() from main script, run function\n\ndo not source() or rm(list=lm()) in main script\nonly works when Run\ndoes it work if you put the bp on the function??\n\nno, it gets really weird!\n\n\n\n\n10.4 Debugging 4 scenarios\n1) Within main (sourced) script\n\nbreakpoint\nbrowser\n\nbut, browser() needs to be encapsulated between { }\n\n\n2) Function outside your main (sourced) script\n\nbrowser() : inconsistent in main script, works in functions\nsource functions script from main, add breakpoint, Run function from main\n\nexternal breakpoint are broken when file is sourced\n\n\n3) External script (not a function script) – No!\n\ndone rarely and bad practice, and a pain to debug, so probably not going to teach\n\n4) Function in package\n\ndownload package to computer\nload with pkgload\ncan use browser() as if this were scenario 2",
-    "crumbs": [
-      "<b>Fundamentals of Programming class</b>",
-      "Part 2: Data Programming",
-      "2-14: Debugging External Scripts (Unfinished)"
-    ]
-  },
-  {
-    "objectID": "lessons/2-14_Debug_External_Scripts.html#extension-using-breakpoints-in-external-scripts",
-    "href": "lessons/2-14_Debug_External_Scripts.html#extension-using-breakpoints-in-external-scripts",
-    "title": "2-14: Debugging External Scripts (Unfinished)",
-    "section": "11 Extension: Using breakpoints in external scripts",
-    "text": "11 Extension: Using breakpoints in external scripts\n&lt;often need to clear all bp&gt;\nnote: bp works under some circumstances in external script\nsource main, sources external: no\nsource main, debugSource external: yes\nsource external, put in breakpoint, run from main: yes\nput in breakpoint, source external, run from main: yes",
     "crumbs": [
       "<b>Fundamentals of Programming class</b>",
       "Part 2: Data Programming",
@@ -252,6 +252,18 @@
     ]
   },
   {
+    "objectID": "lessons/2-10_Statistical_Tests.html",
+    "href": "lessons/2-10_Statistical_Tests.html",
+    "title": "2-10: Statistical Tests",
+    "section": "",
+    "text": "more on the difference between rdata and rds files",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "Part 2: Data Programming",
+      "2-10: Statistical Tests"
+    ]
+  },
+  {
     "objectID": "lessons/2-10_Statistical_Tests.html#purpose",
     "href": "lessons/2-10_Statistical_Tests.html#purpose",
     "title": "2-10: Statistical Tests",
@@ -333,6 +345,30 @@
       "<b>Fundamentals of Programming class</b>",
       "Part 2: Data Programming",
       "2-10: Statistical Tests"
+    ]
+  },
+  {
+    "objectID": "lessons/2-10_Statistical_Tests.html#extension-rds-and-rdata-files",
+    "href": "lessons/2-10_Statistical_Tests.html#extension-rds-and-rdata-files",
+    "title": "2-10: Statistical Tests",
+    "section": "8 Extension: rds and rdata files",
+    "text": "8 Extension: rds and rdata files\nIn the last lesson, we saved the List object temperatureDFs to two different types of files: rdata and rds.\n \nThe two types of files serve a similar purpose: saving objects from your Environment to your Project Folder to be used later. The big difference between the two is how they are later loaded into your Environment.\n \nWhen you load an rdata file, the objects in the rdata file get loaded directly into you Environment exactly as they previously were (i.e., same name as values). In this case, the List temperatureDFs is directly loaded into the Environment:\nload(file = \"data/tempDFs.rdata\");\nWhen you load an rds file, the object in the rds file need to be saved to a variable to get loaded into you Environment. This means the values are the same but the name could be different. In this case, the information from temperatureDFs is save to a variable named tempDFs2:\ntempDFs2 = readRDS(file=\"data/tempDFs.rds\");\n\n8.1 Pro and cons\nRData files are the quick-and-dirty way to save R objects and reload them later. A single .RData file can store multiple objects, and you can even save an entire Environment at once. This is convenient for short-term work, for example restoring your Environment the next morning. However, loading an .RData file restores objects directly into the Environment, which can have unintended consequences: existing objects with the same names will be overwritten. This makes .RData files risky in larger scripts and collaborative settings.\n \nRDS files are the safer and more collaborator-friendly way to save objects. An .rds file stores exactly one object. The file contains the object’s data, but not its name. When loading the file, the user explicitly assigns the object to a variable name of their choosing. This explicit assignment avoids accidental overwrites, and leads to workflows that are easier to reproduce and maintain.",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "Part 2: Data Programming",
+      "2-10: Statistical Tests"
+    ]
+  },
+  {
+    "objectID": "lessons/2-08_Binding_Sampling.html",
+    "href": "lessons/2-08_Binding_Sampling.html",
+    "title": "2-08: Binding and Sampling",
+    "section": "",
+    "text": "create a simple example showing what happens if you insert a random calc in between set.seed() and another random calc",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "Part 2: Data Programming",
+      "2-08: Binding and Sampling"
     ]
   },
   {
@@ -497,6 +533,18 @@
     "title": "2-06: Datetime objects",
     "section": "5 Reformatting Dates",
     "text": "5 Reformatting Dates\nOnce you have date values properly formatted and saved as a Date object, you can then reformat the date to customize the output using format().\n \nFor instance, you can customize stnDate to the more familiar to American month/date/2-digit year format:\ndate_formatted = format(stnDate, format=\"%m/%d/%y\");  \nOr, you can get information from the dates, like the day of the week (%A):\ndate_weekOfDay = format(stnDate, format=\"%A\");      \ndate_formatted: chr[1:300] \"4-15-22\" \"4-17-22\"...\ndate_weekOfDay: chr[1:300] \"Friday\" \"Sunday\"...\nWhen you reformat, the object is no longer a Date object – the reformatted object is a string object and behaves as a string object.  This is awkward behavior in R – there is no way to create a Date variable with a customized format.  Instead, you use the Date variable in plots or calculation and then reformat afterwards when you want to display the values.",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "Part 2: Data Programming",
+      "2-06: Datetime objects"
+    ]
+  },
+  {
+    "objectID": "lessons/2-06_Datetime_Objects.html#subsetting-date-values",
+    "href": "lessons/2-06_Datetime_Objects.html#subsetting-date-values",
+    "title": "2-06: Datetime objects",
+    "section": "6 Subsetting Date values",
+    "text": "6 Subsetting Date values\nOnce in Date vector form, we can use which() to subset the vector by some Date value. In the first example we will subset the values in stnDate by the by month April. There are three different ways to subset for April and they will all produce the same results:\n\nusing month number (%m)\nusing abbreviated month name (%b)\nusing full month name (%B)\n\napr_dates1 = which(format(stnDate, \"%m\") == \"04\");    # by month number (as character)\napr_dates2 = which(format(stnDate, \"%b\") == \"Apr\");   # by abbreviated month name\napr_dates3 = which(format(stnDate, \"%B\") == \"April\"); # by full month name\nEach apr_dates# is a index with 39 values. The 39 index values match the April row numbers in Figure 1.\n&gt; apr_dates1\n [1]   1   2   3   4   5   6   7   8   9  10  11  12  13 101 102 103 104 105 106 107 108 109\n[23] 110 111 112 113 201 202 203 204 205 206 207 208 209 210 211 212 213\n\n6.1 Subsetting using multiple conditions\nWe can also subset Dates using & and | :\nTo find all values that have April or May:\napr_may_dates = which(format(stnDate, \"%b\") == \"Apr\" | \n                      format(stnDate, \"%b\") == \"May\");\nTo find all values that are exactly April 15, we need to check month and day:\napr_15_dates = which(format(stnDate, \"%b\") == \"Apr\" & \n                     format(stnDate, \"%d\") == 15); \nAll values between April 10 and April 19:\napr_10_19_dates = which(format(stnDate, \"%b\") == \"Apr\" & \n                        format(stnDate, \"%d\") &gt; 10 &\n                        format(stnDate, \"%d\") &lt; 19 );\napr_may_dates:  int [1:111] 1 2 3 4 5 6 7 ..\napr_15_dates:   int [1:3] 1 101 201\napr10_19_dates: int [1:9] 1 2 3 101 102 103 201 202 203",
     "crumbs": [
       "<b>Fundamentals of Programming class</b>",
       "Part 2: Data Programming",
@@ -3457,6 +3505,18 @@
     ]
   },
   {
+    "objectID": "lessons/2-07_Matrices.html",
+    "href": "lessons/2-07_Matrices.html",
+    "title": "2-07: Matrices",
+    "section": "",
+    "text": "talk about what happens if you use as.matrix() on a dataframe with multiple types of variables",
+    "crumbs": [
+      "<b>Fundamentals of Programming class</b>",
+      "Part 2: Data Programming",
+      "2-07: Matrices"
+    ]
+  },
+  {
     "objectID": "lessons/2-07_Matrices.html#purpose",
     "href": "lessons/2-07_Matrices.html#purpose",
     "title": "2-07: Matrices",
@@ -4093,63 +4153,430 @@
     ]
   },
   {
-    "objectID": "lessons/2-14_Debug_External_Scripts.html#extension-namespaces-and-environments",
-    "href": "lessons/2-14_Debug_External_Scripts.html#extension-namespaces-and-environments",
-    "title": "2-14: Debugging External Scripts (Unfinished)",
-    "section": "9 Extension: Namespaces and Environments",
-    "text": "9 Extension: Namespaces and Environments\n… how packages are loaded into R",
-    "crumbs": [
-      "<b>Fundamentals of Programming class</b>",
-      "Part 2: Data Programming",
-      "2-14: Debugging External Scripts (Unfinished)"
-    ]
-  },
-  {
-    "objectID": "lessons/2-14_Debug_External_Scripts.html#extension-scope",
-    "href": "lessons/2-14_Debug_External_Scripts.html#extension-scope",
-    "title": "2-14: Debugging External Scripts (Unfinished)",
-    "section": "10 Extension: Scope",
-    "text": "10 Extension: Scope\n…Why breakpoints work in main script and browser() in external script… but not vice-versa. Similar to the reason if-else structures are a little strange in R…",
-    "crumbs": [
-      "<b>Fundamentals of Programming class</b>",
-      "Part 2: Data Programming",
-      "2-14: Debugging External Scripts (Unfinished)"
-    ]
-  },
-  {
-    "objectID": "lessons/2-06_Datetime_Objects.html#subsetting-date-values",
-    "href": "lessons/2-06_Datetime_Objects.html#subsetting-date-values",
-    "title": "2-06: Datetime objects",
-    "section": "6 Subsetting Date values",
-    "text": "6 Subsetting Date values\nOnce in Date vector form, we can use which() to subset the vector by some Date value. In the first example we will subset the values in stnDate by the by month April. There are three different ways to subset for April and they will all produce the same results:\n\nusing month number (%m)\nusing abbreviated month name (%b)\nusing full month name (%B)\n\napr_dates1 = which(format(stnDate, \"%m\") == \"04\");    # by month number (as character)\napr_dates2 = which(format(stnDate, \"%b\") == \"Apr\");   # by abbreviated month name\napr_dates3 = which(format(stnDate, \"%B\") == \"April\"); # by full month name\nEach apr_dates# is a index with 39 values. The 39 index values match the April row numbers in Figure 1.\n&gt; apr_dates1\n [1]   1   2   3   4   5   6   7   8   9  10  11  12  13 101 102 103 104 105 106 107 108 109\n[23] 110 111 112 113 201 202 203 204 205 206 207 208 209 210 211 212 213\n\n6.1 Subsetting using multiple conditions\nWe can also subset Dates using & and | :\nTo find all values that have April or May:\napr_may_dates = which(format(stnDate, \"%b\") == \"Apr\" | \n                      format(stnDate, \"%b\") == \"May\");\nTo find all values that are exactly April 15, we need to check month and day:\napr_15_dates = which(format(stnDate, \"%b\") == \"Apr\" & \n                     format(stnDate, \"%d\") == 15); \nAll values between April 10 and April 19:\napr_10_19_dates = which(format(stnDate, \"%b\") == \"Apr\" & \n                        format(stnDate, \"%d\") &gt; 10 &\n                        format(stnDate, \"%d\") &lt; 19 );\napr_may_dates:  int [1:111] 1 2 3 4 5 6 7 ..\napr_15_dates:   int [1:3] 1 101 201\napr10_19_dates: int [1:9] 1 2 3 101 102 103 201 202 203",
-    "crumbs": [
-      "<b>Fundamentals of Programming class</b>",
-      "Part 2: Data Programming",
-      "2-06: Datetime objects"
-    ]
-  },
-  {
-    "objectID": "lessons/2-10_Statistical_Tests.html",
-    "href": "lessons/2-10_Statistical_Tests.html",
-    "title": "2-10: Statistical Tests",
+    "objectID": "lessons-new/01a-ProjectSetup.html",
+    "href": "lessons-new/01a-ProjectSetup.html",
+    "title": "01a: RStudio Projects Setup",
     "section": "",
-    "text": "more on the difference between rdata and rds files",
-    "crumbs": [
-      "<b>Fundamentals of Programming class</b>",
-      "Part 2: Data Programming",
-      "2-10: Statistical Tests"
-    ]
+    "text": "note that there is a lot of stuff going on with Git and GitHub that we are not covering – we are doing just enough to get your work on to GitHub."
   },
   {
-    "objectID": "lessons/2-10_Statistical_Tests.html#extension-rds-and-rdata-files",
-    "href": "lessons/2-10_Statistical_Tests.html#extension-rds-and-rdata-files",
-    "title": "2-10: Statistical Tests",
-    "section": "8 Extension: rds and rdata files",
-    "text": "8 Extension: rds and rdata files\nIn the last lesson, we saved the List object temperatureDFs to two different types of files: rdata and rds.\n \nThe two types of files serve a similar purpose: saving objects from your Environment to your Project Folder to be used later. The big difference between the two is how they are later loaded into your Environment.\n \nWhen you load an rdata file, the objects in the rdata file get loaded directly into you Environment exactly as they previously were (i.e., same name as values). In this case, the List temperatureDFs is directly loaded into the Environment:\nload(file = \"data/tempDFs.rdata\");\nWhen you load an rds file, the object in the rds file need to be saved to a variable to get loaded into you Environment. This means the values are the same but the name could be different. In this case, the information from temperatureDFs is save to a variable named tempDFs2:\ntempDFs2 = readRDS(file=\"data/tempDFs.rds\");\n\n8.1 Pro and cons\nRData files are the quick-and-dirty way to save R objects and reload them later. A single .RData file can store multiple objects, and you can even save an entire Environment at once. This is convenient for short-term work, for example restoring your Environment the next morning. However, loading an .RData file restores objects directly into the Environment, which can have unintended consequences: existing objects with the same names will be overwritten. This makes .RData files risky in larger scripts and collaborative settings.\n \nRDS files are the safer and more collaborator-friendly way to save objects. An .rds file stores exactly one object. The file contains the object’s data, but not its name. When loading the file, the user explicitly assigns the object to a variable name of their choosing. This explicit assignment avoids accidental overwrites, and leads to workflows that are easier to reproduce and maintain.",
-    "crumbs": [
-      "<b>Fundamentals of Programming class</b>",
-      "Part 2: Data Programming",
-      "2-10: Statistical Tests"
-    ]
+    "objectID": "lessons-new/01a-ProjectSetup.html#purpose",
+    "href": "lessons-new/01a-ProjectSetup.html#purpose",
+    "title": "01a: RStudio Projects Setup",
+    "section": "1 Purpose",
+    "text": "1 Purpose\n\nInstall, setup, and test the software you will need for this class\nView hidden files and file extensions\nProvide a basic overview of the Positrion environment\nExecute an R script using the Source button"
+  },
+  {
+    "objectID": "lessons-new/01a-ProjectSetup.html#questions-about-the-material",
+    "href": "lessons-new/01a-ProjectSetup.html#questions-about-the-material",
+    "title": "01a: RStudio Projects Setup",
+    "section": "2 Questions about the material…",
+    "text": "2 Questions about the material…\nIf you have any questions about the material in this lesson, feel free to email them to the instructor, Charlie Belinsky, at belinsky@msu.edu."
+  },
+  {
+    "objectID": "lessons-new/01a-ProjectSetup.html#install-r-positron-and-git-on-your-computer",
+    "href": "lessons-new/01a-ProjectSetup.html#install-r-positron-and-git-on-your-computer",
+    "title": "01a: RStudio Projects Setup",
+    "section": "3 Install R, Positron and Git on your computer",
+    "text": "3 Install R, Positron and Git on your computer\nWe are going to install R, Positron, and Git on your computer. R is a programming language, Positron provides a structured environment for the R programming language, Git is a version management system that will also allow you to save your work online at github.com.\n \nOn Windows, R and RStudio installation is straightforward and you can use the default settings. For Macs the installation is a bit trickier, the details are below.\n \nNote: Even if you already have the software installed, it is a good idea to verify you have a recent version.\n\n3.1 Install or update R (need version 4.4 or higher)\nThe R for Windows download is here. Click on Download R 4.#.# for Windows.\n \nThe R for Mac download is here.  \n\nThere are two versions of R for Mac \n\nR-4.#.#-arm64.pkg: for Macs with Apple-based processors (M#), all Macs from 2021 on use Apple-based processors\nR-4.#.#.pkg: for older Macs with Intel-based processors\n\nThe installer will tell you If you pick the wrong pkg file – there is no harm except a bit of wasted time.\n\n \nAnd for those of you using Linux – the R for Linux download instructions are here. However, these instructions are often inadequate for many Linux flavor – you probably will have to search how to install on your distribution.\n\n\n3.2 Install or update Positron\nYou can download Positron here. Don’t forget to accept the Positron legal agreement before downloading.\n \nThere are two Windows installation files: system-level and user-level. User-level is probably what you want unless you are installing this on a computer where there are multiple users who are all going to use the same settings.\n \nJust like R, there are two Mac installations: Apple Silicon (new) and Intel (old).\n\n\n3.3 Install or update Git (Windows)\nFor Windows, go here to download and install Git – click on Download for Windows. Git asks a lot of questions during installation and you can choose the default option for everything.\n\n\n3.4 Install or update Git (Windows)\nThere is no direct installation on Mac. I recommend using Homebrew, which is a useful tool for any programmer using a Mac because it gives you access to a bunch of programming tools.\n\nGo to the Homebrew homepage\nCopy the text under the heading Install Homebrew\nPaste the text in a Terminal window (RStudio has a Terminal tab in the bottom-left pane)\n\nBe patient – it takes time to install!\n\nWhen Homebrew is finished installing, install Git by typing in the Terminal:\n\nbrew install git \n\nAnd then install the credential manager by typing in the Terminal:\n\nbrew install --cask git_crendential_manager"
+  },
+  {
+    "objectID": "lessons-new/01a-ProjectSetup.html#console-and-terminal-tabs",
+    "href": "lessons-new/01a-ProjectSetup.html#console-and-terminal-tabs",
+    "title": "01a: RStudio Projects Setup",
+    "section": "4 Console and Terminal tabs",
+    "text": "4 Console and Terminal tabs\nWe are going to use both the Console and Terminal tabs in Positrion. The Console tab runs commands in the programming language (in this case, R) and the Terminal runs operating system commands (it is links to your operating systems Command Promt/Terminal)\n&lt;image&gt;"
+  },
+  {
+    "objectID": "lessons-new/01a-ProjectSetup.html#configuring-git-on-your-computer",
+    "href": "lessons-new/01a-ProjectSetup.html#configuring-git-on-your-computer",
+    "title": "01a: RStudio Projects Setup",
+    "section": "5 Configuring Git on your computer",
+    "text": "5 Configuring Git on your computer\nBefore you use Git, you first need to configure Git on your computer with your GitHub username and email (i.e., the email you use to sign up for your GitHub account). The username and email are used by Git to identify who made what changes in the project history – this is especially important when you are collaborating on a project.\n\n5.1 Adding the username and email\nWe will use the Positron Terminal tab to enter these values &lt;image&gt;.\n \nThe first command sets the user name in Git (replace userName with your GitHub ID):\ngit config --global user.name \"userName\"\nThe second command sets the user email in Git (replace email with the email you used to signup for GitHub):\ngit config --global user.email \"email\"\n\n\n\n\n\n\nFigure 1: Changing Git username and email using the Terminal tab\n\n\n\n\n\n5.2 Viewing the configured values\nGit will not check your user.name and user.email are valid. You can check if you successfully changed the username and email by executing these lines in the Terminal tab:\ngit config user.name \ngit config user.email\nAfter executing the two above command, your Terminal tab should look similar to this:\n\n\n\n$ git config user.name \nbelinskyc   \n$ git config user.email \nbelinsky@msu.edu\n\n\nFigure 2: Testing the git configuration using the RStudio Terminal tab"
+  },
+  {
+    "objectID": "lessons-new/01a-ProjectSetup.html#installing-a-package",
+    "href": "lessons-new/01a-ProjectSetup.html#installing-a-package",
+    "title": "01a: RStudio Projects Setup",
+    "section": "6 Installing a package",
+    "text": "6 Installing a package\nGGPlot2, is a widely used package that does not come with R – so we are going to install the GGPlot2 package using the Console tab.\n \nType the following in the Console and press enter:\ninstall.packages(\"ggplot2\")\n \n\n\n\n\n\n\nFigure 3: Install an R package using the Console\n\n\n\n \nGGPlot2 requires many other packages (its dependencies) – and RStudio will install those packages along with GGPlot2.  Be patient, as this could take a little time."
+  },
+  {
+    "objectID": "lessons-new/01a-ProjectSetup.html#positron-and-project-folders",
+    "href": "lessons-new/01a-ProjectSetup.html#positron-and-project-folders",
+    "title": "01a: RStudio Projects Setup",
+    "section": "7 Positron and Project Folders",
+    "text": "7 Positron and Project Folders\nMost of the work you will do in R involves multiple scripts, data files, and perhaps other types of files.  All these files together make up your project and they exist within a Project Folder, which is the folder on your computer than contains all the files and subfolders for your project. It is very important that you keep all files associated with a project within a Project Folder. &lt;why&gt;\n \nIn RStudio, Project Folder are created by putting an *.Rproj file inside the folder you want designated as a Project Folder. When you open a folder in Positron, it automatically opens as a Project Folder – there is nothing extra you need need to do.\n \n&lt;something about isolating the project folder&gt;\nnote: it is fine to keep the RProj file in the Project Folder is you are using the project in both RStudio and Positron.\n\n7.1 Create a new Project Folder\nPositron opens every folder as a Project Folder, so create a new folder where ever you want and name the folder something appropriate. Note: you can also use the Positron interface to create a new folder (New -&gt; New Folder from Template…), but, for now, there is no advantage to it.\n \nTo open the new folder as a Project Folder in Positron:\n\nclick Open -&gt; Open Folder…\nNavigate to the folder location\nClick on Folder and click Select Folder\n\n\n\n7.2 Difference between opening a file and folder\nWhen you click Open, Positron gives you the option to Open File... or Open Folder… Most of the time you want to open a folder and then open a script from within the folder. You can open a script directly but then Positron does not know it is in a Project Folder &lt;talk about consequences&gt;\n\n\n7.3 Positron Explorer pane\nThe Positron Explorer tab acts like a File Manager and it allows you to do most of the things that you can do in your operating systems File Manager (called File Explorer in Windows and Finder in Mac). The Files tab can be used to open, add, remove, rename files and folders, and drag-and-drop files.\n \nWhenever you open a folder in Positron, the folder name appear at the top of the Explorer pane. Note: Outline and Timeline are not needed right now.\n&lt;image&gt;\n\n\n7.4 file extensions and Hidden files\nBy default, the Explorer tab shows file extensions and most hidden files. You can also do this in your operating system …. &lt;here&gt;\n\n\n7.5 Add Subfolders\nWe will use the Files tab in RStudio (bottom-right tab) to create two subfolders: scripts and data.\n \nTo add two folders named scripts and data:\n\nClick on New Folder icon next to the Project Folder name\n\nnote: you can also right-click in the area and choose New Folder…\n\nEnter scripts in the textbox and click OK\nRepeat the last two steps to add a folder called data\n\n&lt;image&gt;\n\n\n7.6 Add files to the project\nWe are going to download two files and add them to your Project Folder.\n\nRSProj_Setup.r: put this file in your scripts directory\nRSProj_Setup.csv: put this file in your data directory\n\nYou can either put the files in the directory using your OS File Explorer or you can drag-and-drop the file into the folder using the Explorer in Positron\n\n\n7.7 Positron Project File Manager\nYou should now be running Positron, opened to the Project Folder that you just created.  In the Explorer pane, you will see all the folders and files within your Project Folder. You will also see your project name in the upper-right corner (in this case, My_Project).\n&lt;image&gt;"
+  },
+  {
+    "objectID": "lessons-new/01a-ProjectSetup.html#positron-basics",
+    "href": "lessons-new/01a-ProjectSetup.html#positron-basics",
+    "title": "01a: RStudio Projects Setup",
+    "section": "8 Positron Basics",
+    "text": "8 Positron Basics\nNow we are going to execute the script file, RSProj_Setup.R, that we just downloaded to your Project’s scripts folder.\n \nRSProj_Setup.R takes weather data from the other downloaded file, RSProj_Setup.csv and creates boxplots showing how Wind Direction and Wind Speed relate to the Change In Temperature.\n \nFor now, we are executing the script to test your setup and help you become familiar with the RStudio environment. The code in this script is something you will learn as the class progresses.\n\n8.1 Open your RStudio Project\nThere are multiple ways to open an Project Folder – three of them are:\n\nOpen your Project Folder in File Explorer (Windows) or Finder (Mac) window and double-click the &lt;Project_Name&gt;.Rproj file\nIn RStudio, click Open -&gt; Open Folder… -&gt; navigate to the Project Folder and click Select Folder\nIn RStudio, click Open-&gt; choose the Project Folder that has recently been opened\nIn the top-right corner, choose the Project Folder &lt;more description&gt;\n\n\n\n8.2 Open a script file in your Project\nTo open the script file, in the Explorer tab navigate to the script folder and click on the script inside .\n \nThe script will only execute properly if it is opened inside your Project Folder.\n\n\n8.3 Setting up RStudio tabs for scripts\nWhen we are editing and executing an R script, we generally have the following RStudio tabs open (?@fig-openScript):\n\nFile Editor – text viewer and editor for the opened script files (upper-left pane)\nSession– displays information about the execution of your script file (lower-left pane)\nConsole– displays data points, or variables, from the execution of your script file (upper-right pane)\nPlots– the file manager (lower-right pane)\n\nAfter execution of this script, this will switch to Plots (Figure 4) – all plots created by the scrtipt are displayed here\n\n \n\nNote: the Help tab in the lower-right corner is something you might find useful. [Extension: The Help Tab]\n\n\n8.4 Common buttons used in RStudio\nThe script file, RSProj_Setup.r, is a fully functioning script that takes temperature and wind data from the Comma Separated Value (CSV) file, RSProj_Setup.csv, and plots out the data. I am going to use this program to demonstrate a few of the useful buttons in RStudio.\n \nThe one button you will use most in R is Source, which executes your whole script.  Press the Source button to execute the script (Figure 4).\n \nNote: If you have already used R, there is a good chance you highlight lines of code and click Run to execute just those lines. This is fine but, in this class, your code must work when executed using Source.  For more information go to Extension: Run vs. Source\n\n\n\n\n\n\nFigure 4: Executing the whole the script (Source)\n\n\n\nAfter the script is run:\n\nThe Environment tab displays values for the data (variables) in the script (e.g., weatherData, windLabels).\nThe Console tab displays information about the execution of the script.\nThe Plot tab displays the box plots. If there are multiple plots, you can use the arrow buttons to switch between the plots.\n\n\n\n8.5 Cleaning up the Positron panes\nThere many times where you want to clean up the panes, which can get very crowded with information from old script executions.\n\nTo clean the Environment, Plot, and Console panes, use the brush button (Figure 5).\n\n\n\n\n\n\n\nFigure 5: Cleaning out the panes\n\n\n\n \nIf you click Source again, the Environment, Plot, and Console tabs will once again be populated with data from the script."
+  },
+  {
+    "objectID": "lessons-new/01a-ProjectSetup.html#saving-your-project-folder-to-github",
+    "href": "lessons-new/01a-ProjectSetup.html#saving-your-project-folder-to-github",
+    "title": "01a: RStudio Projects Setup",
+    "section": "9 Saving your Project Folder to GitHub",
+    "text": "9 Saving your Project Folder to GitHub\nTo complete this section,you need to have a GitHub account.\n \nTo upload your project to GitHub the first time:\n\nmake sure everything is saved\nclick on the Source Control tab on the left-vertical bar in Positron (circled in Figure 6)\nclick Publish to GitHub\nclick Allow so that the extension can sign in to GitHub\nYou will get a code, click Copy & Continue to GitHub\nYou will have to log in to GitHub and click Continue for Device Activation\nPaste the code to authorize the device and click Continue\nAnd then click Authorize Visual-Studio Code (note: Positron is a based on VSCode)\nA message should appear that you have successfully completed registration – go back to Positron\nIn the top text box, you will get a choose to publish the project publicly or privately – this is up to you.\n\n\n\n\n\n\n\nFigure 6: Source control tab in Positron"
+  },
+  {
+    "objectID": "lessons-new/01a-ProjectSetup.html#view-project-on-github",
+    "href": "lessons-new/01a-ProjectSetup.html#view-project-on-github",
+    "title": "01a: RStudio Projects Setup",
+    "section": "10 View project on GitHub",
+    "text": "10 View project on GitHub\nLet’s go to your GitHub account to verify that the project files are there (Figure 7):\n\nLog in to GitHub\nOn the left side, there is a section called Repositories. \nClick on the repository called &lt;your-user-name&gt;/&lt;your-repository-name&gt;\nChoose the Code tab (you are probably already on it)\n\n \n\n\n\n\n\n\nFigure 7: GitHub after a new Commit was pushed\n\n\n\n\n10.1 Inviting the instructor to your repository\nTo invite a user (or, as GitHub calls them, collaborator) to your repository:\n\nGo to the GitHub home page for your repository and click Settings\nClick Collaborators\nClick Add people\n\nYou can use either the person’s GitHub ID or their email address associated with their GitHub ID\ninvite your instructor: belinsky@msu.edu\n\n\n\n\n\n\n\n\nFigure 8: Inviting a user to your GitHub Repository"
+  },
+  {
+    "objectID": "lessons-new/01a-ProjectSetup.html#application",
+    "href": "lessons-new/01a-ProjectSetup.html#application",
+    "title": "01a: RStudio Projects Setup",
+    "section": "11 Application",
+    "text": "11 Application\n\nIn your RStudio Project, create a new script file (File -&gt; New File -&gt; R Script)\nCopy and paste this lesson’s script, RSProj_Setup1.r, to the new script.\nChange the colors in the boxplot (edit lines 17-21)\n\nHere is a comprehensive list of color names you can use in R\n\nSave the script as app01.r, and to your script folder\nUpload changes to GitHub\n\nIn Changes: Click Stage All changes (all changed files will now be under Staged Changes)\nAdd a message “App 1 finished”\nClick Commit\nClick Sync (Commit button becomes Sync)\n\nInform your instructor that application is ready to be checked\n\n\nClick on Issues (top of page)\n\nClick on New Issue (green button – not pictured)\nClick on Setting wheel and add the instructor as an assignee (belinskyc)\nPut in title that application 1b is finished, add anything you want to the description, and\nClick Submit new issue\n\n\n\n\n \nSave the script as app01a.r in your scripts folder and  email your Project Folder to Charlie Belinsky at belinsky@msu.edu.\n \nInstructions for zipping the Project Folder are here.\n \nIf you have any questions regarding this application, feel free to email them to Charlie Belinsky at belinsky@msu.edu.\n\n11.1 Questions to answer\nAnswer the following in comments inside your application script:\n\nWhat was your level of comfort with the lesson/application?\nWhat areas of the lesson/application confused or still confuses you?\nWhat are some things you would like to know more about that is related to, but not covered in, this lesson?"
+  },
+  {
+    "objectID": "lessons-new/01a-ProjectSetup.html#extension-working-directories-in-r-and-rstudio",
+    "href": "lessons-new/01a-ProjectSetup.html#extension-working-directories-in-r-and-rstudio",
+    "title": "01a: RStudio Projects Setup",
+    "section": "12 Extension: Working directories in R and RStudio",
+    "text": "12 Extension: Working directories in R and RStudio\nThis topic is, in this author’s opinion, one of the most frustrating topic in R.  Compared to other programming languages (e.g., C++. Python, Javascript), R handling of working directories makes it harderto share projects.\n \nA working directory is the folder location used when one file is looking for another file.  It is best shown by its use-case: a script file that is reading in information from another file – this file can be a data file or another script file.\n \nFor example, let’s say we have a script file called weather.r and it is pulling in data from the file weather2020.csv.  weather.r needs to first find the folder location for weather2020.csv before it can access the file.  To do this, weather.r needs a path to weather2020.csv.  This path can be thought of as map directions between two points – and the working directory is the starting point.\n \nFor the vast majority of programming languages, there is no concept of a working directory.  The process of files calling other files works like google maps – a route is specified between the two files starting with the folder the caller (e.g., weather.r) is in and ending where the callee (e.g., weather.csv) is. The path between the two files is called a relative file path. \n\n12.1 R’s default handling of working directories\nIn R, the starting point, or working directory, is fixed for all R files opened in a session (called a session variable).  Using the google maps analogy, this is like saying the map starting point is fixed for everyone – it does not matter where you actually are located.  You can change the working directory in your script using setwd() but this changes the working directories for all R files in the session.  In other words, you are simply changing the starting point to a new location and all files will now use that location.\n\n\n12.2 Absolute file paths (a bad fix to the problem)\nOne way to get around working directories is to use an absolute file path.  So, instead of mapping between weather.R and weather.csv, you just give the file path for weather.csv on your computer (called the absolute file path).\n \nThis will look something like: c:\\Users\\RStudent\\Documents\\WeatherProj\\Data\\weather.csv\n \nDoing this means you do not have to worry about working directories.  But this solution breaks as soon as you move files on your computer or move them to another computer.  The reason is that the file path changes.  Absolute file paths make it almost impossible to share file and should not be used.\n\n\n12.3 How RStudio Projects handle working directory (the least-worst option)\nAn RStudio Project sets the working directory to the Project Folder.  So, for weather.r to find weather.csv inside an RStudio Project, it just needs to know where weather.csv is located relative to the project folder.  Most likely this will be something like: Data\\weather.csv. This makes it far easier to share your project because the path to weather.csv will be the same on any computer.\nWhile I believe this is by far the best method for handling working directory issues, it comes with a major caveat:You need to open script files from within the RStudio Project.  Opening the project sets the working directory for all script files used in the session.  If you a file outside of the Project session, then the working directory is not set by the project.\n\n\n12.4 The default working directory\nA working directory is not defined for a file, it is defined for a session.  So, all files within that session will have the same working directory.  IF you change the working directory in one file, you change it for every file within the session.  This leads to awkward behavior where one R file can change the behavior of another R file within the same session by using setwd()."
+  },
+  {
+    "objectID": "lessons-new/01a-ProjectSetup.html#extension-run-vs.-source",
+    "href": "lessons-new/01a-ProjectSetup.html#extension-run-vs.-source",
+    "title": "01a: RStudio Projects Setup",
+    "section": "13 Extension: Run vs. Source",
+    "text": "13 Extension: Run vs. Source\nTechnically speaking, the difference between Run and Source is:\n\nSource will execute all the code in a script file.\nRun will execute either:\n\nThe code that is highlighted (if code is highlighted) OR\nThe command that the cursor is on (if the command is on more than one line) OR\nThe whole line the cursor is on\n\n\n \nThe real difference lies in a historical discussion of scripting vs. programming, which is a discussion beyond this class.  Suffice to say, R was originally intended to be more like an advanced calculator than a programming language. The script files would contain multiple lines of code that could be execute independently and in any order (think of these as buttons on a calculator).  The user could click a “button” to pull in data, click another “button” to run statistical analysis on the data, and click a third “button” to output the analysis.  This is what the Run button does.\n \nHowever, as R has grown, the focus has shifted towards developing well-structured code just like any modern programming language (e.g., Python, C, Java). This means executing the script as a whole instead of in parts.  This is what Source does.  Executing your script as a whole instead of in parts has many advantages as the code is easier to debug, easier to share, and much better organized – because you are forced to organize it. In the not-so-humble opinion of this author, learning to treat your script as a whole is a vital part of learning how to program.  For this reason, we will always be using the Source button in this class."
+  },
+  {
+    "objectID": "lessons-new/01a-ProjectSetup.html#extension-create-a-standalone-r-script-keep-this-is-orphaned",
+    "href": "lessons-new/01a-ProjectSetup.html#extension-create-a-standalone-r-script-keep-this-is-orphaned",
+    "title": "01a: RStudio Projects Setup",
+    "section": "14 Extension: Create a standalone R script <Keep? – this is orphaned>",
+    "text": "14 Extension: Create a standalone R script &lt;Keep? – this is orphaned&gt;\nThere are two ways to create script file in RStudio:\n\nA standalone script\nAs part of an RStudio Project\n\n \nMany people use the first method.  In this class we exclusively use the second method.  The first method of creating a script file is fine for testing something out.  The second method is far better for organizing larger projects and sharing your code with others.\n \nThe reason the second method is better is because a project consist of many file that need to talk each-other.  Script files will call other scripts file or read in data from data files.  In order to makes this work, the script files need to know how to find the other files. In an RStudio Project, this is easy because the working directory is always the Project Folder of your project – and all files in the project are contained within the Project Folder.  So, you just need to look for the file relative to the Project Folder.\n \nR Programmers often get around the lack of a Project Folder/defined working directory by setting the working directory in code using setwd().  This can work locally but becomes problematic when files are shared or moved.  Whereas, RStudio Project always maintain their folder structure."
+  },
+  {
+    "objectID": "lessons-new/01a-ProjectSetup.html#extension-viewing-file-extensions-and-hidden-files",
+    "href": "lessons-new/01a-ProjectSetup.html#extension-viewing-file-extensions-and-hidden-files",
+    "title": "01a: RStudio Projects Setup",
+    "section": "15 Extension: Viewing file extensions and hidden files",
+    "text": "15 Extension: Viewing file extensions and hidden files\nBy default, Windows and Mac hides file extensions from you (e.g., your Word document file is listed in the file manager as stuff instead of stuff.docx).  This is not convenient when you are programming as you are working with many file types (e.g., *.txt, *.r, *.csv) and, many times, the only difference between the name of two files is the extension.  For instance, you might have two files called weather.r and weather.csv in your folder – without file extensions they are both listed as weather.\n \nAlso, when you are programming, there are files you will need to access that are hidden by default in the operating system.\n \nThis section is optional, but I would highly recommend you learn how to view all hidden files and file extensions – it will greatly assist you when programming.\n\n15.1 Viewing in newer versions of Windows 11\nThis is easy to to do in newer versions of Windows 11:\n\nOpen the File Explorer\nClick View -&gt; Show\nCheck File name extensions and Hidden items\n\n\n\n\n\n\n\nFigure 9: Change settings to view all file extensions on Windows 11\n\n\n\n\n\n15.2 Viewing in Windows 10 and older Windows 11 versions\nThis feature is a bit buried in these Window versions.\n \n\nOpen any File Explorer window (i.e., your folder viewer)\nIn menu bar\n\nWindows 10: click View -&gt; Options -&gt; Change folder and search options\nWindows 11: click 3 dots ( · · · ) -&gt; Options\n\nIn Folder Options window (Figure 10), go to the View tab\nUncheck Hide extensions for known file types\nCheck Show hidden files, folder, and drives\nClick OK\n\n\n\n\n\n\n\nFigure 10: Viewing in older versions of Windows\n\n\n\n\n\n15.3 Viewing in Mac\nFile Extensions:\n\nOpen Finder\nClick on Finder -&gt; Preferences…\nIn Finder Preferences window click on the Advanced tab\nCheck Show all filename extensions\n\n \nHidden files:\n\nYou can temporarily see hidden files in the Finder by pressing Command-Shift-Dot ( . ). \nYou can use the Terminal to permanently show hidden files as described on this webpage but this is not recommended unless you are comfortable with Terminal commands.\n\n\n\n\n\n\n\nFigure 11: Change settings to view all file extensions on a Mac"
+  },
+  {
+    "objectID": "lessons-new/01a-ProjectSetup.html#extension-use-package-manager-extension",
+    "href": "lessons-new/01a-ProjectSetup.html#extension-use-package-manager-extension",
+    "title": "01a: RStudio Projects Setup",
+    "section": "16 Extension: Use Package Manager Extension",
+    "text": "16 Extension: Use Package Manager Extension\nThere is an extension for Positron that replicates most of the features of the Package Manager in RStudio. You can install Positron extensions by clicking the 5th button down in the vertical bar on the left (circled). After installation, a new icon will appear at the bottom of the vertical bar (circled) – this is the package manager.\n\n\n\n\n\n\nFigure 12: Installing the R Package Manager Extension\n\n\n\nMake sure you are installing the version by user kv9898."
+  },
+  {
+    "objectID": "lessons-new/01a-ProjectSetup.html#terminal-commands-for-git",
+    "href": "lessons-new/01a-ProjectSetup.html#terminal-commands-for-git",
+    "title": "01a: RStudio Projects Setup",
+    "section": "17 Terminal commands for Git",
+    "text": "17 Terminal commands for Git\nHow to set up your project in the Terminal…."
+  },
+  {
+    "objectID": "lessons-new/01c-GitHubSetupBasic.html",
+    "href": "lessons-new/01c-GitHubSetupBasic.html",
+    "title": "01c: Git and GitHub Setup (Basic)",
+    "section": "",
+    "text": "The QFC is moving all student work to GitHub. Using GitHub (and Git) can be tricky for new students, so we’ve created two setup lessons to help you get started:\n\nAdvanced: work directly in GitHub, giving you a more complete experience\nBasic (this lesson): Hides most of GitHub from view, making it simpler to get started.\n\n \nBoth lessons require a GitHub account, which you can sign up for here: https://github.com.\n \nYou can choose which lesson to do. If you choose the basic lesson, you must first email belinsky@msu.edu with you GitHub username. Your instructor will send you a GitHub URL to use."
+  },
+  {
+    "objectID": "lessons-new/01c-GitHubSetupBasic.html#purpose",
+    "href": "lessons-new/01c-GitHubSetupBasic.html#purpose",
+    "title": "01c: Git and GitHub Setup (Basic)",
+    "section": "1 Purpose",
+    "text": "1 Purpose\n\nSetup Git on your computer\nUse Git to connect your RStudio Project to an instructor supplied GitHub repository\nUpload changes to your project to the GitHub repository"
+  },
+  {
+    "objectID": "lessons-new/01c-GitHubSetupBasic.html#install-git-on-your-computer-version-2.44-or-higher",
+    "href": "lessons-new/01c-GitHubSetupBasic.html#install-git-on-your-computer-version-2.44-or-higher",
+    "title": "01c: Git and GitHub Setup (Basic)",
+    "section": "2 Install Git on your computer (version 2.44 or higher)",
+    "text": "2 Install Git on your computer (version 2.44 or higher)\nFor this class, you will use Git to upload your classwork to a GitHub repository supplied by the instructor\n \nFor Windows, go here to download and install Git – click on Download for Windows. Git asks a lot of questions during installation and you can choose the default option for everything.\n \nFor Mac, there is no direct installation of Git. I recommend using Homebrew, which is a useful tool for any programmer using a Mac because it gives you access to a bunch of programming tools.\n\n2.1 Homebrew installation of Git on Mac:\n\nGo to the Homebrew homepage\nCopy the text under the heading Install Homebrew\nPaste the text in a Terminal window (RStudio has a Terminal tab in the bottom-left pane)\n\nBe patient – it takes time to install!\n\nWhen Homebrew is finished installing, install Git by typing in the Terminal:\n\nbrew install git \n\nAnd then install the credential manager by typing in the Terminal:\n\nbrew install --cask git_crendential_manager\n\n2.1.1 Alternate installation for Git on Mac\nIf you cannot get Homebrew to work, other options are available here. MacPort is the best alternative. XCode will work but it is a huge installation (at least 20GB), and most of it is not going to be used. The Binary Installer option is too outdated."
+  },
+  {
+    "objectID": "lessons-new/01c-GitHubSetupBasic.html#rstudio-terminal",
+    "href": "lessons-new/01c-GitHubSetupBasic.html#rstudio-terminal",
+    "title": "01c: Git and GitHub Setup (Basic)",
+    "section": "3 RStudio Terminal",
+    "text": "3 RStudio Terminal\nWe will be using the Terminal tab in RStudio to setup Git and to connect your project to a repository on GitHub. The Terminal in RStudio is a tab in the lower left area in RStudio. The Terminal tab is similar to the Command Prompt in Windows or Terminal in Mac\n \nMost of the Terminal command used in this lesson will only work if you are in the correct RStudio Project. The RStudio Project name (in Figure 1 it is My_Project) is in the upper-right corner of RStudio (circled in red).\n\n\n\n\n\n\nFigure 1: RStudio Terminal tab (don’t forget to check the Project Folder)"
+  },
+  {
+    "objectID": "lessons-new/01c-GitHubSetupBasic.html#configuring-git-on-your-computer",
+    "href": "lessons-new/01c-GitHubSetupBasic.html#configuring-git-on-your-computer",
+    "title": "01c: Git and GitHub Setup (Basic)",
+    "section": "4 Configuring Git on your computer",
+    "text": "4 Configuring Git on your computer\nBefore you use Git, you need to configure Git on your computer with your GitHub username and email (i.e., the email you use to sign up for your GitHub account). We will use the RStudio Terminal tab to enter these values.\n\n4.1 Adding the username and email\nThe first command sets the user name in Git (replace userName with your GitHub ID):\ngit config --global user.name \"userName\"\nThe second command sets the user email in Git (replace email with the email you used to signup for GitHub):\ngit config --global user.email \"email\"\n\n\n\n\n\n\nFigure 2: Changing Git username and email using the Terminal tab\n\n\n\n\n\n4.2 Viewing the configured values (optional)\nYou can check if you successfully changed the username and email by executing these lines in the Terminal tab:\ngit config user.name \ngit config user.email\nAfter executing the two above command, your Terminal tab should look similar to this:\n\n\n\n$ git config user.name \nbelinskyc  \n$ git config user.email \nbelinsky@msu.edu\n\n\nFigure 3: Testing the git configuration using the RStudio Terminal tab"
+  },
+  {
+    "objectID": "lessons-new/01c-GitHubSetupBasic.html#add-git-repository-to-your-rstudio-project-folder",
+    "href": "lessons-new/01c-GitHubSetupBasic.html#add-git-repository-to-your-rstudio-project-folder",
+    "title": "01c: Git and GitHub Setup (Basic)",
+    "section": "5 Add Git Repository to your RStudio Project folder",
+    "text": "5 Add Git Repository to your RStudio Project folder\nBoth RStudio Projects and Git Repositories are set up in your Project Folder (i.e., the root folder for your project).\n \nTo add a Git repository to your Project Folder,make sure your RStudio Project is open (Figure 1) and type in the Terminal:\ngit init -b main\nYou should get a message in the Terminal like:\nInitialized empty Git repository in C:/Users/Charlie/...\nNow restart RStudio and Git should be ready to go\n\n5.1 RStudio Git tab\nAfter you add Git to an RStudio Project folder, a Git tab will appear in the upper-right window. This tab is RStudio’s built-in Git interface and it can handle many commonly performed Git functions, including most of the things needed for class. The Git tab is often helpful but not necessary.\n\n\n\n\n\n\nFigure 4: The Git tab has been added to the RStudio Project"
+  },
+  {
+    "objectID": "lessons-new/01c-GitHubSetupBasic.html#linking-your-git-repository-to-a-github-repository",
+    "href": "lessons-new/01c-GitHubSetupBasic.html#linking-your-git-repository-to-a-github-repository",
+    "title": "01c: Git and GitHub Setup (Basic)",
+    "section": "6 Linking your Git repository to a GitHub repository",
+    "text": "6 Linking your Git repository to a GitHub repository\nIn this section we are going to link your Git repository, which is in the same folder as your RStudio Project, with the GitHub Repository provided be your instructor.  The GitHub repository will become the online version of your Git repository.\n \nType the line below into the Terminal. Replace the URL with the URL given to you by your instructor.\ngit remote add origin \"https://github.com/myUserName/myRepository.git\"\nNote: In Windows, Control-V does not paste in a Terminal window, but right-click -&gt; Paste works\n\n6.1 If you added the wrong repository name\nThen you first need to remove the current GitHub repository (i.e., the origin):\ngit remote rm origin\nand then repeat this line (using the correct GitHub URL)\ngit remote add origin \"https://github.com/myUserName/myRepository.git\""
+  },
+  {
+    "objectID": "lessons-new/01c-GitHubSetupBasic.html#uploading-to-the-github-repository",
+    "href": "lessons-new/01c-GitHubSetupBasic.html#uploading-to-the-github-repository",
+    "title": "01c: Git and GitHub Setup (Basic)",
+    "section": "7 Uploading to the GitHub repository",
+    "text": "7 Uploading to the GitHub repository\nChanges to your local project are not automatically uploaded to GitHub – you need to explicitly upload the changes.\n \nTo upload your changes to GitHub, in the Terminal type:\ngit add -A\ngit commit -m \"A message about the changes to your project\"\ngit push -u origin main\nYou will repeat these lines every time you turn in an application.\n\nThe first line compiles all the changes you have made to your project\nThe second line accepts, and adds a message about, your changes\nThe third line sends the changes with the message to GitHub.\n\nAfter the first push, the third line can be reduced to git push\n\n\n\n7.1 Authenticating with GitHub\nGitHub will ask for authentication the first time you connect to a GitHub repository on a computer:\n\n\n\n\n\n\nFigure 5: GitHub asking for authentication\n\n\n\nWhen you click Sign in with your browser, your default browser will open to the GitHub login page.\n \nAfter you login you will get an Authentication Successful window:\n\n\n\n\n\n\nFigure 6: The Authentication Successful window"
+  },
+  {
+    "objectID": "lessons-new/01c-GitHubSetupBasic.html#application",
+    "href": "lessons-new/01c-GitHubSetupBasic.html#application",
+    "title": "01c: Git and GitHub Setup (Basic)",
+    "section": "8 Application",
+    "text": "8 Application\nA) Append to the top of your app01.r the Questions to answer for this lesson.\nB) Send the change to GitHub by executing these lines in the Terminal:\ngit add -A\ngit commit -m \"Finished lesson 1b application\"\ngit push\nAlternatively, you can use the Git tab to add, commit, and push: Extension: Use Git Tab\n \nThe first time you push your project you have to use this command and the Git tab will not work:\ngit push -u origin main\nC) Email your instructor the application is done\n\nWhen you Push, the instructor should get an email from GitHub, so this part is just to double-check that everything is working\n\n\n8.1 Questions to answer\nAnswer the following in comments inside your application script:\n\nWhat was your level of comfort with the lesson/application?\nWhat areas of the lesson/application confused or still confuses you?\nWhat are some things you would like to know more about that is related to, but not covered in, this lesson?"
+  },
+  {
+    "objectID": "lessons-new/01c-GitHubSetupBasic.html#extension-use-git-tab",
+    "href": "lessons-new/01c-GitHubSetupBasic.html#extension-use-git-tab",
+    "title": "01c: Git and GitHub Setup (Basic)",
+    "section": "9 Extension: Use Git Tab",
+    "text": "9 Extension: Use Git Tab\nThe Git tab can be used instead of the Terminal to sync changes from your Project Folder to your GitHub repository.\n\nIn the Git tab, click Commit and the RStudio Review Changes window appears\nOn the left, check the files you want to sync with your GitHub repository (you do not have to check all of them)\nOn the right side, put a message in that describes the changes\nClick Commit in the lower right\nClose the window that pops up (not pictured)\nclick Push in the upper-right\nClose the windows\n\n\n\n\n\n\n\nFigure 7: Using the Git tab to sync with your Github repository"
+  },
+  {
+    "objectID": "lessons-new/01b-GitHubSetupAdv.html",
+    "href": "lessons-new/01b-GitHubSetupAdv.html",
+    "title": "01b: Git and GitHub Setup (Advanced)",
+    "section": "",
+    "text": "Setup Git on your computer\nCreate a GitHub repository for your class project\nUse Git to connect your RStudio Project to the GitHub repository\nShare your GitHub repository\n\n\n\nYou will need a GitHub account to complete this lesson. You can sign up for an account at https://github.com."
+  },
+  {
+    "objectID": "lessons-new/01b-GitHubSetupAdv.html#purpose",
+    "href": "lessons-new/01b-GitHubSetupAdv.html#purpose",
+    "title": "01b: Git and GitHub Setup (Advanced)",
+    "section": "",
+    "text": "Setup Git on your computer\nCreate a GitHub repository for your class project\nUse Git to connect your RStudio Project to the GitHub repository\nShare your GitHub repository\n\n\n\nYou will need a GitHub account to complete this lesson. You can sign up for an account at https://github.com."
+  },
+  {
+    "objectID": "lessons-new/01b-GitHubSetupAdv.html#git-and-github",
+    "href": "lessons-new/01b-GitHubSetupAdv.html#git-and-github",
+    "title": "01b: Git and GitHub Setup (Advanced)",
+    "section": "2 Git and GitHub",
+    "text": "2 Git and GitHub\nFor this class, we will use Git and GitHub for your class assignments.\n \nGit and GitHub are two terms that are often conflated. Git is versioning software – you use Git on your computer to document and create a history of your project folder.  Using the project history, you can bring back previous versions of files or your entire Project.  Git calls the project folder, along with its full history, a repository.\n \nGitHub is an online software development platform and a place to store, sync, and share your Git repository. When combined, Git and GitHub make a very powerful project-management system.\n \nWhile Git and GitHub are very powerful tools, they are not intuitive and there is a pretty high-barrier to getting started. This lesson is designed to allow you to do the very basics in Git and GitHub, which is all you will need for this class."
+  },
+  {
+    "objectID": "lessons-new/01b-GitHubSetupAdv.html#install-git-on-your-computer-need-version-2.44-or-higher",
+    "href": "lessons-new/01b-GitHubSetupAdv.html#install-git-on-your-computer-need-version-2.44-or-higher",
+    "title": "01b: Git and GitHub Setup (Advanced)",
+    "section": "3 Install Git on your computer (need version 2.44 or higher)",
+    "text": "3 Install Git on your computer (need version 2.44 or higher)\nFor Windows, go here to download and install Git – click on Download for Windows. Git asks a lot of questions during installation and you can choose the default option for everything.\n \nFor Mac, there is no direct installation of Git. I recommend using Homebrew, which is a useful tool for any programmer using a Mac because it gives you access to a bunch of programming tools.\n\n3.1 Homebrew installation of Git on Mac:\n\nGo to the Homebrew homepage\nCopy the text under the heading Install Homebrew\nPaste the text in a Terminal window (RStudio has a Terminal tab in the bottom-left pane)\n\nBe patient – it takes time to install!\n\nWhen Homebrew is finished installing, install Git by typing in the Terminal:\n\nbrew install git \n\nAnd then install the credential manager by typing in the Terminal:\n\nbrew install --cask git_crendential_manager\n\n3.1.1 Alternate installation for Git on Mac\nIf you cannot get Homebrew to work, other options are available here. MacPort is the best alternative. XCode will work but it is a huge installation (at least 20GB), and most of it is not going to be used. The Binary Installer option is too outdated."
+  },
+  {
+    "objectID": "lessons-new/01b-GitHubSetupAdv.html#configuring-git-on-your-computer",
+    "href": "lessons-new/01b-GitHubSetupAdv.html#configuring-git-on-your-computer",
+    "title": "01b: Git and GitHub Setup (Advanced)",
+    "section": "4 Configuring Git on your computer",
+    "text": "4 Configuring Git on your computer\nBefore you use Git, you first need to configure Git on your computer with your GitHub username and email (i.e., the email you use to sign up for your GitHub account). The username and email are used by Git to identify who made what changes in the project history – this is especially important when you are collaborating on a project.\n\n4.1 Adding the username and email\nWe will use the RStudio Terminal tab to enter these values.\n \nThe first command sets the user name in Git (replace userName with your GitHub ID):\ngit config --global user.name \"userName\"\nThe second command sets the user email in Git (replace email with the email you used to signup for GitHub):\ngit config --global user.email \"email\"\n\n\n\n\n\n\nFigure 1: Changing Git username and email using the Terminal tab\n\n\n\n\n\n4.2 Viewing the configured values\nGit will not check your user.name and user.email are valid. You can check if you successfully changed the username and email by executing these lines in the Terminal tab:\ngit config user.name \ngit config user.email\nAfter executing the two above command, your Terminal tab should look similar to this:\n\n\n\n$ git config user.name \nbelinskyc  \n$ git config user.email \nbelinsky@msu.edu\n\n\nFigure 2: Testing the git configuration using the RStudio Terminal tab"
+  },
+  {
+    "objectID": "lessons-new/01b-GitHubSetupAdv.html#positron-github-app",
+    "href": "lessons-new/01b-GitHubSetupAdv.html#positron-github-app",
+    "title": "01b: Git and GitHub Setup (Advanced)",
+    "section": "5 Positron GitHub app",
+    "text": "5 Positron GitHub app\nWe will be using the GitHub app in Positron, which is in the left-side Vertical bar\n&lt;image&gt;\nMost likely, the first step is that you have to sign in to your GitHub account."
+  },
+  {
+    "objectID": "lessons-new/01b-GitHubSetupAdv.html#add-git-repository-to-your-rstudio-project-folder",
+    "href": "lessons-new/01b-GitHubSetupAdv.html#add-git-repository-to-your-rstudio-project-folder",
+    "title": "01b: Git and GitHub Setup (Advanced)",
+    "section": "6 Add Git Repository to your RStudio Project folder",
+    "text": "6 Add Git Repository to your RStudio Project folder\nBoth RStudio Projects and Git Repositories are set up in your Project Folder (i.e., the root folder for your project).\n \nTo add a Git repository to your Project Folder\n\nMake sure your RStudio Project is open\n\nLook for your Project name in the upper-right corner (In ?@fig-RStudioTermProj it is My_Project)\n\nType in the Terminal:\ngit init -b main\n\nThis command initializes git and sets the initial branch name to main\nYou should get a message in the Terminal like:\n\n\nInitialized empty Git repository in C:/Users/Charlie/...\n\nRestart RStudio\n\n\n6.1 RStudio Git tab\nAfter you add Git to an RStudio Project folder, a Git tab will appear in the upper-right window. This tab is RStudio’s built-in Git interface and it can handle many commonly performed Git functions, including most of the things needed for class. It is not necessary to use the Git tab for this class.\n\n\n\n\n\n\nFigure 3: The Git tab has been added to the RStudio Project"
+  },
+  {
+    "objectID": "lessons-new/01b-GitHubSetupAdv.html#create-a-github-repository",
+    "href": "lessons-new/01b-GitHubSetupAdv.html#create-a-github-repository",
+    "title": "01b: Git and GitHub Setup (Advanced)",
+    "section": "7 Create a GitHub repository",
+    "text": "7 Create a GitHub repository\nA GitHub repository is an online storage location that syncs with the Git repository (Project Folder) on your computer.\n \nTo create a GitHub repository (Figure 4)\n\nLog in to GitHub\nClick on the + at the top-right and choose New Repository\nChoose a repository name (any name you want – just remember you are sharing it!)\nChoose whether you want the repository to be Public or Private (this can be changed later)\n\nPublic means that anyone with the repository link can view (but not edit) your files\nPrivate means that only users you add in Settings -&gt; Manage Access can view the repository\n\nClick Create Repository\n\n\n\n\n\n\n\nFigure 4: Creating a new repository on GitHub\n\n\n\n\n7.1 Get the GitHub URL\nTo link the Git repository on your computer with this GitHub repository, you will need the URL for the GitHub repository. After you create the new repository, a window will appear ( Figure 5) with the URL at the top in the Quick Setup section. Copy this URL and save it– you will use it in the next section.\n\n\n\n\n\n\nFigure 5: The URL of your GitHub repository\n\n\n\nThe GitHub repository link is the URL that takes you directly to the online project.  A GitHub repository link is always in this format:\nhttps://github.com/&lt;github_user_name&gt;/&lt;github_repository_name&gt;.git****\nSo, if my GitHub username is belinskyc and my repository name is gitHubTest then the link is:\nhttps://github.com/belinskyc/githubtest.git\nNote: capital/lowercase does not matter and .git is optional\n \nIf you lose the Quick Setup page then the URL is going to be the part of the URL for your repository circled in Figure 5\n\n\n7.2 Inviting the instructor to your repository\nTo invite a user (or, as GitHub calls them, collaborator) to your repository:\n\nGo to the GitHub home page for your repository and click Settings\nClick Collaborators\nClick Add people\n\nYou can use either the person’s GitHub ID or their email address associated with their GitHub ID\ninvite your instructor: belinsky@msu.edu\n\n\n\n\n\n\n\n\nFigure 6: Inviting a user to your GitHub Repository"
+  },
+  {
+    "objectID": "lessons-new/01b-GitHubSetupAdv.html#linking-your-git-repository-to-a-github-repository",
+    "href": "lessons-new/01b-GitHubSetupAdv.html#linking-your-git-repository-to-a-github-repository",
+    "title": "01b: Git and GitHub Setup (Advanced)",
+    "section": "8 Linking your Git repository to a GitHub repository",
+    "text": "8 Linking your Git repository to a GitHub repository\nIn this section we are going to link your Git repository, which is in the same folder as your RStudio Project, with your GitHub Repository.  The GitHub repository will become the online version of your Git repository. \nWarning: This only works if the GitHub repository is empty .\n \nType the line below into the Terminal. Replace the URL with the URL for your GitHub repository. Make sure your are in your RStudio Project.\ngit remote add origin \"https://github.com/myUserName/myRepository.git\"\nNote: In Windows, Control-V does not paste in a Terminal window, but right-click -&gt; Paste works\n\n8.1 If you added the wrong repository name…\nThen you first need to remove the current GitHub repository (i.e., the origin):\ngit remote rm origin\nand then repeat this line (using the correct GitHub URL)\ngit remote add origin \"https://github.com/myUserName/myRepository.git\""
+  },
+  {
+    "objectID": "lessons-new/01b-GitHubSetupAdv.html#uploading-to-the-github-repository",
+    "href": "lessons-new/01b-GitHubSetupAdv.html#uploading-to-the-github-repository",
+    "title": "01b: Git and GitHub Setup (Advanced)",
+    "section": "9 Uploading to the GitHub repository",
+    "text": "9 Uploading to the GitHub repository\nGit/GitHub is asynchronous. Changes to your local project are not automatically uploaded to GitHub – you need to explicitly upload the changes.\n \nTo upload your changes to GitHub, in the Terminal type:\ngit add -A\ngit commit -m \"A message about the changes to your project\"\ngit push -u origin main\nYou will repeat these lines every time you turn in an application.\n\nThe first line compiles all the changes you have made to your project\nThe second line accepts, and adds a message about, your changes\nThe third line sends the changes with the message to GitHub.\n\nAfter the first push, the third line can be reduced to git push\n\n\n \nNote: you can also use the Git tab as shown in Extension: Use Git Tab\n\n9.1 Authenticating with GitHub\nGitHub will ask for authentication the first time you connect to a GitHub repository on a computer:\n\n\n\n\n\n\nFigure 7: GitHub asking for authentication\n\n\n\nWhen you click Sign in with your browser, your default browser will open to the GitHub login page.\n \nAfter you login you will get an Authentication Successful window:\n\n\n\n\n\n\nFigure 8: The Authentication Successful window"
+  },
+  {
+    "objectID": "lessons-new/01b-GitHubSetupAdv.html#verifying-the-change-on-github",
+    "href": "lessons-new/01b-GitHubSetupAdv.html#verifying-the-change-on-github",
+    "title": "01b: Git and GitHub Setup (Advanced)",
+    "section": "10 Verifying the change on GitHub",
+    "text": "10 Verifying the change on GitHub\nLet’s go to your GitHub account to verify that the project files are there (Figure 9):\n\nLog in to GitHub\nOn the left side, there is a section called Repositories. \nClick on the repository called &lt;your-user-name&gt;/&lt;your-repository-name&gt;\nChoose the Code tab (you are probably already on it)\n\n \nYou should notice that the files changed in the newest Commit have your Commit message attached (my Commit message: “A message about…”) and the last commit for these files is recent (in this case: 9 minutes). \n\n\n\n\n\n\nFigure 9: GitHub after a new Commit was pushed"
+  },
+  {
+    "objectID": "lessons-new/01b-GitHubSetupAdv.html#application",
+    "href": "lessons-new/01b-GitHubSetupAdv.html#application",
+    "title": "01b: Git and GitHub Setup (Advanced)",
+    "section": "11 Application",
+    "text": "11 Application\nA) Append to the top of your app01.r the Questions to answer for this lesson.\nB) Send the change to GitHub by executing these lines in the Terminal:\ngit add -A\ngit commit -m \"Finished lesson 1b application\"\ngit push -u origin main\nNote: after the first push, the third line can be reduced to\ngit push\n \nAlternatively, you can use the Git tab: Extension: Use Git Tab\n \n\nC) Inform your instructor the application is done by creating an Issue in the Github repository:\n\n\nClick on Issues (top of page)\nClick on New Issue (green button – not pictured)\nClick on Setting wheel and add the instructor as an assignee (belinskyc)\nPut in title that application 1b is finished, add anything you want to the description, and\nClick Submit new issue\n\n\n\n\n\n\n\nFigure 10: Creating an Issue in GitHub\n\n\n\n\n11.1 Questions to answer\nAnswer the following in comments inside your application script:\n\nWhat was your level of comfort with the lesson/application?\nWhat areas of the lesson/application confused or still confuses you?\nWhat are some things you would like to know more about that is related to, but not covered in, this lesson?"
+  },
+  {
+    "objectID": "lessons-new/01b-GitHubSetupAdv.html#extension-use-git-tab",
+    "href": "lessons-new/01b-GitHubSetupAdv.html#extension-use-git-tab",
+    "title": "01b: Git and GitHub Setup (Advanced)",
+    "section": "12 Extension: Use Git Tab",
+    "text": "12 Extension: Use Git Tab\nThe Git tab can be used instead of the Terminal to sync changes from your Project Folder to your GitHub repository.\n\nIn the Git tab, click Commit and the RStudio Review Changes window appears\nOn the left, check the files you want to sync with your GitHub repository (you do not have to check all of them)\nOn the right side, put a message in that describes the changes\nClick Commit in the lower right\nClose the window that pops up (not pictured)\nclick Push in the upper-right\nClose the windows\n\n\n\n\n\n\n\nFigure 11: Using the Git tab to sync with your Github repository"
+  },
+  {
+    "objectID": "lessons-new/01-ProjectSetup.html",
+    "href": "lessons-new/01-ProjectSetup.html",
+    "title": "01: Project Setup",
+    "section": "",
+    "text": "where to compare to Rproj?\nadd images to assets"
+  },
+  {
+    "objectID": "lessons-new/01-ProjectSetup.html#purpose",
+    "href": "lessons-new/01-ProjectSetup.html#purpose",
+    "title": "01: Project Setup",
+    "section": "1 Purpose",
+    "text": "1 Purpose\n\nInstall, setup, and test the software you will need for this class\nProvide a basic overview of the Positron environment\nExecute an R script in Positron\nUse Git and GitHub to save class work\n\nWe are doing just enough to get your work on GitHub, this is far from a Git/GitHub tutorial."
+  },
+  {
+    "objectID": "lessons-new/01-ProjectSetup.html#questions-about-the-material",
+    "href": "lessons-new/01-ProjectSetup.html#questions-about-the-material",
+    "title": "01: Project Setup",
+    "section": "2 Questions about the material…",
+    "text": "2 Questions about the material…\nIf you have any questions about the material in this lesson, feel free to email them to the instructor, Charlie Belinsky, at belinsky@msu.edu."
+  },
+  {
+    "objectID": "lessons-new/01-ProjectSetup.html#install-r-positron-and-git-on-your-computer",
+    "href": "lessons-new/01-ProjectSetup.html#install-r-positron-and-git-on-your-computer",
+    "title": "01: Project Setup",
+    "section": "3 Install R, Positron and Git on your computer",
+    "text": "3 Install R, Positron and Git on your computer\nWe are going to install R, Positron, and Git on your computer. R is a programming language, Positron provides a structured environment for the R programming language, Git is a version management system that allows you to save your work online at github.com.\n \nFor Windows, all installations are straightforward and you can use the default settings. For Macs the installation is a bit trickier for Git.\n \nNote: Even if you already have the software installed, it is a good idea to verify you have a recent version.\n\n3.1 Install or update R (recommend version 4.5 or higher)\nThe R for Windows download is here. Click on Download R 4.#.# for Windows.\n \nThe R for Mac download is here.  \n\nThere are two versions of R for Mac \n\nR-4.#.#-arm64.pkg: for newer Macs (starting in 2021) with Apple Silicon processors (M1, M2,…)\nR-4.#.#-x86_64.pkg: for older Macs with Intel-based processors\n\nThe installer will tell you If you pick the wrong pkg file – there is no harm except a bit of wasted time.\n\n \nLinux user: the R installation instruction for major distributions are here. However, these instructions are inadequate for many distributions – you probably will have to search how to install on your distribution.\n\n\n3.2 Install or update Positron\nYou can download Positron here. Don’t forget to accept the Positron legal agreement before downloading.\n \nThere are two Windows installation files: system-level and user-level. User-level is probably what you want unless you are installing this on a computer where there are multiple users who are all going to use the same settings.\n \nJust like R, there are two Mac installations: Apple Silicon (new) and Intel (old).\n\n\n3.3 Install or update Git (Windows)\nFor Windows, go here to download the latest version of Git. Git asks a lot of questions during installation and you can choose all default options.\n\n\n3.4 Install or update Git (Mac)\nThere is no direct installation on Mac. I recommend using Homebrew, which is a useful tool for any programmer using a Mac because Homebrew gives you access to a bunch of programming tools.\n\nGo to the Homebrew homepage\nCopy the text under the heading Install Homebrew\nPaste the text in a Terminal window (Positron has a Terminal tab in the bottom-left pane)\n\nBe patient – it takes time to install!\n\nWhen Homebrew is finished installing, install Git by typing in the Terminal (Figure 1):\n\nbrew install git \n\nAnd then install the credential manager by typing in the Terminal:\n\nbrew install --cask git_crendential_manager"
+  },
+  {
+    "objectID": "lessons-new/01-ProjectSetup.html#console-and-terminal-tabs",
+    "href": "lessons-new/01-ProjectSetup.html#console-and-terminal-tabs",
+    "title": "01: Project Setup",
+    "section": "4 Console and Terminal tabs",
+    "text": "4 Console and Terminal tabs\nOpen up Positron. We are going to use both the Console and Terminal tabs to execute commands in Positron. The Console tab runs programming langauges commands (in this case, R) and the Terminal runs operating system commands. The Terminal tab is linked to Command Prompt (Windows) or Terminal (Mac/Linux).\n\n\n\n\n\n\nFigure 1: Console and Terminal tabs in Positron"
+  },
+  {
+    "objectID": "lessons-new/01-ProjectSetup.html#configuring-git-terminal-tab",
+    "href": "lessons-new/01-ProjectSetup.html#configuring-git-terminal-tab",
+    "title": "01: Project Setup",
+    "section": "5 Configuring Git (Terminal tab)",
+    "text": "5 Configuring Git (Terminal tab)\nBefore you use Git, you first need to configure Git on your computer with your GitHub username and email (i.e., the email you use to sign up for your GitHub account). The username and email are used by Git to identify who made what changes in the project history.\n\n5.1 Adding the username and email\nWe will use the Positron Terminal tab (Figure 1) to set these values.\n \nThe first command sets the user name in Git (replace Your_GitHub_ID with your GitHub ID):\ngit config --global user.name \"«Your_GitHub_ID»\"\nThe second command sets the user email in Git (replace Your_GitHub_email with the email you used to signup for GitHub):\ngit config --global user.email \"«Your_GitHub_Email»\"\n\n\n5.2 Viewing the configured values\nGit will not check your user.name and user.email are valid. You can check if you successfully changed the username and email by executing these lines in the Terminal tab:\ngit config user.name \ngit config user.email\nAfter executing the two above command, your Terminal tab should look similar to this:\n\n\n\n$ git config user.name \nbelinskyc   \n$ git config user.email \nbelinsky@msu.edu\n\n\nFigure 2: Testing the git configuration using the RStudio Terminal tab"
+  },
+  {
+    "objectID": "lessons-new/01-ProjectSetup.html#installing-a-package-console-tab",
+    "href": "lessons-new/01-ProjectSetup.html#installing-a-package-console-tab",
+    "title": "01: Project Setup",
+    "section": "6 Installing a package (Console tab)",
+    "text": "6 Installing a package (Console tab)\nGGPlot2, is a widely used package that does not come with R – so we are going to install the GGPlot2 package using the Console tab.\n \nType the following in the Console and press enter:\ninstall.packages(\"ggplot2\")\n\n\n\n\n\n\nFigure 3: Install an R package using the Console\n\n\n\n \nGGPlot2 requires many other packages (its dependencies) – and RStudio will install those packages along with GGPlot2.  Be patient, as this could take a little time.\n \nPositron does have a package manager: [Extension: Positron Package Manager]"
+  },
+  {
+    "objectID": "lessons-new/01-ProjectSetup.html#positron-and-project-folders",
+    "href": "lessons-new/01-ProjectSetup.html#positron-and-project-folders",
+    "title": "01: Project Setup",
+    "section": "7 Positron and Project Folders",
+    "text": "7 Positron and Project Folders\nMost of the work you will do in R involves multiple scripts, data files, and perhaps other types of files.  All these files together make up your project and they should exist within a Project Folder, which is a folder than contains all the files and subfolders for your project. It is this Project Folder that will be uploaded to GitHub.\n \nIn RStudio, Project Folder are created by putting an *.Rproj file inside the folder you want designated as a Project Folder. When you open a folder in Positron, it automatically opens as a Project Folder – there is nothing extra you need need to do.\n \nnote: RStudio will add an *.RProj file to the Project Folder – this file will not affect anything in Positron.\n\n7.1 Create a new Project Folder\nCreate a new folder in any location on your computer and name the folder something appropriate (in this case, I named it My_Project).\n \nTo open the new folder as a Project Folder in Positron:\n\nclick Open -&gt; Open Folder…\nNavigate to the folder location\nClick on Folder and click Select Folder\n\n \nNote: you can also use the Positron interface to create a new folder (New -&gt; New Folder from Template…), but, for now, there is no advantage to it.\n \n\n\n\n7.2 Isolating a project\nWhen you click Open in Positron, you can choose Open File… or Open Folder…. Most of the time, you should open a folder first and then open your script from inside it. Positron treats that folder as a container for all of your work, creating a self-contained space where your scripts, data, and output live together. This makes it easier for files to find each other (e.g., when a script reads a data file) and helps ensure that new files are saved in the right place. Keeping your work isolated in one folder also makes it much easier to share the project on GitHub.\n \nFor those who have worked in R before, Positron also sets this folder as the Working Directory.\n\n\n7.3 Add subfolders\nThe Positron Explorer tab is a File Manager and allows you to do most of the things that you can do in your operating systems File Manager (called File Explorer in Windows and Finder in Mac). The Explorer tab can be used to open, add, remove, rename files and folders, and drag-and-drop files.\n \nWe will use the Files tab in RStudio (bottom-right tab) to create two subfolders: scripts and data.\n \nTo add two folders named scripts and data:\n\nClick on New Folder icon next to the Project Folder name\n\nnote: you can also right-click inside the area and choose New Folder…\n\nEnter scripts in the textbox and click OK\nRepeat the last two steps to add a folder called data\n\nMake sure you put data inside the project folder – not inside the scripts folder\n\n\n\n\n\n\n\n\nFigure 4: Adding folders to your project folder\n\n\n\n\n\n7.4 Add files to the project\nWe are going to download two files and add them to your Project Folder.\n\nSetup.r: put this file in your scripts directory\nSetup.csv: put this file in your data directory\n\nYou can either put the files in the directories using your File Explorer or you can drag-and-drop the file into the folder using Explorer in Positron.\n\n\n\n\n\n\nFigure 5: Drag and drop a file into your project folder\n\n\n\n\n\n7.5 file extensions and Hidden files\nBy default, the Explorer tab in Positron shows file extensions and most hidden files. You can also do this in your operating system: Extension: Viewing file extensions and hidden files"
+  },
+  {
+    "objectID": "lessons-new/01-ProjectSetup.html#positron-basics",
+    "href": "lessons-new/01-ProjectSetup.html#positron-basics",
+    "title": "01: Project Setup",
+    "section": "8 Positron Basics",
+    "text": "8 Positron Basics\nNow we are going to execute the script file, Setup.R, that we just downloaded to your Project’s scripts folder.\n \nSetup.R takes weather data from the other downloaded file, Setup.csv and creates boxplots showing how Wind Direction and Wind Speed relate to the Change In Temperature.\n \nWe are executing the script to test your setup and help you become familiar with the Positron environment – not to teach the code in the script (although some will be taught later in class)\n\n8.1 Open your Project folder in Positron\nPosition does remember the last opened Project Folder, but let’s start from scratch and close the project folder by clicking File -&gt; Close Folder. Now we have a clean Positron window without anything open.\n \nThere are multiple ways to open an Project Folder – three of them are:\n\nIn Positron, click Open -&gt; Open Folder… -&gt; navigate to the Project Folder and click Select Folder\n\nIt is likely that the folder is already in the recently opened list\n\nIn Positron, click the folder icon in the upper-right corner and click Open Folder, or choose a Project Folder that has recently been opened\nYou can drag and drop a folder into Positron\n\n\n\n\n\n\n\nFigure 6: Opening a project in Positron\n\n\n\n\n\n8.2 Open and execute a script file in your Project\nTo open the script file, in the Explorer tab navigate to the script folder and click on the script inside. It will open in an editor tab.\n \nTo execute the script, click on the right arrow. This will execute your enitre script (Source).\n \nAfter the script is run:\n\nThe Console tab displays information about the execution of the script.\nThe Sessioin tab displays information generated from the execution of the script including Variables (e.g., weatherData, windLabels) and Plots\n\n\n\n\n\n\n\nFigure 7: Executing an R script (Source)\n\n\n\n\n\n8.3 Cleaning up the Positron panes\nThere many times where you want to clean up the panes, which can get very crowded with information from old script executions.\n\nTo clean the Console, Variables , and Plot panes, use the X button (underlined in Figure 7).\n\n \nIf you click Source again, the panes will once again be populated with data from the script’s execution."
+  },
+  {
+    "objectID": "lessons-new/01-ProjectSetup.html#saving-your-project-folder-to-github",
+    "href": "lessons-new/01-ProjectSetup.html#saving-your-project-folder-to-github",
+    "title": "01: Project Setup",
+    "section": "9 Saving your Project Folder to GitHub",
+    "text": "9 Saving your Project Folder to GitHub\nTo complete this section, you need to have a GitHub account. Steps 4-9 are only needed the first time you publish a project to GitHub on a computer because GitHub needs to authenticate your computer and your ID.\n \nTo upload your project to GitHub the first time:\n\nmake sure everything is saved\nclick on the Source Control button on the left-vertical bar in Positron (circled in Figure 8)\nclick Publish to GitHub\nclick Allow so that the extension can sign in to GitHub\nYou will get a code to use on GitHub, click Copy & Continue to GitHub\nYou will have to log in to GitHub and click Continue for Device Activation\nPaste the code to authorize the device and click Continue\nAnd then click Authorize Visual-Studio Code (note: Positron is based on VSCode)\nA message should appear that you have successfully completed registration – go back to Positron\nIn the top text box, choose to publish the project publicly or privately and click enter\nMake sure all files are selected (default) and click OK\n\n\n\n\n\n\n\nFigure 8: Source control tab in Positron\n\n\n\n\n\n\n\n\n\nFigure 9: Steps 6-8 in browser on GitHub.com\n\n\n\n\n\n\n\n\n\nFigure 10: Publishing project on GitHub"
+  },
+  {
+    "objectID": "lessons-new/01-ProjectSetup.html#view-project-on-github",
+    "href": "lessons-new/01-ProjectSetup.html#view-project-on-github",
+    "title": "01: Project Setup",
+    "section": "10 View project on GitHub",
+    "text": "10 View project on GitHub\nYou project folder is now on GitHub in a repository. Let’s go to your GitHub account to verify that the project files are there (Figure 11):\n\nLog in to GitHub\nOn the left side, there is a section called Repositories. \nClick on the repository called &lt;your-user-name&gt;/&lt;your-repository-name&gt;\nChoose the Code tab (you are probably already on it)\n\n\n\n\n\n\n\nFigure 11: GitHub repository after publishing\n\n\n\nFrom here you can click on the script and data folders to see what is in them. For this class, we are not going to be using the online repository for anything except storage.\n\n10.1 Inviting the instructor to your repository\nLastly, you need to give the instructor access to the repository.\n \nTo invite a user (or, as GitHub calls them, collaborator) to your repository:\n\nGo to the GitHub home page for your repository and click Settings\nClick Collaborators\nClick Add people\nIn Find people textbox, you can use either the person’s GitHub ID or their email\n\ninvite your instructor: belinsky@msu.edu\n\nClick Add to repository\n\n\n\n\n\n\n\nFigure 12: Inviting a user to your GitHub Repository"
+  },
+  {
+    "objectID": "lessons-new/01-ProjectSetup.html#application",
+    "href": "lessons-new/01-ProjectSetup.html#application",
+    "title": "01: Project Setup",
+    "section": "11 Application",
+    "text": "11 Application\n\nIn your Project Folder, create a new script file (File -&gt; New File -&gt; R File R )\n\nMake sure you are in the Explorer tab\n\nCopy and paste this lesson’s script, Setup.r, to the new script.\nChange the colors in the boxplot (edit lines 17-21)\n\nHere is a comprehensive list of color names you can use in R\n\nSave the script as app01.r, and to your script folder\n\nIf you have any questions regarding this application, feel free to email them to Charlie Belinsky at belinsky@msu.edu.\n\n11.1 Questions to answer\nAnswer the following in comments inside your application script:\n\nWhat was your level of comfort with the lesson/application?\nWhat areas of the lesson/application confused or still confuses you?\nWhat are some things you would like to know more about that is related to, but not covered in, this lesson?\n\n\n\n11.2 Upload changes to GitHub\n\nIn Source Control tab, in Changes: Click Stage All changes\n\nAll changed files will now be under Staged Changes\n\nAdd a message “App01 finished”\nClick Commit\nThe Commit button will become a Sync button, click Sync\n\n\n\n\n\n\n\nFigure 13: Upload changes to GitHub\n\n\n\n\n\n11.3 Inform your instructor\n\nGo to your project folder (repository) on GitHub\nClick on Issues (top of page)\nClick on New Issue (green button – not pictured)\nClick on Setting wheel and add the instructor as an assignee (belinskyc)\nPut in title that application 01 is finished, add anything you want to the description, and\nClick Create\n\n\n\n\n\n\n\nFigure 14: Informing your instructor the application is finished"
+  },
+  {
+    "objectID": "lessons-new/01-ProjectSetup.html#extension-working-directories-in-r-and-rstudio",
+    "href": "lessons-new/01-ProjectSetup.html#extension-working-directories-in-r-and-rstudio",
+    "title": "01: Project Setup",
+    "section": "12 Extension: Working directories in R and RStudio",
+    "text": "12 Extension: Working directories in R and RStudio\nThis topic is, in this author’s opinion, one of the most frustrating topic in R.  Compared to other programming languages (e.g., C++. Python, Javascript), R handling of working directories makes it harderto share projects.\n \nA working directory is the folder location used when one file is looking for another file.  It is best shown by its use-case: a script file that is reading in information from another file – this file can be a data file or another script file.\n \nFor example, let’s say we have a script file called weather.r and it is pulling in data from the file weather2020.csv.  weather.r needs to first find the folder location for weather2020.csv before it can access the file.  To do this, weather.r needs a path to weather2020.csv.  This path can be thought of as map directions between two points – and the working directory is the starting point.\n \nFor the vast majority of programming languages, there is no concept of a working directory.  The process of files calling other files works like google maps – a route is specified between the two files starting with the folder the caller (e.g., weather.r) is in and ending where the callee (e.g., weather.csv) is. The path between the two files is called a relative file path. \n\n12.1 R’s default handling of working directories\nIn R, the starting point, or working directory, is fixed for all R files opened in a session (called a session variable).  Using the google maps analogy, this is like saying the map starting point is fixed for everyone – it does not matter where you actually are located.  You can change the working directory in your script using setwd() but this changes the working directories for all R files in the session.  In other words, you are simply changing the starting point to a new location and all files will now use that location.\n\n\n12.2 Absolute file paths (a bad fix to the problem)\nOne way to get around working directories is to use an absolute file path.  So, instead of mapping between weather.R and weather.csv, you just give the file path for weather.csv on your computer (called the absolute file path).\n \nThis will look something like: c:\\Users\\RStudent\\Documents\\WeatherProj\\Data\\weather.csv\n \nDoing this means you do not have to worry about working directories.  But this solution breaks as soon as you move files on your computer or move them to another computer.  The reason is that the file path changes.  Absolute file paths make it almost impossible to share file and should not be used.\n\n\n12.3 How RStudio Projects handle working directory (the least-worst option)\nAn RStudio Project sets the working directory to the Project Folder.  So, for weather.r to find weather.csv inside an RStudio Project, it just needs to know where weather.csv is located relative to the project folder.  Most likely this will be something like: Data\\weather.csv. This makes it far easier to share your project because the path to weather.csv will be the same on any computer.\nWhile I believe this is by far the best method for handling working directory issues, it comes with a major caveat:You need to open script files from within the RStudio Project.  Opening the project sets the working directory for all script files used in the session.  If you a file outside of the Project session, then the working directory is not set by the project.\n\n\n12.4 The default working directory\nA working directory is not defined for a file, it is defined for a session.  So, all files within that session will have the same working directory.  IF you change the working directory in one file, you change it for every file within the session.  This leads to awkward behavior where one R file can change the behavior of another R file within the same session by using setwd()."
+  },
+  {
+    "objectID": "lessons-new/01-ProjectSetup.html#extension-run-vs.-source",
+    "href": "lessons-new/01-ProjectSetup.html#extension-run-vs.-source",
+    "title": "01: Project Setup",
+    "section": "13 Extension: Run vs. Source",
+    "text": "13 Extension: Run vs. Source\nTechnically speaking, the difference between Run and Source is:\n\nSource will execute all the code in a script file.\nRun will execute either:\n\nThe code that is highlighted (if code is highlighted) OR\nThe command that the cursor is on (if the command is on more than one line) OR\nThe whole line the cursor is on\n\n\n \nThe real difference lies in a historical discussion of scripting vs. programming, which is a discussion beyond this class.  Suffice to say, R was originally intended to be more like an advanced calculator than a programming language. The script files would contain multiple lines of code that could be execute independently and in any order (think of these as buttons on a calculator).  The user could click a “button” to pull in data, click another “button” to run statistical analysis on the data, and click a third “button” to output the analysis.  This is what the Run button does.\n \nHowever, as R has grown, the focus has shifted towards developing well-structured code just like any modern programming language (e.g., Python, C, Java). This means executing the script as a whole instead of in parts.  This is what Source does.  Executing your script as a whole instead of in parts has many advantages as the code is easier to debug, easier to share, and much better organized – because you are forced to organize it. In the not-so-humble opinion of this author, learning to treat your script as a whole is a vital part of learning how to program.  For this reason, we will always be using the Source button in this class."
+  },
+  {
+    "objectID": "lessons-new/01-ProjectSetup.html#extension-create-a-standalone-r-script-keep-this-is-orphaned",
+    "href": "lessons-new/01-ProjectSetup.html#extension-create-a-standalone-r-script-keep-this-is-orphaned",
+    "title": "01: Project Setup",
+    "section": "14 Extension: Create a standalone R script <Keep? – this is orphaned>",
+    "text": "14 Extension: Create a standalone R script &lt;Keep? – this is orphaned&gt;\nThere are two ways to create script file in RStudio:\n\nA standalone script\nAs part of an RStudio Project\n\n \nMany people use the first method.  In this class we exclusively use the second method.  The first method of creating a script file is fine for testing something out.  The second method is far better for organizing larger projects and sharing your code with others.\n \nThe reason the second method is better is because a project consist of many file that need to talk each-other.  Script files will call other scripts file or read in data from data files.  In order to makes this work, the script files need to know how to find the other files. In an RStudio Project, this is easy because the working directory is always the Project Folder of your project – and all files in the project are contained within the Project Folder.  So, you just need to look for the file relative to the Project Folder.\n \nR Programmers often get around the lack of a Project Folder/defined working directory by setting the working directory in code using setwd().  This can work locally but becomes problematic when files are shared or moved.  Whereas, RStudio Project always maintain their folder structure."
+  },
+  {
+    "objectID": "lessons-new/01-ProjectSetup.html#extension-viewing-file-extensions-and-hidden-files",
+    "href": "lessons-new/01-ProjectSetup.html#extension-viewing-file-extensions-and-hidden-files",
+    "title": "01: Project Setup",
+    "section": "15 Extension: Viewing file extensions and hidden files",
+    "text": "15 Extension: Viewing file extensions and hidden files\nBy default, Windows and Mac hides file extensions from you (e.g., your Word document file is listed in the file manager as stuff instead of stuff.docx).  This is not convenient when you are programming as you are working with many file types (e.g., *.txt, *.r, *.csv) and, many times, the only difference between the name of two files is the extension.  For instance, you might have two files called weather.r and weather.csv in your folder – without file extensions they are both listed as weather.\n \nAlso, when you are programming, there are files you will need to access that are hidden by default in the operating system.\n \nThis section is optional, but I would highly recommend you learn how to view all hidden files and file extensions – it will greatly assist you when programming.\n\n15.1 Viewing in newer versions of Windows 11\nThis is easy to to do in newer versions of Windows 11:\n\nOpen the File Explorer\nClick View -&gt; Show\nCheck File name extensions and Hidden items\n\n\n\n\n\n\n\nFigure 15: Change settings to view all file extensions on Windows 11\n\n\n\n\n\n15.2 Viewing in Windows 10 and older Windows 11 versions\nThis feature is a bit buried in these Window versions.\n \n\nOpen any File Explorer window (i.e., your folder viewer)\nIn menu bar\n\nWindows 10: click View -&gt; Options -&gt; Change folder and search options\nWindows 11: click 3 dots ( · · · ) -&gt; Options\n\nIn Folder Options window (Figure 16), go to the View tab\nUncheck Hide extensions for known file types\nCheck Show hidden files, folder, and drives\nClick OK\n\n\n\n\n\n\n\nFigure 16: Viewing in older versions of Windows\n\n\n\n\n\n15.3 Viewing in Mac\nFile Extensions:\n\nOpen Finder\nClick on Finder -&gt; Preferences…\nIn Finder Preferences window click on the Advanced tab\nCheck Show all filename extensions\n\n \nHidden files:\n\nYou can temporarily see hidden files in the Finder by pressing Command-Shift-Dot ( . ). \nYou can use the Terminal to permanently show hidden files as described on this webpage but this is not recommended unless you are comfortable with Terminal commands.\n\n\n\n\n\n\n\nFigure 17: Change settings to view all file extensions on a Mac"
+  },
+  {
+    "objectID": "lessons-new/01-ProjectSetup.html#extension-use-package-manager-extension",
+    "href": "lessons-new/01-ProjectSetup.html#extension-use-package-manager-extension",
+    "title": "01: Project Setup",
+    "section": "16 Extension: Use Package Manager Extension",
+    "text": "16 Extension: Use Package Manager Extension\nThere is an extension for Positron that replicates most of the features of the Package Manager in RStudio. You can install Positron extensions by clicking the 5th button down in the vertical bar on the left (circled). After installation, a new icon will appear at the bottom of the vertical bar (circled) – this is the package manager.\n\n\n\n\n\n\nFigure 18: Installing the R Package Manager Extension\n\n\n\nMake sure you are installing the version by user kv9898."
+  },
+  {
+    "objectID": "lessons-new/01-ProjectSetup.html#terminal-commands-for-git",
+    "href": "lessons-new/01-ProjectSetup.html#terminal-commands-for-git",
+    "title": "01: Project Setup",
+    "section": "17 Terminal commands for Git",
+    "text": "17 Terminal commands for Git\nHow to set up your project in the Terminal…."
+  },
+  {
+    "objectID": "lessons-new/01-ProjectSetup.html#extension-working-directories-in-r",
+    "href": "lessons-new/01-ProjectSetup.html#extension-working-directories-in-r",
+    "title": "01: Project Setup",
+    "section": "12 Extension: Working directories in R",
+    "text": "12 Extension: Working directories in R\nIn R, theworking directory is the folder location used when one file is looking for another file.  The most common example is a script file that needs to read in a data file.\n \nLet’s say we have a script file called weather.r and it is pulling in data from the file weather.csv.  weather.r needs to first find the folder location for weather.csv before it can access the file.  To do this, weather.r needs a path to weather.csv.  This path can be thought of as map directions between two points – and the working directory is the starting point.\n\n12.1 R’s default handling of working directories\nIn R, the starting point, or working directory, is fixed for all R files opened in a session (called a session variable).  You can change the working directory in your script using setwd() but this changes the working directories for all R files in the session.  In other words, you are simply changing the starting point to a new location and all files will now use that location.\n\n\n12.2 Absolute file paths (a bad fix to the problem)\nOne way to get around working directories is to use an absolute file path.  So, instead of mapping between weather.R and weather.csv, you just give the file path for weather.csv on your computer (called the absolute file path).\n \nThis will look something like: c:\\Users\\RStudent\\Documents\\WeatherProj\\Data\\weather.csv\n \nDoing this means you do not have to worry about working directories.  But this solution breaks as soon as you move files on your computer or move them to another computer.  The reason is that the file path changes.  Absolute file paths make it almost impossible to share file and should not be used.\n\n\n12.3 How Project Folders handle working directory\nIn Positron, the working directory is the Project Folder.  So, for weather.r to find weather.csv in a project folder, it just needs to know where weather.csv is located relative to the project folder.  Most likely this will be something like: data\\weather.csv. This makes it far easier to share your project because the path to weather.csv will be the same on any computer.\n \nWhile I believe this is by far the best method for handling working directory issues, it comes with a major caveat: You need to open script files from within the Project Folder.  Opening the project sets the working directory for all script files used in the session.  If you open a script file outside of its Project Folder then it will not be able to find the resources it needs."
+  },
+  {
+    "objectID": "lessons-new/01-ProjectSetup.html#extension-create-a-standalone-r-script",
+    "href": "lessons-new/01-ProjectSetup.html#extension-create-a-standalone-r-script",
+    "title": "01: Project Setup",
+    "section": "14 Extension: Create a standalone R script",
+    "text": "14 Extension: Create a standalone R script\nThere are two ways to create script file in Positron:\n\nA standalone script\nAs part of an Project Folder\n\n \nMany people use the first method.  In this class we exclusively use the second method.  The first method of creating a script file is fine for testing something out.  The second method is far better for organizing larger projects and sharing your code with others.\n \nThe reason the second method is better is because a project consist of many file that need to talk each-other.  Script files will call other scripts file or read in data from data files.  In order to makes this work, the script files need to know how to find the other files. In a Project Folder, this is easy because the working directory is always the Project Folder – and all files in the project are contained within the Project Folder.  So, you just need to look for the file relative to the Project Folder.\n \nR Programmers often get around the lack of a Project Folder/defined working directory by setting the working directory in code using setwd().  This can work locally but becomes problematic when files are shared or moved.  Whereas, Project Folders always maintain their folder structure."
   }
 ]
