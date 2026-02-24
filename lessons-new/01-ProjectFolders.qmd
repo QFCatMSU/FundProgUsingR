@@ -6,13 +6,29 @@ short: "01"
 
 ### To do
 
--   where to compare to Rproj?
--   add images to assets
--   default Source is with Echo (in this lesson??)
--   Use Issues or email to hand in apps?
--   Explain how project folders are working directories relate? This is done later in the class
 -   Explain how Git is being used in this class and its potential use
--   Positron sometimes slow to load R (antivirus??)
+-   add images to assets folder
+
+### Positron Issues
+
+-   Positron slow to load R Console after computer restarts/ computer has been on a while
+    -   Windows-only issue: Defender antivirus scan issue – need to exclude these folders:
+        -   c:\\Program Files\\R
+        -   c:\\Users\\\<username\>\\AppData\\Local\\Programs\\Positron
+
+### Differences from RStudio
+
+-   Default Source ([echo]{.hl} means the code prints to Console)
+
+    -   Positron: includes echo
+
+    -   RStudio: no echo
+
+-   Working directories / Project Folders:
+
+    -   Positron opens folders and sets working directory to the folder
+
+    -   RStudio open \*.Rproj files and sets working directory to the folder that contains the RProj file
 
 ## Purpose
 
@@ -24,7 +40,7 @@ short: "01"
 
 -   Use Git and GitHub to save class work
 
-    -   This is far from a Git/GitHub tutorial – it is just enough to get your work on GitHub
+    -   This is far from a Git/GitHub tutorial – it is just enough to get your project folder on GitHub
 
 ## Questions about the material...
 
@@ -32,11 +48,11 @@ If you have any questions about the material in this lesson, feel free to email 
 
 ## Install R, Positron and Git on your computer
 
-We are going to install **R**, **Positron**, and **Git** on your computer. R is a programming language, Positron provides a structured environment for the R programming language, Git is a version management system that allows you to save your work online at github.com.
+We are going to install **R**, **Positron**, and **Git** on your computer. R is a programming language, Positron provides a structured environment for the R programming language, and Git is a version management system that allows you to save your work online at github.com.
 
  
 
-For Windows, all installations are straightforward and you can use the default settings. For Macs the installation of Git is a little harder.
+For Windows, the installation is straightforward and you can use the default settings for all programs. For Macs the installation of Git is a little harder.
 
  
 
@@ -58,7 +74,7 @@ The [R for Mac download is here](https://cran.r-project.org/bin/macosx/).  
 
  
 
-Linux user: the [R installation instruction for major distributions are here.](https://cran.r-project.org/bin/linux/) However, these instructions are inadequate for many distributions – you probably will have to search how to install on your distribution.
+Linux user: the [R installation instruction for major distributions are here.](https://cran.r-project.org/bin/linux/) However, these instructions are inadequate for many distributions – you probably will have to search how to install R on your distribution.
 
 ### Install or update Positron (need at least version 2026.02)
 
@@ -74,7 +90,7 @@ Just like R, there are two Mac installations: Apple Silicon (new) and Intel (old
 
 ### Install or update Git (Windows)
 
-For ***Windows***, [go here to download the latest version of Git](https://git-scm.com/install/windows). Git asks a lot of questions during installation and you can choose all default options.
+For ***Windows***, [go here to download the latest version of Git](https://git-scm.com/install/windows). Git asks a lot of questions during installation – the default options are fine.
 
 ### Install or update Git (Mac)
 
@@ -92,13 +108,15 @@ To install Git on a Mac:
 
     -   Be patient -- it takes time to install!
 
--   When Homebrew is finished installing, install ***Git*** by typing in the ***Terminal*** (@fig-ConsoleTerminal):
+-   When Homebrew is finished installing, install ***Git*** by typing in the ***Terminal***
+
+    -   You can use the Mac Terminal or the Terminal in Positron (@fig-ConsoleTerminal):
 
 ``` bash
 brew install git 
 ```
 
--   And then install the credential manager by typing in the Terminal:
+-   And then install the credential manager by typing in the ***Terminal***:
 
 ``` bash
 brew install --cask git_crendential_manager
@@ -106,7 +124,7 @@ brew install --cask git_crendential_manager
 
 ## Console and Terminal tabs
 
-We are going to use both the ***Console*** and ***Terminal*** tabs inside Positron to execute commands. The Console tab runs programming langauges commands (in this case, R) and the Terminal runs operating system commands. The Terminal tab is linked to Command Prompt (Windows) or Terminal (Mac/Linux).
+We are going to use both the ***Console*** and ***Terminal*** tabs inside Positron to execute commands. The Console tab runs programming language commands (in this case, R) and the Terminal runs operating system commands. The Terminal tab is linked to Command Prompt (Windows) or Terminal (Mac/Linux).
 
 ![Console and Terminal tabs in Positron](images/R_1-01_ConsoleTerminal.png){#fig-ConsoleTerminal .fs}
 
@@ -160,7 +178,7 @@ Testing the git configuration using the RStudio Terminal tab
 
  
 
-Type the following in the Console and press enter:
+Type the following in the Console and press ***enter***:
 
 ``` r
 install.packages("ggplot2")
@@ -178,11 +196,11 @@ install.packages("ggplot2")
 
 ## Positron and Project Folders
 
-Most of the work you will do in R involves multiple scripts, data files, and probably other file types.  All these files together make up your project and they should exist within a self-contained ***Project Folder***, which is a folder that contains all the files and subfolders for your project. It is this Project Folder that will be uploaded to GitHub.
+Most of the work you will do in R involves multiple scripts, data files, and probably other file types.  All these files together make up your project and they should exist within a self-contained [Project Folder]{.hl}, which is a folder that contains all the files and subfolders for your project. It is the Project Folder that gets uploaded to GitHub.
 
 ### Create a new Project Folder
 
-Create a new folder in any location on your computer and name the folder something appropriate (in this case, I named it ***My_Project***).
+Create a new folder in any location on your computer and name the folder something appropriate (I named it ***My_Project***).
 
  
 
@@ -198,11 +216,11 @@ To open the new folder as a Project Folder in Positron:
 
 [Note: you can also use the Positron interface to create a new folder (***New -\> New Folder from Template...***), but, for now, there is no advantage to it.]{.note}
 
-![Opening a new project folder in Positron](images/R-1-01_NewProjectFolder.png){#fig-newProjFolder .fs}
+![Opening a new project folder in Positron -- this view is the Explorer tab](images/R-1-01_NewProjectFolder.png){#fig-newProjFolder .fs}
 
 ### Isolating a project
 
-When you click **Open** in Positron, you can choose **Open File…** or **Open Folder…**. Most of the time, [you should open a folder first]{.hl} and then open your script from inside the folder. Positron treats that folder as a container for all of your work, creating a self-contained space where your scripts, data, and output live together. This makes it easier for files to find each other (e.g., when a script reads a data file) and helps ensure that new files are saved in the right place. Keeping your work isolated in one folder also makes it much easier to share the project on GitHub.
+When you click **Open** in Positron, you can choose **Open File…** or **Open Folder…**. Most of the time, [you should open a folder first]{.hl} and then open your script from inside the folder. Positron treats that folder as a container for all of your work, creating a self-contained space where your scripts, data, and other files reside. This makes it easier for files to find each other (e.g., when a script reads a data file) and helps ensure that new files are saved in the right place. Keeping your work isolated to one folder (and its subfolders) makes it much easier to share the project on GitHub.
 
  
 
@@ -210,17 +228,17 @@ For those who have worked in R before, Positron also sets this folder as the ***
 
 ### Add subfolders
 
-The Positron Explorer tab is a File Manager and allows you to do most of the things that you can do in your operating systems File Manager (called **File Explorer** in Windows and **Finder** in Mac). The ***Explorer*** tab can be used to open, add, remove, rename files and folders, and drag-and-drop files.
+The Positron ***Explorer*** tab is a File Manager and allows you to do most of the things that you can do in your operating systems File Manager (called **File Explorer** in Windows and **Finder** in Mac). The ***Explorer*** tab can be used to open, add, remove, rename files and folders, and drag-and-drop files.
 
  
 
-We will use the ***Files*** tab in RStudio (bottom-right tab) to create two subfolders: ***scripts*** and ***data***.
+We will use the ***Explorer*** tab in Positron (top-left tab) to create two subfolders: ***scripts*** and ***data***.
 
  
 
 To add two folders named ***scripts*** and ***data***:
 
--   Click on ***New Folder*** icon next to the Project Folder name
+-   Click on ***New Folder*** icon next to the Project Folder name (highlighted in @fig-newFolders)
 
     -   note: you can also right-click inside the area and choose ***New Folder...***
 
@@ -234,7 +252,7 @@ To add two folders named ***scripts*** and ***data***:
 
 ### Add files to the project
 
-We are going to download two files and add them to your Project Folder.
+Now we will download two files and add them to your Project Folder.
 
 -   [Setup.r](../scripts/Setup.R): put this file in your ***scripts*** directory
 
@@ -244,9 +262,9 @@ You can either put the files in the directories using your File Explorer or you 
 
 ![Drag and drop a file into your project folder](images/R-1-01_Drag_Drop.png){#fig-drag_drop .fs}
 
-### File extensions and Hidden files
+### File extensions and hidden files
 
-By default, the ***Explorer*** tab in Positron shows file extensions and most hidden files. You can also do this in your operating system: [Extension: Viewing file extensions and hidden files]
+By default, the ***Explorer*** tab in Positron shows file extensions and most hidden files. Windows and Mac File Explorers do not do this by default – you can change that behavior here: [Extension: Viewing file extensions and hidden files]
 
 ## Positron Basics
 
@@ -262,7 +280,7 @@ We are executing the script to test your setup and help you become familiar with
 
 ### Open your Project folder in Positron
 
-Position does remember the last opened Project Folder, but let's start from scratch and close the project folder by clicking ***File -\> Close Folder***. Now we have a clean Positron window without anything open.
+Position remembers the last opened Project Folder, but let's start from scratch and close the project folder by clicking ***File -\> Close Folder***. Now we have a clean Positron window without anything open.
 
  
 
@@ -270,9 +288,9 @@ There are multiple ways to open a Project Folder in Positron -- three of them ar
 
 -   In Positron, click ***Open*** -\> ***Open Folder...*** -\> navigate to the Project Folder and click ***Select Folder***
 
-    -   It is likely that the folder is already in the recently opened list
+    -   It is likely that the folder is already in the recently opened list (circled in @fig-open_proj_folder)
 
--   In Positron, click the folder icon in the upper-right corner and click Open Folder, or choose a Project Folder that has recently been opened (highlighted in @fig-open_proj_folder)
+-   In Positron, click the folder icon in the upper-right corner and click ***Open Folder***, or choose a Project Folder that has recently been opened (highlighted in @fig-open_proj_folder)
 
 -   You can drag and drop a folder into Positron
 
@@ -284,11 +302,11 @@ To open the script file, in the Explorer tab navigate to the ***script*** folder
 
  
 
-To execute the script, click on the right arrow. This will execute your entire script (***Source***).
+To execute or the entire script, or [Source]{.hl}, click on the right arrow.
 
  
 
-After the script is run:
+After the script is sourced:
 
 -   The **Console** tab displays information about the execution of the script.
 
@@ -314,19 +332,17 @@ We are going to save you project folder on GitHub so that it can be shared with 
 
 Steps 4-9 are only needed the first time you publish a project to GitHub on a computer because GitHub needs to authenticate your computer and your ID.
 
- 
-
-To upload your project to GitHub:
+### Upload your project to GitHub
 
 **In Positron** (@fig-sourceControl)
 
-1.  make sure everything is saved
+1.  Make sure everything is saved
 
-2.  click on the ***Source Control*** button on the left-vertical bar in Positron (circled in @fig-sourceControl)
+2.  Click on the ***Source Control*** button on the left-vertical bar in Positron (circled in @fig-sourceControl)
 
-3.  click ***Publish to GitHub***
+3.  Click ***Publish to GitHub***
 
-4.  click ***Allow*** so that the extension can sign in to GitHub
+4.  Click ***Allow*** so that the extension can sign in to GitHub
 
 5.  You will get a code to use on GitHub, click ***Copy & Continue to GitHub***
 
@@ -346,7 +362,7 @@ To upload your project to GitHub:
 
 **Back in Positron** (@fig-publish):
 
-10. In the top text box, choose to publish the project publicly or privately and click ***enter***
+10. In the top text box, choose to publish the project publicly or privately (for this class it does not matter) and click ***enter***
 
 11. Make sure all files are selected (default) and click ***OK***
 
@@ -358,7 +374,7 @@ To upload your project to GitHub:
 
 ## View project on GitHub
 
-You project folder is now on GitHub in a repository. Let's go to your GitHub account to verify that the project files are there (@fig-GitHubPostPublish):
+Your project folder is now on GitHub in a repository. Let's go to your GitHub account to verify that the project files are there (@fig-GitHubPostPublish):
 
 1.  Log in to GitHub
 
@@ -386,7 +402,7 @@ To invite a user (or, as GitHub calls them, ***collaborator***) to your reposito
 
 3.  Click ***Add people***
 
-4.  In Find people textbox, you can use either the person's GitHub ID or their email
+4.  In ***Find people*** textbox, you can use either the person's GitHub ID or their email
 
     -   invite your instructor: {{< var instructor.email >}}
 
@@ -402,11 +418,11 @@ This process is easier if the ***Explorer*** tab is open (e.g., @fig-drag_drop)
 
 2.  Copy and paste this lesson's script, ***Setup.r***, to the new script.
 
-3.  Change the colors in the boxplot (edit lines 16-19)
+3.  Change the colors in the boxplot (lines 16-19)
 
     -   Here is a [comprehensive list of color names](images/rcolornames.pdf) you can use in R
 
-4.  Save the script as ***app01.r***, and to your ***script*** folder
+4.  Save the script to your ***script*** folder as ***app01.r***
 
  
 
