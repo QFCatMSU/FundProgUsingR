@@ -76,9 +76,9 @@ short: "2-05b"
 
 ## Script and data for this lesson
 
-The script for this lesson [can be downloaded here](../scripts/2-05_WhichAndRegularExpressions_new.R)
+The script for this lesson [can be downloaded here](../scripts/2-05b_RegularExpressions.R)
 
-The data for this lesson [can be downloaded here](../data/Lansing2016Noaa-3.csv)
+The data for this lesson [can be downloaded here](../data/filenames.csv)
 
 Regex cheat sheet (very useful):
 
@@ -88,326 +88,137 @@ Regex cheat sheet (very useful):
 
 ## What is Regex
 
--   \<what regex can do\>
+In the last lesson, we used Regular Expressions (RegEx) to find substrings within a string. However, the real power of RegEx is that it allows you to identify complex patterns, letting you search based on how a string is structured rather than the exact text it contains.
 
  
 
- 
+The data file for this lesson a made up list of filenames. Let's save the filenames column to a vector:
+
+``` r
+file_names = read.csv(file="data/filenames.csv")[[1]];
+```
 
 ## Finding substrings within strings
 
-The simplest regex example is to find which strings have a substring in it. We did a few examples of this is the last lesson. Let's take a look at the dataset for this lesson, which has over 45000 baby names.
-
- 
-
-We will store the data in babyNameData:
+Just like last lesson, we can find values that contain a specific string. Let's look for names that contain "reading":
 
 ``` r
-babyNameData = read.csv(file="data/Popular_Baby_Names.csv");
+reading = read.csv(file="data/Popular_Baby_Names.csv");
 ```
 
- 
-
-And looking, at the head(), we see the column with the names is called Name:
-
-``` {.r tab="Console"}
-> head(babyNameData)
-  Year.of.Birth Gender Ethnicity      Name Count Rank
-1          2011 FEMALE  HISPANIC GERALDINE    13   75
-2          2011 FEMALE  HISPANIC       GIA    21   67
-3          2011 FEMALE  HISPANIC    GIANNA    49   42
-4          2011 FEMALE  HISPANIC   GISELLE    38   51
-5          2011 FEMALE  HISPANIC     GRACE    36   53
-6          2011 FEMALE  HISPANIC GUADALUPE    26   62
-```
-
-Let's find which of the names have "Liz" or "Beth" is in:
+reading has 12 value, so there are 12 filenames with the substring reading in them. We can view the 12 filenames
 
 ``` r
-has_Beth = grep("beth", babyNameData$Name, ignore.case=TRUE);
-has_Liz = grep("liz", babyNameData$Name, ignore.case=TRUE);
+reading_names = file_names[reading]
 ```
 
-In the ***Environment***, we see that 121 names have the substring "beth" and 191 that have the substring "liz". We can now extract the names that contain the substrings:
+``` {.r tab="Console"}
+> reading_names
+ [1] "sensor_x103_reading_2019-05-22.dat"        
+ [2] "sensor_z13_reading_20210711(obs).dat"      
+ [3] "sensor_x11_reading_20191130.dat"           
+ [4] "sensor_x13_reading_20200808(obs).dat"      
+ [5] "sensor_z12_reading_20211225.dat"           
+ [6] "sensor_y13_reading_20220917(obs).dat"      
+ [7] "sensor_z10_reading_20181111!.dat"          
+ [8] "sensor_z11_data_reading_final_20210922.dat"
+ [9] "sensor_y10_reading_20220716.dat"           
+[10] "sensor_x142_data_reading_20211212.dat"     
+[11] "sensor_y14_reading_20211230(obs).dat"      
+[12] "sensor_z145_reading_20210509.dat"   
+```
+
+### Multiple substrings
+
+We can look for multiple substrings using the OR ( \| ) operator. The following code will look for any filename that has the substring "reading" or "status":
 
 ``` r
-beth_name =  babyNameData$Name[has_Beth];
-liz_name =  babyNameData$Name[has_Liz];
+reading_status = grep(file_names, pattern="reading|status")
+reading_status_names = file_names[reading_status]
 ```
 
-And we get a vector of the same size with the names:
+There are now 19 values, meaning that 7 file names had "status" as a substring.
 
-``` {.r tab="Environment"}
-beth_name: chr [1:121] "LIZBETH" "ELIZABETH" "ELIZABETH" ... 
-liz_name:  chr [1:191] "LIZBETH" "ALIZA" "ELIZ" ...
-```
-
-We can also find the unique name using ***unique()***:
-
-``` {.r tab="Console"}
-> unique(beth_name)
-[1] "LIZBETH"   "ELIZABETH" "Elizabeth" "Lizbeth"   "Bethany"  
-> unique(liz_name)
- [1] "LIZBETH"   "ALIZA"     "ELIZA"     "ELIZABETH" "LIZ"       "Elizabeth" "Eliza"     "Aliza"    
- [9] "Lizbeth"   "Lizeth"  
-```
-
-If we want a vector that maintains all the values and has information about the unique values, we can use ***factor()***. The ***levels*** are the unique values
-
-``` {.r tab="Console"}
-> factor(liz_name)
-  [1] LIZBETH   ALIZA     ELIZA     ELIZABETH ELIZABETH ELIZABETH ELIZABETH ELIZABETH ELIZABETH
- [10] LIZBETH   ALIZA     ELIZA     ELIZABETH ELIZABETH ELIZABETH ELIZABETH LIZ       LIZBETH  
- ... 
-[190] Aliza     Elizabeth
-Levels: Aliza ALIZA Eliza ELIZA Elizabeth ELIZABETH LIZ Lizbeth LIZBETH Lizeth
-```
-
-### Advantages of factors
-
--   used in stat functions \<give some\>
-
--   more efficient than vectors
-
-    -   vectors stored as numbers
-
- 
-
-## Start and End of string
+## Starts and ends with
 
 Finding substrings within a string is the most basic thing RegEx can do. We are going to step up in difficulty and check for something at the beginning and the end of a string. In RegEx, ( \^ ) indicates the beginning of a string and ( \$ ) indicates the end of a string.
 
-So, to say "starts with liz" or "starts with beth", we add \^ at the beginning:
+ 
+
+So, to say "starts with plot" as opposed to "contains plot", we put \^ at the beginning to indicate that the string needs to begin with the pattern:
 
 ``` r
- ### Starts with
-start_liz = grep("^liz", babyNameData$Name, ignore.case=TRUE);
-start_beth = grep("^beth", babyNameData$Name, ignore.case=TRUE);
+start_station = grep(file_names, pattern="^station")
+start_station_names = file_names[start_station]
 ```
 
-And to say "ends with liz" or "ends with beth", we add \$ to the end
+And there is the equivalent end indicator ( \$ )
 
 ``` r
-### Ends with
-end_liz = grep("liz$", babyNameData$Name, ignore.case=TRUE);
-end_beth = grep("beth$", babyNameData$Name, ignore.case=TRUE);
+end_txt = grep("txt$", file_names)
+end_txt_names = file_names[end_txt]
 ```
 
-30 names start with liz, while only 1 starts with Beth(value 30473). 5 names end with Liz and 120 end with beth.
+### Both start and ends
 
-``` {.r tab="Environment"}
-start_liz:  int [1:30] 103 2967 4504 ...
-start_beth: 30473L
-end_liz:    int [1:5] 4504 9481 18429 ...
-end_beth:   int [1:120] 103 311 1008 ..
-```
-
-In the Console, let's look at the one names that start with beth and the 5 that end with liz:
+This is the first example where we are really using the pattern recnition features in RegEx. We cannot just combine the two examples above start_end_bad = grep(file_names, pattern="\^stationtxt\$")to find names that start with "station" and end with "txt".
 
 ``` r
-> babyNameData$Name[start_beth]
-[1] "Bethany"
-> babyNameData$Name[end_liz]
-[1] "LIZ" "LIZ" "LIZ" "LIZ" "LIZ"
+start_end_bad = grep(file_names, pattern="^stationtxt$")
 ```
 
-So, the only name in the whole dataset that starts with liz is.. liz
-
-## Special characters in RegEx
-
-We have introduction two special character in RegEx, or character that have a specific meaning in RegEx: \^ and \$. There are times when we need to to look through a string for a special character. For instance, we might want to find which of these string values contain a \^.
+This is because we need to describe what is in between station and txt. If we do not care what is in between, we can say in regex: any number of any charatcter .{0,}
 
 ``` r
-testVector = c("^aaa", "bbb", "ccc", "d^\\d", "e\\ee");
+start_end1 = grep(file_names, pattern="^station.{0,}txt$")
 ```
 
-We cannot directly put \^ in a string because \^ means "starts with" to RegEx. We want to tell Regex to ignore the meaning and treat is as an actual character, called [escaping]{.hl}. To do that we [escape]{.hl} the character with two backslashes:
+[note: .\* is a shortcut for .{0,} but believe it is important to understand what {0,} does, which we will cover in this lesson, before using the shortcuts.]{.note}
+
+If we want to find something in the middle, like "B3", we can say this:
 
 ``` r
-has_carrot = grep("\\^", testVector);
+start_end1 = grep(file_names, pattern="^station.{0,}B3.{0,}txt$")
 ```
 
-The two backslashes tell RegEx to ignore the meaning of (i.e., [escape]{.hl}) the \^ and treat it as a character. In the Environment, we see that string values 1 and 4 had carrots ( \^ ).
+BAsically, the patter says:
 
-``` {.r tab="Environment"}
-has_carrot:  int [1:2] 1 4
-```
+-    starts with "station
 
-Extension: escaping backslashes
+-   has any number of any character
 
-## Choosing from character set \[ \]
+-    has B3
 
-Up until now, we have looked for a exclusive pattern within a string. Regex allows you to look for a varying string by listing which permitted characters are allowed. For instance, we might want to look for multiple spellings of a name like Layla and Laila. To do that, we tell Regex that the third character can be a y or i using square brackets:
+-   has any number of characters
 
-``` r
-layla = grep("La[iy]la", babyNameData$Name, ignore.case=TRUE);
-layla_names = unique(babyNameData$Name[layla]);
-```
+-   ends with txt
 
-\<App: capture only Laila and Layla\>
+And only one filename meets this pattern:
 
-```         
-> layla_names
-[1] "LAILA"  "LAYLA"  "Layla"  "Laila"  "Lailah"
-```
+\< \>
 
-We can do multiple checks from a character set. This example will check if the second letter comes from the set a or e and if the third character comes from the set i or y
+## Handling special character
 
-``` r
-### Check twice for one character in many
-layla2 = grep("l[ae][iy]la", babyNameData$Name, ignore.case=TRUE);
-layla_name2 = unique(babyNameData$Name[layla2]);   ### act: get rid of Leilani
-```
-
-``` r
-layla_names2
-[1]  <show 5 names here>
-```
-
-\<app Q: beth, Beth, BETH\>
-
-### Choosing case
-
-We have been using ignore.case=TRUE because the names is the list are not consistent with case
-
-``` r
-### Do not allow for uppercase/lowercase (ignore.case=FALSE by default)
-layla3 = grep("La[iy]la", babyNameData$Name, ignore.case=FALSE);
-layla3_names = unique(babyNameData$Name[layla3]);
-```
-
-And we lose the 2 names in all-caps
-
-``` r
-> layla3_names
-[1] "Layla"  "Laila"  "Lailah"
-```
-
-If we want those names back without using `ignore.case`, then we case put the variations in square brackets:
-
-``` r
-layla4 = grep("L[aA][iIyY][lL][aA]", babyNameData$Name, ignore.case=FALSE);
-layla4_names = unique(babyNameData$Name[layla4]);
-```
-
-And we have the original results
-
-``` r
-> layla4_names
-[1] "LAILA"  "LAYLA"  "Layla"  "Laila"  "Lailah"
-```
-
-### Check for any more letters
-
-When using a square bracket, RegEx will allow for any character within the bracket. We can look for names that begin with 4 vowels \[aeiou\]:
-
-``` r
-### Looking through larger groups of characters:
-fourVowelStart2 = grep("^[aeiouy][aeiouy][aeiouy][aeiouy]", babyNameData$Name, ignore.case=TRUE);
-fourVowelStart2_names = babyNameData$Name[fourVowelStart]
-```
-
-``` r
-> fourVowelStart_names
-[1] "AYAAN" "AYAAN" "AAYAN" "AYAAN" "Aayan" "AYAAN" "Aayan" "Ayaan" "AAYAN" "Ayaan"
-[11] "Ayaan" "Aayan" "Ayaan" "AYAAN" "AAYAN" "AYAAN" "Aayan" "Ayaan" "Aayan" "Ayaan"
-[21] "Ayaan" "Aayan" "AYAAN" "AAYAN" "AYAAN" "Ayaan" "Aayan" "Aayan" "Ayaan" "Aayan"
-[31] "Ayaan" "Aayan" "Ayaan" "Ayaan" "Aayan" "AYAAN" "AAYAN" "AYAAN" "Aayan" "Ayaan"
-[41] "Aayan" "Ayaan" "Ayaan" "Aayan" "Aayat"
-```
-
-## Repeating previous command {X,Y}
-
-In the last example we did the same thing four times in a row, instead of repeating \[aeiouy\] 4 times, we can use curly brackets to indicate we want to repeat the previous command 4 time:
-
-``` r
-### Looking through larger groups of characters:
-fourVowelStart2 = grep("^[aeiouy]{4}", babyNameData$Name, ignore.case=TRUE);
-fourVowelStart2_names = babyNameData$Name[fourVowelStart2]
-```
-
-And we get the same results as before:
-
-``` r
-> fourVowelStart2_names
-[1] "AYAAN" "AYAAN" "AAYAN" "AYAAN" "Aayan" "AYAAN" "Aayan" "Ayaan" "AAYAN" "Ayaan"
-[11] "Ayaan" "Aayan" "Ayaan" "AYAAN" "AAYAN" "AYAAN" "Aayan" "Ayaan" "Aayan" "Ayaan"
-[21] "Ayaan" "Aayan" "AYAAN" "AAYAN" "AYAAN" "Ayaan" "Aayan" "Aayan" "Ayaan" "Aayan"
-[31] "Ayaan" "Aayan" "Ayaan" "Ayaan" "Aayan" "AYAAN" "AAYAN" "AYAAN" "Aayan" "Ayaan"
-[41] "Aayan" "Ayaan" "Ayaan" "Aayan" "Aayat"
-```
-
-## Range of characters
-
-Let's say we only want to only names that are in uppercase. We can use the range \[A-Z\] to indication that we will accept any uppercase letter from A to Z. [note: this means - is a special character]{.note}
+REgex uses special characters to define patterns. Spercial character are characters that have meaning beyond the character itself. The special characters used in the previous section we3re \^, \$, ., {, and }. We are going to focus on the first three.
 
  
 
-Let's look for any name in uppercase that is 11 characters long \<App Q: why \^ and \$?\>
+If you want to find these checracters within a string then you have to tell RegEx that you actually want the character,not the special feature of the character. To do this we [escape ]{.hl}the special character by putting two backslashes if front of it
+
+If we want to find any filename that has a \^ in it:
 
 ``` r
-longNames = grep("^[A-Z]{11}$", babyNameData$Name);
-cat(c("11 character names:", unique(babyNameData$Name[longNames])));
+has_caret = grep(file_names, pattern="\^$") 
+has_caret_names = grep(file_names, pattern="\^")
 ```
 
-``` {.r tab="Console"}
-11 character names: CHRISTOPHER MAXIMILIANO
-```
+## Range of charcatres
 
-If we want all uppercase and lowercase, we can add to the range:
+\<have\>
 
-``` r
-longNames2 = grep("^[A-Za-z]{11}$", babyNameData$Name);
-cat(c("11 character names:", unique(babyNameData$Name[longNames2])));
-```
+## Repeating chracters
 
-{x}: repeat x times
-
-{x,}: repeats a min of X times
-
-{x,y}: repeats between x and y timesnote: {,y} does not work
-
-### Any letter/number/character
-
-\[A-Za-z\]
-
-\[0-9\]
-
-.
-
- 
-
- 
-
- 
-
-### Ranges/ combined ranges
-
-\[a-e0-3\]
-
- 
-
- 
-
- 
-
-## Groupings
-
-(l){1,3} == l{1,3} \<assumed parenthesis\>
-
-(li){2}
-
- 
-
-### Shortcuts
-
-?: {0,1}
-
-\*: {0,}
-
-+: {1,}
-
- 
+\<8 numbers in a row
 
 ## Regex only see characters
 

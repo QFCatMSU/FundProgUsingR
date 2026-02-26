@@ -7,38 +7,47 @@ rm(list=ls());
 
 file_names = read.csv(file="data/filenames.csv")[[1]];
 
-#### Subsets
-station = grep("station", file_names)
-station_names = file_names[station]
+#### 1)Substrings
+reading = grep(file_names, pattern="reading")
+reading_names = file_names[reading]
 
-year_2023 = grep("2023", file_names)
-year_2023_names = file_names[year_2023]
+reading_status = grep(file_names, pattern="reading|status")
+reading_status_names = file_names[reading_status]
 
-#### Starts and Ends with
-start_backup = grep("^backup", file_names)  # other names with backup elsewhere
-start_backup_names = file_names[start_backup]
+#### 2) Starts and Ends with
+start_backup = grep(file_names, pattern="^backup")  # other names with backup elsewhere
+start_blackup_names = file_names[start_backup]
 
 end_txt = grep("txt$", file_names)   
 end_txt_names = file_names[end_txt]
 
-#### Special character ^, $, .
-has_caret = grep("\\^old", file_names)  
-has_caret_names = file_names[has_caret]
 
-has_dollar = grep("_\\$Q", file_names)
-has_dollar_names = file_names[has_dollar]
+#### 3) Combine start and end
+start_end_bad = grep(file_names, pattern="^stationtxt$") # will find nothing
 
-# dot is also a special character (should not be used much as it's too expansive ...  better options in a bit)
-dot = grep(".plot", file_names)
-dot_names = file_names[dot]
 
-dot2 = grep("\\.plot", file_names)
-dot2_names = file_names[dot2]
+start_end1 = grep(file_names, pattern="^station.{0,}txt$") 
+start_end2 = grep(file_names, pattern="^station.{0,}B3.{0,}txt$") 
+
+
+#### 3) Special character ^, $, .
+has_caret = grep(file_names, pattern="\\^$") 
+has_caret_names = grep(file_names, pattern="\\^") 
+
+dot_dat = grep(file_names, pattern=".dat") 
+has_dot_dat = file_names[dot_dat] 
+
+dot_dat2 = grep(file_names, pattern="\\.dat") 
+has_dot_dat2 = file_names[dot_dat] 
+
+#### 5) Finding a range of characters
+year_2016_2019 = grep(file_names, pattern="201[6-9]") 
+has_dot_dat = file_names[dot_dat] 
 
 ### List all special characters and their meanings
 #   note that not all special characters are special all the time
 
-### Choose from characters 
+### 4) Choose from characters 
 # any number (note: this means that dash is also a special character)
 numbers = grep("00[0-9]", file_names);  # could be reduced to [1-4]
 number_names = file_names[numbers]
@@ -47,11 +56,23 @@ number_names = file_names[numbers]
 cap_letter = grep("^image_[A-Z][A-Z]", file_names)
 cap_letter_names = file_names[cap_letter]
 
+# Some of:
 # any letter
-
 # any character
+# any number
 # some upper or lowercase
 # KDEN/KSEA 
+
+# 5) Repeat X to Y times
+# a number up to X times
+# a number exactly X times
+# any number X to Y times
+
+
+# 6) Group and Repeat
+# Use new vector here!
+
+
 
 babyNameData = read.csv(file="data/Popular_Baby_Names.csv");
 babyNames = babyNameData$Name;
