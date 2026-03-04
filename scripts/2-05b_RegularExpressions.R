@@ -47,7 +47,7 @@ has_dot_dat2 = file_names[dot_dat]
 
 #### 5) Finding a range of characters
 year_2016_2019a = grep(file_names, pattern="201[6789]") 
-year_2016_2019b = grep(file_names, pattern="201[9786]") 
+year_2016_2019b = grep(file_names, pattern="201[7986]") 
 year_2016_2019c = grep(file_names, pattern="201[6-9]") 
 
 has_year_2016_2019 = file_names[year_2016_2019a]
