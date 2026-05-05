@@ -5292,5 +5292,293 @@
       "Part 1: Basic Programming",
       "1-05: Functions Introduction"
     ]
+  },
+  {
+    "objectID": "lessons-new/1-06_Source_and_Execute.html",
+    "href": "lessons-new/1-06_Source_and_Execute.html",
+    "title": "1-06: Source and Execute",
+    "section": "",
+    "text": "Add shortcut to Source without Echo\nGo through Source with/without Echo, Execute (Run)",
+    "crumbs": [
+      "<b>Fundamentals of Programming class (new)</b>",
+      "Part 1: Basic Programming",
+      "1-06: Source and Execute"
+    ]
+  },
+  {
+    "objectID": "lessons-new/1-06_Source_and_Execute.html#purpose",
+    "href": "lessons-new/1-06_Source_and_Execute.html#purpose",
+    "title": "1-06: Source and Execute",
+    "section": "1 Purpose",
+    "text": "1 Purpose\n\nlook at some of the features of R and Positron\nexplore uses for the Console\nrun script using Execute and Source\n\n\n1.1 Files for the lesson\nThe script for the lesson is here\nThe data for this lesson is here\n \nWe are using the same script for this and the next lesson. In this lesson the focus is on the different ways to execute your code and other features in Positron.  In the next lesson the focus will be more on the content of the lesson’s script.\n \nIf you have any questions about the material in this lesson, feel free to email them to the instructor, Charlie Belinsky, at belinsky@msu.edu.",
+    "crumbs": [
+      "<b>Fundamentals of Programming class (new)</b>",
+      "Part 1: Basic Programming",
+      "1-06: Source and Execute"
+    ]
+  },
+  {
+    "objectID": "lessons-new/1-06_Source_and_Execute.html#output-to-console",
+    "href": "lessons-new/1-06_Source_and_Execute.html#output-to-console",
+    "title": "1-06: Source and Execute",
+    "section": "2 Output to console",
+    "text": "2 Output to console\nIn this and the next lesson we are going to make extensive use of the Console tab, which can be used to execute code and as output for your script file.  Like the Variables tab, it is difficult to maintain lesson images so I will use text instead.\n \nFor example (the details will be explained later):\n\nopen the script for this lesson in your Project Folder\nclick on line 4 (i.e., put the cursor on line 4)\nclick Control-Enter (Command-Enter on Mac) to execute line 4\n\n \nThe Positron window looks like this:\n\n\n\n\n\n\nFigure 1: Output to the Console tab after executing line 6\n\n\n\n \nInstead of displaying the Positron image, I will display the output to the Console tab like this:\n\n\n\n&gt; cat(\"Hello\"); \nHello\n&gt;\n\n\nFigure 2: Output to the Console tab after executing line 4",
+    "crumbs": [
+      "<b>Fundamentals of Programming class (new)</b>",
+      "Part 1: Basic Programming",
+      "1-06: Source and Execute"
+    ]
+  },
+  {
+    "objectID": "lessons-new/1-06_Source_and_Execute.html#execute-vs.-source",
+    "href": "lessons-new/1-06_Source_and_Execute.html#execute-vs.-source",
+    "title": "1-06: Source and Execute",
+    "section": "5 Execute vs. Source",
+    "text": "5 Execute vs. Source\nSource is used to execute the entire script (i.e., every command) while the Execute Code command (Control/Command-Enter) is used to selectively run commands.  Execute is a great tool for debugging and testing your code and we are going to almost exclusively use Execute for the next two lessons.\n \nYou can also Execute code by clicking the drop down arrow next to the Source button and choosing Execute Code (Figure 5) . Note: Execute is almost equivalent to Run In RStudio.\n \nIt is important to learn how to run individual commands but your goal with most scripts is still to be able to execute the whole file using Source.  It takes longer to develop a script that can be cleanly Source but it forces you to automate your script which makes your script easier to debug and share.\n\n5.1 Executing one line\nnote: Execute, from now on, mean you either click Control/Command+Enter or click Execute Code\n \nWe already have an example of using Execute to run one line in Figure 2.  When we put the cursor on line 4 and Execute, R runs the cat() command on line 4.  We will talk much more about cat() next lesson but cat() outputs to the Console whatever is in the parentheses.\n \nActually, Execute will execute the next line with a command. If you put your cursor on line 2 or 3 and Execute, line 4 will still run because line 2 has nothing and 3 is a comment that R ignores. R looks for the next command (on line 4) and executes it.\n\n\n\n&gt;   cat(\"Hello\");             \nHello            \n&gt;\n\n\nFigure 6: The Console after Execute is clicked on line 3\n\n\n\n\n\n5.2 Executing one command on multiple lines\nLines 15-17 contain the command to open the twoWeekWeatherData.csv file and save the data to a data frame named weatherData.\n  ### read in data from  twoWeekWeatherData.csv   \n  weatherData = read.csv(file=\"data/twoWeekWeatherData.csv\",                           \n                         sep=\",\",                          \n                         header=TRUE);\nWhen you Execute, R will either run the entire line or, if the line is part of a larger command, will run the whole command. Lines 15-17 is one command over 3 lines. If we put the cursor on any line from 15-17 and Execute, R will run the whole command.\n \nAfter Execute, the Console shows lines 15-17 were executed – the ( + ) at the beginning of the lines in the Console says that this line is a continuation of the command from the previous line.\n\n\n\n&gt; weatherData = read.csv(file=\"data/twoWeekWeatherData.csv\",  \n«+»                        sep=\",\", \n«+»                        header=TRUE);\n&gt;\n\n\nFigure 7: Console output when executing the multi-line command to open the csv file\n\n\n\nExecuting lines 15-17 means that you have a new variable named weatherData and this variable is put in Variables:\n\n\n\nweatherData   [14 rows x 5 columns] &lt;data.frame&gt;\n\n\nFigure 8: The Variables tab after the read.csv() command was executed\n\n\n\n\n\n5.3 Executing multiple commands on one line\nYou can put as many commands as you want on one line as long as there are semicolons between them.\n \nThe following line has three commands that\n\ncreate two variables (a and b)\noutput the addition of them to the Console. \n\na=3; b=7; cat(\"a+b=\", a+b);\nExecute that line will run all 3 commands: a and b are added to Variables:\na:   3\nb:   7\nAnd the addition of a and b is displayed in the Console:\n&gt;   a=3; b=7; cat(\"a+b=\", a+b);\na+b= 10\n&gt;\nnote: removing the semicolons from that line means R will try to see the line as one command and that will cause an error.\n\n\n5.4 Executing highlighted script\nYou can also highlight parts of your script and Execute will run exactly what is highlighted.\n \nIf you completely highlight lines 10, 11, and 12:\n  cat(\"Hello, World.\\n\");\n  cat(\"How are you?\\n\");\n  cat(\"I am fine?\\n\");\nand Execute, the output to the Console is:\n\n\n\n&gt; cat(\"Hello, World.\\n\");\n+ cat(\"How are you?\\n\");\n+ cat(\"I am fine?\\n\");\nHello, World.\nHow are you?\nI am fine?\n&gt;\n\n\nFigure 9: Three commands sent to Console\n\n\n\n\n\n5.5 Erroneous highlight and Execute\nWhen you highlight code and Execute, R tries to run the exact code you highlighted. If you make a mistake and, for instance, highlight just a part of line 6 and click Execute .\n### Multiple commands on one line\n«a=3; b»=7; cat(\"a+b=\", a+b);\nR will either give you an error (in this case, the variable b not exist):\n&gt; «a=3; b»\nError:\n! object 'b' not found\n&gt;\nOr, R will put the code into the Console, but not run it. This is the equivalent of you typing in code in the Console and not clicking enter. For instance, if you accidentally highlight a bit of line 9 along with lines 10-12 (since the ### was not highlighted, R does not understand the highlighted text is part of a comment:\n  ### Outputting multiple text messages «(\\n means go to next line)»\n  «cat(\"Hello, World.\\n\");»\n  «cat(\"How are you?\\n\");»\n  «cat(\"I am fine?\\n\");»\nThen in the Console you will get this:\n(\\n means go to next line)                    \ncat(\"Hello, World.\\n\");\ncat(\"How are you?\\n\"); \ncat(\"I am fine?\\n\");\nThe thing to notice here is that the bottom line is not:\n&gt;\nThis means that R has not ran the command yet – it is looking for more input from the user. This is a very similar situation to when you type cat(\"He in the Console.\n\n\n5.6 Cleaning the Console\nThe above situation is awkward and usually you just want the clear the Console so that you have a &gt; prompt again. The easiest way to do this is to press Control+C (Mac: Command+C). This will remove the last entry in the Console and make the last line:\n&gt;\nOccasionally, you need to do something more aggressive. In these case you Delete the Session by clicking the garbage. This closes R and prompts you to start a new session, which you will need to do before running any more code.\n\n\n\nDelete Console Session",
+    "crumbs": [
+      "<b>Fundamentals of Programming class (new)</b>",
+      "Part 1: Basic Programming",
+      "1-06: Source and Execute"
+    ]
+  },
+  {
+    "objectID": "lessons-new/1-06_Source_and_Execute.html#entering-commands-directly-into-console",
+    "href": "lessons-new/1-06_Source_and_Execute.html#entering-commands-directly-into-console",
+    "title": "1-06: Source and Execute",
+    "section": "4 Entering commands directly into Console",
+    "text": "4 Entering commands directly into Console\nYou can directly type commands in the Console . For instance, you can type the code to Source your script without echo (just the highlighted line and press enter):\n&gt; «source(\"scripts/1-06_RunAndSource.R\")»\nHelloa+b= 10Hello, World.\nHow are you?\nI am fine?\n&gt;\nnote: this file path is relative to the Project Folder (i.e., Working Directory) and assumes you put the lesson script in the scripts folder and did not change its name.\n \nYou can type in a simple output command in Console:\n&gt; «cat(\"Hello\")»\nHello\n&gt;\nA common issue for people using the Console is that they will not complete commands.  For example, type cat(\"He in the Console and press enter:\n&gt; «cat(\"He»\n+\nA ( + ) appears on the next line.  The ( + ) means that R sees an unfinished command and is prompting you to finish it.  You can finish it by typing llo\") in the Console. The result will still be a bit off:\n&gt; cat(\"He \n+«llo\")» \nHe \nllo\n&gt;\n\n4.1 Quick view of variables\nAnother use for the Console is to quickly view some value.  If you want to see the highTemp column in weatherData you can type in the Console (this only work if you have already Sourced the script):\n&gt; «weatherData$highTemp»\n[1] 57 50 54 40 39 58 60 53 55 44 39 54 61 75\n&gt;\nNote: after you type $ in weatherData$, Positron will start offering you column suggestions – a very convenient feature when you have large dataframes.",
+    "crumbs": [
+      "<b>Fundamentals of Programming class (new)</b>",
+      "Part 1: Basic Programming",
+      "1-06: Source and Execute"
+    ]
+  },
+  {
+    "objectID": "lessons-new/1-06_Source_and_Execute.html#duplicating-lines-of-code",
+    "href": "lessons-new/1-06_Source_and_Execute.html#duplicating-lines-of-code",
+    "title": "1-06: Source and Execute",
+    "section": "6 Duplicating lines of code",
+    "text": "6 Duplicating lines of code\nQuite often in programming, you are producing multiple lines that are very similar.  For instance, you might have multiple lines that start with a cat() command.  In Positron you can duplicate a line by putting your cursor on the line and clicking Shift+Alt+DownArrow (Windows) or Shift+Option+DownArrow (Mac).\n \nIf you click Shift+Alt/Option+DownArrow on line 12, you will get:\n\n\n\n  ### Outputting multiple text messages\n  cat(\"Hello, World.\");\n  cat(\"How are you?\");\n  cat(\"I am fine?\"); \n  «cat(\"I am fine?\");»\n\n\nFigure 10: Duplicating a line in Positron using Shift+Alt/Option+DownArrow\n\n\n\nnote: Shift+Alt/Option+UpArrow does something very similar… I’ll let you figure out what the difference is",
+    "crumbs": [
+      "<b>Fundamentals of Programming class (new)</b>",
+      "Part 1: Basic Programming",
+      "1-06: Source and Execute"
+    ]
+  },
+  {
+    "objectID": "lessons-new/1-06_Source_and_Execute.html#block-comments",
+    "href": "lessons-new/1-06_Source_and_Execute.html#block-comments",
+    "title": "1-06: Source and Execute",
+    "section": "7 Block Comments",
+    "text": "7 Block Comments\nOften when you are testing code you want to comment lines so they do not run.  In Positron you can comment a bunch of lines at once by highlighting the lines you want commented and clicking Control+/ on Windows and Command+/ on a Mac.\n \nIf you highlight lines 9-12 and press Control+/ (Mac: Command+/), a ( #) will appear at the beginning of each line:\n\n\n\n«#» ### Outputting multiple text messages\n«#» cat(\"Hello, World\");\n«#» cat(\"How are you?\");\n«#» cat(\"I am fine?\");\n\n\nFigure 11: Commenting multiple line by using Control+/ (Mac: Command+/)\n\n\n\nNote: A ( # ) is added to all highlighted lines – even those that were already commented like line 9\n\n7.1 Uncommenting a block\nIf all the lines highlighted already have a ( # ) then pressing Control/Command+/ will uncomment all the lines (i.e., remove a #).  Uncommenting only removed the first # – so if you uncomment the lines from Figure 11, then the lines will revert back to:\n\n\n\n### Outputting multiple text messages\ncat(\"Hello, World\");\ncat(\"How are you?\");\ncat(\"I am fine?\");\n\n\nFigure 12: Uncommenting lines – only 1 # is removed so the first line is still commented",
+    "crumbs": [
+      "<b>Fundamentals of Programming class (new)</b>",
+      "Part 1: Basic Programming",
+      "1-06: Source and Execute"
+    ]
+  },
+  {
+    "objectID": "lessons-new/1-06_Source_and_Execute.html#keyboard-shortcuts-in-rstudio",
+    "href": "lessons-new/1-06_Source_and_Execute.html#keyboard-shortcuts-in-rstudio",
+    "title": "1-06: Source and Execute",
+    "section": "7 Keyboard shortcuts in RStudio",
+    "text": "7 Keyboard shortcuts in RStudio\nControl/Command-Shift-C and Control/Command-Shift-D are the RStudio shortcuts I find the most useful. You can view all the keyboard shortcuts (and there are a lot) in RStudio by clicking Tools -&gt; Keyboard Shortcuts Help.",
+    "crumbs": [
+      "<b>Fundamentals of Programming class (new)</b>",
+      "Part 1: Basic Programming",
+      "1-06: Source and Execute"
+    ]
+  },
+  {
+    "objectID": "lessons-new/1-06_Source_and_Execute.html#breaking-up-long-lines-of-code",
+    "href": "lessons-new/1-06_Source_and_Execute.html#breaking-up-long-lines-of-code",
+    "title": "1-06: Source and Execute",
+    "section": "8 Breaking up long lines of code",
+    "text": "8 Breaking up long lines of code\nLine 15-17 is one command stretched over multiple lines. Just like a period ends a sentence, a semicolon designates the end of a command.  In this case, the read.csv() statement is coded over three line, so the semicolon goes at the end of the third line.  As a reminder, R does not enforce semicolon usage, but it is a good idea to put them in.\n \nWe could put the whole command on one line and it would execute exactly the same:\n  ### same command as above -- this is a little harder to read\n  weatherData2 = read.csv(file=\"data/twoWeekWeatherData.csv\", sep=\",\", header=TRUE); \nweatherData2 appears in Variables alongside weatherData, and it is exactly the same as weatherData:\nweatherData   [14 rows x 5 columns] &lt;data.frame&gt;\nweatherData2  [14 rows x 5 columns] &lt;data.frame&gt;\n\n8.1 Avoid horizontal scrolling (when possible)\nBut, it is easier to read the multiple-line code.  As a general rule, you should try to avoid horizontal scrolling of your script (anything beyond 90 characters) as this makes the script hard to read.\n \nIn R, you can break most lines of code into multiple lines with a few exceptions (one exception being long file-paths). You just need to be judicious about how you break up the line – the best places to break up a line of code are after a comma or where a space occurs.",
+    "crumbs": [
+      "<b>Fundamentals of Programming class (new)</b>",
+      "Part 1: Basic Programming",
+      "1-06: Source and Execute"
+    ]
+  },
+  {
+    "objectID": "lessons-new/1-06_Source_and_Execute.html#putting-margin-lines-in-your-script",
+    "href": "lessons-new/1-06_Source_and_Execute.html#putting-margin-lines-in-your-script",
+    "title": "1-06: Source and Execute",
+    "section": "9 Putting margin lines in your script",
+    "text": "9 Putting margin lines in your script\nThe generally accepted standard in R for the maximum number of characters in a line of code is 80.  This is not a hard-and-fast rule, but keeping your lines 85 characters or less makes it a lot easier to read your code especially on smaller monitors (e.g., laptops).  You can put a margin line at 85 characters in RStudio by clicking Tools -&gt; Global Options -&gt; Code. On the Display tab check Show margin and set Margin column to 85. One of the requirements of this class is that, when possible, you keep your script lines to 85 characters or less.\n\n\n\n\n\n\nFigure 12: setting a reminder line margin in RStudio\n\n\n\nNow you will see a grey vertical line at 85 characters (Figure 13) . The line is there as a guide – you can still type beyond this line. There are times when it is not possible to keep a line to 85 characters – the most common reason is a long file-path name because file-path names cannot be broken up.\n\n\n\n\n\n\nFigure 13: The grey line acts as a margin guide.\n\n\n\nNote: You can also see the cursor’s character position is on in the lower-left corner of Figure 13 – in this case, line 9, character 85.",
+    "crumbs": [
+      "<b>Fundamentals of Programming class (new)</b>",
+      "Part 1: Basic Programming",
+      "1-06: Source and Execute"
+    ]
+  },
+  {
+    "objectID": "lessons-new/1-06_Source_and_Execute.html#application",
+    "href": "lessons-new/1-06_Source_and_Execute.html#application",
+    "title": "1-06: Source and Execute",
+    "section": "9 Application",
+    "text": "9 Application\n\nHighlight header=TRUE in line 17 (do not highlight the );) and Execute.  In comments explain what happens and why.\nIn the Console, create a variable that is the multiplication of a and b. Make sure the variable appears in Variables and show what you did in comments.\nCombine the lines 10, 11, and 12 into one line – don’t change the cat() commands.\nIn comments answer: How many commands are there in the script file for this lesson?\nIn comments answer: If you rewrote the script, what is the minimum number of lines you would need to execute every command in this lesson’s script? Assume there is no limit for line length.\n\n \nIf you have any questions regarding this application, feel free to email them to Charlie Belinsky at belinsky@msu.edu.\n\n9.1 Questions to answer\nAnswer the following in comments inside your application script:\n\nWhat was your level of comfort with the lesson/application?\nWhat areas of the lesson/application confused or still confuses you?\nWhat are some things you would like to know more about that is related to, but not covered in, this lesson?\n\n\n\n9.2 Upload changes to GitHub\n\nIn Source Control tab, under Changes click ( + ): Stage All Changes\n\nAll changed files will now be listed under Staged Changes\n\nAdd a message “App1-06 finished”\nClick Commit\nThe Commit button will become a Sync button, click Sync\nEmail belinsky@msu.edu with the message that application 1-06 is finished OR Extension: Create an issue in GitHub\n\n\n\n\n\n\n\nFigure 13: Upload changes to GitHub – the red circle indicates how many files that changed (in this case: 1)",
+    "crumbs": [
+      "<b>Fundamentals of Programming class (new)</b>",
+      "Part 1: Basic Programming",
+      "1-06: Source and Execute"
+    ]
+  },
+  {
+    "objectID": "lessons-new/1-06_Source_and_Execute.html#extension-create-an-issue-in-github",
+    "href": "lessons-new/1-06_Source_and_Execute.html#extension-create-an-issue-in-github",
+    "title": "1-06: Source and Execute",
+    "section": "10 Extension: Create an issue in GitHub",
+    "text": "10 Extension: Create an issue in GitHub\n\nGo to your project folder (repository) on GitHub\nClick on Issues (top of page)\nClick on New Issue (green button – not pictured)\nClick on Setting wheel and add the instructor as an assignee (belinskyc)\nPut in title that the application 1-06 is finished, add anything you want to the description\nClick Create\n\n\n\n\n\n\n\nFigure 14: Informing your instructor the application is finished",
+    "crumbs": [
+      "<b>Fundamentals of Programming class (new)</b>",
+      "Part 1: Basic Programming",
+      "1-06: Source and Execute"
+    ]
+  },
+  {
+    "objectID": "lessons-new/1-07_Outputs.html#purpose",
+    "href": "lessons-new/1-07_Outputs.html#purpose",
+    "title": "1-07: Outputs",
+    "section": "1 Purpose",
+    "text": "1 Purpose\n\nOutput variables to the Console tab\nOutput messages to the Console tab\nOutput vectors, sequences, and mathematical operations\nOutput special characters to the Console tab, including a line feed\nOutput mixed message and variable statements to the Console tab\n\n\n1.1 Files for the lesson\nThe files for this lesson:\n\nScript: you can download the script here\nData: download the data file here\n\n \nIf you have any questions about the material in this lesson, feel free to email them to the instructor, Charlie Belinsky, at belinsky@msu.edu.",
+    "crumbs": [
+      "<b>Fundamentals of Programming class (new)</b>",
+      "Part 1: Basic Programming",
+      "1-07: Outputs"
+    ]
+  },
+  {
+    "objectID": "lessons-new/1-07_Outputs.html#output-to-console",
+    "href": "lessons-new/1-07_Outputs.html#output-to-console",
+    "title": "1-07: Outputs",
+    "section": "2 Output to console",
+    "text": "2 Output to console\nThe Console tab has many uses and one of them is to output messages from a script – the messages can contain text, variable, or some combination of the two.  Outputting messages to the Console can be done using the function cat(), which stands for concatenate. This is R’s way of saying that cat() will concatenate (combine) variables and values to create an output.\n \nExtension: cat() vs print()\n\n2.1 Output a message\nWe will first use cat() to output a text message to the Console tab – to do this we need to put the message in quotes:\ncat(\"Hello\");\n\n\n\nHello\n\n\nFigure 1: Outputting a text message in the Console tab\n\n\n\nIf you do not use quotes (” “), R will think you are referring to a variable.  For instance, the line cat(Hello) gives you the Object not found error because R thinks this is a reference to a variable named Hello – and, in this case, there is no variable named Hello. \ncat(Hello); # Will cause an «object not found» error\n\n\n\nError in cat(Hello) : object Hello not found\n\n\nFigure 2: An error that occurs if you try to output a variable (object) that does not exist in your script.\n\n\n\nNote: If there is a variable named Hello in your script, then cat(Hello); will output the value of the variable Hello.\n\n\n2.2 Output multiple messages\nYou can add as many cat() statements to your script as you like and they will be displayed sequentially in the Console tab:\ncat(\"Hello, World.\");\ncat(\"How are you?\");\ncat(\"I am fine.\");\n\n\n\nHello World. How are you? I am fine.\n\n\nFigure 3: Output message without spacing\n\n\n\n\n\n2.3 The line feed: \\n\nBut there is a problem here – R puts no spacing in between the lines (Figure 3).  This is typical behavior of programming languages – they do not add line feeds (e.g., enter or return) unless the script specifically requests that a line feed is added.\n \nThe instruction to add a line feed is to put \\n inside the quotes ( “  ” ):\ncat(\"Hello, World.\\n\");\ncat(\"How are you?\\n\");\ncat(\"I am\\n fine.\\n\"); # the first \\n will break up the line\n\n\n\nHello, World\nHow are you?\nI am\n fine.\n\n\nFigure 4: Message with line feeds\n\n\n\nIn Figure 4 we have our text on multiple lines.  Notice that the \\n does not get printed to the screen.  \\n is an instruction to R to add a line feed, \\n is sometimes called a newline character, and \\n needs to be put inside the quotes.\n \n\\n can be put anywhere in a quote.  In the above code there is a \\n put in between “am” and “fine”, hence the line feed between the two words.  The exact same message as Figure 4 can be output to the Console tab using only one cat() statement with multiple \\n:\ncat(\"Hello, World.\\nHow are you?\\nI am\\n fine?\\n\");\n\n\n\nHello, World\nHow are you?\nI am\n fine.\n\n\nFigure 5: Using one cat() statement with multiple \\n to output multiple lines of text",
+    "crumbs": [
+      "<b>Fundamentals of Programming class (new)</b>",
+      "Part 1: Basic Programming",
+      "1-07: Outputs"
+    ]
+  },
+  {
+    "objectID": "lessons-new/1-07_Outputs.html#escape-character-backslash",
+    "href": "lessons-new/1-07_Outputs.html#escape-character-backslash",
+    "title": "1-07: Outputs",
+    "section": "3 Escape character: backslash ( \\ )",
+    "text": "3 Escape character: backslash ( \\ )\nThe backslash in programming is used in a string as an escape character. An escape character tells R that the next character is to be treated as a command rather than the character. This is similar to the way the Shift, Control, or Alt keys on your keyboard change the meaning of the character that is pressed with them (e.g, control-C is a command to copy).\n \nBackslash can be used to\n\nput in a control like a line feed ( \\n ) or a tab ( \\t )\nprint a character that has a functional meaning like a double quote ( \\“ ). In other words, treat the double quote as a character for output, not as the start or end of a string. This also works if you want to output a backslash ( \\\\ )\nprint our characters not on the keyboard using Unicode.  Here is a link to a partial list of Unicode characters.  Use the Escape sequence given on the page.  Note: according to Wikipedia, as of Sept 2025, there are almost 300,000 Unicode characters – including an insane number of emojis (a recent addition).\n\n\n3.1 Using backslash in Console\nHere is an example of outputting special character using the backslash. This output includes tab (\\t), double quotes (\\“), newlines (\\n), backslash (\\\\), and a few Unicode characters.\ncat(\"\\tAnd the boy said, \\\"Hello\\\" \\n\");\ncat(\"Send a backslash \\\\ to the Console\\n\")\ncat(\"Some Unicode characters: \\u00C5 \\u0A94 \\u0115\\n\");\n\n\n\n    And the boy said, \"Hello\" \nSend a backslash \\ to the Console\nSome Unicode characters: Å ઔ ĕ\n\n\nFigure 6: Using backslash ( \\ ) to output special characters.",
+    "crumbs": [
+      "<b>Fundamentals of Programming class (new)</b>",
+      "Part 1: Basic Programming",
+      "1-07: Outputs"
+    ]
+  },
+  {
+    "objectID": "lessons-new/1-07_Outputs.html#output-messages-with-variables",
+    "href": "lessons-new/1-07_Outputs.html#output-messages-with-variables",
+    "title": "1-07: Outputs",
+    "section": "4 Output messages with variables",
+    "text": "4 Output messages with variables\nLet’s output data from the twoWeekWeatherData.csv file to the Console tab.\n \nFirst we will read in the file, like we did last lesson:\n  weatherData = read.csv(file=\"data/twoWeekWeatherData.csv\", \n                         sep=\",\",                   \n                         header=TRUE);\n                        \nAnd then save the highTemp and lowTemp columns to their own variable:\nhighTemps = weatherData$highTemp;\nlowTemps = weatherData$lowTemp;\nWe can directly output the whole temperature vector values along with a line feed:\ncat(lowTemps);  # prints the variable lowTemps in the Console\ncat(\"\\n\");      # adds a line feed -- so the next message goes to the next line\n\n\n\n45 43 46 38 36 45 32 50 48 40 36 43 45 63\n\n\nFigure 7: Output the 12 values in the lowTemps variable\n\n\n\n\n4.1 Combine text and variables in one command\nWe can combine content (e.g., variables and text) in one cat() command by using comma to separate the different types of content:\ncat(\"The low temps are:\", lowTemps, \"\\n\");\n\n\n\nThe low temperatures are: 45 43 46 38 36 45 32 50 48 40 36 43 45 63\n\n\nFigure 8: Combining a text message and variables in one output\n\n\n\nTrap: Misplacing (or forgetting) quotes",
+    "crumbs": [
+      "<b>Fundamentals of Programming class (new)</b>",
+      "Part 1: Basic Programming",
+      "1-07: Outputs"
+    ]
+  },
+  {
+    "objectID": "lessons-new/1-07_Outputs.html#output-indexed-values",
+    "href": "lessons-new/1-07_Outputs.html#output-indexed-values",
+    "title": "1-07: Outputs",
+    "section": "5 Output indexed values",
+    "text": "5 Output indexed values\nWe can output a single value from a vector by indexing it:\ncat(lowTemps[4], \"\\n\");     # 4th value in lowTemps\nOr, output a more robust message about the 4th day:\ncat(\"On the 4th day the high temperature was\", highTemps[4], \"and the low temperature was\", lowTemps[4], \"\\n\");\n\n\n\nOn the 4th day the high temperature was 40 and the low temperature was 38\n\n\nFigure 9: Combining multiple text messages and variables in an output\n\n\n\nOr, even do math on the values:\ncat(\"On the 4th day the difference in temperature was\", \n      highTemps[4] - lowTemps[4], \"degrees\\n\"); \nOn the 4th day the difference in temperature was 2 degrees",
+    "crumbs": [
+      "<b>Fundamentals of Programming class (new)</b>",
+      "Part 1: Basic Programming",
+      "1-07: Outputs"
+    ]
+  },
+  {
+    "objectID": "lessons-new/1-07_Outputs.html#output-multiple-values",
+    "href": "lessons-new/1-07_Outputs.html#output-multiple-values",
+    "title": "1-07: Outputs",
+    "section": "6 Output multiple values",
+    "text": "6 Output multiple values\nWe can use c() to index multiple values within a vector:\ncat(lowTemps[c(4, 8, 3, 11)], \"\\n\");  # 4th, 8th, 3rd, and 11th values in lowTemps\n38 50 46 36 \nOr, we can use the sequencing operator ( : ) and the sequencing function seq() to output multiple values in a vector:\n  cat(lowTemps[5:9], \"\\n\");   # simple sequence: 5th through 9th value\n  cat(lowTemps[seq(from=1, by=2, to=10)], \"\\n\"); # Values 1,3,5,7,9\n\n\n\n36 45 32 50 48\n45 46 36 32 48\n\n\nFigure 10: Output of sequenced values in lowTemps\n\n\n\nAnd add messages to the above output:\n  cat(\"Day 5-9 temperature:\",lowTemps[5:9], \"\\n\");  \n  cat(\"Temp on odd days:\", lowTemps[seq(from=1, by=2, to=10)], \"\\n\");\n\n\n\nDay 5-9 temperature: 36 45 32 50 48 \nTemp on odd days: 45 46 36 32 48 \n\n\nFigure 11: Outputting contiguous values in lowTemps using the sequencing operator.\n\n\n\ncat() commands can go across multiple lines – this one cat() is functionally the same as the above two cat():\n  cat(\"Day 5-9 temperature:\", lowTemps[5:9], \"\\n\", \n      \"Temp on odd days:\", lowTemps[seq(from=1, by=2, to=10)], \"\\n\");\n\n\n\nDay 5-9 temperature: 36 45 32 50 48 \nTemp on odd days: 45 46 36 32 48 \n\n\nFigure 12: Outputting the values of lowTemps using seq()",
+    "crumbs": [
+      "<b>Fundamentals of Programming class (new)</b>",
+      "Part 1: Basic Programming",
+      "1-07: Outputs"
+    ]
+  },
+  {
+    "objectID": "lessons-new/1-07_Outputs.html#the-concatenate-cat-function",
+    "href": "lessons-new/1-07_Outputs.html#the-concatenate-cat-function",
+    "title": "1-07: Outputs",
+    "section": "7 The concatenate, cat(), function",
+    "text": "7 The concatenate, cat(), function\nWe have used cat() many times in this script to output variable and text to the Console but we really have not talked about cat() itself.\n \nLet’s search for cat in the search bar of the Help tab:\n\n\n\n\n\n\nFigure 13: Information about the cat() function in the Help tab.\n\n\n\nThe first part of cat() is the three dots “…”.  When the 3 dots are at the beginning of a function, the three dots say that the function will accept any number of objects as inputs.  The objects can be text in quotes, string variables, numeric variables, or other objects we have not discussed yet like Dates.\n \nNote: the three dots in cat() has a different meaning from the three dots in read.csv().  When three dots are at the first argument of a function (e.g., cat()) it means that any number of inputs are accepted.  When the three dots are elsewhere (e.g., read.csv()) it means the function can be extended with arguments that are not on the list (something that is pretty advanced).\n \nAfter the three dots, cat() has 5 arguments: file, sep, fill, labels, and append. These all have default values (e.g., file=““, sep=” “)\n\n7.1 The sep argument\nArguments are used to modify the behavior of a function.  sep changes how the different components of the output are separated– the default is to use 1 space.  We are going to change the sep argument.\n \nLet’s take the code from above and add the sep argument to cat() and give sep the value ” ** “:\n  cat(\"Day 5-9 temperature:\", lowTemps[5:9], \"\\n\", \n      \"Temp on odd days:\", lowTemps[seq(from=1, by=2, to=10)], \"\\n\",\n      sep = \" ** \");\nAnd you will notice that the different components in cat() are separated by ” ** “.\n\n\n\nDay 5-9 temperature: ** 36 ** 45 ** 32 ** 50 ** 48 ** \n ** Temp on odd days: ** 45 ** 46 ** 36 ** 32 ** 48 ** \n\n\nFigure 14: Using the sep argument in cat()\n\n\n\nNote: The most common way people use sep is to set sep=““– in other words, set sep to nothing so nothing is added to the output.\n \nTrap: Misplacing (or forgetting) quotes\n\n\n7.2 The file argument\nBy default, cat() will output to the Console. But, you can have cat() output to a file by using the file argument.  The file argument in cat() works just like the file argument in read.csv() with one exception:  if the file does not exist yet then R will create the file.\n \nSo, this line:\ncat(\"Hi\", file=\"hello.txt\");\ncreates a file called hello.txt in your Project Folder and add the text hi to the file.\n \nExtension: Sending Console info directly to file",
+    "crumbs": [
+      "<b>Fundamentals of Programming class (new)</b>",
+      "Part 1: Basic Programming",
+      "1-07: Outputs"
+    ]
+  },
+  {
+    "objectID": "lessons-new/1-07_Outputs.html#application",
+    "href": "lessons-new/1-07_Outputs.html#application",
+    "title": "1-07: Outputs",
+    "section": "8 Application",
+    "text": "8 Application\nA. Line 47 in the script downloaded for this lesson is beyond 85 characters, break the line up so that it functions the same but does not go over 85 characters.\n \nB. In the Help for the function c(), the S3 method has 3 dots ( … ) as the first argument. In comments answer: What does the three dots tell you about the c() function?\n \nC.  Using one cat(), output to the Console:\n\nthe date of the 11th day and the amount of precipitation on that day\nthe difference in precipitation between the 3rd and 4th day\nevery 3rd days precipitation\nthe precipitation for days 12, 9, 4 – using a index vector created with c()\nChallenge: output the total precipitation for the first 10 days (without using sum(), which is not something you have learned yet!)\n\nMake sure you use newlines (\\n) to make the output readable.\n \nD. Using cat(), output the data from part C to a file named output.txt in your data folder (instead of the Console)\n\nUse the Help for cat() to figure out how to output to a file.\n\n \nE. Challenge: Using cat(), append your name and three different Unicode characters to the text in the output.txt file created in part D. \n\nAgain, use the Help for cat() to figure out how to add text to a file.\n \n\n \nSave the script as app1-07.r in your scripts folder and  email your Project Folder to Charlie Belinsky at belinsky@msu.edu.\n \nInstructions for zipping the Project Folder are here.\n \nIf you have any questions regarding this application, feel free to email them to Charlie Belinsky at belinsky@msu.edu.\n\n8.1 Questions to answer\nAnswer the following in comments inside your application script:\n\nWhat was your level of comfort with the lesson/application?\nWhat areas of the lesson/application confused or still confuses you?\nWhat are some things you would like to know more about that is related to, but not covered in, this lesson?",
+    "crumbs": [
+      "<b>Fundamentals of Programming class (new)</b>",
+      "Part 1: Basic Programming",
+      "1-07: Outputs"
+    ]
+  },
+  {
+    "objectID": "lessons-new/1-07_Outputs.html#extension-cat-vs-print",
+    "href": "lessons-new/1-07_Outputs.html#extension-cat-vs-print",
+    "title": "1-07: Outputs",
+    "section": "9 Extension: cat() vs print()",
+    "text": "9 Extension: cat() vs print()\nThe two main functions used to output to the Console are cat() and print(). The big difference is that print() does a lot more formatting of the output than cat().  You would likely use print() when you want to display the results of a statistical test, which often has a complicated format.  cat() does very little formatting on its own – cat() lets the programmer control the output.  You would use this when you want to output text and some simple data – or, where you really want control of the output format.",
+    "crumbs": [
+      "<b>Fundamentals of Programming class (new)</b>",
+      "Part 1: Basic Programming",
+      "1-07: Outputs"
+    ]
+  },
+  {
+    "objectID": "lessons-new/1-07_Outputs.html#trap-misplacing-or-forgetting-quotes",
+    "href": "lessons-new/1-07_Outputs.html#trap-misplacing-or-forgetting-quotes",
+    "title": "1-07: Outputs",
+    "section": "10 Trap: Misplacing (or forgetting) quotes",
+    "text": "10 Trap: Misplacing (or forgetting) quotes\nIt is easy to accidentally forget a quote, add a quote, or simply move a quote to a place it does not belong. The following code has a missing quote on line 7 right after “The values are…\nrm(list=ls());\n\ndistance = 100;\ntime = 50;\nvelocity = distance/time;\n\ncat(\"The values are..., \"\\nDistance: \", distance, \"\\ntime: \",\n    time, \"\\nvelocity: \", velocity);\n    \ncat(\"The End\");\nIf you execute the script above, you will get the following message in the Console:\n&gt; source(\"~/.active-rstudio-document\")\nError in source(\"~/.active-rstudio-document\") : \n  ~/.active-rstudio-document:«7:26: unexpected '\\\\'»\n6: \n7: cat(\"The values are..., \"\\\n                            ^\nThe error is unexpected ‘\\\\’ on line 7, character 26. R is telling you that is does not understand why the character on line 7, character 26 is a backslash ( \\ ). This might not be the most helpful message.\n \nHowever, RStudio has a built-in feature to help you find misplaced quotes – the color scheme.  The quoted text is in a different color than other parts of the code.  For example, in the XCode color scheme – text that R sees in quotes is colored red.\n \n\n\n\n\n\n\nFigure 15: Missing quote in cat()\n\n\n\nFigure 15 shows that, right after “The value are… , the variables are all treated as if they are in quotes and the messages are outside the quotes. Since one quote was missing, the error propagated and assumed characters to be variables/numbers and variables/numbers to be characters.\n \nWe will add the missing quote to line 7:\ncat(\"The values are...«\"», \"\\nDistance: \", distance, \"\\ntime: \",\n    time, \"\\nvelocity: \", velocity);\nNow the correct components of the output are in quotes and the script executes without an error:\n&gt; source(\"~/.active-rstudio-document\")\nThe values are... \nDistance:  100 \ntime:  50 \nvelocity:  2\nThe End",
+    "crumbs": [
+      "<b>Fundamentals of Programming class (new)</b>",
+      "Part 1: Basic Programming",
+      "1-07: Outputs"
+    ]
+  },
+  {
+    "objectID": "lessons-new/1-07_Outputs.html#extension-sending-console-info-directly-to-file",
+    "href": "lessons-new/1-07_Outputs.html#extension-sending-console-info-directly-to-file",
+    "title": "1-07: Outputs",
+    "section": "11 Extension: Sending Console info directly to file",
+    "text": "11 Extension: Sending Console info directly to file\nsink() is a commonly used command in R that redirects all Console output to a file. The following command will send all future Console output to the file output2.txt in the data folder.\nsink(file=\"data/output2.txt\") # send Console content to data\nThis means RStudio will send the output from all script execution (no matter the script file) to the output2.txt file until you undo the command like this:\nsink(file=NULL)",
+    "crumbs": [
+      "<b>Fundamentals of Programming class (new)</b>",
+      "Part 1: Basic Programming",
+      "1-07: Outputs"
+    ]
+  },
+  {
+    "objectID": "lessons-new/1-06_Source_and_Execute.html#sourcing-and-echoing",
+    "href": "lessons-new/1-06_Source_and_Execute.html#sourcing-and-echoing",
+    "title": "1-06: Source and Execute",
+    "section": "3 Sourcing and echoing",
+    "text": "3 Sourcing and echoing\nThe right-arrow button used to execute your script in Positron has a small down arrow next to it. That arrow presents three common options for executing commands in your script:\n\nSource R File with Echo: Runs your whole script (Source) and outputs the code to Console (echo)\n\nThis is the same as clicking the right arrow\n\nSource R File: Runs your whole script without outputting code to Console\nExecute Code: Runs a single command, line, or highlighted code. It is grayed out when no code is selected\n\n\n\n\n\n\n\nFigure 3: Three methods for executing commands in your script\n\n\n\n\n3.1 Echo vs no echo\nWhen you click the right arrow, it always does a Source R File with Echo (i.e., the first option). This is what appears in the Console (note: the first line is the command sent when you click the Source button):\n&gt; source(\"c:/Users/Charlie/Projects/FundProgUsingR/scripts/1-06_RunAndSource.R\", «echo = TRUE»)\n\n&gt; rm(list=ls());        # clear out the Environment  \n\n&gt; ### Output a text message\n&gt; cat(\"Hello\"); \nHello\n&gt; ### Multiple commands on one line\n&gt; a=3; b=7; cat(\"a+b=\", a+b);\na+b= 10\n&gt; ### Outputting multiple text messages (\\n means go to next line)                    \n&gt; cat(\"Hello, World.\\n\");\nHello, World.\n\n&gt; cat(\"How are you?\\n\"); \nHow are you?\n\n&gt; cat(\"I am fine?\\n\");\nI am fine?\n\n&gt; ### read in data from  twoWeekWeatherData.csv\n&gt; weatherData = read.csv(file=\"data/twoWeekWeatherData.csv\", \n+                        sep=\",\",\n+      .... [TRUNCATED] \n\n&gt; ### same command as above on one line (a little harder to read)\n&gt; weatherData2 = read.csv(file=\"data/twoWeekWeatherData.csv\", sep=\",\", header=TRUE);\n&gt;\nIf you choose the second option, Source R File (without echo), this is what you see in the Console:\n&gt; source(\"c:/Users/Charlie/Projects/FundProgUsingR/scripts/1-06_RunAndSource.R\")\nHelloa+b= 10Hello, World.\nHow are you?\nI am fine?\n&gt;\nWhen you do not use echo, the only output in Console is the command to run your script (first line) and anything your script explicitly sends to Console (lines 2-4, which we cover later). When you use echo, all of the code (including comments) outputs to Console.\n\n\n3.2 Source without echo keyboard shortcut\nMost programmers prefer to Source without echoing (the default in RStudio) because the Console is much less cluttered. To make this easier, we will create a keyboard shortcut to Source R File (without echo):\n\nClick the Setting wheel in the bottom-left corner\nChoose Keyboard Shortcuts (a Keyboard Shortcuts tab will open)\nIn the text box on top type source\nDouble-click R: Source R File\nPut in the keyboard shortcut you want and press enter. I chose ctrl+shift+s because this is the shortcut in RStudio. This will overwrite Positron’s Save as… shortcut so you might want to choose something else.\n\n \n\n\n\n\n\n\nFigure 4: Adding a keyboard shortcut for Source without echo\n\n\n\nAfter you do this, you will be able to use ctrl+shift+s (or whatever keyboard combo you chose) to Source without echo. You will also see the new shortcut when you click on the down arrow:\n\n\n\n\n\n\nFigure 5: New keyboard shortcut for Source (without echo)",
+    "crumbs": [
+      "<b>Fundamentals of Programming class (new)</b>",
+      "Part 1: Basic Programming",
+      "1-06: Source and Execute"
+    ]
   }
 ]

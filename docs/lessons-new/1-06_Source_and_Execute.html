@@ -1,0 +1,1398 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>1-06: Source and Execute</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-6b648d916be70b808a85e003c3b0aaba.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link rel="shortcut icon" href="https://qfcatmsu.github.io/assets/images/qfc_icon.png">
+<script>mod=true; // menuCollapse=true;</script>
+<!--script src="/assets/quarto/qfc_styles.js"></script-->
+<script src="https://qfcatmsu.github.io/assets/quarto/qfc_styles.js"></script>
+
+
+<link rel="stylesheet" href="https://qfcatmsu.github.io/assets/quarto/qfc_styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+          <h1 class="quarto-secondary-nav-title">1-06: Source and Execute</h1>
+        </a>     
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="quarto-sidebar-header"><div class="sidebar-header-item">
+<p>The new version of this class, which uses Git and Positron, is being rolled out. For now it will appear under Fundamentals of programming (new)…</p>
+</div></div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text"><b>Fundamentals of Programming class (old)</b></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/0-01-IntroductionAndSyllabus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction and Syllabus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Part 1: Basic Programming</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-01-RStudioProjectsSetup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-01: RStudio Projects Setup</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-02-Variables.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-02: Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-03_Mathematical_Operations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-03: Mathematical Operations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-04_Vectors_And_Data_Frames.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-04: Vectors and Data Frames</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-05_Functions_Introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-05: Functions Introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-06_Run_and_Source.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-06: Run and Source</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-07_Outputs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-07: Outputs</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-08_Conditional_Operations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-08: Conditional Operations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-09_If_Else_Statements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-09: If-Else Statements</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-10_For_Loops.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-10: For Loops</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-11_For_Loops_and_State_Varibles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-11: For Loops and State Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-12_MultipleConditions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-12: Multiple Conditions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-13_User_Created_Functions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-13: User Created Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-14_Functions2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-14: Functions 2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-15_Nested_Loops_and _Matrices.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-15: Nested loops and Matrices</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">Part 2: Data Programming</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-01_GGPlot_Intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-01: GGPlot Introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-02_DataFrame_Modifications.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-02: DataFrame Modifications</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-03_DataTypesAndDateFrames.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-03: Data Types and Data Frames</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-04_WhichStatements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-04: Which Statements</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-05_WhichAndSubstrings.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-05: Which and Substrings</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-06_Datetime_Objects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-06: Datetime objects</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-07_Matrices.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-07: Matrices</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-08_Binding_Sampling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-08: Binding and Sampling</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-09_Stacking_Mapping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-09: Stacking and Mapping</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-10_Statistical_Tests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-10: Statistical Tests</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-11_Objects_Attributes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-11: Objects and Attributes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-12_Lists.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-12: Lists</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-13_Breakpoints.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-13: Breakpoints</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-14_Debug_External_Scripts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-14: Debugging External Scripts (Unfinished)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text"><b>Fundamentals of Programming class (new)</b></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons-new/0-01-IntroductionAndSyllabus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction and Syllabus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Part 1: Basic Programming</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons-new/1-01_ProjectFolders.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-01: Project Folders</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons-new/1-02-Variables.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-02: Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons-new/1-03_Mathematical_Operations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-03: Mathematical Operations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons-new/1-04_Vectors_And_Data_Frames.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-04: Vectors and Data Frames</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons-new/1-05_Functions_Introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-05: Functions Introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons-new/1-06_Source_and_Execute.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">1-06: Source and Execute</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons-new/1-07_Outputs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-07: Outputs</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
+ <span class="menu-text">Part 2: Data Programming</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons-new/2-06_RegularExpressions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-05b: Regular Expressions (Unfinished)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title"><b>Lesson Content</b></h2>
+   
+  <ul>
+  <li><a href="#changes" id="toc-changes" class="nav-link active" data-scroll-target="#changes"><span class="header-section-number">0.1</span> Changes…</a></li>
+  <li><a href="#purpose" id="toc-purpose" class="nav-link" data-scroll-target="#purpose"><span class="header-section-number">1</span> Purpose</a>
+  <ul class="collapse">
+  <li><a href="#files-for-the-lesson" id="toc-files-for-the-lesson" class="nav-link" data-scroll-target="#files-for-the-lesson"><span class="header-section-number">1.1</span> Files for the lesson</a></li>
+  </ul></li>
+  <li><a href="#output-to-console" id="toc-output-to-console" class="nav-link" data-scroll-target="#output-to-console"><span class="header-section-number">2</span> Output to console</a></li>
+  <li><a href="#sourcing-and-echoing" id="toc-sourcing-and-echoing" class="nav-link" data-scroll-target="#sourcing-and-echoing"><span class="header-section-number">3</span> Sourcing and echoing</a>
+  <ul class="collapse">
+  <li><a href="#echo-vs-no-echo" id="toc-echo-vs-no-echo" class="nav-link" data-scroll-target="#echo-vs-no-echo"><span class="header-section-number">3.1</span> Echo vs no echo</a></li>
+  <li><a href="#source-without-echo-keyboard-shortcut" id="toc-source-without-echo-keyboard-shortcut" class="nav-link" data-scroll-target="#source-without-echo-keyboard-shortcut"><span class="header-section-number">3.2</span> Source without echo keyboard shortcut</a></li>
+  </ul></li>
+  <li><a href="#entering-commands-directly-into-console" id="toc-entering-commands-directly-into-console" class="nav-link" data-scroll-target="#entering-commands-directly-into-console"><span class="header-section-number">4</span> Entering commands directly into Console</a>
+  <ul class="collapse">
+  <li><a href="#quick-view-of-variables" id="toc-quick-view-of-variables" class="nav-link" data-scroll-target="#quick-view-of-variables"><span class="header-section-number">4.1</span> Quick view of variables</a></li>
+  </ul></li>
+  <li><a href="#execute-vs.-source" id="toc-execute-vs.-source" class="nav-link" data-scroll-target="#execute-vs.-source"><span class="header-section-number">5</span> Execute vs.&nbsp;Source</a>
+  <ul class="collapse">
+  <li><a href="#executing-one-line" id="toc-executing-one-line" class="nav-link" data-scroll-target="#executing-one-line"><span class="header-section-number">5.1</span> Executing one line</a></li>
+  <li><a href="#executing-one-command-on-multiple-lines" id="toc-executing-one-command-on-multiple-lines" class="nav-link" data-scroll-target="#executing-one-command-on-multiple-lines"><span class="header-section-number">5.2</span> Executing one command on multiple lines</a></li>
+  <li><a href="#executing-multiple-commands-on-one-line" id="toc-executing-multiple-commands-on-one-line" class="nav-link" data-scroll-target="#executing-multiple-commands-on-one-line"><span class="header-section-number">5.3</span> Executing multiple commands on one line</a></li>
+  <li><a href="#executing-highlighted-script" id="toc-executing-highlighted-script" class="nav-link" data-scroll-target="#executing-highlighted-script"><span class="header-section-number">5.4</span> Executing highlighted script</a></li>
+  <li><a href="#erroneous-highlight-and-execute" id="toc-erroneous-highlight-and-execute" class="nav-link" data-scroll-target="#erroneous-highlight-and-execute"><span class="header-section-number">5.5</span> Erroneous highlight and Execute</a></li>
+  <li><a href="#cleaning-the-console" id="toc-cleaning-the-console" class="nav-link" data-scroll-target="#cleaning-the-console"><span class="header-section-number">5.6</span> Cleaning the Console</a></li>
+  </ul></li>
+  <li><a href="#duplicating-lines-of-code" id="toc-duplicating-lines-of-code" class="nav-link" data-scroll-target="#duplicating-lines-of-code"><span class="header-section-number">6</span> Duplicating lines of code</a></li>
+  <li><a href="#block-comments" id="toc-block-comments" class="nav-link" data-scroll-target="#block-comments"><span class="header-section-number">7</span> Block Comments</a>
+  <ul class="collapse">
+  <li><a href="#uncommenting-a-block" id="toc-uncommenting-a-block" class="nav-link" data-scroll-target="#uncommenting-a-block"><span class="header-section-number">7.1</span> Uncommenting a block</a></li>
+  </ul></li>
+  <li><a href="#breaking-up-long-lines-of-code" id="toc-breaking-up-long-lines-of-code" class="nav-link" data-scroll-target="#breaking-up-long-lines-of-code"><span class="header-section-number">8</span> Breaking up long lines of code</a>
+  <ul class="collapse">
+  <li><a href="#avoid-horizontal-scrolling-when-possible" id="toc-avoid-horizontal-scrolling-when-possible" class="nav-link" data-scroll-target="#avoid-horizontal-scrolling-when-possible"><span class="header-section-number">8.1</span> Avoid horizontal scrolling (when possible)</a></li>
+  </ul></li>
+  <li><a href="#application" id="toc-application" class="nav-link" data-scroll-target="#application"><span class="header-section-number">9</span> Application</a>
+  <ul class="collapse">
+  <li><a href="#questions-to-answer" id="toc-questions-to-answer" class="nav-link" data-scroll-target="#questions-to-answer"><span class="header-section-number">9.1</span> Questions to answer</a></li>
+  <li><a href="#upload-changes-to-github" id="toc-upload-changes-to-github" class="nav-link" data-scroll-target="#upload-changes-to-github"><span class="header-section-number">9.2</span> Upload changes to GitHub</a></li>
+  </ul></li>
+  <li><a href="#extension-create-an-issue-in-github" id="toc-extension-create-an-issue-in-github" class="nav-link" data-scroll-target="#extension-create-an-issue-in-github"><span class="header-section-number">10</span> Extension: Create an issue in GitHub</a></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content column-page-right" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">1-06: Source and Execute</h1>
+</div>
+
+
+
+<div class="quarto-title-meta column-page-right">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="changes" class="level3" data-number="0.1">
+<h3 data-number="0.1" class="anchored" data-anchor-id="changes"><span class="header-section-number">0.1</span> Changes…</h3>
+</section>
+<section id="purpose" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="purpose"><span class="header-section-number">1</span> Purpose</h2>
+<ul>
+<li><p>look at some of the features of R and Positron</p></li>
+<li><p>explore uses for the Console</p></li>
+<li><p>run script using <strong><em>Execute</em></strong> and <strong><em>Source</em></strong></p></li>
+</ul>
+<section id="files-for-the-lesson" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="files-for-the-lesson"><span class="header-section-number">1.1</span> Files for the lesson</h3>
+<p>The&nbsp;<a href="../scripts/1-06_RunAndSource.R">script for the lesson is here</a></p>
+<p>The&nbsp;<a href="../data/twoWeekWeatherData.csv">data for this lesson is here</a></p>
+<p>&nbsp;</p>
+<p>We are using the same script for this and the next lesson. In this lesson the focus is on the different ways to execute your code and other features in Positron.&nbsp; In the next lesson the focus will be more on the content of the lesson’s script.</p>
+<p>&nbsp;</p>
+<p>If you have any questions about the material in this lesson, feel free to email them to the instructor, Charlie Belinsky, at belinsky@msu.edu.</p>
+</section>
+</section>
+<section id="output-to-console" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="output-to-console"><span class="header-section-number">2</span> Output to console</h2>
+<p>In this and the next lesson we are going to make extensive use of the <strong><em>Console</em></strong> tab, which can be used to execute code and as output for your script file.&nbsp; Like the <strong><em>Variables</em></strong> tab, it is difficult to maintain lesson images so I will use text instead.</p>
+<p>&nbsp;</p>
+<p>For example (the details will be explained later):</p>
+<ul>
+<li><p>open the script for this lesson in your Project Folder</p></li>
+<li><p>click on line <strong>4</strong> (i.e., put the cursor on line 4)</p></li>
+<li><p>click <strong><em>Control-Enter</em></strong> (<strong><em>Command-Enter</em></strong> on Mac) to <strong><em>execute</em></strong> line 4</p></li>
+</ul>
+<p>&nbsp;</p>
+<p>The Positron window looks like this:</p>
+<div id="fig-console-output" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-console-output-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-1-06-OutputToConsole-2.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-console-output-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Output to the Console tab after executing line 6
+</figcaption>
+</figure>
+</div>
+<p>&nbsp;</p>
+<p>Instead of displaying the Positron image, I will display the output to the <strong><em>Console</em></strong> tab like this:</p>
+<div id="fig-consoleTab" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-consoleTab-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">cat</span>(<span class="st">"Hello"</span>); </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>Hello</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-consoleTab-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Output to the Console tab after executing line 4
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="sourcing-and-echoing" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="sourcing-and-echoing"><span class="header-section-number">3</span> Sourcing and echoing</h2>
+<p>The right-arrow button used to execute your script in Positron has a small down arrow next to it. That arrow presents three common options for executing commands in your script:</p>
+<ol type="1">
+<li><p><strong><em>Source R File with Echo</em></strong>: Runs your whole script (<strong><em>Source</em></strong>) and outputs the code to <strong><em>Console</em></strong> (<strong><em>echo</em></strong>)</p>
+<ul>
+<li>This is the same as clicking the right arrow</li>
+</ul></li>
+<li><p><strong><em>Source R File</em></strong>: Runs your whole script <span class="hl">without outputting code to <strong><em>Console</em></strong></span></p></li>
+<li><p><strong><em>Execute Code</em></strong>: Runs a single command, line, or highlighted code. It is grayed out when no code is selected</p></li>
+</ol>
+<div id="fig-executeCommands" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-executeCommands-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-1-06-ExecuteButton.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-executeCommands-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Three methods for executing commands in your script
+</figcaption>
+</figure>
+</div>
+<section id="echo-vs-no-echo" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="echo-vs-no-echo"><span class="header-section-number">3.1</span> Echo vs no echo</h3>
+<p>When you click the right arrow, it always does a <strong><em>Source R File with Echo</em></strong> (i.e., the first option). This is what appears in the <strong><em>Console</em></strong> (<span class="note">note: the first line is the command sent when you click the <strong><em>Source</em></strong> button</span>):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" data-tab="Console"><pre class="sourceCode R code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">source</span>(<span class="st">"c:/Users/Charlie/Projects/FundProgUsingR/scripts/1-06_RunAndSource.R"</span>, «<span class="at">echo =</span> TRUE»)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>());        <span class="co"># clear out the Environment  </span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="do">### Output a text message</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="er">&gt;</span> <span class="fu">cat</span>(<span class="st">"Hello"</span>); </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>Hello</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="do">### Multiple commands on one line</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="er">&gt;</span> a<span class="ot">=</span><span class="dv">3</span>; b<span class="ot">=</span><span class="dv">7</span>; <span class="fu">cat</span>(<span class="st">"a+b="</span>, a<span class="sc">+</span>b);</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>a<span class="sc">+</span>b<span class="ot">=</span> <span class="dv">10</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="do">### Outputting multiple text messages (\n means go to next line)                    </span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="er">&gt;</span> <span class="fu">cat</span>(<span class="st">"Hello, World.</span><span class="sc">\n</span><span class="st">"</span>);</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>Hello, World.</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">cat</span>(<span class="st">"How are you?</span><span class="sc">\n</span><span class="st">"</span>); </span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>How are you?</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">cat</span>(<span class="st">"I am fine?</span><span class="sc">\n</span><span class="st">"</span>);</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>I am fine?</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="do">### read in data from  twoWeekWeatherData.csv</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="er">&gt;</span> weatherData <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="at">file=</span><span class="st">"data/twoWeekWeatherData.csv"</span>, </span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>                        <span class="at">sep=</span><span class="st">","</span>,</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>      .... [TRUNCATED] </span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="do">### same command as above on one line (a little harder to read)</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="er">&gt;</span> <span class="at">weatherData2 =</span> <span class="fu">read.csv</span>(<span class="at">file=</span><span class="st">"data/twoWeekWeatherData.csv"</span>, <span class="at">sep=</span><span class="st">","</span>, <span class="at">header=</span><span class="cn">TRUE</span>);</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If you choose the second option, <strong><em>Source R File</em></strong> (without echo), this is what you see in the <strong><em>Console</em></strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" data-tab="Console"><pre class="sourceCode R code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">source</span>(<span class="st">"c:/Users/Charlie/Projects/FundProgUsingR/scripts/1-06_RunAndSource.R"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>Helloa<span class="sc">+</span>b<span class="ot">=</span> <span class="dv">10</span>Hello, World.</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>How are you?</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>I am fine?</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>When you do not use echo, the only output in <strong><em>Console</em></strong> is the command to run your script (first line) and anything your script explicitly sends to <strong><em>Console</em></strong> (lines 2-4, which we cover later). When you use echo, all of the code (including comments) outputs to <strong><em>Console</em></strong>.</p>
+</section>
+<section id="source-without-echo-keyboard-shortcut" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="source-without-echo-keyboard-shortcut"><span class="header-section-number">3.2</span> Source without echo keyboard shortcut</h3>
+<p>Most programmers prefer to Source <strong><em>without</em></strong> echoing (the default in RStudio) because the Console is much less cluttered. To make this easier, we will create a keyboard shortcut to <strong><em>Source R File</em></strong> (without echo):</p>
+<ol type="1">
+<li>Click the Setting wheel in the bottom-left corner</li>
+<li>Choose <strong><em>Keyboard Shortcuts</em></strong> (a <strong><em>Keyboard Shortcuts</em></strong> tab will open)</li>
+<li>In the text box on top type <code>source</code></li>
+<li>Double-click <strong><em>R: Source R File</em></strong></li>
+<li>Put in the keyboard shortcut you want and press <strong><em>enter</em></strong>. I chose <strong><em>ctrl+shift+s</em></strong> because this is the shortcut in RStudio. This will overwrite Positron’s <strong><em>Save as…</em></strong> shortcut so you might want to choose something else.</li>
+</ol>
+<p>&nbsp;</p>
+<div id="fig-keyboardShortcut" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-keyboardShortcut-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-1-06-AddShortcut.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-keyboardShortcut-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Adding a keyboard shortcut for Source without echo
+</figcaption>
+</figure>
+</div>
+<p>After you do this, you will be able to use <strong><em>ctrl+shift+s</em></strong> (or whatever keyboard combo you chose) to Source without echo. You will also see the new shortcut when you click on the down arrow:</p>
+<div id="fig-newShortcut" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-newShortcut-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-1-06-NewShortcut.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-newShortcut-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: New keyboard shortcut for Source (without echo)
+</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="entering-commands-directly-into-console" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="entering-commands-directly-into-console"><span class="header-section-number">4</span> Entering commands directly into Console</h2>
+<p>You can directly type commands in the <strong><em>Console</em></strong> . For instance, you can type the code to Source your script without echo (just the highlighted line and press enter):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" data-tab="Console"><pre class="sourceCode R code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> «<span class="fu">source</span>(<span class="st">"scripts/1-06_RunAndSource.R"</span>)»</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>Helloa<span class="sc">+</span>b<span class="ot">=</span> <span class="dv">10</span>Hello, World.</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>How are you?</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>I am fine?</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><span class="note">note: this file path is relative to the Project Folder (i.e., Working Directory) and assumes you put the lesson script in the <strong><em>scripts</em></strong> folder and did not change its name.</span></p>
+<p>&nbsp;</p>
+<p>You can type in a simple output command in <strong><em>Console</em></strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> «<span class="fu">cat</span>(<span class="st">"Hello"</span>)»</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>Hello</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>A common issue for people using the <strong><em>Console</em></strong> is that they will not complete commands.&nbsp; For example, type <code>cat("He</code> in the <strong><em>Console</em></strong> and press <strong><em>enter</em></strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> «<span class="fu">cat</span>(<span class="st">"He»</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="st">+</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>A ( <strong>+</strong> ) appears on the next line.&nbsp; The ( <strong>+</strong> ) means that R sees an unfinished command and is prompting you to finish it.&nbsp; You can finish it by typing <code>llo")</code> in the <strong><em>Console</em></strong>. The result will still be a bit off:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">cat</span>(<span class="st">"He </span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="st">+«llo"</span>)» </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>He </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>llo</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="quick-view-of-variables" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="quick-view-of-variables"><span class="header-section-number">4.1</span> Quick view of variables</h3>
+<p>Another use for the <strong><em>Console</em></strong> is to quickly view some value.&nbsp; If you want to see the <strong><em>highTemp</em></strong> column in <strong><em>weatherData</em></strong> you can type in the <strong><em>Console</em></strong> (this only work if you have already Sourced the script):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> «weatherData<span class="sc">$</span>highTemp»</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">57</span> <span class="dv">50</span> <span class="dv">54</span> <span class="dv">40</span> <span class="dv">39</span> <span class="dv">58</span> <span class="dv">60</span> <span class="dv">53</span> <span class="dv">55</span> <span class="dv">44</span> <span class="dv">39</span> <span class="dv">54</span> <span class="dv">61</span> <span class="dv">75</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><span class="note">Note: after you type <strong>$</strong> in <strong>weatherData$</strong>, Positron will start offering you column suggestions – a very convenient feature when you have large dataframes.</span></p>
+</section>
+</section>
+<section id="execute-vs.-source" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="execute-vs.-source"><span class="header-section-number">5</span> Execute vs.&nbsp;Source</h2>
+<p><strong><em>Source</em></strong> is used to execute the entire script (i.e., every command) while the <strong><em>Execute Code</em></strong> command (<strong><em>Control/Command-Enter</em></strong>) is used to selectively run commands.&nbsp; <strong><em>Execute</em></strong> is a great tool for debugging and testing your code and we are going to almost exclusively use <strong><em>Execute</em></strong> for the next two lessons.</p>
+<p>&nbsp;</p>
+<p>You can also <strong><em>Execute</em></strong> code by clicking the drop down arrow next to the Source button and choosing <strong><em>Execute Code</em></strong> (<a href="#fig-newShortcut" class="quarto-xref">Figure&nbsp;5</a>) . <span class="note">Note: <strong><em>Execute</em></strong> is <em>almost</em> equivalent to <strong><em>Run</em></strong> In RStudio.</span></p>
+<p>&nbsp;</p>
+<p>It is important to learn how to run individual commands but your goal with most scripts is still to be able to execute the whole file using <strong><em>Source</em></strong>.&nbsp; It takes longer to develop a script that can be cleanly <strong><em>Source</em></strong> but it forces you to automate your script which makes your script easier to debug and share.</p>
+<section id="executing-one-line" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="executing-one-line"><span class="header-section-number">5.1</span> Executing one line</h3>
+<p><span class="note">note: <strong><em>Execute</em></strong>, from now on, mean you either click <strong><em>Control/Command+Enter</em></strong> or click <strong><em>Execute Code</em></strong></span></p>
+<p><span class="note">&nbsp;</span></p>
+<p>We already have an example of using <strong><em>Execute</em></strong> to run one line in <a href="#fig-consoleTab" class="quarto-xref">Figure&nbsp;2</a>.&nbsp; When we put the cursor on line <strong>4</strong> and <strong><em>Execute</em></strong>, R runs the <strong><em>cat()</em></strong> command on line <strong>4</strong>.&nbsp; We will talk much more about <strong><em>cat()</em></strong> next lesson but <strong><em>cat()</em></strong> outputs to the <strong><em>Console</em></strong> whatever is in the parentheses.</p>
+<p>&nbsp;</p>
+<p>Actually, <strong><em>Execute</em></strong> will execute the next line with a command. If you put your cursor on line 2 or 3 and <strong><em>Execute</em></strong>, line 4 will still run because line 2 has nothing and 3 is a comment that R ignores. R looks for the next command (on line 4) and executes it.</p>
+<div id="fig-commandLines" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-commandLines-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span>   <span class="fu">cat</span>(<span class="st">"Hello"</span>);             </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>Hello            </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-commandLines-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: The Console after <strong><em>Execute</em></strong> is clicked on line 3
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="executing-one-command-on-multiple-lines" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="executing-one-command-on-multiple-lines"><span class="header-section-number">5.2</span> Executing one command on multiple lines</h3>
+<p>Lines 15-17 contain the command to open the <strong><em>twoWeekWeatherData.csv</em></strong> file and save the data to a data frame named <strong><em>weatherData</em></strong>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>  <span class="do">### read in data from  twoWeekWeatherData.csv   </span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  weatherData <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="at">file=</span><span class="st">"data/twoWeekWeatherData.csv"</span>,                           </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">sep=</span><span class="st">","</span>,                          </span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">header=</span><span class="cn">TRUE</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>When you <strong><em>Execute</em></strong>, R will either run the entire line or, if the line is part of a larger command, will run the whole command. Lines 15-17 is one command over 3 lines. If we put the cursor on any line from 15-17 and <strong><em>Execute</em></strong>, R will run the whole command.</p>
+<p>&nbsp;</p>
+<p>After <strong><em>Execute</em></strong>, the <strong><em>Console</em></strong> shows lines 15-17 were executed – the ( <strong>+</strong> ) at the beginning of the lines in the <strong><em>Console</em></strong> says that this line is a continuation of the command from the previous line.</p>
+<div id="fig-multiline" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-multiline-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> weatherData <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="at">file=</span><span class="st">"data/twoWeekWeatherData.csv"</span>,  </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>«<span class="sc">+</span>»                        <span class="at">sep=</span><span class="st">","</span>, </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>«<span class="sc">+</span>»                        <span class="at">header=</span><span class="cn">TRUE</span>);</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-multiline-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7: Console output when executing the multi-line command to open the csv file
+</figcaption>
+</figure>
+</div>
+<p>Executing lines 15-17 means that you have a new variable named <strong><em>weatherData</em></strong> and this variable is put in <strong><em>Variables</em></strong>:</p>
+<div id="fig-readcsv" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-readcsv-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>weatherData   [<span class="dv">14</span> rows x <span class="dv">5</span> columns] <span class="sc">&lt;</span>data.frame<span class="sc">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-readcsv-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8: The Variables tab after the read.csv() command was executed
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="executing-multiple-commands-on-one-line" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="executing-multiple-commands-on-one-line"><span class="header-section-number">5.3</span> Executing multiple commands on one line</h3>
+<p>You can put as many commands as you want on one line as long as there are semicolons between them.</p>
+<p>&nbsp;</p>
+<p>The following line has three commands that</p>
+<ul>
+<li><p>create two variables (<strong><em>a</em></strong> and <strong><em>b</em></strong>)</p></li>
+<li><p>output the addition of them to the <strong><em>Console</em></strong>.&nbsp;</p></li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>a<span class="ot">=</span><span class="dv">3</span>; b<span class="ot">=</span><span class="dv">7</span>; <span class="fu">cat</span>(<span class="st">"a+b="</span>, a<span class="sc">+</span>b);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong><em>Execute</em></strong> that line will run all 3 commands: <strong><em>a</em></strong> and <strong><em>b</em></strong> are added to <strong><em>Variables</em></strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14" data-tab="Variables"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>a<span class="sc">:</span>   <span class="dv">3</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>b<span class="sc">:</span>   <span class="dv">7</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>And the addition of <strong><em>a</em></strong> and <strong><em>b</em></strong> is displayed in the <strong><em>Console</em></strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span>   a<span class="ot">=</span><span class="dv">3</span>; b<span class="ot">=</span><span class="dv">7</span>; <span class="fu">cat</span>(<span class="st">"a+b="</span>, a<span class="sc">+</span>b);</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>a<span class="sc">+</span>b<span class="ot">=</span> <span class="dv">10</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><span class="note">note: removing the semicolons from that line means R will try to see the line as one command and that will cause an error.</span></p>
+</section>
+<section id="executing-highlighted-script" class="level3" data-number="5.4">
+<h3 data-number="5.4" class="anchored" data-anchor-id="executing-highlighted-script"><span class="header-section-number">5.4</span> Executing highlighted script</h3>
+<p>You can also highlight parts of your script and <strong><em>Execute</em></strong> will run exactly what is highlighted.</p>
+<p>&nbsp;</p>
+<p>If you completely highlight lines 10, 11, and 12:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Hello, World.</span><span class="sc">\n</span><span class="st">"</span>);</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"How are you?</span><span class="sc">\n</span><span class="st">"</span>);</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"I am fine?</span><span class="sc">\n</span><span class="st">"</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>and <strong><em>Execute</em></strong>, the output to the <strong><em>Console</em></strong> is:</p>
+<div id="fig-threeCommands" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-threeCommands-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">cat</span>(<span class="st">"Hello, World.</span><span class="sc">\n</span><span class="st">"</span>);</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span> <span class="fu">cat</span>(<span class="st">"How are you?</span><span class="sc">\n</span><span class="st">"</span>);</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span> <span class="fu">cat</span>(<span class="st">"I am fine?</span><span class="sc">\n</span><span class="st">"</span>);</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>Hello, World.</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>How are you?</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>I am fine?</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-threeCommands-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9: Three commands sent to Console
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="erroneous-highlight-and-execute" class="level3" data-number="5.5">
+<h3 data-number="5.5" class="anchored" data-anchor-id="erroneous-highlight-and-execute"><span class="header-section-number">5.5</span> Erroneous highlight and Execute</h3>
+<p>When you highlight code and <strong><em>Execute</em></strong>, R tries to run the exact code you highlighted. If you make a mistake and, for instance, highlight just a part of line 6 and click <strong><em>Execute</em></strong> .</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Multiple commands on one line</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>«a<span class="ot">=</span><span class="dv">3</span>; b»<span class="ot">=</span><span class="dv">7</span>; <span class="fu">cat</span>(<span class="st">"a+b="</span>, a<span class="sc">+</span>b);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>R will either give you an error (in this case, the variable <code>b</code> not exist):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19" data-tab="Console"><pre class="sourceCode R code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> «a<span class="ot">=</span><span class="dv">3</span>; b»</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>Error<span class="sc">:</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="sc">!</span> object <span class="st">'b'</span> not found</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Or, R will put the code into the <strong><em>Console</em></strong>, <span class="hl">but not run it</span>. This is the equivalent of you typing in code in the <strong><em>Console</em></strong> and not clicking <strong><em>enter</em></strong>. For instance, if you accidentally highlight a bit of line 9 along with lines 10-12 (since the ### was not highlighted, R does not understand the highlighted text is part of a comment:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>  <span class="do">### Outputting multiple text messages «(\n means go to next line)»</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  «<span class="fu">cat</span>(<span class="st">"Hello, World.</span><span class="sc">\n</span><span class="st">"</span>);»</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  «<span class="fu">cat</span>(<span class="st">"How are you?</span><span class="sc">\n</span><span class="st">"</span>);»</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  «<span class="fu">cat</span>(<span class="st">"I am fine?</span><span class="sc">\n</span><span class="st">"</span>);»</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Then in the <strong><em>Console</em></strong> you will get this:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>(\n means go to <span class="cf">next</span> line)                    </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Hello, World.</span><span class="sc">\n</span><span class="st">"</span>);</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"How are you?</span><span class="sc">\n</span><span class="st">"</span>); </span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"I am fine?</span><span class="sc">\n</span><span class="st">"</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The thing to notice here is that the bottom line is not:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This means that R has not ran the command yet – it is looking for more input from the user. This is a very similar situation to when you type <code>cat("He</code> in the <strong><em>Console</em></strong>.</p>
+</section>
+<section id="cleaning-the-console" class="level3" data-number="5.6">
+<h3 data-number="5.6" class="anchored" data-anchor-id="cleaning-the-console"><span class="header-section-number">5.6</span> Cleaning the Console</h3>
+<p>The above situation is awkward and usually you just want the clear the Console so that you have a <code>&gt;</code> prompt again. The easiest way to do this is to press <strong><em>Control+C</em></strong> (Mac: <strong><em>Command+C</em></strong>). This will remove the last entry in the <strong><em>Console</em></strong> and make the last line:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Occasionally, you need to do something more aggressive. In these case you <strong><em>Delete the Session</em></strong> by clicking the garbage. This closes R and prompts you to start a new session, which you will need to do before running any more code.</p>
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="images/R-1-06_DeleteSession-2.png" class="img-fluid figure-img"></p>
+<figcaption>Delete Console Session</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="duplicating-lines-of-code" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="duplicating-lines-of-code"><span class="header-section-number">6</span> Duplicating lines of code</h2>
+<p>Quite often in programming, you are producing multiple lines that are very similar.&nbsp; For instance, you might have multiple lines that start with a <strong><em>cat()</em></strong> command.&nbsp; In Positron you can duplicate a line by putting your cursor on the line and clicking <strong><em>Shift+Alt+DownArrow</em></strong> (Windows) or <strong><em>Shift+Option+DownArrow</em></strong> (Mac).</p>
+<p>&nbsp;</p>
+<p>If you click <strong><em>Shift+Alt/Option+DownArrow</em></strong> on line <strong><em>12</em></strong>, you will get:</p>
+<div id="fig-duplication" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-duplication-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>  <span class="do">### Outputting multiple text messages</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Hello, World."</span>);</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"How are you?"</span>);</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"I am fine?"</span>); </span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  «<span class="fu">cat</span>(<span class="st">"I am fine?"</span>);»</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-duplication-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10: Duplicating a line in Positron using <strong><em>Shift+Alt/Option+DownArrow</em></strong>
+</figcaption>
+</figure>
+</div>
+<p><span class="note">note: <strong><em>Shift+Alt/Option+UpArrow</em></strong> does something very similar… I’ll let you figure out what the difference is</span></p>
+</section>
+<section id="block-comments" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="block-comments"><span class="header-section-number">7</span> Block Comments</h2>
+<p>Often when you are testing code you want to comment lines so they do not run.&nbsp; In Positron you can comment a bunch of lines at once by highlighting the lines you want commented and clicking <strong><em>Control+/</em></strong> on Windows and <strong><em>Command+/</em></strong> on a Mac.</p>
+<p>&nbsp;</p>
+<p>If you highlight lines 9-12 and press <strong><em>Control+/</em></strong> (Mac: <strong><em>Command+/</em></strong>), a ( <span class="hl">#</span>) will appear at the beginning of each line:</p>
+<div id="fig-commentLines" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-commentLines-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>«<span class="co">#» </span><span class="al">###</span><span class="co"> Outputting multiple text messages</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>«<span class="co">#» cat("Hello, World");</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>«<span class="co">#» cat("How are you?");</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>«<span class="co">#» cat("I am fine?");</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-commentLines-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11: Commenting multiple line by using <strong><em>Control+/</em></strong> (Mac: <strong><em>Command+/</em></strong>)
+</figcaption>
+</figure>
+</div>
+<p><span class="note">Note: A ( <strong>#</strong> ) is added to all highlighted lines – even those that were already commented like line 9</span></p>
+<section id="uncommenting-a-block" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="uncommenting-a-block"><span class="header-section-number">7.1</span> Uncommenting a block</h3>
+<p>If all the lines highlighted already have a ( <strong>#</strong> ) then pressing <strong><em>Control/Command+/</em></strong> will uncomment all the lines (i.e., remove a #).&nbsp; Uncommenting only removed the first <strong>#</strong> – so if you uncomment the lines from <a href="#fig-commentLines" class="quarto-xref">Figure&nbsp;11</a>, then the lines will revert back to:</p>
+<div id="fig-uncommentLines" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-uncommentLines-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Outputting multiple text messages</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Hello, World"</span>);</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"How are you?"</span>);</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"I am fine?"</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-uncommentLines-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12: Uncommenting lines – only 1 # is removed so the first line is still commented
+</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="breaking-up-long-lines-of-code" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="breaking-up-long-lines-of-code"><span class="header-section-number">8</span> Breaking up long lines of code</h2>
+<p>Line 15-17 is one command stretched over multiple lines. Just like a period ends a sentence, <span class="hl">a semicolon designates the end of a command</span>.&nbsp; In this case, the <strong><em>read.csv()</em></strong> statement is coded over three line, so the semicolon goes at the end of the third line.&nbsp; As a reminder, <span class="note">R does not enforce semicolon usage</span>, but it is a good idea to put them in.</p>
+<p>&nbsp;</p>
+<p>We could put the whole command on one line and it would execute exactly the same:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>  <span class="do">### same command as above -- this is a little harder to read</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  weatherData2 <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="at">file=</span><span class="st">"data/twoWeekWeatherData.csv"</span>, <span class="at">sep=</span><span class="st">","</span>, <span class="at">header=</span><span class="cn">TRUE</span>); </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong><em>weatherData2</em></strong> appears in <strong><em>Variables</em></strong> alongside <strong><em>weatherData</em></strong>, and it is exactly the same as <strong><em>weatherData</em></strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28" data-tab="Variables"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>weatherData   [<span class="dv">14</span> rows x <span class="dv">5</span> columns] <span class="sc">&lt;</span>data.frame<span class="sc">&gt;</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>weatherData2  [<span class="dv">14</span> rows x <span class="dv">5</span> columns] <span class="sc">&lt;</span>data.frame<span class="sc">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="avoid-horizontal-scrolling-when-possible" class="level3" data-number="8.1">
+<h3 data-number="8.1" class="anchored" data-anchor-id="avoid-horizontal-scrolling-when-possible"><span class="header-section-number">8.1</span> Avoid horizontal scrolling (when possible)</h3>
+<p>But, it is easier to read the multiple-line code.&nbsp; As a general rule, <span class="hl">you should try to avoid horizontal scrolling of your script</span> (anything beyond 90 characters) as this makes the script hard to read.</p>
+<p>&nbsp;</p>
+<p>In R, you can break most lines of code into multiple lines with a few exceptions (one exception being long file-paths). You just need to be judicious about how you break up the line – the best places to break up a line of code are after a comma or where a space occurs.</p>
+</section>
+</section>
+<section id="application" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="application"><span class="header-section-number">9</span> Application</h2>
+<ol type="1">
+<li><p>Highlight <code>header=TRUE</code> in line 17 (do not highlight the <code>);</code>) and <strong><em>Execute</em></strong>.&nbsp; In comments explain what happens and why.</p></li>
+<li><p>In the Console, create a variable that is the multiplication of <code>a</code> and <code>b</code>. Make sure the variable appears in <strong><em>Variables</em></strong> and show what you did in comments.</p></li>
+<li><p>Combine the lines 10, 11, and 12 into one line – don’t change the <strong><em>cat()</em></strong> commands.</p></li>
+<li><p>In comments answer: How many commands are there in the script file for this lesson?</p></li>
+<li><p>In comments answer: If you rewrote the script, what is the minimum number of lines you would need to execute every command in this lesson’s script? Assume there is no limit for line length.</p></li>
+</ol>
+<p>&nbsp;</p>
+<p>If you have any questions regarding this application, feel free to email them to Charlie Belinsky at belinsky@msu.edu.</p>
+<section id="questions-to-answer" class="level3" data-number="9.1">
+<h3 data-number="9.1" class="anchored" data-anchor-id="questions-to-answer"><span class="header-section-number">9.1</span> Questions to answer</h3>
+<p>Answer the following in comments inside your application script:</p>
+<ol type="1">
+<li><p>What was your level of comfort with the lesson/application?</p></li>
+<li><p>What areas of the lesson/application confused or still confuses you?</p></li>
+<li><p>What are some things you would like to know more about that is related to, but not covered in, this lesson?</p></li>
+</ol>
+</section>
+<section id="upload-changes-to-github" class="level3" data-number="9.2">
+<h3 data-number="9.2" class="anchored" data-anchor-id="upload-changes-to-github"><span class="header-section-number">9.2</span> Upload changes to GitHub</h3>
+<ol type="1">
+<li><p>In <strong><em>Source Control</em></strong> tab, under <strong><em>Changes</em></strong> click ( + ): <strong><em>Stage All Changes</em></strong></p>
+<ul>
+<li>All changed files will now be listed under <strong><em>Staged Changes</em></strong></li>
+</ul></li>
+<li><p>Add a message “App1-06 finished”</p></li>
+<li><p>Click <strong><em>Commit</em></strong></p></li>
+<li><p>The Commit button will become a Sync button, click <strong><em>Sync</em></strong></p></li>
+<li><p>Email belinsky@msu.edu with the message that application 1-06 is finished <strong><em>OR</em></strong> <a href="#extension-create-an-issue-in-github">Extension: Create an issue in GitHub</a></p></li>
+</ol>
+<div id="fig-upload" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-upload-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-1-01_Upload.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-upload-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;13: Upload changes to GitHub – the red circle indicates how many files that changed (in this case: 1)
+</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="extension-create-an-issue-in-github" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="extension-create-an-issue-in-github"><span class="header-section-number">10</span> Extension: Create an issue in GitHub</h2>
+<ol type="1">
+<li><p>Go to your project folder (repository) on GitHub</p></li>
+<li><p>Click on <strong><em>Issues</em></strong> (top of page)</p></li>
+<li><p>Click on <strong><em>New Issue</em></strong> (green button – not pictured)</p></li>
+<li><p>Click on Setting wheel and add the instructor as an assignee (<strong><em>belinskyc</em></strong>)</p></li>
+<li><p>Put in <strong><em>title</em></strong> that the application 1-06 is finished, add anything you want to the <strong><em>description</em></strong></p></li>
+<li><p>Click <strong><em>Create</em></strong></p></li>
+</ol>
+<div id="fig-inform" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-inform-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-1-01_Inform.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-inform-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;14: Informing your instructor the application is finished
+</figcaption>
+</figure>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
