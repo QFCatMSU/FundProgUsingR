@@ -62,13 +62,24 @@ cat(Hello); # Will cause an «object not found» error
 
 ::: {#fig-varError}
 ``` {.r tab="Console"}
-Error in cat(Hello) : object Hello not found
+> cat(Hello);
+Error:
+! object 'Hello' not found
+ 🞂 Show Traceback
+>
 ```
 
 An error that occurs if you try to output a variable (object) that does not exist in your script.
 :::
 
 [Note: If there is a variable named ***Hello*** in your script, then ***cat(Hello);*** will output the value of the variable ***Hello***.]{.note}
+
+``` {.r tab="Console"}
+> Hello = "howdy"
+> cat(Hello)
+howdy
+>
+```
 
 ### Output multiple messages
 
@@ -136,7 +147,7 @@ Using one **cat()** statement with multiple **\\n** to output multiple lines of 
 
 ## Escape character: backslash ( \\ )
 
-The backslash in programming is used in a string as an [escape character]{.hl}*.* An escape character tells R that the next character is to be treated as a command rather than the character. This is similar to the way the **Shift**, **Control,** or **Alt** keys on your keyboard change the meaning of the character that is pressed with them (e.g, ***control-C*** is a command to copy).
+The backslash in programming is used in a string as an [escape character]{.hl}*.* An escape character tells R that [the next character is to be treated as a command]{.hl} rather than the character. This is similar to the way the **Shift**, **Control,** or **Alt** keys on your keyboard change the meaning of the character that is pressed with them (e.g, ***control-C*** is a command to copy).
 
  
 
@@ -144,7 +155,7 @@ Backslash can be used to
 
 - put in a control like a line feed ( ***\\n*** ) or a tab ( ***\\t*** )
 
-- print a character that has a functional meaning like a double quote ( ***\\"*** ). In other words, treat the double quote as a character for output, not as the start or end of a string. This also works if you want to output a backslash ( **\\\\** )
+- print a character that has a functional meaning like a double quote ( ***\\"*** ). In other words, treat the double quote as a character for output instead of the start or end of a string. This also works if you want to output a backslash ( **\\\\** )
 
 - print our characters not on the keyboard using Unicode.  Here is a [link to a partial list of Unicode characters](https://www.rapidtables.com/code/text/unicode-characters.html).  Use the **Escape sequence** given on the page.  [Note: [according to Wikipedia](https://en.wikipedia.org/wiki/List_of_Unicode_characters), as of Sept 2025, there are almost 300,000 Unicode characters -- including an insane number of emojis (a recent addition).]{.note}
 
@@ -159,7 +170,7 @@ cat("Some Unicode characters: \u00C5 \u0A94 \u0115\n");
 ```
 
 ::: {#fig-backslash}
-``` {.r tab="Environment"}
+``` {.r tab="Console"}
     And the boy said, "Hello" 
 Send a backslash \ to the Console
 Some Unicode characters: Å ઔ ĕ
@@ -202,7 +213,7 @@ cat("\n");      # adds a line feed -- so the next message goes to the next line
 45 43 46 38 36 45 32 50 48 40 36 43 45 63
 ```
 
-Output the 12 values in the lowTemps variable
+Output the 14 values in the lowTemps variable
 :::
 
 ### Combine text and variables in one command
@@ -284,7 +295,7 @@ Or, we can use the sequencing operator ( **:** ) and the sequencing function ***
 Output of sequenced values in lowTemps
 :::
 
-And add messages to the above output:
+And also add messages to the above output:
 
 ``` {.r tab="Console"}
   cat("Day 5-9 temperature:",lowTemps[5:9], "\n");  
@@ -322,17 +333,24 @@ We have used ***cat()*** many times in this script to output variable and text t
 
  
 
-Let's search for **cat** in the search bar of the ***Help*** tab:
+Type ?cat in the Console to open the Help for cat():
 
-![Information about the cat() function in the Help tab.](images/R-01-06%20Cat%20function.PNG){#fig-catHelp .fs}
+``` r
+> ?cat
+```
 
-The first part of ***cat()*** is the three dots "**...**".  When the 3 dots are at the beginning of a function, the three dots say that the function [will accept any number of objects]{.hl} as inputs.  The objects can be text in quotes, string variables, numeric variables, or other objects we have not discussed yet like ***Dates***.
+![Information about the cat() function in the Help tab.](images/R-1-06_CatHelp.png){#fig-catHelp .fs}
+
+The first part of ***cat()*** is the three dots "**...**".  When 3 dots come before the arguments of a function, this means the function [will accept any number of objects]{.hl} as inputs.  The objects can be text in quotes, string variables, numeric variables, or other objects we have not discussed yet like ***Dates***.
 
  
 
-[Note: the three dots in ***cat()*** has a different meaning from the three dots in ***read.csv()***.]{.note}  When three dots are at the first argument of a function (e.g., ***cat()***) it means that any number of inputs are accepted.  When the three dots are elsewhere (e.g., ***read.csv()***) it means the function can be extended with arguments that are not on the list (something that is pretty advanced).
+When the three dots are elsewhere, as in ***read.csv()***, it means the function can be extended with arguments that are not on the list (this is an advanced topic).
 
- 
+``` {.r tab="Help"}
+read.csv(file, header = TRUE, sep = ",", quote = "\"",
+         dec = ".", fill = TRUE, comment.char = "", «...»)
+```
 
 After the three dots, ***cat()*** has **5** arguments: ***file***, ***sep***, ***fill***, ***labels***, and ***append.*** These all have default values (e.g., file="", sep=" ")
 
@@ -347,10 +365,10 @@ Let's take the code from above and add the ***sep*** argument to ***cat()*** and
 ``` r
   cat("Day 5-9 temperature:", lowTemps[5:9], "\n", 
       "Temp on odd days:", lowTemps[seq(from=1, by=2, to=10)], "\n",
-      sep = " ** ");
+      «sep = " ** "»);
 ```
 
-And you will notice that the different components in ***cat()*** are separated by " \*\* ".
+The different components in ***cat()*** are now separated by " \*\* ".
 
 ::: {#fig-sepArgument}
 ``` {.r tab="Console"}
@@ -369,7 +387,7 @@ Using the **sep** argument in **cat()**
 
 ### The **file** argument
 
-By default, ***cat()*** will output to the ***Console***. But, you can have ***cat()*** output to a file by using the ***file*** argument.  The ***file*** argument in ***cat()*** works just like the ***file*** argument in ***read.csv()*** with one exception:  if the file does not exist yet then R will create the file.
+By default, ***cat()*** will output to the ***Console***. But, you can have ***cat()*** output to a file using the ***file*** argument.  The ***file*** argument in ***cat()*** works just like the ***file*** argument in ***read.csv()*** with one exception:  if the file does not exist then R will create the file.
 
  
 
@@ -391,7 +409,7 @@ A. Line 47 in the [script downloaded for this lesson](../scripts/1-07_Outputs.R 
 
  
 
-B. In the ***Help*** for the function ***c()***, the S3 method has 3 dots ( **...** ) as the first argument. In comments answer: What does the three dots tell you about the ***c()*** function?
+B. In the ***Help*** for the function ***c()***, the ***Default S3 method*** has 3 dots ( **...** ) as the first argument. In comments answer: What does the three dots tell you about the ***c()*** function?
 
  
 
@@ -405,7 +423,7 @@ C.  Using one ***cat()***, output to the ***Console***:
 
 - the precipitation for days 12, 9, 4 -- using a index vector created with ***c()***
 
-- Challenge: output the total precipitation for the first 10 days (without using ***sum()***, which is not something you have learned yet!)
+- Challenge: output the total precipitation for the first 10 days (without using ***sum()***)
 
 Make sure you use newlines (***\\n***) to make the output readable.
 
@@ -422,11 +440,11 @@ E. Challenge: Using ***cat()***, append your name and three different Unicode ch
 - Again, use the ***Help*** for ***cat()*** to figure out how to add text to a file.\
    
 
-{{< include ../assets/_AppInstructions.qmd >}}
+{{< include ../assets/_AppInstructions_Pos.qmd >}}
 
 ## Extension: cat() vs print() {#extension-cat-vs-print}
 
-The two main functions used to output to the ***Console*** are ***cat()*** and ***print()***. [The big difference is that ***print()*** does a lot more formatting of the output than ***cat()***.]{.hl}  You would likely use ***print()*** when you want to display the results of a statistical test, which often has a complicated format.  ***cat()*** does very little formatting on its own – ***cat()*** lets the programmer control the output.  You would use this when you want to output text and some simple data – or, where you really want control of the output format.
+The two main functions used to output to the ***Console*** are ***cat()*** and ***print()***. [The big difference is that ***print()*** does a lot more formatting of the output than ***cat()***.]{.hl}  You would likely use ***print()*** to display the results of a statistical test, which often has a complicated format.  ***cat()*** does very little formatting on its own, allowing the programmer more control over the output.  You would use this when you want to output text and some simple data or more control over formatting.
 
 ## Trap: Misplacing (or forgetting) quotes {#trap-misplacing-or-forgetting-quotes}
 
@@ -448,19 +466,21 @@ cat("The End");
 If you execute the script above, you will get the following message in the ***Console***:
 
 ``` {.r tab="Console"}
-> source("~/.active-rstudio-document")
-Error in source("~/.active-rstudio-document") : 
-  ~/.active-rstudio-document:«7:26: unexpected '\\'»
+> source("c:/Users/Charlie/Desktop/Test.R", echo = TRUE)
+Error in `original_source()`:
+! c:/Users/Charlie/Desktop/Test.R:«7:26: unexpected '\\'»
 6: 
 7: cat("The values are..., "\
                             ^
+ 🞂 Show Traceback
+>
 ```
 
 The error is [unexpected '\\\\']{.hl} on line **7**, character **26**. R is telling you that is does not understand why the character on line 7, character 26 is a backslash ( **\\** ). This might not be the most helpful message.
 
  
 
-However, RStudio has a built-in feature to help you find misplaced quotes -- the color scheme.  The quoted text is in a different color than other parts of the code.  For example, in the XCode color scheme -- text that R sees in quotes is colored red.
+However, Positron has a built-in feature to help you find misplaced quotes -- the color scheme.  Quoted text is a different color than other parts of the code.  For example, in the default theme in Positron, quoted text is red.
 
  
 
@@ -477,15 +497,16 @@ cat("The values are...«"», "\nDistance: ", distance, "\ntime: ",
     time, "\nvelocity: ", velocity);
 ```
 
-Now the correct components of the output are in quotes and the script executes without an error:
+Now the correct components of the output are in quotes and the script Sources without an error ([note: this is without echo]{.note}):
 
 ``` {.r tab="Console"}
-> source("~/.active-rstudio-document")
+> source("c:/Users/Charlie/Desktop/Test.R")
 The values are... 
 Distance:  100 
 time:  50 
 velocity:  2
 The End
+>
 ```
 
 ## Extension: Sending Console info directly to file
@@ -496,7 +517,7 @@ The End
 sink(file="data/output2.txt") # send Console content to data
 ```
 
-This means RStudio will [send the output from all script execution]{.hl} (no matter the script file) to the ***output2.txt*** file until you undo the command like this:
+This means R will [send the output from all script execution]{.hl} (no matter the script file) to the ***output2.txt*** file until you undo the command like this:
 
 ``` r
 sink(file=NULL)
