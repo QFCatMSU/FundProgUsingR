@@ -58,7 +58,7 @@ And you will often find combinations of the above.  When dealing with data fram
 
  
 
-For the next couple of lessons we are just going to focus on ***if-else*** statements.  After that, we will introduce ***for*** loops with ***if-else*** statements.
+For the next couple of lessons we are just going to focus on ***if-else*** statements.  After that, we will introduce ***if-else*** statements embedded within ***for*** loops
 
 ## Questions and Statements
 
@@ -74,7 +74,7 @@ The ***if()*** statement can almost be thought of as a question with a **yes/no*
 
  
 
-Except, instead of questions with **yes/no** answer, [**if()** contains statements with **TRUE/FALSE** conditions]{.hl}:
+Except, instead of questions with **yes/no** answer, [***if()*** contains statements with **TRUE/FALSE** conditions]{.hl}:
 
 - *The fish's weight is below 100 grams.* (TRUE/FALSE)
 
@@ -92,7 +92,7 @@ The basic structure of an ***if()*** statement is:
 ``` r
 if (some conditional statement is TRUE)
 { 
-   # Execute the code in this codeblock if the conditional statement is TRUE.
+   # Execute the code in this codeblock 
    # note: All command within the codeblock are indented
 }
 # next lesson we will cover what happens if the conditional statement is FALSE.
@@ -101,7 +101,7 @@ if (some conditional statement is TRUE)
 Structure of an if() statement
 :::
 
-Inside the curly brackets ( ***{  }*** ) attached to the ***if()*** is a [codeblock]{.hl}, or a series of commands, that gets executed if the conditional statement is **TRUE**.  If the statement is **FALSE**, the codeblock is skipped.
+Inside the curly brackets ( ***{  }*** ) attached to the ***if()*** is a [codeblock]{.hl}, or a series of commands, that gets executed if the conditional statement is **TRUE**.  If the statement is **FALSE**, the codeblock is ignored.
 
  
 
@@ -112,11 +112,11 @@ Let's do a simple example where a random number is picked and an ***if()*** stat
 randomTemp = sample(30:80, size=1);  # pick a random number between 30 and 80
 
 if (randomTemp > 50)  # if randomTemp is greater than 50...
-{ 
+«{» 
   # ...execute the commands in this codeblock
   cat("The temperature is", randomTemp);
   cat("warm enough to go outside\n");
-}
+«}»
 # next lesson we will cover what happens if the conditional statement is FALSE.
 ```
 
@@ -127,17 +127,17 @@ An example of an if() statement
 
 The curly brackets ( **{  }** ) designate the beginning and the end of the codeblock attached to the ***if()***.  There are many ways to space the curly brackets but only two methods that are generally accepted in the programming world:
 
-- @fig-ifExample where the curly brackets are on their own line and lined up at the same level as the ***if()*** and all code inside is indented
+- @fig-ifExample where the curly brackets are on their own line and lined up at the same level as the ***if()*** and [all code inside is indented]{.hl}
 
 - @fig-ifAlt where the start bracket is on the same line as the ***if()*** statement -- everything else is the same as the first example
 
 ::: {#fig-ifAlt}
 ``` r
-if (randomTemp > 50)  { # if randomTemp is greater than 50...
+if (randomTemp > 50)  «{» # if randomTemp is greater than 50...
   # ...execute the commands in this codeblock
   cat("The temperature is", randomTemp);
   cat("warm enough to go outside\n");
-}
+«}»
 # next lesson we will cover what happens if the conditional statement is FALSE.
 ```
 
@@ -160,7 +160,7 @@ The conditional statement inside the parentheses of the ***if()*** contains at l
 
 ``` r
 if( fishWeight «<» 100 )                # is greater than
-if( runner1Speed «>» runner2Speed)      # is less than
+if( runner1Speed «>» runner2Speed )     # is less than
 if( location «==» "Silver Lake" )       # is equal to
 if( temperature «<=» 30 )               # is less than or equal to
 ```
@@ -177,25 +177,25 @@ A [conditional operator]{.hl} does two things:
 
 There are six conditional operators in programming:
 
-+-------------+-------------------------------------------------------+
-| Operator    | Meaning                                               |
-+=============+=======================================================+
-| ==          | equal to                                              |
-|             |                                                       |
-|             | (easily confused with the assignment operator, **=**) |
-+-------------+-------------------------------------------------------+
-| !=          | not equal to                                          |
-|             |                                                       |
-|             | (reverses the logic of **==**)                        |
-+-------------+-------------------------------------------------------+
-| \>=         | greater than or equal to                              |
-+-------------+-------------------------------------------------------+
-| \<=         | less than or equal to                                 |
-+-------------+-------------------------------------------------------+
-| \>          | greater than (only)                                   |
-+-------------+-------------------------------------------------------+
-| \<          | less than (only)                                      |
-+-------------+-------------------------------------------------------+
++---------------+-------------------------------------------------------+
+| Operator      | Meaning                                               |
++===============+=======================================================+
+| ==            | equal to                                              |
+|               |                                                       |
+|               | (easily confused with the assignment operator, **=**) |
++---------------+-------------------------------------------------------+
+| !=            | not equal to                                          |
+|               |                                                       |
+|               | (reverses the logic of **==**)                        |
++---------------+-------------------------------------------------------+
+| \>=           | greater than or equal to                              |
++---------------+-------------------------------------------------------+
+| \<=           | less than or equal to                                 |
++---------------+-------------------------------------------------------+
+| \>            | greater than (only)                                   |
++---------------+-------------------------------------------------------+
+| \<            | less than (only)                                      |
++---------------+-------------------------------------------------------+
 
 [Note: \>=, \<=, \>, and \< operators are usually used to compare two numeric values. However they can be used to compare string values.]{.note}
 
@@ -271,7 +271,7 @@ Checking highTemps 3, 4, and 5 to see which are > 50:
   high temp 3 is greater than 50
 ```
 
-[Note: This is not an efficient way to check multiple values. The more efficient way is using ***for()***.]{.note}[Extension: Checking all values in a vector (for loops)](#extension-checking-all-values-in-a-vector-for-loops)
+[Note: This is not an efficient way to check multiple values. The more efficient way is to put the if-else inside a ***for()*** loop (in a later lesson).]{.note}
 
  
 
@@ -325,7 +325,7 @@ Checking high temp 2 using all 6 conditional operators:
 
 ## Conditional Operators with characters/strings
 
-We are going to use conditional operators on the values in the ***noonCondition*** vector.  The ***noonCondition*** vector consists of character values, or, as they are more commonly called, [string values]{.hl} (labelled ***chr*** in the ***Environment*** tab).  Since the value is a ***string/chr***, we need to compare it to a value in quotes
+We are going to use conditional operators on the values in the ***noonCondition*** vector.  The ***noonCondition*** vector consists of character values, or, as they are more commonly called, [string values]{.hl} (labelled ***str*** in ***Variables***).  Since the value is a ***string***, we need to compare it to a value in quotes
 
  
 
@@ -385,7 +385,7 @@ However, you can put quotes around a number:
   if(highTemps[2] >= "50")  # this will often give a wrong answer...
 ```
 
-This change the number 50 to the two characters: "5" and "0".  Coincidentally, the ***if()*** statement above is also ***TRUE***, but for the wrong reason.  [Extension: Numbers as Characters]
+This change the number 50 to the two characters: "5" and "0".  The ***if()*** statement above is also ***TRUE***, but for the wrong reason.  [Extension: Numbers as Characters]
 
 ### Case counts with strings
 
@@ -468,7 +468,9 @@ A\) Using ***if()***, find which of the first five days had at least 1 inch of r
 
  
 
-B\) Using ***if(),*** find which of the last five days had a low temperature that was 40 degrees or less.  For those days output ***date*** to the ***Console***. *\*
+B\) Using ***if(),*** find which of the last five days had a low temperature that was 40 degrees or less.  For those days output ***date*** to the ***Console***.
+
+ 
 
 C\) Use ***sample()*** to pick a random temperature from **40-80** (make sure you save the value to a variable)
 
@@ -498,7 +500,7 @@ The four scenario are mutually exclusive (do not overlap each other) and complet
 
  
 
-{{< include ../assets/_AppInstructions.qmd >}}
+{{< include ../assets/_AppInstructions_Pos.qmd >}}
 
 ## Extension: Curly bracket placement
 
@@ -578,7 +580,7 @@ if(highTemps[5] > 50)
   cat("  high temp 5 is greater than 50\n");
 ```
 
-But, this works if [there is only one command]{.hl} attached to each ***if()*** statement.  The curly brackets are always needed if there if more than one command. This author would not recommend removing brackets if you are a beginner, it can lead to problems down the road.
+But, this only works if [there is one command]{.hl} attached to each ***if()*** statement.  The curly brackets are always needed if there if more than one command. This author would not recommend removing brackets if you are a beginner, it can lead to problems down the road.
 
 ## Extension: Greater than and less than on strings
 
