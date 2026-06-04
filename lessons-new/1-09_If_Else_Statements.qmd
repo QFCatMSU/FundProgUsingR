@@ -28,7 +28,7 @@ If you have any questions about the material in this lesson, feel free to email 
 
 ## Dealing with FALSE conditions
 
-In the last lesson we looked at execution of the ***if()*** statement and how it changes the flow of a script.  ***if()*** statements contain a conditional statement inside the parenthesis and an attached codeblock surrounded by curly brackets ( ***{ }*** ).  The codeblock is only executed if the conditional statement is ***TRUE***. 
+In the last lesson we looked at execution of the ***if()*** statement and how it changes the flow of a script.  ***if()*** statements contain a conditional statement inside the parentheses and an attached codeblock surrounded by curly brackets ( ***{ }*** ).  The codeblock is only executed if the conditional statement is ***TRUE***. 
 
 ``` r
 randomNum = sample(1:100, size=1);
@@ -221,11 +221,11 @@ But there are two problems with the code above:
 
 - You are executing code that you know does not need to be executed.  ***Sunny*** and ***Not Sunny*** are mutually exclusive -- there is no need for the script to check both.  This extra check adds a little bit to the script's execution time and this can make a difference if you are checking 100,000 values in a data frame.
 
-- An ***if-else*** statement is easier to debug than two individual ***if()*** statements because you only need to debug one conditional statement -- as opposed to two.
+- An ***if-else*** statement is easier to debug than two individual ***if()*** statements because there is only one conditional statement to debug (as opposed to two).
 
 ## Adding in more conditions: if-else-if Structures
 
-We are limited to two outcomes when using ***if-else*** structures: (a) the ***if()*** condition is ***TRUE*** or (b) The ***if()*** condition is ***FALSE***.  However, the examples above contain situations that could easily have more than two possible condition.  For instance, the ***noonCondition*** can be "Sunny", "Cloudy", or "Rain" -- and we can check for all three in an ***if-else-if*** structure.
+We are limited to two outcomes when using ***if-else*** structures: (a) the ***if()*** condition is ***TRUE*** or (b) The ***if()*** condition is ***FALSE***.  However, the examples above contain situations that could easily have more than two possible conditions.  For instance, ***noonCondition*** can be "Sunny", "Cloudy", or "Rain" -- and we can check for all three in an ***if-else-if*** structure.
 
  
 
@@ -261,13 +261,17 @@ Checking day 4 against multiple conditions:
 
 In @fig-multConditions, if we replaced day 4 with day 2, which was "Cloudy", then only the first condition (***noonCond\[4\] == "Cloudy"***) gets checked.  Because "Cloudy" is **TRUE** there is no need to check "Sunny" and "Rain".  If there are thousands of values to check (e.g., you are checking all the values in a large vector -- next lesson) then a lot of computational time is saved by not checking conditions that cannot be **TRUE**.
 
-## The error or everything else condition
+## The error, or everything else, condition
 
 We often want to execute something for values we have not prepared for.  For instance, a phone system might have menu options numbered **1** through **5**.  If the user presses **7**, the system will usually have a message saying something like "sorry, **7** is not an option".
 
  
 
-The problem with the script above is that it does nothing if the condition for the day is not given anywhere in the ***if-else-if*** structure (i.e., all the conditional statements are **FALSE**). In an ***if-else-if*** structure you cannot anticipate everything that somebody will input into a dataframe -- let alone all of the errant spellings.  To resolve this, we create what is often referred to as an [error condition]{.hl}*,* meaning we set up a codeblock that gets executed if none of the conditions in the ***if-else-if*** structure are ***TRUE***.  This error codeblock gets attached at the end to an ***else*** statement.
+The problem with the script above is that it does nothing if the condition for the day is not given anywhere in the ***if-else-if*** structure (i.e., all the conditional statements are **FALSE** *-* perhaps the condition was ***Fog***).
+
+ 
+
+In an ***if-else-if*** structure you cannot anticipate everything that somebody will input into a dataframe -- let alone all of the errant spellings.  To resolve this, we create what is often referred to as an [error condition]{.hl}*,* meaning we set up a codeblock that gets executed if none of the conditions in the ***if-else-if*** structure are ***TRUE***.  This error codeblock gets attached at the end to an ***else*** statement.
 
 ::: {#fig-errorCondition}
 ``` r
@@ -289,7 +293,7 @@ if(noonCond[5] == "Cloudy")       # 1st check: the day is cloudy
 Adding an error condition to the if-else-if structure
 :::
 
-Since we have an ***else*** statement at the end, there is guaranteed to be a response from the script no matter what ***noonCond*** is:
+The ***else*** statement guarantees a response from the script – no matter what ***noonCond*** is:
 
 ``` {.r tab="Console"}
 Checking day 5 against multiple conditions:
@@ -298,7 +302,7 @@ Checking day 5 against multiple conditions:
 
 ### Error statement help in debugging
 
-Adding the error statement also helps you debug your code.  In this case, the error statement tells you that some value (Fog) does not meet any of the conditions and you can use the codeblock attached to the ***else*** statement to provide useful information about what went wrong -- and perhaps suggest a fix.
+Adding the error statement also helps you debug your code.  In this case, the error statement tells you that some value does not meet any of your conditions. The codeblock attached to the ***else*** statement can be used to provide useful information about what went wrong -- and perhaps suggest a fix.
 
 ## Creating number ranges using if-else structures
 
@@ -334,11 +338,11 @@ Checking temperature of day 3:
 
 ### if-else-if statements are mutually exclusive
 
-[An **if-else-if** structure ends as soon as a condition is determined to be **TRUE**.]{.hl} This means that at most one codeblock in an ***if-else-if*** structure gets executed.  In the above example (@fig-numberRanges), if the temperature is 75 (i.e., day 14), the first condition (***highTemps\[14\] \> 70***) is ***TRUE*** and "That is hot for April" is output. [The **if-else-if**  ends here and none of the other conditions are checked.]{.hl}
+An **if-else-if** structure ends as soon as a condition is determined to be **TRUE**. This means that [at most one codeblock in an ***if-else-if*** structure gets executed]{.hl}.  In the above example (@fig-numberRanges), if the temperature is 75 (i.e., day 14), the first condition (***highTemps\[14\] \> 70***) is ***TRUE*** and "That is hot for April" is output. The **if-else-if**  ends here and none of the other conditions are checked.
 
  
 
-The second condition (**highTemp\[14\] \> 60**) would, if checked, also be **TRUE**. But this condition does not get checked because a condition above was already **TRUE** -- the ***if-else-if*** structure is done executing.
+The second condition (**highTemp\[14\] \> 60**) would, if checked, also be **TRUE**. But this condition does not get checked because a condition above was already **TRUE** -- the ***if-else-if*** structure stopped there.
 
  
 
@@ -350,7 +354,7 @@ A\) In comments answer: Why can I say that the fourth condition `else if(highTem
 
  
 
-B\) In comments answer: Why might it be easier to find errors in a dataset using ***if-else-if*** structures vs. just ***if()*** statements?
+B\) In comments answer: Why might it be easier to find errors in a dataset containing weight values using ***if-else-if*** structures vs. just ***if()*** statements? Give examples.
 
  
 
@@ -395,7 +399,7 @@ D\) The following line creates a random number between **-30** and **120** and s
 
 E\) Repeat parts C, D, and E from the application in last lesson ([1-08: Conditional Operations](1-08_Conditional_Operations.html#application){target="_blank"}) using ***if-else*** statements. [Note: there are a few different ways to do this.]{.note}
 
-{{< include ../assets/_AppInstructions.qmd >}}
+{{< include ../assets/_AppInstructions_Pos.qmd >}}
 
 ## Trap: TRUE and FALSE are keywords, T and F are not
 
@@ -403,7 +407,7 @@ The terms ***TRUE*** and ***FALSE*** are reserved [keywords]{.hl} in R -- this m
 
  
 
-If you try to assign a value to a "variable" named TRUE or FALSE, you will get an [invalid (do_set) left-hand side to assignment]{.hl} error (@fig-keyword-error).  This is the same error you get if you try to assign a value to a number (e.g., 10 = "a").
+If you try to assign a value to a "variable" named ***TRUE*** or ***FALSE***, you will get an [invalid (do_set) left-hand side to assignment]{.hl} error (@fig-keyword-error).  This is the same error you get if you try to assign a value to a number (e.g., `10 = "a"`).
 
 ![Assigning a value to a keyword causes an error.](images/R-1-09_keyword_error.png){#fig-keyword-error .fs}
 
@@ -531,7 +535,7 @@ if(score > 90)
 }else if(score > 60) # score between 60-70
 { 
    cat("D");
-}else (score <= 60)  # will cause an error
+}else (score <= 60)  «# will cause an error»
 {                 
    cat("E");
 }
@@ -541,7 +545,7 @@ The script seems to work at first.  If you type in a value below 55 then "E" wi
 
 ![Putting a condition on an else causes an error](images/R-1-09_ElseWithConditionError.png){#fig-else-condition-error .fs}
 
-What happens is that the errant condition ***(score \<= 60)*** was attached to the else instead of the codeblock. Since the codeblock below was was detached from the ***else*** statement, it execute without condition (i.e., all the time).
+What happens is that the errant condition ***(score \<= 60)*** was attached to the ***else*** instead of the codeblock. Since the codeblock below was was detached from the ***else*** statement, it execute without condition (i.e., it executes everytime).
 
 ``` r
 {                 
