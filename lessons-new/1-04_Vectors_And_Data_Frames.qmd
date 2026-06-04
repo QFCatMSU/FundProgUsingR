@@ -105,7 +105,7 @@ tempHighCel: num [1:5] 18.3 139 16.1 17.5 15
 tempMean:    61.2
 ```
 
-![View of temperature values in Environment](images/R-1-04-TempValue-in-Env-2.png){#fig-environment-view .fs}
+![View of temperature values in Variables](images/R-1-04-TempValue-in-Env-2.png){#fig-environment-view .fs}
 
 [note: ***dbl \[5\]*** means there are 5 double values in the vector, ***int*** stands for integer]{.note}
 
@@ -237,13 +237,13 @@ In ***weatherData*** there are three types of values:
 
  
 
-[This only works if you are in the]{.hl} Project Folder because the Project Folder sets the Working Directory to your Project Folder.
+[This only works if you are in the]{.hl} Project Folder because the Working Directory is set to your Project Folder.
 
  
 
 If you execute the script file outside your Project Folder (@fig-open-outside-project), you will get a [cannot open file]{.hl} error in the ***Console*** because the script does not know to find the CSV file.
 
-![You get a cannot open file error if you try to execute the script outside of your Project Folder](images/R-1-04-OutSideRSP.png){#fig-open-outside-project .fs}
+![You get a cannot open file error if you try to execute the script outside of your Project Folder](images/R-1-04_OpenOusidePF.png){#fig-open-outside-project .fs}
 
 ### sep
 
@@ -259,7 +259,7 @@ The most common alternate separator values are spaces ( ***sep = " "*** ) and do
 
  
 
-***header = FALSE*** would mean that the first row contains data (i.e., there are no column names).  If you set ***header=FALSE*** in this example then R will think that the column names are the first data point.  So, you will have 15 values in each vector and the first value will not make sense.
+***header = FALSE*** means that the first row contains data (i.e., there are no column names).  If you set ***header=FALSE*** in this example then R will think that the column names are the first value in the vector.  This means you will have 15 values in each vector and the first value will not make sense.
 
 ### Default values for arguments
 
@@ -273,7 +273,7 @@ But I like to keep ***sep*** and ***header*** in my code because you often do ne
 
 ## Getting data
 
-We now have a data frame with weather information stored in a variable called ***weatherData***.  But we usually do not want to deal with the whole data frame at once.  So, our next trick will be to extract parts of the data from the data frame.  We might want to work with one column in the data frame (e.g., ***highTemp*** or ***precipitation***).  We can see all the columns in the data frame by expanding the data frame in the ***Environment*** or looking at the headers in the ***File Viewer*** (both views are in @fig-view-dataframe). 
+We now have a data frame with weather information stored in a variable called ***weatherData***.  But we usually do not want to deal with the whole data frame at once.  So, our next trick will be to extract parts of the data from the data frame.  We might want to work with one column in the data frame (e.g., ***highTemp*** or ***precipitation***).  We can see all the columns in the data frame by expanding the data frame in ***Variables*** or looking at the headers in the ***File Viewer*** (both views are in @fig-weatherdataframe). 
 
 ### Pulling out a column
 
@@ -287,9 +287,9 @@ We start with ***weatherData*** and, use the dollar sign operator ( ***\$*** ) t
 highTemps = weatherData$highTemp;
 ```
 
-In the ***Environment*** square brackets ( **\[ \]** ) indicates the variable is a **vector**.  ***highTemps*** appears in the ***Environment*** as a ***vector***.  ***highTemps*** has 14 ( ***\[1:14\]*** ) integer (***int***) values, representing the temperature for each of the 14 days. 
+In ***Variables*** square brackets ( **\[ \]** ) indicates the variable is a **vector**.  ***highTemps*** appears in ***Variables*** as a ***vector***.  ***highTemps*** is an integer (***int***) that has 14 ( ***\[14\]*** ) values, representing the temperature for each of the 14 days. 
 
-![The highTemps vector variable in the Environment tab](images/R-1-04-Vector-from-dataframe.png){#fig-high-temps .fs}
+![The highTemps vector variable in Variables](images/R-1-04-VectorFromDF.png){#fig-high-temps .fs}
 
 ### Pulling out (subsetting) individual values {#sec-subsetValues}
 
@@ -320,21 +320,17 @@ highTempDay7c = weatherData[7, "highTemp"];  # think of this as [X,Y] notation
 
 The last method is functionally the same as the previous two -- but [the X,Y notation is the most robust]{.hl} as it can best handle more complex subsetting situations (e.g., subsetting multiple rows and columns), which will be discussed in a future lesson.
 
-### The Environment and the L value
+### Variables
 
-I will be referring quite often to the ***Environment*** tab as it looks after the script has been sourced (as in @fig-high-temps) .  Instead of taking a screenshot of the ***Environment*** tab (which is hard to maintain), I will display the variables I am focused on like this:
+I will be referring quite often to values in ***Variables*** after the script has been sourced (as in @fig-high-temps) .  Instead of taking a screenshot of ***Variables*** (which is hard to maintain), I will display the variables I am focused on like this:
 
 ``` {.r tab="Environment"}
-highTemp7a:  60L
-highTemp7b:  60L
-highTemp7c:  60L
+highTemp7a:  60
+highTemp7b:  60
+highTemp7c:  60
 ```
 
-The ***Environment*** tab shows that ***highTemp7a***, ***highTemp7b***, and ***highTemp7c*** are all equal to **60L**
-
- 
-
-The **L** indicates that the number is explicitly an integer, not just a numeric values that happens to have all zeros in its decimal.
+***Variables*** shows that ***highTemp7a***, ***highTemp7b***, and ***highTemp7c*** are all equal to **60**
 
 ## Pulling out multiple values
 
@@ -366,10 +362,10 @@ valComb = highTemps[c(1,5,12)];  # a vector with 3 values
 
 ::: {#fig-subsetValues}
 ``` {.r tab="Environment"}
-val_01:    57L
-val_05:    39L
-val_12:    54L
-valComb:   int [1:3] 57 39 54
+val_01:    57
+val_05:    39
+val_12:    54
+valComb:   57 39 54   int [3]
 ```
 
 The three values we pulled from **highTemps** individually saved and combined (**valComb**)
@@ -377,7 +373,7 @@ The three values we pulled from **highTemps** individually saved and combined (*
 
 ### Pulling out consecutive values
 
-If we want to get the high temperature for consecutive days, we can use the sequence-by-one ( **:** ) operator -- often called the simple sequencing operator. The sequence-by-one operator ( **:** ) gives you every integer number between the two values.
+If we want to get the high temperature for consecutive days, we can use the sequence-by-one ( **:** ) operator -- often called the [simple sequencing operator]{.hl}. The sequence-by-one operator ( **:** ) gives you every integer number between the two values.
 
 ``` r
 consecVals = highTemps[3:11];  # same as highTemps[c(3,4,5,6,7,8,9,10,11)]
@@ -397,18 +393,18 @@ consecValsRev = highTemps[11:3];
 
 ::: {#fig-subsetDown}
 ``` {.r tab="Environment"}
-consecVals:     int [1:9] 54 40 39 ...
-consecValsRev:  int [1:9] 39 44 55 ...
+consecVals:     54 40 39 ...    int [9]
+consecValsRev:  39 44 55 ...    int [9]
 ```
 
-int \[1:9\] means 9 values are in each vector -- the first few values are shown
+int \[9\] means 9 values are in each vector -- the first few values are shown
 :::
 
 ### Using the Console to view values in a vector
 
-The ***Environment*** tab is good for quickly looking at values, but it only shows a few values from each vector.  If you want to see all the values then you can use the ***Console*** tab (bottom-left corner).  In the ***Console*** tab, type in the variable you want to see and press ***Enter***:
+***Variables*** is good for quickly looking at values, but it only shows a few values from each vector.  If you want to see all the values then you can use the ***Console*** tab (bottom-left corner).  In the ***Console*** tab, type in the variable you want to see and press ***Enter***:
 
-![Using the Console tab to view variables](images/R-1-04-Console.png){#fig-console-variables .fs}
+![Using the Console tab to view variables](images/R-1-04-ViewInConsole.png){#fig-console-variables .fs}
 
  
 
@@ -423,7 +419,7 @@ These two values, ***consecVals*** and ***consecValRev***, are shown in the ***C
 
 ### Using a sequence to get values {#sec-seq}
 
-We can use the ***seq()*** to create a more complex sequence to subset a vector.
+We can use ***seq()*** to create a more complex subset for a vector.
 
  
 
@@ -497,9 +493,9 @@ highTempSeq3 = highTemps[seq3];
 
 ::: {#fig-sequences}
 ``` {.r tab="Environment"}
-highTempSeq1:  int [1:7] 57 54 39 60 ...
-highTempSeq2:  int [1:7] 75 54 44 53 ...
-highTempSeq3:  int [1:4] 57 40 60 44
+highTempSeq1:  57 54 39 60 ...    int [7]
+highTempSeq2:  75 54 44 53 ...    int [7]
+highTempSeq3:  57 40 60 44        int [4]
 ```
 
 There are 7 values in the first two sequences and 4 in the third
@@ -592,14 +588,6 @@ F\) Opening Data Frames:
 If you have Excel on your computer, then it is probable that Excel is the default program for opening CSV files.  This means double-clicking on a CSV file will open it in Excel.  The danger with opening CSV files in Excel is that Excel will sometimes reformat the data (especially date and money columns) and then give a message saying how the data needs to be saved to be preserved.  [Do not save the file -- it will change the format of your data]{.hl}*.*  If you are editing a CSV file in Excel then I would save the results to a test file first to make sure Excel did not do anything untoward.
 
 ![Opening a CSV file in Excel -- the possible data loss warning is something you want to heed](images/R-1-04_Excel.png){#fig-excel .fs}
-
-## Extension: Long and Short Integers
-
-***L*** stands for ***Long integer*** -- ***long*** meaning that this variable can hold a number larger than 256.  In the old days, when space on computers was VERY expensive, programmers would save space by having a ***short integer*** and ***long integer*** designation.  So, if a programmer knew a number was small, they would assign it to a ***short integer*** to take up less space on the computer.  Since temperatures in Lansing are generally going to be less than 256 (unless you are using the Kelvin system), it is safe to assign temperatures to short integers.
-
- 
-
-Nowadays, space is so cheap that we rarely care that we are using a tiny bit more memory than we need -- so ***L*** has become mostly a relic of the past.
 
 ## Extension: Statistical functions on vectors
 
