@@ -4,7 +4,9 @@ short: "1-11"
 # special characters for highlighting code : «»
 ---
 
-### Issues
+### To-do
+
+- Show how to use breakpoints when state variable changes
 
 ## Purpose
 
@@ -22,7 +24,7 @@ The files for this lesson:
 
 If you have any questions about the material in this lesson, feel free to email them to the instructor, {{< var instructor.name >}}, at {{< var instructor.email >}}.
 
-## for loops -- a vital skill
+## for loops -- a essential skill
 
 In this lesson, we will be using ***for*** loops and ***if()*** statements to do common calculations on a vector (e.g., finding the sum, finding maximum value, checking if any value meets a condition).  There are functions for all of these calculations in R that are easier to use than a ***for*** loop.  However, the best way to learn ***for*** loops is to use them in applications that are easy to understand.  You are going to have many situations where you cannot rely on an R function or package -- and ***for*** loops with embedded ***if-else*** statements are often the best solution.
 
@@ -32,11 +34,11 @@ Understanding how to effectively use ***for*** loops is perhaps the most vital s
 
 ## Multiple state variables
 
-We ended last lesson by introducing you to the concept of a state variable -- a [state variable]{.hl} is a variable that updates information (e.g., the state of some value) as the ***for*** loops cycles.  The state variable is always declared outside of the ***for*** loop and modified in the codeblock attached to the ***for*** loop.
+We ended last lesson by introducing you to the concept of a state variable -- a [state variable]{.hl} is a variable that updates information (e.g., a count of how values meet a condition) as the ***for*** loops cycles.  The state variable is always declared outside of the ***for*** loop and modified in the codeblock attached to the ***for*** loop.
 
  
 
-The state variable needs to be initialized to some default value. You can think of the default value as the value the state variable should be if the ***for*** loop has no cycles.  In the last example from last lesson, the state variable ***sunnyDays*** was initialized to **0**, which is the correct value if the ***for*** loop never cycles (**0** days checked means **0** sunny days)
+The state variable needs to be initialized to some default value. You can think of the default value as the value the state variable should be if the ***for*** loop has no cycles.  In the last example from last lesson, the state variable ***sunnyDays*** was initialized to **0**, and **0** is the correct value if the ***for*** loop never cycles (**0** days checked means **0** sunny days)
 
 ::: {#fig-sunnyDaysWithStateVar}
 ``` r
@@ -78,9 +80,9 @@ for(i in 1:numDays)
 Using multiple state variables
 :::
 
-And we can look in the ***Environment*** tab to see what the final values of ***rainyDays** and **sunnyDays*** were:
+And we can look in ***Variables*** to see what the final values of ***rainyDays** and **sunnyDays*** were:
 
-``` {.r tab="Environment"}
+``` {.r tab="Variables"}
 rainyDays:   3
 sunnyDays:   6
 ```
@@ -139,9 +141,9 @@ for(i in 1:numDays)
 Using multiple state variables to look at temperature values
 :::
 
-And we can look in the ***Environment*** tab to see the final values of the state variables:
+And we can look in ***Variables*** to see the final values of the state variables:
 
-``` {.r tab="Environment"}
+``` {.r tab="Variables"}
 tempGT60:   2
 tempLT50:   4
 ```
@@ -173,9 +175,9 @@ for(i in «seq(from=1, to=numDays, by=2)») # every other day (1,3,5,7...)
 }
 ```
 
-And, again, the ***Environment*** tab will show the final values of the state variables:
+And, again, ***Variables*** will show the final values of the state variables:
 
-``` {.r tab="Environment"}
+``` {.r tab="Variables"}
 tempGT60odd:   1
 tempLT50odd:   2
 ```
@@ -194,7 +196,7 @@ The difference is that, instead of adding 1 to the state variable, [we add the p
 
  
 
-[Note: there are no **if()** statements in this **for** loop because we are always (i.e., unconditionally) adding every days' precipitation to the total precipitation]{.note}
+[Note: there are no ***if()*** statements in this ***for*** loop because we are always (i.e., unconditionally) adding the indexed days' precipitation to the total precipitation]{.note}
 
 ::: {#fig-state-add-values}
 ``` r
@@ -236,7 +238,7 @@ for(i in 1:numDays)
 Using for loops to find out if any value in a vectors meets a condition
 :::
 
-After executing the script, we see that ***anyDayLT40*** in **TRUE** in the ***Environment*** meaning at least one value in ***highTemps*** was less than **40**.
+After executing the script, we see that ***anyDayLT40*** in **TRUE** in ***Variables*** meaning at least one value in ***highTemps*** was less than **40**.
 
  
 
@@ -254,7 +256,7 @@ for(i in 1:numDays)
 }
 ```
 
-After executing this script, we see that ***anyDayLT30*** in **FALSE** in the ***Environment*** meaning no value in ***highTemps*** was less than **30**.
+After executing this script, we see that ***anyDayLT30*** in **FALSE** in ***Variables*** meaning no value in ***highTemps*** was less than **30**.
 
 ### The break statement
 
@@ -277,7 +279,7 @@ To make the code more efficient, we can add a ***break*** statement to the codeb
   }
 ```
 
-A break statement in the above code will not meaningfully speed up this script, but it will speed up script that is cycling through 1000s or 10000s of times through a ***for*** loop.
+A ***break*** statement in the above code will not meaningfully speed up this script, but it will speed up script that is cycling through 1000s or 10000s of times through a ***for*** loop.
 
 ## Finding the highest (or lowest) value
 
@@ -305,7 +307,7 @@ for (i in 1:numDays)
 Finding the highest value in a vector
 :::
 
-### Using browser() to pause your script
+### Updating the state variable
 
 The ***for*** loop above is going through every value in the vector ***highTemps*** in order.  Each time a new high temperature is found, ***highestTemp*** is set top that value.  So, ***highestTemp*** is going to start at 0 (the initial value), and change multiple times.
 
@@ -344,7 +346,7 @@ A better solution is to set the state variable to the first value in the vector 
 
  
 
-[Note: this means you could start the indexing variable **i** at 2 instead of one.  You do not need to test the 1st value against the 1st value -- there is no harm but it is a tiny bit inefficient.]{.note}
+[Note: this means you could start the indexing variable ***i*** at **2** instead of one (e.g., ]{.note}`for (i in 2:numDays))`[.  You do not need to test the 1st value against the 1st value -- there is no harm but it is a tiny bit inefficient.]{.note}
 
 ::: {#fig-highVal}
 ``` r
