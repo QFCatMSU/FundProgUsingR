@@ -20,7 +20,7 @@ The files for this lesson:
 
  
 
-This lesson's data has two new columns in it compared to the previous lesson's data -- so 14 obs. of ***7*** variables (instead of 5).  The new columns (***noonCondMessy*** and ***precipBad***) are copies of the previous columns with some issues added that are addressed in this lesson.
+This lesson's data has two new columns in it compared to the previous lesson's data -- so 14 rows x ***7*** columns (instead of 5).  The new columns (***noonCondMessy*** and ***precipBad***) are copies of the previous columns with some issues added that are addressed in this lesson.
 
 ![The new weatherData data frame with two new columns](images/R-1-12_NewDataframe.png){#fig-newDataframe .fs}
 
@@ -30,7 +30,7 @@ If you have any questions about the material in this lesson, feel free to email 
 
 ## Logical Operators: AND (&), OR (\|)
 
-In this lesson we are going to learn how to creaste conditional statements with multiple conditions using two new operators: ***AND***, ***OR***.  The symbol for the ***AND*** operator is the ampersand ( ***&*** ) and the symbol for the ***OR*** operator is the vertical pipe ( **\|** ).
+In this lesson we are going to learn how to create conditional statements with multiple conditions using two new operators: ***AND***, ***OR***.  The symbol for the ***AND*** operator is the ampersand ( ***&*** ) and the symbol for the ***OR*** operator is the vertical pipe ( **\|** ).
 
  
 
@@ -104,7 +104,7 @@ for(i in 1:numDays)
 
 And the answer was:
 
-``` {.r tab="Environment"}
+``` {.r tab="Variables"}
 sunnyDays:   6
 rainyDays:   3
 ```
@@ -140,7 +140,7 @@ Using logical operator \| to test two conditions
 
 ***sunnyOrRainyDays*** is the addition of sunny (6) and rainy (3) days
 
-``` {.r tab="Environment"}
+``` {.r tab="Variables"}
 sunnyOrRainyDays:   9
 ```
 
@@ -149,17 +149,17 @@ sunnyOrRainyDays:   9
 In programming we need to be explicit with each condition in a conditional statement:
 
 ``` r
-  if(noonCond[i] == "Sunny" | noonCond[i] == "Rainy")  # this is correct
+  if(noonCond[i] == "Sunny" | noonCond[i] == "Rainy")  # this is correct 
 ```
 
-In English, it makes sense to ask: Is the day sunny or rainy?
+However, in English, it makes sense to ask: Is the day sunny or rainy?
 
  
 
 And, naively, the code for this English sentence would look like this:
 
 ``` r
-  if(noonCond[i] == "Sunny" | "Rain")  # this in incorrect
+  if(noonCond[i] == "Sunny" | "Rain")  # this is incorrect
 ```
 
 If you do this, you will get the error:
@@ -214,11 +214,11 @@ Using OR operator to check for multiple spellings
 
 And, once again we get six:
 
-``` {.r tab="Environment"}
+``` {.r tab="Variables"}
 sunnyDays1:  6
 ```
 
-[Note: This is a brute force method for finding multiple spellings.]{.note} There are more robust way to check for different spelling using substrings and pattern recognition (i.e., ***substr()*** and ***grep()***), topics we will touch on later in this class.
+[Note: This is a brute force method for finding multiple spellings.]{.note} There are more robust way to check for different spelling using substrings and pattern recognition (i.e., Regular Expressions), topics we will touch on later in this class.
 
 ## The AND operator
 
@@ -252,7 +252,7 @@ Using AND operator to check conditions in two different columns
 
 There were 2 days that were both over 60 and sunny:
 
-``` {.r tab="Environment"}
+``` {.r tab="Variables"}
 goOutDays:   2
 ```
 
@@ -284,13 +284,13 @@ Reversing the conditional statements from the last loop
 
 There were 5 days that were below (or equal to) 50 and not sunny:
 
-``` {.r tab="Environment"}
+``` {.r tab="Variables"}
 stayInDays:    5
 ```
 
 ### Mutually exclusive if() statement
 
-Since the two ***if()*** statements above (@fig-and-op-two-columns and @fig-reverse-cond-statement) have mutually exclusive conditional statements (i.e., there are no situations where both can be **TRUE**), we can (and should) combine them into one ***if-else-if*** statement.  The following code is functionally the same but more efficient:
+Since the two ***if()*** statements above (@fig-and-op-two-columns and @fig-reverse-cond-statement) have mutually exclusive conditional statements (i.e., there are no situations where both can be **TRUE**), we can – and should – combine them into one ***if-else-if*** statement.  The following code is functionally the same but more efficient:
 
 ::: {#fig-mutually-exclusive-mult-cond}
 ``` r
@@ -323,7 +323,7 @@ day 14 good day to go out
 
 ## Finding Ranges of numbers
 
-So far when we have used conditional operators on numbers that are bounded on one side but go off to infinity on the other.
+So far when we have conditional operators to bound numbers on only one side – the other side goes to infinity.
 
 - ***highTemp \> 60*** means anything from 60 [up to positive infinity]{.hl}
 
@@ -378,7 +378,7 @@ It was 54 degrees on day 12
 
 ### Values outside a range
 
-Sometimes we want to check for values outside an expected range, usually this in an error check.  For instance, ***precipBad*** has some values that seem problematic:
+Sometimes we want to check for values outside an expected range, usually this is an error check.  For instance, ***precipBad*** has some values that seem problematic:
 
 ``` r
 > precipBad
@@ -390,7 +390,7 @@ Since rain is in inches, we are going to assume that any negative value (less th
 
  
 
-In this case we are looking for  ***precipBad*** values that are less than 0 ***OR*** greater than 10:
+In this case we are looking for ***precipBad*** values that are less than 0 ***OR*** greater than 10:
 
 ::: {#fig-values-beyond-range}
 ``` r
@@ -439,12 +439,12 @@ Or, which days had any precipitation (rain or snow):
 precipBool = (precipitation == "Rain" | precipitation == "Snow")
 ```
 
-The result for all three of these commands is a ***Boolean*** (a.k.a., ***logical***) vector with 14 values:
+The result for all three of these commands is a ***Boolean*** (a.k.a., ***logical*** or ***lgl***) vector with 14 values:
 
-``` {.r tab="Environment"}
-sunnyDayBool  logi [1:14] FALSE FALSE TRUE FALSE...
-niceDayBool   logi [1:14] FALSE FALSE FALSE FALSE...
-precipBool    logi [1:14] FALSE FALSE FALSE TRUE...
+``` {.r tab="Variables"}
+sunnyDayBool  FALSE FALSE TRUE FALSE...       lgl [14]
+niceDayBool   FALSE FALSE FALSE FALSE...      lgl [14]
+precipBool    FALSE FALSE FALSE TRUE...       lgl [14]
 ```
 
 We can look at ***sunnyDayBool*** and see that the index of **the** **TRUE** values match the index of "Sunny" days in ***noonCond*** (values 3, 6, 7, 12, 13, and 14):
@@ -491,9 +491,9 @@ Masking a dataframe using \[X,Y\] subset notation
 
 In @fig-maskdf, we use \[X,Y\] notation to subset the dataframe with:
 
-- ***sunnyDayBool*** subsets ***X*** (the rows) – so only rows where ***sunnyDayBool*** is **TRUE** will be in the subsetted dataframe
+- ***sunnyDayBool*** subsetting ***X*** (the rows) – so only rows where ***sunnyDayBool*** is **TRUE** will be in the subsetted dataframe
 
-- nothing subsets ***Y*** (the columns) – so all columns will be in the subsetted dataframe
+- nothing subsetting ***Y*** (the columns) – so all columns will be in the subsetted dataframe
 
  
 
@@ -616,7 +616,7 @@ and create one ***if-else-if*** structure that outputs:
 
 - "unusually warm" if ***randomTemp*** 60-80
 
-{{< include ../assets/_AppInstructions.qmd >}}
+{{< include ../assets/_AppInstructions_Pos.qmd >}}
 
 ## Extension: & vs && and \| vs \|\| {#extension-vs-and-vs}
 
