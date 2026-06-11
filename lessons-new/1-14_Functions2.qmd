@@ -1,0 +1,627 @@
+---
+title: "1-14: Functions 2"
+short: "1-14"
+# special characters for highlighting code : «»
+---
+
+### Changes
+
+## Purpose
+
+- create a separate file to hold functions
+
+- arguments in functions
+
+- Use return values in functions
+
+## Questions about the material...
+
+The files for this lesson:
+
+- Script: [you can download the script here](../scripts/1-14_Functions2.R)
+
+- Second Script: [a second script containing functions can be downloaded here](../scripts/1-14_myFunctions.R)
+
+ 
+
+If you have any questions about the material in this lesson, feel free to email them to the instructor, {{< var instructor.name >}}, at {{< var instructor.email >}}.
+
+## Opening a script file
+
+A reminder that anytime a script file is looking for some resource, (e.g., a data file, another script file), the script needs a starting point (i.e., a folder) to find the location of the resource. R calls this starting point the Working Directory. [When you are in an RStudio Project, the starting folder/Working Directory is the Project Folder.]{.hl} This is what makes an RStudio Project easy to share – the file path used to link resources does not need to change when the Project Folder is moved.
+
+ 
+
+The main script file for this lesson needs the functions within ***1-14_myFunctions.R***, which is in the ***scripts*** folder inside the Project Folder: `scripts/1_14-myFunctions.r`
+
+ 
+
+And we put the functions in the ***Environment*** by calling:
+
+``` r
+source("scripts/1-14_myFunctions.R");
+```
+
+If the path is incorrect, either because the file name or folder path is incorrect, the line will give you the error:
+
+``` r
+cannot open file 'wrong_path/1-14_myFunctions.R': No such file or directory
+```
+
+or
+
+``` r
+cannot open file 'script/wrong_name.R': No such file or directory
+```
+
+[Note: uppercase/lowercase does not matter in the file path on Windows and Mac. However, case does matter on Linux, so keep that in mind when sharing your files.]{.note}
+
+## Modulus arithmetic {#sec-mod}
+
+All of the functions in this lesson use the modulus operator: ***%%***. The modulus operator divides the first number by the second number and returns only the remainder.
+
+ 
+
+Some examples:
+
+``` {.r tag="Console"}
+> 11 %% 4 
+[1] 3 
+> 12 %% 4 
+[1] 0 
+> 13 %% 4 
+[1] 1 
+> 14 %% 4 
+[1] 2
+```
+
+The modulus operator is often used in a ***for*** loop to perform a task at a regular interval. For instance, modulus can be used to check every 100^th^ value in a large vector (***val %% 100***).
+
+## Modulus operator and checking for divisibility
+
+We are going to use the ***%%*** operator to check if one number (the [dividend]{.hl}) is evenly divided by another number (the [divisor]{.hl}). If the divisor divides the dividend evenly, then the modulus will be **0** (i.e., no remainder). The function is called ***isDivisible()***.
+
+ 
+
+``` {.r tab="1-14_myFunctions"}
+isDivisible = function(dividend, divisor)
+{
+  ### get the remainder of the division using modulus
+  remainder = dividend %% divisor;
+  
+  ### Check if the remainder is 0
+  divBy0 = (remainder == 0);  # TRUE if 0, FALSE otherwise
+  
+  ### return whether the modulus was 0 (TRUE) or more than zero (FALSE)
+  return(divBy0);
+}
+```
+
+[Extension: Variable and function names do not matter... to R]
+
+### A function that checks divisibility
+
+The first function in ***1-14_myFunctions.r*** has two arguments: ***dividend*** and ***divisor***.
+
+``` r
+isDivisible = function(dividend, divisor)
+```
+
+The codeblock calculates the modulus of `dividend` and `divisor` (i.e., it divides the dividend by the divisor and returns the remainder)
+
+``` r
+remainder = dividend %% divisor;
+```
+
+Then the codeblock checks whether ***remainder*** is equal to **0** and saves the Boolean results to ***divBy0***:
+
+``` r
+divBy0 = (remainder == 0); # TRUE if 0, FALSE otherwise
+```
+
+Finally, the codeblock returns ***divBy0*** to the caller:
+
+``` r
+return(divBy0);
+```
+
+### A Boolean return value
+
+***divBy0*** is a [Boolean value]{.hl}. In other words, ***divBy0*** can only have two possible values: **TRUE** and **FALSE**.
+
+ 
+
+The Boolean value is created in this line:
+
+``` r
+divBy0 = (remainder == 0);
+```
+
+`(remainder == 0)` compares ***remainder*** to **0**, just like it would if this were an ***if()*** statement. The results of this comparison is a Boolean ***TRUE/FALSE*** that is saved to the variable ***divBy0***.
+
+ 
+
+This line of code uses both the comparison operator ( **==** ) to create a Boolean value and the assignment operator ( **=** ) to save the Boolean value to a variable (`divBy0`).
+
+### Testing isDivisible()
+
+We can pass in two arguments, the first is ***divdend***, and the second is ***divisor***:
+
+``` r
+div12_4 = isDivisible(12,4); 
+div12_5 = isDivisible(12,5);
+```
+
+And we get the results:
+
+``` {.r tab="Environment"}
+div12_4:   TRUE
+div12_5:   FALSE
+```
+
+We can also put in the argument names to make the functions more readable:
+
+``` r
+div12_4a = isDivisible(dividend=12, divisor=4); 
+div12_5a = isDivisible(dividend=12, divisor=5);
+```
+
+And we get the same results:
+
+``` {.r tab="Environment"}
+div12_4a:   TRUE 
+div12_5a:   FALSE
+```
+
+Aside from readability, another advantage to using argument names is that you can put the arguments in any order you want:
+
+``` r
+div12_4b = isDivisible(divisor=4, dividend=12); 
+div12_5b = isDivisible(divisor=5, dividend=12);
+```
+
+``` r
+div12_4b: TRUE 
+div12_5b: FALSE
+```
+
+When calling ***isDivisible()***, it is fine to skip argument names but using argument names is a necessity for functions that have lots of arguments, [such as ***geom_boxplot()***](https://ggplot2.tidyverse.org/reference/geom_boxplot.html):
+
+## Prime function
+
+The function, ***isDivisible()***, performs the simple task of checking if one number is divisible by another number. We are going to expand that by checking whether the dividend can be evenly divided [by any number]{.hl}. In other words, we are checking to see if the dividend is a prime number. This function, in the functions script, is called ***isPrime1()***.
+
+ 
+
+[note: The method we are using to check for prime works but is very inefficient!]{.note}
+
+``` {.r tab="1-14_myFunctions.R"}
+isPrime1 = function(dividend)
+{
+  # check all numbers between 2 and one less that dividend
+  for(i in 2:(dividend-1))
+  {
+    if(dividend %% i == 0)
+    {
+      ## number can be divided evenly by another number -- return FALSE
+      return(FALSE);
+    }
+  }
+  ## number cannot be divided evenly by another number -- return TRUE
+  return(TRUE);
+}
+```
+
+### Parts of the ***isPrime()*** function
+
+The header of the function has one argument: the value you want to check for prime:
+
+``` r
+isPrime1 = function(dividend)
+```
+
+To check if ***dividend*** is prime, you need to go through all numbers smaller than ***dividend***, starting with 2. If none of those values evenly divide ***dividend*** then ***dividend*** is prime.
+
+ 
+
+We check all potential divisors with a ***for*** loop that cycles from 2 to one less than ***dividend***:
+
+``` r
+for(i in 2:(dividend-1))
+```
+
+Inside the ***for*** loop, we takes the modulus of `dividend` and the divisor, which is the current ***for*** loop cycle value (`i`):
+
+``` r
+if(dividend %% i == 0)
+```
+
+If any modulus is **0**, then we know the divisor evenly divides ***dividend*** and ***dividend*** cannot be prime. At this point we do not need to check any more values and can immediately return ***FALSE*** back to the caller.
+
+``` r
+  return(FALSE);  #dividend is not prime
+```
+
+If the ***for*** loop cycles through all of the values, and the modulus is never **0**, then we know ***dividend*** is prime and return ***TRUE*** to the caller:
+
+``` r
+return(TRUE);    #dividend is prime
+```
+
+### Two return locations
+
+This function has two places where it calls ***return()***.
+
+1.  In the ***for*** loop if the modulus is **0**. At this point we know the dividend cannot be prime because another number evenly divides it. We can immediately end the function and return ***FALSE*** to the caller (i.e., the dividend is not prime)
+2.  At the end of the function after the ***for*** loop. If the ***for*** loop cycles through every number and none evenly divide the dividend then we know the dividend has to be prime and return ***TRUE*** to the caller.
+
+ 
+
+[Note: There is no way both ***return()*** can be executed in one function call.]{.note}
+
+### Checking for prime
+
+We will call the function multiple times with different dividends. You can convince yourself that the function is correctly declaring prime numbers:
+
+``` r
+p0 = isPrime1(13);
+p1 = isPrime1(14);
+p2 = isPrime1(81);
+p3 = isPrime1(dividend=83);
+p4 = isPrime1(dividend=87);
+p5 = isPrime1(dividend=89);
+```
+
+[Note: the first (and only) argument in ***isPrime1()*** is ***dividend***. We can either explicitly name the argument or have R assume the one value is for the first argument.]{.note}
+
+``` {.r tab="Environment"}
+p0: TRUE
+p1: FALSE
+p2: FALSE
+p3: TRUE
+p4: FALSE
+p5: TRUE
+```
+
+## Error checking
+
+The assumption when someone calls ***isPrime1()*** is that the caller will send a valid integer as an argument. It is not a good strategy to assume this as there are many other types of value the caller can pass in:
+
+- A vector of values (i.e., multiple values)
+
+- A non-numeric value (e.g., a string or Boolean value)
+
+- A negative value
+
+- A decimal value
+
+ 
+
+***isPrime2()*** is the same as ***isPrime1()*** except that ***isPrime2()*** first does a series of checks using an ***if-else-if*** structure. If any of the statements are ***TRUE*** (i.e., the argument is an invalid value) then the function will return an error message and end:
+
+``` {.r tab="isPrime2()"}
+  ### Error checks on the argument value
+  if(length(dividend) > 1)         # error check 1: too many values
+  {
+    return("Error: too many values");
+  }
+  else if (!is.numeric(dividend))  # error check 2: value not numeric
+  {
+    return("Error: value is not numeric");
+  }
+  else if (dividend < 0)           # error check 3: value is negative
+  {
+    return("Error: value must be positive");
+  }
+  else if (dividend %% 1 != 0)     # error check 4: value is a decimal
+  {
+    return("Error: value must be an integer");
+  }
+```
+
+A truly robust function will check to make sure arguments are valid using some sort of error checking.
+
+### The error checks:
+
+There are four error checks:
+
+1\) Check to see if the argument has more than one value
+
+``` r
+if(length(val) > 1)         # error check 1: too many values
+```
+
+2\) Check to see if the argument is not a numeric value:
+
+``` r
+else if (!is.numeric(val))  # error check 2: value not numeric
+```
+
+3\) Check to see if the argument is a negative value:
+
+``` r
+else if (val < 0)           # error check 3: value is negative
+```
+
+4\) Check to see if the number is a decimal (i.e., not an integer):
+
+``` r
+else if (val %% 1 != 0)     # error check 4: value is a decimal
+```
+
+The first three checks are self-explanatory. The last one is a bit trickier as R does not have a dedicated check for integers. [Note: R has a function named ***is.integer()***, but this function only checks if the number has been explicitly declared an integer, something the caller is unlikely to do.]{.note}
+
+ 
+
+To check is the value is an integer, we perform a modulus between the value and **1**.
+
+- If the value is an integer, the modulus is 0
+
+- If the value is a decimal, the modulus is the decimal
+
+ 
+
+You can convince yourself of this in the ***Console***:
+
+``` {.r tab="Console"}
+> 5.5 %% 1 
+[1] 0.5 
+> 8.333 %% 1 
+[1] 0.333 
+> 10 %% 1 
+[1] 0 
+> 12.99 %% 1 
+[1] 0.99
+```
+
+### Testing the error checking
+
+We will check for the four errors and test valid values to make sure we have not lost the functionality of the original ***isPrime1()***:
+
+``` r
+e1 = isPrime2(c(10,34)); # too many values 
+e2 = isPrime2("hello");  # not numeric 
+e3 = isPrime2(FALSE);    # not numeric 
+e4 = isPrime2(-35);      # negative numeric 
+e5 = isPrime2(74.24);    # decimal numeric 
+e6 = isPrime1(13);       # valid -- and prime 
+e7 = isPrime1(14);       # valid -- and not prime 
+e8 = isPrime1(81);       # valid -- and not prime
+```
+
+``` {.r tab="Environment"}
+e1: "Error: too many values"
+e2: "Error: value is not numeric"
+e3: "Error: value is not numeric"
+e4: "Error: value must be positive"
+e5: "Error: value must be an integer"
+e6: TRUE
+e7: FALSE
+e8: FALSE
+```
+
+## Multiple return values
+
+All the functions we have created so far in the past two lessons have returned one value, either a single Boolean value, or a single numeric value.
+
+ 
+
+We are going to create a function that returns an undetermined number of values. Specifically, we are going to modify the ***isPrime1()*** to return all factors of the dividend supplied by the caller. For example, **12** can be divided by **2, 3, 4**, and **6** so the return has 4 values: `c(2,3,4,6)`.
+
+ 
+
+The function is called ***findFactors()***:
+
+``` {.r tab="1-14_myFunctions.R"}
+findFactors = function(val)
+{
+  ### Store the factors here -- factors is a state variable
+  factors = c();
+  
+  for(i in 2:(val-1))
+  {
+    if(val %% i == 0)
+    {
+      ## number can be divided evenly by another number 
+      ## insert this number as a factor
+      factors = c(factors, i);
+    }
+  }
+  ## number cannot be divided evenly by another number -- return TRUE
+  return(factors);
+}
+```
+
+### Storing multiple values
+
+We start the function by creating the vector that will store the values returned to the caller (i.e., the factors of the dividend):
+
+``` r
+### Store the factors here (starts as a NULL vector)
+factors = c();
+```
+
+***factors*** starts as an empty, or ***NULL***, vector. And a ***NULL*** vector will be returned to the caller if ***dividend*** is prime (i.e., ***dividend*** has no factors).
+
+ 
+
+The ***for*** loop still cycles from ***2*** to one less than ***dividend*** and checks if the modulus is ***0***. Every time the modulus is ***0***, the value that evenly divides ***dividend*** is inserted in the ***factors*** vector:
+
+``` r
+  for(i in 2:(dividend-1))
+  {
+    if(val %% i == 0)
+    {
+      ## number can be divided evenly by another number 
+      ## insert this number as a factor
+      factors = c(factors, i);
+    }
+  }
+```
+
+### Adding values to a vector
+
+This line says that ***factors*** is equal to a vector of itself and the ***i*** value that we just calculated to be a factor:
+
+``` r
+factors = c(factors, i);
+```
+
+In other words, the code above creates a new vector that is the old vector with the ***i*** value inserted at the end.
+
+### Returning the factors
+
+After cycling through all the values in the ***for*** loop, we return the ***factors*** vector to the caller:
+
+``` r
+return(factors);
+```
+
+***factors*** will either be ***NULL*** (***dividend*** is prime), or have a list of all factors of ***dividend***.
+
+### Testing findFactors()
+
+We will test ***findFactors()*** with values that we know are prime (13, 83), values we know are not prime (14, 81, 87), and one value that has many factors (72):
+
+``` r
+f0 = findFactors(dividend=13);
+f1 = findFactors(14);
+f2 = findFactors(dividend=81);
+f3 = findFactors(83);
+f4 = findFactors(dividend=87);
+f5 = findFactors(72);
+```
+
+And we get ***NULL*** for the dividends that are prime or a list of factors for the non-prime dividends:
+
+``` {.r tab="Environment"}
+f0: NULL
+f1: int [1:2] 2 7
+f2: int [1:3] 3 9 27
+f3: NULL
+f4: int [1:2] 3 29
+f5: int [1:10] 2 3 4 6 8 9 12 18 24 36
+```
+
+## Application
+
+1\) Setup your scripts
+
+a.  For this application you need to create two scripts:
+
+    - a functions script named ***app1-14_functions.r*** that contains the functions created in this application
+
+    - a main script named ***app1-14.r*** where you will answer questions in comments and test the functions created in ***app1-14_functions.r***
+
+b.  ***source()*** your functions script from the main script
+
+c.  [Make sure you thoroughly test all the functions you create in your main script.]{.hl} I want to see the test code in ***app1-14.r***.
+
+ 
+
+2\) In comments answer:
+
+a.  Why is ***factors*** created as an empty vector in ***findFactors()*** before it is used in the ***for*** loop? What happens if ***factors*** is created at the beginning of the ***for*** loop?
+
+b.  How would you change ***findFactors()*** to return the number of factors instead the actual factors? In this case, the return only has one value.
+
+ 
+
+3\) Make modifications to ***isPrime1():***
+
+- copy ***isPrime1()*** to your function script
+- Fix ***isPrime1()*** so it can correctly handle the dividends 0, 1, and 2
+  - 0 and 1 are not prime, 2 is prime
+  - The ***for*** loop should not be executed if the dividend is 0, 1 or 2
+- Make ***isPrime1()*** more efficient by having the ***for*** loop cycle from 2 to the square root of ***dividend***
+  - [note: the ***for*** loop will ignore the decimal in the square loop value]{.note}
+
+ 
+
+4\) Create a function that checks a vector to see which numbers in the vector are divisible by 7, 11, or 13
+
+- The function has one argument: a vector of numbers
+
+- The function return all the numbers that can be evenly divided by at least one of 7, 11, or 13
+
+ 
+
+5\) Create a function that check if the modulus of two numbers is a value given by caller:
+
+- The function has three arguments: ***dividend***, ***divisor***, ***remainder***
+
+- The function will check to see if the modulus of ***dividend*** and ***divisor*** is equal to ***remainder*** and return ***TRUE*** if it is and ***FALSE*** if it is not
+
+ 
+
+Also...
+
+- Give a default value for ***remainder***
+
+- Have the function return an error if:
+
+  - any of the three arguments numbers are zero or negative
+
+  - ***remainder*** is bigger than ***divisor***
+
+ 
+
+6\) Create one function that converts one temperature value between the three temperature measurements: Celsius (C), Fahrenheit (F), and Kelvin (K).
+
+- There are six possible conversions:
+
+  - F -\> C
+
+  - C -\> F
+
+  - C -\> K
+
+  - K -\> C
+
+  - K -\> F
+
+- The conversion for Celsius to Kelvin is: $K = C + 273$
+
+- The conversion for Celsius to Fahrenheit is: $F=\frac{9}{5} C+32$
+
+- You need an argument for the temperature value.
+
+- You need two arguments to determine the conversion: ***from*** and ***to***
+
+  - an ***if-else-if*** structure checking ***from*** and ***to*** to choose the correct conversion
+
+{{< include ../assets/_AppInstructions.qmd >}}
+
+## Extension: Variable and function names do not matter... to R
+
+Variable and function names are generally chosen to make it easier for the reader to understand the script.  But R could care less what names you use.  The following script executes the exact same calculation and returns the exact same ***TRUE/FALSE*** values as ***isDivisible()*** -- it just uses variable and function names that are not intuitive to the user.  Do not do this in your script!
+
+``` r
+do_stuff = function(a_number, another_number)
+{
+  ### get the remainder of the division using modulus
+  the_answer = a_number %% another_number;
+  ### Check if the remainder is 0
+  thing_to_return = (the_answer == 0);  # TRUE if 0, FALSE otherwise
+  
+  ### return whether the modulus was 0 (TRUE) or more than zero (FALSE)
+  return(thing_to_return);
+}
+```
+
+## Extension: combining error conditions
+
+You can combine the four error check into one conditional statement using OR ( **\|** ). The coding is simpler but the return message cannot be as robust.
+
+``` r
+  ### Error checks on the argument value
+  if(length(dividend) > 1 |   # error check 1: too many values
+     !is.numeric(dividend) |  # error check 2: value not numeric
+     dividend < 0 |           # error check 3: value is negative
+     dividend %% 1 != 0)      # error check 4: value is a decimal
+    
+  {
+    return("Error: dividend not a valid value");
+  }
+ 
+```
