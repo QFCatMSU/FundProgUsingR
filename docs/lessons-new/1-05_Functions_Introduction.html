@@ -552,7 +552,8 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#read.csv-arguments" id="toc-read.csv-arguments" class="nav-link" data-scroll-target="#read.csv-arguments"><span class="header-section-number">6.1</span> read.csv arguments</a></li>
   <li><a href="#required-arguments-and-default-arguments" id="toc-required-arguments-and-default-arguments" class="nav-link" data-scroll-target="#required-arguments-and-default-arguments"><span class="header-section-number">6.2</span> Required arguments and default arguments</a></li>
-  <li><a href="#the-other-arguments-aside-from-file" id="toc-the-other-arguments-aside-from-file" class="nav-link" data-scroll-target="#the-other-arguments-aside-from-file"><span class="header-section-number">6.3</span> The other arguments (aside from <strong><em>file</em></strong>)</a></li>
+  <li><a href="#arguments-without-default-values" id="toc-arguments-without-default-values" class="nav-link" data-scroll-target="#arguments-without-default-values"><span class="header-section-number">6.3</span> Arguments without default values</a></li>
+  <li><a href="#the-other-arguments-aside-from-file" id="toc-the-other-arguments-aside-from-file" class="nav-link" data-scroll-target="#the-other-arguments-aside-from-file"><span class="header-section-number">6.4</span> The other arguments (aside from <strong><em>file</em></strong>)</a></li>
   </ul></li>
   <li><a href="#application" id="toc-application" class="nav-link" data-scroll-target="#application"><span class="header-section-number">7</span> Application</a>
   <ul class="collapse">
@@ -814,7 +815,7 @@ Figure&nbsp;4: The Help page for read.table() contains the help for read.csv()
 </section>
 <section id="required-arguments-and-default-arguments" class="level3" data-number="6.2">
 <h3 data-number="6.2" class="anchored" data-anchor-id="required-arguments-and-default-arguments"><span class="header-section-number">6.2</span> Required arguments and default arguments</h3>
-<p><strong><em>file</em></strong> is an argument that is not set equal to anything in <strong><em>read.table()</em></strong> or <strong><em>read.csv()</em></strong>.&nbsp; This is because <strong><em>file</em></strong> must be supplied by the user –<span class="hl"><strong>file</strong> is the only required argument</span> in either of these functions<em>.</em>&nbsp; This should make sense as there is no point in calling <strong><em>read.table()</em></strong> / <strong><em>read.csv()</em></strong> without a data file.</p>
+<p><strong><em>file</em></strong> is an argument that is not set equal to anything in <strong><em>read.table()</em></strong> or <strong><em>read.csv()</em></strong>.&nbsp; This is because <strong><em>file</em></strong> must be supplied by the user –<span class="hl"><strong>file</strong> is (almost always) the only required argument</span> in either of these functions<em>.</em>&nbsp; This should make sense as there is no point in calling <strong><em>read.table()</em></strong> / <strong><em>read.csv()</em></strong> without a data file.</p>
 <p>&nbsp;</p>
 <p>Most other argument in <strong><em>read.table()</em></strong> / <strong><em>read.csv()</em></strong> has a default value (except <strong><em>row.names</em></strong> and <strong><em>col.names</em></strong> – there is a question about this in the application). This means you can execute the function without using any argument except <strong><em>file</em></strong>.</p>
 <p>&nbsp;</p>
@@ -832,8 +833,17 @@ Figure&nbsp;5: Expanding weatherData and weatherData2 in <strong><em>Variables</
 </figure>
 </div>
 </section>
-<section id="the-other-arguments-aside-from-file" class="level3" data-number="6.3">
-<h3 data-number="6.3" class="anchored" data-anchor-id="the-other-arguments-aside-from-file"><span class="header-section-number">6.3</span> The other arguments (aside from <strong><em>file</em></strong>)</h3>
+<section id="arguments-without-default-values" class="level3" data-number="6.3">
+<h3 data-number="6.3" class="anchored" data-anchor-id="arguments-without-default-values"><span class="header-section-number">6.3</span> Arguments without default values</h3>
+<p>There are four arguments in <strong><em>read.table()</em></strong> without default values (<a href="#fig-readcsv" class="quarto-xref">Figure&nbsp;4</a>) : <strong><em>files</em></strong>, <strong><em>row.names</em></strong>, <strong><em>col.names</em></strong>, and <strong><em>text</em></strong>. You need to read the description in the argument section to find out how the function determines these values. For <strong><em>text</em></strong>, the description reads:</p>
+<blockquote class="blockquote">
+<p>character string: if file is not supplied and this is, then data are read from the value of text via a text connection. Notice that a literal string can be used to include (small) data sets within R code.&nbsp;</p>
+</blockquote>
+<p>&nbsp;<br>
+This mean that you can pass in a character string as the data instead of using a file. This is very rare, hence why <strong><em>text</em></strong> is near the bottom of the arguments. So, technically speaking, <span class="hl">either <strong><em>file</em></strong> or <strong><em>text</em></strong> is required to have a value</span>.</p>
+</section>
+<section id="the-other-arguments-aside-from-file" class="level3" data-number="6.4">
+<h3 data-number="6.4" class="anchored" data-anchor-id="the-other-arguments-aside-from-file"><span class="header-section-number">6.4</span> The other arguments (aside from <strong><em>file</em></strong>)</h3>
 <p>In my original call to <strong><em>read.csv()</em></strong>, the arguments <strong><em>sep=“,”</em></strong> and <strong><em>header=TRUE</em></strong> are functionally not changing anything because I have them set to the same value as their default.&nbsp; But, these arguments are changed often enough that it is nice to have them quickly at hand when copying <strong><em>read.csv()</em></strong> from one script to another.</p>
 <p>&nbsp;</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a> weatherData <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="at">file=</span><span class="st">"data/twoWeekWeatherData.csv"</span>,</span>
@@ -850,7 +860,8 @@ Figure&nbsp;5: Expanding weatherData and weatherData2 in <strong><em>Variables</
 <p>&nbsp;</p>
 <p>2. Explain, in comments, why you get an error if you try to use all four arguments in <strong><em>seq()</em></strong>: <strong><em>from, by, to, length.out</em></strong></p>
 <p>&nbsp;</p>
-<p>3. In comments answer: In <strong><em>read.csv()</em></strong>, what are the default values for <strong><em>row.names</em></strong>, <strong><em>na.strings</em></strong>, <strong><em>fill</em></strong> , and <strong><em>comment.char</em></strong>? <span class="note">Note: some are defined in <strong><em>read.table()</em></strong>, some are defined in <strong><em>read.csv()</em></strong>.</span></p>
+<p>3. In comments answer: In <strong><em>read.csv()</em></strong>, what are the default values for <strong><em>row.names</em></strong>, <strong><em>na.strings</em></strong>, <strong><em>fill</em></strong> , and <strong><em>comment.char</em></strong>?</p>
+<p><span class="note">Note: one argument is defined in <strong><em>read.table()</em></strong>, two are defined in <strong><em>read.csv(),</em></strong> and one you need to read the description.</span></p>
 <p>&nbsp;</p>
 <p>4. Find the log (base 5) of this vector: <strong>c(0.04, 0.2, 25, 125)</strong> using the <strong><em>log()</em></strong> function</p>
 <ul>
@@ -917,6 +928,9 @@ Figure&nbsp;6: Upload changes to GitHub – the red circle indicates how many fi
 <li><p>Click on <strong><em>Issues</em></strong> (top of page)</p></li>
 <li><p>Click on <strong><em>New Issue</em></strong> (green button – not pictured)</p></li>
 <li><p>Click on Setting wheel and add the instructor as an assignee (<strong><em>belinskyc</em></strong>)</p></li>
+</ol>
+<p></p>
+<ol start="5" type="1">
 <li><p>Put in <strong><em>title</em></strong> that the application 1-05 is finished, add anything you want to the <strong><em>description</em></strong></p></li>
 <li><p>Click <strong><em>Create</em></strong></p></li>
 </ol>
