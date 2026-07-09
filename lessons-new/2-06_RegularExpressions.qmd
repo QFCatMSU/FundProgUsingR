@@ -6,13 +6,13 @@ short: "2-05b"
 
 ### to-do
 
--   grep (index values) vs grepl (Boolean) (extension??)
+- grep (index values) vs grepl (Boolean) (extension??)
 
--   shortcuts for all letter, all numbers (extension)
+- shortcuts for all letter, all numbers (extension)
 
 ## Purpose
 
--   finding complex string patterns within a vector
+- finding complex string patterns within a vector
 
 ## Script and data for this lesson
 
@@ -24,7 +24,7 @@ The data for this lesson [can be downloaded here](../data/filenames.csv)
 
 Regex cheatsheet: <https://github.com/rstudio/cheatsheets/blob/main/regex.pdf>
 
--   click ***Download Raw*** button (top-right above image)
+- click ***Download Raw*** button (top-right above image)
 
 ## What is Regex
 
@@ -134,13 +134,13 @@ Let's say we want to combine the two examples above and find file names that bot
 start_end_bad = grep(file_names, pattern="^station&txt$")
 ```
 
-In this case, we need to be explicit about what is in between ***station*** and ***txt*** – which can by any number of any character. In Regex we use [ **.\***]{.hl} to repesent [any number of any characters]{.hl}. This pattern says:
+In this case, we need to be explicit about what is in between ***station*** and ***txt*** – which can by any number of any character. In Regex we use [**.\***]{.hl} to repesent [any number of any characters]{.hl}. This pattern says:
 
--   starts with ***station*** followed by
+- starts with ***station*** followed by
 
--   any number of any character followed by
+- any number of any character followed by
 
--   ending with ***txt***
+- ending with ***txt***
 
 ``` r
 start_end = grep(file_names, pattern="^station.*txt$")
@@ -166,15 +166,15 @@ start_middle_end = grep(file_names, pattern="^station.*B3.*txt$")
 
 Basically, the pattern says that, in order, the string:
 
--   starts with ***station***
+- starts with ***station***
 
--   has any number of any any characters ( ***.\**** )
+- has any number of any any characters ( ***.\**** )
 
--   contains ***B3***
+- contains ***B3***
 
--   has any number of any characters ( ***.\**** )
+- has any number of any characters ( ***.\**** )
 
--   ends with ***txt***
+- ends with ***txt***
 
  
 
@@ -216,11 +216,11 @@ has_caret2 = grep(file_names, pattern="^backup.*\\^ba")
 
 In this case we want file names that
 
--   starts with ***backup*** followed by
+- starts with ***backup*** followed by
 
--   any number of any characters followed by
+- any number of any characters followed by
 
--   ***\^ba***
+- ***\^ba***
 
  
 
@@ -233,7 +233,7 @@ There is just one file name with this pattern:
 
 ## Range of characters
 
-In Regex, a [dot ]{.hl}( . ) [represents any character]{.hl}. We can also search for a cheacter within a set of characters.
+In Regex, a [dot]{.hl}( . ) [represents any character]{.hl}. We can also search for a cheacter within a set of characters.
 
  
 
@@ -274,11 +274,11 @@ year_2016_2019c = grep(file_names, pattern="201[6-9]")
 
 The square brackets means the character must match one the characters in set. We can add multiple square brackets to a search. In the following pattern we are looking for:
 
--   An underscore followed by
+- An underscore followed by
 
--   An A or B (Regex sees uppercase and lowercase letters are different characters) followed by
+- An A or B (Regex sees uppercase and lowercase letters are different characters) followed by
 
--   1, 2, or 3
+- 1, 2, or 3
 
 ``` r
 letter_number = grep(file_names, pattern="_[aAbB][123]")
@@ -298,11 +298,11 @@ letter_number = grep(file_names, pattern="_[aAbB][123]")
 
 We can use ( - ) to create a range of all letters or numbers. This patternwill look for any file name with:
 
--   an underscore followed by
+- an underscore followed by
 
--   2 letters followed by
+- 2 letters followed by
 
--   1 number
+- 1 number
 
 ``` r
 all_letter_number = grep(file_names, pattern="_[a-zA-Z][a-zA-Z][0-9]")
@@ -387,11 +387,11 @@ However, if we want to match file names with exactly four digits in a row, then 
 
 The \^ operator is used in brackets to invert the pattern. \[\^0-9\] means every character except 0 to 9. The pattern here is:
 
--   non-numeric character \[\^0-9\] followed by
+- non-numeric character \[\^0-9\] followed by
 
--   4 numeric characters \[0-9\]{4} followed by
+- 4 numeric characters \[0-9\]{4} followed by
 
--   non-numeric character \[\^0-9\]
+- non-numeric character \[\^0-9\]
 
 ``` r
 four_numbers_exact = grep(file_names, pattern="[^0-9][0-9]{4}[^0-9]");
@@ -441,11 +441,11 @@ letter_numbers = grep(file_names, pattern="[a-zA-Z][0-9]{2,3}");
 
 Curly brackets tell regex to match the previous character or character set:
 
--   {X}: exactly X times
+- {X}: exactly X times
 
--   {X,}: minimum of X times
+- {X,}: minimum of X times
 
--   {X,Y}: between X and Y (inclusive)
+- {X,Y}: between X and Y (inclusive)
 
  
 
@@ -526,9 +526,9 @@ repeat_AAB = grep(repeat_vals, pattern="(A[AB]){3}");
 
 2\) Search for any file name with months between Jan (01) and May (05) and year between 2010 and 2023.
 
--   There are two types of dates – some use the format YYYY-MM-DD
+- There are two types of dates – some use the format YYYY-MM-DD
 
--   To handle the potential dash, you need to say "has between 0 and 1 dash"
+- To handle the potential dash, you need to say "has between 0 and 1 dash"
 
  
 
