@@ -6,6 +6,8 @@ short: "1-15"
 
 ### To-Do {#sec-first}
 
+- revisit Positron's support of matrices
+
 ## Purpose
 
 - embedded for loops
@@ -28,15 +30,15 @@ If you have any questions about the material in this lesson, feel free to email 
 
 ## Functions within a script
 
-In the previous two lessons, we created a separate script for the functions used in the lesson. For this lesson, the function ***isPrime3()*** has been put inside the main script. It is not usually best practice to put functions inside the calling script (why this is true is an application question). However, there are many occasions where you will see functions put directly inside a script, so it is good to be familiar with this practice.
+In the previous two lessons, we created a separate script for the functions used in the lesson. For this lesson, the function ***isPrime3()*** has been put inside the main lesson's script. It is not usually best practice to put functions inside the calling script (why this is true is an application question). However, there are many occasions where you will see functions put directly inside the calling script, so it is good to be familiar with this practice.
 
-### functions need to be declared
+### Functions need to be declared
 
-Functions are like variables in that they store information to a named objects – and objects must be declared before they are used. If you are going to code a function directly in the script that calls the function then [you need to declare the function before you call the function]{.hl}.
+Functions are like variables in that they store information to a named objects – and objects must be declared before they are used. If you are going to code a function directly in the script then [you need to declare the function before you call the function]{.hl}.
 
 ## Nesting for loops: isPrime3()
 
-In the [previous lesson's function script](../scripts/1-14_myFunctions.R), the function ***isPrime2()***, has a ***for*** loop that cycles through all of the possible divisors for the dividend given by the caller. If none of the modulus calculations are zero (i.e., every division has a remainder), then we know the dividend is prime. ***isPrime3()*** extends ***isPrime2()*** so that it can check multiple dividends for prime instead of one.
+In the [previous lesson's function script](../scripts/1-14_myFunctions.R) the function ***isPrime2()*** has a ***for*** loop that cycles through all of the possible divisors for a dividend given by the caller. If none of the modulus calculations are zero (i.e., for every divisor, the remainder of $\frac{dividend}{divisor}\ne0$ ), then we know the dividend is a prime number. ***isPrime3()*** extends ***isPrime2()*** so that it can check multiple dividends for prime instead of one.
 
  
 
@@ -45,7 +47,7 @@ This means we need nested ***for*** loops (***for*** loops inside of ***for*** l
 ``` r
 for(each dividend we want to check)         # outer loop
 {
-  for(each divisor of the current dividend) # inner loop
+  for(each possible divisor of the current dividend) # inner loop
   {
     
   }
@@ -60,13 +62,19 @@ Before we look at the code, let's look at an example of its use:
 primeTest1 = isPrime3(c(12,13,14,15,16,17));
 ```
 
-In the ***Environment***, ***primeTest1***, which stored the return value, is called a ***Named logi***.
+In ***Variables***, ***primeTest1***, which stored the return value, is called a ***lgl***, meaning the vector has Boolean values. primeTest1 is also a [Named]{.hl} vector, when ***primeTest1*** is expanded, the index values ( \[1\], \[2\],...) have been replaced by the names (12, 13,...)
 
-``` {.r tab="Environment"}
-primeTest1: Named logi [1:6] FALSE TRUE FALSE FALSE FALSE TRUE
+``` {.r tab="Variables"}
+primeTest1: FALSE TRUE FALSE FALSE FALSE TRUE   lgl [6]
+    12      FALSE
+    13      TRUE
+    14      FALSE
+    15      FALSE
+    16      FALSE
+    17      TRUE
 ```
 
-***logi*** means the vector values are Boolean and ***Named*** means the individual vector values are named. You cannot see the names in the ***Environment*** but you can in the ***Console***:
+You can also see the names in the in the ***Console***:
 
 ``` {.r tab="Console"}
 > primeTest1    
@@ -78,7 +86,7 @@ The names are the same as the dividend values passed in by the caller. How this 
 
  
 
-One advantage to ***Named*** variables is that you can index the vector by either name or position:
+One advantage to ***Named*** vectors is that you can index the vector by either name or position:
 
 ``` {.r tab="Environment"}
 > primeTest1["14"]
@@ -89,31 +97,33 @@ FALSE
 FALSE
 ```
 
+[note: the name is always in quotes (i.e., a string) to distinguish the name from an index. So, ***14*** would be 14^th^ value in the vector (which does not exist in ***primeTest1***) whereas ***"14"*** is the vector value named "14".]{.note}
+
 ## Nested for loops
 
 ***isPrime3()*** has two ***for*** loops:
 
-- outer loop: indexes through the range of ***dividends*** supplied by the caller
+- outer loop: indexes through the ***dividends*** supplied by the caller
 
-- inner loop: indexes through the range of divisors that will be used to check the dividend for prime
+- inner loop: indexes through the divisors that will be used to check the dividend for prime
 
-  - like last lesson, the range will be from 2 to one less than the dividend
+  - like last lesson, the divisors will go from 2 to one less than the dividend
 
 ### Outer loop
 
-The job of the outer loop is cycle through each ***dividends***. The index value, ***i***, determines the current dividend, indexed from the ***dividends*** vector. The current dividend gets used inside the inner ***for*** loop.
+The job of the outer loop is cycle through each value in the vector ***dividends***. The index value, ***i***, determines the current indexed value in the ***dividends*** vector. The current dividend gets used inside the inner ***for*** loop.
 
  
 
-In the example above (@sec-example),
+In the example above (@sec-example), `primeNum = c(12,13,14,15,16,17)` so...
 
-primeNum\[1\] = 12;
+`primeNum[1] = 12`
 
-primeNum\[2\] = 13;
+`primeNum[2] = 13`
 
 ...
 
-primeNum\[6\] = 17;
+`primeNum[6] = 17`
 
 ``` r
   «for(i in 1:length(dividends))»   
@@ -132,7 +142,7 @@ primeNum\[6\] = 17;
 
 ### Inner loop
 
-***isPrime2()*** uses a ***for*** loop to check all the possible divisors for the dividend. That ***for*** loop is now the inner ***for*** loop in ***isPrime3()***. The inner ***for*** loop cycles through every single value from 2 to one less that the current dividend, except the index variable is now ***j,*** because ***i*** was used by the outer loop.
+***isPrime2()*** uses a ***for*** loop to check all the possible divisors for the dividend. That ***for*** loop is now the inner ***for*** loop in ***isPrime3()***. The inner ***for*** loop cycles through every single value from 2 to one less that the current dividend, except the index variable is now called ***j,*** because ***i*** was used by the outer loop.
 
 ``` r
   for(i in 1:length(dividends))   
@@ -149,7 +159,7 @@ primeNum\[6\] = 17;
   }
 ```
 
-The return value needs to specify if each dividend is prime (***TRUE***) or not (***FALSE***). This means a vector of Boolean values needs to be set and returned to the caller so the return vector returned has the same number of values as the vector ***dividends***.
+The return value needs to specify if each dividend is prime (***TRUE***) or not (***FALSE***). This means a vector of Boolean values needs to be set and returned to the caller that has the same number of values as the vector ***dividends***.
 
 ### Set up the return value
 
@@ -165,7 +175,7 @@ Like before, we assume that the dividend is prime until proven otherwise, so at 
 primeNum[i] = TRUE;
 ```
 
-The inner ***for*** loop goes through all possible divisors. If one of the divisors divides the dividend evenly then the dividend is not prime and then switches the single value in the vector ***primeNum*** to **FALSE**.
+The inner ***for*** loop goes through all possible divisors. If one of the divisors divides the dividend evenly then the dividend is not prime and then switches the indexed value in the vector ***primeNum*** to **FALSE**.
 
 ``` r
 primeNum[i] = FALSE;
@@ -205,7 +215,7 @@ It order to make the return value more readable to the caller, we attached names
 names(primeNum) = dividends;
 ```
 
-In the end, we return ***primeNum*** back to the caller and ***primeNum*** gets save to the variable the caller set equal to the function:
+At the end, we return ***primeNum*** back to the caller and ***primeNum*** gets save to the variable the caller set equal to the function:
 
 ``` r
 return(primeNum);
@@ -239,17 +249,17 @@ One of the more natural uses of nested ***for*** loops in R is the creation of t
 
 ### What is a matrix
 
-A matrix is somewhat of a cross between a vector and a data frame. A matrix has rows and columns like a data frame. However, like a vector, all values in a matrix are of the same type. This means that calculations on a matrix can be applied to all values as opposed to just one column. We will talk more about the use of matrices in a later lesson.
+A matrix is somewhat of a cross between a vector and a data frame. A matrix has rows and columns like a data frame. However, like a vector, all values in a matrix are of the same type (e.g., numeric, string). This means that calculations on a numeric matrix can be applied to all values as opposed to just one column. We will talk more about this use of matrices in a later lesson.
 
 ### Matrix creation
 
-Just like ***c()*** is used to create a vector, ***matrix()*** isused to create a matrix, with the arguments ***nrow*** and ***ncol*** giving the dimensions of the matrix.
+Just like ***c()*** is used to create a vector, ***matrix()*** is used to create a matrix, with the arguments ***nrow*** and ***ncol*** giving the dimensions of the matrix.
 
  
 
 We can create an empty matrix:
 
-``` r
+``` {.r tab="Console"}
 > matrix(nrow=4, ncol=3)
      [,1] [,2] [,3]
 [1,]   NA   NA   NA
@@ -258,7 +268,18 @@ We can create an empty matrix:
 [4,]   NA   NA   NA
 ```
 
-Or fill the matrix with values:
+Fill the matrix with all the same values:
+
+``` {.r tab="Console"}
+> matrix(data=7, nrow=4, ncol=3)
+     [,1] [,2] [,3]
+[1,]    7    7    7
+[2,]    7    7    7
+[3,]    7    7    7
+[4,]    7    7    7
+```
+
+Or fill the matrix with individual values:
 
 ``` {.r tab="Console"}
 > matrix(data=1:12, nrow=4, ncol=3)
@@ -299,7 +320,7 @@ You can get a whole row by leaving the column blank and a whole column by leavin
 
 ### Matrices are often all combinations of two factors
 
-One common use of a matrix is to create a table the contains every combination of two factors. For instance, we can have a vector of temperature values and a vector of humidity values and create a heat index matrix for every temperature/humidity combination:
+One common use of a matrix is to create a table the contains every combination of two factors. For instance, we can have a vector of temperature values and a vector of humidity values and create a ***heat index matrix*** for every temperature/humidity combination:
 
  
 
@@ -309,17 +330,19 @@ One common use of a matrix is to create a table the contains every combination o
 
 We will start with a simpler example: a multiplication table. For this table we will have two numeric vectors and populate the matrix with every possible multiplication between values in the two vectors:
 
-|       | 1   | 2   | 3   |
-|-------|-----|-----|-----|
-| **1** | 1   | 2   | 3   |
-| **2** | 2   | 4   | 6   |
-| **3** | 3   | 6   | 9   |
-| **4** | 4   | 8   | 12  |
-| **5** | 5   | 10  | 15  |
+::: {style="width: 50%; margin: auto;"}
+|       | **8** | **9** | **10** |
+|-------|-------|-------|--------|
+| **2** | 16    | 18    | 20     |
+| **3** | 24    | 27    | 30     |
+| **4** | 32    | 36    | 40     |
+| **5** | 40    | 45    | 50     |
+| **6** | 48    | 54    | 60     |
+:::
 
 ### Setting up the matrix
 
-First we need our numeric vectors:
+First we need our numeric vectors for the rows and columns of the table:
 
 ``` r
 ### Factors for multiplication table
@@ -372,7 +395,7 @@ multTable[i,j] = mult1[i] * mult2[j];
 
 After we execute the for loop, we have a matrix that looks like this:
 
-``` r
+``` {.r tab="Console"}
 > multTable
      [,1] [,2] [,3]
 [1,]   16   18   20
@@ -385,15 +408,16 @@ After we execute the for loop, we have a matrix that looks like this:
 Let's make the matrix more visually informative by naming the rows and columns to the values in `mult1` and `mult2`:
 
 ``` r
-rownames(multTable) = mult1;
-colnames(multTable) = mult2;
+multTable_named = multTable;         # create copy of multTable 
+rownames(multTable_named) = mult1;   # add row names to copy
+colnames(multTable_named) = mult2;   # add column names to copy
 ```
 
 Now we get something that's easier to read:
 
-::: {#fig-mult-table-ex}
+::: {#fig-mult-table-ex tab="Console"}
 ``` r
-> multTable
+> multTable_named
    8  9 10
 2 16 18 20
 3 24 27 30
@@ -405,16 +429,28 @@ Now we get something that's easier to read:
 
 and can use the names to refer to rows and columns:
 
-``` r
+``` {.r tab="Console"}
 > multTable["4", "10"]
 [1] 40
 > multTable["2", "9"]
 [1] 18
 ```
 
+### Matrices in Positron
+
+As of July 2026, Positron's support for viewing matrices is not nearly as robust as RStudio. For instance:
+
+- the ***Variables*** tab does not show row names or column names for the matrix
+
+- double-clicking on the matrix in ***Variables*** does not correctly put the matrix in a viewer (as it does for a data frame – shown in a future lesson)
+
+ 
+
+We will be looking more at this in future lessons and ways to work around it. I expect that Positron will add support for matrices in the near future.
+
 ### Indexing named numeric values
 
-Rownames and column names are always characters – this is why the values are in quotes. Numeric value are used to index rows and columns.
+Rownames and column names are always characters – this is why the values are in quotes. This is how we distinguish names from index, which are always numeric.
 
 - `multTable[4, 10]` is the value in row 4 and column 10, which does not exist so this would be an error.
 
@@ -466,7 +502,7 @@ for(«row» in 1:length(temps))     # cycle thru temps for each row
 
 ### Populating the matrix
 
-The ***windChillTable*** ***for*** loop operates almost exactly the same as the multiplication table. It has a outer loop the cycles through one set of values (temperatures) and send each temperature into the inner loop where it cycles through the second set of values (wind speeds). The main difference is the formula, [supplied by the National Weather Service](https://www.weather.gov/media/epz/wxcalc/windChill.pdf), is more complicated.
+The ***windChillTable*** ***for*** loop operates almost exactly the same as the multiplication table. It has a outer loop the cycles through one set of values (temperatures) and sends each temperature into the inner loop where it cycles through the second set of values (wind speeds). The main difference is the formula, [supplied by the National Weather Service](https://www.weather.gov/media/epz/wxcalc/windChill.pdf), is more complicated.
 
  
 
@@ -476,7 +512,7 @@ But, like the multiplication matrix, each cell in the wind chill matrix...
 windChillMatrix[row,col]
 ```
 
-is set to a formula that contains the current temperature:
+is set to a formula that contains the currently indexed temperature:
 
 ``` r
     windChillTable[row,col] = 35.74 +
@@ -485,7 +521,7 @@ is set to a formula that contains the current temperature:
                               0.4275*«temps[row]»*(speeds[col]^0.16);
 ```
 
-and the current wind speed:
+and the currently indexed wind speed:
 
 ``` r
     windChillTable[row,col] = 35.74 +
@@ -494,11 +530,9 @@ and the current wind speed:
                               0.4275*temps[row]*(«speeds[col]»^0.16);
 ```
 
-![The wind chill matrix in Rstudio](images/1-15_WindChillTable.png){#fig-windChillTable .fs}
-
 ## Application
 
-1\) For this application, all functions, code, and answers to questions will go in one script named ***1-15.r.*** [Make sure you test all code thoroughly in your script.]{.hl}
+1\) For this application, all functions, code, and answers to questions will go in one script named ***App1-15.r.*** [Make sure you test all code thoroughly in your script.]{.hl}
 
  
 
@@ -528,14 +562,14 @@ c.  If you reverse the order of the ***for*** loop in the multiplication matrix 
 5\) Create a wind chill matrix function that has temperature and wind speed as arguments and the return value is the wind chill matrix.
 
  \
-So, this code:
+So, this code (assuming your function is named ***windChillCalc***:
 
 ``` r
-windChill = windchill(temps = seq(from=40, to=-20, by=-10), 
-                      speeds = seq(from=5, to=45, by=10))
+myWindChill = windChillCalc(temps = seq(from=40, to=-20, by=-10), 
+                            speeds = seq(from=5, to=45, by=10))
 ```
 
-should save to `windChill` a matrix that looks like this @fig-windChillTable
+should save to `myWindChill` a matrix that looks like the same as ***windChillTable*** from the lesson's script.
 
  
 
@@ -554,7 +588,7 @@ should save to `windChill` a matrix that looks like this @fig-windChillTable
 12  12 14 15
 ```
 
-- A good middle step is to print something to the Console every time you get a pair where one divides the other.
+- A good middle step is to print something to the ***Console*** every time you get a pair where one divides the other.
 - Info about naming individual values: [Extension: Create and modify Named vectors]
 
 {{< include ../assets/_AppInstructions.qmd >}}

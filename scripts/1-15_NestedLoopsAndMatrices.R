@@ -48,8 +48,9 @@ for(i in 1:length(mult1))   # outer loop (for each mult1)
 }
 
 ### Name the rows and columns
-rownames(multTable) = mult1;
-colnames(multTable) = mult2;
+multTable_named = multTable;          # create a copy of multTable
+rownames(multTable_named) = mult1;    # add row names to copy
+colnames(multTable_named) = mult2;    # add column names to copy
 
 ### Second matrix: wind chill table
 temps = seq(from=40, to=-20, by=-10); # 40, 30, 20...
