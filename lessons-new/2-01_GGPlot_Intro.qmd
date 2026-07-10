@@ -17,6 +17,7 @@ knitr::purl("lessons/2-01_GGPlot_intro.qmd", output="scripts/2-01_GGPlot_intro.r
 ### To-do
 
 - handle ***Source*** issues (especially from plots people have to cycle through)
+- Include equivalent RBase plots?
 
 ## Purpose
 
@@ -42,10 +43,6 @@ library(package=ggplot2);              # include all GGPlot2 functions
 ```
 
 The second line gives your script access to all of the functions in the GGPlot2 package. [Note: ggplot2 is technically the third version of GGPlot -- but no one uses the first two versions (ggplot and ggplot1) anymore.]{.note}
-
-### R-base plots
-
-The script files for lessons in this class that contain plots will have the GGPlot presented in the lesson and, in comments, the R-base plot equivalent. The plan is to eventually add a lesson about R-base plots but, until then, the R-base plots are there FYI.
 
 ## GGPlot components and subcomponents {#sec-components}
 
@@ -197,7 +194,7 @@ plot1 = «ggplot( data=weatherData )» +
 plot(plot1);
 ```
 
-Next, we add the scapperplot component ***geom_point()***, and map the ***x*** and ***y*** axis to the ***avgTemp*** and ***relHum*** columns from ***weatherData***:
+Next, we add the scatterplot component ***geom_point()***, and map the ***x*** and ***y*** axis to the ***avgTemp*** and ***relHum*** columns from ***weatherData***:
 
 ``` r
 plot1 = ggplot( data=weatherData ) +
@@ -213,10 +210,6 @@ The canvas, which contains a scatterplot, is saved to a variable named ***plot1:
 plot(plot1);
 ```
 
-[note: **plot1** is a **List** variable -- **List** variable will be covered in a later lesson]{.note}
-
- 
-
 And then ***plot()*** is used to display the canvas saved in ***plot1***:
 
 ``` r
@@ -224,6 +217,19 @@ plot1 = ggplot( data=weatherData ) +
         geom_point( mapping=aes(x=avgTemp, y=relHum) );
 «plot(plot1)»;
 ```
+
+### GGplots in the Variables tab
+
+As of July 2026, the plots will appear in Variables with ?? followed by ggplot2::gplot
+
+``` {.r tab="Variables"}
+plot1:    ??   ggplot2::ggplot
+plot2:    ??   ggplot2::ggplot
+plot3:    ??   ggplot2::ggplot
+...
+```
+
+GGplot released version 4.0 in February 2026. One of the big changes was that GGPlot switched from storing plot information in S3 Objects (Lists) to the much more modern S7 object. At this point, Positron does not know how to view an S7 objects so it puts ***??*** (this is not a programming issue, just a ***Variables*** tab issue). I assume that a near-future version of Positron will fix this.
 
 ### GGPlot components
 
@@ -247,7 +253,7 @@ plotData = ggplot( data=weatherData ) +
 
 ### GGPlot mapping and aesthetics (aes)
 
-[Most plotting components in GGPlot contain a subcomponent called **mapping**]{.hl}.  ***mapping*** describes the relationship between the data and the plot.  Or, another way to put it, ***mapping*** describes what data gets represented on the plot (in the above case, ***avgTemp*** and ***relHum***) and how the data gets represented (***avgTemp*** on x-axis, ***relHum*** on y-axis): 
+Most plotting components in GGPlot contain a subcomponent called **mapping**.  [***mapping*** describes the relationship between the data and the plot]{.hl}.  Or, another way to put it, ***mapping*** describes what data gets represented on the plot (in the above case, ***avgTemp*** and ***relHum***) and how the data gets represented (***avgTemp*** on x-axis, ***relHum*** on y-axis): 
 
 ``` r
 plotData = ggplot( data=weatherData ) +
@@ -325,7 +331,11 @@ Scatterplot with a few added components
         y = "Relative Humidity") +
 ```
 
-When we search in the ***Help*** tab for ***labs()*** (@fig-help) we see that it has many subcomponents (or arguments) including:
+In the ***Console***, type `?labs` to get theHelp page for ***ggplot::labs()***:
+
+![Positron will give you suggestions as you type ](images/R_2-01_GGPlotHelp.png)
+
+In the ***Help*** tab for ***labs()*** (@fig-help) we see that it has many subcomponents (or arguments) including:
 
 - ***label***: the title
 
@@ -339,7 +349,7 @@ A couple of notes about the information in the ***Help***:
 
 - ***waiver()*** is the default value given by the plotting function.
 
-![ Using the Help tab in RStudio to find info about GGPlot components](images/GGP-1-01-labs.png){#fig-help .fs}
+![ Using the Help tab to find info about GGPlot components](images/GGP-1-01-labs.png){#fig-help .fs}
 
 ``` r
 scale_x_continuous( breaks = seq(from=10, to=80, by=10) )
@@ -361,13 +371,13 @@ In this example we changed one subcomponent in ***theme()*** called ***axis.text
 
  
 
-Broadly speaking, ***theme()*** is used to make modifications that are not data related to the canvas (the plots and the background).  ***theme()*** is probably the most used component in GGPlot, and we could spend many lessons going through all the subcomponents of ***theme()***. 
+Broadly speaking, ***theme()*** is used to make modifications to the canvas (the plots and the background) that are not data related.  ***theme()*** is probably the most used component in GGPlot, and we could spend many lessons going through all the subcomponents of ***theme()***. 
 
 ![theme() component help page (yes, there is a lot there!)](images/GGP-01-02-Theme.PNG){#fig-theme .fs}
 
 ### For more help with components
 
-A good place to find more information about components in GGPlot is the **Help** tab in the lower-right corner of RStudio.  The ***Help*** tab provides information directly from <https://ggplot2.tidyverse.org/reference/>, which is the official webpage for GGPlot.  
+The ***Help*** tab provides information directly from <https://ggplot2.tidyverse.org/reference/>, which is the official webpage for GGPlot.  
 
 ## Getting rid of the grey (themes)
 
@@ -535,11 +545,7 @@ Switching the order of the components to change which plot is on top
 
 ## Application
 
-A\) Create a script file names ***app2-01.r*** in your RStudio Project's ***scripts*** folder
-
- 
-
-B\) Looking at the GGPlot cheat sheet (or the GGPlot functions page) from @sec-components answer the following in comments in ***app2-01.r***:
+A\) Looking at the GGPlot cheat sheet (or the GGPlot functions page) from @sec-components answer the following in comments in your script:
 
 1.  What component (function) would be used to create a text plot?
 
@@ -547,7 +553,7 @@ B\) Looking at the GGPlot cheat sheet (or the GGPlot functions page) from @sec-c
 
      
 
-C\) Create a scatterplot in GGPlot in your script:
+B\) Create a scatterplot in GGPlot in your script:
 
 1.  Create a scatterplot of ***stnPressure*** vs ***windSpeed*** using the data from Lansing2016NOAA.csv
 
@@ -567,7 +573,7 @@ C\) Create a scatterplot in GGPlot in your script:
 
     - ***limits*** is set equal to a vector with two values -- so ***limits = c(0,100)*** would mean the axis would go from 0 to 100
 
-{{< include ../assets/_AppInstructions.qmd >}}
+{{< include ../assets/_AppInstructions_Pos.qmd >}}
 
 ## Trap: Putting the ( + ) on the next line {#trap-putting-the-on-the-next-line}
 
