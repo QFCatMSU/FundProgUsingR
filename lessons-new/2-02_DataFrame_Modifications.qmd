@@ -32,15 +32,17 @@ weatherData = read.csv(file="data/Lansing2016NOAA.csv",
               header=TRUE);
 ```
 
-In the ***Environment***, you can see that ***weatherData*** consists of 366 observations (366 days -- it was a leap year) of 23 variables.  In other words there are 23 different weather variables in the data (columns) for each of the 366 days (rows).
+In Variables, you can see that ***weatherData*** consists of 366 observations (366 days -- it was a leap year) of 23 variables.  In other words there are 23 different weather variables in the data (columns) for each of the 366 days (rows).
 
-``` {.r tab="Environment"}
-weatherData:      366 obs. of 23 variables
+``` {.r tab="Variables"}
+weatherData:      [366 rows x 23 columns] <data.frame>
 ```
 
-If we double-click on ***weatherData*** in the ***Environment***, we can look at the data frame in the file viewer section of RStudio:
+If we double-click on ***weatherData*** in ***Variables***, we can look at the data frame in the file viewer section of Positron:
 
 ![Viewing the weatherData data frame in the main section](images/R-1-14_ViewDataFrame.png){#fig-weatherData .fs}
+
+[Note: the left section of the file viewer shows statistics for the columns – we will be ignoring that for the rest of this class. ]{.note}
 
 ## String manipulations
 
@@ -56,7 +58,7 @@ There is extra information in the values of the ***dateTime*** column (column 1)
 
 We can use the function ***substr()*** to subset, or pull out, a portion of the string's value.
 
-![The substr() function](images/R-1-14_Substr.png){#fig-substr .fs}
+![The substr() function in Help ( `?substr`)](images/R-1-14_Substr.png){#fig-substr .fs}
 
 [note: **substr()** and **substring()** are practically the same when working with a single string]{.note}
 
@@ -105,7 +107,7 @@ In other words, we want the date format to be **MM-DD-YYYY**:
 
 You can use ***paste()*** to add (concatenate) string values together.
 
-![The paste() function -- with ... as the first "argument"](images/R-1-14_Paste-01.png){#fig-paste .fs}
+![The paste() function -- with ... as the first "argument" ( `?paste` )](images/R-1-14_Paste-01.png){#fig-paste .fs}
 
 ### three dots ( ... ) and arguments
 
@@ -113,7 +115,7 @@ In the ***Help*** tab that the first argument in ***paste()*** is three dots ( .
 
  
 
-The three dots represents a [pseudo-argument]{.hl}, meaning that for this function, [any argument that does not have a name]{.hl} will be assigned to the three dots (i.e., unnamed arguments are objects to be pasted).
+The three dots represents a [pseudo-argument]{.hl}. This means that, for this function, [any argument that does not have a name]{.hl} will be pasted / concatenated (i.e., assigned to the three dots).
 
  
 
@@ -219,7 +221,7 @@ We have created two new vectors: ***dateYear*** and ***windSpeedRounded***, and 
 
  
 
-First, we will make a copy of ***weatherData*** called ***weatherData2***.  We will be creating multiple copies of ***weatherData*** so that we can see the progress of the data frames in the ***Environment*** tab.  You could just manipulate the original ***weatherData*** data frame.
+First, we will make a copy of ***weatherData*** called ***weatherData2***.  We will be creating multiple copies of ***weatherData*** so that we can see the progress of the data frames in ***Variables***.  You could just manipulate the original ***weatherData*** data frame.
 
 ``` r
 # copy the original data frame
@@ -238,7 +240,7 @@ Since there was no ***dateYear*** column in ***weatherData2***, the above code a
 
  
 
-Double-click on ***weatherData2*** in the ***Environment*** tab and scroll to the end to see the new ***dateYear*** column:
+Double-click on ***weatherData2*** in ***Variables*** and scroll to the end to see the new ***dateYear*** column:
 
 ![A column was added to the end of the weatherData2 data frame](images/R-2-01-AddColumn.jpg){#fig-addColumn .fs}
 
@@ -260,7 +262,7 @@ Now the values in the ***windSpeed*** column reflect the rounded values from ***
 
 ## Deleting columns from a data frame
 
-The easiest way to delete a column from a data frame is just to set the column to **NULL**.
+The easiest way to delete a column from a data frame is to set the column to **NULL**.
 
  
 
@@ -305,7 +307,7 @@ We will make another copy of ***weatherData*** here:
 weatherData4 = weatherData3;
 ```
 
-There is no great way to move data frame columns around in R because you cannot just say "move column X to position Y".  Instead, [you need to recreate the whole column order of the data frame]{.hl} to reflect the new position of every column -- taking care to include every column.
+There is no great way to move data frame columns around in R – you cannot just say "move column X to position Y".  Instead, [you need to recreate the column order of the data frame]{.hl} to reflect the new position of every column -- taking care to include every column.
 
  
 
@@ -320,13 +322,13 @@ Luckily, we do not have to write out all 23 column names because we can use sequ
 weatherData4 = subset(weatherData2, select=c(dateYear, «maxTemp:windSusDir»));
 ```
 
-( : ) is the sequence operator and it says to take all the columns in between (and inclusive of) ***maxTemp*** and ***windSusDir***.  Since ***maxTemp*** was the first column and ***windSusDir*** was the second to last column (the last being ***dateYear***), this basically says all other columns except ***dateYear***.
+( : ) is the [sequence operato]{.hl}r and it says to take all the columns in between (and inclusive of) ***maxTemp*** and ***windSusDir***.  Since ***maxTemp*** was the first column and ***windSusDir*** was the second to last column (the last being ***dateYear***), this basically says all other columns except ***dateYear***.
 
  
 
-So, ***select=c(dateYear, maxTemp:windSusDir))*** says to order the columns with ***dateYear*** first and every other column after that.
+So, `select=c(dateYear, maxTemp:windSusDir))` says to order the columns with ***dateYear*** first and every other column after that.
 
-![the dateYear column moves from the end to the beginning](images/sy81vh6o.png){#fig-moveColumn .fs}
+![the dateYear column moves from the end to the beginning](images/R_2-02_MoveColumn.jpg){#fig-moveColumn .fs}
 
 ### A more complex moving example
 
@@ -340,7 +342,7 @@ It is trickier to move columns in the middle because you need to keep track of a
 
  
 
-Let's says we want to move ***heatDays*** and ***coolDays*** right after ***tempDept.*** These are all columns in the middle of the data frame so you need to break the columns up more to order them the way you want.
+Let's says we want to move ***heatDays*** and ***coolDays*** right after ***tempDept.*** These are all columns in the middle of the data frame so you need to break the columns up to order them the way you want.
 
  
 
@@ -383,11 +385,11 @@ Quite often, people just call ***write.csv()***, pass in the data frame and the 
 write.csv(weatherData5, file="data/Lansing2016Noaa-2-bad.csv");  
 ```
 
-The above code will add an extra column populated by the row numbers.  This is because, by default, ***write.csv()*** assumes the row numbers are row names.
+The above code, however, will add an extra column populated by the row numbers.  This is because, by default, ***write.csv()*** assumes the row numbers are row names.
 
  
 
-To stop ***write.csv()*** from assuming the row numbers are row names, we need to set the argument ***row.names*** to **FALSE**:
+To stop ***write.csv()*** from assuming the row numbers are row names, we need to set the argument ***row.names*** to **FALSE,** meaning that there are no row names in the data frame::
 
 ``` r
 write.csv(weatherData5, file="data/Lansing2016Noaa-2.csv",
