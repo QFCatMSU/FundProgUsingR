@@ -42,11 +42,11 @@ Let's open up this file and see what happened:
 
 ``` r
 badData = read.csv(file="data/Lansing2016NOAA-2-bad.csv",
-              sep=",",
-              header=TRUE);
+                   sep=",",
+                   header=TRUE);
 ```
 
-After you double-click on ***badData*** in the ***Environment*** tab, you can see there is an extra column in the data frame at the beginning which has the row numbers in it.  This is because, by default, ***write.csv()*** [will treat the row numbers as a column of data]{.hl}.
+After you double-click on ***badData*** in ***Variables***, you can see there is an extra column in the data frame at the beginning which has the row numbers in it.  This is because, by default, ***write.csv()*** [will treat the row numbers as a column of data]{.hl}.
 
 ![An extra column containing row numbers was added to the data frame](images/R-2-03-ExtraColumn.png){#fig-extraColumn .fs}
 
@@ -56,11 +56,15 @@ This is not a big deal but each time you write to a CSV file without setting ***
 
 ## Adding columns with the wrong number of values
 
-While we are messing around with a throwaway data frame, let's see what happens if you try to add/overwrite a column to the data frame that has the wrong number of values.  In this case, the data frame has 366 rows, meaning there are 366 values in each column.
+Since we are messing around with a throwaway data frame, let's see what happens if you try to add/overwrite a column to the data frame that has the wrong number of values.  In this case, the data frame has 366 rows, meaning there are 366 values in each column.
 
  
 
-Let's attempt to overwrite the column ***test1*** with **400** values and write to a new column called ***test2*** with **10** values:
+Let's attempt to:
+
+- overwrite the column ***test1*** with **400** values and
+
+- write to a new column called ***test2*** with **10** values:
 
 ``` r
 badData$test1 = c(1:400);  # 400 values: 1-400
@@ -109,7 +113,7 @@ Or, if you use **6** values (366/6 = 61):
 badData$test4 = c(1:6);
 ```
 
-Then R will create a column called ***test4*** that repeat the numbers **1-6** 61times:
+Then R will create a column called ***test4*** that repeat the numbers **1-6** 61 times:
 
 ``` r
 > badData$test3
@@ -185,11 +189,11 @@ Now let's read in the "good" CSV file created in the last lesson:
                          header=TRUE);
 ```
 
-If we look at the ***Environment*** (@fig-stringCol), there are a few columns in the ***weatherData*** data frame that R categorizes as string (***chr***) even though they are numeric by nature.  For instance, ***precip, snow,*** and ***snowDepth*** are all labelled as ***chr*** even though they have (mostly) numeric values.
+If we look at ***Variables*** (@fig-stringCol), there are a few columns in the ***weatherData*** data frame that R categorizes as string (***chr***) even though they are numeric by nature.  For instance, ***precip, snow,*** and ***snowDepth*** are all labelled as ***chr*** even though they have (mostly) numeric values.
 
  
 
-The issue is the ***"T"*** values used in these columns to indicate a ***trace*** of precipitation (less than 0.01 inches).  ***"T"*** is a ***chr/string*** values and, in R, [if any value in a vector or a column is a string then every value in the vector (or column) is treated as a string]{.hl}.
+The issue is the ***"T"*** values used in these columns to indicate a ***trace*** of precipitation (less than 0.01 inches).  ***"T"*** is a ***chr/string*** values and, in R, [if any value in a vector or a column is a string then the whole vector (column) is treated as a string]{.hl}.
 
 ![The precip column is seen as a string (chr) column by R](images/R-1-14_StringPrecip.png){#fig-stringCol .fs}
 
@@ -246,7 +250,7 @@ In mean.default(precip) : argument is not numeric or logical: returning NA
 
 ### Forcing characters to become numbers
 
-The solution is to change the ***chr*** (string) vector into a numeric vector using ***as.numeric()***:
+One solution is to change the ***chr*** (string) vector into a numeric vector using ***as.numeric()***:
 
  
 
@@ -256,11 +260,11 @@ Let's use ***as.numeric()*** on the ***precip*** vector as save the results to *
 precip2 = as.numeric(precip);
 ```
 
-If we look at the ***Environment***, we can see that ***precip2*** is a numeric vector and the numbers no longer have quotes around them.  But, the non-numeric "T" values were replaced with ***NA***:
+If we look at ***Variables***, we can see that ***precip2*** is a numeric vector and the numbers no longer have quotes around them.  Also, the non-numeric "T" values were replaced with ***NA***:
 
-``` {.r tab="Environment"}
-precip:   chr[1:366]  "0.04" "0.00" "T" "T" "0.00"
-precip2:  num[1:366]  0.04 0 NA NA 0
+``` {.r tab="Variables"}
+precip:   chr[1:366]  "0.04" "0.00" «"T" "T"» "0.00"
+precip2:  num[1:366]  0.04 0 «NA NA» 0
 ```
 
 ### Double values are numeric...
@@ -296,7 +300,7 @@ meanPrecip = mean(precip2);
 totalPrecip = sum(precip2);
 ```
 
-``` {.r tab="Environment"}
+``` {.r tab="Variables"}
 meanPrecip: NA_Real
 totalPrecip: NA_Real
 ```
@@ -314,7 +318,7 @@ totalPrecip: NA_Real
 [1] NA
 ```
 
-Whereas the ***NULL*** values will be treated as if it does not exist:
+Whereas the ***NULL*** values are treated as if they do not exist:
 
 ``` r
 > length(c(10, NULL, NULL, 20))
@@ -356,7 +360,7 @@ totalPrecip2 = sum(precip2, na.rm = TRUE);
 
 Without the ***NA*** values in the vector, the results are:
 
-``` {.r tab="Environment"}
+``` {.r tab="Variables"}
 meanPrecip2: 0.1144...
 totalPrecip2: 35.01
 ```
@@ -389,7 +393,7 @@ for(i in 1:length(precip3)) # go through every value in precip
 
 And we can see that ***precip3 now*** has **0.005** in place of **NA**:
 
-``` {.r tab="Environment"}
+``` {.r tab="Variables"}
 precip3 num [1:366] 0.04 0.00 «0.005» «0.005» 0.00...
 ```
 
@@ -433,7 +437,7 @@ totalPrecip3 = sum(precip3);
 
 Adding 60 days with trace precipitation increased the sum by a little bit and lowered the mean a bit:
 
-``` {.r tab="Environment"}
+``` {.r tab="Variables"}
 meanPrecip2:   0.1144...
 totalPrecip2:  35.01
 meanPrecip3:   0.0964...
@@ -456,11 +460,11 @@ We are going to do some basic plots with the rainfall values.  For all of these
 
 ### A scatterplot
 
-The first plot will be a scatterplot with rainfall (***precipNum***) on the y-axis and day number on the x-axis.  Since day number is just the row number, we will map the y-axis to a sequence from ***1*** to the number of rows in ***weatherData*** (i.e., **366**)
+The first plot will be a scatterplot with rainfall (***precipNum***) on the y-axis and day number on the x-axis.  Since day number is the row number, we will map the y-axis to a sequence from ***1*** to the number of rows in ***weatherData*** (i.e., **366**)
 
 ``` r
 plot1 = ggplot(data=weatherData ) +
-  geom_point( mapping=aes(x=1:nrow(weatherData),  # 1:366
+  geom_point( mapping=aes(x=«1:nrow(weatherData)»,  # 1:366
                           y=precipNum),
               color = "red") +
   labs( title="Daily Precipitation",
@@ -482,7 +486,7 @@ GGPlot can also create a scatterplot from the precipitation values that are give
 ``` r
   plot2 = ggplot(data=weatherData ) +
     geom_point( mapping=aes(x=1:nrow(weatherData),  
-                            y=precip),  # chr values
+                            «y=precip»),  # chr values
                 color = "red") +
     labs( title="Daily Precipitation",
           subtitle="Lansing, MI -- 2016",
@@ -522,9 +526,9 @@ But, since ***precip*** contains ***chr***/string values (i.e., not numbers), GG
 
 4\) Create a vector with **366** values called ***seasons*** and add the vector to a column in the ***weatherData*** called ***season***
 
-- March 21 June 21, and September 21 are approximate dates for the transition of the season -- it is OK for this application to be off by a few days
+- March 21 June 21, and September 21 are approximate dates for the transition of the season -- it is OK for this application to be off by a couple days
 
-- But, you need to deal with the fact that the beginning of the year and end of the year are winter days
+- But, you need to deal with the fact that winter days occur at the beginning and end of the year
 
    
 

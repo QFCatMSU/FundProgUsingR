@@ -290,8 +290,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../lessons-new/2-04_WhichStatements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-04: Which Statements</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons-new/2-05_WhichAndSubstrings.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-05: Which and Substrings</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../lessons-new/2-06_RegularExpressions.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">2-05b: Regular Expressions (Unfinished)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons-new/2-07_Datetime_Objects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-06: Datetime objects</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons-new/2-08_Matrices.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-07: Matrices</span></a>
   </div>
 </li>
       </ul>
@@ -611,9 +635,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(weatherData5, <span class="at">file=</span><span class="st">"data/Lansing2016Noaa-2-bad.csv"</span>);  <span class="co"># from last lesson</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Let’s open up this file and see what happened:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>badData <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="at">file=</span><span class="st">"data/Lansing2016NOAA-2-bad.csv"</span>,</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">sep=</span><span class="st">","</span>,</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">header=</span><span class="cn">TRUE</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>After you double-click on <strong><em>badData</em></strong> in the <strong><em>Environment</em></strong> tab, you can see there is an extra column in the data frame at the beginning which has the row numbers in it.&nbsp; This is because, by default, <strong><em>write.csv()</em></strong> <span class="hl">will treat the row numbers as a column of data</span>.</p>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">sep=</span><span class="st">","</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">header=</span><span class="cn">TRUE</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>After you double-click on <strong><em>badData</em></strong> in <strong><em>Variables</em></strong>, you can see there is an extra column in the data frame at the beginning which has the row numbers in it.&nbsp; This is because, by default, <strong><em>write.csv()</em></strong> <span class="hl">will treat the row numbers as a column of data</span>.</p>
 <div id="fig-extraColumn" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-extraColumn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -638,9 +662,13 @@ Figure&nbsp;2: Multiple column containing row numbers…
 </section>
 <section id="adding-columns-with-the-wrong-number-of-values" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="adding-columns-with-the-wrong-number-of-values"><span class="header-section-number">4</span> Adding columns with the wrong number of values</h2>
-<p>While we are messing around with a throwaway data frame, let’s see what happens if you try to add/overwrite a column to the data frame that has the wrong number of values.&nbsp; In this case, the data frame has 366 rows, meaning there are 366 values in each column.</p>
+<p>Since we are messing around with a throwaway data frame, let’s see what happens if you try to add/overwrite a column to the data frame that has the wrong number of values.&nbsp; In this case, the data frame has 366 rows, meaning there are 366 values in each column.</p>
 <p>&nbsp;</p>
-<p>Let’s attempt to overwrite the column <strong><em>test1</em></strong> with <strong>400</strong> values and write to a new column called <strong><em>test2</em></strong> with <strong>10</strong> values:</p>
+<p>Let’s attempt to:</p>
+<ul>
+<li><p>overwrite the column <strong><em>test1</em></strong> with <strong>400</strong> values and</p></li>
+<li><p>write to a new column called <strong><em>test2</em></strong> with <strong>10</strong> values:</p></li>
+</ul>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>badData<span class="sc">$</span>test1 <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">400</span>);  <span class="co"># 400 values: 1-400</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>badData<span class="sc">$</span>test2 <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>);   <span class="co"># 10 values: 1-10</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The <strong><em>test1</em></strong> line will output this error:</p>
@@ -662,7 +690,7 @@ Figure&nbsp;2: Multiple column containing row numbers…
 <p>&nbsp;</p>
 <p>Or, if you use <strong>6</strong> values (366/6 = 61):</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>badData<span class="sc">$</span>test4 <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Then R will create a column called <strong><em>test4</em></strong> that repeat the numbers <strong>1-6</strong> 61times:</p>
+<p>Then R will create a column called <strong><em>test4</em></strong> that repeat the numbers <strong>1-6</strong> 61 times:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> badData<span class="sc">$</span>test3</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">10</span> <span class="dv">10</span> <span class="dv">10</span> <span class="dv">10</span> <span class="dv">10</span> <span class="dv">10</span> <span class="dv">10</span> <span class="dv">10</span> <span class="dv">10</span> ...</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> badData<span class="sc">$</span>test4</span>
@@ -715,9 +743,9 @@ Figure&nbsp;3: Adding columns with values that repeats
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>  weatherData <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="at">file=</span><span class="st">"data/Lansing2016Noaa-2.csv"</span>,</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">sep=</span><span class="st">","</span>,</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">header=</span><span class="cn">TRUE</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>If we look at the <strong><em>Environment</em></strong> (<a href="#fig-stringCol" class="quarto-xref">Figure&nbsp;4</a>), there are a few columns in the <strong><em>weatherData</em></strong> data frame that R categorizes as string (<strong><em>chr</em></strong>) even though they are numeric by nature.&nbsp; For instance, <strong><em>precip, snow,</em></strong> and <strong><em>snowDepth</em></strong> are all labelled as <strong><em>chr</em></strong> even though they have (mostly) numeric values.</p>
+<p>If we look at <strong><em>Variables</em></strong> (<a href="#fig-stringCol" class="quarto-xref">Figure&nbsp;4</a>), there are a few columns in the <strong><em>weatherData</em></strong> data frame that R categorizes as string (<strong><em>chr</em></strong>) even though they are numeric by nature.&nbsp; For instance, <strong><em>precip, snow,</em></strong> and <strong><em>snowDepth</em></strong> are all labelled as <strong><em>chr</em></strong> even though they have (mostly) numeric values.</p>
 <p>&nbsp;</p>
-<p>The issue is the <strong><em>“T”</em></strong> values used in these columns to indicate a <strong><em>trace</em></strong> of precipitation (less than 0.01 inches).&nbsp; <strong><em>“T”</em></strong> is a <strong><em>chr/string</em></strong> values and, in R, <span class="hl">if any value in a vector or a column is a string then every value in the vector (or column) is treated as a string</span>.</p>
+<p>The issue is the <strong><em>“T”</em></strong> values used in these columns to indicate a <strong><em>trace</em></strong> of precipitation (less than 0.01 inches).&nbsp; <strong><em>“T”</em></strong> is a <strong><em>chr/string</em></strong> values and, in R, <span class="hl">if any value in a vector or a column is a string then the whole vector (column) is treated as a string</span>.</p>
 <div id="fig-stringCol" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-stringCol-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -758,13 +786,13 @@ Figure&nbsp;4: The precip column is seen as a string (chr) column by R
 </section>
 <section id="forcing-characters-to-become-numbers" class="level3" data-number="6.2">
 <h3 data-number="6.2" class="anchored" data-anchor-id="forcing-characters-to-become-numbers"><span class="header-section-number">6.2</span> Forcing characters to become numbers</h3>
-<p>The solution is to change the <strong><em>chr</em></strong> (string) vector into a numeric vector using <strong><em>as.numeric()</em></strong>:</p>
+<p>One solution is to change the <strong><em>chr</em></strong> (string) vector into a numeric vector using <strong><em>as.numeric()</em></strong>:</p>
 <p>&nbsp;</p>
 <p>Let’s use <strong><em>as.numeric()</em></strong> on the <strong><em>precip</em></strong> vector as save the results to <strong><em>precip2</em></strong>:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>precip2 <span class="ot">=</span> <span class="fu">as.numeric</span>(precip);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>If we look at the <strong><em>Environment</em></strong>, we can see that <strong><em>precip2</em></strong> is a numeric vector and the numbers no longer have quotes around them.&nbsp; But, the non-numeric “T” values were replaced with <strong><em>NA</em></strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>precip<span class="sc">:</span>   chr[<span class="dv">1</span><span class="sc">:</span><span class="dv">366</span>]  <span class="st">"0.04"</span> <span class="st">"0.00"</span> <span class="st">"T"</span> <span class="st">"T"</span> <span class="st">"0.00"</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>precip2<span class="sc">:</span>  num[<span class="dv">1</span><span class="sc">:</span><span class="dv">366</span>]  <span class="fl">0.04</span> <span class="dv">0</span> <span class="cn">NA</span> <span class="cn">NA</span> <span class="dv">0</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If we look at <strong><em>Variables</em></strong>, we can see that <strong><em>precip2</em></strong> is a numeric vector and the numbers no longer have quotes around them.&nbsp; Also, the non-numeric “T” values were replaced with <strong><em>NA</em></strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22" data-tab="Variables"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>precip<span class="sc">:</span>   chr[<span class="dv">1</span><span class="sc">:</span><span class="dv">366</span>]  <span class="st">"0.04"</span> <span class="st">"0.00"</span> «<span class="st">"T"</span> <span class="st">"T"</span>» <span class="st">"0.00"</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>precip2<span class="sc">:</span>  num[<span class="dv">1</span><span class="sc">:</span><span class="dv">366</span>]  <span class="fl">0.04</span> <span class="dv">0</span> «NA NA» <span class="dv">0</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="double-values-are-numeric" class="level3" data-number="6.3">
 <h3 data-number="6.3" class="anchored" data-anchor-id="double-values-are-numeric"><span class="header-section-number">6.3</span> Double values are numeric…</h3>
@@ -786,7 +814,7 @@ Figure&nbsp;4: The precip column is seen as a string (chr) column by R
 <p>If you try to perform mathematical or statistical operation on a vector that has numeric <strong>NA</strong> values, R will tell you the answer is <strong>NA</strong>, or <strong><em>NA_Real,</em></strong> which is just R’s way of telling you that the answer would be a real number if the <strong><em>NA</em></strong> values existed.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>meanPrecip <span class="ot">=</span> <span class="fu">mean</span>(precip2);</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>totalPrecip <span class="ot">=</span> <span class="fu">sum</span>(precip2);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>meanPrecip<span class="sc">:</span> NA_Real</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26" data-tab="Variables"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>meanPrecip<span class="sc">:</span> NA_Real</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>totalPrecip<span class="sc">:</span> NA_Real</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <section id="comparing-na-to-null" class="level3" data-number="7.1">
 <h3 data-number="7.1" class="anchored" data-anchor-id="comparing-na-to-null"><span class="header-section-number">7.1</span> Comparing NA to NULL</h3>
@@ -797,7 +825,7 @@ Figure&nbsp;4: The precip column is seen as a string (chr) column by R
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="cn">NA</span></span>
 <span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">mean</span>(<span class="fu">c</span>(<span class="dv">10</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="dv">20</span>))</span>
 <span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="cn">NA</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Whereas the <strong><em>NULL</em></strong> values will be treated as if it does not exist:</p>
+<p>Whereas the <strong><em>NULL</em></strong> values are treated as if they do not exist:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">length</span>(<span class="fu">c</span>(<span class="dv">10</span>, <span class="cn">NULL</span>, <span class="cn">NULL</span>, <span class="dv">20</span>))</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">2</span></span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">sum</span>(<span class="fu">c</span>(<span class="dv">10</span>, <span class="cn">NULL</span>, <span class="cn">NULL</span>, <span class="dv">20</span>))</span>
@@ -823,7 +851,7 @@ Figure&nbsp;4: The precip column is seen as a string (chr) column by R
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>meanPrecip2 <span class="ot">=</span> <span class="fu">mean</span>(precip2, <span class="at">na.rm =</span> <span class="cn">TRUE</span>);</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>totalPrecip2 <span class="ot">=</span> <span class="fu">sum</span>(precip2, <span class="at">na.rm =</span> <span class="cn">TRUE</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Without the <strong><em>NA</em></strong> values in the vector, the results are:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>meanPrecip2<span class="sc">:</span> <span class="dv">0</span>.<span class="dv">1144</span>...</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32" data-tab="Variables"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>meanPrecip2<span class="sc">:</span> <span class="dv">0</span>.<span class="dv">1144</span>...</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>totalPrecip2<span class="sc">:</span> <span class="fl">35.01</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><span class="note">Note: <strong><em>na.rm=TRUE</em></strong> effectively changes an <strong><em>NA</em></strong> to a <strong><em>NULL</em></strong></span></p>
 </section>
@@ -842,7 +870,7 @@ Figure&nbsp;4: The precip column is seen as a string (chr) column by R
 <span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>And we can see that <strong><em>precip3 now</em></strong> has <strong>0.005</strong> in place of <strong>NA</strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>precip3 num [<span class="dv">1</span><span class="sc">:</span><span class="dv">366</span>] <span class="fl">0.04</span> <span class="fl">0.00</span> «<span class="fl">0.005</span>» «<span class="fl">0.005</span>» <span class="dv">0</span>.<span class="dv">00</span>...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35" data-tab="Variables"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>precip3 num [<span class="dv">1</span><span class="sc">:</span><span class="dv">366</span>] <span class="fl">0.04</span> <span class="fl">0.00</span> «<span class="fl">0.005</span>» «<span class="fl">0.005</span>» <span class="dv">0</span>.<span class="dv">00</span>...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="reserved-words-in-r" class="level3" data-number="7.5">
 <h3 data-number="7.5" class="anchored" data-anchor-id="reserved-words-in-r"><span class="header-section-number">7.5</span> Reserved Words in R</h3>
@@ -863,7 +891,7 @@ Figure&nbsp;4: The precip column is seen as a string (chr) column by R
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>meanPrecip3 <span class="ot">=</span> <span class="fu">mean</span>(precip3);</span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>totalPrecip3 <span class="ot">=</span> <span class="fu">sum</span>(precip3);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Adding 60 days with trace precipitation increased the sum by a little bit and lowered the mean a bit:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>meanPrecip2<span class="sc">:</span>   <span class="dv">0</span>.<span class="dv">1144</span>...</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41" data-tab="Variables"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>meanPrecip2<span class="sc">:</span>   <span class="dv">0</span>.<span class="dv">1144</span>...</span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>totalPrecip2<span class="sc">:</span>  <span class="fl">35.01</span></span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>meanPrecip3<span class="sc">:</span>   <span class="dv">0</span>.<span class="dv">0964</span>...</span>
 <span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>totalPrecip3<span class="sc">:</span>  <span class="dv">35</span>.<span class="dv">31</span>...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -889,9 +917,9 @@ Figure&nbsp;5: The precipNum column added to weatherData – note the 0.005 in p
 <p>We are going to do some basic plots with the rainfall values.&nbsp; For all of these plots we are going to plot rainfall vs.&nbsp;the day number (e.g., <strong>1</strong> is Jan 1, <strong>2</strong> is Jan 2, <strong>366</strong> is Dec 31).&nbsp; We will deal with dates in a later lesson.</p>
 <section id="a-scatterplot" class="level3" data-number="8.1">
 <h3 data-number="8.1" class="anchored" data-anchor-id="a-scatterplot"><span class="header-section-number">8.1</span> A scatterplot</h3>
-<p>The first plot will be a scatterplot with rainfall (<strong><em>precipNum</em></strong>) on the y-axis and day number on the x-axis.&nbsp; Since day number is just the row number, we will map the y-axis to a sequence from <strong><em>1</em></strong> to the number of rows in <strong><em>weatherData</em></strong> (i.e., <strong>366</strong>)</p>
+<p>The first plot will be a scatterplot with rainfall (<strong><em>precipNum</em></strong>) on the y-axis and day number on the x-axis.&nbsp; Since day number is the row number, we will map the y-axis to a sequence from <strong><em>1</em></strong> to the number of rows in <strong><em>weatherData</em></strong> (i.e., <strong>366</strong>)</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>plot1 <span class="ot">=</span> <span class="fu">ggplot</span>(<span class="at">data=</span>weatherData ) <span class="sc">+</span></span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>( <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(weatherData),  <span class="co"># 1:366</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>( <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>«<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(weatherData)»,  <span class="co"># 1:366</span></span>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">y=</span>precipNum),</span>
 <span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
 <span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>( <span class="at">title=</span><span class="st">"Daily Precipitation"</span>,</span>
@@ -917,7 +945,7 @@ Figure&nbsp;6: scatterplot of rainfall for every day
 <p>GGPlot can also create a scatterplot from the precipitation values that are given in the <strong><em>precip</em></strong> column that is of type <strong><em>chr</em></strong>:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>  plot2 <span class="ot">=</span> <span class="fu">ggplot</span>(<span class="at">data=</span>weatherData ) <span class="sc">+</span></span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>( <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(weatherData),  </span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>                            <span class="at">y=</span>precip),  <span class="co"># chr values</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>                            «<span class="at">y=</span>precip»),  <span class="co"># chr values</span></span>
 <span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
 <span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>( <span class="at">title=</span><span class="st">"Daily Precipitation"</span>,</span>
 <span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">subtitle=</span><span class="st">"Lansing, MI -- 2016"</span>,</span>
@@ -959,8 +987,8 @@ Figure&nbsp;7: A scatterplot using character values instead of numeric
 <p>&nbsp;</p>
 <p>4) Create a vector with <strong>366</strong> values called <strong><em>seasons</em></strong> and add the vector to a column in the <strong><em>weatherData</em></strong> called <strong><em>season</em></strong></p>
 <ul>
-<li><p>March 21 June 21, and September 21 are approximate dates for the transition of the season – it is OK for this application to be off by a few days</p></li>
-<li><p>But, you need to deal with the fact that the beginning of the year and end of the year are winter days</p>
+<li><p>March 21 June 21, and September 21 are approximate dates for the transition of the season – it is OK for this application to be off by a couple days</p></li>
+<li><p>But, you need to deal with the fact that winter days occur at the beginning and end of the year</p>
 <p>&nbsp;</p></li>
 </ul>
 <p>5) Create a vector call <strong><em>daysOfTheWeek</em></strong> (Sun-Mon-Tues-Wed) and add it to the <strong><em>weatherData</em></strong> column</p>

@@ -3,8 +3,8 @@ library(package=ggplot2);
 
 ### First let's read in the bad csv file:
 badData = read.csv(file="data/Lansing2016Noaa-2-bad.csv",
-                       sep=",",
-                       header=TRUE);
+                   sep=",",
+                   header=TRUE);
 
 ### Keep writing with row.names then you can have multiple X columns
 
