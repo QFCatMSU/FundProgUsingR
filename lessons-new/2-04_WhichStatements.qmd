@@ -62,22 +62,22 @@ index4 = which(animalNames != "llama"); # index of animals not named "llama"
 
 ### which() produces an index vector
 
-The four index vectors [contain the index of the values that met the condition]{.hl} -- not the values itself.
+The four index vectors [contain the index of the values that meet the condition]{.hl} -- not the values itself.
 
-The number of values in the vector that met the condition is given by the second number in brackets **\[1:[X]{.hl}\]**. The second number is also the length of the vector.
+The number of values in the vector that met the condition is given by the number in brackets `int [X]`. The number is also the length of the vector.
 
 ``` {.r tab="Variables"}
-index1: int [1:4] 2 4 5 7
-index2: int [1:3] 1 3 6
-index3: int [1:2] 1 4
-index4: int [1:3] 2 3 5
+index1: 2 4 5 7     int [4]
+index2: 1 3 6       int [3]
+index3: 1 4         int [2] 
+index4: 2 3 5       int [3]
 ```
 
 ***index1*** says there were **4** values in ***ages*** greater than **40**: values 2, 4, 5, and 7 (values: 47, 59, 76, and 45)
 
 ***index2*** says there were ***3*** values in ***ages*** less than or equal to **33**: values 1, 3, and 6 (values: 25, 13, and 33)
 
-***index3*** says there were ***2*** values in ***animalNames*** that were [equal]{.hl}to "llama": values 1 and 4
+***index3*** says there were ***2*** values in ***animalNames*** that were [equal]{.hl} to "llama": values 1 and 4
 
 ***index4*** says there were ***3*** values in ***animalNames*** [not equal]{.hl} to "llama": values 2,3 and 5 (alpaca, guanaco, and goat)
 
@@ -97,9 +97,9 @@ We are going to use ***which()*** to
 
 1.  find values in the precipitation columns that meet a certain condition
 
-2.  subset other columns (e.g., ***avgTemp***, ***relHum***) by these values
+2.  subset other columns (e.g., ***avgTemp***, ***relHum***) by the index of these precipitation values
 
-    - in other words, find the ***avgTemp*** on days where precipitation meets a certain condition
+    - in other words, find the ***avgTemp*** or ***relHum*** on days where precipitation meets a certain condition
 
 ### Finding the NA values using which()
 
@@ -129,13 +129,13 @@ Use ***which()*** to find which values in ***precip2*** are **NA**:
 naValues = which(is.na(precip2));
 ```
 
-In the ***Environment***, we see there are 60 **NA** values in ***precip2***, starting with values ***3, 4, 14***... (meaning the 3^rd^, 4^th^, 14^th^... values in ***precip2*** are **NA**)
+In ***Variables***, we see there are 60 **NA** values in ***precip2***, starting with values ***3, 4, 14***... (meaning the 3^rd^, 4^th^, 14^th^... values in ***precip2*** are **NA**)
 
 ``` {.r tab="Variables"}
-naValues:  int[1:60] 3 4 14 16 17 19 20 ...
+naValues:  3 4 14 16 17 19 20 ...   num [60]
 ```
 
-Create a copy of ***precip2*** called ***precip3*** (this is only done so we can see the progress):
+Create a copy of ***precip2*** called ***precip3*** (the copies are so we can see the progress in ***Variables***):
 
 ``` r
 precip3 = precip2;
@@ -150,9 +150,9 @@ precip3[naValues] = 0.005;
 Like last lesson, we see the progress from a ***chr*** vector (***precip***) to a numeric vector with **NA** values (***precip2***) to a numeric value with **NA** values replaced with **0.005** (***precip3***):
 
 ``` {.r tab="Variables"}
-precip:   chr[1:366]  "0.04" "0.00" «"T"» «"T"» "0.00" ...
-precip2:  num[1:366]  0.04 0 «NA» «NA» 0 ...
-precip3:  num[1:366]  0.04 0 «0.005» «0.005» 0 ...
+precip:   "0.04" "0.00" «"T"» «"T"» "0.00" ...   str [366]
+precip2:  0.04 0 «NA» «NA» 0 ...                 dbl [366]
+precip3:  0.04 0 «0.005» «0.005» 0 ...           dbl [366]
 ```
 
 ### Subset based on numeric conditions
@@ -174,10 +174,6 @@ daysNoPrecip = which(weatherData$precipNum == 0.00);   # days where precip is 0
 daysHighPrecip = which(weatherData$precipNum > 1.00);  # days where precip is > 1
 ```
 
-[Note: it is good practice to put in the decimal (**1.00** as opposed to **1**) to indicate to the reader that it is a real number that, in this situation, happens to have a value the looks like an integer.]{.note}
-
- 
-
 The first two scenarios have one condition, the third scenario has two conditions:
 
 - ***precipNum*** \> 0.25 and
@@ -196,7 +192,7 @@ daysModPrecip = which(weatherData$precipNum > 0.25 & weatherData$precipNum < 0.5
 # daysModPrecip = which(weatherData$precipNum > 0.25 & < 0.5);
 ```
 
-We see in the ***Environment*** tab that there were:
+We see in ***Variables*** that there were:
 
 - **167** days without any precipitation
 
@@ -207,18 +203,36 @@ We see in the ***Environment*** tab that there were:
    
 
 ::: {#fig-vectorIndices}
-``` r
-daysHighPrecip: int [1:«8»]  73 91 225 228 229 273 290 307
-daysModPrecip:  int [1:«18»]  33 88 119 121 123 125 168 183 ...
-daysNoPrecip:   int [1:«167»]  2 5 6 7 24 30 37 38 42 49 ...
+``` {.r tab="Variables"}
+daysHighPrecip: 73 91 225 228 229 273 290 307           int [«8»]  
+daysModPrecip:  33 88 119 121 123 125 168 183 ...       int [«18»]  
+daysNoPrecip:   2 5 6 7 24 30 37 38 42 49 ...           int [«167»]  
 ```
 
 Creating vector indices of days based on precipitation amounts
 :::
 
+### A note about decimals and best programming practice
+
+When comparing values to 0 and 1, I coded it with decimal number:
+
+``` r
+daysNoPrecip = which(weatherData$precipNum == «0.00»);   # days where precip is 0
+daysHighPrecip = which(weatherData$precipNum > «1.00»);  # days where precip is > 1
+```
+
+The code would have worked just fine using integer numbers:
+
+``` r
+daysNoPrecip = which(weatherData$precipNum == «0»);   # days where precip is 0
+daysHighPrecip = which(weatherData$precipNum > «1»);  # days where precip is > 1
+```
+
+It is good practice to put in the decimal (**1.00** as opposed to **1**) to indicate to the reader that the numbers being compared (in the precipitation column) are real numbers.
+
 ## Subsetting other vectors
 
-The index vectors in @fig-vectorIndices give the rows in ***weatherData\$precipNum*** that meet the given condition.  We can use this information to subset other columns and answer questions like:
+The index vectors in @fig-vectorIndices gives the rows in ***weatherData\$precipNum*** that meet the given condition.  We can use this information to subset other columns and answer questions like:
 
 - Which dates (***dateYear*** column) had more than 1 inch of rain?
 
@@ -231,7 +245,7 @@ rainyDates = weatherData$dateYear[highPrecipIndex];
 rainyDayWindSpeed = weatherData$windSpeed[highPrecipIndex];
 ```
 
-***rainyDates*** and ***rainyDayWindSpeed*** are both vector with 8 values, the 8 values are on the rows where the precipitations are greater than 1 inch.
+***rainyDates*** and ***rainyDayWindSpeed*** are both vectors with 8 values, the 8 values are the ones on the rows that have precipitation greater than 1 inch.
 
  
 
@@ -253,7 +267,7 @@ Printing out the subsetted rainy dates to the Console
 
 ## Plotting subsetted vectors
 
-In previous lesson, we created a scatterplot by initializing a data frame in ***ggplot()*** and mapping columns to the ***x*** and ***y*** axes:
+In a previous lesson, we created a scatterplot by initializing a data frame in ***ggplot()*** and mapping columns to the ***x*** and ***y*** axes:
 
 ``` r
 plot1 = ggplot(«data=weatherData») +                # initialize data frame
