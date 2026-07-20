@@ -35,23 +35,23 @@ complexCond = which( (weatherData$weatherType == "RA" |
 grepTestVec = c("one fish", "two fish", "one llama", "two llama",
                 "red fish", "blue fish");
 
-test1 = grep("two", grepTestVec);  # values that have the substring "two"
-test2 = grep("lla", grepTestVec);  # values that have the substring "lla"
-test3 = grep("fish", grepTestVec); # values that have the substring "fish"
+test1 = grep(x=grepTestVec, pattern="two");  # values that have the substring "two"
+test2 = grep(x=grepTestVec, pattern="lla");  # values that have the substring "lla"
+test3 = grep(x=grepTestVec, pattern="fish"); # values that have the substring "fish"
 
 ### Using grep() on the dataframe to find snowy days
-snowyDaysGrep = grep(weatherData$weatherType, pattern="SN");
+snowyDaysGrep = grep(x=weatherData$weatherType, pattern="SN");
 
 snowDaysGrepTemp = weatherData$avgTemp[snowyDaysGrep];
 snowDaysGrepWind = weatherData$windSpeed[snowyDaysGrep];
 
-daysWithPrecipGrep = grep(weatherData$weatherType, pattern="RA|SN");
+daysWithPrecipGrep = grep(x=weatherData$weatherType, pattern="RA|SN");
 
-rainyDaysGrep = grep(weatherData$weatherType, pattern="RA");
-snowyDaysGrep = grep(weatherData$weatherType, pattern="SN");
+rainyDaysGrep = grep(x=weatherData$weatherType, pattern="RA");
+snowyDaysGrep = grep(x=weatherData$weatherType, pattern="SN");
 daysWithPrecipUnion = union(rainyDaysGrep, snowyDaysGrep);
 
-hazyDays = grep(weatherData$weatherType, pattern="HZ");
+hazyDays = grep(x=weatherData$weatherType, pattern="HZ");
 hotDays = which(weatherData$maxTemp > 85);
 hazyOrHotDays = union(hazyDays, hotDays);
 
