@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>2-06: Datetime objects</title>
+<title>2-07: Datetime objects</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -124,7 +124,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-          <h1 class="quarto-secondary-nav-title">2-06: Datetime objects</h1>
+          <h1 class="quarto-secondary-nav-title">2-07: Datetime objects</h1>
         </a>     
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
@@ -303,19 +303,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../lessons-new/2-06_RegularExpressions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">2-05b: Regular Expressions (Unfinished)</span></a>
+ <span class="menu-text">2-06: Regular Expressions</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../lessons-new/2-07_Datetime_Objects.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">2-06: Datetime objects</span></a>
+ <span class="menu-text">2-07: Datetime objects</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../lessons-new/2-08_Matrices.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">2-07: Matrices</span></a>
+ <span class="menu-text">2-08: Matrices</span></a>
   </div>
 </li>
       </ul>
@@ -586,7 +586,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">2-06: Datetime objects</h1>
+<h1 class="title d-none d-lg-block">2-07: Datetime objects</h1>
 </div>
 
 
@@ -617,7 +617,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="2" class="anchored" data-anchor-id="material"><span class="header-section-number">2</span> Material</h2>
 <p>The <a href="../scripts/2-06_DateTimeObjects_new.R">script for the lesson is here</a></p>
 <p>The data for the lesson: <a href="../data/dateTimeData.csv">dateTimeData.csv</a></p>
-<p><span class="hl">Warning: do not save this data file using Excel.</span> Excel will edit the Date columns and break the lesson script.</p>
+<p><span class="hl">Warning: do not save this data file using Excel.</span> Excel will edit the date columns and break the lesson script.</p>
 </section>
 <section id="two-new-variable-types-date-and-posixct" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="two-new-variable-types-date-and-posixct"><span class="header-section-number">3</span> Two new variable types: Date and POSIXct</h2>
@@ -625,21 +625,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>&nbsp;</p>
 <p>In this lesson we introduce two more variable type: <strong><em>Date</em></strong> and <strong><em>POSIXct</em></strong>.&nbsp; <strong><em>Date</em></strong>, as the name implies, holds information about the date whereas <strong><em>POSIXct</em></strong> holds information about both the date and the time.</p>
 <p>&nbsp;</p>
-<p><strong><em>POSIX</em></strong> is a system of standards developed for UNIX computers in the 1970s.&nbsp; <strong><em>ct</em></strong> means Calendar Time.&nbsp; So <strong><em>POSIXct</em></strong> is the UNIX standard for calendar time – and we continue to use this standard to this date (and maintain the unintuitive name).</p>
+<p><strong><em>POSIX</em></strong> is a system of standards developed for UNIX computers in the 1970s.&nbsp; <strong><em>ct</em></strong> means Calendar Time.&nbsp; So <strong><em>POSIXct</em></strong> is the UNIX standard for calendar time – and we still use this standard today (and maintain the unintuitive name).</p>
 <section id="reading-datetime-objects-from-a-dataframe" class="level3" data-number="3.1">
 <h3 data-number="3.1" class="anchored" data-anchor-id="reading-datetime-objects-from-a-dataframe"><span class="header-section-number">3.1</span> Reading datetime objects from a dataframe</h3>
 <p>Let’s open the data file and save the contents to a data frame called <strong><em>dateTimeData</em></strong>.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>  dateTimeData <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">"data/dateTimeData.csv"</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The first six columns in <strong><em>dateTimeData</em></strong> (<a href="#fig-dateTime_str" class="quarto-xref">Figure&nbsp;1</a>) have values that look like dates and times but R still sees these columns as strings (<strong><em>chr</em></strong>).</p>
 <p>&nbsp;</p>
-<p>In other words, R does not automatically assign values that look like dates and times to variable types <strong><em>Date</em></strong> or <strong><em>POSIXct</em></strong>.&nbsp; R only sees quotes and assigns the values to a string variable.&nbsp; We need to manually convert the string columns into <strong><em>Date</em></strong> or <strong><em>POSIXct</em></strong> variables.</p>
+<p>In other words, R does not automatically assign values that look like dates and times to the variable types <strong><em>Date</em></strong> or <strong><em>POSIXct</em></strong>.&nbsp; R only sees quotes and assigns the values to a string variable.&nbsp; We need to manually convert the string columns into <strong><em>Date</em></strong> or <strong><em>POSIXct</em></strong> variables.</p>
 <div id="fig-dateTime_str" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-dateTime_str-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/R_2-03_DatetimeAndStrings.jpg" class="fs img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dateTime_str-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: R sees the columns with date and time values as strings (chr)
+Figure&nbsp;1: R sees the columns with date and time values as strings (str)
 </figcaption>
 </figure>
 </div>
@@ -648,11 +648,11 @@ Figure&nbsp;1: R sees the columns with date and time values as strings (chr)
 <h3 data-number="3.2" class="anchored" data-anchor-id="using-as.date"><span class="header-section-number">3.2</span> Using as.Date()</h3>
 <p>We are going to start with converting strings that hold only date values to a <strong><em>Date</em></strong> variables and later in the lesson we will convert strings that have time values to <strong><em>POSIXct</em></strong> variables.&nbsp; The process is very similar for both <strong><em>Date</em></strong> and <strong><em>POSIXct</em></strong>.</p>
 <p>&nbsp;</p>
-<p><strong><em>as.Date()</em></strong> is the function that reads in a string and converts it to a Date variable.&nbsp; However, if you pass a string column (in this case, <strong><em>date3</em></strong> from <strong><em>dateTimeData</em></strong>) into <strong><em>as.Date()</em></strong>, you will get the following error:</p>
+<p><strong><em>as.Date()</em></strong> is the function that reads in a string and converts it to a <strong><em>Date</em></strong> variable.&nbsp; However, if you pass a string column (in this case, <strong><em>date3</em></strong> from <strong><em>dateTimeData</em></strong>) into <strong><em>as.Date()</em></strong>, you will get the following error:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">as.Date</span>(dateTimeData<span class="sc">$</span>date3)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> <span class="fu">charToDate</span>(x) <span class="sc">:</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> <span class="fu">charToDate</span>() <span class="sc">:</span> </span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  character string is not <span class="cf">in</span> a standard unambiguous format</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This error occurs because dates can come in many different formats (e.g., April 15, 2022; 2022-04-15; 4/15/22).&nbsp; <strong><em>as.Date()</em></strong> tries to figure out the format used in the string values but <strong><em>as.Date()</em></strong> often fails to figure out a format and it gives you an error.</p>
+<p>This error occurs because dates can come in many different formats (e.g., April 15, 2022; 2022-04-15; 4/15/22).&nbsp; <strong><em>as.Date()</em></strong> tries to figure out the format used and often fails hence the “…not in a standard unambiguous format” error.</p>
 <p>&nbsp;</p>
 <p>Even when <strong><em>as.Date()</em></strong> figures out a format, it is often the wrong format. In the following example, <strong><em>as.Date()</em></strong> assumes the first digits in the string represent the year even though, visually, the year is obviously the last four digits.</p>
 <div id="fig-wrongDate" class="quarto-float quarto-figure quarto-figure-left anchored">
@@ -680,10 +680,9 @@ Figure&nbsp;3: The as.Date() function with the format argument
 </figcaption>
 </figure>
 </div>
-<p>First we need to break down the date values into their component parts.&nbsp;</p>
 <p>Let’s start with the first column (<a href="#fig-dateTime_str" class="quarto-xref">Figure&nbsp;1</a>) where the dates look like this: <strong>Apr 15, 2022</strong></p>
 <p>&nbsp;</p>
-<p><span class="hl">We need to explicitly tell <strong>as.Date()</strong> how the date is formatted</span> and this means breaking down every component of the string.</p>
+<p><span class="hl">We need to explicitly tell <strong>as.Date()</strong> how the date is formatted</span> and this means breaking down every component of the string that contains the string.</p>
 <p>&nbsp;</p>
 <p>Broken down, each cell in the column <strong><em>date1</em></strong> has:</p>
 <ul>
@@ -710,7 +709,7 @@ Figure&nbsp;4: The beginning of the list of conversion specifications
 </figcaption>
 </figure>
 </div>
-<p>The conversion specifications allow you to generalize the different components of the datetime – and they all start with a <strong><em>%</em></strong>.&nbsp; When you declare the format of a datetime string, you replace the date and time components of the string with conversion specifications.&nbsp; For instance, <strong>Apr 15, 2022</strong> contains the abbreviated month so we know <strong><em>%b</em></strong> will be in the specification.</p>
+<p>The conversion specifications allow you to generalize the different components of the datetime – and they all start with a <span class="hl"><strong><em>%</em></strong></span>.&nbsp; When you declare the format of a datetime string, you replace the date and time components of the string with conversion specifications.&nbsp; For instance, <strong>Apr 15, 2022</strong> contains the abbreviated month so we know <strong><em>%b</em></strong> will be in the specification.</p>
 <p>&nbsp;</p>
 <p>Some other specifications:</p>
 <ul>
@@ -741,13 +740,18 @@ Figure&nbsp;4: The beginning of the list of conversion specifications
 <p>And we can attach that conversion specification string using the <strong><em>format</em></strong> argument in <strong><em>as.Date()</em></strong>:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>  stnDate <span class="ot">=</span> <span class="fu">as.Date</span>(dateTimeData<span class="sc">$</span>date1,    <span class="co"># date1 is a chr (string) column</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">format=</span><span class="st">"%b %d, %Y"</span>);   <span class="co"># give the format of date1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>In the <strong><em>Environment</em></strong> tab, we see that <strong><em>stnDate</em></strong> is a <strong><em>Date</em></strong> variable with <strong>300</strong> values in it.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" data-tab="Variables"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>stnDate Date[<span class="dv">1</span><span class="sc">:</span><span class="dv">300</span>], format<span class="sc">:</span> <span class="st">"2022-04-15"</span>...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong><em>stnDate</em></strong> is shown in the default method R uses to display <strong><em>Date</em></strong> variables, which is 4-digit year, 2-digit month, and 2-digit day.</p>
+<p>In <strong><em>Variables</em></strong>, we see that <strong><em>stnDate</em></strong> is a <strong><em>Date</em></strong> variable. Positron (as of this writing) does not put the size of <strong><em>Date</em></strong> vectors in <strong><em>Variables</em></strong>, but if you expand <strong><em>stnDate</em></strong>, you can see it has <strong>300</strong> values:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" data-tab="Variables"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>⮟ stnDate<span class="sc">:</span> <span class="st">"2022-04-15"</span> <span class="st">"2022-04-17"</span> <span class="st">"2022-04-18"</span>...   Date</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>       [<span class="dv">1</span>]<span class="sc">:</span> <span class="st">"2022-04-15"</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>       [<span class="dv">2</span>]<span class="sc">:</span> <span class="st">"2022-04-17"</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>      ...</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>     [<span class="dv">299</span>]<span class="sc">:</span> <span class="st">"2022-08-16"</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>     [<span class="dv">300</span>]<span class="sc">:</span> <span class="st">"2022-08-17"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong><em>stnDate</em></strong> is displayed in the default method R uses to display <strong><em>Date</em></strong> variables, which is 4-digit year, 2-digit month, and 2-digit day.</p>
 </section>
 <section id="sorting-a-date-object" class="level3" data-number="4.2">
 <h3 data-number="4.2" class="anchored" data-anchor-id="sorting-a-date-object"><span class="header-section-number">4.2</span> Sorting a Date object</h3>
-<p>Formatting dates properly is vital when you are calculating or plotting date and time data.&nbsp; When properly formatted, R understands the order of the value and the intervals between them.</p>
+<p>Formatting dates properly is vital when you are calculating or plotting date and time data.&nbsp; When properly formatted, R understands the order of the date values and the intervals between them.</p>
 <p>&nbsp;</p>
 <p>If we take the original <strong><em>date1</em></strong> column and sort it, the sorting will be in alphabetical order with April dates followed by August, then July, June, and May (because R sees <strong><em>date1</em></strong> as a string).</p>
 <p>&nbsp;</p>
@@ -789,9 +793,9 @@ Figure&nbsp;4: The beginning of the list of conversion specifications
 <h2 data-number="5" class="anchored" data-anchor-id="reformatting-dates"><span class="header-section-number">5</span> Reformatting Dates</h2>
 <p>Once you have date values properly formatted and saved as a <strong><em>Date</em></strong> object, you can then reformat the date to customize the output using <strong><em>format()</em></strong>.</p>
 <p>&nbsp;</p>
-<p>For instance, you can customize <strong><em>stnDate</em></strong> to the more familiar to American <span class="hl">month/date/2-digit year</span> format:</p>
+<p>For instance, you can customize <strong><em>stnDate</em></strong> to the, more familiar to Americans, <span class="hl">month/date/2-digit year</span> format:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>date_formatted <span class="ot">=</span> <span class="fu">format</span>(stnDate, <span class="at">format=</span><span class="st">"%m/%d/%y"</span>);  </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Or, you can get information from the dates, like the day of the week (<strong><em>%A</em></strong>):</p>
+<p>Or you can extract information from the dates, like the day of the week (<strong><em>%A</em></strong>):</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>date_weekOfDay <span class="ot">=</span> <span class="fu">format</span>(stnDate, <span class="at">format=</span><span class="st">"%A"</span>);      </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12" data-tab="Variables"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>date_formatted<span class="sc">:</span> chr[<span class="dv">1</span><span class="sc">:</span><span class="dv">300</span>] <span class="st">"4-15-22"</span> <span class="st">"4-17-22"</span>...</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>date_weekOfDay<span class="sc">:</span> chr[<span class="dv">1</span><span class="sc">:</span><span class="dv">300</span>] <span class="st">"Friday"</span> <span class="st">"Sunday"</span>...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -799,7 +803,7 @@ Figure&nbsp;4: The beginning of the list of conversion specifications
 </section>
 <section id="subsetting-date-values" class="level2" data-number="6">
 <h2 data-number="6" class="anchored" data-anchor-id="subsetting-date-values"><span class="header-section-number">6</span> Subsetting Date values</h2>
-<p>Once in Date vector form, we can use which() to subset the vector by some Date value. In the first example we will subset the values in stnDate by the by month April. There are three different ways to subset for April and they will all produce the same results:</p>
+<p>Once in <strong><em>Date</em></strong> vector form, we can use <strong><em>which()</em></strong> to subset the vector by some <strong><em>Date</em></strong> value. In the first example we will subset the values in <strong><em>stnDate</em></strong> by the month April. There are three different ways to subset for April and they will all produce the same results:</p>
 <ul>
 <li><p>using month number (<strong><em>%m</em></strong>)</p></li>
 <li><p>using abbreviated month name (<strong><em>%b</em></strong>)</p></li>
@@ -832,7 +836,7 @@ Figure&nbsp;4: The beginning of the list of conversion specifications
 </section>
 <section id="posixct-values" class="level2" data-number="7">
 <h2 data-number="7" class="anchored" data-anchor-id="posixct-values"><span class="header-section-number">7</span> POSIXct values</h2>
-<p>Date variables and the corresponding <strong><em>as.Date()</em></strong> function work for values with only dates in them.&nbsp; Values that have dates and times (or just times) need to be saved as <strong><em>POSIXct</em></strong> variables and the corresponding function is <strong><em>as.POSIXct()</em></strong>.</p>
+<p>Date variables and the corresponding <strong><em>as.Date()</em></strong> function work for string values with only dates in them.&nbsp; Values that have dates and times (or just times) need to be saved as <strong><em>POSIXct</em></strong> variables and the corresponding function is <strong><em>as.POSIXct()</em></strong>.</p>
 <p>&nbsp;</p>
 <p>The only difference between <strong><em>Date</em></strong> and <strong><em>POSIXct</em></strong> variables is that there are a lot more conversion specifications that can be used for <strong><em>POSIXct</em></strong> (all of the specification used for dates and all of the specifications used for time). Otherwise, they operate the same.</p>
 <section id="posixct-example" class="level3" data-number="7.1">
@@ -968,9 +972,9 @@ Figure&nbsp;5: Adding two of the reformatted datetime vectors to the data frame
 <ul>
 <li>All changed files will now be listed under <strong><em>Staged Changes</em></strong></li>
 </ul></li>
-<li><p>Add a message “App2-06 finished”</p>
+<li><p>Add a message “App2-07 finished”</p>
 <ul>
-<li>Or, “App2-06 updated” if you are updating the application</li>
+<li>Or, “App2-07 updated” if you are updating the application</li>
 </ul></li>
 <li><p>Click <strong><em>Commit</em></strong></p></li>
 <li><p>The Commit button will become a Sync button, click <strong><em>Sync</em></strong></p></li>
@@ -998,7 +1002,7 @@ Figure&nbsp;6: Upload changes to GitHub – the red circle indicates how many fi
 </ol>
 <p></p>
 <ol start="5" type="1">
-<li><p>Put in <strong><em>title</em></strong> that the application 2-06 is finished, add anything you want to the <strong><em>description</em></strong></p></li>
+<li><p>Put in <strong><em>title</em></strong> that the application 2-07 is finished, add anything you want to the <strong><em>description</em></strong></p></li>
 <li><p>Click <strong><em>Create</em></strong></p></li>
 </ol>
 <div id="fig-inform" class="fs quarto-float quarto-figure quarto-figure-left anchored">
@@ -1031,7 +1035,7 @@ Figure&nbsp;7: Informing your instructor the application is finished
 <li><p>Dec 30, 1969 = -2</p>
 <p>&nbsp;</p></li>
 </ul>
-<p>The zero-point for POSIXct is Jan 1, 1970 at midnight Greenwich Mean Time.&nbsp; To get any other time, you add 1 for every second after or subtract 1 for every second before.&nbsp; This is called <span class="hl">epoch time</span> and the <a href="https://www.epochconverter.com/">current epoch time</a> (as of this writing) is 1749475799, which means there have been 1749475799 seconds since Jan 1, 1970 at midnight GMT.</p>
+<p>The zero-point for POSIXct is Jan 1, 1970 at midnight Greenwich Mean Time.&nbsp; To get any other time, you add 1 for every second after or subtract 1 for every second before.&nbsp; This is called <span class="hl">epoch time</span> and the <a href="https://www.epochconverter.com/">current epoch time</a> (as of this writing) is 1784565672, which means there have been 1784565672 seconds since Jan 1, 1970 at midnight GMT.</p>
 <p>&nbsp;</p>
 <p><strong><em>as.Date()</em></strong> and <strong><em>as.POSIXct()</em></strong> take string values with conversion specifications and create numeric datetime values.&nbsp; <strong><em>format()</em></strong> does the reverse and takes numeric datetime values and converts them into strings that are readable to the user.&nbsp; This all works because the epoch time is fixed to a point in time that everyone has agree upon.&nbsp; Everything else is a (very complicated) conversion.</p>
 <p>&nbsp;</p>

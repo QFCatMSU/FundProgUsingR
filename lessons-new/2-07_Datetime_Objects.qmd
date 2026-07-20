@@ -1,6 +1,6 @@
 ---
-title: "2-06: Datetime objects"
-short: "2-06"
+title: "2-07: Datetime objects"
+short: "2-07"
 # special characters for highlighting code : «»
 ---
 
@@ -18,7 +18,7 @@ The [script for the lesson is here](../scripts/2-06_DateTimeObjects_new.R)
 
 The data for the lesson: [dateTimeData.csv](../data/dateTimeData.csv)
 
-[Warning: do not save this data file using Excel.]{.hl} Excel will edit the Date columns and break the lesson script.
+[Warning: do not save this data file using Excel.]{.hl} Excel will edit the date columns and break the lesson script.
 
 ## Two new variable types: Date and POSIXct
 
@@ -30,7 +30,7 @@ In this lesson we introduce two more variable type: ***Date*** and ***POSIXct***
 
  
 
-***POSIX*** is a system of standards developed for UNIX computers in the 1970s.  ***ct*** means Calendar Time.  So ***POSIXct*** is the UNIX standard for calendar time -- and we continue to use this standard to this date (and maintain the unintuitive name).
+***POSIX*** is a system of standards developed for UNIX computers in the 1970s.  ***ct*** means Calendar Time.  So ***POSIXct*** is the UNIX standard for calendar time -- and we still use this standard today (and maintain the unintuitive name).
 
 ### Reading datetime objects from a dataframe
 
@@ -44,9 +44,9 @@ The first six columns in ***dateTimeData*** (@fig-dateTime_str) have values that
 
  
 
-In other words, R does not automatically assign values that look like dates and times to variable types ***Date*** or ***POSIXct***.  R only sees quotes and assigns the values to a string variable.  We need to manually convert the string columns into ***Date*** or ***POSIXct*** variables.
+In other words, R does not automatically assign values that look like dates and times to the variable types ***Date*** or ***POSIXct***.  R only sees quotes and assigns the values to a string variable.  We need to manually convert the string columns into ***Date*** or ***POSIXct*** variables.
 
-![R sees the columns with date and time values as strings (chr)](images/R_2-03_DatetimeAndStrings.jpg){#fig-dateTime_str .fs}
+![R sees the columns with date and time values as strings (str)](images/R_2-03_DatetimeAndStrings.jpg){#fig-dateTime_str .fs}
 
 ### Using as.Date()
 
@@ -54,15 +54,15 @@ We are going to start with converting strings that hold only date values to a **
 
  
 
-***as.Date()*** is the function that reads in a string and converts it to a Date variable.  However, if you pass a string column (in this case, ***date3*** from ***dateTimeData***) into ***as.Date()***, you will get the following error:
+***as.Date()*** is the function that reads in a string and converts it to a ***Date*** variable.  However, if you pass a string column (in this case, ***date3*** from ***dateTimeData***) into ***as.Date()***, you will get the following error:
 
 ``` {.r tab="Console"}
 > as.Date(dateTimeData$date3)
-Error in charToDate(x) : 
+Error in charToDate() : 
   character string is not in a standard unambiguous format
 ```
 
-This error occurs because dates can come in many different formats (e.g., April 15, 2022; 2022-04-15; 4/15/22).  ***as.Date()*** tries to figure out the format used in the string values but ***as.Date()*** often fails to figure out a format and it gives you an error.
+This error occurs because dates can come in many different formats (e.g., April 15, 2022; 2022-04-15; 4/15/22).  ***as.Date()*** tries to figure out the format used and often fails hence the "...not in a standard unambiguous format" error.
 
  
 
@@ -83,13 +83,11 @@ The solution is to explicitly tell ***as.Date()*** the format of the date values
 
 ![The as.Date() function with the format argument](images/R-1-14_asDate.png){#fig-asDate .fs}
 
-First we need to break down the date values into their component parts. 
-
 Let's start with the first column (@fig-dateTime_str) where the dates look like this: **Apr 15, 2022**
 
  
 
-[We need to explicitly tell **as.Date()** how the date is formatted]{.hl} and this means breaking down every component of the string.
+[We need to explicitly tell **as.Date()** how the date is formatted]{.hl} and this means breaking down every component of the string that contains the string.
 
  
 
@@ -115,7 +113,7 @@ The official term for the representation of the different parts of the datetime 
 
 ![The beginning of the list of conversion specifications](images/R_2-03_ConversionSpecs.jpg){#fig-conversion_specs .fs}
 
-The conversion specifications allow you to generalize the different components of the datetime -- and they all start with a ***%***.  When you declare the format of a datetime string, you replace the date and time components of the string with conversion specifications.  For instance, **Apr 15, 2022** contains the abbreviated month so we know ***%b*** will be in the specification.
+The conversion specifications allow you to generalize the different components of the datetime -- and they all start with a [***%***]{.hl}.  When you declare the format of a datetime string, you replace the date and time components of the string with conversion specifications.  For instance, **Apr 15, 2022** contains the abbreviated month so we know ***%b*** will be in the specification.
 
  
 
@@ -170,17 +168,22 @@ And we can attach that conversion specification string using the ***format*** ar
                     format="%b %d, %Y");   # give the format of date1
 ```
 
-In the ***Environment*** tab, we see that ***stnDate*** is a ***Date*** variable with **300** values in it.
+In ***Variables***, we see that ***stnDate*** is a ***Date*** variable. Positron (as of this writing) does not put the size of ***Date*** vectors in ***Variables***, but if you expand ***stnDate***, you can see it has **300** values:
 
 ``` {.r tab="Variables"}
-stnDate Date[1:300], format: "2022-04-15"...
+⮟ stnDate: "2022-04-15" "2022-04-17" "2022-04-18"...   Date
+       [1]: "2022-04-15"
+       [2]: "2022-04-17"
+      ...
+     [299]: "2022-08-16"
+     [300]: "2022-08-17"
 ```
 
-***stnDate*** is shown in the default method R uses to display ***Date*** variables, which is 4-digit year, 2-digit month, and 2-digit day.
+***stnDate*** is displayed in the default method R uses to display ***Date*** variables, which is 4-digit year, 2-digit month, and 2-digit day.
 
 ### Sorting a Date object
 
-Formatting dates properly is vital when you are calculating or plotting date and time data.  When properly formatted, R understands the order of the value and the intervals between them.
+Formatting dates properly is vital when you are calculating or plotting date and time data.  When properly formatted, R understands the order of the date values and the intervals between them.
 
  
 
@@ -239,13 +242,13 @@ Once you have date values properly formatted and saved as a ***Date*** object, y
 
  
 
-For instance, you can customize ***stnDate*** to the more familiar to American [month/date/2-digit year]{.hl} format:
+For instance, you can customize ***stnDate*** to the, more familiar to Americans, [month/date/2-digit year]{.hl} format:
 
 ``` r
 date_formatted = format(stnDate, format="%m/%d/%y");  
 ```
 
-Or, you can get information from the dates, like the day of the week (***%A***):
+Or you can extract information from the dates, like the day of the week (***%A***):
 
 ``` r
 date_weekOfDay = format(stnDate, format="%A");      
@@ -260,7 +263,7 @@ date_weekOfDay: chr[1:300] "Friday" "Sunday"...
 
 ## Subsetting Date values
 
-Once in Date vector form, we can use which() to subset the vector by some Date value. In the first example we will subset the values in stnDate by the by month April. There are three different ways to subset for April and they will all produce the same results:
+Once in ***Date*** vector form, we can use ***which()*** to subset the vector by some ***Date*** value. In the first example we will subset the values in ***stnDate*** by the month April. There are three different ways to subset for April and they will all produce the same results:
 
 - using month number (***%m***)
 
@@ -316,7 +319,7 @@ apr10_19_dates: int [1:9] 1 2 3 101 102 103 201 202 203
 
 ## POSIXct values
 
-Date variables and the corresponding ***as.Date()*** function work for values with only dates in them.  Values that have dates and times (or just times) need to be saved as ***POSIXct*** variables and the corresponding function is ***as.POSIXct()***.
+Date variables and the corresponding ***as.Date()*** function work for string values with only dates in them.  Values that have dates and times (or just times) need to be saved as ***POSIXct*** variables and the corresponding function is ***as.POSIXct()***.
 
  
 
@@ -512,7 +515,7 @@ If you want to go earlier than you subtract 1 so:
 
    
 
-The zero-point for POSIXct is Jan 1, 1970 at midnight Greenwich Mean Time.  To get any other time, you add 1 for every second after or subtract 1 for every second before.  This is called [epoch time]{.hl} and the [current epoch time](https://www.epochconverter.com/) (as of this writing) is 1749475799, which means there have been 1749475799 seconds since Jan 1, 1970 at midnight GMT.
+The zero-point for POSIXct is Jan 1, 1970 at midnight Greenwich Mean Time.  To get any other time, you add 1 for every second after or subtract 1 for every second before.  This is called [epoch time]{.hl} and the [current epoch time](https://www.epochconverter.com/) (as of this writing) is 1784565672, which means there have been 1784565672 seconds since Jan 1, 1970 at midnight GMT.
 
  
 
