@@ -303,7 +303,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../lessons-new/2-06_RegularExpressions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">2-05b: Regular Expressions (Unfinished)</span></a>
+ <span class="menu-text">2-06: Regular Expressions</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -685,7 +685,7 @@ Figure&nbsp;2: Multiple column containing row numbers…
 <p>In these cases, R will repeat the values provided until 366 values is reached.</p>
 <p>&nbsp;</p>
 <p>So, if you use one value to create a column:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>badData<span class="sc">$</span>test3 <span class="ot">=</span><span class="dv">10</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>badData<span class="sc">$</span>test3 <span class="ot">=</span> <span class="dv">10</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Then R will create a column called <strong><em>test3</em></strong> with the value <strong>10</strong> in every cell.</p>
 <p>&nbsp;</p>
 <p>Or, if you use <strong>6</strong> values (366/6 = 61):</p>
@@ -791,8 +791,8 @@ Figure&nbsp;4: The precip column is seen as a string (chr) column by R
 <p>Let’s use <strong><em>as.numeric()</em></strong> on the <strong><em>precip</em></strong> vector as save the results to <strong><em>precip2</em></strong>:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>precip2 <span class="ot">=</span> <span class="fu">as.numeric</span>(precip);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>If we look at <strong><em>Variables</em></strong>, we can see that <strong><em>precip2</em></strong> is a numeric vector and the numbers no longer have quotes around them.&nbsp; Also, the non-numeric “T” values were replaced with <strong><em>NA</em></strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22" data-tab="Variables"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>precip<span class="sc">:</span>   chr[<span class="dv">1</span><span class="sc">:</span><span class="dv">366</span>]  <span class="st">"0.04"</span> <span class="st">"0.00"</span> «<span class="st">"T"</span> <span class="st">"T"</span>» <span class="st">"0.00"</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>precip2<span class="sc">:</span>  num[<span class="dv">1</span><span class="sc">:</span><span class="dv">366</span>]  <span class="fl">0.04</span> <span class="dv">0</span> «NA NA» <span class="dv">0</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22" data-tab="Variables"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>precip<span class="sc">:</span>   <span class="st">"0.04"</span> <span class="st">"0.00"</span> «<span class="st">"T"</span> <span class="st">"T"</span>» <span class="st">"0.00"</span>   str [<span class="dv">366</span>]</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>precip2<span class="sc">:</span>  <span class="fl">0.04</span> <span class="dv">0</span> «NA NA» <span class="dv">0</span>                 dbl [<span class="dv">366</span>]                </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="double-values-are-numeric" class="level3" data-number="6.3">
 <h3 data-number="6.3" class="anchored" data-anchor-id="double-values-are-numeric"><span class="header-section-number">6.3</span> Double values are numeric…</h3>
@@ -814,8 +814,8 @@ Figure&nbsp;4: The precip column is seen as a string (chr) column by R
 <p>If you try to perform mathematical or statistical operation on a vector that has numeric <strong>NA</strong> values, R will tell you the answer is <strong>NA</strong>, or <strong><em>NA_Real,</em></strong> which is just R’s way of telling you that the answer would be a real number if the <strong><em>NA</em></strong> values existed.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>meanPrecip <span class="ot">=</span> <span class="fu">mean</span>(precip2);</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>totalPrecip <span class="ot">=</span> <span class="fu">sum</span>(precip2);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26" data-tab="Variables"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>meanPrecip<span class="sc">:</span> NA_Real</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>totalPrecip<span class="sc">:</span> NA_Real</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26" data-tab="Variables"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>meanPrecip<span class="sc">:</span>   NA_Real</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>totalPrecip<span class="sc">:</span>  NA_Real</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <section id="comparing-na-to-null" class="level3" data-number="7.1">
 <h3 data-number="7.1" class="anchored" data-anchor-id="comparing-na-to-null"><span class="header-section-number">7.1</span> Comparing NA to NULL</h3>
 <p><strong><em>NA</em></strong> values are, in a sense, placeholder values for data that should exist but is unknown. Therefore are mathematical and statistical operations on <strong><em>NA</em></strong> will result in <strong><em>NA</em></strong>:</p>
@@ -851,8 +851,8 @@ Figure&nbsp;4: The precip column is seen as a string (chr) column by R
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>meanPrecip2 <span class="ot">=</span> <span class="fu">mean</span>(precip2, <span class="at">na.rm =</span> <span class="cn">TRUE</span>);</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>totalPrecip2 <span class="ot">=</span> <span class="fu">sum</span>(precip2, <span class="at">na.rm =</span> <span class="cn">TRUE</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Without the <strong><em>NA</em></strong> values in the vector, the results are:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32" data-tab="Variables"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>meanPrecip2<span class="sc">:</span> <span class="dv">0</span>.<span class="dv">1144</span>...</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>totalPrecip2<span class="sc">:</span> <span class="fl">35.01</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32" data-tab="Variables"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>meanPrecip2<span class="sc">:</span>   <span class="dv">0</span>.<span class="dv">1144</span>...</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>totalPrecip2<span class="sc">:</span>  <span class="fl">35.01</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><span class="note">Note: <strong><em>na.rm=TRUE</em></strong> effectively changes an <strong><em>NA</em></strong> to a <strong><em>NULL</em></strong></span></p>
 </section>
 <section id="replacing-the-na-values" class="level3" data-number="7.4">
@@ -870,7 +870,7 @@ Figure&nbsp;4: The precip column is seen as a string (chr) column by R
 <span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>And we can see that <strong><em>precip3 now</em></strong> has <strong>0.005</strong> in place of <strong>NA</strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35" data-tab="Variables"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>precip3 num [<span class="dv">1</span><span class="sc">:</span><span class="dv">366</span>] <span class="fl">0.04</span> <span class="fl">0.00</span> «<span class="fl">0.005</span>» «<span class="fl">0.005</span>» <span class="dv">0</span>.<span class="dv">00</span>...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35" data-tab="Variables"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>precip3<span class="sc">:</span> <span class="fl">0.04</span> <span class="fl">0.00</span> «<span class="fl">0.005</span>» «<span class="fl">0.005</span>» <span class="dv">0</span>.<span class="dv">00</span>...   dbl [<span class="dv">366</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="reserved-words-in-r" class="level3" data-number="7.5">
 <h3 data-number="7.5" class="anchored" data-anchor-id="reserved-words-in-r"><span class="header-section-number">7.5</span> Reserved Words in R</h3>

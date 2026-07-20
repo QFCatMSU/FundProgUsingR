@@ -5,8 +5,11 @@ rm(list=ls());
 #  - more example where name has something not in beginning or end
 #  - caret, dollar examples with more text and//^, 
 
-### read in the file names -- the file only has 1 column
-file_names = read.csv(file="data/filenames.csv")[[1]];
+### read in the file names 
+file_names_df = read.csv(file="data/filenames.csv");
+
+### save file name column to a vector (there is one one column in this data frame)
+file_names = file_names_df$FileNames;
 
 #### 1)Substrings
 reading = grep(file_names, pattern="reading")

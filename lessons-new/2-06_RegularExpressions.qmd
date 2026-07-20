@@ -1,12 +1,12 @@
 ---
-title: "2-05b: Regular Expressions (Unfinished)"
-short: "2-05b"
+title: "2-06: Regular Expressions"
+short: "2-06"
 # special characters for highlighting code : «»
 ---
 
 ### to-do
 
-- grep (index values) vs grepl (Boolean) (extension??)
+- grep (index values) vs grepl (Boolean) (extension)
 
 - shortcuts for all letter, all numbers (extension)
 
@@ -32,11 +32,17 @@ In the last lesson, we used Regular Expressions (RegEx) to find substrings withi
 
  
 
-The data file for this lesson a made up list of file names. Let's save the file names column to a vector:
+The data file for this lesson a made up list of 75 file names. Let's save the file names column to a vector:
 
 ``` r
-file_names = read.csv(file="data/filenames.csv")[[1]];
+### read in the file names 
+file_names_df = read.csv(file="data/filenames.csv");
+
+### save file name column to a vector (there is one one column in this data frame)
+file_names = file_names_df$FileNames;
 ```
+
+![The file names dataframe](images/R_2-06_FileNameDF.png){#fig-filenames .fs}
 
 ## Finding substrings within strings
 
@@ -90,11 +96,11 @@ There are now 19 values, meaning that the pattern ***status*** added 7 file name
 
 ## Starts and ends with
 
-Finding substrings within a string is the most basic thing RegEx can do. We are going to step up in difficulty and check for something at the beginning and the end of a string. In RegEx, the caret ( \^ ) is a special character that indicates the beginning of a string and ( \$ ) indicates the end of a string.
+We are going to step up in difficulty and check for something specifically at the beginning and the end of a string. In RegEx, the caret ( \^ ) is a special character that indicates the beginning of a string and ( \$ ) indicates the end of a string.
 
  
 
-So, to say "starts with ***plot***" as opposed to "contains ***plot***", we put ***\^*** at the beginning to indicate that the string needs to begin with the pattern:
+So, to say "starts with ***station***" as opposed to "contains ***station***", we put ***\^*** at the beginning to indicate that the string needs to begin with the pattern:
 
 ``` r
 start_station = grep(file_names, pattern="^station")
@@ -131,16 +137,16 @@ end_txt = grep("txt$", file_names)
 Let's say we want to combine the two examples above and find file names that both starts with ***station*** and ends with ***txt***. Regex has an OR operator ( \| ) but [Regex does not have an AND operator]{.hl}. This means we cannot just combine the two like this:
 
 ``` r
-start_end_bad = grep(file_names, pattern="^station&txt$")
+start_end_bad = grep(file_names, pattern="^station&txt$")   # does not work!
 ```
 
-In this case, we need to be explicit about what is in between ***station*** and ***txt*** – which can by any number of any character. In Regex we use [**.\***]{.hl} to repesent [any number of any characters]{.hl}. This pattern says:
+In this case, we need to be explicit about what is in between ***station*** and ***txt*** – which can by any number of any characters. In Regex we use [**.\***]{.hl} to repesent [any number of any characters]{.hl}. The pattern is `^station.*txt$` and says:
 
-- starts with ***station*** followed by
+- starts with ***station*** ( `^station` )
 
-- any number of any character followed by
+- followed by any number of any character ( `.*` )
 
-- ending with ***txt***
+- and ending with ***txt*** ( `txt$` )
 
 ``` r
 start_end = grep(file_names, pattern="^station.*txt$")
@@ -166,15 +172,15 @@ start_middle_end = grep(file_names, pattern="^station.*B3.*txt$")
 
 Basically, the pattern says that, in order, the string:
 
-- starts with ***station***
+- starts with ***station*** ( `^station` )
 
-- has any number of any any characters ( ***.\**** )
+- followed by any number of any characters ( ***`.*`*** )
 
-- contains ***B3***
+- contains ***B3*** ( `B3` )
 
-- has any number of any characters ( ***.\**** )
+- followed by any number of any characters ( ***`.*`*** )
 
-- ends with ***txt***
+- and ends with ***txt*** ( `txt$` )
 
  
 
@@ -187,7 +193,7 @@ There is one file name meets this pattern:
 
 ## Handling special character
 
-Regex uses special characters to define more complex patterns. Special characters are characters that have meaning beyond the character itself. The special characters used in the previous section were: caret ( \^ ), dollar ( \$ ) , dot ( . ), and the curly brackets ( { } ). We are going to focus on the first three.
+Regex uses special characters to define more complex patterns. Special characters are characters that have meaning beyond the character itself. The special characters used in the previous section were: caret ( `^` ), dollar ( `$` ) , dot ( `.` ), and the curly brackets ( `{ }` ). We are going to focus on the first three.
 
  
 
@@ -216,11 +222,11 @@ has_caret2 = grep(file_names, pattern="^backup.*\\^ba")
 
 In this case we want file names that
 
-- starts with ***backup*** followed by
+- starts with ***backup*** ( `^backup` )
 
-- any number of any characters followed by
+- followed by any number of any characters ( `.*` )
 
-- ***\^ba***
+- followed by ***\^ba*** ( `\\^ba` )
 
  
 
@@ -233,7 +239,7 @@ There is just one file name with this pattern:
 
 ## Range of characters
 
-In Regex, a [dot]{.hl}( . ) [represents any character]{.hl}. We can also search for a cheacter within a set of characters.
+In Regex, a [dot]{.hl} ( `.` ) [represents any character]{.hl}. We can also search for a character within a set or range of characters.
 
  
 
@@ -247,13 +253,13 @@ For instance, we might want to search for every file name from the years **2016*
 year_2016_2019a = grep(file_names, pattern="201[6789]")
 ```
 
-**\[ \]** means that RegEx is looking for one of any of the characters inside, it does not matter the order of the characters inside the brackets. This does the same thing:
+**\[ \]** means that RegEx is looking for one of any of the characters inside, it does not matter the order of the characters inside the brackets. This ***pattern*** changes the order but does the same thing:
 
 ``` r
 year_2016_2019b = grep(file_names, pattern="201[7986]")
 ```
 
-RegEx also understands a range of characters using dash. This command is also equivalent:
+In RegEx, you can also create a range of characters using dash. This ***pattern*** below is also equivalent:
 
 ``` r
 year_2016_2019c = grep(file_names, pattern="201[6-9]")
@@ -272,7 +278,7 @@ year_2016_2019c = grep(file_names, pattern="201[6-9]")
 
 ### Multiple brackets
 
-The square brackets means the character must match one the characters in set. We can add multiple square brackets to a search. In the following pattern we are looking for:
+The square brackets means the character must match one of the characters in set. We can add multiple square brackets to a search. In the following pattern we are looking for:
 
 - An underscore followed by
 
@@ -284,7 +290,7 @@ The square brackets means the character must match one the characters in set. We
 letter_number = grep(file_names, pattern="_[aAbB][123]")
 ```
 
-``` {.r tab="Connsole"}
+``` {.r tab="Console"}
 > file_names[letter_number]
  [1] "plot_A3_20230815-backup.csv"          "backup_A1_v1_20181205.csv"           
  [3] "station_A3_status_2019-07-21!.txt"    "plot_A2_2023-12-01.csv"              
@@ -296,13 +302,13 @@ letter_number = grep(file_names, pattern="_[aAbB][123]")
 
 ### Multiple brackets with a range
 
-We can use ( - ) to create a range of all letters or numbers. This patternwill look for any file name with:
+We can use ( - ) to create a range of all letters or numbers. This ***pattern*** will look for any file name with:
 
-- an underscore followed by
+- an underscore ( `_` )
 
-- 2 letters followed by
+- followed by 2 letters ( `[a-zA-Z][a-zA-Z]` )
 
-- 1 number
+- followed by 1 number ( `[0-9]` )
 
 ``` r
 all_letter_number = grep(file_names, pattern="_[a-zA-Z][a-zA-Z][0-9]")
@@ -324,15 +330,15 @@ all_letter_number = grep(file_names, pattern="_[a-zA-Z][a-zA-Z][0-9]")
 
 ## Repeating characters
 
-Earlier, we use an asterisk ( \* ) to indicate there could be any number of the preceding character. That character was the dot ( . ). So, .\* means any number of any character.
+Earlier, we use an asterisk ( `*` ) to indicate there could be any number of the preceding character. That character was the dot ( `.` ). So, `.*` means any number of any character.
 
  
 
-An asterisk ( \* ) says repeat the preceding character between 0 and infinite time. However, we can find tune this to any range using curly brackets **{ }**
+An asterisk ( `*` ) says to repeat the preceding character between 0 and infinite time. However, we can find tune this to any range using curly brackets **`{ }`**
 
  
 
-The curly bracket notation {X,Y} is the RegEx repeat operator that says to repeat the previous character or character set between X and Y times. If no value is put for Y, then there is no upper limit to the repetition.
+The curly bracket notation `{X,Y}` is the RegEx repeat operator that says to repeat the previous character or character set between X and Y times.
 
 ### Repeat X times
 
@@ -358,13 +364,13 @@ eight_number2 = grep(file_names, pattern="[0-9]{8}");
 [65] "report_v3.0_20230119-draft.txt"   
 ```
 
-### Repeat exclusively X times (invert)
+### Repeat ***exclusively*** X times
 
 The above pattern does not care what comes before or after the 8 numbers – it could even be more numbers.
 
  
 
-If we reduce it to 4 numbers in a row, then the pattern will match everything with 4 numbers in a row, including the matches from above (because 8 numbers in a row matches the pattern of 4 numbers in a row.
+If we reduce it to 4 numbers in a row, then the pattern will match everything with 4 numbers in a row, including all the matches from above (because 8 numbers in a row matches the pattern of 4 numbers in a row.
 
 ``` r
 four_numbers =  grep(file_names, pattern="[0-9]{4}");
@@ -381,17 +387,29 @@ four_numbers =  grep(file_names, pattern="[0-9]{4}");
 [71] "report_v3.0_20230119-draft.txt"   
 ```
 
-However, if we want to match file names with exactly four digits in a row, then we need to need to explicitly say that the four digits are preceded and followed by something that is not a number.
+However, if we want to match file names with [exactly four digits in a row]{.hl}, then we need to need to explicitly say that the four digits are preceded and followed by something that is not a number.
+
+### The invert operator ( \^ )
+
+The `^` has two roles in RegEx:
+
+- At the beginning of a string it means [starts with]{.hl}
+
+- At the beginning of a bracket it means [invert what is inside this bracket]{.hl}
 
  
 
-The \^ operator is used in brackets to invert the pattern. \[\^0-9\] means every character except 0 to 9. The pattern here is:
+The `^` operator is used in brackets to invert the pattern. `[^0-9]` means every character [except]{.hl} 0 to 9.
 
-- non-numeric character \[\^0-9\] followed by
+ 
 
-- 4 numeric characters \[0-9\]{4} followed by
+The ***pattern*** here is:
 
-- non-numeric character \[\^0-9\]
+- a non-numeric character `[^0-9]`
+
+- followed by 4 numeric characters `[0-9]{4}`
+
+- followed by a non-numeric character `[^0-9]`
 
 ``` r
 four_numbers_exact = grep(file_names, pattern="[^0-9][0-9]{4}[^0-9]");
@@ -407,19 +425,21 @@ Now we only have file names that have exactly 4 digits somewhere inside:
 [7] "plot_B4_2023-09-30(COOP).csv"    
 ```
 
-[note: ***\^***means ***invert*** at the beginning of a square bracket and ***start*** at the beginning of a string. (]{.note}and this gets even more complicated... extension??)
-
  
 
 The above pattern will not capture strings that begin or end with four numbers. This requires more advanced RegEx: [Extension: Lookaheads]
 
 ### min and max
 
-If you put two numbers in curly brackets, RegEx treats this as a range with the first number as the minimun and the second as the maximum. So, {X, Y} says to repeat between X and Y times:
+If you put two numbers in curly brackets, RegEx treats this as a range with the first number as the minimun and the second as the maximum. So, `{X, Y}` says to repeat between ***X*** and ***Y*** times:
 
  
 
-This code will look for any file name that has a letter followed by 2 or 3 numbers:
+This code will look for any file name that has:
+
+- a letter ( `[a-zA-Z]` )
+
+- followed by 2 or 3 numbers ( `[0-9]{2,3}` )
 
 ``` r
 letter_numbers = grep(file_names, pattern="[a-zA-Z][0-9]{2,3}");
@@ -441,15 +461,15 @@ letter_numbers = grep(file_names, pattern="[a-zA-Z][0-9]{2,3}");
 
 Curly brackets tell regex to match the previous character or character set:
 
-- {X}: exactly X times
+- `{X}`: X times
 
-- {X,}: minimum of X times
+- `{X,}`: minimum of X times (Y is assumed to be infinity)
 
-- {X,Y}: between X and Y (inclusive)
+- `{X,Y}`: between X and Y (inclusive of X and Y)
 
  
 
-And there are shortcuts for the common repeats:
+The most commonly used repeats have shortcuts:
 
 | Pattern | Shortcut | Meaning                   |
 |---------|----------|---------------------------|
@@ -466,7 +486,7 @@ repeat_vals = c("A", "AA", "AAA", "AAAA", "AAAAAA",
                 "AB", "ABAB", "ABABAB", "ABABABAB", "ABABABABABA")
 ```
 
-We use the repeat operator { } to repeat the preceding pattern. So we can say:
+We use the repeat operator `{ }` to repeat the preceding pattern. So we can say:
 
  
 
@@ -494,7 +514,7 @@ repeat_AorB = grep(repeat_vals, pattern="[AB]{4}");
 
 ### Repeat a grouping
 
-If we specifically want to repeat AB 4 times, then we [group AB]{.hl}, or put it in parentheses [(AB)]{.hl}:
+If we specifically want to repeat AB 4 times, then we [group AB]{.hl}, by putting AB in parentheses [`(AB)`]{.hl}:
 
 ``` r
 repeat_AB = grep(repeat_vals, pattern="(AB){4}");
@@ -518,7 +538,7 @@ repeat_AAB = grep(repeat_vals, pattern="(A[AB]){3}");
 
 ## Application
 
-1\) What will this pattern look for if you take out the parentheses?
+1\) In Comments answer: What will this pattern look for with the parentheses and without the parentheses?
 
 ``` r
 repeat_AAB = grep(repeat_vals, pattern="(A[AB]){3}");
@@ -532,7 +552,7 @@ repeat_AAB = grep(repeat_vals, pattern="(A[AB]){3}");
 
  
 
-3\) File names that has ***A#*** (i.e., A1, A2, A3...) and is from the year 2020
+3\) File names that has ***A#*** (i.e., A1, A2, A3...) and is from the year 2020. Assume that A# comes before the year.
 
  
 
@@ -544,7 +564,7 @@ repeat_AAB = grep(repeat_vals, pattern="(A[AB]){3}");
 
 5b) File names that do not have the following characters !, \^, \$, -
 
-(the 2 should be mutually exclusive and cover all filenames)
+(the 2 should be mutually exclusive and cover all 75 filenames)
 
 {{< include ../assets/_AppInstructions_Pos.qmd >}}
 
@@ -557,7 +577,3 @@ grep("(?<![0-9])[0-9]{4}(?![0-9])", x, perl = TRUE)
 ```
 
 \<get into why we try to avoid lookarounds??\>
-
-## Extension: Multiple meanings for many special characters
-
-Regex is very efficient! But this efficiency causes confusion...

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>2-05b: Regular Expressions (Unfinished)</title>
+<title>2-06: Regular Expressions</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -124,7 +124,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-          <h1 class="quarto-secondary-nav-title">2-05b: Regular Expressions (Unfinished)</h1>
+          <h1 class="quarto-secondary-nav-title">2-06: Regular Expressions</h1>
         </a>     
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
@@ -303,7 +303,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../lessons-new/2-06_RegularExpressions.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">2-05b: Regular Expressions (Unfinished)</span></a>
+ <span class="menu-text">2-06: Regular Expressions</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -564,9 +564,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#repeating-characters" id="toc-repeating-characters" class="nav-link" data-scroll-target="#repeating-characters"><span class="header-section-number">8</span> Repeating characters</a>
   <ul class="collapse">
   <li><a href="#repeat-x-times" id="toc-repeat-x-times" class="nav-link" data-scroll-target="#repeat-x-times"><span class="header-section-number">8.1</span> Repeat X times</a></li>
-  <li><a href="#repeat-exclusively-x-times-invert" id="toc-repeat-exclusively-x-times-invert" class="nav-link" data-scroll-target="#repeat-exclusively-x-times-invert"><span class="header-section-number">8.2</span> Repeat exclusively X times (invert)</a></li>
-  <li><a href="#min-and-max" id="toc-min-and-max" class="nav-link" data-scroll-target="#min-and-max"><span class="header-section-number">8.3</span> min and max</a></li>
-  <li><a href="#summing-up-curly-brackets" id="toc-summing-up-curly-brackets" class="nav-link" data-scroll-target="#summing-up-curly-brackets"><span class="header-section-number">8.4</span> Summing up curly brackets</a></li>
+  <li><a href="#repeat-exclusively-x-times" id="toc-repeat-exclusively-x-times" class="nav-link" data-scroll-target="#repeat-exclusively-x-times"><span class="header-section-number">8.2</span> Repeat <strong><em>exclusively</em></strong> X times</a></li>
+  <li><a href="#the-invert-operator" id="toc-the-invert-operator" class="nav-link" data-scroll-target="#the-invert-operator"><span class="header-section-number">8.3</span> The invert operator ( ^ )</a></li>
+  <li><a href="#min-and-max" id="toc-min-and-max" class="nav-link" data-scroll-target="#min-and-max"><span class="header-section-number">8.4</span> min and max</a></li>
+  <li><a href="#summing-up-curly-brackets" id="toc-summing-up-curly-brackets" class="nav-link" data-scroll-target="#summing-up-curly-brackets"><span class="header-section-number">8.5</span> Summing up curly brackets</a></li>
   </ul></li>
   <li><a href="#groupings" id="toc-groupings" class="nav-link" data-scroll-target="#groupings"><span class="header-section-number">9</span> Groupings</a>
   <ul class="collapse">
@@ -579,7 +580,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#create-an-issue-in-github" id="toc-create-an-issue-in-github" class="nav-link" data-scroll-target="#create-an-issue-in-github"><span class="header-section-number">10.3</span> Create an Issue in GitHub</a></li>
   </ul></li>
   <li><a href="#extension-lookaheads" id="toc-extension-lookaheads" class="nav-link" data-scroll-target="#extension-lookaheads"><span class="header-section-number">11</span> Extension: Lookaheads</a></li>
-  <li><a href="#extension-multiple-meanings-for-many-special-characters" id="toc-extension-multiple-meanings-for-many-special-characters" class="nav-link" data-scroll-target="#extension-multiple-meanings-for-many-special-characters"><span class="header-section-number">12</span> Extension: Multiple meanings for many special characters</a></li>
   </ul>
 </nav>
 </nav>
@@ -592,7 +592,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">2-05b: Regular Expressions (Unfinished)</h1>
+<h1 class="title d-none d-lg-block">2-06: Regular Expressions</h1>
 </div>
 
 
@@ -636,8 +636,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="3" class="anchored" data-anchor-id="what-is-regex"><span class="header-section-number">3</span> What is Regex</h2>
 <p>In the last lesson, we used Regular Expressions (RegEx) to find substrings within a string. However, the real power of RegEx is that it allows you to identify complex patterns, letting you search based on how a string is structured rather than the exact text it contains.</p>
 <p>&nbsp;</p>
-<p>The data file for this lesson a made up list of file names. Let’s save the file names column to a vector:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>file_names <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="at">file=</span><span class="st">"data/filenames.csv"</span>)[[<span class="dv">1</span>]];</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The data file for this lesson a made up list of 75 file names. Let’s save the file names column to a vector:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">### read in the file names </span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>file_names_df <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="at">file=</span><span class="st">"data/filenames.csv"</span>);</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">### save file name column to a vector (there is one one column in this data frame)</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>file_names <span class="ot">=</span> file_names_df<span class="sc">$</span>FileNames;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="fig-filenames" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-filenames-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R_2-06_FileNameDF.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-filenames-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: The file names dataframe
+</figcaption>
+</figure>
+</div>
 </section>
 <section id="finding-substrings-within-strings" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="finding-substrings-within-strings"><span class="header-section-number">4</span> Finding substrings within strings</h2>
@@ -677,9 +691,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="starts-and-ends-with" class="level2" data-number="5">
 <h2 data-number="5" class="anchored" data-anchor-id="starts-and-ends-with"><span class="header-section-number">5</span> Starts and ends with</h2>
-<p>Finding substrings within a string is the most basic thing RegEx can do. We are going to step up in difficulty and check for something at the beginning and the end of a string. In RegEx, the caret ( ^ ) is a special character that indicates the beginning of a string and ( $ ) indicates the end of a string.</p>
+<p>We are going to step up in difficulty and check for something specifically at the beginning and the end of a string. In RegEx, the caret ( ^ ) is a special character that indicates the beginning of a string and ( $ ) indicates the end of a string.</p>
 <p>&nbsp;</p>
-<p>So, to say “starts with <strong><em>plot</em></strong>” as opposed to “contains <strong><em>plot</em></strong>”, we put <strong><em>^</em></strong> at the beginning to indicate that the string needs to begin with the pattern:</p>
+<p>So, to say “starts with <strong><em>station</em></strong>” as opposed to “contains <strong><em>station</em></strong>”, we put <strong><em>^</em></strong> at the beginning to indicate that the string needs to begin with the pattern:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>start_station <span class="ot">=</span> <span class="fu">grep</span>(file_names, <span class="at">pattern=</span><span class="st">"^station"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>There are seven file names that start with <strong><em>station</em></strong>:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> file_names[start_station]</span>
@@ -699,12 +713,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="both-start-and-ends" class="level3" data-number="5.1">
 <h3 data-number="5.1" class="anchored" data-anchor-id="both-start-and-ends"><span class="header-section-number">5.1</span> Both start and ends</h3>
 <p>Let’s say we want to combine the two examples above and find file names that both starts with <strong><em>station</em></strong> and ends with <strong><em>txt</em></strong>. Regex has an OR operator ( | ) but <span class="hl">Regex does not have an AND operator</span>. This means we cannot just combine the two like this:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>start_end_bad <span class="ot">=</span> <span class="fu">grep</span>(file_names, <span class="at">pattern=</span><span class="st">"^station&amp;txt$"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>In this case, we need to be explicit about what is in between <strong><em>station</em></strong> and <strong><em>txt</em></strong> – which can by any number of any character. In Regex we use <span class="hl"><strong>.*</strong></span> to repesent <span class="hl">any number of any characters</span>. This pattern says:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>start_end_bad <span class="ot">=</span> <span class="fu">grep</span>(file_names, <span class="at">pattern=</span><span class="st">"^station&amp;txt$"</span>)   <span class="co"># does not work!</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>In this case, we need to be explicit about what is in between <strong><em>station</em></strong> and <strong><em>txt</em></strong> – which can by any number of any characters. In Regex we use <span class="hl"><strong>.*</strong></span> to repesent <span class="hl">any number of any characters</span>. The pattern is <code>^station.*txt$</code> and says:</p>
 <ul>
-<li><p>starts with <strong><em>station</em></strong> followed by</p></li>
-<li><p>any number of any character followed by</p></li>
-<li><p>ending with <strong><em>txt</em></strong></p></li>
+<li><p>starts with <strong><em>station</em></strong> ( <code>^station</code> )</p></li>
+<li><p>followed by any number of any character ( <code>.*</code> )</p></li>
+<li><p>and ending with <strong><em>txt</em></strong> ( <code>txt$</code> )</p></li>
 </ul>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>start_end <span class="ot">=</span> <span class="fu">grep</span>(file_names, <span class="at">pattern=</span><span class="st">"^station.*txt$"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>file_names[start_end]</span>
@@ -720,11 +734,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>start_middle_end <span class="ot">=</span> <span class="fu">grep</span>(file_names, <span class="at">pattern=</span><span class="st">"^station.*B3.*txt$"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Basically, the pattern says that, in order, the string:</p>
 <ul>
-<li><p>starts with <strong><em>station</em></strong></p></li>
-<li><p>has any number of any any characters ( <strong><em>.*</em></strong> )</p></li>
-<li><p>contains <strong><em>B3</em></strong></p></li>
-<li><p>has any number of any characters ( <strong><em>.*</em></strong> )</p></li>
-<li><p>ends with <strong><em>txt</em></strong></p></li>
+<li><p>starts with <strong><em>station</em></strong> ( <code>^station</code> )</p></li>
+<li><p>followed by any number of any characters ( <strong><em><code>.*</code></em></strong> )</p></li>
+<li><p>contains <strong><em>B3</em></strong> ( <code>B3</code> )</p></li>
+<li><p>followed by any number of any characters ( <strong><em><code>.*</code></em></strong> )</p></li>
+<li><p>and ends with <strong><em>txt</em></strong> ( <code>txt$</code> )</p></li>
 </ul>
 <p>&nbsp;</p>
 <p>There is one file name meets this pattern:</p>
@@ -734,7 +748,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="handling-special-character" class="level2" data-number="6">
 <h2 data-number="6" class="anchored" data-anchor-id="handling-special-character"><span class="header-section-number">6</span> Handling special character</h2>
-<p>Regex uses special characters to define more complex patterns. Special characters are characters that have meaning beyond the character itself. The special characters used in the previous section were: caret ( ^ ), dollar ( $ ) , dot ( . ), and the curly brackets ( { } ). We are going to focus on the first three.</p>
+<p>Regex uses special characters to define more complex patterns. Special characters are characters that have meaning beyond the character itself. The special characters used in the previous section were: caret ( <code>^</code> ), dollar ( <code>$</code> ) , dot ( <code>.</code> ), and the curly brackets ( <code>{ }</code> ). We are going to focus on the first three.</p>
 <p>&nbsp;</p>
 <p>If you want to find these special characters within a string then you have to tell RegEx that you actually want the character, <span class="hl">not the special feature of the character</span>. To do this we <span class="hl">escape</span> the special character by putting two backslashes if front of it:</p>
 <p>&nbsp;</p>
@@ -747,9 +761,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>has_caret2 <span class="ot">=</span> <span class="fu">grep</span>(file_names, <span class="at">pattern=</span><span class="st">"^backup.*</span><span class="sc">\\</span><span class="st">^ba"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>In this case we want file names that</p>
 <ul>
-<li><p>starts with <strong><em>backup</em></strong> followed by</p></li>
-<li><p>any number of any characters followed by</p></li>
-<li><p><strong><em>^ba</em></strong></p></li>
+<li><p>starts with <strong><em>backup</em></strong> ( <code>^backup</code> )</p></li>
+<li><p>followed by any number of any characters ( <code>.*</code> )</p></li>
+<li><p>followed by <strong><em>^ba</em></strong> ( <code>\\^ba</code> )</p></li>
 </ul>
 <p>&nbsp;</p>
 <p>There is just one file name with this pattern:</p>
@@ -758,16 +772,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="range-of-characters" class="level2" data-number="7">
 <h2 data-number="7" class="anchored" data-anchor-id="range-of-characters"><span class="header-section-number">7</span> Range of characters</h2>
-<p>In Regex, a <span class="hl">dot</span>( . ) <span class="hl">represents any character</span>. We can also search for a cheacter within a set of characters.</p>
+<p>In Regex, a <span class="hl">dot</span> ( <code>.</code> ) <span class="hl">represents any character</span>. We can also search for a character within a set or range of characters.</p>
 <p>&nbsp;</p>
 <p>We use square brackets [ ] to create the set of characters we want to match.</p>
 <section id="one-character-in-a-set" class="level3" data-number="7.1">
 <h3 data-number="7.1" class="anchored" data-anchor-id="one-character-in-a-set"><span class="header-section-number">7.1</span> One character in a set</h3>
 <p>For instance, we might want to search for every file name from the years <strong>2016</strong> through <strong>2019</strong>. In other words, we know we want <strong><em>201</em></strong>, but the fourth character can be a <strong><em>6,7,8,</em></strong> or <strong><em>9</em></strong>. We express that in RegEx using square brackets <strong>[ ]</strong>:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>year_2016_2019a <span class="ot">=</span> <span class="fu">grep</span>(file_names, <span class="at">pattern=</span><span class="st">"201[6789]"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>[ ]</strong> means that RegEx is looking for one of any of the characters inside, it does not matter the order of the characters inside the brackets. This does the same thing:</p>
+<p><strong>[ ]</strong> means that RegEx is looking for one of any of the characters inside, it does not matter the order of the characters inside the brackets. This <strong><em>pattern</em></strong> changes the order but does the same thing:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>year_2016_2019b <span class="ot">=</span> <span class="fu">grep</span>(file_names, <span class="at">pattern=</span><span class="st">"201[7986]"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>RegEx also understands a range of characters using dash. This command is also equivalent:</p>
+<p>In RegEx, you can also create a range of characters using dash. This <strong><em>pattern</em></strong> below is also equivalent:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>year_2016_2019c <span class="ot">=</span> <span class="fu">grep</span>(file_names, <span class="at">pattern=</span><span class="st">"201[6-9]"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> file_names[year_2016_2019a]</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] <span class="st">"sensor_x103_reading_2019-05-22.dat"</span>   <span class="st">"backup_A1_v1_20181205.csv"</span>           </span>
@@ -780,14 +794,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="multiple-brackets" class="level3" data-number="7.2">
 <h3 data-number="7.2" class="anchored" data-anchor-id="multiple-brackets"><span class="header-section-number">7.2</span> Multiple brackets</h3>
-<p>The square brackets means the character must match one the characters in set. We can add multiple square brackets to a search. In the following pattern we are looking for:</p>
+<p>The square brackets means the character must match one of the characters in set. We can add multiple square brackets to a search. In the following pattern we are looking for:</p>
 <ul>
 <li><p>An underscore followed by</p></li>
 <li><p>An A or B (Regex sees uppercase and lowercase letters are different characters) followed by</p></li>
 <li><p>1, 2, or 3</p></li>
 </ul>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>letter_number <span class="ot">=</span> <span class="fu">grep</span>(file_names, <span class="at">pattern=</span><span class="st">"_[aAbB][123]"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24" data-tab="Connsole"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> file_names[letter_number]</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> file_names[letter_number]</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] <span class="st">"plot_A3_20230815-backup.csv"</span>          <span class="st">"backup_A1_v1_20181205.csv"</span>           </span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a> [<span class="dv">3</span>] <span class="st">"station_A3_status_2019-07-21!.txt"</span>    <span class="st">"plot_A2_2023-12-01.csv"</span>              </span>
 <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a> [<span class="dv">5</span>] <span class="st">"export_A1_20191230-draft.tsv"</span>         <span class="st">"export_data_B3_20200704_final.tsv"</span>   </span>
@@ -797,11 +811,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="multiple-brackets-with-a-range" class="level3" data-number="7.3">
 <h3 data-number="7.3" class="anchored" data-anchor-id="multiple-brackets-with-a-range"><span class="header-section-number">7.3</span> Multiple brackets with a range</h3>
-<p>We can use ( - ) to create a range of all letters or numbers. This patternwill look for any file name with:</p>
+<p>We can use ( - ) to create a range of all letters or numbers. This <strong><em>pattern</em></strong> will look for any file name with:</p>
 <ul>
-<li><p>an underscore followed by</p></li>
-<li><p>2 letters followed by</p></li>
-<li><p>1 number</p></li>
+<li><p>an underscore ( <code>_</code> )</p></li>
+<li><p>followed by 2 letters ( <code>[a-zA-Z][a-zA-Z]</code> )</p></li>
+<li><p>followed by 1 number ( <code>[0-9]</code> )</p></li>
 </ul>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>all_letter_number <span class="ot">=</span> <span class="fu">grep</span>(file_names, <span class="at">pattern=</span><span class="st">"_[a-zA-Z][a-zA-Z][0-9]"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> file_names[all_letter_number]  </span>
@@ -818,11 +832,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="repeating-characters" class="level2" data-number="8">
 <h2 data-number="8" class="anchored" data-anchor-id="repeating-characters"><span class="header-section-number">8</span> Repeating characters</h2>
-<p>Earlier, we use an asterisk ( * ) to indicate there could be any number of the preceding character. That character was the dot ( . ). So, .* means any number of any character.</p>
+<p>Earlier, we use an asterisk ( <code>*</code> ) to indicate there could be any number of the preceding character. That character was the dot ( <code>.</code> ). So, <code>.*</code> means any number of any character.</p>
 <p>&nbsp;</p>
-<p>An asterisk ( * ) says repeat the preceding character between 0 and infinite time. However, we can find tune this to any range using curly brackets <strong>{ }</strong></p>
+<p>An asterisk ( <code>*</code> ) says to repeat the preceding character between 0 and infinite time. However, we can find tune this to any range using curly brackets <strong><code>{ }</code></strong></p>
 <p>&nbsp;</p>
-<p>The curly bracket notation {X,Y} is the RegEx repeat operator that says to repeat the previous character or character set between X and Y times. If no value is put for Y, then there is no upper limit to the repetition.</p>
+<p>The curly bracket notation <code>{X,Y}</code> is the RegEx repeat operator that says to repeat the previous character or character set between X and Y times.</p>
 <section id="repeat-x-times" class="level3" data-number="8.1">
 <h3 data-number="8.1" class="anchored" data-anchor-id="repeat-x-times"><span class="header-section-number">8.1</span> Repeat X times</h3>
 <p>For an exact number, we just use one number inside the curly brackets. Many of the file names have 8-digit time stamps (8 numbers in a row). We can search for that by:</p>
@@ -837,11 +851,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>[<span class="dv">63</span>] <span class="st">"export_D1_20230715_final.tsv"</span>               <span class="st">"plot_D2_20230828(COOP).csv"</span>                </span>
 <span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>[<span class="dv">65</span>] <span class="st">"report_v3.0_20230119-draft.txt"</span>   </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="repeat-exclusively-x-times-invert" class="level3" data-number="8.2">
-<h3 data-number="8.2" class="anchored" data-anchor-id="repeat-exclusively-x-times-invert"><span class="header-section-number">8.2</span> Repeat exclusively X times (invert)</h3>
+<section id="repeat-exclusively-x-times" class="level3" data-number="8.2">
+<h3 data-number="8.2" class="anchored" data-anchor-id="repeat-exclusively-x-times"><span class="header-section-number">8.2</span> Repeat <strong><em>exclusively</em></strong> X times</h3>
 <p>The above pattern does not care what comes before or after the 8 numbers – it could even be more numbers.</p>
 <p>&nbsp;</p>
-<p>If we reduce it to 4 numbers in a row, then the pattern will match everything with 4 numbers in a row, including the matches from above (because 8 numbers in a row matches the pattern of 4 numbers in a row.</p>
+<p>If we reduce it to 4 numbers in a row, then the pattern will match everything with 4 numbers in a row, including all the matches from above (because 8 numbers in a row matches the pattern of 4 numbers in a row.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>four_numbers <span class="ot">=</span>  <span class="fu">grep</span>(file_names, <span class="at">pattern=</span><span class="st">"[0-9]{4}"</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> file_names[four_numbers]</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] <span class="st">"plot_A3_20230815-backup.csv"</span>                <span class="st">"sensor_x103_reading_2019-05-22.dat"</span>        </span>
@@ -851,13 +865,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a> [<span class="dv">9</span>] <span class="st">"plot_A2_2023-12-01.csv"</span>                     <span class="st">"sensor_x13_reading_20200808(obs).dat"</span>      </span>
 <span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>...             </span>
 <span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>[<span class="dv">71</span>] <span class="st">"report_v3.0_20230119-draft.txt"</span>   </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>However, if we want to match file names with exactly four digits in a row, then we need to need to explicitly say that the four digits are preceded and followed by something that is not a number.</p>
-<p>&nbsp;</p>
-<p>The ^ operator is used in brackets to invert the pattern. [^0-9] means every character except 0 to 9. The pattern here is:</p>
+<p>However, if we want to match file names with <span class="hl">exactly four digits in a row</span>, then we need to need to explicitly say that the four digits are preceded and followed by something that is not a number.</p>
+</section>
+<section id="the-invert-operator" class="level3" data-number="8.3">
+<h3 data-number="8.3" class="anchored" data-anchor-id="the-invert-operator"><span class="header-section-number">8.3</span> The invert operator ( ^ )</h3>
+<p>The <code>^</code> has two roles in RegEx:</p>
 <ul>
-<li><p>non-numeric character [^0-9] followed by</p></li>
-<li><p>4 numeric characters [0-9]{4} followed by</p></li>
-<li><p>non-numeric character [^0-9]</p></li>
+<li><p>At the beginning of a string it means <span class="hl">starts with</span></p></li>
+<li><p>At the beginning of a bracket it means <span class="hl">invert what is inside this bracket</span></p></li>
+</ul>
+<p>&nbsp;</p>
+<p>The <code>^</code> operator is used in brackets to invert the pattern. <code>[^0-9]</code> means every character <span class="hl">except</span> 0 to 9.</p>
+<p>&nbsp;</p>
+<p>The <strong><em>pattern</em></strong> here is:</p>
+<ul>
+<li><p>a non-numeric character <code>[^0-9]</code></p></li>
+<li><p>followed by 4 numeric characters <code>[0-9]{4}</code></p></li>
+<li><p>followed by a non-numeric character <code>[^0-9]</code></p></li>
 </ul>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>four_numbers_exact <span class="ot">=</span> <span class="fu">grep</span>(file_names, <span class="at">pattern=</span><span class="st">"[^0-9][0-9]{4}[^0-9]"</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now we only have file names that have exactly 4 digits somewhere inside:</p>
@@ -866,15 +890,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">3</span>] <span class="st">"plot_A2_2023-12-01.csv"</span>             <span class="st">"logfile_bb1_2020-03-02!.txt"</span>       </span>
 <span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">5</span>] <span class="st">"plot_B1_20230904_2023_final.csv"</span>    <span class="st">"plot_C2_2023-08-22(COOP).csv"</span>      </span>
 <span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">7</span>] <span class="st">"plot_B4_2023-09-30(COOP).csv"</span>    </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><span class="note">note: <strong><em>^</em></strong>means <strong><em>invert</em></strong> at the beginning of a square bracket and <strong><em>start</em></strong> at the beginning of a string. (</span>and this gets even more complicated… extension??)</p>
 <p>&nbsp;</p>
 <p>The above pattern will not capture strings that begin or end with four numbers. This requires more advanced RegEx: <a href="#extension-lookaheads">Extension: Lookaheads</a></p>
 </section>
-<section id="min-and-max" class="level3" data-number="8.3">
-<h3 data-number="8.3" class="anchored" data-anchor-id="min-and-max"><span class="header-section-number">8.3</span> min and max</h3>
-<p>If you put two numbers in curly brackets, RegEx treats this as a range with the first number as the minimun and the second as the maximum. So, {X, Y} says to repeat between X and Y times:</p>
+<section id="min-and-max" class="level3" data-number="8.4">
+<h3 data-number="8.4" class="anchored" data-anchor-id="min-and-max"><span class="header-section-number">8.4</span> min and max</h3>
+<p>If you put two numbers in curly brackets, RegEx treats this as a range with the first number as the minimun and the second as the maximum. So, <code>{X, Y}</code> says to repeat between <strong><em>X</em></strong> and <strong><em>Y</em></strong> times:</p>
 <p>&nbsp;</p>
-<p>This code will look for any file name that has a letter followed by 2 or 3 numbers:</p>
+<p>This code will look for any file name that has:</p>
+<ul>
+<li><p>a letter ( <code>[a-zA-Z]</code> )</p></li>
+<li><p>followed by 2 or 3 numbers ( <code>[0-9]{2,3}</code> )</p></li>
+</ul>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>letter_numbers <span class="ot">=</span> <span class="fu">grep</span>(file_names, <span class="at">pattern=</span><span class="st">"[a-zA-Z][0-9]{2,3}"</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> file_names[letter_numbers]</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] <span class="st">"sensor_x103_reading_2019-05-22.dat"</span>         <span class="st">"sensor_z13_reading_20210711(obs).dat"</span>      </span>
@@ -886,16 +913,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>[<span class="dv">13</span>] <span class="st">"sensor_y14_reading_20211230(obs).dat"</span>       <span class="st">"logfile_bb432_20220716-old.txt"</span>            </span>
 <span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>[<span class="dv">15</span>] <span class="st">"sensor_z145_reading_20210509.dat"</span>  </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="summing-up-curly-brackets" class="level3" data-number="8.4">
-<h3 data-number="8.4" class="anchored" data-anchor-id="summing-up-curly-brackets"><span class="header-section-number">8.4</span> Summing up curly brackets</h3>
+<section id="summing-up-curly-brackets" class="level3" data-number="8.5">
+<h3 data-number="8.5" class="anchored" data-anchor-id="summing-up-curly-brackets"><span class="header-section-number">8.5</span> Summing up curly brackets</h3>
 <p>Curly brackets tell regex to match the previous character or character set:</p>
 <ul>
-<li><p>{X}: exactly X times</p></li>
-<li><p>{X,}: minimum of X times</p></li>
-<li><p>{X,Y}: between X and Y (inclusive)</p></li>
+<li><p><code>{X}</code>: X times</p></li>
+<li><p><code>{X,}</code>: minimum of X times (Y is assumed to be infinity)</p></li>
+<li><p><code>{X,Y}</code>: between X and Y (inclusive of X and Y)</p></li>
 </ul>
 <p>&nbsp;</p>
-<p>And there are shortcuts for the common repeats:</p>
+<p>The most commonly used repeats have shortcuts:</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -929,7 +956,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>It is hard to create one dataset that can cover all Regex scenarios, so for this section I created a vector to demonstrate grouping. In this vector, A and AB are both repeated 1 through 5 times:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>repeat_vals <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"AA"</span>, <span class="st">"AAA"</span>, <span class="st">"AAAA"</span>, <span class="st">"AAAAAA"</span>,</span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>                <span class="st">"AB"</span>, <span class="st">"ABAB"</span>, <span class="st">"ABABAB"</span>, <span class="st">"ABABABAB"</span>, <span class="st">"ABABABABABA"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>We use the repeat operator { } to repeat the preceding pattern. So we can say:</p>
+<p>We use the repeat operator <code>{ }</code> to repeat the preceding pattern. So we can say:</p>
 <p>&nbsp;</p>
 <p>Strings that have A repeated 4 times (AAAA):</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>repeat_A <span class="ot">=</span> <span class="fu">grep</span>(repeat_vals, <span class="at">pattern=</span><span class="st">"A{4}"</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -941,7 +968,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"AAAA"</span>        <span class="st">"AAAAAA"</span>      <span class="st">"ABAB"</span>        <span class="st">"ABABAB"</span>      <span class="st">"ABABABAB"</span>    <span class="st">"ABABABABABA"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <section id="repeat-a-grouping" class="level3" data-number="9.1">
 <h3 data-number="9.1" class="anchored" data-anchor-id="repeat-a-grouping"><span class="header-section-number">9.1</span> Repeat a grouping</h3>
-<p>If we specifically want to repeat AB 4 times, then we <span class="hl">group AB</span>, or put it in parentheses <span class="hl">(AB)</span>:</p>
+<p>If we specifically want to repeat AB 4 times, then we <span class="hl">group AB</span>, by putting AB in parentheses <span class="hl"><code>(AB)</code></span>:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>repeat_AB <span class="ot">=</span> <span class="fu">grep</span>(repeat_vals, <span class="at">pattern=</span><span class="st">"(AB){4}"</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> repeat_vals[repeat_AB]</span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"ABABABAB"</span>    <span class="st">"ABABABABABA"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -953,7 +980,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="application" class="level2" data-number="10">
 <h2 data-number="10" class="anchored" data-anchor-id="application"><span class="header-section-number">10</span> Application</h2>
-<p>1) What will this pattern look for if you take out the parentheses?</p>
+<p>1) In Comments answer: What will this pattern look for with the parentheses and without the parentheses?</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>repeat_AAB <span class="ot">=</span> <span class="fu">grep</span>(repeat_vals, <span class="at">pattern=</span><span class="st">"(A[AB]){3}"</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>2) Search for any file name with months between Jan (01) and May (05) and year between 2010 and 2023.</p>
 <ul>
@@ -961,13 +988,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>To handle the potential dash, you need to say “has between 0 and 1 dash”</p></li>
 </ul>
 <p>&nbsp;</p>
-<p>3) File names that has <strong><em>A#</em></strong> (i.e., A1, A2, A3…) and is from the year 2020</p>
+<p>3) File names that has <strong><em>A#</em></strong> (i.e., A1, A2, A3…) and is from the year 2020. Assume that A# comes before the year.</p>
 <p>&nbsp;</p>
 <p>4) File names that have 15-20 characters and ends in <strong><em>.dat</em></strong></p>
 <p>&nbsp;</p>
 <p>5a) File names that have the following characters !, ^, $, -</p>
 <p>5b) File names that do not have the following characters !, ^, $, -</p>
-<p>(the 2 should be mutually exclusive and cover all filenames)</p>
+<p>(the 2 should be mutually exclusive and cover all 75 filenames)</p>
 <p>If you have any questions regarding this application, feel free to email them to Charlie Belinsky at belinsky@msu.edu.</p>
 <section id="questions-to-answer" class="level3" data-number="10.1">
 <h3 data-number="10.1" class="anchored" data-anchor-id="questions-to-answer"><span class="header-section-number">10.1</span> Questions to answer</h3>
@@ -985,9 +1012,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li>All changed files will now be listed under <strong><em>Staged Changes</em></strong></li>
 </ul></li>
-<li><p>Add a message “App2-05b finished”</p>
+<li><p>Add a message “App2-06 finished”</p>
 <ul>
-<li>Or, “App2-05b updated” if you are updating the application</li>
+<li>Or, “App2-06 updated” if you are updating the application</li>
 </ul></li>
 <li><p>Click <strong><em>Commit</em></strong></p></li>
 <li><p>The Commit button will become a Sync button, click <strong><em>Sync</em></strong></p></li>
@@ -999,7 +1026,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <img src="images/R-1-01_Upload.png" class="fs img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-upload-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Upload changes to GitHub – the red circle indicates how many files that changed (in this case: 1)
+Figure&nbsp;2: Upload changes to GitHub – the red circle indicates how many files that changed (in this case: 1)
 </figcaption>
 </figure>
 </div>
@@ -1015,7 +1042,7 @@ Figure&nbsp;1: Upload changes to GitHub – the red circle indicates how many fi
 </ol>
 <p></p>
 <ol start="5" type="1">
-<li><p>Put in <strong><em>title</em></strong> that the application 2-05b is finished, add anything you want to the <strong><em>description</em></strong></p></li>
+<li><p>Put in <strong><em>title</em></strong> that the application 2-06 is finished, add anything you want to the <strong><em>description</em></strong></p></li>
 <li><p>Click <strong><em>Create</em></strong></p></li>
 </ol>
 <div id="fig-inform" class="fs quarto-float quarto-figure quarto-figure-left anchored">
@@ -1024,7 +1051,7 @@ Figure&nbsp;1: Upload changes to GitHub – the red circle indicates how many fi
 <img src="images/R-1-01_Inform.png" class="fs img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-inform-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Informing your instructor the application is finished
+Figure&nbsp;3: Informing your instructor the application is finished
 </figcaption>
 </figure>
 </div>
@@ -1035,10 +1062,6 @@ Figure&nbsp;2: Informing your instructor the application is finished
 <p>The issue with the pattern above is that it assumes the four numbers are in the middle of a larger string, because there has to be a non-digit character before and after the 4 numbers. If you want to say that exactly four number can occur anywhere in the string (e.g., the beginning or end of the string), then you have to use a lookahead:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span>(<span class="st">"(?&lt;![0-9])[0-9]{4}(?![0-9])"</span>, x, <span class="at">perl =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>&lt;get into why we try to avoid lookarounds??&gt;</p>
-</section>
-<section id="extension-multiple-meanings-for-many-special-characters" class="level2" data-number="12">
-<h2 data-number="12" class="anchored" data-anchor-id="extension-multiple-meanings-for-many-special-characters"><span class="header-section-number">12</span> Extension: Multiple meanings for many special characters</h2>
-<p>Regex is very efficient! But this efficiency causes confusion…</p>
 
 
 </section>
