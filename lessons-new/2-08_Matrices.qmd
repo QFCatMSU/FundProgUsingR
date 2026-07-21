@@ -7,6 +7,7 @@ short: "2-08"
 ### to do
 
 - talk about what happens if you use as.matrix() on a dataframe with multiple types of variables
+- [Note: As of July 2026, Positron has a bug where it cannot display a Matrix with row names in the Data Viewer. This should be fixed soon and I will update this lesson to show the matrix in the viewer.]{.note}
 
 ## Purpose
 
@@ -26,7 +27,7 @@ Let's first look at the CSV file, ***LansingJanTemps.csv***.  The data in the C
 
  
 
-A CSV file is a text file that can be read by any text editor.  We can look at the csv file by clicking on it in the ***Files*** tab of RStudio and choosing ***View File***.  The file will open in RStudio's file viewer:
+A CSV file is a text file that can be read by any text editor, including Positron.  When you click on a CSV file, Positron will first open the file in a Data Viewer tab. From there you can click on ***Open as Plain Text File*** to view and edit the original file: [Note: I used the Split Editor button (circled blue) to see multiple files at once.]{.note}
 
 ![Opening and viewing a CSV file in RStudio](images/R-2-07-OpenCSV.jpg){#fig-CSVinRStudio .fs}
 
@@ -40,7 +41,7 @@ Let's open the CSV file and save it to a data frame, named ***lansingJanDF***:
 lansingJanDF = read.csv(file = "data/LansingJanTemps.csv");
 ```
 
-***lansingJanDF*** is a data frame with 6 columns of January temperatures from the years 2011-2016.  This view of ***lansingJanDF*** is just a more structured view of the data from @fig-CSVinRStudio.
+***lansingJanDF*** is a data frame with 6 columns of January temperatures from the years 2011-2016.  This view of ***lansingJanDF*** is very similar to the Data Viewer tab in @fig-CSVinRStudio.
 
 ![Viewing the data frame from the CSV file](images/R-2-07-DF.jpg){#fig-dataframe_csv .fs}
 
@@ -58,15 +59,11 @@ We want to change the column names to something that has the years in it. We ca
 colnames(lansingJanMat2) = 2011:2016;
 ```
 
-But, [it is not recommended to start a column name with a number]{.hl}.  Column names are essentially variable names and variable names cannot start with a number.  R does allow you to start a column name with a number, but there are problems with this that are beyond the scope of this lesson.
+But, [it is not recommended to start a column name with a number]{.hl}.  Column names are essentially variable names and variable names cannot start with a number.  R does allow you to start a column name with a number, but there are problems with this. You should always use variable naming standards for column names in a dataframe, even though R does not enforce this.
 
  
 
-To avoid problems, [you should always use variable naming standards for column names in a dataframe]{.hl} even though R does not enforce this.
-
- 
-
-As a reminder, the are that variable names :
+As a reminder, variable names :
 
 - can only start with a letter, underscore ( \_ ) , or a dot ( . )
 
@@ -114,15 +111,27 @@ We can convert a data frame directly into a matrix using ***as.matrix()***:
 lansingJanMat = as.matrix(lansingJanDF2);
 ```
 
-In the ***Environment*** tab, the matrix is placed in the ***Data*** section (like a data frame), but is presented as a two-dimensional vector (31 rows by 6 columns):
+In ***Variables***, the matrix is placed in the ***Data*** section (like a data frame), but is presented as a two-dimensional vector (31 rows by 6 columns):
 
 ``` {.r tab="Variables"}
-lansingJanMat: num [1:31, 1:6] 122 -39 6 0 -50 -33 ...
+> lansingJanMat: [31 rows x 6 columns] <matrix>
+```
+
+You can expand the matrix to see the columns and can also expand the columns to see all the values
+
+``` {.bash tab="Variables"}
+🞃 lansingJanMat: [31 rows x 6 columns] <matrix>
+   > [, 1]       122 -39 6 0 ...
+   > [, 2]       67 -17 -50 22 ...
+   > [, 3]       -39 -33 -17 6 ...
+   > [, 4]       -100 -106 -106 -6 ...
+   > [, 5]       -17 11 6 0 ...
+   > [, 6]       -17 17 6 -38 ...
 ```
 
 And, if you double-click on the matrix, it will show up in a ***Viewer*** tab and look like a data frame:
 
-![Matrices and data frame in the Environment -- double-clicking on a matrix opens it in a Viewer tab](images/R-2-07-ViewingMatrix.jpg){#fig-matrixInRStudio .fs}
+![Matrices and data frame in Variables -- double-clicking on a matrix opens it in a Viewer tab](images/R-2-07-ViewingMatrix.jpg){#fig-matrixInRStudio .fs}
 
 ### Advantages of a matrix
 
@@ -134,11 +143,11 @@ A matrix has two advantages over a data frame:
 
    
 
-If you are dealing with large data that is all of the same type, then it is best to use a matrix.
+If you are dealing with large data sets that is all of the same type, then it is best to use a matrix.
 
 ## Modifying the whole matrix
 
-The temperature data in the ***lansingJanMat*** is in units of tenths of Celsius (this author does not know why NOAA/NCDC chose to store the data this way).  Let's convert this to Fahrenheit.
+The temperature data in the ***lansingJanMat*** is in units of tenths of Celsius (this author does not know why NOAA/NCDC chose to store the data this way).  We will convert this to Fahrenheit.
 
  
 
@@ -160,7 +169,7 @@ We are going to perform three operations on the matrix and show the results of t
 
  
 
-[Note: I create a new matrices to maintain the old versions of the matrix, but this is not necessary -- you could keep saving the results to ***lansingJanMat***. ]{.note}
+[Note: I create new matrices to maintain the old versions, but this is not necessary -- you could keep saving the results to ***lansingJanMat***. ]{.note}
 
  
 
@@ -347,15 +356,52 @@ Console output for the matrix subsetted by even rows and odd columns 1-3, and th
 
 ## Reversing the matrix (transpose)
 
-In the previous examples, the rows represent days and the columns represent years.  We could easily reverse the matrix so that the [rows represent the years and the columns represent the days]{.hl}. We do this using the transpose, ***t()***, function:
+In the previous examples, the rows represent days and the columns represent years.  We could easily reverse the matrix so that the rows represent the years and the columns represent the days. We do this using the transpose, ***t()***, function:
 
 ``` r
 lansingJanMat_T = t(lansingJanMat4);
 ```
 
-The resulting matrix has 6 row and 31 columns with temperature values for the months going horizontally across the matrix instead of vertically down:
+In Variables we see that the resulting matrix has 6 rows and 31 columns (the reverse of the previous matrix):
+
+``` r
+> lansingJanMat: [31 rows x 6 columns] <matrix>
+🞃 lansingJanMat_T: [6 rows x 31 columns] <matrix>
+   > [, 1]       54 44 25 14 29 29
+   > [, 2]       25 29 26 13 34 35
+   > [, 3]       33 23 29 13 33 33
+   ...
+   > [, 31]      18 53 27 31 33 49
+```
+
+[The Positron data viewer (as of July 2026) has a bug in it where it cannot display matrices with row names]{.hl}, so double-clicking on the matrix will not display anything.
+
+ 
+
+This is the view from RStudio, notice the with temperature values for the months going horizontally across the matrix instead of vertically down:
 
 ![The transpose matrix (reversing the rows and columns)](images/R-2-07-Transpose.jpg){#fig-transpose .fs}
+
+And, you can also view the matrix in the ***Console***:
+
+``` {.r tab="Console"}
+
+> lansingJanMat_T
+        [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14] [,15] [,16]
+Jan2011   54   25   33   32   23   26 19.0   22   27    25    26    27    25    23    26    18
+Jan2012   44   29   23   36   42   53 44.0   38   42    47    50    37    26    22    24    42
+Jan2013   25   26   29   33   35   35 35.0   38   45    44    55    58    40    26    29    34
+Jan2014   14   13   13   31   29   16  2.1   17   21    39    41    39    44    37    27    28
+Jan2015   29   34   33   32   14   17 13.0   13   15    16    31    27    15    19    31    32
+Jan2016   29   35   33   27   29   36 42.0   39   42    38    16    23    18    34    42    33
+        [,17] [,18] [,19] [,20] [,21] [,22] [,23] [,24] [,25] [,26] [,27] [,28] [,29] [,30] [,31]
+Jan2011    30    34    22    23  14.0    16    13    29    29    29    27  29.0    26    24    18
+Jan2012    40    24    27    17  22.0    36    48    32    32    36    40  33.0    29    41    53
+Jan2013    33    35    45    41  15.0    10    17    16    20    27    30  43.0    57    56    27
+Jan2014    30    21    29    30   9.1    11    13    19    25    25    15   8.2    19    28    31
+Jan2015    45    39    33    31  28.0    30    32    37    33    26    27  31.0    32    23    33
+Jan2016    26    15    21    22  26.0    29    26    32    40    43    29  34.0    29    47    49
+```
 
 ## Statistics across all rows and columns
 
@@ -379,11 +425,11 @@ There are two better ways to cycle through each column and get the means:
 
 ### For loops
 
-A ***for*** loop can be used to cycle through, and calculate the mean of, each column in the matrix.  Since there are multiple mean values that you are calculating, you need to save the mean values to one vector.
+A ***for*** loop can be used to cycle through, and calculate the mean of, each column in the matrix.  Since there are multiple mean values that you are calculating, you need to save the mean values to a vector.
 
  
 
-[The vector needs to be created before the **for** loop]{.hl} and assigned values during the ***for*** loop.  After, the ***for*** loop the vector will have the same number of values as the matrix has columns (i.e., 6).
+[The vector is a state variable and needs to be created before the **for** loop]{.hl} and assigned values during the ***for*** loop.  After, the ***for*** loop the vector will have the same number of values as the matrix has columns (i.e., 6).
 
 ``` r
 # vector that holds the 6 yearly mean values
@@ -436,7 +482,7 @@ And, ***yearlyMean2*** is a vector with 6 value, the same as ***yearlyMean*** ab
 25.61290 35.77419 34.16129 23.36774 27.45161 31.74194 
 ```
 
-***yearlyMean2*** is formatted differently than ***yearlyMean*** -- ***yearlyMean2*** is a ***named*** variable.  The distinction is something we will look more into in the lesson on Objects in R.
+***yearlyMean2*** is formatted differently than ***yearlyMean*** because ***yearlyMean2*** is a ***named*** variable.  The distinction is something we will look more into in the lesson on Objects in R.
 
 ## Saving the matrix
 
@@ -492,50 +538,3 @@ Is it best to convert the data frame into matrix?  In comments in your applicat
 6\) Convert the temperature matrix so that it show how many degrees the temperature was above or below freezing on the Fahrenheit scale.  So, 25 would become -7,  and 60 would become 28.
 
 {{< include ../assets/_AppInstructions_Pos.qmd >}}
-
-## Extension: dataframes and tibbles
-
-In March 2019, the line of code to get a column of temperature values from the ***lansWeather11Data*** dataframe (and the other 5 years) changed from
-
-``` r
-lansWeather11Val = lansWeather11Data [, "value"];
-```
-
-to
-
-``` r
-lansWeather11Val = lansWeather11Data$value;
-```
-
-The reason for this change is that the NOAA/NCDC database starting sending data in tibbles instead of dataframes.  Tibbles are designed to be a more modern take on the dataframe, basically taking the lessons from decades on dataframe usage to create a better dataframe.
-
- 
-
-Tibbles are essentially the tidyverse version of a data frame and they supposedly improve on the data frame.
-
- 
-
-But, one difference is that in a data frame the three following lines all function exactly the same – they each take the column ***value*** from the data frame ***lw11Data*** and save it to a vector called ***temps***:
-
-``` r
-temps=lw11Data$value
-temps=lw11Data[, "value"]
-temps=lw11Data[["value"]]
-```
-
-However, in a tibble, the following line saves the column ***value*** into [a new 1 column tibble]{.hl} called ***temps***.
-
-``` r
-temps=lw11Data[,"value"]
-```
-
-In other words, ***temps*** is not a vector, hence the error.
-
- 
-
-These two lines work the same in tibbles and data frames:
-
-``` r
-temps=lw11Data$value
-temps=lw11Data[[“value”]]
-```
