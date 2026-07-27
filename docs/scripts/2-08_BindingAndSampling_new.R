@@ -5,8 +5,10 @@ library(package="ggplot2");
 lansJanTempsDF = read.csv(file = "data/lansingJanTempsFixed.csv"); 
 lansJanTemps2017DF = read.csv(file = "data/lansingJan2017Temps.csv"); 
 
-### Combine the data
+### Name the column
 colnames(lansJanTemps2017DF) = "Jan2017";   # only one column to name
+
+### Combine the data
 lansJanTempsDF2 = cbind(lansJanTempsDF, lansJanTemps2017DF);
 
 ### Binding vectors of the same size together:

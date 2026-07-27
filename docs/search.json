@@ -2188,7 +2188,7 @@
     "href": "lessons/2-08_Binding_Sampling.html#sampling-from-a-normal-distribution",
     "title": "2-08: Binding and Sampling",
     "section": "7 Sampling from a normal distribution",
-    "text": "7 Sampling from a normal distribution\nsample() creates a random sample where each observation has the same chance of being picked (i.e., uniform probability). If we want to create a random set of observations that comes from a normal distribution with a specified mean and standard deviation, we use the function rnorm().\n \nrnorm() has 3 arguments:\n\nn: the number of observations to sample\nmean: the mean of the distribution we are sampling from\nsd: the standard deviation of the distribution we are sampling from\n\n \nThe following code samples 200 observations from a normal distribution with a mean of 20 and a standard deviation of 4:\nnormalDist1 = rnorm(n=200, mean=20, sd=2);\nnote: the sampled valued are weighted but they are still random\n \nLooking at the first 20 random values, we can see their values are centered around 20:\n&gt; normalDist1[1:20]\n [1] 19.99109 18.17063 21.53481 21.20402 20.78958 21.00338 23.53383\n [8] 19.72381 18.93655 18.74356 22.54336 18.14803 17.84504 19.18242\n[15] 16.70889 20.53722 23.31189 16.91820 19.35975 17.85754\n\n7.1 Plot a normal distribution\nWe can also create a normal distribution using the mean and standard deviation from the sampled temperature values (Figure 4):\nnormalDist2 = rnorm(n=200, \n                    mean=mean(randomTempsSeeded), \n                    sd=sd(randomTempsSeeded));\nIn the code above, we generated 200 temperature observations from a normal distribution based on the mean and standard deviation of lansJanTempsMat. The data generated are saved in the vector normalDist2.\n\nThen we use a histogram to make a visual representation of normalTemp and, to the histogram, we add a vertical line at the mean value of the samples, mean(normalDist2):\nplot2 = ggplot() +\n  geom_histogram(mapping=aes(x=normalDist2),\n                 fill=\"gray50\",\n                 color=\"blue\") +\n  geom_vline(xintercept = mean(normalDist2),\n             color=\"red\") +\n  theme_bw();\nplot(plot2);\nThe result is a histogram that looks like a bell diagram – and would look more so if you increased the sample size.\n\n\n\n\n\n\nFigure 4: Histogram of the normal distribution created using rnorm()",
+    "text": "7 Sampling from a normal distribution\nsample() creates a random sample where each observation has the same chance of being picked (i.e., uniform probability). If we want to create a random set of observations that comes from a normal distribution with a specified mean and standard deviation, we use the function rnorm().\n \nrnorm() has 3 arguments:\n\nn: the number of observations to sample\nmean: the mean of the distribution we are sampling from\nsd: the standard deviation of the distribution we are sampling from\n\n \nThe following code samples 200 observations from a normal distribution with a mean of 20 and a standard deviation of 4:\nnormalDist1 = rnorm(n=200, mean=20, sd=2);\nnote: the sampled valued are weighted but they are still random\n \nLooking at the first 20 random values, we can see their values are centered around 20:\n&gt; normalDist1[1:20]\n [1] 19.99109 18.17063 21.53481 21.20402 20.78958 21.00338 23.53383\n [8] 19.72381 18.93655 18.74356 22.54336 18.14803 17.84504 19.18242\n[15] 16.70889 20.53722 23.31189 16.91820 19.35975 17.85754\n\n7.1 Plot a normal distribution\nWe can also create a normal distribution using the mean and standard deviation from the sampled temperature values (Figure 4):\nnormalDist2 = rnorm(n=200, \n                    mean=mean(randomTempsSeeded), \n                    sd=sd(randomTempsSeeded));\nIn the code above, we generated 200 temperature observations from a normal distribution based on the mean and standard deviation of lansJanTempsMat. The data generated are saved in the vector normalDist2.****\nThen we use a histogram to make a visual representation of normalTemp and, to the histogram, we add a vertical line at the mean value of the samples, mean(normalDist2):\nplot2 = ggplot() +\n  geom_histogram(mapping=aes(x=normalDist2),\n                 fill=\"gray50\",\n                 color=\"blue\") +\n  geom_vline(xintercept = mean(normalDist2),\n             color=\"red\") +\n  theme_bw();\nplot(plot2);\nThe result is a histogram that looks like a bell diagram – and would look more so if you increased the sample size.\n\n\n\n\n\n\nFigure 4: Histogram of the normal distribution created using rnorm()",
     "crumbs": [
       "<b>Fundamentals of Programming class (old)</b>",
       "Part 2: Data Programming",
@@ -2476,7 +2476,7 @@
     "href": "lessons/2-02_DataFrame_Modifications.html#a-larger-data-frame",
     "title": "2-02: DataFrame Modifications",
     "section": "3 A larger data frame",
-    "text": "3 A larger data frame\nFor this lesson we are going to use weather data for Lansing, Michigan for all of 2016.  The weather data comes from NCDC/NOAA.\n \nTo open the data:\nweatherData = read.csv(file=\"data/Lansing2016NOAA.csv\",\n              sep=\",\",\n              header=TRUE);\nIn the Environment, you can see that weatherData consists of 366 observations (366 days – it was a leap year) of 23 variables.  In other words there are 23 different weather variables in the data (columns) for each of the 366 days (rows).\nweatherData:      366 obs. of 23 variables\nIf we double-click on weatherData in the Environment, we can look at the data frame in the file viewer section of RStudio:\n\n\n\n\n\n\nFigure 1: Viewing the weatherData data frame in the main section",
+    "text": "3 A larger data frame\nFor this lesson we are going to use weather data for Lansing, Michigan for all of 2016.  The weather data comes from NCDC/NOAA.\n \nTo open the data:\nweatherData = read.csv(file=\"data/Lansing2016Noaa.csv\",\n              sep=\",\",\n              header=TRUE);\nIn the Environment, you can see that weatherData consists of 366 observations (366 days – it was a leap year) of 23 variables.  In other words there are 23 different weather variables in the data (columns) for each of the 366 days (rows).\nweatherData:      366 obs. of 23 variables\nIf we double-click on weatherData in the Environment, we can look at the data frame in the file viewer section of RStudio:\n\n\n\n\n\n\nFigure 1: Viewing the weatherData data frame in the main section",
     "crumbs": [
       "<b>Fundamentals of Programming class (old)</b>",
       "Part 2: Data Programming",
@@ -4949,7 +4949,7 @@
     "href": "lessons/2-01_GGPlot_Intro.html#create-plot-data-using-ggplot",
     "title": "2-01: GGPlot Introduction",
     "section": "4 Create plot data using GGPlot",
-    "text": "4 Create plot data using GGPlot\nWe are going to create a scatterplot in GGPlot using data from Lansing2016NOAA.csv\n# read in CSV file and save the content to weatherData\nweatherData = read.csv(file=\"data/Lansing2016NOAA.csv\");\nThe scatterplot will be average temperature (avgTemp column) vs. humidity (relHum column).\n \nThe code to create a scatterplot using GGPlot is:\n#### Part 1: Create a scatterplot #### \nplot1 = ggplot( data=weatherData ) +   \n  geom_point( mapping=aes(x=avgTemp, y=relHum) ); \nplot(plot1);\nSource the script and this plot appears:\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 1: Our first plot using GGPlot – note that the x and y-axis labels match the mapped name\n\n\n\n\n4.1 Taking out argument names\nBelow, the argument names are highlighted:\n\n\n\n#### Part 1: Create a scatterplot ####\nplot1 = ggplot( «data»=weatherData ) +\n        geom_point( «mapping»=aes(«x»=avgTemp, «y»=relHum) );\nplot(plot1);\n\n\nFigure 2: Argument names used in ggplot call\n\n\n\nWe can remove the argument names and, in this case, the script will render the same plot:\n#### Part 2: Same scatterplot without argument names ####\nplot2 = ggplot( weatherData ) +\n        geom_point( aes(avgTemp, relHum) );\nplot(plot2);   # same as plot1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 3: Taking out argument names, in this case, produces the same plot\n\n\n\n\n\n4.2 Benefits of using argument names\nYou will often see people skip the argument names and, for the example above, this works.  But it only works because we only used the default arguments for each function and used the arguments in the same order as they appeared in the function.\n \nIn this class, we will (almost always) use argument names because using argument names:\n\nmakes the code more intuitive to the reader – and making code more intuitive should (almost always) take precedence over saving space\nmeans that you can order the arguments however you want\navoids bad assumptions about the ordering of arguments and their default values\n\n \nThe one exception where we will not use argument names is:\nplot(plot1)   # no argument name used here\ninstead of\nplot(x=plot1) # x is the argument name\nThere are multiple functions in R and GGPlot where x is used as the first argument name in a function, and it often refers to the data being passed in to the function.  This is not intuitive when plotting because x is also used to refer to x-axis data.\n \nWe will use the argument name x when x refers to an axis (e.g., x=avgTemp) but not when x refers generically to data (e.g., x=plotData) as shown in Figure 2.",
+    "text": "4 Create plot data using GGPlot\nWe are going to create a scatterplot in GGPlot using data from Lansing2016NOAA.csv\n# read in CSV file and save the content to weatherData\nweatherData = read.csv(file=\"data/Lansing2016Noaa.csv\");\nThe scatterplot will be average temperature (avgTemp column) vs. humidity (relHum column).\n \nThe code to create a scatterplot using GGPlot is:\n#### Part 1: Create a scatterplot #### \nplot1 = ggplot( data=weatherData ) +   \n  geom_point( mapping=aes(x=avgTemp, y=relHum) ); \nplot(plot1);\nSource the script and this plot appears:\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 1: Our first plot using GGPlot – note that the x and y-axis labels match the mapped name\n\n\n\n\n4.1 Taking out argument names\nBelow, the argument names are highlighted:\n\n\n\n#### Part 1: Create a scatterplot ####\nplot1 = ggplot( «data»=weatherData ) +\n        geom_point( «mapping»=aes(«x»=avgTemp, «y»=relHum) );\nplot(plot1);\n\n\nFigure 2: Argument names used in ggplot call\n\n\n\nWe can remove the argument names and, in this case, the script will render the same plot:\n#### Part 2: Same scatterplot without argument names ####\nplot2 = ggplot( weatherData ) +\n        geom_point( aes(avgTemp, relHum) );\nplot(plot2);   # same as plot1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 3: Taking out argument names, in this case, produces the same plot\n\n\n\n\n\n4.2 Benefits of using argument names\nYou will often see people skip the argument names and, for the example above, this works.  But it only works because we only used the default arguments for each function and used the arguments in the same order as they appeared in the function.\n \nIn this class, we will (almost always) use argument names because using argument names:\n\nmakes the code more intuitive to the reader – and making code more intuitive should (almost always) take precedence over saving space\nmeans that you can order the arguments however you want\navoids bad assumptions about the ordering of arguments and their default values\n\n \nThe one exception where we will not use argument names is:\nplot(plot1)   # no argument name used here\ninstead of\nplot(x=plot1) # x is the argument name\nThere are multiple functions in R and GGPlot where x is used as the first argument name in a function, and it often refers to the data being passed in to the function.  This is not intuitive when plotting because x is also used to refer to x-axis data.\n \nWe will use the argument name x when x refers to an axis (e.g., x=avgTemp) but not when x refers generically to data (e.g., x=plotData) as shown in Figure 2.",
     "crumbs": [
       "<b>Fundamentals of Programming class (old)</b>",
       "Part 2: Data Programming",
@@ -7511,6 +7511,666 @@
       "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
       "Part 2: Data Programming",
       "2-01: GGPlot Introduction"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-09_Binding_Sampling.html",
+    "href": "lessons-new/2-09_Binding_Sampling.html",
+    "title": "2-09: Binding and Sampling",
+    "section": "",
+    "text": "create a simple example showing what happens if you insert a random calculation in between set.seed() and another random calculation",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-09: Binding and Sampling"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-09_Binding_Sampling.html#purpose",
+    "href": "lessons-new/2-09_Binding_Sampling.html#purpose",
+    "title": "2-09: Binding and Sampling",
+    "section": "1 Purpose",
+    "text": "1 Purpose\n\nCreating a uniform random sample\nCreating a normal sample\nCreating repeatable pseudo-random values\nSaving and loading list objects",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-09: Binding and Sampling"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-09_Binding_Sampling.html#script-and-data-for-this-lesson",
+    "href": "lessons-new/2-09_Binding_Sampling.html#script-and-data-for-this-lesson",
+    "title": "2-09: Binding and Sampling",
+    "section": "2 Script and data for this lesson",
+    "text": "2 Script and data for this lesson\nThe script for the lesson is here\nLansingJanTempsFixed.csv\nLansingJan2017Temps.csv",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-09: Binding and Sampling"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-09_Binding_Sampling.html#binding-multiple-data-frames",
+    "href": "lessons-new/2-09_Binding_Sampling.html#binding-multiple-data-frames",
+    "title": "2-09: Binding and Sampling",
+    "section": "3 Binding multiple data frames",
+    "text": "3 Binding multiple data frames\nWe are going to start by opening the CSV file created in the last lesson, lansingJanTempsFixed.csv file, that contains temperatures in Fahrenheit for January 2011-2016:\nlansJanTempsDF = read.csv(file = \"data/lansingJanTempsFixed.csv\"); \nNext, we are going to add January 2017 data from lansingJan2017Temps.csv.  First, let’s read the 2017 weather data into a data frame:\nlansJanTemps2017DF = read.csv(file = \"data/lansingJan2017Temps.csv\"); \nlansJanTems2017DF is a data frame with one column (named x) – x has 31 temperature values (in Fahrenheit), one for each day in January 2017.  If we click on the arrow to the left of  lansJanTemps2017DF in Variables, it looks like this:\n🞃 lansJanTemps2017DF   [31 rows x 1 column] &lt;data.frame&gt;\n   &gt; x:                 42 44 37 35 15 15 ...   int [31]\nLet’s first change the column name from x to Jan2017:\ncolnames(lansJanTemps2017DF) = \"Jan2017\";   # there is only one column to name\nAnd then bind the 2017 data to the 2011-2016 data frame using cbind().  We will save the binded data to a new data frame, lansJanTempDF2:\nlansJanTempsDF2 = cbind(lansJanTempsDF, lansJanTemps2017DF);\ncbind() stands for column bind and it will bind two (or more) data frames together by their columns.  cbind() also will bind columns together between two matrices, or bind columns between a matrix and a data frame.  The only caveat is that the columns need to be the same size.  In this example, the columns all have 31 rows (note: the first row is labeled 0):\n\n\n\n\n\n\nFigure 1: The January temperature matrix in Fahrenheit – with 7 years of temperatures\n\n\n\n\n3.1 Binding vectors\nYou can also use cbind() to bind two vectors together – as long as they are the same size.  The result will be a matrix with two columns (remember a matrix is a two-dimensional vector):\nvectorA = 20:1;   # 20 values 20, 19, 18, ..., 1\nvectorB = seq(from=100, to =195,  by=5);  # 20 values: 100, 105, 110, ..., 195\nmatrixAB = cbind(vectorA, vectorB);  # 2 columns with 20 values in each\nor bind a vector to a data frame/matrix.  Again, the only caveat is that the number of values in the vectors are the same as the number of rows in the data frame/matrix:\nvectorC = seq(from=-20, to=18,  by=2);  # 20 values: -20, -18, ..., 18\nmatrixABC  = cbind(matrixAB, vectorC);  # 3 columns with 20 values in each\nmatrixABC contains three columns named vectorA, vectorB, and vectorC:\n&gt; matrixABC\n      vectorA vectorB vectorC\n [1,]      20     100     -20\n [2,]      19     105     -18\n [3,]      18     110     -16\n [4,]      17     115     -14\n [5,]      16     120     -12\n [6,]      15     125     -10\n [7,]      14     130      -8\n [8,]      13     135      -6\n [9,]      12     140      -4\n[10,]      11     145      -2\n[11,]      10     150       0\n[12,]       9     155       2\n[13,]       8     160       4\n[14,]       7     165       6\n[15,]       6     170       8\n[16,]       5     175      10\n[17,]       4     180      12\n[18,]       3     185      14\n[19,]       2     190      16\n[20,]       1     195      18",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-09: Binding and Sampling"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-09_Binding_Sampling.html#random-values-in-programming",
+    "href": "lessons-new/2-09_Binding_Sampling.html#random-values-in-programming",
+    "title": "2-09: Binding and Sampling",
+    "section": "4 Random values in programming",
+    "text": "4 Random values in programming\nWe are going to pick random values from our temperature matrix but, in programming there is no such thing as a truly random value.  There has to be some calculation that determines the random number – the calculation is just so complex that it seems random. As we will see later, these calculations can be manipulated (or, seeded) so you get the same “random” numbers every time you Source your script.  This is very helpful when you are sharing and documenting your results.\n \nFor now, we are going to use unseeded calculations, which means that this part of the script will produce different results each time it is executed.  The following line enforces the unseeded random calculations:\nset.seed(seed=NULL);  # remove seed value\n\n4.1 sample of numbers\nWe can use the sample() function to get a random sample from a set of observations.  In our first example, the “observations” will just be a vector of values from 1 to 10: 1:10.\n \nsample() has three arguments:\n\nx: the observations we are taking a random sample from (in this case, a sequence vector)\nsize: the number of samples we will take.\nreplace: whether we allow for an observation to be sampled multiple times (replace=TRUE means we allow an observation to be sampled more than once)\n \n\nIn the following code, the arguments for sample() are set so that:\n\nThe data set we are using is the sequence 1-10:  1:10\nWe are taking eight random samples: size=8\nWe allow repeat observations (replace=TRUE) in randomSample1 but not in randomSample2 (replace=FALSE).\n\nrandomSample1 = sample( 1:10, size=8, replace=TRUE);\nrandomSample2 = sample( 1:10, size=8, replace=FALSE);\nWhen I execute the script (Figure 2), randomSample1 had three observations that were repeated 4, 7, and 2), whereas randomSample2 has no repeated observations.  Each time you execute the script, you will get different observations but randomSample2 will always have eight unique observations because replace=FALSE.\n \n\n\n\n\n\n\nFigure 2: Random sampling of a vector with replacement and without replacement\n\n\n\n\n4.1.1 Sampling and replacement error\nYou will get an error if the argument size is greater than the population size and replace=FALSE:\n# randomSample3 = sample( c(1:10), size=12, replace=FALSE);  # will cause error\nrandomSample4 = sample( c(1:10), size=12, replace=TRUE);   # will work\nThis is because you cannot take 12 unique samples from a population whose size is 10 (replace=FALSE), but you can take 12 samples from a population whose size is 10 (replace=TRUE) – there will be at least two observations that are repeated.  In this case, observation 1 is repeated twice, observations 7 and 8 are repeated 3 times, and observations 3, 4, and 9 were never picked:\n&gt; randomSample4\n [1]  10 7 7 8 2 7 1 8 8 1 5 6\n\n\n\n4.2 Randomly sampling the temperature values\nIn the previous examples we were sampling values from a vector. A matrix is a two-dimensional vector so we can just as easily sample values from a matrix.  Let’s first convert the data frame lansJanTempsDF2 into a matrix:\nlansJanTempsMat = as.matrix(x=lansJanTempsDF2);\nAnd then randomly sample 80 values from the matrix:\nrandomTemps = sample(lansJanTempsMat, size=80, replace=TRUE);\nThe 80 samples will be different each time you Source your script…\n&gt; randomTemps\n [1] 13 55 13 14 24 16 35 21 24 37 34 30 16 44 29 35 29 37 16 35 18 35 32 27 16\n[26] 55 26 26 40 26 25 29 48 23 26 35 19 30 23 45 38 42 42 18 42 19 45 32 13 37\n[51] 30 11 30 33 30 22 29 32 44 14 23 38 41 43 27 22 22 37 37 31 44 21 25 34 21\n[76] 40 29 55 42 29\nA matrix is a single 2D vector, whereas a data frame is multiple vectors (each column is a vector) and sampling has a different effect. For more information go to Extension: Sampling from a data frame\n\n\n4.3 Setting the seed value\nEvery time your script is executed, a new “random” set of observations, called pseudo-random, is produced using a complex algorithm that seems random to humans. \n \nTo replicate your results (i.e., get the same “random” values), you use set.seed() and pass in a number:\nset.seed(seed=12345);\nThe number is called the seed number – the seed number sets the initial conditions for the algorithm that creates the pseudo-random numbers.  This means that the pseudo-random number will be the same after the seed is set.  If you change the seed number, then you get a different set of the same pseudo-random numbers.\n \nIf you want to learn more, there is a really good video on PBS Infinite Series about random number generators, pseudo-random number generators, and seed numbers.  The discussion on seed numbers starts at 2:15.\n\n\n4.4 Sampling a data vector\nWe will take another 80 random samples from lansJanTempsMat allowing for repeats:\nrandomTempsSeeded = sample(x=lansJanTempsMat, size=80, replace=TRUE);\nThe 80 sampled values from the lansJanTempsMat matrix:\n&gt; randomTempsSeeded\n [1] 38.0 23.0 29.0 25.0 30.0 34.0 23.0 19.0 13.0 44.0 34.0 32.0\n[13] 29.0 31.0 19.0 44.0 16.0 55.0 32.0 19.0 29.0 27.0 23.0 25.0\n[25] 26.0 15.0 44.0 29.0 35.0 32.0 32.0 43.0 19.0 25.0 29.0 55.0\n[37] 29.0 48.0 17.0 32.0  2.1 34.0 27.0 21.0 26.0 44.0 53.0 39.0\n[49] 32.0 29.0 16.0 26.0 30.0 43.0 29.0 35.0 27.0 42.0 32.0 41.0\n[61] 32.0 47.0 15.0 56.0 26.0 25.0 38.0 17.0 25.0 27.0 32.0 27.0\n[73] 14.0 29.0 32.0 25.0 13.0 32.0 35.0 21.0\nAnd let’s find the mean and standard deviation of the sample, which we will use later in the lesson:\nmeanRandom = mean(randomSampleSeeded); \nsdRandom = sd(randomSampleSeeded);     \nmeanRandom:  29.98875\nsdRandom:    10.485...\nSince the random values were seeded, randomSampleSeeded will be the same values every time you Source the script.  If you change the seed number (from 12345 to anything else), then you will get another set of the same “random” values every time you Source your script.\n \nFor instance, if we change the seed number from 12345 to 54321 then you will get these values every time for randomTempsSeeded:\n&gt; randomTempsSeeded\n [1] 38.0 23.0 29.0 25.0 30.0 34.0 23.0 19.0 13.0 44.0 34.0 32.0 29.0 31.0 19.0\n[16] 44.0 16.0 55.0 32.0 19.0 29.0 27.0 23.0 25.0 26.0 15.0 44.0 29.0 35.0 32.0\n[31] 32.0 43.0 19.0 25.0 29.0 55.0 29.0 48.0 17.0 32.0  2.1 34.0 27.0 21.0 26.0\n[46] 44.0 53.0 39.0 32.0 29.0 16.0 26.0 30.0 43.0 29.0 35.0 27.0 42.0 32.0 41.0\n[61] 32.0 47.0 15.0 56.0 26.0 25.0 38.0 17.0 25.0 27.0 32.0 27.0 14.0 29.0 32.0\n[76] 25.0 13.0 32.0 35.0 21.0",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-09: Binding and Sampling"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-09_Binding_Sampling.html#a-last-note-about-random-value-and-seed-numbers",
+    "href": "lessons-new/2-09_Binding_Sampling.html#a-last-note-about-random-value-and-seed-numbers",
+    "title": "2-09: Binding and Sampling",
+    "section": "5 A last note about random value and seed numbers",
+    "text": "5 A last note about random value and seed numbers\nR uses a Random Number Generator (RNG) to produce random numbers. The RNG is actually a deterministic algorithm that produces a sequence of values that appear random. The initial state of the RNG is determined by a seed value. After each random value is generated, the RNG updates its internal state, and that updated state is used to generate the next random value.\n \nThis code will always produce the same results for a and b:\nset.seed(321)\na = sample(1:10, 1);    # RNG in intial state with seed=321\nb = sample(30:40, 1);   # RNG in next state\na:   6\nb:   31\nThis code will also always produce the same results for a and b. But, the results are different from above because the RNG is in a different state when calculating a and b:\nset.seed(321)\nb = sample(30:40, 1);   # RNG in intial state with seed=321\na = sample(1:10, 1);    # RNG is in next state\na:   2\nb:   35\n\n5.1 setting the seed\nIf the user chooses a seed number with set.seed(), they can guarantee that the same sequence of “random” values will be generated every time the script is executed.\n \nIf the user does not choose a seed, R automatically initializes the RNG with a seed obtained from the opeerating system. Because this seed will usually be different each time the script is run, the resulting sequence of random values will also be different. Calling set.seed(NULL) tells R to reinitialize the RNG with a new, automatically chosen seed.\n\n\n5.2 Transforming the random value\nThe RNG itself produces values that are approximately uniformly distributed. R then transforms these values using an appropriate algorithm to produce random values from the distribution requested by the user (such as a normal, Poisson, or exponential distribution).",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-09: Binding and Sampling"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-09_Binding_Sampling.html#a-histogram-in-ggplot",
+    "href": "lessons-new/2-09_Binding_Sampling.html#a-histogram-in-ggplot",
+    "title": "2-09: Binding and Sampling",
+    "section": "6 A Histogram in GGplot",
+    "text": "6 A Histogram in GGplot\nWe can visualize the 80 sampled values using a histogram and add a vertical line to represent the mean value.\n \nThe mean value, mean(randomTempsSeeded), is very close to 30.\n&gt; mean(randomTempsSeeded)\n[1] 29.98875\nThe ggplot component that creates a histogram is geom_histogram and you only need to map the x value for a histogram (the y-axis in a histogram is the count).  The vertical line is created using the component: geom_vline where x (xintercept) is set to the mean value:\n  #### Plot a histogram with the mean value\n  plot1 = ggplot() +\n    geom_histogram(mapping=aes(x=randomTempsSeeded),\n                   fill=\"gray50\",\n                   color=\"blue\") +\n    geom_vline(xintercept = mean(randomTempsSeeded),\n               color=\"red\") +\n    theme_bw();\n  plot(plot1);\nNote: in a geom_histogram (and many other plot objects in GGPlot), fill is the background color whereas color is the outline color.\n\n\n\n\n\n\nFigure 3: Histogram of the 80 sampled values from the January temperature matrix\n\n\n\nYou will get this warning when plotting a histogram: `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.  This is GGPlot telling you (in an awkward way) that you are using the default 30 bins and that you can change this using the arguments bins or binwidth. You can change this if you want, but there is no need.",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-09: Binding and Sampling"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-09_Binding_Sampling.html#sampling-from-a-normal-distribution",
+    "href": "lessons-new/2-09_Binding_Sampling.html#sampling-from-a-normal-distribution",
+    "title": "2-09: Binding and Sampling",
+    "section": "7 Sampling from a normal distribution",
+    "text": "7 Sampling from a normal distribution\nsample() creates a random sample where each observation has the same chance of being picked (i.e., uniform probability). If we want to create a random set of observations that comes from a normal distribution with a specified mean and standard deviation, we use the function rnorm().\n \nrnorm() has 3 arguments:\n\nn: the number of observations to sample\nmean: the mean of the distribution we are sampling from\nsd: the standard deviation of the distribution we are sampling from\n\n \nThe following code samples 200 observations from a normal distribution with a mean of 20 and a standard deviation of 4:\nnormalDist1 = rnorm(n=200, mean=20, sd=2);\nnote: the sampled valued are weighted but they are still random\n \nLooking at the first 20 random values, we can see their values are centered around 20:\n&gt; normalDist1[1:20]\n [1] 19.99109 18.17063 21.53481 21.20402 20.78958 21.00338 23.53383\n [8] 19.72381 18.93655 18.74356 22.54336 18.14803 17.84504 19.18242\n[15] 16.70889 20.53722 23.31189 16.91820 19.35975 17.85754\n\n7.1 Plot a normal distribution\nWe can also create a normal distribution using the mean and standard deviation from the sampled temperature values (Figure 4):\nnormalDist2 = rnorm(n=200, \n                    mean=mean(randomTempsSeeded), \n                    sd=sd(randomTempsSeeded));\nIn the code above, we generated 200 temperature observations from a normal distribution based on the mean and standard deviation of lansJanTempsMat. The data generated are saved in the vector normalDist2.****\nThen we use a histogram to make a visual representation of normalTemp and, to the histogram, we add a vertical line at the mean value of the samples, mean(normalDist2):\nplot2 = ggplot() +\n  geom_histogram(mapping=aes(x=normalDist2),\n                 fill=\"gray50\",\n                 color=\"blue\") +\n  geom_vline(xintercept = mean(normalDist2),\n             color=\"red\") +\n  theme_bw();\nplot(plot2);\nThe result is a histogram that looks like a bell diagram – and would look more so if you increased the sample size.\n\n\n\n\n\n\nFigure 4: Histogram of the normal distribution created using rnorm()",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-09: Binding and Sampling"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-09_Binding_Sampling.html#application",
+    "href": "lessons-new/2-09_Binding_Sampling.html#application",
+    "title": "2-09: Binding and Sampling",
+    "section": "8 Application",
+    "text": "8 Application\nA) In comments, answer the following:\n\nWhat is the minimum number of unique observations you can get from this code?  Explain your answer.\n\nsample(1:10, size=8, replace=TRUE)\n\nIf you get repeat values after executing this code, what does it say about observations?:\n\nsample(observations, size=8, replace=FALSE)\n\nIf you move the code set.seed(54321) from line 40 (right before randomTempSeeded was set) to line 35 (right before randomTemps is set):\n\nDid you get the same values for randomTempSeeded?  (test it!)\nWhy or why not?\n\n\n \nB) Get 50 non-repeating samples from the even numbers between 100 and 999\n\nYou probably want to use the seq() function\n\n \nC) Get 50 samples that can repeat from the first 40 numbers that are a multiple of 7 starting with 7 (so, 7, 14, 21, 28…).\n \nD) Using the row binding function rbind(), bind two more rows to lansJanTempsMat (this is sort of like adding a 32nd and 33rd day to January)\n\nthe vectors you bind need to have the same number of values as columns in lansJanTempMat\n\n \nE) Using set.seed(seed=10) and rnorm():\n\ncreate a vector that has these exact 20 observations.  \nthe mean and sd used to in rnorm() to create these observations were both whole numbers.\n\n&gt; normExample\n [1] 12.056239 11.447242  7.886008 10.202497 12.883635 13.169383  8.375771\n [8] 10.908972  7.119982 11.230565 15.305339 14.267345 11.285299 14.962334\n[15] 14.224170 12.268042  9.135168 11.414549 14.776564 13.448936\n  If you have any questions regarding this application, feel free to email them to Charlie Belinsky at belinsky@msu.edu.\n\n8.1 Questions to answer\nAnswer the following in comments inside your application script:\n\nWhat was your level of comfort with the lesson/application?\nWhat areas of the lesson/application confused or still confuses you?\nWhat are some things you would like to know more about that is related to, but not covered in, this lesson?\n\n\n\n8.2 Upload changes to GitHub\n\nIn Source Control tab, under Changes click ( + ): Stage All Changes\n\nAll changed files will now be listed under Staged Changes\n\nAdd a message “App2-09 finished”\n\nOr, “App2-09 updated” if you are updating the application\n\nClick Commit\nThe Commit button will become a Sync button, click Sync\nCreate an Issue in GitHub\n\n\n\n\n\n\n\nFigure 5: Upload changes to GitHub – the red circle indicates how many files that changed (in this case: 1)\n\n\n\n\n\n8.3 Create an Issue in GitHub\nNote: if the Issue was already created and you are updating your application, then just reply to the Issue.\n\nGo to your project folder (repository) on GitHub\nClick on Issues (top of page)\nClick on New Issue (green button – not pictured)\nClick on Setting wheel and add the instructor as an assignee (belinskyc)\n\n\n\nPut in title that the application 2-09 is finished, add anything you want to the description\nClick Create\n\n\n\n\n\n\n\nFigure 6: Informing your instructor the application is finished",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-09: Binding and Sampling"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-09_Binding_Sampling.html#extension-sampling-from-a-data-frame",
+    "href": "lessons-new/2-09_Binding_Sampling.html#extension-sampling-from-a-data-frame",
+    "title": "2-09: Binding and Sampling",
+    "section": "9 Extension: Sampling from a data frame",
+    "text": "9 Extension: Sampling from a data frame\nWhen you sample from a matrix, sample() sees each value in the matrix as an observation.\n \nWhen you sample from a data frame, sample() sees each column as an observation.\nThis means that sample() will choose random columns from a data frame – not random values\n \nIf you try to sample 80 values from the data frame lansJanTempsDF2 without replacement:\n&gt; sample(lansJanTempsDF2, size=80, replace=«FALSE»)\nYou will get an error because there are only 7 columns in lansJanTempsDF2 and you are asking for 80 values without replacement.\n \nIf you try to sample 80 values from the data frame lansJanTempsDF2, with replacement:\n&gt; sample(lansJanTempsDF2, size=80, replace=«TRUE»)\nYou will get the original 7 columns randomly repeated 80 times.",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-09: Binding and Sampling"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-13_Lists.html",
+    "href": "lessons-new/2-13_Lists.html",
+    "title": "2-13: Lists",
+    "section": "",
+    "text": "expand lesson to include reading/writing Lists to RData file",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-13: Lists"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-13_Lists.html#purpose",
+    "href": "lessons-new/2-13_Lists.html#purpose",
+    "title": "2-13: Lists",
+    "section": "1 Purpose",
+    "text": "1 Purpose\n\nCreating you own List\nSubsetting a List\nReading a List return from plots and models",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-13: Lists"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-13_Lists.html#script-for-this-lesson",
+    "href": "lessons-new/2-13_Lists.html#script-for-this-lesson",
+    "title": "2-13: Lists",
+    "section": "2 Script for this lesson",
+    "text": "2 Script for this lesson\nThe script for the lesson is here\nThe data used for this lesson and the application is here",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-13: Lists"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-13_Lists.html#objects-in-r",
+    "href": "lessons-new/2-13_Lists.html#objects-in-r",
+    "title": "2-13: Lists",
+    "section": "3 Objects in R",
+    "text": "3 Objects in R\nAs mentioned in last lesson, there are 2 types of objects (i.e., variables) in R:\n\nAtomic vector (often just called vectors): objects that hold values of the same type (e.g., numeric, string, logical)\nLists: objects that hold other objects (including more Lists)\n \n\nThe relationship between Atomic Vectors and Lists is analogous to the relationship between folders and files on your computer.  Files, like atomic vector, hold information, or data.  Folders, like Lists, are containers for other folders and files.\n \nLast lesson we talked mostly about atomic vectors. This lesson we will talk mostly about Lists. As you will see in this lesson, Lists create a tree-like structure for your data.  At the end of the tree is the Atomic Vectors",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-13: Lists"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-13_Lists.html#lists",
+    "href": "lessons-new/2-13_Lists.html#lists",
+    "title": "2-13: Lists",
+    "section": "4 Lists",
+    "text": "4 Lists\nA List is an object that holds other (usually related) objects. When you create a plot or perform a statistical test, the results are often stored as Lists, as we will see later in the lesson.\n \nWe will create our own List with three objects in it.\n \nThe three objects will be:\n\na character vector called someAnimals\na 2x3 matrix consisting of a sequence of six numbers called someNumbers\nthe weatherData dataframe from previous lessons\n\nsomeAnimals = c(\"llama\", \"guanaco\", \"alpaca\", \"goat\");\nsomeNumbers = matrix(nrow=2, ncol=3, seq(from=30, to=4, length.out=6))\nweatherData = read.csv(file=\"data/Lansing2016NOAA.csv\");\n\n4.1 Lists in the Environment tab\nNotice that, in the Environment, weatherData has an arrow to expand it whereas someAnimals and someNumbers contains all of their information in one line.  It is this expand arrow that indicates weatherData is a List, whereas someAnimals and SomeNumbers are atomic vectors.  weatherData is a data frame, which is List where all the objects inside are vectors of the same length:\n\n\n\n\n\n\nFigure 1: The expand arrow in the Environment indicates that the object is a List (i.e., holds other objects)\n\n\n\n\n\n4.2 Creating the new List\nWe can create a List with the three objects above using the list() function:\nlistAtOnce = list(someAnimals, someNumbers, weatherData);\nThis will add listAtOnce to the Environment.  From there we double-click on it to see it in a Viewer tab.  The Viewer tab offers a more helpful and informative view of the List.\n \nA couple things to notice about listAtOnce in the Viewer tab:\n\nThe objects inside the List do not have names – instead they only have numbers.  Objects do not retain their names when put in to a List.\nThe third object [[3]], the dataframe, has an expand arrow.  The arrow indicates that this object is also a List – [[1]] and [[2]] are atomic vectors.\n\n \n\n\n\n\n\n\nFigure 2: The List inside a Viewer tab\n\n\n\nNote: When looking at the List in the Viewer, the objects with expand arrows are functionally similar to folders, those without arrows are functionally similar to files\n\n\n4.3 Including names for the objects\nIf we want the objects inside the List to have names, then we have to specify the names while creating the List.  You do that by setting a name equal to the object when calling list():\n  listAtOnce2 = list(animals = someAnimals,\n                     numbers = someNumbers, \n                     weather = weatherData);\nThis makes animals, numbers, and weather the names of the objects someAnimal, someNumbers, and weatherData inside the List.  You can choose any name, including the same as the original objects:\n\n\n\n\n\n\nFigure 3: Adding names to the objects inside the List\n\n\n\nNote: names inside Lists, like variables, should follow programming naming conventions – but this is not enforced in R.",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-13: Lists"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-13_Lists.html#creating-a-dynamic-list",
+    "href": "lessons-new/2-13_Lists.html#creating-a-dynamic-list",
+    "title": "2-13: Lists",
+    "section": "5 Creating a dynamic List",
+    "text": "5 Creating a dynamic List\nIn the previous example, all the objects put in the List were put in at once.  What often happens is that data is generated and gets dynamically added to a List, so the objects are put in the List separately.  We are going to create a List equivalent to listAtOnce except the three object will be put in one at a time.\n \nFirst we create a List with nothing in it (i.e., an empty list):\nlistDynamic = list();\nlistDynamic:  List of 0\n\n5.1 Appending to the List\nThen add the object someAnimals to the List. \nlistDynamic2  = append(listDynamic, someAnimals); \nSomewhat unintuitively, append() does not append the object someAnimals to the List.  Instead, append() appends each value within someAnimals to the List – making each value a separate object.  Now you have a List with 4 string vectors (each with 1 value) …. this is not what we want.\n\n\n\n\n\n\nFigure 4: Appending an object one value at a time…\n\n\n\n\n\n5.2 Appending whole objects\nWe want is to append someAnimals to the List as vector and, to do this, we need to (unintuitively) wrap someAnimals inside its own List:\nlistDynamic3 = append(listDynamic, list(someAnimals));\nAnd, if we want the object to have a name inside the List, then we need to provide the name – just like Figure 3 :\nlistDynamic4 = append(listDynamic, list(animal = someAnimals));\nlistDynamic3 and listDynamic4 both now have a vector with four character values, the latter has that vector named:\n\n\n\n\n\n\nFigure 5: Lists with appended objects\n\n\n\n\n\n5.3 Appending multiple objects\nWe will now append someNumber and weatherData using append():\nlistDynamic5 = append(listDynamic4, list(numbers=someNumbers));\nlistDynamic5 = append(listDynamic5, list(weather=weatherData));\nAnd see that listDynamic5 is a List with three objects in it: animals, numbers, and weather – just like listAtOnce2 (Figure 3).\n\n\n\n\n\n\nFigure 6: Lists after the three objects were appended and named",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-13: Lists"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-13_Lists.html#subsetting-within-a-list",
+    "href": "lessons-new/2-13_Lists.html#subsetting-within-a-list",
+    "title": "2-13: Lists",
+    "section": "6 Subsetting within a List",
+    "text": "6 Subsetting within a List\nThe RStudio Viewer tab for Lists has a nice feature where it will shows you how to subset an object inside a List when you click on it.  In listDynamic5 List, when you click on avgTemp in the weather dataframe – and at the bottom of the tab, RStudio shows the code to subset avgTemp:\nlistDynamic5[[\"weather\"]][[\"avgTemp\"]]\nIf you click the document icon with an arrow on the right-side, RStudio will put the above code in the Console where you click Enter to execute it:\n\n\n\n\n\n\nFigure 7: Opening an object within a List from the Viewer tab\n\n\n\n\n6.1 Subsetting with $ and [[ ]]\nEvery object in the List Viewer with a value under Name in Figure 7 can be accessed with both the $ and [[ ]] subset operators – RStudio always uses [[ ]].\n \nHere are two ways to subset the animal object inside listDynamic5 – the results are saved to anim1 and anim2:\nanim1 = listDynamic5[[\"animal\"]];\nanim2 = listDynamic5$animal;\nThe string (chr) vectors anim1 and anim2 have the same values as the original someAnimals vector:\nanim1:       chr [1:4] \"llama\" \"guanaco\" ...\nanim2:       chr [1:4] \"llama\" \"guanaco\" ...\nsomeAnimals: chr [1:4] \"llama\" \"guanaco\" ...\nHere are three ways to subset the dewPoint vector within weather, which is within listDynamic5: \ndewPoint1 = listDynamic5$weather$dewPoint;\ndewPoint2 = listDynamic5[[\"weather\"]][[\"dewPoint\"]];\ndewPoint3 = listDynamic5[[\"weather\"]]$dewPoint;\nAgain, all three saved values are identical to the original weatherData$dewPoint:\ndewPoint1:       20 22 20 13 10 16 ...\ndewPoint2:       20 22 20 13 10 16 ...\ndewPoint3:       20 22 20 13 10 16 ...\n🞃 weatherData:  366 obs. of 23 variables\n    $ dewPoint:    20 22 20 13 10 16...\n$ and [[ ]] are equivalent operators when you are working with named objects within a List.  $ is more convenient to use because it involves less typing and RStudio will give you suggestions.\n\n\n6.2 Numeric subsetting (only with [[ ]])\nObjects within a Lists can also be accessed by their numeric order using [[ ]]:\nanim3 = listDynamic5[[1]];\ndewPoint4 = listDynamic5[[3]][[7]];\nBut, you cannot use the $ operator to subset by number:\n# anim3 = listDynamic5$1;   # will cause an error\nSo, if the object inside a List does not have a name, as in listAtOnce (Figure 2), then you have to use [[ ]] to subset the unnamed object by numeric placement.\n\n\n6.3 The [ ] subset operator\nYou can use [ ] to subset the List, but instead of getting the object, you will get a List with the object in it:\nanim4 = listDynamic5[\"animal\"];\nIn the Environment, we can see that  anim1, anim2, and anim3 (subsetted with either [[ ]] or $) are all character vectors with 4 values.  But, anim4 (subsetted with [ ]) is a List with a character vector that has 4 values:\n\n\n\nanim1:   chr [1:4] \"llama\" \"guanaco\" ...\nanim2:   chr [1:4] \"llama\" \"guanaco\" ...\nanim3:   chr [1:4] \"llama\" \"guanaco\" ...\n\n🞃 anim4:   List of 1\n   $ animal: chr [1:4] \"llama\" \"guanaco\" ...\n\n\nFigure 8: The difference between using [[ ]] or $ vs [ ] for subsetting objects within a List\n\n\n\nThis is not very useful so [ ] is rarely used to subset a List.",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-13: Lists"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-13_Lists.html#returned-list-from-functions",
+    "href": "lessons-new/2-13_Lists.html#returned-list-from-functions",
+    "title": "2-13: Lists",
+    "section": "7 Returned List from functions",
+    "text": "7 Returned List from functions\nWe are going to move from creating our own Lists to looking at Lists that are returned when you call certain functions, specifically lm().\n \nWhen we create a linear regression model of humidity vs temperature using lm(), the results are saved to a list, in this case named model1:\n«model1» = lm(formula=weatherData$avgTemp~weatherData$relHum);\nAnd then look at a summary of the model using print(summary(model1)):\n\n\n\n&gt;   print(summary(model1));\nCall:\nlm(formula = weatherData$avgTemp ~ weatherData$relHum)\nResiduals:\n    Min      1Q  Median      3Q     Max \n-44.213 -14.424  -0.213  15.479  36.461 \nCoefficients:\n                   Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)        77.27006    6.07644  12.716  &lt; 2e-16 ***\nweatherData$relHum -0.38696    0.08722  -4.437 1.21e-05 ***\n---\nSignif. codes:  \n0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1\nResidual standard error: 18.59 on 364 degrees of freedom\nMultiple R-squared:  0.0513,    Adjusted R-squared:  0.04869 \nF-statistic: 19.68 on 1 and 364 DF,  p-value: 1.213e-05\n\n\nFigure 9: Summary of a model of a linear regression\n\n\n\n\n7.1 The returned List: linear model\nmodel1 is a List object and the information for the linear model is stored in the List:\n\n\n\n\n\n\nFigure 10: The List returned from a lm() call\n\n\n\n\n\n7.2 Subsetting the linear model List\nmodel1 has information that is inside the summary, for instance the estimate for the intercept is at:\n&gt; model1$coefficients[\"(Intercept)\"]\n(Intercept) \n   77.27006 \nNote: (Intercept) does not follow good programming naming practices!\n \nWe need to use [ ] to subset coefficients because coefficients is an atomic vector.  Note: Subsetting operators are a bit inconsistent in R.\n \nWe can also subset the first ten residuals from model1:\n&gt; model1$residuals[1:10]\n          1           2           3           4           5 \n-21.8609230 -17.7957344 -22.7305458 -30.0869984 -32.5696589 \n          6           7           8           9          10 \n-24.8914326 -19.4392818 -12.3130738  -0.1216773 -20.0869984 \nOr, subset every twentieth value in fitted.values:\n&gt; model1$fitted.values[seq(from=1, to=366, by=20)]\n       1       21       41       61       81      101      121      141 \n47.86092 45.92611 52.11751 44.76522 57.53498 46.31307 49.02181 57.92194 \n     161      181      201      221      241      261      281      301 \n54.43928 57.53498 54.82624 55.21321 47.47396 45.15219 50.56966 43.60434 \n     321      341      361 \n48.24789 46.31307 46.70004 \nThere are also a lot of other, more obscure, values in the List object which we will not go through.  The point is that there is a lot of information inside the List and that information can be extracted using subset operators.\n\n\n7.3 New variables types\nIf you look through model1, you will find three new variable types: language, symbol, and formula.  These variables types are used by R programmers to store the code that created the List – this is not something you will need to deal with at this point.\n\n\n\n\n\n\nFigure 11: Some of the less common variable types appear in this List",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-13: Lists"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-13_Lists.html#application",
+    "href": "lessons-new/2-13_Lists.html#application",
+    "title": "2-13: Lists",
+    "section": "8 Application",
+    "text": "8 Application\nA) Why is it better to subset objects by name instead of position numbers?\n\nSave the answer to a 1-character vector\nAdd the name “comment” to the value\n \n\nB) Using weatherData, create a linear model of dewpoint vs temperature\n\nSave the model to a List named linearModel1\n \n\nC) Using only values in linearModel1, find and save:\n\nthe slope and the intercept\nthe last 10 effects values\nthe first 10 values from the original temperature vector\nthe most extreme residual value (i.e., furthest from 0 – could be positive or negative)\n\n \nD) Create one List named app2_13_List that contains the objects from parts A, B, and C in this application\n \nE) Write the List to an RData file named app2-13List.RData in the data folder.\n  If you have any questions regarding this application, feel free to email them to Charlie Belinsky at belinsky@msu.edu.\n\n8.1 Questions to answer\nAnswer the following in comments inside your application script:\n\nWhat was your level of comfort with the lesson/application?\nWhat areas of the lesson/application confused or still confuses you?\nWhat are some things you would like to know more about that is related to, but not covered in, this lesson?\n\n\n\n8.2 Upload changes to GitHub\n\nIn Source Control tab, under Changes click ( + ): Stage All Changes\n\nAll changed files will now be listed under Staged Changes\n\nAdd a message “App2-13 finished”\n\nOr, “App2-13 updated” if you are updating the application\n\nClick Commit\nThe Commit button will become a Sync button, click Sync\nCreate an Issue in GitHub\n\n\n\n\n\n\n\nFigure 12: Upload changes to GitHub – the red circle indicates how many files that changed (in this case: 1)\n\n\n\n\n\n8.3 Create an Issue in GitHub\nNote: if the Issue was already created and you are updating your application, then just reply to the Issue.\n\nGo to your project folder (repository) on GitHub\nClick on Issues (top of page)\nClick on New Issue (green button – not pictured)\nClick on Setting wheel and add the instructor as an assignee (belinskyc)\n\n\n\nPut in title that the application 2-13 is finished, add anything you want to the description\nClick Create\n\n\n\n\n\n\n\nFigure 13: Informing your instructor the application is finished",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-13: Lists"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-11_Statistical_Tests.html",
+    "href": "lessons-new/2-11_Statistical_Tests.html",
+    "title": "2-11: Statistical Tests",
+    "section": "",
+    "text": "more on the difference between rdata and rds files",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-11: Statistical Tests"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-11_Statistical_Tests.html#purpose",
+    "href": "lessons-new/2-11_Statistical_Tests.html#purpose",
+    "title": "2-11: Statistical Tests",
+    "section": "1 Purpose",
+    "text": "1 Purpose\n\nOpening , and using data from, rdata files\nUse t-tests and ANOVAS\ndemonstrate subsetting methods\nplot and calculate a linear regresion",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-11: Statistical Tests"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-11_Statistical_Tests.html#script-and-data-for-this-lesson",
+    "href": "lessons-new/2-11_Statistical_Tests.html#script-and-data-for-this-lesson",
+    "title": "2-11: Statistical Tests",
+    "section": "2 Script and data for this lesson",
+    "text": "2 Script and data for this lesson\nThe script for the lesson is here\nThe List file created in the last lesson: tempDFs.rdata",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-11: Statistical Tests"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-11_Statistical_Tests.html#reading-in-the-rdata-file-list-from-last-lesson",
+    "href": "lessons-new/2-11_Statistical_Tests.html#reading-in-the-rdata-file-list-from-last-lesson",
+    "title": "2-11: Statistical Tests",
+    "section": "3 Reading in the rdata file (List from last lesson)",
+    "text": "3 Reading in the rdata file (List from last lesson)\nIn previous lesson, we opened up a CSV file and saved the data to a data frame using read.csv().  In this lesson, we are going to use some of the data frames created in the last lesson – data frames that were saved to a rdata file in the data folder of our project.\n \nFrom last lesson:\n# save(temperatureDFs, file = \"data/tempDFs.rdata\");\nExtension: rds and rdata files\n \nNow, let’s open up the file using load():\nload(file = \"data/tempDFs.rdata\");\nInside the rdata file is a List object, temperatureDFs,  with four data frames.  In the next couple lessons we will be dealing a lot more with navigating and creating List objects.  For now, a List object is a container for other object (like data frames). load() takes the objects from the rdata file and puts in the Environment:\n\n\n\n\n\n\nFigure 1: The List object from the rdata file – it is a carbon copy of the List object from last lesson\n\n\n\n\n3.1 Extracting the data frames\nThe data frames inside the List can be extracted just like a column can be extracted from a data frame.  Let’s extract the four data frame using the ( $ ) subset operator:\nlansJanTempsDF = temperatureDFs$origDF;\nstackedDF = temperatureDFs$stackedDF;\nstackedDF2 = temperatureDFs$stackDF_3_6;\nstackedDF3 = temperatureDFs$stackedDF_1_2_5_6;\nThis put the data frames directly in the Environment:\n⮞ lansJanTempsDF:   31 obs. of 6 variables\n⮞ stackedDF:        186 obs. of 2 variables\n⮞ stackedDF2:       62 obs. of 2 variables\n⮞ stackedDF3:       124 obs. of 2 variables",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-11: Statistical Tests"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-11_Statistical_Tests.html#t-tests",
+    "href": "lessons-new/2-11_Statistical_Tests.html#t-tests",
+    "title": "2-11: Statistical Tests",
+    "section": "4 t-tests",
+    "text": "4 t-tests\nIn the last lesson, we created line plot and box plot to display the temperature data.  Let’s be more formal about analyzing the data and do a two-sample t-test.  In statistics, a two-sample t-test is used to determine if there is evidence that the means from two groups of values are different.  In this case, we are asking if the columns (years) in the matrix, are statistically different. \n\n\n\n\n\n\nFigure 2: Boxplot of temperature data from last lesson\n\n\n\n\n4.1 first t-test on columns that do not look similar\nWe are going to compare the means from January 2012 (column 2) and January 2014 (column 4). – two columns that visually (Figure 2) do not look similar at all.  To perform a t-test between these two years, we call the function t.test() and use the arguments x and y.  x and y are set to the two columns we are comparing using the subset operator ( $ ).\ntTest1 = t.test(x=lansJanTempsDF$Jan2012, y=lansJanTempsDF$Jan2014);\nIn the Environment tab, tTest1 is labelled as a “List of 10”.  There is a lot of information in that List and we will dig more into this later.  For now, we can get a helpful summary using the function print() and passing it the results of the t-test:\nprint(tTest1);\n\n\n\n&gt;   print(tTest1);\n\n    Welch Two Sample t-test\n\ndata:  lansJanTempsDF$Jan2012 and lansJanTempsDF$Jan2014\nt = 4.7784, df = 59.561, p-value = «1.195e-05»\nalternative hypothesis: true difference in means is not equal to 0\n95 percent confidence interval:\n  «7.212138 17.600765»\nsample estimates:\nmean of x mean of y \n «35.77419  23.36774»\n\n\nFigure 3: Printing the summary of the t-test in the Console tab\n\n\n\nIn the summary of the t-test it is stated that\n\nThe mean of x (Jan 2012) is 35.77419 and the mean of y (Jan 2014) is 23.36774\nIf the “experiment” could be repeated, we would expect to see a difference of this size between the means 0.001195% of the time (from the p-value of 1.195e-05 or 0.00001195)\nWe are 95% sure that the means of x and y have a difference between 7.212138 and 17.600765\n\nSo, 0, or no difference is not within our confidence interval\n\nIn this case, we would reject the null hypothesis that the means of x and y are equal – in other words, January 2012 and 2014 temperatures are statistically different.\n\n\n\n4.2 second t-test on columns that do look similar\nWe will do a second t-test between years that do look as visually similar (Figure 2) – 2013 (column 3) and 2016 (column 6):\ntTest2 = t.test(x=lansJanTempsDF[,3], y=lansJanTempsDF[,6]);\nAnd, let’s summarize the results of the t-test in the Console tab:\n\n\n\n&gt;   print(tTest2);\n\n    Welch Two Sample t-test\n\ndata:  lansJanTempsDF[, 3] and lansJanTempsDF[, 6]\nt = 0.88083, df = 53.993, p-value = «0.3823»\nalternative hypothesis: true difference in means is not equal to 0\n95 percent confidence interval:\n «-3.087414  7.926124»\nsample estimates:\nmean of x mean of y \n «34.16129  31.74194» \n\n\nFigure 4: Printing the summary of the second t-test in the Console tab\n\n\n\nIn the summary of the t-test it is stated that\n\nThe mean of x (Jan 2013) is 34.16129 and the mean of y (Jan 2016) is 31.74194\nIf the “experiment” could be repeated, we would expect to see a difference of this size between the means 38.23% of the time (from the p-value of 0.3823)\nWe are 95% sure that the means of x and y have a difference between -3.087414 and 7.926124\n\nSo, 0, or no difference is within our confidence interval\n\nIn this case, we would not reject the null hypothesis that the means of x and y are equal – in other words, January 2013 and 2016 temperatures are statistically similar.\n\n\n\n4.3 Seven ways to subset columns in a Data Frame\nFor tTest1 an tTest2, we used 2 different methods for subsetting a column in a dataframe.  There are actually seven ways to subset a column in a data frame and they all produce the same result.\n \nThis is because there are four different operators that you can use to subset a data frame and for three of the operators you can use numbers or names:\n\n$: dollar sign operator (note: this is the only operator where you cannot use a number)\n[ ,]: row/column operator (note: this is the only subset operator that works for a matrix)\n[ ] : single bracket operator\n[[ ]]: double bracket operator\n\n \n1) The row-column operator [ , ] using column numbers (also works on a matrix):\ntTest2a = t.test(x=lansJanTempsDF[,2], y=lansJanTempsDF[,4]);\n2) The row-column operator [ , ] using column names (also works on a matrix):\ntTest2b = t.test(x=lansJanTempsDF[,\"Jan2012\"], y=lansJanTempsDF[,\"Jan2014\"]);\n3) The single bracket operator [  ] using column numbers:\ntTest2c = t.test(x=lansJanTempsDF[2], y=lansJanTempsDF[4]);\n4) The single bracket operator [  ] using column names:\ntTest2d = t.test(x=lansJanTempsDF[\"Jan2012\"], y=lansJanTempsDF[\"Jan2014\"]);\n5) The double bracket operator [[  ]] using column numbers:\ntTest2e = t.test(x=lansJanTempsDF[[2]], y=lansJanTempsDF[[4]]);\n6) The double bracket operator [[  ]] using column names:\ntTest2f = t.test(x=lansJanTempsDF[[\"Jan2012\"]], y=lansJanTempsDF[[\"Jan2014\"]]);\n7) The dollar sign operator $ using column names (you cannot use $ with column numbers):\ntTest2g = t.test(x=lansJanTempsDF$Jan2012, y=lansJanTempsDF$Jan2014;\n\n\n4.4 Summary of subset operators\nThe operators in general (and in order of this author preference):\n\nThe $ operator is the most convenient because it requires the least code and RStudio will give you suggestions\nThe [ , ] operator is the most robust because it is explicit about the two-dimensionality of the data frame, allowing you to subset the rows along with the columns. This is the best choice if you are subsetting rows and columns at the same time\nThe [[  ]] operator is best used for more complex object like Lists – I generally avoid these when using data frames\nThe [  ] operator does a different kind of subsetting than the other three operators that will be explored in the next lesson. This author would argue that it is the least useful operator",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-11: Statistical Tests"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-11_Statistical_Tests.html#anovas",
+    "href": "lessons-new/2-11_Statistical_Tests.html#anovas",
+    "title": "2-11: Statistical Tests",
+    "section": "5 ANOVAs",
+    "text": "5 ANOVAs\nANOVAs are similar to t-tests except they generally are used to test the means from three or more groups of data, whereas a t-test can only test the means from two groups.  For comparison, we are going to start by using an ANOVA on 2 groups (Jan2013 and Jan2016).\n \nANOVAs are functionally similar to a t-test but R requires that the data be structured differently before performing an ANOVA.  In R, the ANOVA function aov() cannot compare values from different columns like t.test().  Instead aov() compares values within a column grouped by a second column.\n \nIn other words, to perform an ANOVA using aov(), you need to use a stacked dataframe and we will use the stacked data frames created in the last lesson and loaded in from the rdata file.\n \nNote: the reason why aov() requires a stacked data frame is largely a legacy issue\n\n5.1 Performing an ANOVA\nWe will perform an ANOVA on stackedDF2, which contains data from only Jan2013 and Jan2016, to check whether the January temperatures from the two years are likely to be from the same distribution.\n \nTo perform an Anova using aov() you need two arguments:\n\ndata: the (stacked) data frame that contains the data\n\nin this case: the stacked data frame stackedDF2\n\nformula: the columns used for the ANOVA in the form: all_values~grouping\n\nall_values comes from the values column and the grouping comes from the ind column (note: this is similar to an x, y mapping GGPlot except that it is in the form y~x)\n\n\nJan13_16_Anova = aov(data=stackedDF2, formula=values~ind);\nTo get the results of the ANOVA you need to print the summary of the Anova:\nprint(summary(Jan13_16_Anova);\nDoing this in the Console tab, we get:\n\n\n\n&gt;   print(summary(Jan13_16_Anova));\n            Df Sum Sq Mean Sq F value Pr(&gt;F)\nind          1     91   90.73   0.776  «0.382»\nResiduals   60   7016  116.94 \n\n\nFigure 5: ANOVA of the temperatures from 2012 and 2014\n\n\n\nThe results of the ANOVA show the probability that the temperatures come from the same distribution is 0.382 (38.2%).  This, as expected, is the very close to the same probability (0.3823) that we got from doing the t-test between 2013 and 2016 and means we do not reject the NULL hypothesis that the groups come from the same distribution.\n\n\n5.2 A Second ANOVA &lt;make into application&gt;\nWe are going to perform a second ANOVA on the 4 years (2011, 2012, 2015,and 2016) in stackedDF3 created in last lesson.\n \nThe Anova call looks almost the same:\nJan4MonthAnova = aov(data=stackedDF3, formula=values~ind);\nSummarizing the ANOVA in the Console tab:\n&gt;   print(summary(Jan4MonthAnova));\n             Df Sum Sq Mean Sq F value   Pr(&gt;F)    \nind           3   1923   641.0   8.617 «3.17e-05» ***\nResiduals   120   8926    74.4                     \n---\nSignif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1\nThe results of the ANOVA show that the probability of the four sets of January temperatures coming from the same distribution is 3.17e-05, or 0.00317%. In this case, we reject the NULL hypothesis that the groups come from the same distribution.\n\n\n5.3 Residuals: checking for normailty\nLastly, we can perform a histogram on the residuals of the ANOVA to show the we have not violated normality assumptions.\n \nThe residuals() function gets the 124 residuals from Jan4MonthAnova:\nresiduals = residuals(Jan4MonthAnova);\nresiduals: Named num [1:124] 28.387 -0.613 7.387 6.387 ...\nWe can then plot the residuals vector in a histogram by mapping the vector to x (the y-axis is count as does not get mapped):\nplot1 = ggplot() +\n  geom_histogram(mapping=aes(x=residuals)) +\n  theme_bw();\nplot(plot1);\n… and this histogram looks fairly normal so we probably did not violated the normality assumption.\n\n\n\n\n\n\nFigure 6: Histogram of the residuals from the second ANOVA",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-11: Statistical Tests"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-11_Statistical_Tests.html#linear-regression",
+    "href": "lessons-new/2-11_Statistical_Tests.html#linear-regression",
+    "title": "2-11: Statistical Tests",
+    "section": "6 Linear Regression",
+    "text": "6 Linear Regression\nFor linear regressions, we will be using the data from the bigger data set found in Lansing2016Noaa-3.csv:\nweatherData = read.csv(file=\"data/Lansing2016Noaa-3.csv\");\nIn the GGPlot introductory lesson (2-01), we did a scatterplot of humidity vs. temperature using a geom_point component and added a linear regression using geom_smooth.\nplot1 = ggplot(data=weatherData) + \n  «geom_point»( mapping=aes( x=avgTemp, y=relHum ) ) + \n  «geom_smooth»( mapping=aes( x=avgTemp, y=relHum ),\n               method=\"lm\" ) +\n  labs( title=\"Humidity vs Temperature\",\n        subtitle=\"Lansing, MI -- 2016\",\n        x = \"Average Temperatures (Fahrenheit)\",\n        y = \"Relative Humidity\") + \n  theme_bw();\nplot(plot1);\nThe plot looks like this:\n\n\n\n\n\n\nFigure 7: Scatterplot of humidity vs. temperature with a linear regression\n\n\n\n\n6.1 Calculate a linear regression\nWe can formalize the calculation of the humidity vs. temperature linear regression using lm().\n \nThe argument we need to set for lm() is formula and formula is in this form: y ~ x\nSo, y is the humidity column and x is the temperature column:\ntempHumLM = lm( formula = weatherData$relHum ~ weatherData$avgTemp );\nWe can print() the results to the Console and see the intercept is about 75 and the slope is about -0.13:\n&gt;   print(tempHumLM);\n\nCall:\nlm(formula = weatherData$relHum ~ weatherData$avgTemp)\nCoefficients:\n        (Intercept)  weatherData$avgTemp  \n            «75.4863»              «-0.1326» \nThe results closely match the linear regression in the plot in Figure 7 .\n \nWe can get a lot more information using print(summary()):\n&gt;   print(summary(tempHumLM));\n\nCall:\nlm(formula = weatherData$relHum ~ weatherData$avgTemp)\n\nResiduals:\n     Min       1Q   Median       3Q      Max \n-30.0624  -7.5984   0.3051   8.2171  25.8165 \n\nCoefficients:\n                    Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)         «75.48632»    1.61703  46.682  &lt; 2e-16 ***\nweatherData$avgTemp «-0.13257»    0.02988  -4.437 1.21e-05 ***\n---\nSignif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1\n\nResidual standard error: 10.88 on 364 degrees of freedom\nMultiple R-squared:  «0.0513»,    Adjusted R-squared:  0.04869 \nF-statistic: 19.68 on 1 and 364 DF,  p-value: «1.213e-05»\nThe slope and intercept are in this summary.  The R-squared value tells us that temperature explains about 5.13% (0.0513) of the variance in humidity and the p-value of 1.21e-05 (0.0000121) says we reject the NULL hypothesis that temperature is not a predictor of humidity.  In other words, changes in temperature can predict some change in humidity.",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-11: Statistical Tests"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-11_Statistical_Tests.html#application",
+    "href": "lessons-new/2-11_Statistical_Tests.html#application",
+    "title": "2-11: Statistical Tests",
+    "section": "7 Application",
+    "text": "7 Application\n1) Subset the first 10 values from column 6 of lansJanTempsDF four times using four different methods (Section 4.3).\n \n2) Based on the boxplot of all 6 years ( Figure 2 ), which three years would most likely come form the same distribution (i.e., the ANOVA would not reject the NULL hypothesis).\n\ncreate a stacked frame with just these three years\nperform an ANOVA on the three years\nprint the result to the Console\n\n \n3) Using t-tests, find which year’s January temperatures is most statistically similar to the temperatures from January 2014 (other than itself!).\n \n4) Perform four linear models:\n\nstnPressure vs. windSpeed,\nstnPressure vs. precipNum\nstnPressure vs. avgTemp\nstnPressure vs. relHum\n \n\n5) Using only the linear model from #4 that shows the most correlation:\n\nprint the summary to the Console and explain the summary in comments\ncreate a scatterplot of the two variables\nplace a regression line on the scatterplot\ncreate a histogram of the residuals\n\n  If you have any questions regarding this application, feel free to email them to Charlie Belinsky at belinsky@msu.edu.\n\n7.1 Questions to answer\nAnswer the following in comments inside your application script:\n\nWhat was your level of comfort with the lesson/application?\nWhat areas of the lesson/application confused or still confuses you?\nWhat are some things you would like to know more about that is related to, but not covered in, this lesson?\n\n\n\n7.2 Upload changes to GitHub\n\nIn Source Control tab, under Changes click ( + ): Stage All Changes\n\nAll changed files will now be listed under Staged Changes\n\nAdd a message “App2-11 finished”\n\nOr, “App2-11 updated” if you are updating the application\n\nClick Commit\nThe Commit button will become a Sync button, click Sync\nCreate an Issue in GitHub\n\n\n\n\n\n\n\nFigure 8: Upload changes to GitHub – the red circle indicates how many files that changed (in this case: 1)\n\n\n\n\n\n7.3 Create an Issue in GitHub\nNote: if the Issue was already created and you are updating your application, then just reply to the Issue.\n\nGo to your project folder (repository) on GitHub\nClick on Issues (top of page)\nClick on New Issue (green button – not pictured)\nClick on Setting wheel and add the instructor as an assignee (belinskyc)\n\n\n\nPut in title that the application 2-11 is finished, add anything you want to the description\nClick Create\n\n\n\n\n\n\n\nFigure 9: Informing your instructor the application is finished",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-11: Statistical Tests"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-11_Statistical_Tests.html#extension-rds-and-rdata-files",
+    "href": "lessons-new/2-11_Statistical_Tests.html#extension-rds-and-rdata-files",
+    "title": "2-11: Statistical Tests",
+    "section": "8 Extension: rds and rdata files",
+    "text": "8 Extension: rds and rdata files\nIn the last lesson, we saved the List object temperatureDFs to two different types of files: rdata and rds.\n \nThe two types of files serve a similar purpose: saving objects from your Environment to your Project Folder to be used later. The big difference between the two is how they are later loaded into your Environment.\n \nWhen you load an rdata file, the objects in the rdata file get loaded directly into you Environment exactly as they previously were (i.e., same name as values). In this case, the List temperatureDFs is directly loaded into the Environment:\nload(file = \"data/tempDFs.rdata\");\nWhen you load an rds file, the object in the rds file need to be saved to a variable to get loaded into you Environment. This means the values are the same but the name could be different. In this case, the information from temperatureDFs is save to a variable named tempDFs2:\ntempDFs2 = readRDS(file=\"data/tempDFs.rds\");\n\n8.1 Pro and cons\nRData files are the quick-and-dirty way to save R objects and reload them later. A single .RData file can store multiple objects, and you can even save an entire Environment at once. This is convenient for short-term work, for example restoring your Environment the next morning. However, loading an .RData file restores objects directly into the Environment, which can have unintended consequences: existing objects with the same names will be overwritten. This makes .RData files risky in larger scripts and collaborative settings.\n \nRDS files are the safer and more collaborator-friendly way to save objects. An .rds file stores exactly one object. The file contains the object’s data, but not its name. When loading the file, the user explicitly assigns the object to a variable name of their choosing. This explicit assignment avoids accidental overwrites, and leads to workflows that are easier to reproduce and maintain.",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-11: Statistical Tests"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-10_Stacking_Mapping.html#purpose",
+    "href": "lessons-new/2-10_Stacking_Mapping.html#purpose",
+    "title": "2-10: Stacking and Mapping",
+    "section": "1 Purpose",
+    "text": "1 Purpose\n\nstacking dataframe\ncreating line plots and box plots\nmapping values other than x and y\ncreating a List object",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-10: Stacking and Mapping"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-10_Stacking_Mapping.html#script-and-data-for-this-lesson",
+    "href": "lessons-new/2-10_Stacking_Mapping.html#script-and-data-for-this-lesson",
+    "title": "2-10: Stacking and Mapping",
+    "section": "2 Script and data for this lesson",
+    "text": "2 Script and data for this lesson\nThe script for the lesson is here\nData for the lesson: LansingJanTempsFixed.csv",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-10: Stacking and Mapping"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-10_Stacking_Mapping.html#ggplot-mapping",
+    "href": "lessons-new/2-10_Stacking_Mapping.html#ggplot-mapping",
+    "title": "2-10: Stacking and Mapping",
+    "section": "3 GGPlot mapping",
+    "text": "3 GGPlot mapping\nThis lesson is designed to give an overview of the many issues that occur when you are creating plots in GGPlot and some of the fixes. There is the huge topic of mapping in GGPlot that we use in this lesson, but do not have time to fully explain (we go into much more detail in our dedicated GGPlot class…).  Mapping is how you relate data in a data frame to a visual aspect of a plot.  We have already mapped data in a data frame to the x and y axis of a plot – but, you can map many other visual aspects to data like size, shape, and, in this lesson, color.",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-10: Stacking and Mapping"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-10_Stacking_Mapping.html#reading-in-the-data-frame",
+    "href": "lessons-new/2-10_Stacking_Mapping.html#reading-in-the-data-frame",
+    "title": "2-10: Stacking and Mapping",
+    "section": "4 Reading in the data frame",
+    "text": "4 Reading in the data frame\nWe will be using the data from lansingJanTempsFixed.csv that has 6 years of January temperatures in Fahrenheit.  First we need to read in the file, lansJanTempsFixed.csv, and save the temperature data to a data frame:\nlansJanTempsDF = read.csv(file = \"data/lansingJanTempsFixed.csv\");",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-10: Stacking and Mapping"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-10_Stacking_Mapping.html#line-plots",
+    "href": "lessons-new/2-10_Stacking_Mapping.html#line-plots",
+    "title": "2-10: Stacking and Mapping",
+    "section": "5 Line Plots",
+    "text": "5 Line Plots\nWe are going to go over the multiple ways in GGPlot to make a line plot for each of the 6 temperature column in one canvas area.  The ggplot component that creates a line plot is geom_line().\n \nThe simplest way to do it is to create six geom_line() components – one for each column in the data frame:\nplot1 = ggplot( data=(lansJanTempsDF), \n                «mapping = aes(x=1:31)») + \n  geom_line( mapping=aes(y=Jan2011),\n             color = \"red\") +\n  geom_line( mapping=aes(y=Jan2012),\n             color = \"green\") +\n  geom_line( mapping=aes(y=Jan2013),\n             color = \"orange\") +\n  geom_line( mapping=aes(y=Jan2014),\n             color = \"blue\") +\n  geom_line( mapping=aes(y=Jan2015),\n             color = \"purple\") +\n  geom_line( mapping=aes(y=Jan2016),\n             color = \"black\") +\n  labs( title=\"January Temperature\",\n        subtitle=\"Lansing, MI -- 2011-2016\",\n        x = \"January Days\",\n        y = \"temperature (F)\") +\n  theme_bw();\nplot(plot1);\nSince the x-axis gets mapped to the same date values (1 to 31) for each line plot, we can place the x mapping in ggplot() call.  This makes the x mapping of 1:31 universal for all components in the canvas area.\n \nEach geom_line component is also customized with a color subcomponent.\n\n\n\n\n\n\nFigure 1: A line plot for the six temperature columns",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-10: Stacking and Mapping"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-10_Stacking_Mapping.html#adding-a-legend",
+    "href": "lessons-new/2-10_Stacking_Mapping.html#adding-a-legend",
+    "title": "2-10: Stacking and Mapping",
+    "section": "6 Adding a legend",
+    "text": "6 Adding a legend\nThe problem with Figure 1 is that the individual line plots are not labelled. We would like to add a legend to the plot that maps the color to the year and adding a legend in GGPlot is awkward.  Generally speaking GGPlot will put a legend on the plot when something is mapped other than x or y.  We are going to map color.  To do this, we move color from being a subcomponent of the geom_line to being a mapped element of the geom_line.\nplot2 = ggplot( data=(lansJanTempsDF), \n                mapping = aes(x=1:31)) +  \n  geom_line( mapping=aes(y=Jan2011, color = \"Jan2011\") ) +\n  geom_line( mapping=aes(y=Jan2012, color = \"Jan2012\") ) +\n  geom_line( mapping=aes(y=Jan2013, color = \"Jan2013\") ) +\n  geom_line( mapping=aes(y=Jan2014, color = \"Jan2014\") ) +\n  geom_line( mapping=aes(y=Jan2015, color = \"Jan2015\") ) +\n  geom_line( mapping=aes(y=Jan2016, color = \"Jan2016\") ) +\n  labs( title=\"January Temperature\",\n        subtitle=\"Lansing, MI -- 2011-2016\",\n        x = \"January Days\",\n        y = \"temperature (F)\") +\n  theme_bw();\nplot(plot2);\nIn this plot, we moved color to the mapping of the geom_line and set color to the text we want displayed in the legend.  This solution adds a legend with the text but the line colors are chosen by GGPlot.  Note: There is a way to customize these color but that is beyond the scope of this class.\n\n\n\n\n\n\nFigure 2: Line plots with a legend – note that the legend text matches the color mappings",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-10: Stacking and Mapping"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-10_Stacking_Mapping.html#stacking-the-data-frame",
+    "href": "lessons-new/2-10_Stacking_Mapping.html#stacking-the-data-frame",
+    "title": "2-10: Stacking and Mapping",
+    "section": "7 Stacking the data frame",
+    "text": "7 Stacking the data frame\nThe most common (and pretty ugly) technique used to plot multiple line plots on one canvas is to create a new data frame that has all the data you want to plot in two columns – this process is often called melting or stacking the data frame.\n \nWe can use stack() to create a stacked data frame:\nstackedDF = stack(lansJanTempsDF);\nThe stacked data frame has the same data as the original data frame but everything is put in two columns:\n\n\n\n\n\n\nFigure 3: A stacked dataframe of the six years of temperature data put into two columns\n\n\n\nThe stacked data frame has 186 rows (31 days * 6 years) and two columns:\n\ncolumn 1: combined the 6 temperature columns into one column called values\ncolumn 2: contains the names of the six temperature columns (2011 to 2016) called ind\n \n\nThe 6 years of data are now stacked on top of each-other with the first 31 rows containing values from 2011, the next 31 rows containing values from 2012, etc…  The ind columns give the year the temperatures came from.\n\n7.1 A note from the author about stacked data frame\nThis author considers stacking data frames to be a bad programming practice but this practice is widely reinforced by R.  The reason stacking a data frame is bad is you are restructuring the data frame to meet the needs of a function.  But, the data frame is an object that should remain fixed.  The better practice is to code functions that match the structure of the data frame.  This is not a difficult task, but, unfortunately, this is not how R operates and there is no good way to get around stacking data frames.\n\n\n7.2 Plotting the stacked data frame\nWith the stacked data frame, we only need one geom_line component to plot all 6 lines.  This works because of the color mapping.  The color mapping tells GGPlot to create a distinct line for each different value in the ind column – and set each to a different color.  The ind column has 6 different value – the 6 column names from the original data frame (Jan2011, Jan2012,…).\n \nThe x-axis represents the days from 1 to 31.  We have 186 rows but every 31 rows represents a new line plot (31 * 6 = 186).  So, we want to repeat the values 1 to 31 six times.\n \nThe y mapping is the temperature values from the original data frame put into one long values column.\nplot3 = ggplot( data=(stackedDF)) +  \n  geom_line( mapping=«aes(x=rep(1:31, times=6)», y=values, color=ind) ) +\n  labs( title=\"January Temperature\",\n        subtitle=\"Lansing, MI -- 2011-2016\",\n        x = \"January Days\",\n        y = \"temperature (F)\") +\n  theme_bw();\nplot(plot3);\n\n\n\n\n\n\nFigure 4: Plotting using a stacked dataframe",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-10: Stacking and Mapping"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-10_Stacking_Mapping.html#using-for-loops-to-plot-6-columns",
+    "href": "lessons-new/2-10_Stacking_Mapping.html#using-for-loops-to-plot-6-columns",
+    "title": "2-10: Stacking and Mapping",
+    "section": "8 Using for loops to plot 6 columns",
+    "text": "8 Using for loops to plot 6 columns\nI consider using for loops to be the most robust solution because it gives you more control over what to plot and it maintains the integrity of the original data frame.  It is also probably the most difficult method:\n  plot4 = ggplot( data=(lansJanTempsDF));  # create a canvas\n  for(i in 1:ncol(lansJanTempsDF))         # add plots to canvas one at a time\n  {\n    # replace i by with !!(i) -- avoids Lazy Evaluation\n    «plot4 = plot4» + geom_line( mapping=aes(x=1:nrow(lansJanTempsDF), \n                                             y=lansJanTempsDF[,«!!(i)»], \n                                             color=colnames(lansJanTempsDF)[«!!(i)»]) )\n  }\n  # add the labels and theme to the canvas\n  «plot4 = plot4» + labs( title=\"January Temperature\",\n          subtitle=\"Lansing, MI -- 2011-2016\",\n          x = \"January Days\",\n          y = \"temperature (F)\") +\n  theme_bw();\n  plot(plot4);\nIn this example, the for loop adds the six plot components to the plot4 canvas one at a time.  When mapping in a for loop, you need to replace the index variable, in this case i, with !!(i).  The reason is here: Extension: Lazy Evaluation\n \nAfter the plot components are added, we then add the labels and theme to plot4.\n\n\n\n\n\n\nFigure 5: Using for loops to plot 6 column – this authors believes this is the most robust solution",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-10: Stacking and Mapping"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-10_Stacking_Mapping.html#unstacking-the-data-frame",
+    "href": "lessons-new/2-10_Stacking_Mapping.html#unstacking-the-data-frame",
+    "title": "2-10: Stacking and Mapping",
+    "section": "9 Unstacking the data frame",
+    "text": "9 Unstacking the data frame\nYou can take a stacked data frame and return it to original state using unstack():\norigDF = unstack(stackedDF);\nAnd origDF looks just like the original lansJanTempDF\n\n\n\n\n\n\nFigure 6: Unstacking a dataframe return you to the original dataframe\n\n\n\n \nNote: The stacked version of a dataframe is often called long format and the original dataframe called wide format.",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-10: Stacking and Mapping"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-10_Stacking_Mapping.html#boxplots",
+    "href": "lessons-new/2-10_Stacking_Mapping.html#boxplots",
+    "title": "2-10: Stacking and Mapping",
+    "section": "10 Boxplots",
+    "text": "10 Boxplots\nA good way to visually compare the six years of January temperatures is to use a boxplot.  In GGPlot, the component to use is geom_boxplot.   For our first attempt, we will just create two boxes representing the columns Jan2011 and Jan2012.\n \nLike all plotting components in GGPlot, geom_boxplot needs to be mapped.  The y-axis represents the temperatures so we can map y to the columns, Jan2011 in one box and Jan2012 in the other.\n \nWe also need to map x to something otherwise the two boxplots will appear right on top of each other (try it!). We can start by mapping the boxplot to the years they represent:\nplot5 = ggplot(data=lansJanTempsDF) +\n  geom_boxplot(mapping=aes(x=2011, y=Jan2011)) +\n  geom_boxplot(mapping=aes(x=2012, y=Jan2012)) +\n  theme_bw();\nplot(plot5);  \nThis code successfully creates two boxplots but the x-axis is a bit weird:\n\n\n\n\n\n\nFigure 7: The boxes for January temperatures in 2011 and 2012\n\n\n\n \nBecause we used numbers to map the x-axis, GGPlot assumed a continuous and numeric x-axis.  But, the x-axis in a boxplot is really a discrete axis – we are not plotting value in between 2011 and 2012.  If we want a discrete axis, then we need to put the years in quotes (i.e., make the year a string value):\n  plot6 = ggplot(data=lansJanTempsDF) +\n    geom_boxplot(mapping=aes(«x=\"2011\"», y=Jan2011)) +\n    geom_boxplot(mapping=aes(«x=\"2012\"», y=Jan2012)) +\n    theme_bw();\n  plot(plot6);\nNow, we have a discrete x-axis:\n\n\n\n\n\n\nFigure 8: The same boxplots with a discrete x-axis",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-10: Stacking and Mapping"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-10_Stacking_Mapping.html#box-plots-using-the-stacked-dataframe",
+    "href": "lessons-new/2-10_Stacking_Mapping.html#box-plots-using-the-stacked-dataframe",
+    "title": "2-10: Stacking and Mapping",
+    "section": "11 Box Plots using the stacked dataframe",
+    "text": "11 Box Plots using the stacked dataframe\nJust like with lines plots, there is no great way to create boxes from multiple columns in a dataframe.  We could plot all six columns by creating six geom_boxplot components, one for each year.  But, in programming, you generally do not want to repeat code – this would get messy if there were 20 columns.\n \nThe most common technique used for plotting multiple columns is to use a stacked dataframe.\n \nUsing the stacked dataframe, we can plot all 6 years using one geom_boxplot component.  The works by mapping x to the ind column (which has the years) and mapping y to the values column (which has all the temperature values).\nplot7 = ggplot(data=stackedDF) +\n  geom_boxplot(mapping=aes(x=ind, y=values)) +\n  theme_bw();\nplot(plot7);\nThe x-axis of the boxplot is labelled with the names of the columns and the y-axis has the box for each year:\n\n\n\n\n\n\nFigure 9: Boxes for all six columns using the stacked data frame",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-10: Stacking and Mapping"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-10_Stacking_Mapping.html#stacking-a-subset-of-the-columns",
+    "href": "lessons-new/2-10_Stacking_Mapping.html#stacking-a-subset-of-the-columns",
+    "title": "2-10: Stacking and Mapping",
+    "section": "12 Stacking a subset of the columns",
+    "text": "12 Stacking a subset of the columns\nWe might not want all of the data from the original dataframe. We can create a stacked dataframe that only has a subset of the columns from the original data frame.\n \nThis stacked dataframe only has the values from 2 columns, the3rd and 6th (2013 and 2016– 62 values in all):\nstackedDF2 = stack(lansJanTempsDF[,c(3,6)]); # 2013 and 2016\nAnd this stacked dataframe has the values from 4 columns: the1st, 2nd, 5th, and 6th (2011, 2012, 2015, & 2016 – 124 values in all):\nstackedDF3 = stack(lansJanTempsDF[,c(1,2,5,6)]); # 2011, 2012, 2015, & 2016\nIn the Environment tab we see the two new stacked dataframes, both with 2 columns (values and ind) and 62 values (for two Januaries) and 124 values (for four Januaries)\n🞃 stackedDF2:   62 obs. of 2 variables\n    $ values: num 25 26 29 33 35 35 ...\n    $ ind    :  Factor w/ 2 levels \"Jan2013\",...\n🞃 stackedDF3:   124 obs. of 4 variables\n    $ values: num 54 25 33 32 23 ...\n    $ ind    :  Factor w/ 4 levels \"Jan2011\",...\n\n12.1 Plotting the subset stacked dataframe\nWe can plot the four boxes from dataframe stackedDF3 just like we plotting all six boxes using stackedDF:\nplot8 = ggplot(data=«stackedDF3») +\n  geom_boxplot(mapping=aes(x=ind, y=values)) +\n  theme_bw();\nplot(plot8);\n\n\n\nPlotting boxes from a stacked dataframe that has been subsetted\n\n\n\n\n12.2 Plotting a subset using for loops\nAgain, this author believes the most robust way to plot the subset data is to use for loop.  Once again, this allows you to work with the original data frame – there is no need to create a stacked data frame.\nplot9 = ggplot( data=(lansJanTempsDF)); \nfor(i in «c(1,2,5,6)»)   # cycle through the four columns\n{\n  ## map the column names to x and the column values to y\n  plot9 = plot9 + geom_boxplot(mapping=aes(x=colnames(lansJanTempsDF)[!!(i)], \n                                            y=lansJanTempsDF[,!!(i)] ))\n}\nplot9 = plot9 + theme_bw();\nplot(plot9);\nIn this code,\n\nthe for loops only cycles through the four columns we want to plot c(1,2,5,6). \nx is mapped to the subsetted column name\ny is mapped to the subsetted column values\n \n\n\n\n\n\n\n\nFigure 10: Using for loops to create a boxplot of four of the columns from the temperature data frame",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-10: Stacking and Mapping"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-10_Stacking_Mapping.html#saving-data-frames-to-one-object",
+    "href": "lessons-new/2-10_Stacking_Mapping.html#saving-data-frames-to-one-object",
+    "title": "2-10: Stacking and Mapping",
+    "section": "13 Saving data frames to one object",
+    "text": "13 Saving data frames to one object\nIn this lesson, we created four data frames:\n\nlansJanTempsDF: the original data frame\nstackedDF: a stacked version of the full data frame\nstackedDF2: a stacked version of columns 3 and 6 only\nstackedDF3: a stacked version of columns 1, 3, 5, and 6\n \n\nWe are going to use these data frames in the next lesson.  In the next lesson, we could just reopen the lansingJanTempsFixed.csv file, save the data to a data frame and then create the stacked dataframes.  But, since we have already done that work, it would be easier to pass the data frames from this lesson to the next lesson.\n \nWe will create one object that holds all four data frame using list().  The object is a List object (we will be talking a lot more about List object in the next few lessons):\ntemperatureDFs= list(\"origDF\" = lansJanTempsDF,\n                     \"stackedDF\" = stackedDF,\n                     \"stackDF_3_6\" = stackedDF2,\n                     \"stackedDF_1_2_5_6\" = stackedDF3);\nThe value in quotes is the name of the object – you can choose the name but you should use variable naming conventions.\n \ntemperatureDFs appear in the Environment as a List object with four data frames inside it.  We can view the data frames in the list by clicking on the arrow in the Environment tab or double-clicking on temperatureDFs to see it in a viewer tab:\n\n\n\n\n\n\nFigure 11: The List object in the Environment and the viewer tab\n\n\n\n\n13.1 Saving the List object to a file\nWe want to use the List object with four data frames in the next lesson.  To do this, we need to save the List to a file – a file we will open in the next lesson. There are two different types of file we can use: rdata and rds. We are going to use both to show the pro and cons of each in the next lesson.\nsave(temperatureDFs, file = \"data/tempDFs.rdata\");   # save to rdata file\nsaveRDS(temperatureDFs, file = \"data/tempDFs.rds\");  # save to rds file\nThere should now be files named tempDFs.rdata and tempDFs.rds in the data folder. Both of these files contain the List object temperatureDFs.",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-10: Stacking and Mapping"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-10_Stacking_Mapping.html#application",
+    "href": "lessons-new/2-10_Stacking_Mapping.html#application",
+    "title": "2-10: Stacking and Mapping",
+    "section": "14 Application",
+    "text": "14 Application\nA) Open the file Lansing2016NOAA.csv and save the contents of the file to a data frame named weatherData\n \nB) Create a stacked data frame named stackedWD that only contains the three temperature columns from weatherData (maxTemp, avgTemp, and minTemp). \n\nstackedWD will have 2 columns (values and ind) and 1098 rows (366 * 3).\n \n\nC) Create six GGPlot canvases, the individual canvases will contain:\n\nThree lines plots (maxTemp, avgTemp, and minTemp) using weatherData and three geom_line components – the method used in Figure 1\nThree lines plots (maxTemp, avgTemp, and minTemp) using stackedWD and one geom_line component.\nThree lines plots (maxTemp, avgTemp, and minTemp) using weatherData and a for loop.\nThree box plots (maxTemp, avgTemp, and minTemp) using weatherData and three geom_boxplot components\nThree box plots (maxTemp, avgTemp, and minTemp) using stackedWD and one geom_boxplot component.\nThree box plots (maxTemp, avgTemp, and minTemp) using weatherData and a for loop.\n \n\n  If you have any questions regarding this application, feel free to email them to Charlie Belinsky at belinsky@msu.edu.\n\n14.1 Questions to answer\nAnswer the following in comments inside your application script:\n\nWhat was your level of comfort with the lesson/application?\nWhat areas of the lesson/application confused or still confuses you?\nWhat are some things you would like to know more about that is related to, but not covered in, this lesson?\n\n\n\n14.2 Upload changes to GitHub\n\nIn Source Control tab, under Changes click ( + ): Stage All Changes\n\nAll changed files will now be listed under Staged Changes\n\nAdd a message “App2-10 finished”\n\nOr, “App2-10 updated” if you are updating the application\n\nClick Commit\nThe Commit button will become a Sync button, click Sync\nCreate an Issue in GitHub\n\n\n\n\n\n\n\nFigure 12: Upload changes to GitHub – the red circle indicates how many files that changed (in this case: 1)\n\n\n\n\n\n14.3 Create an Issue in GitHub\nNote: if the Issue was already created and you are updating your application, then just reply to the Issue.\n\nGo to your project folder (repository) on GitHub\nClick on Issues (top of page)\nClick on New Issue (green button – not pictured)\nClick on Setting wheel and add the instructor as an assignee (belinskyc)\n\n\n\nPut in title that the application 2-10 is finished, add anything you want to the description\nClick Create\n\n\n\n\n\n\n\nFigure 13: Informing your instructor the application is finished",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-10: Stacking and Mapping"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-10_Stacking_Mapping.html#extension-lazy-evaluation",
+    "href": "lessons-new/2-10_Stacking_Mapping.html#extension-lazy-evaluation",
+    "title": "2-10: Stacking and Mapping",
+    "section": "15 Extension: Lazy Evaluation",
+    "text": "15 Extension: Lazy Evaluation\nThis is probably the one programming topic that has caused the most agony in this author’s life as it is unintuitive and happens unexpectedly in many programming languages…\n \nThere are 7 columns in lansJanTempsDF, which means the for loop will cycle 7 times. Each time with a different value for i (1, 2, 3, 4, 5, 6, and 7).\nfor(i in 1:ncol(lansJanTempsDF))         # add plots to canvas one at a time\n{\n  plot4 = plot4 + geom_line( mapping=aes(x=1:nrow(lansJanTempsDF), \n                                         y=lansJanTempsDF[,i], \n                                         color=colnames(lansJanTempsDF)[i]) )\n}\nHowever, if you execute the code above you will only see one plot – the plot for the seventh cycle (when i=7). Actually, the seventh plot got plotted seven times but they overlap each other so you only see one.\n \nThe reason this happens is that R, in the background, will first stack up the code from all seven cycles of the for loop like this:\nplot4 = plot4 + geom_line( mapping=aes(x=1:nrow(lansJanTempsDF), \n                                         y=lansJanTempsDF[,«i»], \n                                         color=colnames(lansJanTempsDF)[«i»])\nplot4 = plot4 + geom_line( mapping=aes(x=1:nrow(lansJanTempsDF), \n                                         y=lansJanTempsDF[,«i»], \n                                         color=colnames(lansJanTempsDF)[«i»])\nplot4 = plot4 + geom_line( mapping=aes(x=1:nrow(lansJanTempsDF), \n                                         y=lansJanTempsDF[,«i»], \n                                         color=colnames(lansJanTempsDF)[«i»])\n... (4 more) ...\nAnd then execute each command in the stack. This happens all the time when programming for loops and it is normally not an issue. Except, in this case, R does not realize that i is the index variable. R assumes that i=7 because that is the value of i at the end of the for loop (i.e., after the seventh cycle). So, R replaces i with 7 for every command. This is called Lazy Evaluation and I cannot explain why it happens here, but I can say that I have experienced it many times in many programming languages in my career.\n \n!!() is a function that forces R to immediately evaluate what is inside the parentheses (i.e., before R stacks the commands). This means the stacked commands will look like this and execute properly:\nplot4 = plot4 + geom_line( mapping=aes(x=1:nrow(lansJanTempsDF), \n                                         y=lansJanTempsDF[,«1»], \n                                         color=colnames(lansJanTempsDF)[«1»])\nplot4 = plot4 + geom_line( mapping=aes(x=1:nrow(lansJanTempsDF), \n                                         y=lansJanTempsDF[,«2»], \n                                         color=colnames(lansJanTempsDF)[«2»])\nplot4 = plot4 + geom_line( mapping=aes(x=1:nrow(lansJanTempsDF), \n                                         y=lansJanTempsDF[,«3»], \n                                         color=colnames(lansJanTempsDF)[«3»])\n... (4 more) ...",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-10: Stacking and Mapping"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-12_Objects_Attributes.html#purpose",
+    "href": "lessons-new/2-12_Objects_Attributes.html#purpose",
+    "title": "2-12: Objects and Attributes",
+    "section": "1 Purpose",
+    "text": "1 Purpose\n\nDistinguish between atomic vectors and Lists\nShow the different types of vectors\nApply attributes to a vector: names, dimensions, and class\nSubsetting a vector",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-12: Objects and Attributes"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-12_Objects_Attributes.html#script-for-this-lesson",
+    "href": "lessons-new/2-12_Objects_Attributes.html#script-for-this-lesson",
+    "title": "2-12: Objects and Attributes",
+    "section": "2 Script for this lesson",
+    "text": "2 Script for this lesson\nThe script for the lesson is here",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-12: Objects and Attributes"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-12_Objects_Attributes.html#terminology",
+    "href": "lessons-new/2-12_Objects_Attributes.html#terminology",
+    "title": "2-12: Objects and Attributes",
+    "section": "3 Terminology",
+    "text": "3 Terminology\nThis lesson requires the use of terminology that has been inconsistently used in R or has morphed in meaning throughout the years, so you will find different definitions online.  In general, I will be using the terminology from the 2nd edition of Hadley Wickham’s Advanced R book and mention places where there is commonly used terminology that is different.",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-12: Objects and Attributes"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-12_Objects_Attributes.html#objects-and-variables",
+    "href": "lessons-new/2-12_Objects_Attributes.html#objects-and-variables",
+    "title": "2-12: Objects and Attributes",
+    "section": "4 Objects and Variables",
+    "text": "4 Objects and Variables\nIn the programming world, anything stored in memory that has a value (or multiple values) associated with it is called a variable.  This terms gets a bit confusing because values that do not change are still called variables (sometimes called constant variables).  Also, variables has different meanings in different fields from mathematics to science to statistics.  Perhaps, for this reason, R tends to use the term object to define anything that has a name and stores values. That means that, in R, everything in the Environment tab in RStudio is an object.\n \nBroadly speaking, in R there are two types of objects: Atomic Vectors (covered in this lesson) and Lists (covered in the next lesson). \n\n4.1 Atomic vectors and Lists\nAtomic vectors are objects that hold values of the same type (e.g., numeric, string).  In other words, atomic vectors are just vectors. However, in R, you will get often get error messages that refer to an “atomic vector” (Figure 6).\n \nAnything you create with c() is an atomic vector and atomic vectors can have dimensions – a 2D atomic vector is called a matrix and a 3D atomic vector is called an array.\n\n\n4.2 Atomic vectors vs List\nWhereas atomic vectors hold values, a List is an object that holds other objects – including other Lists.\n \nA data frame is an example of a List where each column is an atomic vector – and each column has the same number of values.\n\n\n4.3 Folder and file analogy for Lists and atomic vectors\nLists and Atomic Vectors functionally play the same role as folder and files on your computer.  Folders are used to create a tree-like structure for information on your computer. Folders contain folders and files (the tree-like structure), folders do not directly contain information.  It is the files that contains the information – and files are always at the end of the tree (a file cannot contain another folder or file).\n \nLists are the folders of the R world – they create a tree-like structure for information.  Lists can contain other Lists or Atomic Vector.  The Atomic Vector are the files – they contain information and are always at the end of the tree (Atomic Vector cannot contain Lists nor other atomic vectors).\n \nA data frame is a type of List (folder) that contains multiple columns/Atomic Vectors (files) of the same size.\n \nNote: Atomic vectors are often referred to as homogeneous objects and Lists are often referred to as heterogeneous objects, but I believe these terms are not helpful as they create a false distinction between Lists and atomic vectors.",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-12: Objects and Attributes"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-12_Objects_Attributes.html#the-simplest-object-in-r-the-vector",
+    "href": "lessons-new/2-12_Objects_Attributes.html#the-simplest-object-in-r-the-vector",
+    "title": "2-12: Objects and Attributes",
+    "section": "5 The simplest object in R: the vector",
+    "text": "5 The simplest object in R: the vector\nBecause R is a programming language designed to work with data, the vector represents the most basic object in R.  Note: This is different from most programming languages where a single named value is the most basic object.\n \nA vector is a named object that hold values of the same type (or class) – usually strings or numeric.\n \nEven a single value is put into a vector.  Setting a variable to one value creates a one-value vector:\ntemperature = 80; # a vector, temperature, with one value, 80\nThe fact that temperature is a vector with one value is not shown in the Environment but it is shown in the Console with the [1]:\n&gt; temperature\n[1] 80\nThis code creates a vector named JulyTemps with eight numeric values:\nJulyTemps = c(90, 88, 86, 77,81, 83, 80, 80);\nAnd, the Environment shows that it is a numeric (num) vector with eight values [1:8]:\nJulyTemps num [1:8] 90 88 86 ...\n\n5.1 Types of vector\nThere are six basic types/classes of vectors in R:\n\ncharacters (strings)\nnumeric (decimal numbers)\nintegers (numbers without decimals)\ncomplex (numbers with real and imaginary parts – these are not covered in this class)\nBoolean/logical (TRUE/FALSE values)\nraw (hold bytes – rarely used and are not covered in this class)\n \n\nWe have mentioned character and numeric vectors multiple times in previous lessons.  We are going to look a little deeper into integer and Boolean vectors.\n\n\n5.2 Integer vectors\nInteger vectors can be useful when you need counting values because integer values take up less space in memory and can be processed faster than numeric (i.e., decimal) vectors.\n \nThe issue is that, R will often coerce integer vectors to numeric vectors, effectively taking away the memory and speed advantages.\n \nLet’s create an integer vector:\nintValues = as.integer(c(3,4,5));\nAnd then add 1 :\nintValues2 = intValues + 1;\nIn the Environment we see that intValues is an integer vector but intValues2 is numeric:\nintValues:    int [1:3] 3 4 5\nintValues2:   num [1:3] 4 5 6\nIf we want the results to be an integer, then we need to declare 1 as an integer:\nintValues3 = intValues + as.integer(1);\nNow, R will see the results as integers:\nintValues3: int [1:3] 4 5 6\nExtension: rounding functions in R\n\n\n5.3 A Boolean/logical vector (TRUE/FALSE values)\nWe have not talked much about Boolean vectors but they are useful in programming because they are fast as they only have two possible values: TRUE and FALSE.  Note: It is bad programming practice (and potentially dangerous) to use T and F to represent TRUE and FALSE.\n \nThere are two general ways to create a Boolean vector: manually or with a conditional statement\n\n5.3.1 Manually create a Boolean vector\nWe can use c() to create a vector with Boolean values.  Let’s create a vector that tells whether it rained on the eight days in JulyTemps:\nrainyDaysInJuly = c(FALSE, FALSE, TRUE, FALSE, FALSE, TRUE, TRUE, FALSE);\nIn the Environment, rainyDaysInJuly is given as a logi, which stands for logical – which is just another name for Boolean:\nrainyDaysInJuly: logi [1:8] FALSE FALSE TRUE ...\nand we can check which values are TRUE using which():\nwhich(rainyDaysInJuly)\n[1] 3 5 6\n\n\n5.3.2 Conditional statements create a Boolean vector\nA conditional statement always creates a Boolean vector.  We typically used conditional statements in if() statements:\nfor(i in 1:length(JulyTemps))\n{\n  # Output Boolean value instead of executing the if() statement\n  #  if(JulyTemps[i] &gt; 85)\n  cat(\"day\", i, (JulyTemps[i] &gt; 85), \"\\n\");\n}    \nThe output from the above for loop is:\nday 1 TRUE \nday 2 TRUE \nday 3 TRUE \nday 4 FALSE \nday 5 FALSE \nday 6 FALSE \nday 7 FALSE \nday 8 FALSE \nThis means that the first three days in JulyTemps were more than 85, the rest were less than or equal to 85.\n \nWe could also save Boolean results to a vector.  (JulyTemps &gt; 85) instructs R to check the 8 values in JulyTemps against the number 85:\nhotterThan85 = (JulyTemps &gt; 85);\nAnd the answer is given as a Boolean vector:\n&gt; hotterThan85\n[1]  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-12: Objects and Attributes"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-12_Objects_Attributes.html#attributes-of-a-objects",
+    "href": "lessons-new/2-12_Objects_Attributes.html#attributes-of-a-objects",
+    "title": "2-12: Objects and Attributes",
+    "section": "6 Attributes of a objects",
+    "text": "6 Attributes of a objects\nAttributes is a very broad term in R.  All objects can have attributes and there are two distinct types of attributes in R.\n \n1) Attributes that are properties of the object – these are defined by R and they include:\n\nnames: names for the values inside an object – not to be confused with the name of the object\nclass: the type of object is it (numeric, boolean…)\ndim: dimension – this is how you create a 2D matrix, 3D array, or higher dimension arrays\n\n \n2) Attributes that act as metadata for the object.  These attributes are defined by the user and are analogous to comments in a script.\n \nAttributes can be confusing because there is not a consistent way to apply or view them in R.  In this lesson, we will look at attributes on vectors and next lesson look at attributes on Lists.",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-12: Objects and Attributes"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-12_Objects_Attributes.html#names-attribute",
+    "href": "lessons-new/2-12_Objects_Attributes.html#names-attribute",
+    "title": "2-12: Objects and Attributes",
+    "section": "7 names attribute",
+    "text": "7 names attribute\nAll objects have a name and they can be assigned an attribute called names.  The name of the object and the names attribute are two different things. The attribute names refers to names given to the values within the object and are assigned using the names() function.\n \nLet’s first create a copy of our JulyTemps vector:\nJulyTempsNamed = JulyTemps;\nAnd we will use names() to give the date to each temperature value:\nnames(JulyTempsNamed) = c(\"July22\", \"July23\", \"July24\", \"July25\",\n                          \"July26\", \"July27\", \"July28\", \"July29\");\nJulyTempsNamed is called a Named vector in the Environment and the names are given in the Console:\nJulyTempsNames:  Named num [1:8] 90 88 86 77...\nAnd in the Console, JulyTempsNamed has two rows, the first contains the names and the second contains the values:\n&gt; JulyTempsNamed\nJuly22 July23 July24 July25 July26 July27 July28 July29 \n    90     88     86     77     81     83     80     80\n\n7.1 Subsetting named values with square brackets [ ]\nThe main advantage to naming vectors is that you can use the names to subset the value within the object.\n \nTo get the second value in JulyTempsNamed, you can subset with the position (2) or the name (July23):\n\n\n\n&gt; JulyTempsNamed[2]\nJuly23 \n    88 \n&gt; JulyTempsNamed[\"July23\"]\nJuly23 \n    88 \n\n\nFigure 1: Subsetting a named vector with the position and the name – the results are the same\n\n\n\nYou can subset multiple values by position or name:\n&gt; JulyTempsNamed[c(2,4,6)]\nJuly23 July25 July27 \n    88     77     83 \n&gt; JulyTempsNamed[c(\"July23\", \"July25\", \"July27\")]\nJuly23 July25 July27 \n    88     77     83 \nFrom a functional perspective, named values and unnamed values will work exactly the same in any computation.  The difference between the two is only how they are displayed and how they can be referenced.  Here we subtract all values in JulyTempsNamed by 20:\n\n\n\n&gt; JulyTempsNamed - 20\nJuly22 July23 July24 July25 July26 July27 July28 July29 \n    70     68     66     57     61     63     60     60 \n\n\nFigure 2: You can do mathematics on named values just like unnamed values\n\n\n\n\n\n7.2 Subsetting named values with double-square brackets [[ ]]\nYou can also subset a named vector with double square brackets [[  ]] and you will just get the value (without the name):\n\n\n\n&gt; JulyTempsNamed[[2]]\n[1] 88\n&gt; JulyTempsNamed[[\"July23\"]]\n[1] 88\n\n\nFigure 3: Using double brackets to subset named vectors will give you just the value\n\n\n\nThis is generally not recommended because you cannot select multiple elements using [[ ]]\n\n\n\n&gt; JulyTempsNamed[2:4]\nJuly23 July24 July25 \n    88     86     77 \n&gt; JulyTempsNamed[[2:4]]\nError in JulyTempsNamed[[2:4]] : \n  attempt to select more than one element in vectorIndex\n\n\nFigure 4: using single brackets and double brackets to subset multiple values in a vector\n\n\n\nNote: element here means the same as values (so, the  8 elements in JulyTempsNamed are the eight values)",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-12: Objects and Attributes"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-12_Objects_Attributes.html#dimension-dim-attribute",
+    "href": "lessons-new/2-12_Objects_Attributes.html#dimension-dim-attribute",
+    "title": "2-12: Objects and Attributes",
+    "section": "8 dimension (dim) attribute",
+    "text": "8 dimension (dim) attribute\nWhen you create a vector using c(), you are creating an object that, functionally, has one dimension.  This is why you can subset values in JulyTemps using their position within the vector (Figure 1).\n \nHowever, data is sometimes best represented in multiple dimensions – for instance you might have temperatures that are stored by both location and date.\n\n8.1 Multidimensional objects\nWe can use dim() to add more dimensions to a vector.\n \nWe are going to make a two-dimensional vector (also called a matrix or a 2D array) using JulyTemps.  First, we will create a copy of JulyTemps and then set the dimensions of the copy to two values (4 and 2).  Those two dimension values (which can be thought of as 4 rows and 2 columns) must multiply to the number of values in the vector (8).\nJulyTemps2D = July Temps;\ndim(JulyTemps2D) = c(4,2);\nThe Environment and Console reflect the dimensions in JulyTemps2D:\n&gt; JulyTemps2D\n     [,1] [,2]\n[1,]   90   81\n[2,]   88   83\n[3,]   86   80\n[4,]   77   80\n\n\n\nJulyTemps2D: num [1:4, 1:2] 90 88 86 77...\n\n\nFigure 5: Displaying a 2D value in the Console and the Environment\n\n\n\nNow we have a 2D object that can be subsetted using the [ , ] operator (which can be though of as a dimensional subset operator):\n&gt; JulyTemps2D[3,2]\n[1] 80\nWe could create a three-dimensional object (called a 3D array) by setting the dimensions to three values.  The numbers still need to multiply to 8:\nJulyTemps3D = JulyTemps;\ndim(JulyTemps3D) = c(2,2,2); # each dimension has length of 2\n&gt; JulyTemps3D[1,2,2]\n[1] 80\nNote: You can declare a one-dimensional vector (also called a 1D array).  I do not know if there is a practical reason to do this since vectors functionally operate as 1D objects:\nJulyTemps1D = JulyTemps;\ndim(JulyTemps1D) = c(8);\n\n\n8.2 accessing rows and columns in matrices\nLet’s take the 2D matrix we created and add names for the rows and columns using rownames() and colnames():\nJulyTemps2DNamed = JulyTemps2D;\nrownames(JulyTemps2DNamed) = paste(\"date\", 1:4, sep=\"\");\ncolnames(JulyTemps2DNamed) = c(\"location1\", \"location2\");\nAnd we can see the names in the Console:\n&gt; JulyTemps2DNamed\n      location1 location2\ndate1        90        81\ndate2        88        83\ndate3        86        80\ndate4        77        80\nWe can now access values in the matrix by name or position using the dimensional operator:\n&gt; JulyTemps2DNamed[3,2]\n[1] 80\n&gt; JulyTemps2DNamed[\"date3\",\"location2\"]\n[1] 80\nAnd we can access whole rows or columns by leaving the other blank:\n&gt; JulyTemps2DNamed[3,]\nlocation1 location2 \n       86        80 \n&gt; JulyTemps2DNamed[,2]\ndate1 date2 date3 date4 \n   81    83    80    80 \n&gt; JulyTemps2DNamed[,\"location2\"]\ndate1 date2 date3 date4 \n   81    83    80    80 \n\n\n8.3 matrices are vectors\nThe [ , ] operator is really the same thing as the [ ] operator.  The difference is that [ , ] is used for 2D objects (matrices) whereas [ ] is used for 1D objects (vectors).\n \nYou can use the 1D operator on a matrix – [ ] will flatten the matrix to one dimensional vector:\n&gt; JulyTemps2DNamed[1:8]\n[1] 90 88 86 77 81 83 80 80\n\n&gt; JulyTemps2DNamed[5]\n[1] 81\n\n\n8.4 The $ operator\nYou cannot use $ to subset any Atomic Vector (vector, matrix, or array). You will get the $ operator is invalid for atomic vectors error:\n\n\n\n&gt; JulyTemps2DNamed$col2\nError in JulyTemps2DNamed$col2 : $ operator is invalid for atomic vectors\n\n\nFigure 6: R does not allow use of $ operator on vectors",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-12: Objects and Attributes"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-12_Objects_Attributes.html#class-attribute-and-typeof",
+    "href": "lessons-new/2-12_Objects_Attributes.html#class-attribute-and-typeof",
+    "title": "2-12: Objects and Attributes",
+    "section": "9 class attribute and typeof()",
+    "text": "9 class attribute and typeof()\nclass() is a function that allows you to either view or set the class of an object (i.e., change a numeric vector to a character vector).  You should never use class() to changes the class of an object, instead use a specialized function like as.character().\n \nUsing class() to get the class of an object will produces inconsistent results.  Using class on an object will return the value type if the vector has no dimensions set, and will return the object type if there are dimensions set:\n&gt; class(JulyTemps2D)\n[1] \"matrix\" \"array\" \n&gt; class(JulyTemps)\n[1] \"numeric\"\nInstead of class, you should use typeof(). It will always give you the class of the values:\n&gt; typeof(JulyTemps2D)\n[1] \"double\"\n&gt; typeof(JulyTemps)\n[1] \"double\"\nNote: double means the values are numeric.  In other programming languages (especially older ones), there is a corresponding single class that does not exist in R.",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-12: Objects and Attributes"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-12_Objects_Attributes.html#other-attributes-metadata-or-comments",
+    "href": "lessons-new/2-12_Objects_Attributes.html#other-attributes-metadata-or-comments",
+    "title": "2-12: Objects and Attributes",
+    "section": "10 Other attributes (metadata or comments)",
+    "text": "10 Other attributes (metadata or comments)\nYou can create any attribute you want and add it an object using attr().  We are going to add two attributes using attr() to a copy of JulyTemps2DNamed.  The attributes will be named timeChecked and unit and they will be set to noon and Fahrenheit:\nJulyTemps2DNamed_2 = JulyTemps2DNamed;\nattr(JulyTemps2DNamed_2, \"timeChecked\") = \"noon\";\nattr(JulyTemps2DNamed_2, \"unit\") = \"Fahrenheit\";\nnote: while not enforced, attribute names should follow variable variable naming conventions\n \nWe can also use attr() to get the attributes of an object:\n&gt; attr(JulyTempsNamed_2, \"timeChecked\")\n[1] \"noon\"\n&gt; attr(JulyTempsNamed_2, \"unit\")\n[1] \"Fahrenheit\"\nUser-defined attributes should be treated as comments or metadata.  Attributes give information that might interest the user of your script but attributes should not be a functional part of the script. \n\n10.1 Viewing all attributes\nIf you view a object in the Console, the user-defined attributes will be displayed:\n&gt; JulyTemps2DNamed_2\n      location1 location2\ndate1        90        81\ndate2        88        83\ndate3        86        80\ndate4        77        80\nattr(,\"timeChecked\")\n[1] \"noon\"\nattr(,\"unit\")\n[1] \"Fahrenheit\"\nFor a more robust view of the attributes in an object, you can use attributes():\n&gt; attributes(JulyTemps2DNamed_2)\n$dim\n[1] 4 2\n$dimnames\n$dimnames[[1]]\n[1] \"date1\" \"date2\" \"date3\" \"date4\"\n$dimnames[[2]]\n[1] \"location1\" \"location2\"\n\n$timeChecked\n[1] \"noon\"\n$unit\n[1] \"Fahrenheit\"\nNote: dimnames is a property attribute that was set when you set the row and column names",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-12: Objects and Attributes"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-12_Objects_Attributes.html#application",
+    "href": "lessons-new/2-12_Objects_Attributes.html#application",
+    "title": "2-12: Objects and Attributes",
+    "section": "11 Application",
+    "text": "11 Application\nA) In comment at the top of your script answer:\n\nWhat happens when you create this vector:  c(1, “a”, 2, “b”)?  Why?  Explain in terms of atomic vectors and class types.\n\n \nB) Open the Lansing2016Noaa-3.csv CSV file above and save it to the dataframe weatherData\n\nAdd a logical/Boolean column to weatherData call wasPrecip that gives whether there was any precipitation for the day\nAdd a logical/Boolean column to weatherData call wasMild that gives whether a day had high temperatures between 50 and 70\nAdd a logical/Boolean column to weatherData call wasMuggy that gives whether a day had high temperatures greater than 70 and humidity greater than 80\n\n \nC) Save the windSpeed column from weatherData to a vector named windSpeed\n\nAdd two user-defined attributes to windSpeed– one that gives the unit (miles/hour), the other that gives the year (2016)\nuse variable naming conventions when naming the attributes\n\n \nD) Save averageTemp to a vector and add a names attribute for the first five values in averageTemp that gives the day (Jan1, Jan2…)\n\nAnswer in comments: What happens to the other 361 unnamed values?\n\n \nE) Create a 4D array from this vector:  c(1:256)\n\nsubset two values in the 4D vector\n\n  If you have any questions regarding this application, feel free to email them to Charlie Belinsky at belinsky@msu.edu.\n\n11.1 Questions to answer\nAnswer the following in comments inside your application script:\n\nWhat was your level of comfort with the lesson/application?\nWhat areas of the lesson/application confused or still confuses you?\nWhat are some things you would like to know more about that is related to, but not covered in, this lesson?\n\n\n\n11.2 Upload changes to GitHub\n\nIn Source Control tab, under Changes click ( + ): Stage All Changes\n\nAll changed files will now be listed under Staged Changes\n\nAdd a message “App2-12 finished”\n\nOr, “App2-12 updated” if you are updating the application\n\nClick Commit\nThe Commit button will become a Sync button, click Sync\nCreate an Issue in GitHub\n\n\n\n\n\n\n\nFigure 7: Upload changes to GitHub – the red circle indicates how many files that changed (in this case: 1)\n\n\n\n\n\n11.3 Create an Issue in GitHub\nNote: if the Issue was already created and you are updating your application, then just reply to the Issue.\n\nGo to your project folder (repository) on GitHub\nClick on Issues (top of page)\nClick on New Issue (green button – not pictured)\nClick on Setting wheel and add the instructor as an assignee (belinskyc)\n\n\n\nPut in title that the application 2-12 is finished, add anything you want to the description\nClick Create\n\n\n\n\n\n\n\nFigure 8: Informing your instructor the application is finished",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-12: Objects and Attributes"
+    ]
+  },
+  {
+    "objectID": "lessons-new/2-12_Objects_Attributes.html#extension-rounding-functions-in-r",
+    "href": "lessons-new/2-12_Objects_Attributes.html#extension-rounding-functions-in-r",
+    "title": "2-12: Objects and Attributes",
+    "section": "12 Extension: rounding functions in R",
+    "text": "12 Extension: rounding functions in R\nThere are three rounding functions in R:\n\nround()   # rounds to nearest integer (5.3 become 5 and 5.7 becomes 6)\nfloor() # drops the decimal (both 5.3 and 5.7 become 5)\nceiling()  # increase decimal number to next integer  (both 5.3 and 5.7 become 6)\n \n\nEven though these function create integer-like values, R will still see the values as numeric:\n&gt; a = c(2.5, 3.6, -1.3)\n&gt; b = round(a)\n&gt; b\n[1]  2  4 -1\n&gt; class(b)\n[1] \"numeric\"\nIf you actually want integer values, then you need to to convert the vector to an integer:\n&gt; b = as.integer(b)\n&gt; b\n[1]  2  4 -1\n&gt; class(b)\n[1] \"integer\"\nInteger values have a speed advantage over numeric values, which you will notice if you are processing 100,000 values.",
+    "crumbs": [
+      "<b style='color:darkred;'>Fundamentals of Programming class (new)</b>",
+      "Part 2: Data Programming",
+      "2-12: Objects and Attributes"
     ]
   }
 ]

@@ -1,12 +1,12 @@
 ---
-title: "2-08: Binding and Sampling"
-short: "2-08"
+title: "2-09: Binding and Sampling"
+short: "2-09"
 # special characters for highlighting code : «»
 ---
 
 ### To-do
 
-- create a simple example showing what happens if you insert a random calc in between set.seed() and another random calc
+- create a simple example showing what happens if you insert a random calculation in between set.seed() and another random calculation
 
 ## Purpose
 
@@ -40,11 +40,11 @@ Next, we are going to add January 2017 data from ***lansingJan2017Temps.csv***.�
 lansJanTemps2017DF = read.csv(file = "data/lansingJan2017Temps.csv"); 
 ```
 
-***lansJanTems2017DF*** is a data frame with one column (named ***x***) -- ***x*** has 31 temperature values (in Fahrenheit), one for each day in January 2017.  If we click on the arrow to the left of  ***lansJanTemps2017DF*** in the ***Environment***, it looks like this:
+***lansJanTems2017DF*** is a data frame with one column (named ***x***) -- ***x*** has 31 temperature values (in Fahrenheit), one for each day in January 2017.  If we click on the arrow to the left of  ***lansJanTemps2017DF*** in ***Variables***, it looks like this:
 
-``` {.r tab="Environment"}
-🞃 lansJanTemps2017DF     31 obs. of 1 variable
-     $ x: int 42 44 37 35 15 15 ...
+``` {.r tab="Variables"}
+🞃 lansJanTemps2017DF   [31 rows x 1 column] <data.frame>
+   > x:                 42 44 37 35 15 15 ...   int [31]
 ```
 
 Let's first change the column name from ***x*** to ***Jan2017***:
@@ -59,13 +59,13 @@ And then bind the 2017 data to the 2011-2016 data frame using ***cbind()***.  W
 lansJanTempsDF2 = cbind(lansJanTempsDF, lansJanTemps2017DF);
 ```
 
-***cbind()*** stands for column bind and it will bind two data frames together by their columns.  ***cbind()*** also will bind columns together between two matrices, or bind columns between a matrix and a data frame.  The only caveat is that the [columns need to be the same size]{.hl}.  In this example, the columns all have 31 rows:
+***cbind()*** stands for column bind and it will bind two (or more) data frames together by their columns.  ***cbind()*** also will bind columns together between two matrices, or bind columns between a matrix and a data frame.  The only caveat is that the [columns need to be the same size]{.hl}.  In this example, the columns all have 31 rows ([note: the first row is labeled 0]{.note}):
 
 ![The January temperature matrix in Fahrenheit -- with 7 years of temperatures](images/R-2-08-Matrix.jpg){#fig-JanMatrix .fs}
 
 ### Binding vectors
 
-You can also use ***cbind()*** to bind two vectors together -- as long as they are the same size.  The result will be a matrix with two columns:
+You can also use ***cbind()*** to bind two vectors together -- as long as they are the same size.  The result will be a matrix with two columns (remember a matrix is a two-dimensional vector):
 
 ``` r
 vectorA = 20:1;   # 20 values 20, 19, 18, ..., 1
@@ -109,7 +109,7 @@ matrixABC  = cbind(matrixAB, vectorC);  # 3 columns with 20 values in each
 
 ## Random values in programming
 
-We are going to pick random values from our temperature data frame but, [in programming there is no such thing as a truly random value]{.hl}.  There has to be some calculation that determines the random number -- the calculations are just so complex that they seem random. As we will see later, these calculations can be manipulated (or, [seeded]{.hl}) so you get the same "random" numbers every time you ***Source*** your script.  This is very helpful when you are sharing and documenting your results.
+We are going to pick random values from our temperature matrix but, [in programming there is no such thing as a truly random value]{.hl}.  There has to be some calculation that determines the random number -- the calculation is just so complex that it seems random. As we will see later, these calculations can be manipulated (or, [seeded]{.hl}) so you get the same "random" numbers every time you ***Source*** your script.  This is very helpful when you are sharing and documenting your results.
 
  
 
@@ -121,7 +121,7 @@ set.seed(seed=NULL);  # remove seed value
 
 ### sample of numbers
 
-We can use the ***sample()*** function to get a random sample from a set of observations.   In our first example, the "observations" will just be a vector of values from 1 to 10: ***1:10***.
+We can use the ***sample()*** function to get a random sample from a set of observations.  In our first example, the "observations" will just be a vector of values from 1 to 10: ***1:10***.
 
  
 
@@ -148,13 +148,13 @@ randomSample1 = sample( 1:10, size=8, replace=TRUE);
 randomSample2 = sample( 1:10, size=8, replace=FALSE);
 ```
 
-In @fig-random_sampling, ***randomSample1*** has two observations that were repeated **5** and **9**), whereas ***randomSample2*** has no repeated observations.  [Running the script again will produce different observations]{.hl} but ***randomSample2*** will always have eight unique observations because ***replace=FALSE***.
+When I execute the script (@fig-random_sampling), ***randomSample1*** had three observations that were repeated **4**, **7**, and **2**), whereas ***randomSample2*** has no repeated observations.  [Each time you execute the script, you will get different observations]{.hl} but ***randomSample2*** will always have eight unique observations because ***replace=FALSE***.
 
  
 
-[Note: you can get repeat values if **replace=FALSE** *because* there can be multiple observations with the same value -- you just cannot get repeat observations.]{.note}
-
 ![Random sampling of a vector with replacement and without replacement](images/R-2-08-Sampling.jpg){#fig-random_sampling .fs}
+
+#### Sampling and replacement error
 
 You will get an error if the argument ***size*** is greater than the population size and ***replace=FALSE:***
 
@@ -163,11 +163,11 @@ You will get an error if the argument ***size*** is greater than the population 
 randomSample4 = sample( c(1:10), size=12, replace=TRUE);   # will work
 ```
 
-This is because you cannot take **12** [unique]{.hl}samples from a population whose size is **10** (***replace=FALSE***), but you can take **12** samples from a population whose size is **10** (***replace=TRUE***) -- there will be at least two observations that are repeated.  In this case, observations 2 and 3 are repeated twice, observation 6 is repeated 3 times, and observations 4, 5, and 7 were never picked:
+This is because you cannot take **12** [unique]{.hl} samples from a population whose size is **10** (***replace=FALSE***), but you can take **12** samples from a population whose size is **10** (***replace=TRUE***) -- there will be at least two observations that are repeated.  In this case, observation **1** is repeated twice, observations **7** and **8** are repeated 3 times, and observations **3**, **4**, and **9** were never picked:
 
 ``` {.r tab="Console"}
 > randomSample4
- [1]  6  6  9  3  2  6  9 10  8  3  1  2
+ [1]  10 7 7 8 2 7 1 8 8 1 5 6
 ```
 
 ### Randomly sampling the temperature values
@@ -186,7 +186,7 @@ randomTemps = sample(lansJanTempsMat, size=80, replace=TRUE);
 
 The 80 samples will be different each time you ***Source*** your script...
 
-``` {.r tab="Environment"}
+``` {.r tab="Variables"}
 > randomTemps
  [1] 13 55 13 14 24 16 35 21 24 37 34 30 16 44 29 35 29 37 16 35 18 35 32 27 16
 [26] 55 26 26 40 26 25 29 48 23 26 35 19 30 23 45 38 42 42 18 42 19 45 32 13 37
@@ -194,11 +194,11 @@ The 80 samples will be different each time you ***Source*** your script...
 [76] 40 29 55 42 29
 ```
 
-A data frame is multiple vectors (each column is a vector) and sampling has a different effect. For more information go to [Extension: Sampling from a data frame]
+A matrix is a single 2D vector, whereas a data frame is multiple vectors (each column is a vector) and sampling has a different effect. For more information go to [Extension: Sampling from a data frame]
 
 ### Setting the seed value
 
-Every time your script is executed, a new "random" set of observations, called [pseudo-random]{.hl}, is produced using a complex algorithm that seems random to humans.  However, you often want to replicate your results meaning you want the same random values to occur each time you source the code.
+Every time your script is executed, a new "random" set of observations, called [pseudo-random]{.hl}, is produced using a complex algorithm that seems random to humans. 
 
  
 
@@ -208,7 +208,7 @@ To replicate your results (i.e., get the same "random" values), you use ***set.s
 set.seed(seed=12345);
 ```
 
-The number is called the [seed number]{.hl} -- the seed number sets the initial conditions for the algorithms that creates the pseudo-random numbers.  This means that the pseudo-random number will be the same after the seed is set.  If you change the seed number, then you get a different set of the same pseudo-random numbers.
+The number is called the [seed number]{.hl} -- the seed number sets the initial conditions for the algorithm that creates the pseudo-random numbers.  This means that the pseudo-random number will be the same after the seed is set.  If you change the seed number, then you get a different set of the same pseudo-random numbers.
 
  
 
@@ -242,7 +242,7 @@ meanRandom = mean(randomSampleSeeded);
 sdRandom = sd(randomSampleSeeded);     
 ```
 
-``` {.r tab="Environment"}
+``` {.r tab="Variables"}
 meanRandom:  29.98875
 sdRandom:    10.485...
 ```
@@ -263,21 +263,49 @@ For instance, if we change the seed number from **12345** to **54321** then you 
 [76] 25.0 13.0 32.0 35.0 21.0
 ```
 
-## A last note about seed numbers
+## A last note about random value and seed numbers
 
-A seed number is the input to a very complex formula that generates seemingly random number.  Each time the formula executes (i.e., each time you ask R to pick a random number), a new number is generated that will be used as the input for the complex formula the next time a random number is requested.
-
- 
-
-When you pick a seed number using ***set.seed()***, you are generating a list of numbers that just looks random.  When you choose a different seed number, you are generating a different list of consistent numbers that just look random.
+R uses a Random Number Generator (RNG) to produce random numbers. The RNG is actually a deterministic algorithm that produces a sequence of values that appear random. The initial state of the RNG is determined by a seed value. After each random value is generated, the RNG updates its internal state, and that updated state is used to generate the next random value.
 
  
 
-When you set the seed to ***NULL***, R still uses the same formula to generate "random" number, but it seeds the formula with another "random" number.  You need to set the seed to ***NULL*** if you want different random numbers every time you execute your script.
+This code will always produce the same results for **a** and **b**:
+
+``` r
+set.seed(321)
+a = sample(1:10, 1);    # RNG in intial state with seed=321
+b = sample(30:40, 1);   # RNG in next state
+```
+
+``` {.r tab="Variables"}
+a:   6
+b:   31
+```
+
+This code will also always produce the same results for **a** and **b**. But, the results are different from above because the RNG is in a different state when calculating **a** and **b**:
+
+``` r
+set.seed(321)
+b = sample(30:40, 1);   # RNG in intial state with seed=321
+a = sample(1:10, 1);    # RNG is in next state
+```
+
+``` {.r tab="Variables"}
+a:   2
+b:   35
+```
+
+### setting the seed
+
+If the user chooses a seed number with set.seed(), they can guarantee that the same sequence of "random" values will be generated every time the script is executed.
 
  
 
-The rules get more complicated if you pick random numbers without using ***set.seed()*** in your script -- you will get a situation in between setting seed to ***NULL*** and picking a seed number.
+If the user does not choose a seed, R automatically initializes the RNG with a seed obtained from the opeerating system. Because this seed will usually be different each time the script is run, the resulting sequence of random values will also be different. Calling `set.seed(NULL)` tells R to reinitialize the RNG with a new, automatically chosen seed.
+
+### Transforming the random value
+
+The RNG itself produces values that are approximately uniformly distributed. R then transforms these values using an appropriate algorithm to produce random values from the distribution requested by the user (such as a normal, Poisson, or exponential distribution).
 
 ## A Histogram in GGplot
 
@@ -310,7 +338,7 @@ The ggplot component that creates a histogram is ***geom_histogram*** and you on
 
 ![Histogram of the 80 sampled values from the January temperature matrix](images/R-2-08-Histogram-Temps.png){#fig-histogram .fs}
 
-You will get this warning when plotting a histogram: [\`stat_bin()\` using \`bins = 30\`. Pick better value with \`binwidth\`]{.hl}.  This warning is kind of GGPlot bug -- GGPlot does not like it's own default of using 30 bins in a histogram.  You can change this if you want, but there is no need.
+You will get this warning when plotting a histogram: [\`stat_bin()\` using \`bins = 30\`. Pick better value with \`binwidth\`]{.hl}.  This is GGPlot telling you (in an awkward way) that you are using the default 30 bins and that you can change this using the arguments ***bins*** or ***binwidth***. You can change this if you want, but there is no need.
 
 ## Sampling from a normal distribution
 
@@ -384,9 +412,13 @@ A\) In comments, answer the following:
 
   - `sample(1:10, size=8, replace=TRUE)`
 
+- If you get repeat values after executing this code, what does it say about ***observations***?:
+
+  - `sample(observations, size=8, replace=FALSE)`
+
 - If you move the code ***set.seed(54321)*** from line **40** (right before ***randomTempSeeded*** was set) to line **35** (right before ***randomTemps*** is set):
 
-  - Will you get the same values for ***randomTempSeeded***?  (test it!)
+  - Did you get the same values for ***randomTempSeeded***?  (test it!)
 
   - Why or why not?
 
@@ -398,7 +430,7 @@ B\) Get 50 non-repeating samples from the even numbers between 100 and 999
 
  
 
-C\) Get 50 samples that can repeat from the odd numbers  between 100 and 199
+C\) Get 50 samples that can repeat from the first 40 numbers that are a multiple of 7 starting with 7 (so, 7, 14, 21, 28...).
 
  
 
@@ -421,7 +453,7 @@ E\) Using ***set.seed(seed=10)*** and ***rnorm()***:
 [15] 14.224170 12.268042  9.135168 11.414549 14.776564 13.448936
 ```
 
-{{< include ../assets/_AppInstructions.qmd >}}
+{{< include ../assets/_AppInstructions_Pos.qmd >}}
 
 ## Extension: Sampling from a data frame
 
