@@ -24,7 +24,7 @@ Data for the lesson: [LansingJanTempsFixed.csv](../data/LansingJanTempsFixed.csv
 
 ## GGPlot mapping
 
-This lesson is designed to give an overview of the many issues that occur when you are creating plots in GGPlot and some of the fixes. There is the huge topic of mapping in GGPlot that we use in this lesson, but do not have time to fully explain (we go into much more detail in our dedicated GGPlot class...).  Mapping is how you relate data in a data frame to a visual aspect of a plot.  We have already mapped data in a data frame to the x and y axis of a plot -- but, you can map many other visual aspects to data like size, shape, and, in this lesson, color. 
+This lesson is designed to give an overview of the many issues that occur when you are creating plots in GGPlot and some of the fixes. Mapping is a huge topic in GGPlot that will not be fully explained in this lesson (I go into much more detail in the dedicated GGPlot class...).  Concisely, mapping is how you relate data in a data frame to a visual aspect of a plot.  We have already mapped data in a data frame to the x and y axis of a plot -- but, you can map many other visual aspects to data like size, shape, and, in this lesson, color. 
 
 ## Reading in the data frame
 
@@ -36,7 +36,7 @@ lansJanTempsDF = read.csv(file = "data/lansingJanTempsFixed.csv");
 
 ## Line Plots
 
-We are going to go over the multiple ways in GGPlot to make a line plot for each of the 6 temperature column in one canvas area.  The ggplot component that creates a line plot is ***geom_line()***.
+We are going to go over the multiple ways in GGPlot to make a line plot for each of the 6 temperature column in one canvas.  The ggplot component that creates a line plot is ***geom_line()***.
 
  
 
@@ -75,17 +75,17 @@ Each ***geom_line*** component is also customized with a ***color*** subcomponen
 
 ## Adding a legend
 
-The problem with @fig-line_plot is that the individual line plots are not labelled. We would like to add a legend to the plot that maps the color to the year and adding a legend in GGPlot is awkward.  Generally speaking [GGPlot will put a legend on the plot when something is **mapped** other than **x** or **y**]{.hl}.  We are going to ***map*** color.  To do this, we move ***color*** from being a subcomponent of the ***geom_line*** to being a mapped element of the ***geom_line***.
+The problem with @fig-line_plot is that the individual line plots are not labeled. We would like to add a legend to the plot that maps the color to the year.  In generally, [GGPlot automatically adds a legend when something other than **x** or **y** is mapped]{.hl}.  We are going to map ***color***.  To do this, we move ***color*** from being a subcomponent of the ***geom_line*** to being a mapped element for each ***geom_line***.
 
 ``` r
 plot2 = ggplot( data=(lansJanTempsDF), 
                 mapping = aes(x=1:31)) +  
-  geom_line( mapping=aes(y=Jan2011, color = "Jan2011") ) +
-  geom_line( mapping=aes(y=Jan2012, color = "Jan2012") ) +
-  geom_line( mapping=aes(y=Jan2013, color = "Jan2013") ) +
-  geom_line( mapping=aes(y=Jan2014, color = "Jan2014") ) +
-  geom_line( mapping=aes(y=Jan2015, color = "Jan2015") ) +
-  geom_line( mapping=aes(y=Jan2016, color = "Jan2016") ) +
+  geom_line( mapping=aes(y=Jan2011, «color = "Jan2011"») ) +
+  geom_line( mapping=aes(y=Jan2012, «color = "Jan2012"») ) +
+  geom_line( mapping=aes(y=Jan2013, «color = "Jan2013"») ) +
+  geom_line( mapping=aes(y=Jan2014, «color = "Jan2014"») ) +
+  geom_line( mapping=aes(y=Jan2015, «color = "Jan2015"») ) +
+  geom_line( mapping=aes(y=Jan2016, «color = "Jan2016"») ) +
   labs( title="January Temperature",
         subtitle="Lansing, MI -- 2011-2016",
         x = "January Days",
@@ -94,13 +94,13 @@ plot2 = ggplot( data=(lansJanTempsDF),
 plot(plot2);
 ```
 
-In this plot, we moved ***color*** to the mapping of the ***geom_line*** and set ***color*** to the text we want displayed in the legend.  This solution adds a legend with the text but the line colors are chosen by GGPlot.  [Note: There is a way to customize these color but that is beyond the scope of this class.]{.note}
+In this plot, we moved ***color*** to the mapping of the ***geom_line*** and set ***color*** to the text we want displayed in the legend.  This solution adds a legend with the text with line colors chosen by GGPlot.  [Note: There is a way to customize these color but that is beyond the scope of this class.]{.note}
 
 ![Line plots with a legend -- note that the legend text matches the color mappings](images/R-2-09-Legend.png){#fig-legend .fs}
 
 ## Stacking the data frame
 
-The most common (and pretty ugly) technique used to plot multiple line plots on one canvas is to create a new data frame that has all the data you want to plot in two columns -- this process is often called [melting]{.hl} or [stacking]{.hl} the data frame.
+Plotting multiple columns one at a time can get quite cumbersome. The most common technique used to plot multiple line plots on one canvas is to create a new data frame that has all the data in two columns -- this process is often called [melting]{.hl} or [stacking]{.hl} the data frame.
 
  
 
@@ -126,7 +126,7 @@ The stacked data frame has **186** rows (**31** days \* **6** years) and two col
 
 ### A note from the author about stacked data frame
 
-This author considers stacking data frames to be a bad programming practice but this practice is widely reinforced by R.  The reason stacking a data frame is bad is you are restructuring the data frame to meet the needs of a function.  But, the data frame is an object that should remain fixed.  The better practice is to code functions that match the structure of the data frame.  This is not a difficult task, but, unfortunately, this is not how R operates and there is no good way to get around stacking data frames.
+The author considers stacking data frames to be poor programming practice, although it is a commonly encouraged in R. The primary concern is that stacking restructures the data solely to meet the requirements of a function, rather than preserving the data in its natural form. Ideally, a data frame should remain unchanged, and functions should instead be written to operate on the existing structure of the data. While designing functions this way is not inherently difficult, much of R's ecosystem is built around stacked (long-format) data, leaving few practical alternatives in many situations – we will explore one way to do this.
 
 ### Plotting the stacked data frame
 
@@ -155,7 +155,7 @@ plot(plot3);
 
 ## Using for loops to plot 6 columns
 
-I consider using for loops to be the most robust solution because it gives you more control over what to plot and it maintains the integrity of the original data frame.  It is also probably the most difficult method:
+I consider ***for*** loops to be the most robust solution because it gives you more control over the plot and [it maintains the integrity of the original data frame]{.hl}.  It is also, initially, the more difficult method:
 
 ``` r
   plot4 = ggplot( data=(lansJanTempsDF));  # create a canvas
@@ -175,7 +175,7 @@ I consider using for loops to be the most robust solution because it gives you m
   plot(plot4);
 ```
 
-In this example, the ***for*** loop adds the six plot components to the ***plot4*** canvas one at a time.  When mapping in a ***for*** loop, you need to replace the index variable, in this case ***i***, with ***!!(i)***.  The reason is here: [Extension: Lazy Evaluation]
+In this example, the ***for*** loop cycles through and adds the six plot components to the ***plot4*** canvas one at a time.  When mapping in a ***for*** loop, you need to replace the index variable, ***i***, with ***!!(i)***.  This is a quirk of R and a detailed explanation is here: [Extension: Lazy Evaluation]
 
  
 
@@ -209,7 +209,7 @@ Like all plotting components in GGPlot, ***geom_boxplot*** needs to be mapped. 
 
  
 
-We also need to map ***x*** to something otherwise the two boxplots will appear right on top of each other (try it!). We can start by mapping the boxplot to the years they represent:
+We also need to map ***x*** to some value otherwise the two boxplots will appear right on top of each other (try it!). We can start by mapping ***x*** to the years the two boxplots represent:
 
 ``` r
 plot5 = ggplot(data=lansJanTempsDF) +
@@ -268,7 +268,7 @@ We might not want all of the data from the original dataframe. We can create a s
 
  
 
-This stacked dataframe only has the values from **2** columns, the3^rd^ and 6^th^ (2013 and 2016-- **62** values in all):
+This stacked dataframe only has the values from **2** columns, the 3^rd^ (2013) and 6^th^ (2016) -- **62** values in all:
 
 ``` r
 stackedDF2 = stack(lansJanTempsDF[,c(3,6)]); # 2013 and 2016
@@ -280,15 +280,15 @@ And this stacked dataframe has the values from **4** columns: the1^st^, 2^nd^, 5
 stackedDF3 = stack(lansJanTempsDF[,c(1,2,5,6)]); # 2011, 2012, 2015, & 2016
 ```
 
-In the ***Environment*** tab we see the two new stacked dataframes, both with 2 columns (***values*** and ***ind***) and 62 values (for two Januaries) and 124 values (for four Januaries)
+In ***Variables*** we see the two new stacked dataframes, both with 2 columns (***values*** and ***ind***) and 62 values (two Januaries) and 124 values (four Januaries). [Note: `fct(2) [62]` means that this is a ***factor*** with ***2*** levels and ***62*** values.]{.note}
 
 ``` {.r tab="Environment"}
-🞃 stackedDF2:   62 obs. of 2 variables
-    $ values: num 25 26 29 33 35 35 ...
-    $ ind    :  Factor w/ 2 levels "Jan2013",...
-🞃 stackedDF3:   124 obs. of 4 variables
-    $ values: num 54 25 33 32 23 ...
-    $ ind    :  Factor w/ 4 levels "Jan2011",...
+🞃 stackedDF2:   [62 rows x 2 columns]
+     > values:  25 26 29 33 35 35 ...                  int [62]
+     > ind   :  "Jan2013" "Jan2013" "Jan2013" ...   fct(2) [62]
+🞃 stackedDF3:   [124 rows x 4 columns]
+     > values:  54 25 33 32 23 ...                    int [124]
+     > ind   :  "Jan2011" "Jan2011" "Jan2011" ...  fct(4) [124]
 ```
 
 ### Plotting the subset stacked dataframe
@@ -314,7 +314,7 @@ for(i in «c(1,2,5,6)»)   # cycle through the four columns
 {
   ## map the column names to x and the column values to y
   plot9 = plot9 + geom_boxplot(mapping=aes(x=colnames(lansJanTempsDF)[!!(i)], 
-                                            y=lansJanTempsDF[,!!(i)] ))
+                                           y=lansJanTempsDF[,!!(i)] ))
 }
 plot9 = plot9 + theme_bw();
 plot(plot9);
@@ -327,6 +327,8 @@ In this code,
 - ***x*** is mapped to the subsetted column name
 
 - ***y*** is mapped to the subsetted column values
+
+- `i` is replaced with `!!(i)`
 
    
 
@@ -346,11 +348,11 @@ In this lesson, we created four data frames:
 
    
 
-We are going to use these data frames in the next lesson.  In the next lesson, we could just reopen the ***lansingJanTempsFixed.csv*** file, save the data to a data frame and then create the stacked dataframes.  But, since we have already done that work, it would be easier to pass the data frames from this lesson to the next lesson.
+We are going to use these data frames in the next lesson.  In the next lesson, we could just reopen the ***lansingJanTempsFixed.csv*** file, save the data to a data frame and then create the stacked dataframes.  But, since we have already done the work, it would be easier to pass the data frames from this lesson to the next lesson.
 
  
 
-We will create one object that holds all four data frame using ***list()***.  The object is a ***List*** object (we will be talking a lot more about List object in the next few lessons):
+We will create one object that holds all four data frame using ***list()***.  The object is a ***List*** object (we will be talking a lot more about ***List*** objects in the next few lessons):
 
 ``` r
 temperatureDFs= list("origDF" = lansJanTempsDF,
@@ -363,9 +365,9 @@ The value in quotes is the name of the object -- you can choose the name but you
 
  
 
-***temperatureDFs*** appear in the ***Environment*** as a ***List*** object with four data frames inside it.  We can view the data frames in the list by clicking on the arrow in the ***Environment*** tab or double-clicking on ***temperatureDFs*** to see it in a viewer tab:
+***temperatureDFs*** appear in ***Variables*** as a ***List*** object with four data frames inside it (`list [4]`).  We can view the data frames inside ***temperatureDFs*** by double-clicking on them. However, the data viewer lists them by their index within the List object starting with ***0***. So, the ***third*** data frame in ***temperatureDFs*** shows up in the viewer as ***2***:
 
-![The List object in the Environment and the viewer tab](images/R-2-09-ListObject.jpg){#fig-list_object .fs}
+![The List object in Variables and the viewer tab](images/R-2-09-ListObject.jpg){#fig-list_object .fs}
 
 ### Saving the List object to a file
 
@@ -380,7 +382,7 @@ There should now be files named ***tempDFs.rdata*** and ***tempDFs.rds*** in the
 
 ## Application
 
-A\) [Open the file Lansing2016NOAA.csv](../data/Lansing2016NOAA.csv) and save the contents of the file to a data frame named ***weatherData***
+A\) [Open the file Lansing2016Noaa.csv](../data/Lansing2016Noaa.csv) and save the contents of the file to a data frame named ***weatherData***
 
  
 
@@ -410,11 +412,11 @@ C\) Create six GGPlot canvases, the individual canvases will contain:
 
 ## Extension: Lazy Evaluation
 
-This is probably the one programming topic that has caused the most agony in this author's life as it is unintuitive and happens unexpectedly in many programming languages...
+Lazy Evaluation is probably the one programming topic that has caused the most agony in this author's life! [Lazy Evaluation]{.hl} means that the evaluation of an expression is delayed until, theoretically, the results are actually needed. This can increase the efficiency of a script but it can also lead to some very unexpected behavior. In GGPlot's case, the index values in a ***for*** loop are not evaluated at the expected time leading to a unintuitive situation...
 
  
 
-There are **7** columns in ***lansJanTempsDF***, which means the ***for*** loop will cycle **7** times. Each time with a different value for ***i*** (1, 2, 3, 4, 5, 6, and 7).
+There are **7** columns in ***lansJanTempsDF***, which means the ***for*** loop will cycle **7** times. Each time with a different value for the index value, ***i*** (1, 2, 3, 4, 5, 6, and 7).
 
 ``` r
 for(i in 1:ncol(lansJanTempsDF))         # add plots to canvas one at a time
@@ -425,7 +427,7 @@ for(i in 1:ncol(lansJanTempsDF))         # add plots to canvas one at a time
 }
 ```
 
-However, if you execute the code above you will only see one plot – the plot for the seventh cycle (when ***i=7***). Actually, [the seventh plot got plotted seven times]{.hl} but they overlap each other so you only see one.
+However, if you execute the code above you will only see one plot – the plot for the seventh cycle (when ***i=7***). In reality, [the seventh plot was plotted seven times]{.hl}, and, since it is the exact same plot, the seven plots completely overlap.
 
  
 
@@ -433,18 +435,39 @@ The reason this happens is that R, in the background, will first stack up the co
 
 ``` r
 plot4 = plot4 + geom_line( mapping=aes(x=1:nrow(lansJanTempsDF), 
-                                         y=lansJanTempsDF[,«i»], 
-                                         color=colnames(lansJanTempsDF)[«i»])
+                                       y=lansJanTempsDF[,«i»], 
+                                       color=colnames(lansJanTempsDF)[«i»])
 plot4 = plot4 + geom_line( mapping=aes(x=1:nrow(lansJanTempsDF), 
-                                         y=lansJanTempsDF[,«i»], 
-                                         color=colnames(lansJanTempsDF)[«i»])
+                                       y=lansJanTempsDF[,«i»], 
+                                       color=colnames(lansJanTempsDF)[«i»])
 plot4 = plot4 + geom_line( mapping=aes(x=1:nrow(lansJanTempsDF), 
-                                         y=lansJanTempsDF[,«i»], 
-                                         color=colnames(lansJanTempsDF)[«i»])
-... (4 more) ...
+                                       y=lansJanTempsDF[,«i»], 
+                                       color=colnames(lansJanTempsDF)[«i»])
+... (3 more) ...
+plot4 = plot4 + geom_line( mapping=aes(x=1:nrow(lansJanTempsDF), 
+                                       y=lansJanTempsDF[,«i»], 
+                                       color=colnames(lansJanTempsDF)[«i»])
 ```
 
-And then execute each command in the stack. This happens all the time when programming ***for*** loops and it is normally not an issue. Except, in this case, R does not realize that ***i*** is the index variable. R assumes that ***i=7*** because that is the value of ***i*** at the end of the ***for*** loop (i.e., after the seventh cycle). So, R replaces ***i*** with 7 for every command. This is called [Lazy Evaluation]{.hl} and I cannot explain why it happens here, but I can say that I have experienced it many times in many programming languages in my career.
+And then execute each command in the stack. This happens all the time when programming ***for*** loops and it is normally not an issue. Except, in this case, R does not realize that ***i*** is the index variable. R assumes that ***i=7*** because that is the value of ***i*** at the end of the ***for*** loop (i.e., after the seventh cycle). So, R replaces ***i*** with 7 for every command.
+
+``` r
+plot4 = plot4 + geom_line( mapping=aes(x=1:nrow(lansJanTempsDF), 
+                                       y=lansJanTempsDF[,«7»], 
+                                       color=colnames(lansJanTempsDF)[«7»])
+plot4 = plot4 + geom_line( mapping=aes(x=1:nrow(lansJanTempsDF), 
+                                       y=lansJanTempsDF[,«7»], 
+                                       color=colnames(lansJanTempsDF)[«7»])
+plot4 = plot4 + geom_line( mapping=aes(x=1:nrow(lansJanTempsDF), 
+                                       y=lansJanTempsDF[,«7»], 
+                                       color=colnames(lansJanTempsDF)[«7»])
+... (3 more) ...
+plot4 = plot4 + geom_line( mapping=aes(x=1:nrow(lansJanTempsDF), 
+                                       y=lansJanTempsDF[,«7»], 
+                                       color=colnames(lansJanTempsDF)[«7»])
+```
+
+This is called [Lazy Evaluation]{.hl} and I cannot explain why it happens here, but I can say that I have experienced this behavior many times in many programming languages in my career.
 
  
 
@@ -460,5 +483,8 @@ plot4 = plot4 + geom_line( mapping=aes(x=1:nrow(lansJanTempsDF),
 plot4 = plot4 + geom_line( mapping=aes(x=1:nrow(lansJanTempsDF), 
                                          y=lansJanTempsDF[,«3»], 
                                          color=colnames(lansJanTempsDF)[«3»])
-... (4 more) ...
+... (3 more) ...
+plot4 = plot4 + geom_line( mapping=aes(x=1:nrow(lansJanTempsDF), 
+                                         y=lansJanTempsDF[,«7»], 
+                                         color=colnames(lansJanTempsDF)[«7»])
 ```
