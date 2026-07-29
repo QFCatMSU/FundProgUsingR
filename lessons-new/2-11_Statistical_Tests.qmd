@@ -6,17 +6,15 @@ short: "2-11"
 
 ### to-do
 
-- more on the difference between rdata and rds files
-
 ## Purpose
 
-- Opening , and using data from, rdata files
+- Opening, and using data from, rdata and rds files
 
-- Use t-tests and ANOVAS
+- Performing t-tests and ANOVAS
 
 - demonstrate subsetting methods
 
-- plot and calculate a linear regresion
+- calculate and plot linear regressions
 
 ## Script and data for this lesson
 
@@ -26,7 +24,7 @@ The List file created in the last lesson: [tempDFs.rdata](../data/tempDFs.rdata)
 
 ## Reading in the rdata file (List from last lesson)
 
-In previous lesson, we opened up a CSV file and saved the data to a data frame using ***read.csv()***.  In this lesson, we are going to use some of the data frames created in the last lesson -- data frames that were saved to a ***rdata*** file in the ***data*** folder of our project.
+In most of the previous lessons, we use ***read.csv()*** to open a CSV file and save the data to a data frame.  In this lesson, we are going to use some of the data frames created in the last lesson -- data frames that were saved to a ***rdata*** file in the ***data*** folder of our project.
 
  
 
@@ -40,13 +38,13 @@ From last lesson:
 
  
 
-Now, let's open up the file using ***load()***:
+We use ***load()*** to open the ***rdata*** file and save it to ***Variables***:
 
 ``` r
 load(file = "data/tempDFs.rdata");
 ```
 
-Inside the ***rdata*** file is a ***List*** object, ***temperatureDFs***,  with four data frames.  In the next couple lessons we will be dealing a lot more with navigating and creating ***List*** objects.  For now, a ***List*** object is a container for other object (like data frames). ***load()*** takes the objects from the ***rdata*** file and puts in the ***Environment***:
+Inside the ***rdata*** file is a ***List*** object, ***temperatureDFs***,  with four data frames.  In the next couple lessons we will be dealing a lot more with navigating and creating ***List*** objects.  For now, a ***List*** object is a container for other object (like data frames). ***load()*** takes the objects from the ***rdata*** file and puts in ***Variables***:
 
 ![The List object from the rdata file -- it is a carbon copy of the List object from last lesson](images/R-2-10-LoadRData.jpg){#fig-rdata_list .fs}
 
@@ -61,13 +59,13 @@ stackedDF2 = temperatureDFs$stackDF_3_6;
 stackedDF3 = temperatureDFs$stackedDF_1_2_5_6;
 ```
 
-This put the data frames directly in the ***Environment***:
+This put the data frames directly in ***Variables***:
 
-``` {.r tab="Environment"}
-⮞ lansJanTempsDF:   31 obs. of 6 variables
-⮞ stackedDF:        186 obs. of 2 variables
-⮞ stackedDF2:       62 obs. of 2 variables
-⮞ stackedDF3:       124 obs. of 2 variables
+``` {.r tab="Variables"}
+⮞ lansJanTempsDF:   [31 rows x 6 columns] <data.frame>
+⮞ stackedDF:        [186 rows x 2 columns] <data.frame>
+⮞ stackedDF2:       [62 rows x 2 columns] <data.frame>
+⮞ stackedDF3:       [124 rows x 2 columns] <data.frame>
 ```
 
 ## t-tests
@@ -84,7 +82,13 @@ We are going to compare the means from January 2012 (column **2**) and January 2
 tTest1 = t.test(x=lansJanTempsDF$Jan2012, y=lansJanTempsDF$Jan2014);
 ```
 
-In the ***Environment*** tab, ***tTest1*** is labelled as a "List of 10".  There is a lot of information in that List and we will dig more into this later.  For now, we can get a helpful summary using the function ***print()*** and passing it the results of the t-test:
+In ***Variables***, ***tTest1*** is labelled as an [htest]{.hl}, which uses a standardized List object to structure the output of a [hypothesis test]{.hl}.
+
+``` {.r tab="Variables"}
+> tTest1:  [statistic: 4.77...]   «htest»
+```
+
+There is a lot of information in that List and we will dig more into this later.  For now, we can get a helpful summary using the function ***print()*** and passing it the results of the t-test:
 
 ``` r
 print(tTest1);
@@ -129,7 +133,7 @@ We will do a second t-test between years that do look as visually similar (@fig-
 tTest2 = t.test(x=lansJanTempsDF[,3], y=lansJanTempsDF[,6]);
 ```
 
-And, let's summarize the results of the t-test in the ***Console*** tab:
+And, summarize the results of the t-test in the ***Console*** tab using `print(tTest2)`:
 
 ::: {#fig-second_summary_ttest}
 ``` r
@@ -168,7 +172,7 @@ For ***tTest1*** an ***tTest2***, we used 2 different methods for subsetting a c
 
  
 
-This is because there are four different operators that you can use to subset a data frame and for three of the operators you can use numbers or names:
+This is because there are four different operators that you can use to subset a data frame and, for three of the operators, you can use numbers or names:
 
 - ***\$:*** dollar sign operator ([note: this is the only operator where you cannot use a number]{.note})
 
@@ -226,17 +230,17 @@ tTest2g = t.test(x=lansJanTempsDF$Jan2012, y=lansJanTempsDF$Jan2014;
 
 The operators in general (and in order of this author preference):
 
-- The ***\$*** operator is the most convenient because it requires the least code and RStudio will give you suggestions
+- The ***\$*** operator is the most convenient because it requires the least code and both Positron and RStudio will give you suggestions
 
 - The ***\[ , \]*** operator is the most robust because it is explicit about the two-dimensionality of the data frame, allowing you to subset the rows along with the columns. This is the best choice if you are subsetting rows and columns at the same time
 
-- The ***\[\[  \]\]*** operator is best used for more complex object like ***Lists*** -- I generally avoid these when using data frames
+- The ***\[\[  \]\]*** operator is best used for more complex object like ***Lists*** (in a later lesson) -- I generally avoid these when using data frames
 
 - The ***\[  \]*** operator does a different kind of subsetting than the other three operators that will be explored in the next lesson. This author would argue that it is the least useful operator
 
 ## ANOVAs
 
-ANOVAs are similar to t-tests except they generally are used to test the means from three or more groups of data, whereas a t-test can only test the means from two groups.  For comparison, we are going to start by using an ANOVA on 2 groups (Jan2013 and Jan2016).
+ANOVAs are similar to t-tests except they are generally used to test the means from three or more groups of data, whereas a t-test can only test the means from two groups.  For comparison, we are going to start by using an ANOVA on 2 groups (Jan2013 and Jan2016).
 
  
 
@@ -289,9 +293,9 @@ Residuals   60   7016  116.94
 ANOVA of the temperatures from 2012 and 2014
 :::
 
-The results of the ANOVA show the probability that the temperatures come from the same distribution is ***0.382*** (***38.2%***).  This, as expected, is the very close to the same probability (**0.3823**) that we got from doing the t-test between **2013** and **2016** and means we do not reject the NULL hypothesis that the groups come from the same distribution.
+The results of the ANOVA show the probability that the temperatures come from the same distribution is ***0.382*** (***38.2%***).  This, as expected, is the very close to the same probability (**0.3823**) that we got from doing the t-test between **2013** and **2016** and means we do not reject the **NULL** hypothesis that the groups come from the same distribution.
 
-### A Second ANOVA \<make into application\>
+### A Second ANOVA 
 
 We are going to perform a second ANOVA on the 4 years (2011, 2012, 2015,and 2016) in ***stackedDF3*** created in last lesson.
 
@@ -314,7 +318,7 @@ Residuals   120   8926    74.4
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 ```
 
-The results of the ANOVA show that the probability of the four sets of January temperatures coming from the same distribution is **3.17e-05**, or **0.00317%**. In this case, we reject the NULL hypothesis that the groups come from the same distribution.
+The results of the ANOVA show that the probability of the four sets of January temperatures coming from the same distribution is **3.17e-05**, or **0.00317%**. In this case, we reject the **NULL** hypothesis that the groups come from the same distribution.
 
 ### Residuals: checking for normailty
 
@@ -322,17 +326,17 @@ Lastly, we can perform a histogram on the residuals of the ANOVA to show the we 
 
  
 
-The ***residuals()*** function gets the 124 residuals from ***Jan4MonthAnova:***
+The ***residuals()*** function gets the 124 residuals, which is the difference between the 124 observations and the mean, from ***Jan4MonthAnova:***
 
 ``` r
 residuals = residuals(Jan4MonthAnova);
 ```
 
-``` {.r tab="Environment"}
-residuals: Named num [1:124] 28.387 -0.613 7.387 6.387 ...
+``` {.r tab="Variables"}
+residuals: 28.387 -0.613 7.387 6.387 ...    dbl [124]
 ```
 
-We can then plot the ***residuals*** vector in a histogram by mapping the vector to ***x*** (the y-axis is count as does not get mapped):
+We can then plot the ***residuals*** vector in a histogram by mapping it to ***x*** ([note: in a histogram, the y-axis is the count of unique values mapped in **x** as does not get its own mapping]{.note}):
 
 ``` r
 plot1 = ggplot() +
@@ -378,7 +382,7 @@ We can formalize the calculation of the humidity vs. temperature linear regressi
 
  
 
-The argument we need to set for ***lm()*** is ***formula*** and ***formula*** is in this form: ***y \~ x***
+The argument we need to set for ***lm()*** is ***formula*** and ***formula*** is in the form: ***y \~ x***
 
 So, ***y*** is the humidity column and ***x*** is the temperature column:
 
@@ -426,7 +430,7 @@ Multiple R-squared:  «0.0513»,    Adjusted R-squared:  0.04869
 F-statistic: 19.68 on 1 and 364 DF,  p-value: «1.213e-05»
 ```
 
-The slope and intercept are in this summary.  The R-squared value tells us that temperature explains about ***5.13%*** (0.0513) of the variance in humidity and the p-value of ***1.21e-05*** (0.0000121) says we reject the NULL hypothesis that temperature is not a predictor of humidity.  In other words, changes in temperature can predict some change in humidity. 
+The slope and intercept are in this summary.  The R-squared value tells us that temperature explains about ***5.13%*** (0.0513) of the variance in humidity and the p-value of ***1.21e-05*** (0.0000121) says we reject the **NULL** hypothesis that temperature is not a predictor of humidity.  In other words, changes in temperature can predict some change in humidity. 
 
 ## Application
 
@@ -434,7 +438,7 @@ The slope and intercept are in this summary.  The R-squared value tells us that
 
  
 
-2\) Based on the boxplot of all 6 years ( @fig-box_temp_data ), which three years would most likely come form the same distribution (i.e., the ANOVA would not reject the NULL hypothesis).
+2\) Based on the boxplot of all 6 years ( @fig-box_temp_data ), which three years would most likely come form the same distribution (i.e., the ANOVA would not reject the **NULL** hypothesis).
 
 - create a stacked frame with just these three years
 
@@ -478,17 +482,17 @@ In the last lesson, we saved the List object ***temperatureDFs*** to two differe
 
  
 
-The two types of files serve a similar purpose: saving objects from your Environment to your Project Folder to be used later. The big difference between the two is how they are later loaded into your Environment.
+The two types of files serve a similar purpose: saving objects from ***Variables*** to your Project Folder to be used later. The big difference between the two is how they are later loaded into ***Variables***.
 
  
 
-When you load an rdata file, the objects in the rdata file get loaded directly into you Environment exactly as they previously were (i.e., same name as values). In this case, the List ***temperatureDFs*** is directly loaded into the Environment:
+When you load an rdata file, the objects in the rdata file get loaded directly into ***Variables*** exactly as they were (i.e., same name and values). In this case, the List ***temperatureDFs*** is directly loaded into ***Variables***:
 
 ``` r
 load(file = "data/tempDFs.rdata");
 ```
 
-When you load an rds file, the object in the rds file need to be saved to a variable to get loaded into you Environment. This means the values are the same but the name could be different. In this case, the information from ***temperatureDFs*** is save to a variable named ***tempDFs2***:
+When you load an rds file, the object in the rds file need to be saved to a variable to get loaded into ***Variables***. This means the values are the same but the name could be different. In this case, the information from ***temperatureDFs*** is save to a variable named ***tempDFs2***:
 
 ``` r
 tempDFs2 = readRDS(file="data/tempDFs.rds");
@@ -496,8 +500,8 @@ tempDFs2 = readRDS(file="data/tempDFs.rds");
 
 ### Pro and cons
 
-RData files are the quick-and-dirty way to save R objects and reload them later. A single `.RData` file can store multiple objects, and you can even save an entire Environment at once. This is convenient for short-term work, for example restoring your Environment the next morning. However, loading an `.RData` file restores objects directly into the Environment, which can have unintended consequences: existing objects with the same names will be overwritten. This makes `.RData` files risky in larger scripts and collaborative settings.
+RData files are the quick-and-dirty way to save R objects and reload them later. A single `.RData` file can store multiple objects, or even all object in ***Variables***. This is convenient for short-term work, for example restoring your ***Variables*** tab the next morning. However, loading an `.RData` file restores objects directly into ***Variables*** can have unintended consequences: existing objects with the same names will be overwritten. This makes `.RData` files risky in larger scripts and collaborative settings.
 
  
 
-RDS files are the safer and more collaborator-friendly way to save objects. An `.rds` file stores exactly one object. The file contains the object’s data, but not its name. When loading the file, the user explicitly assigns the object to a variable name of their choosing. This explicit assignment avoids accidental overwrites, and leads to workflows that are easier to reproduce and maintain.
+RDS files are the safer and more collaborator-friendly way to save objects. An `.rds` file stores exactly one object. The file contains the object’s data, but not its name. When loading the file, the caller explicitly assigns the object to a variable name of their choosing. This explicit assignment avoids accidental overwrites, and leads to workflows that are easier to reproduce and maintain.

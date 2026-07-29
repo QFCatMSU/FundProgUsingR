@@ -605,7 +605,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#upload-changes-to-github" id="toc-upload-changes-to-github" class="nav-link" data-scroll-target="#upload-changes-to-github"><span class="header-section-number">14.2</span> Upload changes to GitHub</a></li>
   <li><a href="#create-an-issue-in-github" id="toc-create-an-issue-in-github" class="nav-link" data-scroll-target="#create-an-issue-in-github"><span class="header-section-number">14.3</span> Create an Issue in GitHub</a></li>
   </ul></li>
-  <li><a href="#extension-lazy-evaluation" id="toc-extension-lazy-evaluation" class="nav-link" data-scroll-target="#extension-lazy-evaluation"><span class="header-section-number">15</span> Extension: Lazy Evaluation</a></li>
+  <li><a href="#extension-lazy-evaluation" id="toc-extension-lazy-evaluation" class="nav-link" data-scroll-target="#extension-lazy-evaluation"><span class="header-section-number">15</span> Extension: Lazy Evaluation</a>
+  <ul class="collapse">
+  <li><a href="#forcing-immediate-i.e.-non-lazy-evaluation" id="toc-forcing-immediate-i.e.-non-lazy-evaluation" class="nav-link" data-scroll-target="#forcing-immediate-i.e.-non-lazy-evaluation"><span class="header-section-number">15.1</span> Forcing immediate (i.e., non-lazy) evaluation</a></li>
+  </ul></li>
   </ul>
 </nav>
 </nav>
@@ -1087,8 +1090,8 @@ Figure&nbsp;13: Informing your instructor the application is finished
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(lansJanTempsDF))         <span class="co"># add plots to canvas one at a time</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>{</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  plot4 <span class="ot">=</span> plot4 <span class="sc">+</span> <span class="fu">geom_line</span>( <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(lansJanTempsDF), </span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">y=</span>lansJanTempsDF[,i], </span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">color=</span><span class="fu">colnames</span>(lansJanTempsDF)[i]) )</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">y=</span>lansJanTempsDF[,«i»], </span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">color=</span><span class="fu">colnames</span>(lansJanTempsDF)[«i»]) )</span>
 <span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>However, if you execute the code above you will only see one plot – the plot for the seventh cycle (when <strong><em>i=7</em></strong>). In reality, <span class="hl">the seventh plot was plotted seven times</span>, and, since it is the exact same plot, the seven plots completely overlap.</p>
 <p>&nbsp;</p>
@@ -1121,23 +1124,32 @@ Figure&nbsp;13: Informing your instructor the application is finished
 <span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">y=</span>lansJanTempsDF[,«<span class="dv">7</span>»], </span>
 <span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">color=</span><span class="fu">colnames</span>(lansJanTempsDF)[«<span class="dv">7</span>»])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This is called <span class="hl">Lazy Evaluation</span> and I cannot explain why it happens here, but I can say that I have experienced this behavior many times in many programming languages in my career.</p>
-<p>&nbsp;</p>
-<p><strong><em>!!()</em></strong> is a function that forces R to immediately evaluate what is inside the parentheses (i.e., before R stacks the commands). This means the stacked commands will look like this and execute properly:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>plot4 <span class="ot">=</span> plot4 <span class="sc">+</span> <span class="fu">geom_line</span>( <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(lansJanTempsDF), </span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">y=</span>lansJanTempsDF[,«<span class="dv">1</span>»], </span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">color=</span><span class="fu">colnames</span>(lansJanTempsDF)[«<span class="dv">1</span>»])</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="at">plot4 =</span> plot4 <span class="sc">+</span> <span class="fu">geom_line</span>( <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(lansJanTempsDF), </span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">y=</span>lansJanTempsDF[,«<span class="dv">2</span>»], </span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">color=</span><span class="fu">colnames</span>(lansJanTempsDF)[«<span class="dv">2</span>»])</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="at">plot4 =</span> plot4 <span class="sc">+</span> <span class="fu">geom_line</span>( <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(lansJanTempsDF), </span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">y=</span>lansJanTempsDF[,«<span class="dv">3</span>»], </span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">color=</span><span class="fu">colnames</span>(lansJanTempsDF)[«<span class="dv">3</span>»])</span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="fu">...</span> (<span class="dv">3</span> more) ...</span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="at">plot4 =</span> plot4 <span class="sc">+</span> <span class="fu">geom_line</span>( <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(lansJanTempsDF), </span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">y=</span>lansJanTempsDF[,«<span class="dv">7</span>»], </span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">color=</span><span class="fu">colnames</span>(lansJanTempsDF)[«<span class="dv">7</span>»])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="forcing-immediate-i.e.-non-lazy-evaluation" class="level3" data-number="15.1">
+<h3 data-number="15.1" class="anchored" data-anchor-id="forcing-immediate-i.e.-non-lazy-evaluation"><span class="header-section-number">15.1</span> Forcing immediate (i.e., non-lazy) evaluation</h3>
+<p><strong><em>!!()</em></strong> is a function that forces R to immediately evaluate what is inside the parentheses (i.e., before R stacks the commands).</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(lansJanTempsDF))         <span class="co"># add plots to canvas one at a time</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  plot4 <span class="ot">=</span> plot4 <span class="sc">+</span> <span class="fu">geom_line</span>( <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(lansJanTempsDF), </span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">y=</span>lansJanTempsDF[,«<span class="sc">!!</span>(i)»], </span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">color=</span><span class="fu">colnames</span>(lansJanTempsDF)[«<span class="sc">!!</span>(i)»]) )</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This means the stacked commands will look like this and execute properly:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>plot4 <span class="ot">=</span> plot4 <span class="sc">+</span> <span class="fu">geom_line</span>( <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(lansJanTempsDF), </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">y=</span>lansJanTempsDF[,«<span class="dv">1</span>»], </span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">color=</span><span class="fu">colnames</span>(lansJanTempsDF)[«<span class="dv">1</span>»])</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="at">plot4 =</span> plot4 <span class="sc">+</span> <span class="fu">geom_line</span>( <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(lansJanTempsDF), </span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">y=</span>lansJanTempsDF[,«<span class="dv">2</span>»], </span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">color=</span><span class="fu">colnames</span>(lansJanTempsDF)[«<span class="dv">2</span>»])</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="at">plot4 =</span> plot4 <span class="sc">+</span> <span class="fu">geom_line</span>( <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(lansJanTempsDF), </span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">y=</span>lansJanTempsDF[,«<span class="dv">3</span>»], </span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">color=</span><span class="fu">colnames</span>(lansJanTempsDF)[«<span class="dv">3</span>»])</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="fu">...</span> (<span class="dv">3</span> more) ...</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="at">plot4 =</span> plot4 <span class="sc">+</span> <span class="fu">geom_line</span>( <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(lansJanTempsDF), </span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">y=</span>lansJanTempsDF[,«<span class="dv">7</span>»], </span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">color=</span><span class="fu">colnames</span>(lansJanTempsDF)[«<span class="dv">7</span>»])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

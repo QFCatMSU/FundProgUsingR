@@ -422,8 +422,8 @@ There are **7** columns in ***lansJanTempsDF***, which means the ***for*** loop 
 for(i in 1:ncol(lansJanTempsDF))         # add plots to canvas one at a time
 {
   plot4 = plot4 + geom_line( mapping=aes(x=1:nrow(lansJanTempsDF), 
-                                         y=lansJanTempsDF[,i], 
-                                         color=colnames(lansJanTempsDF)[i]) )
+                                         y=lansJanTempsDF[,«i»], 
+                                         color=colnames(lansJanTempsDF)[«i»]) )
 }
 ```
 
@@ -469,9 +469,20 @@ plot4 = plot4 + geom_line( mapping=aes(x=1:nrow(lansJanTempsDF),
 
 This is called [Lazy Evaluation]{.hl} and I cannot explain why it happens here, but I can say that I have experienced this behavior many times in many programming languages in my career.
 
- 
+### Forcing immediate (i.e., non-lazy) evaluation
 
-***!!()*** is a function that forces R to immediately evaluate what is inside the parentheses (i.e., before R stacks the commands). This means the stacked commands will look like this and execute properly:
+***!!()*** is a function that forces R to immediately evaluate what is inside the parentheses (i.e., before R stacks the commands).
+
+``` r
+for(i in 1:ncol(lansJanTempsDF))         # add plots to canvas one at a time
+{
+  plot4 = plot4 + geom_line( mapping=aes(x=1:nrow(lansJanTempsDF), 
+                                         y=lansJanTempsDF[,«!!(i)»], 
+                                         color=colnames(lansJanTempsDF)[«!!(i)»]) )
+}
+```
+
+This means the stacked commands will look like this and execute properly:
 
 ``` r
 plot4 = plot4 + geom_line( mapping=aes(x=1:nrow(lansJanTempsDF), 
