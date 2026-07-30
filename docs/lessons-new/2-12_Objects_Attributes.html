@@ -578,11 +578,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#purpose" id="toc-purpose" class="nav-link" data-scroll-target="#purpose"><span class="header-section-number">1</span> Purpose</a></li>
   <li><a href="#script-for-this-lesson" id="toc-script-for-this-lesson" class="nav-link" data-scroll-target="#script-for-this-lesson"><span class="header-section-number">2</span> Script for this lesson</a></li>
   <li><a href="#terminology" id="toc-terminology" class="nav-link" data-scroll-target="#terminology"><span class="header-section-number">3</span> Terminology</a></li>
-  <li><a href="#objects-and-variables" id="toc-objects-and-variables" class="nav-link" data-scroll-target="#objects-and-variables"><span class="header-section-number">4</span> Objects and Variables</a>
+  <li><a href="#objects-in-r" id="toc-objects-in-r" class="nav-link" data-scroll-target="#objects-in-r"><span class="header-section-number">4</span> Objects in R</a>
   <ul class="collapse">
-  <li><a href="#atomic-vectors-and-lists" id="toc-atomic-vectors-and-lists" class="nav-link" data-scroll-target="#atomic-vectors-and-lists"><span class="header-section-number">4.1</span> Atomic vectors and Lists</a></li>
-  <li><a href="#atomic-vectors-vs-list" id="toc-atomic-vectors-vs-list" class="nav-link" data-scroll-target="#atomic-vectors-vs-list"><span class="header-section-number">4.2</span> Atomic vectors vs List</a></li>
-  <li><a href="#folder-and-file-analogy-for-lists-and-atomic-vectors" id="toc-folder-and-file-analogy-for-lists-and-atomic-vectors" class="nav-link" data-scroll-target="#folder-and-file-analogy-for-lists-and-atomic-vectors"><span class="header-section-number">4.3</span> Folder and file analogy for Lists and atomic vectors</a></li>
+  <li><a href="#objects-in-positron" id="toc-objects-in-positron" class="nav-link" data-scroll-target="#objects-in-positron"><span class="header-section-number">4.1</span> Objects in Positron</a></li>
+  <li><a href="#relationship-between-the-objects" id="toc-relationship-between-the-objects" class="nav-link" data-scroll-target="#relationship-between-the-objects"><span class="header-section-number">4.2</span> Relationship between the objects</a></li>
   </ul></li>
   <li><a href="#the-simplest-object-in-r-the-vector" id="toc-the-simplest-object-in-r-the-vector" class="nav-link" data-scroll-target="#the-simplest-object-in-r-the-vector"><span class="header-section-number">5</span> The simplest object in R: the vector</a>
   <ul class="collapse">
@@ -598,10 +597,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#dimension-dim-attribute" id="toc-dimension-dim-attribute" class="nav-link" data-scroll-target="#dimension-dim-attribute"><span class="header-section-number">8</span> dimension (dim) attribute</a>
   <ul class="collapse">
-  <li><a href="#multidimensional-objects" id="toc-multidimensional-objects" class="nav-link" data-scroll-target="#multidimensional-objects"><span class="header-section-number">8.1</span> Multidimensional objects</a></li>
-  <li><a href="#accessing-rows-and-columns-in-matrices" id="toc-accessing-rows-and-columns-in-matrices" class="nav-link" data-scroll-target="#accessing-rows-and-columns-in-matrices"><span class="header-section-number">8.2</span> accessing rows and columns in matrices</a></li>
-  <li><a href="#matrices-are-vectors" id="toc-matrices-are-vectors" class="nav-link" data-scroll-target="#matrices-are-vectors"><span class="header-section-number">8.3</span> matrices are vectors</a></li>
-  <li><a href="#the-operator" id="toc-the-operator" class="nav-link" data-scroll-target="#the-operator"><span class="header-section-number">8.4</span> The $ operator</a></li>
+  <li><a href="#dimensional-vectors" id="toc-dimensional-vectors" class="nav-link" data-scroll-target="#dimensional-vectors"><span class="header-section-number">8.1</span> 2-dimensional vectors</a></li>
+  <li><a href="#dimensional-vectors-1" id="toc-dimensional-vectors-1" class="nav-link" data-scroll-target="#dimensional-vectors-1"><span class="header-section-number">8.2</span> 3-dimensional vectors</a></li>
+  <li><a href="#accessing-rows-and-columns-in-matrices" id="toc-accessing-rows-and-columns-in-matrices" class="nav-link" data-scroll-target="#accessing-rows-and-columns-in-matrices"><span class="header-section-number">8.3</span> accessing rows and columns in matrices</a></li>
+  <li><a href="#matrices-are-vectors" id="toc-matrices-are-vectors" class="nav-link" data-scroll-target="#matrices-are-vectors"><span class="header-section-number">8.4</span> matrices are vectors</a></li>
+  <li><a href="#the-operator" id="toc-the-operator" class="nav-link" data-scroll-target="#the-operator"><span class="header-section-number">8.5</span> The $ operator</a></li>
   </ul></li>
   <li><a href="#class-attribute-and-typeof" id="toc-class-attribute-and-typeof" class="nav-link" data-scroll-target="#class-attribute-and-typeof"><span class="header-section-number">9</span> class attribute and typeof()</a></li>
   <li><a href="#other-attributes-metadata-or-comments" id="toc-other-attributes-metadata-or-comments" class="nav-link" data-scroll-target="#other-attributes-metadata-or-comments"><span class="header-section-number">10</span> Other attributes (metadata or comments)</a>
@@ -646,6 +646,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="to-do" class="level3" data-number="0.1">
 <h3 data-number="0.1" class="anchored" data-anchor-id="to-do"><span class="header-section-number">0.1</span> To-do</h3>
+<ul>
+<li>Talk about procedural, functional, and object-oriented programming??</li>
+</ul>
 </section>
 <section id="purpose" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="purpose"><span class="header-section-number">1</span> Purpose</h2>
@@ -664,30 +667,36 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="3" class="anchored" data-anchor-id="terminology"><span class="header-section-number">3</span> Terminology</h2>
 <p>This lesson requires the use of terminology that has been inconsistently used in R or has morphed in meaning throughout the years, so you will find different definitions online.&nbsp; In general, I will be using the terminology from the 2<sup>nd</sup> edition of <a href="https://adv-r.hadley.nz/">Hadley Wickham’s Advanced R book</a> and mention places where there is commonly used terminology that is different.</p>
 </section>
-<section id="objects-and-variables" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="objects-and-variables"><span class="header-section-number">4</span> Objects and Variables</h2>
-<p>In the programming world, anything stored in memory that has a value (or multiple values) associated with it is called a <strong><em>variable</em></strong>.&nbsp; This terms gets a bit confusing because values that do not change are still called <strong><em>variables</em></strong> (sometimes called <strong><em>constant variables</em></strong>).&nbsp; Also, variables has different meanings in different fields from mathematics to science to statistics.&nbsp; Perhaps, for this reason, R tends to use the term <strong><em>object</em></strong> to define anything that has a name and stores values. That means that, in R, <span class="hl">everything in the Environment tab in RStudio is an object</span>.</p>
-<p>&nbsp;</p>
-<p>Broadly speaking, in R there are two types of objects: Atomic Vectors (covered in this lesson) and Lists (covered in the next lesson).&nbsp;</p>
-<section id="atomic-vectors-and-lists" class="level3" data-number="4.1">
-<h3 data-number="4.1" class="anchored" data-anchor-id="atomic-vectors-and-lists"><span class="header-section-number">4.1</span> Atomic vectors and Lists</h3>
-<p><span class="hl">Atomic vectors are objects that hold values of the same type</span> (e.g., numeric, string).&nbsp; In other words, atomic vectors are just vectors. However, in R, you will get often get error messages that refer to an “atomic vector” (<a href="#fig-errorAtomicVec" class="quarto-xref">Figure&nbsp;6</a>).</p>
-<p>&nbsp;</p>
-<p>Anything you create with <strong><em>c()</em></strong> is an atomic vector and atomic vectors can have dimensions – a 2D atomic vector is called a matrix and a 3D atomic vector is called an array.</p>
+<section id="objects-in-r" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="objects-in-r"><span class="header-section-number">4</span> Objects in R</h2>
+<p>In the R world, anything stored in memory that has a name is called an <span class="hl">object</span>. In base-R, there are three main types of objects: atomic vectors (usually shortened to vector), functions, and Lists. Broadly speaking:</p>
+<ul>
+<li><p><span class="hl">(atomic) vectors</span>: objects that hold values of the same type. The word <strong><em>atomic</em></strong> is rarely used but does occasionally appear as in <a href="#fig-errorAtomicVec" class="quarto-xref">Figure&nbsp;7</a>.</p></li>
+<li><p><span class="hl">functions</span>: objects that hold operations</p></li>
+<li><p><span class="hl">Lists</span>: objects that hold other objects (including Lists) – covered in next lesson (<span class="note">note: data frames are a type of List</span>)</p></li>
+</ul>
+<section id="objects-in-positron" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="objects-in-positron"><span class="header-section-number">4.1</span> Objects in Positron</h3>
+<p>When you execute a script in Positron, all of the current objects are put in the <strong><em>Variables</em></strong> tab. This is poorly names because, technically speaking, only vectors are variables. The tab would be better named <strong><em>Objects</em></strong>. The Variables tab is divided into three sections: DATA, VALUES, ans FUNCTIONS that somewhat map to the three object types:</p>
+<ul>
+<li><p>FUNCTIONS: holds all function objects</p></li>
+<li><p>VALUES: holds all vectors except 2D vectors (<span class="note">note: yes, this is a bit confusing!</span>)</p></li>
+<li><p>DATA: holds all matrices (2D vectors) and Lists (which includes data frames)</p></li>
+</ul>
+<div id="fig-object_in_var" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-object_in_var-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R_2-12_ObjectInSession.jpg" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-object_in_var-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Objects in the Positron Variables tab (lesson 1-15 script)
+</figcaption>
+</figure>
+</div>
 </section>
-<section id="atomic-vectors-vs-list" class="level3" data-number="4.2">
-<h3 data-number="4.2" class="anchored" data-anchor-id="atomic-vectors-vs-list"><span class="header-section-number">4.2</span> Atomic vectors vs List</h3>
-<p>Whereas atomic vectors hold values, <span class="hl">a List is an object that holds other objects</span> – including other Lists.</p>
-<p>&nbsp;</p>
-<p>A data frame is an example of a List where each column is an atomic vector – and each column has the same number of values.</p>
-</section>
-<section id="folder-and-file-analogy-for-lists-and-atomic-vectors" class="level3" data-number="4.3">
-<h3 data-number="4.3" class="anchored" data-anchor-id="folder-and-file-analogy-for-lists-and-atomic-vectors"><span class="header-section-number">4.3</span> Folder and file analogy for Lists and atomic vectors</h3>
-<p>Lists and Atomic Vectors functionally play the same role as folder and files on your computer.&nbsp; Folders are used to create a tree-like structure for information on your computer. Folders contain folders and files (the tree-like structure), folders do not directly contain information.&nbsp; It is the files that contains the information – and files are always at the end of the tree (a file cannot contain another folder or file).</p>
-<p>&nbsp;</p>
-<p>Lists are the folders of the R world – they create a tree-like structure for information.&nbsp; Lists can contain other Lists or Atomic Vector.&nbsp; The Atomic Vector are the files – they contain information and are always at the end of the tree (Atomic Vector cannot contain Lists nor other atomic vectors).</p>
-<p>&nbsp;</p>
-<p>A data frame is a type of List (folder) that contains multiple columns/Atomic Vectors (files) of the same size.</p>
+<section id="relationship-between-the-objects" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="relationship-between-the-objects"><span class="header-section-number">4.2</span> Relationship between the objects</h3>
+<p>In R, vectors, functions, and lists are like different types of files and folders on a computer. A vector is like a data file, a function is like an executable file, and a list (covered in the next lesson) is like a folder: a container that stores objects, including vectors, functions, and even other lists.</p>
 <p>&nbsp;</p>
 <p><span class="note">Note: Atomic vectors are often referred to as <strong><em>homogeneous objects</em></strong> and Lists are often referred to as <strong>heterogeneous objects,</strong> but I believe these terms are not helpful as they create a false distinction between Lists and atomic vectors.&nbsp;</span></p>
 </section>
@@ -696,17 +705,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="5" class="anchored" data-anchor-id="the-simplest-object-in-r-the-vector"><span class="header-section-number">5</span> The simplest object in R: the vector</h2>
 <p>Because R is a programming language designed to work with data, the vector represents the most basic object in R.&nbsp; <span class="note">Note: This is different from most programming languages where a single named value is the most basic object</span><em>.</em></p>
 <p>&nbsp;</p>
-<p>A vector is a named object that hold values of the same type (or class) – usually strings or numeric.</p>
+<p>A vector is a named object that hold values of the same type (or class) – usually string or numeric.</p>
 <p>&nbsp;</p>
 <p><span class="hl">Even a single value is put into a vector.</span>&nbsp; Setting a variable to one value creates a one-value vector<strong>:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>temperature <span class="ot">=</span> <span class="dv">80</span>; <span class="co"># a vector, temperature, with one value, 80</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The fact that <strong><em>temperature</em></strong> is a vector with one value is not shown in the <strong><em>Environment</em></strong> but it is shown in the <strong><em>Console</em></strong> with the <strong>[1]</strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> temperature</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">80</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>temperature <span class="ot">=</span> <span class="dv">80</span>; <span class="co"># a vector, named temperature, with one value, 80</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>In <strong><em>Variables</em></strong>, <strong><em>temperature</em></strong> is listed as a double (<strong><em>dbl</em></strong>) without any number but this is equivalent to <strong><em>dbl [1].</em></strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" data-tab="Variables"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>temperature<span class="sc">:</span>  <span class="dv">80</span>     dbl</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The <strong><em>Console</em></strong>, with the <strong>[1]</strong>, better shows the vector nature of all R variables:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> temperature</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">80</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This code creates a vector named <strong><em>JulyTemps</em></strong> with eight numeric values:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>JulyTemps <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">90</span>, <span class="dv">88</span>, <span class="dv">86</span>, <span class="dv">77</span>,<span class="dv">81</span>, <span class="dv">83</span>, <span class="dv">80</span>, <span class="dv">80</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>And, the <strong><em>Environment</em></strong> shows that it is a numeric (num) vector with eight values [1:8]:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>JulyTemps num [<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>] <span class="dv">90</span> <span class="dv">88</span> <span class="dv">86</span> ...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>JulyTemps <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">90</span>, <span class="dv">88</span>, <span class="dv">86</span>, <span class="dv">77</span>,<span class="dv">81</span>, <span class="dv">83</span>, <span class="dv">80</span>, <span class="dv">80</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>And, <strong><em>Variables</em></strong> shows that it is a double (dbl) vector with eight values [8]:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" data-tab="Variables"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>JulyTemps<span class="sc">:</span>  <span class="dv">90</span> <span class="dv">88</span> <span class="dv">86</span> <span class="dv">77</span> <span class="dv">81</span> <span class="dv">83</span> <span class="dv">80</span> <span class="dv">80</span>    dbl [<span class="dv">8</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <section id="types-of-vector" class="level3" data-number="5.1">
 <h3 data-number="5.1" class="anchored" data-anchor-id="types-of-vector"><span class="header-section-number">5.1</span> Types of vector</h3>
 <p>There are six basic types/<strong><em>classes</em></strong> of vectors in R:</p>
@@ -727,17 +738,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>&nbsp;</p>
 <p>The issue is that, R will often coerce integer vectors to numeric vectors, effectively taking away the memory and speed advantages.</p>
 <p>&nbsp;</p>
-<p>Let’s create an integer vector:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>intValues <span class="ot">=</span> <span class="fu">as.integer</span>(<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>));</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>And then add 1 :</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>intValues2 <span class="ot">=</span> intValues <span class="sc">+</span> <span class="dv">1</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>In the <strong><em>Environment</em></strong> we see that <strong><em>intValues</em></strong> is an integer vector but <strong><em>intValues2</em></strong> is numeric:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>intValues<span class="sc">:</span>    int [<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>] <span class="dv">3</span> <span class="dv">4</span> <span class="dv">5</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>intValues2<span class="sc">:</span>   num [<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>] <span class="dv">4</span> <span class="dv">5</span> <span class="dv">6</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>If we want the results to be an integer, then we need to declare <strong>1</strong> as an integer:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>intValues3 <span class="ot">=</span> intValues <span class="sc">+</span> <span class="fu">as.integer</span>(<span class="dv">1</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>We can use <strong><em>as.integer()</em></strong> to explicitly create an integer vector:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>intValues <span class="ot">=</span> <span class="fu">as.integer</span>(<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>));</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>And then add 1 and save the results a a new vector:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>intValues2 <span class="ot">=</span> intValues <span class="sc">+</span> <span class="dv">1</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>In <strong><em>Variables</em></strong> we see that <strong><em>intValues</em></strong> is an integer vector but <strong><em>intValues2</em></strong> is double (i.e., numeric):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" data-tab="Variables"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>intValues<span class="sc">:</span>    <span class="dv">3</span> <span class="dv">4</span> <span class="dv">5</span>   int [<span class="dv">3</span>]</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>intValues2<span class="sc">:</span>   <span class="dv">4</span> <span class="dv">5</span> <span class="dv">6</span>   dbl [<span class="dv">3</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If we want the results to be an integer, then we need to also declare <strong>1</strong> as an integer:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>intValues3 <span class="ot">=</span> intValues <span class="sc">+</span> <span class="fu">as.integer</span>(<span class="dv">1</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now, R will see the results as integers:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>intValues3<span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>] <span class="dv">4</span> <span class="dv">5</span> <span class="dv">6</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10" data-tab="Variables"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>intValues3<span class="sc">:</span>  <span class="dv">4</span> <span class="dv">5</span> <span class="dv">6</span>   int [<span class="dv">3</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><a href="#extension-rounding-functions-in-r">Extension: rounding functions in R</a></p>
 </section>
 <section id="a-booleanlogical-vector-truefalse-values" class="level3" data-number="5.3">
@@ -748,38 +759,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="manually-create-a-boolean-vector" class="level4" data-number="5.3.1">
 <h4 data-number="5.3.1" class="anchored" data-anchor-id="manually-create-a-boolean-vector"><span class="header-section-number">5.3.1</span> Manually create a Boolean vector</h4>
 <p>We can use <strong><em>c()</em></strong> to create a vector with Boolean values.&nbsp; Let’s create a vector that tells whether it rained on the eight days in <strong><em>JulyTemps</em></strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>rainyDaysInJuly <span class="ot">=</span> <span class="fu">c</span>(<span class="cn">FALSE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>In the <strong><em>Environment</em></strong>, <strong><em>rainyDaysInJuly</em></strong> is given as a <strong><em>logi</em></strong>, which stands for <strong><em>logical</em></strong> – which is just another name for Boolean:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>rainyDaysInJuly<span class="sc">:</span> logi [<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>] <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">TRUE</span> ...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>rainyDaysInJuly <span class="ot">=</span> <span class="fu">c</span>(<span class="cn">FALSE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>In <strong><em>Variables</em></strong>, <strong><em>rainyDaysInJuly</em></strong> is given as a <strong><em>lgl</em></strong>, which stands for <strong><em>logical</em></strong> – which is just another name for Boolean:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12" data-tab="Variables"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>rainyDaysInJuly<span class="sc">:</span>  <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">TRUE</span> ...   lgl [<span class="dv">8</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>and we can check which values are <strong><em>TRUE</em></strong> using <strong><em>which()</em></strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span>(rainyDaysInJuly)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">3</span> <span class="dv">5</span> <span class="dv">6</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span>(rainyDaysInJuly)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">3</span> <span class="dv">5</span> <span class="dv">6</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="conditional-statements-create-a-boolean-vector" class="level4" data-number="5.3.2">
 <h4 data-number="5.3.2" class="anchored" data-anchor-id="conditional-statements-create-a-boolean-vector"><span class="header-section-number">5.3.2</span> Conditional statements create a Boolean vector</h4>
 <p>A conditional statement always creates a Boolean vector.&nbsp; We typically used conditional statements in <strong><em>if()</em></strong> statements:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(JulyTemps))</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Output Boolean value instead of executing the if() statement</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">#  if(JulyTemps[i] &gt; 85)</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"day"</span>, i, (JulyTemps[i] <span class="sc">&gt;</span> <span class="dv">85</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>);</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>}    </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(JulyTemps))</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Output Boolean value instead of executing the if() statement:  if(JulyTemps[i] &gt; 85)</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"day"</span>, i, (JulyTemps[i] <span class="sc">&gt;</span> <span class="dv">85</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>);</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>}    </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The output from the above <strong><em>for</em></strong> loop is:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>day <span class="dv">1</span> <span class="cn">TRUE</span> </span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>day <span class="dv">2</span> <span class="cn">TRUE</span> </span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>day <span class="dv">3</span> <span class="cn">TRUE</span> </span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>day <span class="dv">4</span> <span class="cn">FALSE</span> </span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>day <span class="dv">5</span> <span class="cn">FALSE</span> </span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>day <span class="dv">6</span> <span class="cn">FALSE</span> </span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>day <span class="dv">7</span> <span class="cn">FALSE</span> </span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>day <span class="dv">8</span> <span class="cn">FALSE</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>day <span class="dv">1</span> <span class="cn">TRUE</span> </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>day <span class="dv">2</span> <span class="cn">TRUE</span> </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>day <span class="dv">3</span> <span class="cn">TRUE</span> </span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>day <span class="dv">4</span> <span class="cn">FALSE</span> </span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>day <span class="dv">5</span> <span class="cn">FALSE</span> </span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>day <span class="dv">6</span> <span class="cn">FALSE</span> </span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>day <span class="dv">7</span> <span class="cn">FALSE</span> </span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>day <span class="dv">8</span> <span class="cn">FALSE</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This means that the first three days in <strong><em>JulyTemps</em></strong> were more than 85, the rest were less than or equal to 85.</p>
 <p>&nbsp;</p>
 <p>We could also save Boolean results to a vector.&nbsp; <strong><em>(JulyTemps &gt; 85)</em></strong> instructs R to check the 8 values in <strong><em>JulyTemps</em></strong> against the number <strong>85</strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>hotterThan85 <span class="ot">=</span> (JulyTemps <span class="sc">&gt;</span> <span class="dv">85</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>hotterThan85 <span class="ot">=</span> (JulyTemps <span class="sc">&gt;</span> <span class="dv">85</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>And the answer is given as a Boolean vector:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> hotterThan85</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>]  <span class="cn">TRUE</span>  <span class="cn">TRUE</span>  <span class="cn">TRUE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> hotterThan85</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>]  <span class="cn">TRUE</span>  <span class="cn">TRUE</span>  <span class="cn">TRUE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 </section>
 </section>
@@ -791,7 +801,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li><p><strong><em>names</em></strong>: names for the <span class="hl">values inside an object</span> – not to be confused with the name of the object</p></li>
 <li><p><strong><em>class</em></strong>: the type of object is it (numeric, boolean…)</p></li>
-<li><p><strong><em>dim</em></strong>: dimension – this is how you create a 2D matrix, 3D array, or higher dimension arrays</p></li>
+<li><p><strong><em>dim</em></strong>: dimension – this is one way to create a 2D matrix, 3D array, or higher dimension arrays</p></li>
 </ul>
 <p>&nbsp;</p>
 <p>2) Attributes that act as <span class="hl">metadata for the object</span>.&nbsp; These attributes are defined by the user and are analogous to comments in a script.</p>
@@ -800,56 +810,66 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="names-attribute" class="level2" data-number="7">
 <h2 data-number="7" class="anchored" data-anchor-id="names-attribute"><span class="header-section-number">7</span> names attribute</h2>
-<p>All objects have a name and they can be assigned an attribute called <strong><em>names</em></strong>.&nbsp; <span class="hl">The name of the object and the <strong>names</strong> attribute are two different things</span><em>.</em> The attribute <strong><em>names</em></strong> refers to names given to the values <span class="hl">within the object</span> and are assigned using the <strong><em>names()</em></strong> function.</p>
+<p>All objects have a <strong><em>name</em></strong> and they can be assigned an attribute called <strong><em>names</em></strong>.&nbsp; <span class="hl">The <strong><em>name</em></strong> of the object and the <strong>names</strong> attribute are two different things</span><em>.</em> The attribute <strong><em>names</em></strong> refers to names given to the values <span class="hl">within the object</span> and are assigned using the <strong><em>names()</em></strong> function.</p>
 <p>&nbsp;</p>
 <p>Let’s first create a copy of our <strong><em>JulyTemps</em></strong> vector:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>JulyTempsNamed <span class="ot">=</span> JulyTemps;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>JulyTempsNamed <span class="ot">=</span> JulyTemps;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>And we will use <strong><em>names()</em></strong> to give the date to each temperature value:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(JulyTempsNamed) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"July22"</span>, <span class="st">"July23"</span>, <span class="st">"July24"</span>, <span class="st">"July25"</span>,</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"July26"</span>, <span class="st">"July27"</span>, <span class="st">"July28"</span>, <span class="st">"July29"</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong><em>JulyTempsNamed</em></strong> is called a <strong><em>Named</em></strong> vector in the <strong><em>Environment</em></strong> and the names are given in the <strong><em>Console</em></strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>JulyTempsNames<span class="sc">:</span>  Named num [<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>] <span class="dv">90</span> <span class="dv">88</span> <span class="dv">86</span> <span class="dv">77</span>...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(JulyTempsNamed) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"July22"</span>, <span class="st">"July23"</span>, <span class="st">"July24"</span>, <span class="st">"July25"</span>,</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"July26"</span>, <span class="st">"July27"</span>, <span class="st">"July28"</span>, <span class="st">"July29"</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>In <strong><em>Variables,</em></strong> you can see the names when you expand <strong><em>JulyTempsNames</em></strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20" data-tab="Variables"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>🞃 JulyTempsNames<span class="sc">:</span>  <span class="dv">90</span> <span class="dv">88</span> <span class="dv">86</span> <span class="dv">77</span>...    dbl [<span class="dv">8</span>]</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>     July22     <span class="sc">:</span>  <span class="dv">90</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>     July23     <span class="sc">:</span>  <span class="dv">88</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>     July24     <span class="sc">:</span>  <span class="dv">86</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>     July25     <span class="sc">:</span>  <span class="dv">77</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>     July26     <span class="sc">:</span>  <span class="dv">81</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>     July27     <span class="sc">:</span>  <span class="dv">83</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>     July28     <span class="sc">:</span>  <span class="dv">80</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>     July29     <span class="sc">:</span>  <span class="dv">80</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>And in the <strong><em>Console</em></strong>, <strong><em>JulyTempsNamed</em></strong> has two rows, the first contains the names and the second contains the values:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> JulyTempsNamed</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>July22 July23 July24 July25 July26 July27 July28 July29 </span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">90</span>     <span class="dv">88</span>     <span class="dv">86</span>     <span class="dv">77</span>     <span class="dv">81</span>     <span class="dv">83</span>     <span class="dv">80</span>     <span class="dv">80</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> JulyTempsNamed</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>July22 July23 July24 July25 July26 July27 July28 July29 </span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">90</span>     <span class="dv">88</span>     <span class="dv">86</span>     <span class="dv">77</span>     <span class="dv">81</span>     <span class="dv">83</span>     <span class="dv">80</span>     <span class="dv">80</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <section id="subsetting-named-values-with-square-brackets" class="level3" data-number="7.1">
 <h3 data-number="7.1" class="anchored" data-anchor-id="subsetting-named-values-with-square-brackets"><span class="header-section-number">7.1</span> Subsetting named values with square brackets [ ]</h3>
 <p>The main advantage to naming vectors is that you can use the names to subset the value within the object.</p>
 <p>&nbsp;</p>
-<p>To get the second value in <strong><em>JulyTempsNamed</em></strong>, you can subset with the position (<strong>2</strong>) or the name (<strong>July23</strong>):</p>
+<p>To get the second value in <strong><em>JulyTempsNamed</em></strong>, you can subset with the position <code>[2]</code> or the name <code>[July23]</code>:</p>
 <div id="fig-subset_named_vec" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-subset_named_vec-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> JulyTempsNamed[<span class="dv">2</span>]</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>July23 </span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">88</span> </span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> JulyTempsNamed[<span class="st">"July23"</span>]</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>July23 </span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="dv">88</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> JulyTempsNamed[<span class="dv">2</span>]</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>July23 </span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">88</span> </span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> JulyTempsNamed[<span class="st">"July23"</span>]</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>July23 </span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    <span class="dv">88</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-subset_named_vec-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Subsetting a named vector with the position and the name – the results are the same
+Figure&nbsp;2: Subsetting a named vector with the position and the name – the results are the same
 </figcaption>
 </figure>
 </div>
 <p>You can subset multiple values by position or name:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> JulyTempsNamed[<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">6</span>)]</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>July23 July25 July27 </span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">88</span>     <span class="dv">77</span>     <span class="dv">83</span> </span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> JulyTempsNamed[<span class="fu">c</span>(<span class="st">"July23"</span>, <span class="st">"July25"</span>, <span class="st">"July27"</span>)]</span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>July23 July25 July27 </span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    <span class="dv">88</span>     <span class="dv">77</span>     <span class="dv">83</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>From a functional perspective, <span class="hl">named values and unnamed values will work exactly the same in any computation</span>.&nbsp; The difference between the two is only how they are displayed and how they can be referenced.&nbsp; Here we subtract all values in <strong><em>JulyTempsNamed</em></strong> by <strong>20</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> JulyTempsNamed[<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">6</span>)]</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>July23 July25 July27 </span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">88</span>     <span class="dv">77</span>     <span class="dv">83</span> </span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> JulyTempsNamed[<span class="fu">c</span>(<span class="st">"July23"</span>, <span class="st">"July25"</span>, <span class="st">"July27"</span>)]</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>July23 July25 July27 </span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    <span class="dv">88</span>     <span class="dv">77</span>     <span class="dv">83</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>From a functional perspective, <span class="hl">named values and unnamed values will work exactly the same in any computation</span>.&nbsp; The difference between the two is only how they are displayed and how they can be referenced.&nbsp;</p>
+<p>&nbsp;</p>
+<p>Here we subtract all values in <strong><em>JulyTempsNamed</em></strong> by <strong>20</strong> – the names stay the same but the values change:</p>
 <div id="fig-math_named_unamed" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-math_named_unamed-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> JulyTempsNamed <span class="sc">-</span> <span class="dv">20</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>July22 July23 July24 July25 July26 July27 July28 July29 </span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">70</span>     <span class="dv">68</span>     <span class="dv">66</span>     <span class="dv">57</span>     <span class="dv">61</span>     <span class="dv">63</span>     <span class="dv">60</span>     <span class="dv">60</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> JulyTempsNamed <span class="sc">-</span> <span class="dv">20</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>July22 July23 July24 July25 July26 July27 July28 July29 </span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">70</span>     <span class="dv">68</span>     <span class="dv">66</span>     <span class="dv">57</span>     <span class="dv">61</span>     <span class="dv">63</span>     <span class="dv">60</span>     <span class="dv">60</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-math_named_unamed-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: You can do mathematics on named values just like unnamed values
+Figure&nbsp;3: You can do mathematics on named values just like unnamed values
 </figcaption>
 </figure>
 </div>
@@ -860,13 +880,13 @@ Figure&nbsp;2: You can do mathematics on named values just like unnamed values
 <div id="fig-double_brackets" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-double_brackets-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> JulyTempsNamed[[<span class="dv">2</span>]]</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">88</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> JulyTempsNamed[[<span class="st">"July23"</span>]]</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">88</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> JulyTempsNamed[[<span class="dv">2</span>]]</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">88</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> JulyTempsNamed[[<span class="st">"July23"</span>]]</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">88</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-double_brackets-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Using double brackets to subset named vectors will give you just the value
+Figure&nbsp;4: Using double brackets to subset named vectors will give you just the value
 </figcaption>
 </figure>
 </div>
@@ -874,15 +894,15 @@ Figure&nbsp;3: Using double brackets to subset named vectors will give you just 
 <div id="fig-single_double_brackets" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-single_double_brackets-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> JulyTempsNamed[<span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>]</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>July23 July24 July25 </span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">88</span>     <span class="dv">86</span>     <span class="dv">77</span> </span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> JulyTempsNamed[[<span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>]]</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> JulyTempsNamed[[<span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>]] <span class="sc">:</span> </span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  attempt to select more than one element <span class="cf">in</span> vectorIndex</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> JulyTempsNamed[<span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>]</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>July23 July24 July25 </span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">88</span>     <span class="dv">86</span>     <span class="dv">77</span> </span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> JulyTempsNamed[[<span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>]]</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> JulyTempsNamed[[<span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>]] <span class="sc">:</span> </span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  attempt to select more than one element <span class="cf">in</span> vectorIndex</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-single_double_brackets-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4: using single brackets and double brackets to subset multiple values in a vector
+Figure&nbsp;5: using single brackets and double brackets to subset multiple values in a vector
 </figcaption>
 </figure>
 </div>
@@ -891,96 +911,117 @@ Figure&nbsp;4: using single brackets and double brackets to subset multiple valu
 </section>
 <section id="dimension-dim-attribute" class="level2" data-number="8">
 <h2 data-number="8" class="anchored" data-anchor-id="dimension-dim-attribute"><span class="header-section-number">8</span> dimension (dim) attribute</h2>
-<p>When you create a vector using <strong><em>c()</em></strong>, you are creating an object that, functionally, has one dimension.&nbsp; This is why you can subset values in <strong><em>JulyTemps</em></strong> using their position within the vector (<a href="#fig-subset_named_vec" class="quarto-xref">Figure&nbsp;1</a>).</p>
+<p>When you create a vector using <strong><em>c()</em></strong>, you are creating an object that, functionally, has one dimension.&nbsp; This is why you can subset values in <strong><em>JulyTemps</em></strong> using their position within the vector (<a href="#fig-subset_named_vec" class="quarto-xref">Figure&nbsp;2</a>).</p>
 <p>&nbsp;</p>
 <p>However, data is sometimes best represented in multiple dimensions – for instance you might have temperatures that are stored by both location and date.</p>
-<section id="multidimensional-objects" class="level3" data-number="8.1">
-<h3 data-number="8.1" class="anchored" data-anchor-id="multidimensional-objects"><span class="header-section-number">8.1</span> Multidimensional objects</h3>
+<section id="dimensional-vectors" class="level3" data-number="8.1">
+<h3 data-number="8.1" class="anchored" data-anchor-id="dimensional-vectors"><span class="header-section-number">8.1</span> 2-dimensional vectors</h3>
 <p>We can use <strong><em>dim()</em></strong> to add more dimensions to a vector.</p>
 <p>&nbsp;</p>
 <p>We are going to make a two-dimensional vector (also called a matrix or a 2D array) using <strong><em>JulyTemps</em></strong>.&nbsp; First, we will create a copy of <strong><em>JulyTemps</em></strong> and then set the dimensions of the copy to two values (<strong>4</strong> and <strong>2</strong>).&nbsp; Those two dimension values (which can be thought of as <strong>4</strong> rows and <strong>2</strong> columns) must multiply to the number of values in the vector (<strong>8</strong>).</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>JulyTemps2D <span class="ot">=</span> July Temps;</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(JulyTemps2D) <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">2</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The <strong><em>Environment</em></strong> and <strong><em>Console</em></strong> reflect the dimensions in <strong><em>JulyTemps2D</em></strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> JulyTemps2D</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>     [,<span class="dv">1</span>] [,<span class="dv">2</span>]</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>,]   <span class="dv">90</span>   <span class="dv">81</span></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">2</span>,]   <span class="dv">88</span>   <span class="dv">83</span></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">3</span>,]   <span class="dv">86</span>   <span class="dv">80</span></span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>[<span class="dv">4</span>,]   <span class="dv">77</span>   <span class="dv">80</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>JulyTemps2D <span class="ot">=</span> July Temps;</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(JulyTemps2D) <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">2</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The <strong><em>Console</em></strong> reflects the dimensions in <strong><em>JulyTemps2D</em></strong>: whereas, in <strong><em>Variables</em></strong>, <strong><em>JulyTemps2D</em></strong> appears as a matrix:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> JulyTemps2D</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>     [,<span class="dv">1</span>] [,<span class="dv">2</span>]</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>,]   <span class="dv">90</span>   <span class="dv">81</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">2</span>,]   <span class="dv">88</span>   <span class="dv">83</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">3</span>,]   <span class="dv">86</span>   <span class="dv">80</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>[<span class="dv">4</span>,]   <span class="dv">77</span>   <span class="dv">80</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div id="fig-2D_display" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-2D_display-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>JulyTemps2D<span class="sc">:</span> num [<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>] <span class="dv">90</span> <span class="dv">88</span> <span class="dv">86</span> <span class="dv">77</span>...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29" data-tab="Variables"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>🞃 JulyTemps2D<span class="sc">:</span> [<span class="dv">4</span> rows x <span class="dv">2</span> columns] <span class="sc">&lt;</span>matrix<span class="sc">&gt;</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>   <span class="er">&gt;</span> [, <span class="dv">1</span>]    <span class="sc">:</span> <span class="dv">90</span> <span class="dv">88</span> <span class="dv">86</span> <span class="dv">77</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&gt;</span> [, <span class="dv">2</span>]    <span class="sc">:</span> <span class="dv">81</span> <span class="dv">83</span> <span class="dv">80</span> <span class="dv">80</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2D_display-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5: Displaying a 2D value in the Console and the Environment
+Figure&nbsp;6: Displaying a 2D value in the Console and Variables
 </figcaption>
 </figure>
 </div>
-<p>Now we have a 2D object that can be subsetted using the <strong>[ , ]</strong> operator (which can be though of as a dimensional subset operator):</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> JulyTemps2D[<span class="dv">3</span>,<span class="dv">2</span>]</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">80</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>We could create a three-dimensional object (called a 3D array) by setting the dimensions to three values.&nbsp; The numbers still need to multiply to <strong>8</strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>JulyTemps3D <span class="ot">=</span> JulyTemps;</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(JulyTemps3D) <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>); <span class="co"># each dimension has length of 2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> JulyTemps3D[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>]</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">80</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Now we have a 2D object that can be subset using the <strong>[ , ]</strong> operator (which can be thought of as a dimensional subset operator):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> JulyTemps2D[<span class="dv">3</span>,<span class="dv">2</span>]</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">80</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="dimensional-vectors-1" class="level3" data-number="8.2">
+<h3 data-number="8.2" class="anchored" data-anchor-id="dimensional-vectors-1"><span class="header-section-number">8.2</span> 3-dimensional vectors</h3>
+<p>We could also create a three-dimensional object (called a 3D array) by setting the dimensions to three values.&nbsp; The numbers still need to multiply to <strong>8</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>JulyTemps3D <span class="ot">=</span> JulyTemps;</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(JulyTemps3D) <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>); <span class="co"># each dimension has length of 2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>In the <strong><em>Console</em></strong>, the third dimension is show vertically as multiple 2D arrays:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> JulyTemps3D</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>, , <span class="dv">1</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>     [,<span class="dv">1</span>] [,<span class="dv">2</span>]</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>,]   <span class="dv">90</span>   <span class="dv">86</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>[<span class="dv">2</span>,]   <span class="dv">88</span>   <span class="dv">77</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>, , <span class="dv">2</span></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>     [,<span class="dv">1</span>] [,<span class="dv">2</span>]</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>,]   <span class="dv">81</span>   <span class="dv">80</span></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>[<span class="dv">2</span>,]   <span class="dv">83</span>   <span class="dv">80</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>In <strong><em>Variables</em></strong>, this object will appear under VALUES as a <strong><em>dbl</em></strong> with 3 dimensions <strong><em>[2, 2, 2]</em></strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33" data-tab="Variables"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>JulyTemps3D<span class="sc">:</span>  <span class="dv">90</span> <span class="dv">88</span> <span class="dv">86</span> <span class="dv">77</span> <span class="dv">81</span> <span class="dv">83</span> <span class="dv">80</span> <span class="dv">80</span>     dbl [<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>And we can subset the 3D vector using three values in the array operator:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> JulyTemps3D[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>]</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">80</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><span class="note">Note: You can declare a one-dimensional vector (also called a 1D array).&nbsp; I do not know if there is a practical reason to do this since vectors functionally operate as 1D objects:</span></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>JulyTemps1D <span class="ot">=</span> JulyTemps;</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(JulyTemps1D) <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">8</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>JulyTemps1D <span class="ot">=</span> JulyTemps;</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(JulyTemps1D) <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">8</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="accessing-rows-and-columns-in-matrices" class="level3" data-number="8.2">
-<h3 data-number="8.2" class="anchored" data-anchor-id="accessing-rows-and-columns-in-matrices"><span class="header-section-number">8.2</span> accessing rows and columns in matrices</h3>
+<section id="accessing-rows-and-columns-in-matrices" class="level3" data-number="8.3">
+<h3 data-number="8.3" class="anchored" data-anchor-id="accessing-rows-and-columns-in-matrices"><span class="header-section-number">8.3</span> accessing rows and columns in matrices</h3>
 <p>Let’s take the 2D matrix we created and add names for the rows and columns using <strong><em>rownames()</em></strong> and <strong><em>colnames()</em></strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>JulyTemps2DNamed <span class="ot">=</span> JulyTemps2D;</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(JulyTemps2DNamed) <span class="ot">=</span> <span class="fu">paste</span>(<span class="st">"date"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">sep=</span><span class="st">""</span>);</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(JulyTemps2DNamed) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"location1"</span>, <span class="st">"location2"</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>JulyTemps2DNamed <span class="ot">=</span> JulyTemps2D;</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(JulyTemps2DNamed) <span class="ot">=</span> <span class="fu">paste</span>(<span class="st">"date"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">sep=</span><span class="st">""</span>);</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(JulyTemps2DNamed) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"location1"</span>, <span class="st">"location2"</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>And we can see the names in the <strong><em>Console</em></strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> JulyTemps2DNamed</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>      location1 location2</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>date1        <span class="dv">90</span>        <span class="dv">81</span></span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>date2        <span class="dv">88</span>        <span class="dv">83</span></span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>date3        <span class="dv">86</span>        <span class="dv">80</span></span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>date4        <span class="dv">77</span>        <span class="dv">80</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> JulyTemps2DNamed</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>      location1 location2</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>date1        <span class="dv">90</span>        <span class="dv">81</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>date2        <span class="dv">88</span>        <span class="dv">83</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>date3        <span class="dv">86</span>        <span class="dv">80</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>date4        <span class="dv">77</span>        <span class="dv">80</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>We can now access values in the matrix by name or position using the dimensional operator:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> JulyTemps2DNamed[<span class="dv">3</span>,<span class="dv">2</span>]</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">80</span></span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> JulyTemps2DNamed[<span class="st">"date3"</span>,<span class="st">"location2"</span>]</span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">80</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> JulyTemps2DNamed[<span class="dv">3</span>,<span class="dv">2</span>]</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">80</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> JulyTemps2DNamed[<span class="st">"date3"</span>,<span class="st">"location2"</span>]</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">80</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>And we can access whole rows or columns by leaving the other blank:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> JulyTemps2DNamed[<span class="dv">3</span>,]</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>location1 location2 </span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>       <span class="dv">86</span>        <span class="dv">80</span> </span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> JulyTemps2DNamed[,<span class="dv">2</span>]</span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>date1 date2 date3 date4 </span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>   <span class="dv">81</span>    <span class="dv">83</span>    <span class="dv">80</span>    <span class="dv">80</span> </span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> JulyTemps2DNamed[,<span class="st">"location2"</span>]</span>
-<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>date1 date2 date3 date4 </span>
-<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>   <span class="dv">81</span>    <span class="dv">83</span>    <span class="dv">80</span>    <span class="dv">80</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> JulyTemps2DNamed[<span class="dv">3</span>,]</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>location1 location2 </span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>       <span class="dv">86</span>        <span class="dv">80</span> </span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> JulyTemps2DNamed[,<span class="dv">2</span>]</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>date1 date2 date3 date4 </span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>   <span class="dv">81</span>    <span class="dv">83</span>    <span class="dv">80</span>    <span class="dv">80</span> </span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> JulyTemps2DNamed[,<span class="st">"location2"</span>]</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>date1 date2 date3 date4 </span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>   <span class="dv">81</span>    <span class="dv">83</span>    <span class="dv">80</span>    <span class="dv">80</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="matrices-are-vectors" class="level3" data-number="8.3">
-<h3 data-number="8.3" class="anchored" data-anchor-id="matrices-are-vectors"><span class="header-section-number">8.3</span> matrices are vectors</h3>
+<section id="matrices-are-vectors" class="level3" data-number="8.4">
+<h3 data-number="8.4" class="anchored" data-anchor-id="matrices-are-vectors"><span class="header-section-number">8.4</span> matrices are vectors</h3>
 <p>The <strong><em>[ , ]</em></strong> operator is really the same thing as the <strong><em>[ ]</em></strong> operator.&nbsp; The difference is that <strong><em>[ , ]</em></strong> is used for 2D objects (matrices) whereas <strong><em>[ ]</em></strong> is used for 1D objects (vectors).</p>
 <p>&nbsp;</p>
 <p>You can use the 1D operator on a matrix – <strong><em>[ ]</em></strong> will flatten the matrix to one dimensional vector:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> JulyTemps2DNamed[<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>]</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">90</span> <span class="dv">88</span> <span class="dv">86</span> <span class="dv">77</span> <span class="dv">81</span> <span class="dv">83</span> <span class="dv">80</span> <span class="dv">80</span></span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> JulyTemps2DNamed[<span class="dv">5</span>]</span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">81</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> JulyTemps2DNamed[<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>]</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">90</span> <span class="dv">88</span> <span class="dv">86</span> <span class="dv">77</span> <span class="dv">81</span> <span class="dv">83</span> <span class="dv">80</span> <span class="dv">80</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> JulyTemps2DNamed[<span class="dv">5</span>]</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">81</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="the-operator" class="level3" data-number="8.4">
-<h3 data-number="8.4" class="anchored" data-anchor-id="the-operator"><span class="header-section-number">8.4</span> The $ operator</h3>
+<section id="the-operator" class="level3" data-number="8.5">
+<h3 data-number="8.5" class="anchored" data-anchor-id="the-operator"><span class="header-section-number">8.5</span> The $ operator</h3>
 <p>You cannot use <strong>$</strong> to subset any Atomic Vector (vector, matrix, or array). You will get the <span class="hl">$ operator is invalid for atomic vectors</span> error:</p>
 <div id="fig-errorAtomicVec" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-errorAtomicVec-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> JulyTemps2DNamed<span class="sc">$</span>col2</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> JulyTemps2DNamed<span class="sc">$</span>col2 <span class="sc">:</span> <span class="er">$</span> operator is invalid <span class="cf">for</span> atomic vectors</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> JulyTemps2DNamed<span class="sc">$</span>col2</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> JulyTemps2DNamed<span class="sc">$</span>col2 <span class="sc">:</span> <span class="er">$</span> operator is invalid <span class="cf">for</span> atomic vectors</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-errorAtomicVec-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6: R does not allow use of $ operator on vectors
+Figure&nbsp;7: R does not allow use of $ operator on vectors
 </figcaption>
 </figure>
 </div>
@@ -988,62 +1029,62 @@ Figure&nbsp;6: R does not allow use of $ operator on vectors
 </section>
 <section id="class-attribute-and-typeof" class="level2" data-number="9">
 <h2 data-number="9" class="anchored" data-anchor-id="class-attribute-and-typeof"><span class="header-section-number">9</span> class attribute and typeof()</h2>
-<p><strong><em>class()</em></strong> is a function that allows you to either view or set the class of an object (i.e., change a numeric vector to a character vector).&nbsp; <span class="hl">You should never use <strong>class()</strong> to changes the class of an object, instead use a specialized function like <strong>as.character()</strong>.</span></p>
+<p><strong><em>class()</em></strong> is a function that allows you to either view or set the class of an object (i.e., change a numeric vector to a character vector).&nbsp; <span class="hl">However, you should never use <strong>class()</strong> to changes the class of an object, instead use a specialized function like <strong>as.character()</strong>.</span></p>
 <p>&nbsp;</p>
 <p>Using <strong><em>class()</em></strong> to get the class of an object will produces inconsistent results.&nbsp; Using class on an object will return the value type if the vector has no dimensions set, and will return the object type if there are dimensions set:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">class</span>(JulyTemps2D)</span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"matrix"</span> <span class="st">"array"</span> </span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">class</span>(JulyTemps)</span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"numeric"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">class</span>(JulyTemps2D)</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"matrix"</span> <span class="st">"array"</span> </span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">class</span>(JulyTemps)</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"numeric"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Instead of class, you should use <span class="hl">typeof()</span><em>.</em> It will always give you the class of the values:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">typeof</span>(JulyTemps2D)</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"double"</span></span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">typeof</span>(JulyTemps)</span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"double"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">typeof</span>(JulyTemps2D)</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"double"</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">typeof</span>(JulyTemps)</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"double"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><span class="note">Note: <strong>double</strong> means the values are <strong>numeric</strong>.&nbsp; In other programming languages (especially older ones), there is a corresponding <strong>single</strong> class that does not exist in R.&nbsp;</span></p>
 </section>
 <section id="other-attributes-metadata-or-comments" class="level2" data-number="10">
 <h2 data-number="10" class="anchored" data-anchor-id="other-attributes-metadata-or-comments"><span class="header-section-number">10</span> Other attributes (metadata or comments)</h2>
 <p>You can create any attribute you want and add it an object using <strong><em>attr()</em></strong>.&nbsp; We are going to add two attributes using <strong><em>attr()</em></strong> to a copy of <strong><em>JulyTemps2DNamed</em></strong>.&nbsp; The attributes will be named <strong><em>timeChecked</em></strong> and <strong><em>unit</em></strong> and they will be set to <strong><em>noon</em></strong> and <strong><em>Fahrenheit</em></strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>JulyTemps2DNamed_2 <span class="ot">=</span> JulyTemps2DNamed;</span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(JulyTemps2DNamed_2, <span class="st">"timeChecked"</span>) <span class="ot">=</span> <span class="st">"noon"</span>;</span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(JulyTemps2DNamed_2, <span class="st">"unit"</span>) <span class="ot">=</span> <span class="st">"Fahrenheit"</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>JulyTemps2DNamed_2 <span class="ot">=</span> JulyTemps2DNamed;</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(JulyTemps2DNamed_2, <span class="st">"timeChecked"</span>) <span class="ot">=</span> <span class="st">"noon"</span>;</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(JulyTemps2DNamed_2, <span class="st">"unit"</span>) <span class="ot">=</span> <span class="st">"Fahrenheit"</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><span class="note">note: while not enforced, attribute names should follow variable variable naming conventions</span></p>
 <p>&nbsp;</p>
 <p>We can also use <strong><em>attr()</em></strong> to get the attributes of an object:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">attr</span>(JulyTempsNamed_2, <span class="st">"timeChecked"</span>)</span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"noon"</span></span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">attr</span>(JulyTempsNamed_2, <span class="st">"unit"</span>)</span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"Fahrenheit"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">attr</span>(JulyTempsNamed_2, <span class="st">"timeChecked"</span>)</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"noon"</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">attr</span>(JulyTempsNamed_2, <span class="st">"unit"</span>)</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"Fahrenheit"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><span class="hl">User-defined attributes should be treated as comments or metadata</span><em>.</em>&nbsp; Attributes give information that might interest the user of your script but attributes should not be a functional part of the script.&nbsp;</p>
 <section id="viewing-all-attributes" class="level3" data-number="10.1">
 <h3 data-number="10.1" class="anchored" data-anchor-id="viewing-all-attributes"><span class="header-section-number">10.1</span> Viewing all attributes</h3>
 <p>If you view a object in the <strong><em>Console</em></strong>, the user-defined attributes will be displayed:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> JulyTemps2DNamed_2</span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>      location1 location2</span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>date1        <span class="dv">90</span>        <span class="dv">81</span></span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>date2        <span class="dv">88</span>        <span class="dv">83</span></span>
-<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>date3        <span class="dv">86</span>        <span class="dv">80</span></span>
-<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>date4        <span class="dv">77</span>        <span class="dv">80</span></span>
-<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(,<span class="st">"timeChecked"</span>)</span>
-<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"noon"</span></span>
-<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(,<span class="st">"unit"</span>)</span>
-<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"Fahrenheit"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb46" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> JulyTemps2DNamed_2</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>      location1 location2</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>date1        <span class="dv">90</span>        <span class="dv">81</span></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>date2        <span class="dv">88</span>        <span class="dv">83</span></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>date3        <span class="dv">86</span>        <span class="dv">80</span></span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>date4        <span class="dv">77</span>        <span class="dv">80</span></span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(,<span class="st">"timeChecked"</span>)</span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"noon"</span></span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(,<span class="st">"unit"</span>)</span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"Fahrenheit"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>For a more robust view of the attributes in an object, you can use <strong><em>attributes()</em></strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">attributes</span>(JulyTemps2DNamed_2)</span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span>dim</span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">4</span> <span class="dv">2</span></span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span>dimnames</span>
-<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span>dimnames[[<span class="dv">1</span>]]</span>
-<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"date1"</span> <span class="st">"date2"</span> <span class="st">"date3"</span> <span class="st">"date4"</span></span>
-<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span>dimnames[[<span class="dv">2</span>]]</span>
-<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"location1"</span> <span class="st">"location2"</span></span>
-<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span>timeChecked</span>
-<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"noon"</span></span>
-<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span>unit</span>
-<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"Fahrenheit"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><span class="note">Note: <strong>dimnames</strong> is a property attribute that was set when you set the row and column names</span></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb47" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">attributes</span>(JulyTemps2DNamed_2)</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span>dim</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">4</span> <span class="dv">2</span></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span>dimnames</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span>dimnames[[<span class="dv">1</span>]]</span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"date1"</span> <span class="st">"date2"</span> <span class="st">"date3"</span> <span class="st">"date4"</span></span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span>dimnames[[<span class="dv">2</span>]]</span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"location1"</span> <span class="st">"location2"</span></span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span>timeChecked</span>
+<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"noon"</span></span>
+<span id="cb47-12"><a href="#cb47-12" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span>unit</span>
+<span id="cb47-13"><a href="#cb47-13" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"Fahrenheit"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><span class="note">Note: <strong>dimnames</strong> is an attribute set in the background when you set the row and column names</span></p>
 </section>
 </section>
 <section id="application" class="level2" data-number="11">
@@ -1071,9 +1112,10 @@ Figure&nbsp;6: R does not allow use of $ operator on vectors
 <li>Answer in comments: What happens to the other 361 unnamed values?</li>
 </ul>
 <p>&nbsp;</p>
-<p>E) Create a 4D array from this vector:&nbsp; c(1:256)</p>
+<p>E) Using <strong><em>sample()</em></strong>, create a vector with 800 random values from 1-100</p>
 <ul>
-<li>subset two values in the 4D vector</li>
+<li><p>Make this vector a 4D vector</p></li>
+<li><p>subset two values in the 4D vector</p></li>
 </ul>
 <p>&nbsp; If you have any questions regarding this application, feel free to email them to Charlie Belinsky at belinsky@msu.edu.</p>
 <section id="questions-to-answer" class="level3" data-number="11.1">
@@ -1106,7 +1148,7 @@ Figure&nbsp;6: R does not allow use of $ operator on vectors
 <img src="images/R-1-01_Upload.png" class="fs img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-upload-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7: Upload changes to GitHub – the red circle indicates how many files that changed (in this case: 1)
+Figure&nbsp;8: Upload changes to GitHub – the red circle indicates how many files that changed (in this case: 1)
 </figcaption>
 </figure>
 </div>
@@ -1131,7 +1173,7 @@ Figure&nbsp;7: Upload changes to GitHub – the red circle indicates how many fi
 <img src="images/R-1-01_Inform.png" class="fs img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-inform-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;8: Informing your instructor the application is finished
+Figure&nbsp;9: Informing your instructor the application is finished
 </figcaption>
 </figure>
 </div>
@@ -1142,23 +1184,23 @@ Figure&nbsp;8: Informing your instructor the application is finished
 <p>There are three rounding functions in R:</p>
 <ul>
 <li><p><strong><em>round()</em></strong> &nbsp; # rounds to nearest integer (<strong>5.3</strong> become <strong>5</strong> and <strong>5.7</strong> becomes <strong>6</strong>)</p></li>
-<li><p><strong><em>floor()</em></strong> # drops the decimal (both <strong>5.3</strong> and <strong>5.7</strong> become <strong>5</strong>)</p></li>
-<li><p><strong><em>ceiling()</em></strong>&nbsp; # increase decimal number to next integer&nbsp; (both <strong>5.3</strong> and <strong>5.7</strong> become <strong>6</strong>)</p>
+<li><p><strong><em>floor()</em></strong> # always rounds down (both <strong>5.3</strong> and <strong>5.7</strong> become <strong>5</strong>)</p></li>
+<li><p><strong><em>ceiling()</em></strong>&nbsp; # always rounds up&nbsp; (both <strong>5.3</strong> and <strong>5.7</strong> become <strong>6</strong>)</p>
 <p>&nbsp;</p></li>
 </ul>
 <p>Even though these function create integer-like values, R will still see the values as numeric:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> a <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">2.5</span>, <span class="fl">3.6</span>, <span class="sc">-</span><span class="fl">1.3</span>)</span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> b <span class="ot">=</span> <span class="fu">round</span>(a)</span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> b</span>
-<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>]  <span class="dv">2</span>  <span class="dv">4</span> <span class="sc">-</span><span class="dv">1</span></span>
-<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">class</span>(b)</span>
-<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"numeric"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb48" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> a <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">2.5</span>, <span class="fl">3.6</span>, <span class="sc">-</span><span class="fl">1.3</span>)</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> b <span class="ot">=</span> <span class="fu">round</span>(a)</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> b</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>]  <span class="dv">2</span>  <span class="dv">4</span> <span class="sc">-</span><span class="dv">1</span></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">class</span>(b)</span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"numeric"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>If you actually want integer values, then you need to to convert the vector to an integer:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb46" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> b <span class="ot">=</span> <span class="fu">as.integer</span>(b)</span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> b</span>
-<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>]  <span class="dv">2</span>  <span class="dv">4</span> <span class="sc">-</span><span class="dv">1</span></span>
-<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">class</span>(b)</span>
-<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"integer"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb49" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> b <span class="ot">=</span> <span class="fu">as.integer</span>(b)</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> b</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>]  <span class="dv">2</span>  <span class="dv">4</span> <span class="sc">-</span><span class="dv">1</span></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">class</span>(b)</span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"integer"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Integer values have a speed advantage over numeric values, which you will notice if you are processing 100,000 values.</p>
 
 
