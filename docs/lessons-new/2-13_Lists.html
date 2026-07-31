@@ -580,7 +580,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#objects-in-r" id="toc-objects-in-r" class="nav-link" data-scroll-target="#objects-in-r"><span class="header-section-number">3</span> Objects in R</a></li>
   <li><a href="#lists" id="toc-lists" class="nav-link" data-scroll-target="#lists"><span class="header-section-number">4</span> Lists</a>
   <ul class="collapse">
-  <li><a href="#lists-in-the-environment-tab" id="toc-lists-in-the-environment-tab" class="nav-link" data-scroll-target="#lists-in-the-environment-tab"><span class="header-section-number">4.1</span> Lists in the Environment tab</a></li>
+  <li><a href="#data-frames-are-lists-matrices-are-vectors" id="toc-data-frames-are-lists-matrices-are-vectors" class="nav-link" data-scroll-target="#data-frames-are-lists-matrices-are-vectors"><span class="header-section-number">4.1</span> Data frames are Lists, matrices are vectors</a></li>
   <li><a href="#creating-the-new-list" id="toc-creating-the-new-list" class="nav-link" data-scroll-target="#creating-the-new-list"><span class="header-section-number">4.2</span> Creating the new List</a></li>
   <li><a href="#including-names-for-the-objects" id="toc-including-names-for-the-objects" class="nav-link" data-scroll-target="#including-names-for-the-objects"><span class="header-section-number">4.3</span> Including names for the objects</a></li>
   </ul></li>
@@ -641,6 +641,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 data-number="0.1" class="anchored" data-anchor-id="to-do"><span class="header-section-number">0.1</span> To-do</h3>
 <ul>
 <li>expand lesson to include reading/writing Lists to RData file</li>
+<li>procedural, functional, and object-oriented programming discussion</li>
 </ul>
 </section>
 <section id="purpose" class="level2" data-number="1">
@@ -658,19 +659,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="objects-in-r" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="objects-in-r"><span class="header-section-number">3</span> Objects in R</h2>
-<p>As mentioned in last lesson, there are 2 types of objects (i.e., variables) in R:</p>
+<p>As mentioned in last lesson, there are 3 types of objects in R:</p>
 <ul>
-<li><p>Atomic vector (often just called vectors): objects that hold values of the same type (e.g., numeric, string, logical)</p></li>
-<li><p>Lists: objects that hold other objects (including more Lists)</p>
+<li><p>Vectors (sometimes called atomic vectors): objects that hold values of the same type (e.g., numeric, string, logical)</p></li>
+<li><p>Lists: objects that hold other objects (including more Lists)</p></li>
+<li><p>Functions: objects that hold operations</p>
 <p>&nbsp;</p></li>
 </ul>
-<p>The relationship between Atomic Vectors and Lists is analogous to the relationship between folders and files on your computer.&nbsp; Files, like atomic vector, hold information, or data.&nbsp; Folders, like Lists, are containers for other folders and files.</p>
-<p>&nbsp;</p>
-<p>Last lesson we talked mostly about atomic vectors. This lesson we will talk mostly about Lists. As you will see in this lesson, Lists create a tree-like structure for your data.&nbsp; At the end of the tree is the Atomic Vectors</p>
+<p>Last lesson we talked mostly about atomic vectors. This lesson we will talk mostly about Lists. As you will see in this lesson, Lists create a tree-like structure for your data.&nbsp;</p>
 </section>
 <section id="lists" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="lists"><span class="header-section-number">4</span> Lists</h2>
-<p>A List is an object that holds other (usually related) objects. When you create a plot or perform a statistical test, the results are often stored as Lists, as we will see later in the lesson.</p>
+<p>A List is an object that holds other (usually related) objects, much like a folder holds files. Lists are often used to organize and send data. For instance, when you perform a statistical test, the results are often stored as Lists, as we will see later in the lesson.</p>
 <p>&nbsp;</p>
 <p>We will create our own List with three objects in it.</p>
 <p>&nbsp;</p>
@@ -683,9 +683,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>someAnimals <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"llama"</span>, <span class="st">"guanaco"</span>, <span class="st">"alpaca"</span>, <span class="st">"goat"</span>);</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>someNumbers <span class="ot">=</span> <span class="fu">matrix</span>(<span class="at">nrow=</span><span class="dv">2</span>, <span class="at">ncol=</span><span class="dv">3</span>, <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">30</span>, <span class="at">to=</span><span class="dv">4</span>, <span class="at">length.out=</span><span class="dv">6</span>))</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>weatherData <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="at">file=</span><span class="st">"data/Lansing2016NOAA.csv"</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<section id="lists-in-the-environment-tab" class="level3" data-number="4.1">
-<h3 data-number="4.1" class="anchored" data-anchor-id="lists-in-the-environment-tab"><span class="header-section-number">4.1</span> Lists in the Environment tab</h3>
-<p>Notice that, in the Environment, <strong><em>weatherData</em></strong> has an arrow to expand it whereas <strong><em>someAnimals</em></strong> and <strong><em>someNumbers</em></strong> contains all of their information in one line.&nbsp; It is this expand arrow that indicates <strong><em>weatherData</em></strong> is a List, whereas <strong><em>someAnimals</em></strong> and <strong><em>SomeNumbers</em></strong> are atomic vectors.&nbsp; <strong><em>weatherData</em></strong> is a data frame, which is List where all the objects inside are vectors of the same length:</p>
+<section id="data-frames-are-lists-matrices-are-vectors" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="data-frames-are-lists-matrices-are-vectors"><span class="header-section-number">4.1</span> Data frames are Lists, matrices are vectors</h3>
+<p>Notice that, in the Environment, <strong><em>weatherData</em></strong> has an arrow to expand it whereas <strong><em>someAnimals</em></strong> and <strong><em>someNumbers</em></strong> contains all of their information in one line.&nbsp; It is this expand arrow that indicates <strong><em>weatherData</em></strong> is a List, whereas <strong><em>someAnimals</em></strong> and <strong><em>SomeNumbers</em></strong> are atomic vectors.&nbsp; <strong><em>weatherData</em></strong> is a data frame, which is a List where all the objects inside are vectors of the same length:</p>
 <div id="fig-list_expand_env" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-list_expand_env-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -802,6 +802,15 @@ Figure&nbsp;6: Lists after the three objects were appended and named
 </section>
 <section id="subsetting-within-a-list" class="level2" data-number="6">
 <h2 data-number="6" class="anchored" data-anchor-id="subsetting-within-a-list"><span class="header-section-number">6</span> Subsetting within a List</h2>
+<p>&lt;Show the Positron Variables tab&gt;</p>
+<p>&lt;Show three ways to subset</p>
+<ol type="1">
+<li><p>by [[ ]]</p></li>
+<li><p>by $</p></li>
+<li><p>by index number</p></li>
+</ol>
+<p>Note that you can combine these</p>
+<p>&nbsp;</p>
 <p>The RStudio <strong><em>Viewer</em></strong> tab for Lists has a nice feature where it will shows you how to subset an object inside a List when you click on it.&nbsp; In <strong><em>listDynamic5</em></strong> List, when you click on <strong><em>avgTemp</em></strong> in the <strong><em>weather</em></strong> dataframe – and at the bottom of the tab, RStudio shows the code to subset <strong><em>avgTemp</em></strong>:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>listDynamic5[[<span class="st">"weather"</span>]][[<span class="st">"avgTemp"</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>If you click the document icon with an arrow on the right-side, RStudio will put the above code in the <strong><em>Console</em></strong> where you click <strong><em>Enter</em></strong> to execute it:</p>
@@ -904,6 +913,7 @@ Figure&nbsp;9: Summary of a model of a linear regression
 </div>
 <section id="the-returned-list-linear-model" class="level3" data-number="7.1">
 <h3 data-number="7.1" class="anchored" data-anchor-id="the-returned-list-linear-model"><span class="header-section-number">7.1</span> The returned List: linear model</h3>
+<p>called lm – in Console: typeof(model1)</p>
 <p><strong><em>model1</em></strong> is a List object and the information for the linear model is stored in the List:</p>
 <div id="fig-returned_list" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">

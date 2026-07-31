@@ -7,6 +7,7 @@ short: "2-13"
 ### To-do
 
 - expand lesson to include reading/writing Lists to RData file
+- procedural, functional, and object-oriented programming discussion
 
 ## Purpose
 
@@ -24,23 +25,25 @@ The [data used for this lesson and the application](../data/Lansing2016Noaa.csv)
 
 ## Objects in R
 
-As mentioned in last lesson, there are 2 types of objects (i.e., variables) in R:
+As mentioned in last lesson, there are 3 types of objects in R:
 
-- Atomic vector (often just called vectors): objects that hold values of the same type (e.g., numeric, string, logical)
+- Vectors (sometimes called atomic vectors): objects that hold values of the same type (e.g., numeric, string, logical)
 
 - Lists: objects that hold other objects (including more Lists)
 
+- Functions: objects that hold operations
+
    
 
-The relationship between Atomic Vectors and Lists is analogous to the relationship between folders and files on your computer.  Files, like atomic vector, hold information, or data.  Folders, like Lists, are containers for other folders and files.
-
- 
-
-Last lesson we talked mostly about atomic vectors. This lesson we will talk mostly about Lists. As you will see in this lesson, Lists create a tree-like structure for your data.  At the end of the tree is the Atomic Vectors
+Last lesson we talked mostly about atomic vectors. This lesson we will talk mostly about Lists. As you will see in this lesson, Lists create a tree-like structure for your data. 
 
 ## Lists
 
-A List is an object that holds other (usually related) objects. When you create a plot or perform a statistical test, the results are often stored as Lists, as we will see later in the lesson.
+A List is an object that holds other (usually related) objects, much like a folder holds files. Lists are often used to organize and send data. For instance, when you perform a statistical test, the results are often stored as Lists, as we will see later in the lesson.
+
+ 
+
+"Most lists simply organize data, but more advanced packages often return lists that contain both data and functions. These functions know how to operate on the data stored in the object."
 
  
 
@@ -62,9 +65,9 @@ someNumbers = matrix(nrow=2, ncol=3, seq(from=30, to=4, length.out=6))
 weatherData = read.csv(file="data/Lansing2016NOAA.csv");
 ```
 
-### Lists in the Environment tab
+### Data frames are Lists, matrices are vectors
 
-Notice that, in the Environment, ***weatherData*** has an arrow to expand it whereas ***someAnimals*** and ***someNumbers*** contains all of their information in one line.  It is this expand arrow that indicates ***weatherData*** is a List, whereas ***someAnimals*** and ***SomeNumbers*** are atomic vectors.  ***weatherData*** is a data frame, which is List where all the objects inside are vectors of the same length:
+Notice that, in the Environment, ***weatherData*** has an arrow to expand it whereas ***someAnimals*** and ***someNumbers*** contains all of their information in one line.  It is this expand arrow that indicates ***weatherData*** is a List, whereas ***someAnimals*** and ***SomeNumbers*** are atomic vectors.  ***weatherData*** is a data frame, which is a List where all the objects inside are vectors of the same length:
 
 ![The expand arrow in the Environment indicates that the object is a List (i.e., holds other objects)](images/R-2-11-ListExpandArrow.png){#fig-list_expand_env .fs}
 
@@ -168,6 +171,20 @@ And see that ***listDynamic5*** is a List with three objects in it: ***animals**
 ![Lists after the three objects were appended and named](images/R-2-11-FinishedAppendedList.png){#fig-three_objects_appended .fs}
 
 ## Subsetting within a List
+
+\<Show the Positron Variables tab\>
+
+\<Show three ways to subset
+
+1)  by \[\[ \]\]
+
+2)  by \$
+
+3)  by index number
+
+Note that you can combine these
+
+ 
 
 The RStudio ***Viewer*** tab for Lists has a nice feature where it will shows you how to subset an object inside a List when you click on it.  In ***listDynamic5*** List, when you click on ***avgTemp*** in the ***weather*** dataframe -- and at the bottom of the tab, RStudio shows the code to subset ***avgTemp***:
 
@@ -300,6 +317,8 @@ Summary of a model of a linear regression
 :::
 
 ### The returned List: linear model
+
+called lm – in Console: typeof(model1)
 
 ***model1*** is a List object and the information for the linear model is stored in the List:
 

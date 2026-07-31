@@ -21,8 +21,7 @@ rainyDaysInJuly = c(FALSE, FALSE, TRUE, FALSE, FALSE, TRUE, TRUE, FALSE);
 ### the conditional statements in if() creates a Boolean value:
 for(i in 1:length(JulyTemps))
 {
-  # Output Boolean value instead of executing the if() statement
-  #  if(JulyTemps[i] > 85)
+  # Output Boolean value instead of executing the if() statement: if(JulyTemps[i] > 85)
   cat("day", i, (JulyTemps[i] > 85), "\n");
 }     
 
