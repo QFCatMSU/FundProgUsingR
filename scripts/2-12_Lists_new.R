@@ -2,48 +2,64 @@ rm(list=ls());                         # clear the Environment tab
 library(package=ggplot2);              # include all GGPlot2 functions
 
 #### Creating three objects to put in a List
-someAnimals = c("llama", "guanaco", "alpaca", "goat");  
-someNumbers = matrix(nrow=2, ncol=3, seq(from=30, to=4, length.out=6))
+someAnimals = c("llama", "guanaco", "alpaca", "goat");
+someNumbers = matrix(nrow=2, ncol=3, seq(from=30, to=4, length.out=6));
 weatherData = read.csv(file="data/Lansing2016NOAA.csv");
 
 #### Create a new List with the three objects above 
-listAtOnce = list(someAnimals, someNumbers, weatherData);
+list1 = list(someAnimals, someNumbers, weatherData);
 
 #### Same List but give a name to each of the objects
-listAtOnce2 = list(animals = someAnimals,
-                   numbers = someNumbers, 
-                   weather = weatherData);
+list2 = list(animals = someAnimals,
+             numbers = someNumbers, 
+             weather = weatherData);
 
 #### Create a new (and empty) List
-listDynamic = list();
+list3 = list();
 
-### Append an object to the List -- this will append each value within the objects as a separate object
-listDynamic2  = append(listDynamic, someAnimals);  
-
-### Append an object to the List as a whole object
-listDynamic3 = append(listDynamic, list(someAnimals));
-
-### Give a name to the appended object 
-listDynamic4 = append(listDynamic, list(animal = someAnimals));
+### Create an object named animal and save someAnimals to the List
+list3[["animals"]] = someAnimals;  
 
 ### Add the other two objects to the list with names 
-listDynamic5 = append(listDynamic4, list(numbers=someNumbers));
-listDynamic5 = append(listDynamic5, list(weather=weatherData));
+list3[["numbers"]] = someNumbers;
+list3[["weather"]] = weatherData;
+
+#### To put objects in a list by index:
+list4 = list()
+list4[[1]] = someAnimals; 
+list4[[2]] = someNumbers; 
+list4[[3]] = weatherData; 
+
+#### To automate the numbering of objects in a list
+list5 = list()
+list5[[length(list5)+1]] = someAnimals; 
+list5[[length(list5)+1]] = someNumbers; 
+list5[[length(list5)+1]] = weatherData; 
+
+#### Add random data to a list
+set.seed(123);
+
+list6 = list();
+for (i in 1:5)
+{
+  sampleData = sample(1:100, size=10);    # pick 10 random numbers
+  list6[[length(list6)+1]] = sampleData;  # at to list in next spot
+}
 
 #### Subsetting a List
-anim1 = listDynamic5[["animal"]];
-anim2 = listDynamic5$animal;
+anim1 = list5[["animal"]];
+anim2 = list5$animal;
 
-dewPoint1 = listDynamic5$weather$dewPoint;
-dewPoint2 = listDynamic5[["weather"]][["dewPoint"]];
-dewPoint3 = listDynamic5[["weather"]]$dewPoint;
+dewPoint1 = list5$weather$dewPoint;
+dewPoint2 = list5[["weather"]][["dewPoint"]];
+dewPoint3 = list5[["weather"]]$dewPoint;
 
 #### Subsetting by numeric placement
-anim3 = listDynamic5[[1]];
-dewPoint4 = listDynamic5[[3]][[7]];
+anim3 = list5[[1]];
+dewPoint4 = list5[[3]][[7]];
 
 #### Subsetting using [ ] -- this returns a List, which is not very useful:
-anim4 = listDynamic5["animal"];
+anim4 = list5["animal"];
 
 #### lm() creates a List
 model1 = lm(formula=weatherData$avgTemp~weatherData$relHum);    

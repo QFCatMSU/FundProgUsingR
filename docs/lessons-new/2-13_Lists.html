@@ -577,18 +577,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#to-do" id="toc-to-do" class="nav-link active" data-scroll-target="#to-do"><span class="header-section-number">0.1</span> To-do</a></li>
   <li><a href="#purpose" id="toc-purpose" class="nav-link" data-scroll-target="#purpose"><span class="header-section-number">1</span> Purpose</a></li>
   <li><a href="#script-for-this-lesson" id="toc-script-for-this-lesson" class="nav-link" data-scroll-target="#script-for-this-lesson"><span class="header-section-number">2</span> Script for this lesson</a></li>
-  <li><a href="#objects-in-r" id="toc-objects-in-r" class="nav-link" data-scroll-target="#objects-in-r"><span class="header-section-number">3</span> Objects in R</a></li>
+  <li><a href="#objects-in-r" id="toc-objects-in-r" class="nav-link" data-scroll-target="#objects-in-r"><span class="header-section-number">3</span> Objects in R</a>
+  <ul class="collapse">
+  <li><a href="#creating-objects-to-put-in-a-list" id="toc-creating-objects-to-put-in-a-list" class="nav-link" data-scroll-target="#creating-objects-to-put-in-a-list"><span class="header-section-number">3.1</span> Creating objects to put in a List</a></li>
+  <li><a href="#matrices-vs.-data-frames" id="toc-matrices-vs.-data-frames" class="nav-link" data-scroll-target="#matrices-vs.-data-frames"><span class="header-section-number">3.2</span> Matrices vs.&nbsp;data frames</a></li>
+  </ul></li>
   <li><a href="#lists" id="toc-lists" class="nav-link" data-scroll-target="#lists"><span class="header-section-number">4</span> Lists</a>
   <ul class="collapse">
-  <li><a href="#data-frames-are-lists-matrices-are-vectors" id="toc-data-frames-are-lists-matrices-are-vectors" class="nav-link" data-scroll-target="#data-frames-are-lists-matrices-are-vectors"><span class="header-section-number">4.1</span> Data frames are Lists, matrices are vectors</a></li>
-  <li><a href="#creating-the-new-list" id="toc-creating-the-new-list" class="nav-link" data-scroll-target="#creating-the-new-list"><span class="header-section-number">4.2</span> Creating the new List</a></li>
-  <li><a href="#including-names-for-the-objects" id="toc-including-names-for-the-objects" class="nav-link" data-scroll-target="#including-names-for-the-objects"><span class="header-section-number">4.3</span> Including names for the objects</a></li>
+  <li><a href="#creating-the-new-list" id="toc-creating-the-new-list" class="nav-link" data-scroll-target="#creating-the-new-list"><span class="header-section-number">4.1</span> Creating the new List</a></li>
+  <li><a href="#including-names-for-the-objects" id="toc-including-names-for-the-objects" class="nav-link" data-scroll-target="#including-names-for-the-objects"><span class="header-section-number">4.2</span> Including names for the objects</a></li>
   </ul></li>
   <li><a href="#creating-a-dynamic-list" id="toc-creating-a-dynamic-list" class="nav-link" data-scroll-target="#creating-a-dynamic-list"><span class="header-section-number">5</span> Creating a dynamic List</a>
   <ul class="collapse">
   <li><a href="#appending-to-the-list" id="toc-appending-to-the-list" class="nav-link" data-scroll-target="#appending-to-the-list"><span class="header-section-number">5.1</span> Appending to the List</a></li>
-  <li><a href="#appending-whole-objects" id="toc-appending-whole-objects" class="nav-link" data-scroll-target="#appending-whole-objects"><span class="header-section-number">5.2</span> Appending whole objects</a></li>
-  <li><a href="#appending-multiple-objects" id="toc-appending-multiple-objects" class="nav-link" data-scroll-target="#appending-multiple-objects"><span class="header-section-number">5.3</span> Appending multiple objects</a></li>
+  <li><a href="#appending-by-index" id="toc-appending-by-index" class="nav-link" data-scroll-target="#appending-by-index"><span class="header-section-number">5.2</span> Appending by index</a></li>
+  <li><a href="#appending-by-index-automated" id="toc-appending-by-index-automated" class="nav-link" data-scroll-target="#appending-by-index-automated"><span class="header-section-number">5.3</span> Appending by index automated</a></li>
   </ul></li>
   <li><a href="#subsetting-within-a-list" id="toc-subsetting-within-a-list" class="nav-link" data-scroll-target="#subsetting-within-a-list"><span class="header-section-number">6</span> Subsetting within a List</a>
   <ul class="collapse">
@@ -640,8 +643,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="to-do" class="level3" data-number="0.1">
 <h3 data-number="0.1" class="anchored" data-anchor-id="to-do"><span class="header-section-number">0.1</span> To-do</h3>
 <ul>
-<li>expand lesson to include reading/writing Lists to RData file</li>
-<li>procedural, functional, and object-oriented programming discussion</li>
+<li>expand lesson to include reading/writing Lists to RDS file (save lm to RDS?)</li>
+<li>talk about attributes on a matrix vs data frame
+<ul>
+<li>how matrix and data frame determine rows and columns</li>
+</ul></li>
 </ul>
 </section>
 <section id="purpose" class="level2" data-number="1">
@@ -667,212 +673,191 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>&nbsp;</p></li>
 </ul>
 <p>Last lesson we talked mostly about atomic vectors. This lesson we will talk mostly about Lists. As you will see in this lesson, Lists create a tree-like structure for your data.&nbsp;</p>
-</section>
-<section id="lists" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="lists"><span class="header-section-number">4</span> Lists</h2>
-<p>A List is an object that holds other (usually related) objects, much like a folder holds files. Lists are often used to organize and send data. For instance, when you perform a statistical test, the results are often stored as Lists, as we will see later in the lesson.</p>
-<p>&nbsp;</p>
-<p>We will create our own List with three objects in it.</p>
-<p>&nbsp;</p>
-<p>The three objects will be:</p>
+<section id="creating-objects-to-put-in-a-list" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="creating-objects-to-put-in-a-list"><span class="header-section-number">3.1</span> Creating objects to put in a List</h3>
+<p>We are going to create a List object and add other objects to it. The objects we will add are:</p>
 <ul>
 <li><p>a character vector called <strong><em>someAnimals</em></strong></p></li>
 <li><p>a 2x3 matrix consisting of a sequence of six numbers called <strong><em>someNumbers</em></strong></p></li>
 <li><p>the <strong><em>weatherData</em></strong> dataframe from previous lessons</p></li>
 </ul>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>someAnimals <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"llama"</span>, <span class="st">"guanaco"</span>, <span class="st">"alpaca"</span>, <span class="st">"goat"</span>);</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>someNumbers <span class="ot">=</span> <span class="fu">matrix</span>(<span class="at">nrow=</span><span class="dv">2</span>, <span class="at">ncol=</span><span class="dv">3</span>, <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">30</span>, <span class="at">to=</span><span class="dv">4</span>, <span class="at">length.out=</span><span class="dv">6</span>))</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>someNumbers <span class="ot">=</span> <span class="fu">matrix</span>(<span class="at">nrow=</span><span class="dv">2</span>, <span class="at">ncol=</span><span class="dv">3</span>, <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">30</span>, <span class="at">to=</span><span class="dv">4</span>, <span class="at">length.out=</span><span class="dv">6</span>)) </span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>weatherData <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="at">file=</span><span class="st">"data/Lansing2016NOAA.csv"</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<section id="data-frames-are-lists-matrices-are-vectors" class="level3" data-number="4.1">
-<h3 data-number="4.1" class="anchored" data-anchor-id="data-frames-are-lists-matrices-are-vectors"><span class="header-section-number">4.1</span> Data frames are Lists, matrices are vectors</h3>
-<p>Notice that, in the Environment, <strong><em>weatherData</em></strong> has an arrow to expand it whereas <strong><em>someAnimals</em></strong> and <strong><em>someNumbers</em></strong> contains all of their information in one line.&nbsp; It is this expand arrow that indicates <strong><em>weatherData</em></strong> is a List, whereas <strong><em>someAnimals</em></strong> and <strong><em>SomeNumbers</em></strong> are atomic vectors.&nbsp; <strong><em>weatherData</em></strong> is a data frame, which is a List where all the objects inside are vectors of the same length:</p>
-<div id="fig-list_expand_env" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<p><strong><em>someAnimals</em></strong> is a one-dimensional vector, <strong><em>someNumbers</em></strong> is a two-dimensional vector (i.e., a matrix), and <strong><em>weatherData</em></strong> is a data frame.</p>
+<p>&nbsp;</p>
+<p>In <strong><em>Variables</em></strong>, <strong><em>someNumbers</em></strong> and <strong><em>weatherData</em></strong> are put in the DATA section. In general, only 2D data objects are put into the DATA section – everything else goes into VALUES (including <strong><em>someAnimals</em></strong>).</p>
+<div id="fig-data-values" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-list_expand_env-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/R-2-11-ListExpandArrow.png" class="fs img-fluid figure-img">
+<div aria-describedby="fig-data-values-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R_2-13_Data-and-Values.png" class="fs img-fluid figure-img">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-list_expand_env-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: The expand arrow in the Environment indicates that the object is a List (i.e., holds other objects)
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-data-values-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Matrixes and data frames are put under DATA
 </figcaption>
 </figure>
 </div>
 </section>
-<section id="creating-the-new-list" class="level3" data-number="4.2">
-<h3 data-number="4.2" class="anchored" data-anchor-id="creating-the-new-list"><span class="header-section-number">4.2</span> Creating the new List</h3>
+<section id="matrices-vs.-data-frames" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="matrices-vs.-data-frames"><span class="header-section-number">3.2</span> Matrices vs.&nbsp;data frames</h3>
+<p>Matrices and data frames are both 2D structures that contain data – but they are formed very differently. A matrices is a single vector object with the <strong><em>dim</em></strong> attributes modified to defining how many rows and column are in the data. A data frame is a List object where each column is a separate vector – and all vectors have the same number of values.</p>
+</section>
+</section>
+<section id="lists" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="lists"><span class="header-section-number">4</span> Lists</h2>
+<p>A List is an object that holds other (usually related) objects, much like a folder holds files. A data frame is a special type of List that holds only vectors with the same number of values. Lists are often used to organize and send data. For instance, when you perform a statistical test, the results are often stored as Lists, as we will see later in the lesson.</p>
+<p>&nbsp;</p>
+<p>A List is usually used as a data structure and contains vectors and subLists. A List can also include functions – this is often done when programming using the Object-Oriented Programming (OOP) paradigm, a topic not covered in this class.</p>
+<section id="creating-the-new-list" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="creating-the-new-list"><span class="header-section-number">4.1</span> Creating the new List</h3>
 <p>We can create a List with the three objects above using the <strong><em>list()</em></strong> function:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>listAtOnce <span class="ot">=</span> <span class="fu">list</span>(someAnimals, someNumbers, weatherData);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This will add <strong><em>listAtOnce</em></strong> to the <strong><em>Environment</em></strong>.&nbsp; From there we double-click on it to see it in a <strong><em>Viewer</em></strong> tab.&nbsp; The <strong><em>Viewer</em></strong> tab offers a more helpful and informative view of the List.</p>
-<p>&nbsp;</p>
-<p>A couple things to notice about <strong><em>listAtOnce</em></strong> in the <strong><em>Viewer</em></strong> tab:</p>
-<ul>
-<li><p>The objects inside the List do not have names – instead they only have numbers.&nbsp; <span class="hl">Objects do not retain their names when put in to a List.</span></p></li>
-<li><p>The third object <strong>[[3]]</strong>, the dataframe, has an expand arrow.&nbsp; The arrow indicates that this object is also a List – <strong>[[1]]</strong> and <strong>[[2]]</strong> are atomic vectors.</p></li>
-</ul>
-<p>&nbsp;</p>
-<div id="fig-list_viewer" class="fs quarto-float quarto-figure quarto-figure-left anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-list_viewer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/R-2-11-ListInViewer.png" class="fs img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-list_viewer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: The List inside a Viewer tab
-</figcaption>
-</figure>
-</div>
-<p><span class="note">Note: When looking at the List in the Viewer, the objects with expand arrows are functionally similar to folders, those without arrows are functionally similar to files</span></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>list1 <span class="ot">=</span> <span class="fu">list</span>(someAnimals, someNumbers, weatherData);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>When you expand List1 in <strong><em>Variables</em></strong>, you can see the three objects that were added to the List, but they do not have names – they just have index numbers. <span class="hl">Objects do not retain their names when put in to a List.</span></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" data-tab="Variables"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>🞃 list1<span class="sc">:</span>     [<span class="st">"llama"</span> <span class="st">"guanaco"</span> ...]              list [<span class="dv">3</span>]</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="sc">&gt;</span> [[<span class="dv">1</span>]]<span class="sc">:</span>  <span class="st">"llama"</span> <span class="st">"guanaco"</span> <span class="st">"alpaca"</span> <span class="st">"goat"</span>      str[<span class="dv">4</span>]</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="sc">&gt;</span> [[<span class="dv">2</span>]]<span class="sc">:</span>  [<span class="dv">2</span> rows x <span class="dv">3</span> columns] <span class="sc">&lt;</span>matrix<span class="sc">&gt;</span>     </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="er">&gt;</span> [[<span class="dv">3</span>]]<span class="sc">:</span>  [<span class="dv">366</span> rows x <span class="dv">23</span> columns] <span class="sc">&lt;</span>data.frame<span class="sc">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="including-names-for-the-objects" class="level3" data-number="4.3">
-<h3 data-number="4.3" class="anchored" data-anchor-id="including-names-for-the-objects"><span class="header-section-number">4.3</span> Including names for the objects</h3>
-<p>If we want the objects inside the List to have names, then we have to specify the names while creating the List.&nbsp; You do that by setting a name equal to the object when calling <strong><em>list()</em></strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>  listAtOnce2 <span class="ot">=</span> <span class="fu">list</span>(<span class="at">animals =</span> someAnimals,</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">numbers =</span> someNumbers, </span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">weather =</span> weatherData);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This makes <strong><em>animals</em></strong>, <strong><em>numbers</em></strong>, and <strong><em>weather</em></strong> the names of the objects <strong><em>someAnimal</em></strong>, <strong><em>someNumbers</em></strong>, and <strong>weatherData</strong> <span class="hl">inside the List</span>.&nbsp; You can choose any name, including the same as the original objects:</p>
-<div id="fig-add_names_list" class="fs quarto-float quarto-figure quarto-figure-left anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-add_names_list-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/R-2-11-ListWithNames.png" class="fs img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-add_names_list-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Adding names to the objects inside the List
-</figcaption>
-</figure>
-</div>
+<section id="including-names-for-the-objects" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="including-names-for-the-objects"><span class="header-section-number">4.2</span> Including names for the objects</h3>
+<p>If we want the objects inside the List to have names, then we have to specify the names while creating the List (<span class="note">note: you can use a different name</span>).&nbsp; You do that by setting a name equal to the object when calling <strong><em>list()</em></strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>  list2 <span class="ot">=</span> <span class="fu">list</span>(<span class="at">animals =</span> someAnimals,</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">numbers =</span> someNumbers, </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">weather =</span> weatherData);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This makes <strong><em>animals</em></strong>, <strong><em>numbers</em></strong>, and <strong><em>weather</em></strong> the names of the objects <strong><em>someAnimal</em></strong>, <strong><em>someNumbers</em></strong>, and <strong>weatherData</strong> inside the List.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>🞃 list2<span class="sc">:</span>       [<span class="st">"llama"</span> <span class="st">"guanaco"</span> ...]               list [<span class="dv">3</span>]</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="sc">&gt;</span> animals<span class="sc">:</span>  <span class="st">"llama"</span> <span class="st">"guanaco"</span> <span class="st">"alpaca"</span> <span class="st">"goat"</span>      str[<span class="dv">4</span>]</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="sc">&gt;</span> numbers<span class="sc">:</span>  [<span class="dv">2</span> rows x <span class="dv">3</span> columns] <span class="sc">&lt;</span>matrix<span class="sc">&gt;</span>     </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="er">&gt;</span> weather<span class="sc">:</span>  [<span class="dv">366</span> rows x <span class="dv">23</span> columns] <span class="sc">&lt;</span>data.frame<span class="sc">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><span class="note">Note: names inside Lists, like variables, should follow programming naming conventions – but this is not enforced in R.</span></p>
 </section>
 </section>
 <section id="creating-a-dynamic-list" class="level2" data-number="5">
 <h2 data-number="5" class="anchored" data-anchor-id="creating-a-dynamic-list"><span class="header-section-number">5</span> Creating a dynamic List</h2>
-<p>In the previous example, all the objects put in the List were put in at once.&nbsp; What often happens is that data is generated and gets dynamically added to a List, so the objects are put in the List separately.&nbsp; We are going to create a List equivalent to <strong><em>listAtOnce</em></strong> except the three object will be put in one at a time.</p>
+<p>In the previous example, all the objects put in the List were put in at once.&nbsp; What often happens is that data is generated and gets dynamically added to a List, so the objects are put in the List separately.&nbsp; We are going to create a List equivalent to <strong><em>list2</em></strong> except the three object will be put in one at a time.</p>
 <p>&nbsp;</p>
 <p>First we create a List with nothing in it (i.e., an empty list):</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>listDynamic <span class="ot">=</span> <span class="fu">list</span>();</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>listDynamic<span class="sc">:</span>  List of <span class="dv">0</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" data-tab="Variables"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>list3 <span class="ot">=</span> <span class="fu">list</span>();</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" data-tab="Variables"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>list3<span class="sc">:</span>  list [<span class="dv">0</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <section id="appending-to-the-list" class="level3" data-number="5.1">
 <h3 data-number="5.1" class="anchored" data-anchor-id="appending-to-the-list"><span class="header-section-number">5.1</span> Appending to the List</h3>
 <p>Then add the object <strong><em>someAnimals</em></strong> to the List.&nbsp;</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>listDynamic2  <span class="ot">=</span> <span class="fu">append</span>(listDynamic, someAnimals); </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Somewhat unintuitively, <strong><em>append()</em></strong> does not append the object <strong><em>someAnimals</em></strong> to the List.&nbsp; Instead, <strong><em>append()</em></strong> appends each value within <strong><em>someAnimals</em></strong> to the List – making each value a separate object.&nbsp; Now you have a List with 4 string vectors (each with 1 value) …. this is not what we want.</p>
-<div id="fig-append_object" class="fs quarto-float quarto-figure quarto-figure-left anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-append_object-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/R-2-11-IncorrectAppend.png" class="fs img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-append_object-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4: Appending an object one value at a time…
-</figcaption>
-</figure>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>list3[[<span class="st">"animals"</span>]] <span class="ot">=</span> someAnimals;  </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Now <strong><em>list3</em></strong> is a List with one string object in it named animal.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9" data-tab="Variables"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>🞃 list3<span class="sc">:</span>       [<span class="st">"llama"</span> <span class="st">"guanaco"</span> ...]               list [<span class="dv">1</span>]</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="sc">&gt;</span> animals<span class="sc">:</span>  <span class="st">"llama"</span> <span class="st">"guanaco"</span> <span class="st">"alpaca"</span> <span class="st">"goat"</span>      str [<span class="dv">4</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>We can now add the other two objects using the same format:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>list3[[<span class="st">"numbers"</span>]] <span class="ot">=</span> someNumbers;</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>list3[[<span class="st">"weather"</span>]] <span class="ot">=</span> weatherData;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>And <strong><em>list3</em></strong> looks exactly like <strong><em>list2</em></strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11" data-tab="Variables"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>🞃 list2<span class="sc">:</span>       [<span class="st">"llama"</span> <span class="st">"guanaco"</span> ...]               list [<span class="dv">3</span>]</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="sc">&gt;</span> animals<span class="sc">:</span>  <span class="st">"llama"</span> <span class="st">"guanaco"</span> <span class="st">"alpaca"</span> <span class="st">"goat"</span>      str[<span class="dv">4</span>]</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="sc">&gt;</span> numbers<span class="sc">:</span>  [<span class="dv">2</span> rows x <span class="dv">3</span> columns] <span class="sc">&lt;</span>matrix<span class="sc">&gt;</span>     </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="er">&gt;</span> weather<span class="sc">:</span>  [<span class="dv">366</span> rows x <span class="dv">23</span> columns] <span class="sc">&lt;</span>data.frame<span class="sc">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="appending-whole-objects" class="level3" data-number="5.2">
-<h3 data-number="5.2" class="anchored" data-anchor-id="appending-whole-objects"><span class="header-section-number">5.2</span> Appending whole objects</h3>
-<p>We want is to append <strong><em>someAnimals</em></strong> to the List as vector and, to do this, we need to (unintuitively) wrap <strong><em>someAnimals</em></strong> inside its own List:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>listDynamic3 <span class="ot">=</span> <span class="fu">append</span>(listDynamic, <span class="fu">list</span>(someAnimals));</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>And, if we want the object to have a name inside the List, then we need to provide the name – just like <a href="#fig-add_names_list" class="quarto-xref">Figure&nbsp;3</a> :</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>listDynamic4 <span class="ot">=</span> <span class="fu">append</span>(listDynamic, <span class="fu">list</span>(<span class="at">animal =</span> someAnimals));</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong><em>listDynamic3</em></strong> and <strong><em>listDynamic4</em></strong> both now have a vector with four character values, the latter has that vector named:</p>
-<div id="fig-list_appended" class="fs quarto-float quarto-figure quarto-figure-left anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-list_appended-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/R-2-11-AppendedLists.png" class="fs img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-list_appended-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5: Lists with appended objects
-</figcaption>
-</figure>
-</div>
+<section id="appending-by-index" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="appending-by-index"><span class="header-section-number">5.2</span> Appending by index</h3>
+<p>When you are automating the generation of a List, you often do not want to name objects, you just want to keep appending objects to the List. What you want to do is more like this:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="do">#### To put in objects in a list by index a name</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>list4 <span class="ot">=</span> <span class="fu">list</span>()</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>list4[[<span class="dv">1</span>]] <span class="ot">=</span> someAnimals; </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>list4[[<span class="dv">2</span>]] <span class="ot">=</span> someNumbers; </span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>list4[[<span class="dv">3</span>]] <span class="ot">=</span> weatherData; </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>And list4 will look exactly like list1 – a list with unnamed objects:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13" data-tab="Variables"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>🞃 list4<span class="sc">:</span>     [<span class="st">"llama"</span> <span class="st">"guanaco"</span> ...]              list [<span class="dv">3</span>]</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="sc">&gt;</span> [[<span class="dv">1</span>]]<span class="sc">:</span>  <span class="st">"llama"</span> <span class="st">"guanaco"</span> <span class="st">"alpaca"</span> <span class="st">"goat"</span>      str[<span class="dv">4</span>]</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="sc">&gt;</span> [[<span class="dv">2</span>]]<span class="sc">:</span>  [<span class="dv">2</span> rows x <span class="dv">3</span> columns] <span class="sc">&lt;</span>matrix<span class="sc">&gt;</span>     </span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="er">&gt;</span> [[<span class="dv">3</span>]]<span class="sc">:</span>  [<span class="dv">366</span> rows x <span class="dv">23</span> columns] <span class="sc">&lt;</span>data.frame<span class="sc">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="appending-multiple-objects" class="level3" data-number="5.3">
-<h3 data-number="5.3" class="anchored" data-anchor-id="appending-multiple-objects"><span class="header-section-number">5.3</span> Appending multiple objects</h3>
-<p>We will now append <strong><em>someNumber</em></strong> and <strong><em>weatherData</em></strong> using <strong><em>append()</em></strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>listDynamic5 <span class="ot">=</span> <span class="fu">append</span>(listDynamic4, <span class="fu">list</span>(<span class="at">numbers=</span>someNumbers));</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>listDynamic5 <span class="ot">=</span> <span class="fu">append</span>(listDynamic5, <span class="fu">list</span>(<span class="at">weather=</span>weatherData));</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>And see that <strong><em>listDynamic5</em></strong> is a List with three objects in it: <strong><em>animals</em></strong>, <strong><em>numbers</em></strong>, and <strong><em>weather</em></strong> – just like <strong><em>listAtOnce2</em></strong> (<a href="#fig-add_names_list" class="quarto-xref">Figure&nbsp;3</a>).</p>
-<div id="fig-three_objects_appended" class="fs quarto-float quarto-figure quarto-figure-left anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-three_objects_appended-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/R-2-11-FinishedAppendedList.png" class="fs img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-three_objects_appended-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6: Lists after the three objects were appended and named
-</figcaption>
-</figure>
-</div>
+<section id="appending-by-index-automated" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="appending-by-index-automated"><span class="header-section-number">5.3</span> Appending by index automated</h3>
+<p>But the problem with the above code is that you have to manually add the index number – a likely impractical task in large scripts! Instead, we can tell R to append to the next open index by using <strong><em>length()</em></strong>, which gives the current number of objects in the list:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="do">#### To automate the numbering of objects in a list</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>list5 <span class="ot">=</span> <span class="fu">list</span>()</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>list5[[<span class="fu">length</span>(list5)<span class="sc">+</span><span class="dv">1</span>]] <span class="ot">=</span> someAnimals; </span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>list5[[<span class="fu">length</span>(list5)<span class="sc">+</span><span class="dv">1</span>]] <span class="ot">=</span> someNumbers; </span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>list5[[<span class="fu">length</span>(list5)<span class="sc">+</span><span class="dv">1</span>]] <span class="ot">=</span> weatherData; </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>and list5 looks exactly like list4.</p>
+<p>&nbsp;</p>
+<p>Something like this would probably be done in a <strong><em>for</em></strong> loop where you are adding data to a list each cycle:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>list6 <span class="ot">=</span> <span class="fu">list</span>();</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  sampleData <span class="ot">=</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="at">size=</span><span class="dv">10</span>);    <span class="co"># pick 10 random numbers</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  list6[[<span class="fu">length</span>(list6)<span class="sc">+</span><span class="dv">1</span>]] <span class="ot">=</span> sampleData;  <span class="co"># at to list in next spot</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>And list6 has stored the 5 sets of random numbers:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16" data-tab="Variables"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>🞃 list6<span class="sc">:</span>     [<span class="dv">37</span> <span class="dv">8</span> <span class="dv">51</span> <span class="dv">74</span> ...]                     list [<span class="dv">5</span>]</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="sc">&gt;</span> [[<span class="dv">1</span>]]<span class="sc">:</span>  <span class="dv">37</span> <span class="dv">8</span> <span class="dv">51</span> <span class="dv">74</span> <span class="dv">50</span> <span class="dv">97</span> <span class="dv">86</span> <span class="dv">76</span> <span class="dv">84</span> <span class="dv">46</span> </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="sc">&gt;</span> [[<span class="dv">2</span>]]<span class="sc">:</span>  <span class="dv">17</span> <span class="dv">62</span> <span class="dv">46</span> <span class="dv">54</span> <span class="dv">35</span> <span class="dv">94</span> <span class="dv">79</span> <span class="dv">24</span> <span class="dv">87</span> <span class="dv">7</span>     </span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="sc">&gt;</span> [[<span class="dv">3</span>]]<span class="sc">:</span>  <span class="dv">93</span> <span class="dv">79</span> <span class="dv">23</span> <span class="dv">26</span> <span class="dv">32</span> <span class="dv">7</span> <span class="dv">27</span> <span class="dv">42</span> <span class="dv">5</span> <span class="dv">70</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="sc">&gt;</span> [[<span class="dv">4</span>]]<span class="sc">:</span>  <span class="dv">16</span> <span class="dv">24</span> <span class="dv">32</span> <span class="dv">21</span> <span class="dv">55</span> <span class="dv">75</span> <span class="dv">36</span> <span class="dv">83</span> <span class="dv">89</span> <span class="dv">39</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="sc">&gt;</span> [[<span class="dv">5</span>]]<span class="sc">:</span>  <span class="dv">54</span> <span class="dv">90</span> <span class="dv">9</span> <span class="dv">71</span> <span class="dv">48</span> <span class="dv">77</span> <span class="dv">83</span> <span class="dv">56</span> <span class="dv">39</span> <span class="dv">68</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 </section>
 <section id="subsetting-within-a-list" class="level2" data-number="6">
 <h2 data-number="6" class="anchored" data-anchor-id="subsetting-within-a-list"><span class="header-section-number">6</span> Subsetting within a List</h2>
-<p>&lt;Show the Positron Variables tab&gt;</p>
-<p>&lt;Show three ways to subset</p>
+<p>There are three ways to subset a List</p>
 <ol type="1">
-<li><p>by [[ ]]</p></li>
-<li><p>by $</p></li>
-<li><p>by index number</p></li>
+<li><p>using name inside [[ ]]</p></li>
+<li><p>using name after $</p></li>
+<li><p>by index number (this is the only option when there is no name)</p></li>
 </ol>
-<p>Note that you can combine these</p>
+<p><span class="note">Note that you can combine these</span></p>
 <p>&nbsp;</p>
-<p>The RStudio <strong><em>Viewer</em></strong> tab for Lists has a nice feature where it will shows you how to subset an object inside a List when you click on it.&nbsp; In <strong><em>listDynamic5</em></strong> List, when you click on <strong><em>avgTemp</em></strong> in the <strong><em>weather</em></strong> dataframe – and at the bottom of the tab, RStudio shows the code to subset <strong><em>avgTemp</em></strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>listDynamic5[[<span class="st">"weather"</span>]][[<span class="st">"avgTemp"</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>If you click the document icon with an arrow on the right-side, RStudio will put the above code in the <strong><em>Console</em></strong> where you click <strong><em>Enter</em></strong> to execute it:</p>
-<div id="fig-viewer_to_Console" class="fs quarto-float quarto-figure quarto-figure-left anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-viewer_to_Console-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/R-2-11-SubsetInViewer.png" class="fs img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-viewer_to_Console-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7: Opening an object within a List from the Viewer tab
-</figcaption>
-</figure>
-</div>
+<p>The <strong><em>Variables</em></strong> tab does a good job of showing the structure of a List object. Here we see the object within model1 and there are multiple object (highlighted) that are three levels deep:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>listDynamic5[[<span class="st">"weather"</span>]][[<span class="st">"avgTemp"</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>We can view any of those objects using the [[ ]] operator:</p>
+<p>anim4 = list5[“animal”];</p>
 <section id="subsetting-with-and" class="level3" data-number="6.1">
 <h3 data-number="6.1" class="anchored" data-anchor-id="subsetting-with-and"><span class="header-section-number">6.1</span> Subsetting with $ and [[ ]]</h3>
-<p>Every object in the List Viewer with a value under <strong><em>Name</em></strong> in <a href="#fig-viewer_to_Console" class="quarto-xref">Figure&nbsp;7</a> can be accessed with both the <strong>$</strong> and <strong>[[ ]]</strong> subset operators – RStudio always uses <strong>[[ ]]</strong>.</p>
+<p>Every object in the List Viewer with a value under <strong><em>Name</em></strong> in <strong>?@fig-viewer_to_Console</strong> can be accessed with both the <strong>$</strong> and <strong>[[ ]]</strong> subset operators.</p>
 <p>&nbsp;</p>
 <p>Here are two ways to subset the <strong><em>animal</em></strong> object inside <strong><em>listDynamic5</em></strong> – the results are saved to <strong><em>anim1</em></strong> and <strong><em>anim2</em></strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>anim1 <span class="ot">=</span> listDynamic5[[<span class="st">"animal"</span>]];</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>anim2 <span class="ot">=</span> listDynamic5<span class="sc">$</span>animal;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>anim1 <span class="ot">=</span> listDynamic5[[<span class="st">"animal"</span>]];</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>anim2 <span class="ot">=</span> listDynamic5<span class="sc">$</span>animal;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The <strong><em>string</em></strong> (chr) vectors <strong><em>anim1</em></strong> and <strong><em>anim2</em></strong> have the same values as the original <strong><em>someAnimals</em></strong> vector:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>anim1<span class="sc">:</span>       chr [<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="st">"llama"</span> <span class="st">"guanaco"</span> ...</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>anim2<span class="sc">:</span>       chr [<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="st">"llama"</span> <span class="st">"guanaco"</span> ...</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>someAnimals<span class="sc">:</span> chr [<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="st">"llama"</span> <span class="st">"guanaco"</span> ...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>anim1<span class="sc">:</span>       chr [<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="st">"llama"</span> <span class="st">"guanaco"</span> ...</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>anim2<span class="sc">:</span>       chr [<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="st">"llama"</span> <span class="st">"guanaco"</span> ...</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>someAnimals<span class="sc">:</span> chr [<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="st">"llama"</span> <span class="st">"guanaco"</span> ...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Here are three ways to subset the <strong><em>dewPoint</em></strong> vector within <strong><em>weather</em></strong>, which is within <strong><em>listDynamic5</em></strong>:&nbsp;</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>dewPoint1 <span class="ot">=</span> listDynamic5<span class="sc">$</span>weather<span class="sc">$</span>dewPoint;</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>dewPoint2 <span class="ot">=</span> listDynamic5[[<span class="st">"weather"</span>]][[<span class="st">"dewPoint"</span>]];</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>dewPoint3 <span class="ot">=</span> listDynamic5[[<span class="st">"weather"</span>]]<span class="sc">$</span>dewPoint;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>dewPoint1 <span class="ot">=</span> listDynamic5<span class="sc">$</span>weather<span class="sc">$</span>dewPoint;</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>dewPoint2 <span class="ot">=</span> listDynamic5[[<span class="st">"weather"</span>]][[<span class="st">"dewPoint"</span>]];</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>dewPoint3 <span class="ot">=</span> listDynamic5[[<span class="st">"weather"</span>]]<span class="sc">$</span>dewPoint;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Again, all three saved values are identical to the original <strong><em>weatherData$dewPoint</em></strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14" data-ta="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>dewPoint1<span class="sc">:</span>       <span class="dv">20</span> <span class="dv">22</span> <span class="dv">20</span> <span class="dv">13</span> <span class="dv">10</span> <span class="dv">16</span> ...</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>dewPoint2<span class="sc">:</span>       <span class="dv">20</span> <span class="dv">22</span> <span class="dv">20</span> <span class="dv">13</span> <span class="dv">10</span> <span class="dv">16</span> ...</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>dewPoint3<span class="sc">:</span>       <span class="dv">20</span> <span class="dv">22</span> <span class="dv">20</span> <span class="dv">13</span> <span class="dv">10</span> <span class="dv">16</span> ...</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>🞃 weatherData<span class="sc">:</span>  <span class="dv">366</span> obs. of <span class="dv">23</span> variables</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="sc">$</span> dewPoint<span class="sc">:</span>    <span class="dv">20</span> <span class="dv">22</span> <span class="dv">20</span> <span class="dv">13</span> <span class="dv">10</span> <span class="dv">16</span>...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21" data-ta="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>dewPoint1<span class="sc">:</span>       <span class="dv">20</span> <span class="dv">22</span> <span class="dv">20</span> <span class="dv">13</span> <span class="dv">10</span> <span class="dv">16</span> ...</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>dewPoint2<span class="sc">:</span>       <span class="dv">20</span> <span class="dv">22</span> <span class="dv">20</span> <span class="dv">13</span> <span class="dv">10</span> <span class="dv">16</span> ...</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>dewPoint3<span class="sc">:</span>       <span class="dv">20</span> <span class="dv">22</span> <span class="dv">20</span> <span class="dv">13</span> <span class="dv">10</span> <span class="dv">16</span> ...</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>🞃 weatherData<span class="sc">:</span>  <span class="dv">366</span> obs. of <span class="dv">23</span> variables</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="sc">$</span> dewPoint<span class="sc">:</span>    <span class="dv">20</span> <span class="dv">22</span> <span class="dv">20</span> <span class="dv">13</span> <span class="dv">10</span> <span class="dv">16</span>...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>$</strong> and <strong>[[ ]]</strong> are equivalent operators when you are working with named objects within a List.&nbsp; <strong>$</strong> is more convenient to use because it involves less typing and RStudio will give you suggestions.</p>
 </section>
 <section id="numeric-subsetting-only-with" class="level3" data-number="6.2">
 <h3 data-number="6.2" class="anchored" data-anchor-id="numeric-subsetting-only-with"><span class="header-section-number">6.2</span> Numeric subsetting (only with [[ ]])</h3>
 <p>Objects within a Lists can also be accessed by their numeric order using <strong>[[ ]]</strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>anim3 <span class="ot">=</span> listDynamic5[[<span class="dv">1</span>]];</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>dewPoint4 <span class="ot">=</span> listDynamic5[[<span class="dv">3</span>]][[<span class="dv">7</span>]];</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>anim3 <span class="ot">=</span> listDynamic5[[<span class="dv">1</span>]];</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>dewPoint4 <span class="ot">=</span> listDynamic5[[<span class="dv">3</span>]][[<span class="dv">7</span>]];</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>But, you cannot use the <strong>$</strong> operator to subset by number:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># anim3 = listDynamic5$1;   # will cause an error</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>So, if the object inside a List does not have a name, as in <strong><em>listAtOnce</em></strong> (<a href="#fig-list_viewer" class="quarto-xref">Figure&nbsp;2</a>), then you have to use <strong>[[ ]]</strong> to subset the unnamed object by numeric placement.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># anim3 = listDynamic5$1;   # will cause an error</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>So, if the object inside a List does not have a name, as in <strong><em>listAtOnce</em></strong> (<strong>?@fig-list_viewer</strong>), then you have to use <strong>[[ ]]</strong> to subset the unnamed object by numeric placement.</p>
 </section>
 <section id="the-subset-operator" class="level3" data-number="6.3">
 <h3 data-number="6.3" class="anchored" data-anchor-id="the-subset-operator"><span class="header-section-number">6.3</span> The [ ] subset operator</h3>
 <p>You can use <strong>[ ]</strong> to subset the List, but instead of getting the object, you will get a List with the object in it:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>anim4 <span class="ot">=</span> listDynamic5[<span class="st">"animal"</span>];</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>anim4 <span class="ot">=</span> listDynamic5[<span class="st">"animal"</span>];</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>In the <strong><em>Environment</em></strong>, we can see that&nbsp; <strong><em>anim1</em></strong>, <strong><em>anim2</em></strong>, and <strong><em>anim3</em></strong> (subsetted with either <strong>[[ ]]</strong> or <strong>$</strong>) are all character vectors with 4 values.&nbsp; But, <strong><em>anim4</em></strong> (subsetted with <strong>[ ]</strong>) is a List with a character vector that has 4 values:</p>
 <div id="fig-double_single_brackets" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-double_single_brackets-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>anim1<span class="sc">:</span>   chr [<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="st">"llama"</span> <span class="st">"guanaco"</span> ...</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>anim2<span class="sc">:</span>   chr [<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="st">"llama"</span> <span class="st">"guanaco"</span> ...</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>anim3<span class="sc">:</span>   chr [<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="st">"llama"</span> <span class="st">"guanaco"</span> ...</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>🞃 anim4<span class="sc">:</span>   List of <span class="dv">1</span></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>   <span class="sc">$</span> animal<span class="sc">:</span> chr [<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="st">"llama"</span> <span class="st">"guanaco"</span> ...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25" data-tab="Environment"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>anim1<span class="sc">:</span>   chr [<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="st">"llama"</span> <span class="st">"guanaco"</span> ...</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>anim2<span class="sc">:</span>   chr [<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="st">"llama"</span> <span class="st">"guanaco"</span> ...</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>anim3<span class="sc">:</span>   chr [<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="st">"llama"</span> <span class="st">"guanaco"</span> ...</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>🞃 anim4<span class="sc">:</span>   List of <span class="dv">1</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>   <span class="sc">$</span> animal<span class="sc">:</span> chr [<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="st">"llama"</span> <span class="st">"guanaco"</span> ...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-double_single_brackets-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;8: The difference between using [[ ]] or $ vs [ ] for subsetting objects within a List
+Figure&nbsp;2: The difference between using [[ ]] or $ vs [ ] for subsetting objects within a List
 </figcaption>
 </figure>
 </div>
@@ -884,36 +869,35 @@ Figure&nbsp;8: The difference between using [[ ]] or $ vs [ ] for subsetting obj
 <p>We are going to move from creating our own Lists to looking at Lists that are returned when you call certain functions, specifically <strong><em>lm()</em></strong>.</p>
 <p>&nbsp;</p>
 <p>When we create a linear regression model of humidity vs temperature using <strong><em>lm()</em></strong>, the results are saved to a list, in this case named <strong><em>model1</em></strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>«model1» <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula=</span>weatherData<span class="sc">$</span>avgTemp<span class="sc">~</span>weatherData<span class="sc">$</span>relHum);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>«model1» <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula=</span>weatherData<span class="sc">$</span>avgTemp<span class="sc">~</span>weatherData<span class="sc">$</span>relHum);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>And then look at a summary of the model using <strong><em>print(summary(model1))</em></strong>:</p>
 <div id="fig-summary_linear_reg" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-summary_linear_reg-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span>   <span class="fu">print</span>(<span class="fu">summary</span>(model1));</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>Call<span class="sc">:</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(<span class="at">formula =</span> weatherData<span class="sc">$</span>avgTemp <span class="sc">~</span> weatherData<span class="sc">$</span>relHum)</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>Residuals<span class="sc">:</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    Min      <span class="dv">1</span>Q  Median      <span class="dv">3</span>Q     Max </span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="fl">44.213</span> <span class="sc">-</span><span class="fl">14.424</span>  <span class="sc">-</span><span class="fl">0.213</span>  <span class="fl">15.479</span>  <span class="fl">36.461</span> </span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>Coefficients<span class="sc">:</span></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>                   Estimate Std. Error t value <span class="fu">Pr</span>(<span class="sc">&gt;</span><span class="er">|</span>t<span class="sc">|</span>)    </span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>(Intercept)        <span class="fl">77.27006</span>    <span class="fl">6.07644</span>  <span class="fl">12.716</span>  <span class="sc">&lt;</span> <span class="fl">2e-16</span> <span class="sc">**</span><span class="er">*</span></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>weatherData<span class="sc">$</span>relHum <span class="sc">-</span><span class="fl">0.38696</span>    <span class="fl">0.08722</span>  <span class="sc">-</span><span class="fl">4.437</span> <span class="fl">1.21e-05</span> <span class="sc">**</span><span class="er">*</span></span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="sc">---</span></span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>Signif. codes<span class="sc">:</span>  </span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span> ‘<span class="sc">**</span><span class="er">*</span>’ <span class="fl">0.001</span> ‘<span class="sc">**</span>’ <span class="fl">0.01</span> ‘<span class="sc">*</span>’ <span class="fl">0.05</span> ‘.’ <span class="fl">0.1</span> ‘ ’ <span class="dv">1</span></span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>Residual standard error<span class="sc">:</span> <span class="fl">18.59</span> on <span class="dv">364</span> degrees of freedom</span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>Multiple R<span class="sc">-</span>squared<span class="sc">:</span>  <span class="fl">0.0513</span>,    Adjusted R<span class="sc">-</span>squared<span class="sc">:</span>  <span class="fl">0.04869</span> </span>
-<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>F<span class="sc">-</span>statistic<span class="sc">:</span> <span class="fl">19.68</span> on <span class="dv">1</span> and <span class="dv">364</span> DF,  p<span class="sc">-</span>value<span class="sc">:</span> <span class="fl">1.213e-05</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span>   <span class="fu">print</span>(<span class="fu">summary</span>(model1));</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>Call<span class="sc">:</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(<span class="at">formula =</span> weatherData<span class="sc">$</span>avgTemp <span class="sc">~</span> weatherData<span class="sc">$</span>relHum)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>Residuals<span class="sc">:</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    Min      <span class="dv">1</span>Q  Median      <span class="dv">3</span>Q     Max </span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="fl">44.213</span> <span class="sc">-</span><span class="fl">14.424</span>  <span class="sc">-</span><span class="fl">0.213</span>  <span class="fl">15.479</span>  <span class="fl">36.461</span> </span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>Coefficients<span class="sc">:</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>                   Estimate Std. Error t value <span class="fu">Pr</span>(<span class="sc">&gt;</span><span class="er">|</span>t<span class="sc">|</span>)    </span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>(Intercept)        <span class="fl">77.27006</span>    <span class="fl">6.07644</span>  <span class="fl">12.716</span>  <span class="sc">&lt;</span> <span class="fl">2e-16</span> <span class="sc">**</span><span class="er">*</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>weatherData<span class="sc">$</span>relHum <span class="sc">-</span><span class="fl">0.38696</span>    <span class="fl">0.08722</span>  <span class="sc">-</span><span class="fl">4.437</span> <span class="fl">1.21e-05</span> <span class="sc">**</span><span class="er">*</span></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a><span class="sc">---</span></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>Signif. codes<span class="sc">:</span>  </span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span> ‘<span class="sc">**</span><span class="er">*</span>’ <span class="fl">0.001</span> ‘<span class="sc">**</span>’ <span class="fl">0.01</span> ‘<span class="sc">*</span>’ <span class="fl">0.05</span> ‘.’ <span class="fl">0.1</span> ‘ ’ <span class="dv">1</span></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>Residual standard error<span class="sc">:</span> <span class="fl">18.59</span> on <span class="dv">364</span> degrees of freedom</span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>Multiple R<span class="sc">-</span>squared<span class="sc">:</span>  <span class="fl">0.0513</span>,    Adjusted R<span class="sc">-</span>squared<span class="sc">:</span>  <span class="fl">0.04869</span> </span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>F<span class="sc">-</span>statistic<span class="sc">:</span> <span class="fl">19.68</span> on <span class="dv">1</span> and <span class="dv">364</span> DF,  p<span class="sc">-</span>value<span class="sc">:</span> <span class="fl">1.213e-05</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-summary_linear_reg-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9: Summary of a model of a linear regression
+Figure&nbsp;3: Summary of a model of a linear regression
 </figcaption>
 </figure>
 </div>
 <section id="the-returned-list-linear-model" class="level3" data-number="7.1">
 <h3 data-number="7.1" class="anchored" data-anchor-id="the-returned-list-linear-model"><span class="header-section-number">7.1</span> The returned List: linear model</h3>
-<p>called lm – in Console: typeof(model1)</p>
 <p><strong><em>model1</em></strong> is a List object and the information for the linear model is stored in the List:</p>
 <div id="fig-returned_list" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -921,35 +905,38 @@ Figure&nbsp;9: Summary of a model of a linear regression
 <img src="images/R-2-11-modelList.png" class="fs img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-returned_list-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;10: The List returned from a lm() call
+Figure&nbsp;4: The List returned from a lm() call
 </figcaption>
 </figure>
 </div>
+<p>In <strong><em>Variables</em></strong>, <strong><em>model1</em></strong> is listed as <strong><em>lm</em></strong> (linear model), but <strong><em>lm</em></strong> is a type of list. In fact using <strong><em>typeof()</em></strong>, you can see that model1 is a List.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">typeof</span>(model1)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"list"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="subsetting-the-linear-model-list" class="level3" data-number="7.2">
 <h3 data-number="7.2" class="anchored" data-anchor-id="subsetting-the-linear-model-list"><span class="header-section-number">7.2</span> Subsetting the linear model List</h3>
 <p><strong><em>model1</em></strong> has information that is inside the summary, for instance the estimate for the intercept is at:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> model1<span class="sc">$</span>coefficients[<span class="st">"(Intercept)"</span>]</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>(Intercept) </span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>   <span class="fl">77.27006</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> model1<span class="sc">$</span>coefficients[<span class="st">"(Intercept)"</span>]</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>(Intercept) </span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>   <span class="fl">77.27006</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><span class="note">Note: <strong>(Intercept)</strong> does not follow good programming naming practices!</span></p>
 <p>&nbsp;</p>
 <p>We need to use <strong>[ ]</strong> to subset <strong><em>coefficients</em></strong> because <strong><em>coefficients</em></strong> is an atomic vector.&nbsp; <span class="note">Note: Subsetting operators are a bit inconsistent in R.</span></p>
 <p>&nbsp;</p>
 <p>We can also subset the first ten <strong><em>residuals</em></strong> from <strong><em>model1</em></strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> model1<span class="sc">$</span>residuals[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>          <span class="dv">1</span>           <span class="dv">2</span>           <span class="dv">3</span>           <span class="dv">4</span>           <span class="dv">5</span> </span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="fl">21.8609230</span> <span class="sc">-</span><span class="fl">17.7957344</span> <span class="sc">-</span><span class="fl">22.7305458</span> <span class="sc">-</span><span class="fl">30.0869984</span> <span class="sc">-</span><span class="fl">32.5696589</span> </span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>          <span class="dv">6</span>           <span class="dv">7</span>           <span class="dv">8</span>           <span class="dv">9</span>          <span class="dv">10</span> </span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="fl">24.8914326</span> <span class="sc">-</span><span class="fl">19.4392818</span> <span class="sc">-</span><span class="fl">12.3130738</span>  <span class="sc">-</span><span class="fl">0.1216773</span> <span class="sc">-</span><span class="fl">20.0869984</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> model1<span class="sc">$</span>residuals[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>          <span class="dv">1</span>           <span class="dv">2</span>           <span class="dv">3</span>           <span class="dv">4</span>           <span class="dv">5</span> </span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="fl">21.8609230</span> <span class="sc">-</span><span class="fl">17.7957344</span> <span class="sc">-</span><span class="fl">22.7305458</span> <span class="sc">-</span><span class="fl">30.0869984</span> <span class="sc">-</span><span class="fl">32.5696589</span> </span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>          <span class="dv">6</span>           <span class="dv">7</span>           <span class="dv">8</span>           <span class="dv">9</span>          <span class="dv">10</span> </span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="fl">24.8914326</span> <span class="sc">-</span><span class="fl">19.4392818</span> <span class="sc">-</span><span class="fl">12.3130738</span>  <span class="sc">-</span><span class="fl">0.1216773</span> <span class="sc">-</span><span class="fl">20.0869984</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Or, subset every twentieth value in <strong><em>fitted.values</em></strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> model1<span class="sc">$</span>fitted.values[<span class="fu">seq</span>(<span class="at">from=</span><span class="dv">1</span>, <span class="at">to=</span><span class="dv">366</span>, <span class="at">by=</span><span class="dv">20</span>)]</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>       <span class="dv">1</span>       <span class="dv">21</span>       <span class="dv">41</span>       <span class="dv">61</span>       <span class="dv">81</span>      <span class="dv">101</span>      <span class="dv">121</span>      <span class="dv">141</span> </span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fl">47.86092</span> <span class="fl">45.92611</span> <span class="fl">52.11751</span> <span class="fl">44.76522</span> <span class="fl">57.53498</span> <span class="fl">46.31307</span> <span class="fl">49.02181</span> <span class="fl">57.92194</span> </span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>     <span class="dv">161</span>      <span class="dv">181</span>      <span class="dv">201</span>      <span class="dv">221</span>      <span class="dv">241</span>      <span class="dv">261</span>      <span class="dv">281</span>      <span class="dv">301</span> </span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="fl">54.43928</span> <span class="fl">57.53498</span> <span class="fl">54.82624</span> <span class="fl">55.21321</span> <span class="fl">47.47396</span> <span class="fl">45.15219</span> <span class="fl">50.56966</span> <span class="fl">43.60434</span> </span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>     <span class="dv">321</span>      <span class="dv">341</span>      <span class="dv">361</span> </span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="fl">48.24789</span> <span class="fl">46.31307</span> <span class="fl">46.70004</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> model1<span class="sc">$</span>fitted.values[<span class="fu">seq</span>(<span class="at">from=</span><span class="dv">1</span>, <span class="at">to=</span><span class="dv">366</span>, <span class="at">by=</span><span class="dv">20</span>)]</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>       <span class="dv">1</span>       <span class="dv">21</span>       <span class="dv">41</span>       <span class="dv">61</span>       <span class="dv">81</span>      <span class="dv">101</span>      <span class="dv">121</span>      <span class="dv">141</span> </span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="fl">47.86092</span> <span class="fl">45.92611</span> <span class="fl">52.11751</span> <span class="fl">44.76522</span> <span class="fl">57.53498</span> <span class="fl">46.31307</span> <span class="fl">49.02181</span> <span class="fl">57.92194</span> </span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>     <span class="dv">161</span>      <span class="dv">181</span>      <span class="dv">201</span>      <span class="dv">221</span>      <span class="dv">241</span>      <span class="dv">261</span>      <span class="dv">281</span>      <span class="dv">301</span> </span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="fl">54.43928</span> <span class="fl">57.53498</span> <span class="fl">54.82624</span> <span class="fl">55.21321</span> <span class="fl">47.47396</span> <span class="fl">45.15219</span> <span class="fl">50.56966</span> <span class="fl">43.60434</span> </span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>     <span class="dv">321</span>      <span class="dv">341</span>      <span class="dv">361</span> </span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="fl">48.24789</span> <span class="fl">46.31307</span> <span class="fl">46.70004</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>There are also a lot of other, more obscure, values in the List object which we will not go through.&nbsp; The point is that there is a lot of information inside the List and that information can be extracted using subset operators.</p>
 </section>
 <section id="new-variables-types" class="level3" data-number="7.3">
@@ -961,7 +948,7 @@ Figure&nbsp;10: The List returned from a lm() call
 <img src="images/R-2-11-OtherVariableTypes.png" class="fs img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-less_common_var_types-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;11: Some of the less common variable types appear in this List
+Figure&nbsp;5: Some of the less common variable types appear in this List
 </figcaption>
 </figure>
 </div>
@@ -969,18 +956,19 @@ Figure&nbsp;11: Some of the less common variable types appear in this List
 </section>
 <section id="application" class="level2" data-number="8">
 <h2 data-number="8" class="anchored" data-anchor-id="application"><span class="header-section-number">8</span> Application</h2>
-<p>A) Why is it better to subset objects by name instead of position numbers?</p>
+<p>A) Create one List named <strong><em>app2_13_List</em></strong> that contains the objects from parts A, B, and C in this application</p>
+<p>B) Why is it better to subset objects by name instead of position numbers?</p>
 <ul>
 <li><p>Save the answer to a 1-character vector</p></li>
 <li><p>Add the <strong><em>name</em></strong> “comment” to the value</p>
 <p>&nbsp;</p></li>
 </ul>
-<p>B) Using <strong><em>weatherData</em></strong>, create a linear model of dewpoint vs temperature</p>
+<p>C) Using <strong><em>weatherData</em></strong>, create a linear model of dewpoint vs temperature</p>
 <ul>
 <li><p>Save the model to a List named <strong><em>linearModel1</em></strong></p>
 <p>&nbsp;</p></li>
 </ul>
-<p>C) Using only values in <strong><em>linearModel1</em></strong>, find and save:</p>
+<p>D) Using only values in <strong><em>linearModel1</em></strong>, find and save:</p>
 <ul>
 <li><p>the slope and the intercept</p></li>
 <li><p>the last 10 effects values</p></li>
@@ -988,9 +976,7 @@ Figure&nbsp;11: Some of the less common variable types appear in this List
 <li><p>the most extreme residual value (i.e., furthest from 0 – could be positive or negative)</p></li>
 </ul>
 <p>&nbsp;</p>
-<p>D) Create one List named <strong><em>app2_13_List</em></strong> that contains the objects from parts A, B, and C in this application</p>
-<p>&nbsp;</p>
-<p>E) Write the List to an RData file named <strong><em>app2-13List.RData</em></strong> in the <strong><em>data</em></strong> folder.</p>
+<p>E) Write the List to an RDS file named <strong><em>app2-13List.RDS</em></strong> in the <strong><em>data</em></strong> folder.</p>
 <p>&nbsp; If you have any questions regarding this application, feel free to email them to Charlie Belinsky at belinsky@msu.edu.</p>
 <section id="questions-to-answer" class="level3" data-number="8.1">
 <h3 data-number="8.1" class="anchored" data-anchor-id="questions-to-answer"><span class="header-section-number">8.1</span> Questions to answer</h3>
@@ -1022,7 +1008,7 @@ Figure&nbsp;11: Some of the less common variable types appear in this List
 <img src="images/R-1-01_Upload.png" class="fs img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-upload-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;12: Upload changes to GitHub – the red circle indicates how many files that changed (in this case: 1)
+Figure&nbsp;6: Upload changes to GitHub – the red circle indicates how many files that changed (in this case: 1)
 </figcaption>
 </figure>
 </div>
@@ -1047,7 +1033,7 @@ Figure&nbsp;12: Upload changes to GitHub – the red circle indicates how many f
 <img src="images/R-1-01_Inform.png" class="fs img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-inform-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;13: Informing your instructor the application is finished
+Figure&nbsp;7: Informing your instructor the application is finished
 </figcaption>
 </figure>
 </div>

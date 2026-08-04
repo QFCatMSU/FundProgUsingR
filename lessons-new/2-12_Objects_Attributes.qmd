@@ -6,6 +6,8 @@ short: "2-12"
 
 ### To-do
 
+- note that \[ \] is better to subset vectors whereas \[\[ \]\] is better to subset lists (however, both operators can be used for both objects)
+
 ## Purpose
 
 - Distinguish between atomic vectors and Lists
@@ -18,7 +20,7 @@ short: "2-12"
 
 ## Script for this lesson
 
-The [script for the lesson is here](../scripts/2-11_ObjectsAndAttributes_new.R)
+The [script for the lesson is here](../scripts/2-12_ObjectsAndAttributes.R)
 
 ## Terminology
 
@@ -28,21 +30,33 @@ This lesson requires the use of terminology that has been inconsistently used in
 
 In the R world, anything stored in memory that has a name is called an [object]{.hl}. In base-R, there are three main types of objects: atomic vectors (usually shortened to vector), functions, and Lists. Broadly speaking:
 
-- [(atomic) vectors]{.hl}: objects that hold values of the same type. The word ***atomic*** is rarely used but does occasionally appear as in @fig-errorAtomicVec.
+- [(atomic) vectors]{.hl}: objects that hold values of the same type. The word ***atomic*** is rarely used but does occasionally appear as in the error message in @fig-errorAtomicVec.
 
 - [functions]{.hl}: objects that hold operations
 
-- [Lists]{.hl}: objects that hold other objects (including Lists) – covered in next lesson ([note: data frames are a type of List]{.note})
+- [lists]{.hl}: objects that hold other objects (including Lists) – covered in next lesson ([note: data frames are a type of List]{.note})
+
+### Relationship between the objects
+
+The three types of objects (vectors, functions, and lists) are quite analogous to the different types of files and folders on a computer. A vector is like a data file, a function is like an executable file, and a list (covered in the next lesson) is like a folder: a container that stores objects, including vectors, functions, and even other lists.
+
+ 
+
+[Note: Vectors are often referred to as ***homogeneous objects*** and Lists are often referred to as **heterogeneous objects,** but I believe these terms are not helpful as they do the capture the main difference between the objects like the file/folder analogy. ]{.note}
 
 ### Objects in Positron
 
-When you execute a script in Positron, all of the current objects are put in the ***Variables*** tab. This is poorly names because, technically speaking, only vectors are variables. The tab would be better named ***Objects***. The ***Variables*** tab is divided into three sections: DATA, VALUES, and FUNCTIONS. These three categories are not a mapping to the three types of objects in R:
+When you execute a script in Positron, all of the current objects are put in the ***Variables*** tab. ***Variables*** is a poor name because, technically speaking, only vectors are variables. A better name would be ***Objects***.
 
-- **FUNCTIONS**: holds all function objects (this is a direct mapping)
+ 
 
-- **DATA**: holds all data frames and matrices
+The ***Variables*** tab is divided into three sections: DATA, VALUES, and FUNCTIONS. These three categories are not a mapping to the three types of objects in R:
 
-  - Essentially, any data that can be represented in two dimensions.
+- **FUNCTIONS**: holds function objects
+
+- **DATA**: holds 2D data structure
+
+  - Data frames are matrices are the most common 2D data structures
 
   - Double-clicking on a item in DATA will open it in a data viewer tab
 
@@ -52,31 +66,43 @@ When you execute a script in Positron, all of the current objects are put in the
 
 ![Objects in the Positron Variables tab (lesson 1-15 script)](images/R_2-12_ObjectInSession.jpg){#fig-object_in_var .fs}
 
-### Relationship between the objects
-
-In R, vectors, functions, and lists are like different types of files and folders on a computer. A vector is like a data file, a function is like an executable file, and a list (covered in the next lesson) is like a folder: a container that stores objects, including vectors, functions, and even other lists.
-
- 
-
-[Note: Atomic vectors are often referred to as ***homogeneous objects*** and Lists are often referred to as **heterogeneous objects,** but I believe these terms are not helpful as they create a false distinction between Lists and atomic vectors. ]{.note}
-
 ## The simplest object in R: the vector
 
-Because R is a programming language designed to work with data, the vector represents the most basic object in R.  [Note: This is different from most programming languages where a single named value is the most basic object]{.note}*.*
+Because R is a programming language designed to work with data, the vector represents the most basic object in R.  A [vector ]{.hl}is a named object that hold values of the same type (or class) -- usually string or numeric.
 
  
 
-A vector is a named object that hold values of the same type (or class) -- usually string or numeric.
+This code creates a vector named ***randomTemps*** with 40 integer values between -20 and 120:
 
- 
+``` r
+set.seed(123);
+randomTemps = sample(-20:120, size=40);
+```
 
-[Even a single value is put into a vector.]{.hl}  Setting a variable to one value creates a one-value vector**:**
+And, ***Variables*** shows that it is a integer (int) vector with forty values \[40\] ([note: ***sample()*** always returns integer values]{.note}):
+
+``` {.r tab="Variables"}
+randomTemps:  90 88 86 77 81 83 80 80    int [40]
+```
+
+In the Console, the 40 values are listed and, at the beginning of each line is the index value for the first value in the line. So, **-7** is the 1^st^ value, **-12** is the 16^th^ value, and **20** is the 31~~st~~ value. Your Console will look different because of the width.
+
+``` {.r tab="Console"}
+> randomTemps
+ «[1]»  «-7»  29  97  22 120 118  69  70 113  71  78  51   5 -14  21
+«[16]» «-12»  62  15  57  60 117  82  96  55  -6  11  85  88 107 105
+«[31]»  «20»  53   2   6  39  32  92  94  87  75
+```
+
+### Single-value vectors
+
+[Even a single value is stored in a vector.]{.hl}  Setting a variable to one value creates a one-value vector**:**
 
 ``` r
 temperature = 80; # a vector, named temperature, with one value, 80
 ```
 
-In ***Variables***, ***temperature*** is listed as a double (***dbl***) without any number but this is equivalent to ***dbl \[1\].***
+In ***Variables***, ***temperature*** is listed as a double (***dbl***) without any index number, but this is equivalent to ***dbl \[1\].***
 
 ``` {.r tab="Variables"}
 temperature:  80     dbl
@@ -89,19 +115,7 @@ The ***Console***, with the **\[1\]**, better shows the vector nature of all R v
 [1] 80
 ```
 
-This code creates a vector named ***JulyTemps*** with eight numeric values:
-
-``` r
-JulyTemps = c(90, 88, 86, 77,81, 83, 80, 80);
-```
-
-And, ***Variables*** shows that it is a double (dbl) vector with eight values \[8\]:
-
-``` {.r tab="Variables"}
-JulyTemps:  90 88 86 77 81 83 80 80    dbl [8]
-```
-
-### Types of vector
+## Types of vector
 
 There are six basic types/***classes*** of vectors in R:
 
@@ -174,22 +188,22 @@ There are two general ways to create a Boolean vector: manually or with a condit
 
 #### Manually create a Boolean vector
 
-We can use ***c()*** to create a vector with Boolean values.  Let's create a vector that tells whether it rained on the eight days in ***JulyTemps***:
+We can use ***c()*** to create a vector with Boolean values.  Let's create a vector that that tells whether it rained on the eight days:
 
 ``` r
-rainyDaysInJuly = c(FALSE, FALSE, TRUE, FALSE, FALSE, TRUE, TRUE, FALSE);
+rainyDays = c(FALSE, FALSE, TRUE, FALSE, FALSE, TRUE, TRUE, FALSE);
 ```
 
-In ***Variables***, ***rainyDaysInJuly*** is given as a ***lgl***, which stands for ***logical*** -- which is just another name for Boolean:
+In ***Variables***, ***rainyDays*** is given as a ***lgl***, which stands for ***logical*** -- which is just another name for Boolean:
 
 ``` {.r tab="Variables"}
-rainyDaysInJuly:  FALSE FALSE TRUE ...   lgl [8]
+rainyDays:  FALSE FALSE TRUE ...   lgl [8]
 ```
 
 and we can check which values are ***TRUE*** using ***which()***:
 
 ``` {.r tab="Console"}
-which(rainyDaysInJuly)
+which(rainyDays)
 [1] 3 5 6
 ```
 
@@ -198,6 +212,8 @@ which(rainyDaysInJuly)
 A conditional statement always creates a Boolean vector.  We typically used conditional statements in ***if()*** statements:
 
 ``` r
+JulyTemps = c(90, 88, 86, 77,81, 83, 80, 80);  
+
 for(i in 1:length(JulyTemps))
 {
   # Output Boolean value instead of executing the if() statement:  if(JulyTemps[i] > 85)
@@ -237,7 +253,7 @@ And the answer is given as a Boolean vector:
 
 ## Attributes of a objects
 
-[Attributes]{.hl} is a very broad term in R.  All objects can have attributes and there are two distinct types of attributes in R.
+[Attributes]{.hl} is a very broad term in R.  All R objects can have attributes and there are two types of attributes.
 
  
 
@@ -255,7 +271,7 @@ And the answer is given as a Boolean vector:
 
  
 
-Attributes can be confusing because there is not a consistent way to apply or view them in R.  In this lesson, we will look at attributes on vectors and next lesson look at attributes on Lists.
+Attributes can be confusing because there is not a consistent way to apply or view them in R.
 
 ## names attribute
 
@@ -304,7 +320,7 @@ The main advantage to naming vectors is that you can use the names to subset the
 
  
 
-To get the second value in ***JulyTempsNamed***, you can subset with the position `[2]` or the name `[July23]`:
+To get the second value in ***JulyTempsNamed***, you can subset with the position `[2]` or the name `["July23"]`:
 
 ::: {#fig-subset_named_vec}
 ``` {.r tab="Console"}
@@ -386,20 +402,20 @@ When you create a vector using ***c()***, you are creating an object that, funct
 
 However, data is sometimes best represented in multiple dimensions -- for instance you might have temperatures that are stored by both location and date.
 
-### 2-dimensional vectors
+### two-dimensional vectors
 
 We can use ***dim()*** to add more dimensions to a vector.
 
  
 
-We are going to make a two-dimensional vector (also called a matrix or a 2D array) using ***JulyTemps***.  First, we will create a copy of ***JulyTemps*** and then set the dimensions of the copy to two values (**4** and **2**).  Those two dimension values (which can be thought of as **4** rows and **2** columns) must multiply to the number of values in the vector (**8**).
+We are going to make a two-dimensional vector (also called a [matrix ]{.hl}or a [2D array]{.hl}) using ***JulyTemps***.  First, we will create a copy of ***JulyTemps*** and then set the dimensions of the copy to two values (**4** and **2**).  Those two dimension values (which can be thought of as **4** rows and **2** columns) must multiply to the number of values in the vector (**8**).
 
 ``` r
 JulyTemps2D = July Temps;
 dim(JulyTemps2D) = c(4,2);
 ```
 
-The ***Console*** reflects the dimensions in ***JulyTemps2D***: whereas, in ***Variables***, ***JulyTemps2D*** appears as a matrix:
+The ***Console*** reflects the dimensions in ***JulyTemps2D***: whereas, in ***Variables***, ***JulyTemps2D*** appears as a matrix in the DATA section:
 
 ``` {.r tab="Console"}
 > JulyTemps2D
@@ -436,17 +452,17 @@ JulyTemps3D = JulyTemps;
 dim(JulyTemps3D) = c(2,2,2); # each dimension has length of 2
 ```
 
-In the ***Console***, the third dimension is show vertically as multiple 2D arrays:
+In the ***Console***, the third dimension is show vertically as multiple 2D arrays (the 1 and 2 highlighted represent the third dimension):
 
 ``` {.r tab="Console"}
 > JulyTemps3D
-, , 1
+, , «1»
 
      [,1] [,2]
 [1,]   90   86
 [2,]   88   77
 
-, , 2
+, , «2»
 
      [,1] [,2]
 [1,]   81   80
@@ -464,13 +480,6 @@ And we can subset the 3D vector using three values in the array operator:
 ``` {.r tab="Console"}
 > JulyTemps3D[1,2,2]
 [1] 80
-```
-
-[Note: You can declare a one-dimensional vector (also called a 1D array).  I do not know if there is a practical reason to do this since vectors functionally operate as 1D objects:]{.note}
-
-``` r
-JulyTemps1D = JulyTemps;
-dim(JulyTemps1D) = c(8);
 ```
 
 ### accessing rows and columns in matrices
@@ -548,7 +557,7 @@ R does not allow use of \$ operator on vectors
 
 ## class attribute and typeof()
 
-***class()*** is a function that allows you to either view or set the class of an object (i.e., change a numeric vector to a character vector).  [However, you should never use **class()** to changes the class of an object, instead use a specialized function like **as.character()**.]{.hl}
+***class()*** is a function that allows you to either view or set the class of an object (e.g., change a numeric vector to a character vector).  [However, you should never use **class()** to changes the class of an object, instead use a specialized function like **as.character()**.]{.hl}
 
  
 
