@@ -6,9 +6,10 @@ short: "2-13"
 
 ### To-do
 
-- expand lesson to include reading/writing Lists to RDS file (save lm to RDS?)
+- expand lesson to include reading/writing Lists to RDS file (save lm to RDS – use saveRDS() and laodRDS() – Help
 - talk about attributes on a matrix vs data frame
-  - how matrix and data frame determine rows and columns
+  - how matrix (dim) and data frame determine rows and columns
+- simpler data frame?
 
 ## Purpose
 
@@ -20,7 +21,7 @@ short: "2-13"
 
 ## Script for this lesson
 
-The [script for the lesson is here](../scripts/2-12_Lists_new.R)
+The [script for the lesson is here](../scripts/2-13_Lists.R)
 
 The [data used for this lesson and the application](../data/Lansing2016Noaa.csv) is here
 
@@ -28,93 +29,127 @@ The [data used for this lesson and the application](../data/Lansing2016Noaa.csv)
 
 As mentioned in last lesson, there are 3 types of objects in R:
 
-- Vectors (sometimes called atomic vectors): objects that hold values of the same type (e.g., numeric, string, logical)
+- Vectors (sometimes called atomic vectors): objects that hold multiple values of the same type (e.g., numeric, string, logical)
+
+  - vector are like data files on your computer
 
 - Lists: objects that hold other objects (including more Lists)
 
+  - lists are like folders on your computer
+
 - Functions: objects that hold operations
 
-   
+  - functions are like executable files on your computer
 
-Last lesson we talked mostly about atomic vectors. This lesson we will talk mostly about Lists. As you will see in this lesson, Lists create a tree-like structure for your data. 
+     
+
+Last lesson we talked mostly about vectors. This lesson we will talk mostly about Lists, which create a tree-like structure for your data. 
 
 ### Creating objects to put in a List
 
 We are going to create a List object and add other objects to it. The objects we will add are:
 
-- a character vector called ***someAnimals***
+- a character (string) vector called ***someAnimals***
 
 - a 2x3 matrix consisting of a sequence of six numbers called ***someNumbers***
 
-- the ***weatherData*** dataframe from previous lessons
+- the ***weatherData*** dataframe from previous lessons – but reduce the data to make it easier to read in ***Variables***
 
 ``` r
 someAnimals = c("llama", "guanaco", "alpaca", "goat");
 someNumbers = matrix(nrow=2, ncol=3, seq(from=30, to=4, length.out=6)) 
 weatherData = read.csv(file="data/Lansing2016NOAA.csv");
+
+### reduce the dataset to 20 rows (150-169) and 5 columns (1,3,5,7,9)
+weatherData_reduced = weatherData[150:169, seq(from=1, to=10, by=2)];
 ```
 
-***someAnimals*** is a one-dimensional vector, ***someNumbers*** is a two-dimensional vector (i.e., a matrix), and ***weatherData*** is a data frame.
+***someAnimals*** is a one-dimensional vector, ***someNumbers*** is a two-dimensional vector (i.e., a matrix), and ***weatherData_reduced*** is a data frame.
 
  
 
-In ***Variables***, ***someNumbers*** and ***weatherData*** are put in the DATA section. In general, only 2D data objects are put into the DATA section – everything else goes into VALUES (including ***someAnimals***).
+In ***Variables***, ***someNumbers,*** ***weatherData***, and ***weatherData_reduced*** are put in the DATA section. Positron only puts 2D data objects into the DATA section. These are objects that can be double-clicked and put into a data viewer tab – in @fig-data-values, ***weatherData_reduced*** is in a data viewer. All other data goes into VALUES (including ***someAnimals***).
 
-![Matrixes and data frames are put under DATA](images/R_2-13_Data-and-Values.png){#fig-data-values .fs}
+![Expanded view of three objects and ***weatherData_reduced*** in the data viewer](images/R_2-13_Data-and-Values.png){#fig-data-values .fs}
 
 ### Matrices vs. data frames
 
-Matrices and data frames are both 2D structures that contain data – but they are formed very differently. A matrices is a single vector object with the ***dim*** attributes modified to defining how many rows and column are in the data. A data frame is a List object where each column is a separate vector – and all vectors have the same number of values.
-
-## Lists
-
-A List is an object that holds other (usually related) objects, much like a folder holds files. A data frame is a special type of List that holds only vectors with the same number of values. Lists are often used to organize and send data. For instance, when you perform a statistical test, the results are often stored as Lists, as we will see later in the lesson.
+Matrices and data frames are both 2D structures that contain data – but they are formed very differently. [A matrix is a single vector]{.hl} object with the ***dim*** attributes modified to define how many rows and column are in the data. [A data frame is structured like a folder]{.hl} (i.e., List object) that holds multiple vectors of the same size – the vectors can be of different types (e.g., string, Boolean, numeric, integer, Datetime).
 
  
 
-A List is usually used as a data structure and contains vectors and subLists. A List can also include functions – this is often done when programming using the Object-Oriented Programming (OOP) paradigm, a topic not covered in this class.
+In a matrix, the number of rows and columns are defined by the ***dim*** attribute that is set when you declare the matrix using the ***nrow*** and ***ncol*** arguments. In a data frame, the number of columns is the number of vectors in the List/folder and the number of rows is the number of values in each vector, which must be the same.
+
+### Subsetting a data frame
+
+When weatherData was reduced to weatherData_reduced, the row and column names stayed the same. It is easy to see the column names in ***weatherData_reduced*** are still ***dateTime***, ***minTemp***, ***tempDept***, ***dewPoint***, and ***heatDays***. If you look at the row names in the data viewer, you can see they are still **150 - 169**, matching the row numbers extracted out of ***weatherData***. This can also be seen in ***Console***:
+
+``` {.r tab="Console"}
+> rownames(weatherData_reduced)
+ [1] "150" "151" "152" "153" "154" "155" "156" "157" "158" "159" "160" "161" "162" "163" "164" "165" "166"
+[18] "167" "168" "169"
+```
+
+The ***Console*** also clearly shows that these are not number, but string values consisting of numbers. So, you can refer to the row using the index number or the row name. Here we are extracting row 4, or "153":
+
+``` {.r tab="Console"}
+> weatherData_reduced[«4»,]
+               dateTime minTemp tempDept dewPoint heatDays
+153 2016-06-01T00:00:00      59      6.9       56        0
+> weatherData_reduced[«"153"»,]
+               dateTime minTemp tempDept dewPoint heatDays
+153 2016-06-01T00:00:00      59      6.9       56        0
+```
+
+## Lists
+
+A List is an object that holds other (usually related) objects, much like a folder holds files. A data frame is a special type of List. Lists are often used to organize and send data. For instance, when you perform a statistical test, the results are often stored as Lists, as we will see later in the lesson.
+
+ 
+
+A List is usually used as a data structure that contains vectors and subLists. A List can also include functions – this is often done when programming using the Object-Oriented Programming (OOP) paradigm, a topic not covered in this class, but you will see in some advanced packages (e.g., shiny, terra, RTMB).
 
 ### Creating the new List
 
-We can create a List with the three objects above using the ***list()*** function:
+Let's create a List with the three objects above using the ***list()*** function:
 
 ``` r
-list1 = list(someAnimals, someNumbers, weatherData);
+list1 = list(someAnimals, someNumbers, weatherData_reduced);
 ```
 
-When you expand List1 in ***Variables***, you can see the three objects that were added to the List, but they do not have names – they just have index numbers. [Objects do not retain their names when put in to a List.]{.hl}
+When you expand ***list1*** in ***Variables***, you can see the three objects were added to the List, but they do not have names – they just have index numbers. When put in a list, [objects retain their data but not their names.]{.hl}
 
 ``` {.r tab="Variables"}
 🞃 list1:     ["llama" "guanaco" ...]              list [3]
     > [[1]]:  "llama" "guanaco" "alpaca" "goat"      str[4]
     > [[2]]:  [2 rows x 3 columns] <matrix>     
-    > [[3]]:  [366 rows x 23 columns] <data.frame>
+    > [[3]]:  [20 rows x 5 columns] <data.frame>
 ```
 
 ### Including names for the objects
 
-If we want the objects inside the List to have names, then we have to specify the names while creating the List ([note: you can use a different name]{.note}).  You do that by setting a name equal to the object when calling ***list()***:
+If we want the objects inside the List to have names, then we have to specify a name while creating the List ([note: you can use a different name]{.note}).  You do that by setting a name equal to the object when calling ***list()***:
 
 ``` r
   list2 = list(animals = someAnimals,
                numbers = someNumbers, 
-               weather = weatherData);
+               weather = weatherData_reduced);
 ```
 
-This makes ***animals***, ***numbers***, and ***weather*** the names of the objects ***someAnimal***, ***someNumbers***, and **weatherData** inside the List.
+The names in the List can be different from the original. In this case, ***animals***, ***numbers***, and ***weather*** are the names of the original objects ***someAnimal***, ***someNumbers***, and ***weatherData_reduced***.
 
 ``` r
 🞃 list2:       ["llama" "guanaco" ...]               list [3]
     > animals:  "llama" "guanaco" "alpaca" "goat"      str[4]
     > numbers:  [2 rows x 3 columns] <matrix>     
-    > weather:  [366 rows x 23 columns] <data.frame>
+    > weather:  [20 rows x 5 columns] <data.frame>
 ```
 
 [Note: names inside Lists, like variables, should follow programming naming conventions -- but this is not enforced in R.]{.note}
 
 ## Creating a dynamic List
 
-In the previous example, all the objects put in the List were put in at once.  What often happens is that data is generated and gets dynamically added to a List, so the objects are put in the List separately.  We are going to create a List equivalent to ***list2*** except the three object will be put in one at a time.
+In the previous example, all the objects were put in the List at once.  What often happens is data is generated and gets dynamically added to a List, so the objects are put in the List separately.  We are going to create a List equivalent to ***list2*** except the three object will be put in one at a time.
 
  
 
@@ -124,8 +159,10 @@ First we create a List with nothing in it (i.e., an empty list):
 list3 = list();
 ```
 
+In ***Variables***, an empty list looks like this:
+
 ``` {.r tab="Variables"}
-list3:  list [0]
+list3: []                    list [0]
 ```
 
 ### Appending to the List
@@ -135,6 +172,10 @@ Then add the object ***someAnimals*** to the List. 
 ``` r
 list3[["animals"]] = someAnimals;  
 ```
+
+[Note: double brackets **\[\[ \]\]** are used to access or create objects within a list, single brackets **\[ \]** are used to access or create values within a vector.]{.note}
+
+ 
 
 Now ***list3*** is a List with one string object in it named animal.
 
@@ -156,49 +197,51 @@ And ***list3*** looks exactly like ***list2***:
 🞃 list2:       ["llama" "guanaco" ...]               list [3]
     > animals:  "llama" "guanaco" "alpaca" "goat"      str[4]
     > numbers:  [2 rows x 3 columns] <matrix>     
-    > weather:  [366 rows x 23 columns] <data.frame>
+    > weather:  [20 rows x 5 columns] <data.frame>
 ```
 
 ### Appending by index
 
-When you are automating the generation of a List, you often do not want to name objects, you just want to keep appending objects to the List. What you want to do is more like this:
+When you are automating the generation of a List, you often do not want to name objects, you just want to keep appending objects to the List. Here we are saying that the 1^st^ object in ***list4*** is ***someAnimals***, the 2^nd^ object is ***someNumbers***, and the 3^rd^ object is ***weatherData_reduced***:
 
 ``` r
 #### To put in objects in a list by index a name
 list4 = list()
 list4[[1]] = someAnimals; 
 list4[[2]] = someNumbers; 
-list4[[3]] = weatherData; 
+list4[[3]] = weatherData_reduced; 
 ```
 
-And list4 will look exactly like list1 – a list with unnamed objects:
+***list4*** has the same data in the same order as ***list1***, but without the names:
 
 ``` {.r tab="Variables"}
 🞃 list4:     ["llama" "guanaco" ...]              list [3]
     > [[1]]:  "llama" "guanaco" "alpaca" "goat"      str[4]
     > [[2]]:  [2 rows x 3 columns] <matrix>     
-    > [[3]]:  [366 rows x 23 columns] <data.frame>
+    > [[3]]:  [20 rows x 5 columns] <data.frame>
 ```
 
-### Appending by index automated
+### Using length() to appending objects
 
-But the problem with the above code is that you have to manually add the index number – a likely impractical task in large scripts! Instead, we can tell R to append to the next open index by using ***length()***, which gives the current number of objects in the list:
+But the problem with the above code is that you have to know the number of object in the list beforehand – an impractical task in large scripts! Instead, we can tell R to append to the next open index by using ***length()***, which gives the current number of objects in the list.
 
 ``` r
 #### To automate the numbering of objects in a list
 list5 = list()
-list5[[length(list5)+1]] = someAnimals; 
-list5[[length(list5)+1]] = someNumbers; 
-list5[[length(list5)+1]] = weatherData; 
+list5[[length(list5)+1]] = someAnimals;           # 0+1 = 1
+list5[[length(list5)+1]] = someNumbers;           # 1+1 = 2
+list5[[length(list5)+1]] = weatherData_reduced;   # 2+1 = 3
 ```
 
-and list5 looks exactly like list4.
+and ***list5*** looks exactly like ***list4***.
 
- 
+#### Using for loops to append objects
 
-Something like this would probably be done in a ***for*** loop where you are adding data to a list each cycle:
+However, appending to a list is often done in a ***for*** loop where you are adding data to a list each cycle. In this case, 10 random numbers are chosen each cycle of the ***for*** loop and then added to ***list6***:
 
 ``` r
+set.seed(123);     # use the same "random" numbers
+
 list6 = list();
 for (i in 1:5)
 {
@@ -207,7 +250,7 @@ for (i in 1:5)
 }
 ```
 
-And list6 has stored the 5 sets of random numbers:
+And ***list6*** has stored the ***5*** sets of random numbers as ***5*** objects:
 
 ``` {.r tab="Variables"}
 🞃 list6:     [37 8 51 74 ...]                     list [5]
@@ -220,82 +263,52 @@ And list6 has stored the 5 sets of random numbers:
 
 ## Subsetting within a List
 
-There are three ways to subset a List
+There are three ways to subset a List:
 
-1)  using name inside \[\[ \]\]
+1)  using name inside **\[\[ \]\]**
 
-2)  using name after \$
+2)  using name after **\$**
 
-3)  by index number (this is the only option when there is no name)
+3)  by index number – [this is the only option when objects do not have a name]{style="hl"}
 
-[Note that you can combine these]{.note}
-
- 
-
-The ***Variables*** tab does a good job of showing the structure of a List object. Here we see the object within model1 and there are multiple object (highlighted) that are three levels deep:
-
-``` r
-listDynamic5[["weather"]][["avgTemp"]]
-```
-
-We can view any of those objects using the \[\[ \]\] operator:
-
-anim4 = list5\["animal"\];
-
-### Subsetting with \$ and \[\[ \]\]
-
-Every object in the List Viewer with a value under ***Name*** in @fig-viewer_to_Console can be accessed with both the **\$** and **\[\[ \]\]** subset operators.
+... and we can combine these.
 
  
 
-Here are two ways to subset the ***animal*** object inside ***listDynamic5*** -- the results are saved to ***anim1*** and ***anim2***:
+Here are various ways to subset ***list3*** -\> ***weather*** -\> ***minTemp***
 
-``` r
-anim1 = listDynamic5[["animal"]];
-anim2 = listDynamic5$animal;
+``` {.r tab="Console"}
+> list3$weather$minTemp
+ [1] 64 60 53 59 57 51 57 60 55 48 45 44 54 71 56 50 60 62 62 53
+> list3[["weather"]][["minTemp"]]
+ [1] 64 60 53 59 57 51 57 60 55 48 45 44 54 71 56 50 60 62 62 53
+> list3$weather[["minTemp"]]
+ [1] 64 60 53 59 57 51 57 60 55 48 45 44 54 71 56 50 60 62 62 53
+> list3[["weather"]]$minTemp
+ [1] 64 60 53 59 57 51 57 60 55 48 45 44 54 71 56 50 60 62 62 53
+> list3[[3]][[2]]
+ [1] 64 60 53 59 57 51 57 60 55 48 45 44 54 71 56 50 60 62 62 53
+> list3[[3]]$minTemp
+ [1] 64 60 53 59 57 51 57 60 55 48 45 44 54 71 56 50 60 62 62 53
+> list3[["weather"]][[2]]
+ [1] 64 60 53 59 57 51 57 60 55 48 45 44 54 71 56 50 60 62 62 53
 ```
 
-The ***string*** (chr) vectors ***anim1*** and ***anim2*** have the same values as the original ***someAnimals*** vector:
+[Note: \$ is generally easier to use than \[\[ \]\] because it is less typing and Positron gives suggestions, but \$ can only be used with name, not index values.]{.note}
 
-``` {.r tab="Environment"}
-anim1:       chr [1:4] "llama" "guanaco" ...
-anim2:       chr [1:4] "llama" "guanaco" ...
-someAnimals: chr [1:4] "llama" "guanaco" ...
-```
+ 
 
-Here are three ways to subset the ***dewPoint*** vector within ***weather***, which is within ***listDynamic5***: 
+The ***Variables*** tab does a good job of showing the structure of a List object:
 
-``` r
-dewPoint1 = listDynamic5$weather$dewPoint;
-dewPoint2 = listDynamic5[["weather"]][["dewPoint"]];
-dewPoint3 = listDynamic5[["weather"]]$dewPoint;
-```
-
-Again, all three saved values are identical to the original ***weatherData\$dewPoint***:
-
-``` {.r ta="Environment"}
-dewPoint1:       20 22 20 13 10 16 ...
-dewPoint2:       20 22 20 13 10 16 ...
-dewPoint3:       20 22 20 13 10 16 ...
-🞃 weatherData:  366 obs. of 23 variables
-    $ dewPoint:    20 22 20 13 10 16...
-```
-
-**\$** and **\[\[ \]\]** are equivalent operators when you are working with named objects within a List.  **\$** is more convenient to use because it involves less typing and RStudio will give you suggestions.
+![Variables tab in Positron showing the structure of a List object](images/R_2-13_ListInVariables.png)
 
 ### Numeric subsetting (only with \[\[ \]\])
 
-Objects within a Lists can also be accessed by their numeric order using **\[\[ \]\]**:
+Objects within a Lists that do not have a name have to be subset using **\[\[ \]\]** and their index number:
 
 ``` r
-anim3 = listDynamic5[[1]];
-dewPoint4 = listDynamic5[[3]][[7]];
-```
-
-But, you cannot use the **\$** operator to subset by number:
-
-``` r
-# anim3 = listDynamic5$1;   # will cause an error
+animal1 = list5[[1]];                  # 1st level is index only
+dewPoint1 = list5[[3]][["dewPoint"]];  # 2nd level, in this case, does have a name 
 ```
 
 So, if the object inside a List does not have a name, as in ***listAtOnce*** (@fig-list_viewer), then you have to use **\[\[ \]\]** to subset the unnamed object by numeric placement.
@@ -305,19 +318,16 @@ So, if the object inside a List does not have a name, as in ***listAtOnce*** (@f
 You can use **\[ \]** to subset the List, but instead of getting the object, you will get a List with the object in it:
 
 ``` r
-anim4 = listDynamic5["animal"];
+animal2 = list5[1];
 ```
 
-In the ***Environment***, we can see that  ***anim1***, ***anim2***, and ***anim3*** (subsetted with either **\[\[ \]\]** or **\$**) are all character vectors with 4 values.  But, ***anim4*** (subsetted with **\[ \]**) is a List with a character vector that has 4 values:
+In ***Variables***, we can see that  ***animal1*** (subsetted with **\[\[ \]\]**) is a string vectors with 4 values.  But, ***animal2*** (subsetted with **\[ \]**) is a List that has a string vector with 4 values:
 
 ::: {#fig-double_single_brackets}
 ``` {.r tab="Environment"}
-anim1:   chr [1:4] "llama" "guanaco" ...
-anim2:   chr [1:4] "llama" "guanaco" ...
-anim3:   chr [1:4] "llama" "guanaco" ...
-
-🞃 anim4:   List of 1
-   $ animal: chr [1:4] "llama" "guanaco" ...
+> animal1:   "llama" "guanaco" "alpaca" "goat"                 str [4]
+🞃 animal2:    [animals = "llama" "guanaco" "alpaca" "goat"]   list [1]
+   $ [[1]]:  "llama" "guanaco" "alpaca" "goat"                 str [4]
 ```
 
 The difference between using \[\[ \]\] or \$ vs \[ \] for subsetting objects within a List
@@ -327,7 +337,7 @@ This is not very useful so **\[ \]** is rarely used to subset a List.
 
 ## Returned List from functions
 
-We are going to move from creating our own Lists to looking at Lists that are returned when you call certain functions, specifically ***lm()***.
+Statistical functions often return a List. We are going to run a linear model using lm() and view the List returned from lm().
 
  
 
@@ -364,11 +374,11 @@ Summary of a model of a linear regression
 
 ### The returned List: linear model
 
-***model1*** is a List object and the information for the linear model is stored in the List:
+***model1*** is a List object with the information for the linear model:
 
 ![The List returned from a lm() call](images/R-2-11-modelList.png){#fig-returned_list .fs}
 
-In ***Variables***, ***model1*** is listed as ***lm*** (linear model), but ***lm*** is a type of list. In fact using ***typeof()***, you can see that model1 is a List.
+In ***Variables***, ***model1*** is listed as ***lm*** (linear model), but ***lm***, like a data frame, is a type of list. In fact using ***typeof()***, you can see that ***model1*** is a List.
 
 ``` {.r tab="Console"}
 > typeof(model1)
@@ -377,7 +387,18 @@ In ***Variables***, ***model1*** is listed as ***lm*** (linear model), but ***lm
 
 ### Subsetting the linear model List
 
-***model1*** has information that is inside the summary, for instance the estimate for the intercept is at:
+The summary of ***model1*** is based on information within the list. For instance, we can find the estimate for the intercept inside the ***coefficients*** object:
+
+``` {.r tab="Variables"}
+🞃 model1:   
+   🞃 coefficients:          77.27 ...
+       (Intercept):          77.27 ...
+       weatherData$relHum:  -0.3869 ...
+   > residuals:             -21.86 ...
+   > effects:               -969.15...
+```
+
+And we can subset to get the intercept [note: **(Intercept)** does not follow good programming naming practices!]{.note}:
 
 ``` {.r tab="Console"}
 > model1$coefficients["(Intercept)"]
@@ -385,13 +406,13 @@ In ***Variables***, ***model1*** is listed as ***lm*** (linear model), but ***lm
    77.27006 
 ```
 
-[Note: **(Intercept)** does not follow good programming naming practices!]{.note}
+We need to use **\[ \]** to subset ***coefficients*** because ***coefficients*** is a vector. (Intercept) is the name of the value inside the vector. We could also subset by the index number:
 
- 
-
-We need to use **\[ \]** to subset ***coefficients*** because ***coefficients*** is an atomic vector.  [Note: Subsetting operators are a bit inconsistent in R.]{.note}
-
- 
+``` {.r tab="Console"}
+> model1$coefficients[1]
+(Intercept) 
+   77.27006 
+```
 
 We can also subset the first ten ***residuals*** from ***model1***:
 
@@ -419,13 +440,15 @@ There are also a lot of other, more obscure, values in the List object which we 
 
 ### New variables types
 
-If you look through ***model1***, you will find three new variable types: ***language***, ***symbol***, and ***formula***.  These variables types are used by R programmers to store the code that created the List -- this is not something you will need to deal with at this point.
+If you look through ***model1***, you will find two new variable types: ***qr***, ***language***, and ***terms***.  ***qr*** is a special type of List (like data frames and lm). The other two are more advanced types of objects that you do not have to worry about until you get a lot more advanced in R – even Positron cannot read a ***language*** object – hence the ***??***.
 
 ![Some of the less common variable types appear in this List](images/R-2-11-OtherVariableTypes.png){#fig-less_common_var_types .fs}
 
 ## Application
 
-A\) Create one List named ***app2_13_List*** that contains the objects from parts A, B, and C in this application
+A\) Create one List named ***app2_13_List*** . The list will contains the objects from parts B-D in this application
+
+ 
 
 B\) Why is it better to subset objects by name instead of position numbers?
 
@@ -453,6 +476,6 @@ D\) Using only values in ***linearModel1***, find and save:
 
  
 
-E\) Write the List to an RDS file named ***app2-13List.RDS*** in the ***data*** folder.
+E\) Write the List to an RDS file named ***app2-13List.RDS*** in the ***data*** folder and have code to load the RDS file into ***Variables***. The functions are ***saveRDS()*** and ***readRDS()***
 
 {{< include ../assets/_AppInstructions_Pos.qmd >}}
