@@ -351,6 +351,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">2-13: Lists</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons-new/2-14_Breakpoints.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-14: Breakpoints</span></a>
+  </div>
+</li>
       </ul>
   </li>
       </ul>
@@ -594,16 +600,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#appending-by-index" id="toc-appending-by-index" class="nav-link" data-scroll-target="#appending-by-index"><span class="header-section-number">5.2</span> Appending by index</a></li>
   <li><a href="#using-length-to-appending-objects" id="toc-using-length-to-appending-objects" class="nav-link" data-scroll-target="#using-length-to-appending-objects"><span class="header-section-number">5.3</span> Using length() to appending objects</a></li>
   </ul></li>
-  <li><a href="#subsetting-within-a-list" id="toc-subsetting-within-a-list" class="nav-link" data-scroll-target="#subsetting-within-a-list"><span class="header-section-number">6</span> Subsetting within a List</a>
+  <li><a href="#object-within-within-a-list" id="toc-object-within-within-a-list" class="nav-link" data-scroll-target="#object-within-within-a-list"><span class="header-section-number">6</span> Object within within a List</a>
   <ul class="collapse">
-  <li><a href="#numeric-subsetting-only-with" id="toc-numeric-subsetting-only-with" class="nav-link" data-scroll-target="#numeric-subsetting-only-with"><span class="header-section-number">6.1</span> Numeric subsetting (only with [[ ]])</a></li>
-  <li><a href="#the-subset-operator" id="toc-the-subset-operator" class="nav-link" data-scroll-target="#the-subset-operator"><span class="header-section-number">6.2</span> The [ ] subset operator</a></li>
+  <li><a href="#subsetting-a-list" id="toc-subsetting-a-list" class="nav-link" data-scroll-target="#subsetting-a-list"><span class="header-section-number">6.1</span> Subsetting a list</a></li>
+  <li><a href="#numeric-subsetting-only-with" id="toc-numeric-subsetting-only-with" class="nav-link" data-scroll-target="#numeric-subsetting-only-with"><span class="header-section-number">6.2</span> Numeric subsetting (only with [[ ]])</a></li>
+  <li><a href="#the-subset-operator" id="toc-the-subset-operator" class="nav-link" data-scroll-target="#the-subset-operator"><span class="header-section-number">6.3</span> The [ ] subset operator</a></li>
   </ul></li>
   <li><a href="#returned-list-from-functions" id="toc-returned-list-from-functions" class="nav-link" data-scroll-target="#returned-list-from-functions"><span class="header-section-number">7</span> Returned List from functions</a>
   <ul class="collapse">
   <li><a href="#the-returned-list-linear-model" id="toc-the-returned-list-linear-model" class="nav-link" data-scroll-target="#the-returned-list-linear-model"><span class="header-section-number">7.1</span> The returned List: linear model</a></li>
   <li><a href="#subsetting-the-linear-model-list" id="toc-subsetting-the-linear-model-list" class="nav-link" data-scroll-target="#subsetting-the-linear-model-list"><span class="header-section-number">7.2</span> Subsetting the linear model List</a></li>
-  <li><a href="#new-variables-types" id="toc-new-variables-types" class="nav-link" data-scroll-target="#new-variables-types"><span class="header-section-number">7.3</span> New variables types</a></li>
+  <li><a href="#subsetting-vectors-within-a-list" id="toc-subsetting-vectors-within-a-list" class="nav-link" data-scroll-target="#subsetting-vectors-within-a-list"><span class="header-section-number">7.3</span> Subsetting vectors within a list</a></li>
+  <li><a href="#new-variables-types" id="toc-new-variables-types" class="nav-link" data-scroll-target="#new-variables-types"><span class="header-section-number">7.4</span> New variables types</a></li>
   </ul></li>
   <li><a href="#application" id="toc-application" class="nav-link" data-scroll-target="#application"><span class="header-section-number">8</span> Application</a>
   <ul class="collapse">
@@ -642,14 +650,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="to-do" class="level3" data-number="0.1">
 <h3 data-number="0.1" class="anchored" data-anchor-id="to-do"><span class="header-section-number">0.1</span> To-do</h3>
-<ul>
-<li>expand lesson to include reading/writing Lists to RDS file (save lm to RDS – use saveRDS() and laodRDS() – Help</li>
-<li>talk about attributes on a matrix vs data frame
-<ul>
-<li>how matrix (dim) and data frame determine rows and columns</li>
-</ul></li>
-<li>simpler data frame?</li>
-</ul>
 </section>
 <section id="purpose" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="purpose"><span class="header-section-number">1</span> Purpose</h2>
@@ -668,7 +668,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="3" class="anchored" data-anchor-id="objects-in-r"><span class="header-section-number">3</span> Objects in R</h2>
 <p>As mentioned in last lesson, there are 3 types of objects in R:</p>
 <ul>
-<li><p>Vectors (sometimes called atomic vectors): objects that hold multiple values of the same type (e.g., numeric, string, logical)</p>
+<li><p>Vectors (a.k.a. atomic vectors): objects that hold multiple values of the same type (e.g., numeric, string, logical)</p>
 <ul>
 <li>vector are like data files on your computer</li>
 </ul></li>
@@ -685,11 +685,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Last lesson we talked mostly about vectors. This lesson we will talk mostly about Lists, which create a tree-like structure for your data.&nbsp;</p>
 <section id="creating-objects-to-put-in-a-list" class="level3" data-number="3.1">
 <h3 data-number="3.1" class="anchored" data-anchor-id="creating-objects-to-put-in-a-list"><span class="header-section-number">3.1</span> Creating objects to put in a List</h3>
-<p>We are going to create a List object and add other objects to it. The objects we will add are:</p>
+<p>We are going to create a List object and add objects to it. The objects we will add are:</p>
 <ul>
 <li><p>a character (string) vector called <strong><em>someAnimals</em></strong></p></li>
 <li><p>a 2x3 matrix consisting of a sequence of six numbers called <strong><em>someNumbers</em></strong></p></li>
-<li><p>the <strong><em>weatherData</em></strong> dataframe from previous lessons – but reduce the data to make it easier to read in <strong><em>Variables</em></strong></p></li>
+<li><p>a subset of the <strong><em>weatherData</em></strong> dataframe from previous lessons – named <strong><em>weatherData_reduced</em></strong></p></li>
 </ul>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>someAnimals <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"llama"</span>, <span class="st">"guanaco"</span>, <span class="st">"alpaca"</span>, <span class="st">"goat"</span>);</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>someNumbers <span class="ot">=</span> <span class="fu">matrix</span>(<span class="at">nrow=</span><span class="dv">2</span>, <span class="at">ncol=</span><span class="dv">3</span>, <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">30</span>, <span class="at">to=</span><span class="dv">4</span>, <span class="at">length.out=</span><span class="dv">6</span>)) </span>
@@ -699,7 +699,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>weatherData_reduced <span class="ot">=</span> weatherData[<span class="dv">150</span><span class="sc">:</span><span class="dv">169</span>, <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">1</span>, <span class="at">to=</span><span class="dv">10</span>, <span class="at">by=</span><span class="dv">2</span>)];</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong><em>someAnimals</em></strong> is a one-dimensional vector, <strong><em>someNumbers</em></strong> is a two-dimensional vector (i.e., a matrix), and <strong><em>weatherData_reduced</em></strong> is a data frame.</p>
 <p>&nbsp;</p>
-<p>In <strong><em>Variables</em></strong>, <strong><em>someNumbers,</em></strong> <strong><em>weatherData</em></strong>, and <strong><em>weatherData_reduced</em></strong> are put in the DATA section. Positron only puts 2D data objects into the DATA section. These are objects that can be double-clicked and put into a data viewer tab – in <a href="#fig-data-values" class="quarto-xref">Figure&nbsp;1</a>, <strong><em>weatherData_reduced</em></strong> is in a data viewer. All other data goes into VALUES (including <strong><em>someAnimals</em></strong>).</p>
+<p>In <strong><em>Variables</em></strong>, <strong><em>someNumbers,</em></strong> <strong><em>weatherData</em></strong>, and <strong><em>weatherData_reduced</em></strong> are put in the DATA section. Positron only puts 2D data objects into the DATA section. Objects in DATA can be double-clicked and put into a data viewer tab – in <a href="#fig-data-values" class="quarto-xref">Figure&nbsp;1</a>, <strong><em>weatherData_reduced</em></strong> is in a data viewer. All other data goes into VALUES (including <strong><em>someAnimals</em></strong>).</p>
 <div id="fig-data-values" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-data-values-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -713,17 +713,19 @@ Figure&nbsp;1: Expanded view of three objects and <strong><em>weatherData_reduce
 </section>
 <section id="matrices-vs.-data-frames" class="level3" data-number="3.2">
 <h3 data-number="3.2" class="anchored" data-anchor-id="matrices-vs.-data-frames"><span class="header-section-number">3.2</span> Matrices vs.&nbsp;data frames</h3>
-<p>Matrices and data frames are both 2D structures that contain data – but they are formed very differently. <span class="hl">A matrix is a single vector</span> object with the <strong><em>dim</em></strong> attributes modified to define how many rows and column are in the data. <span class="hl">A data frame is structured like a folder</span> (i.e., List object) that holds multiple vectors of the same size – the vectors can be of different types (e.g., string, Boolean, numeric, integer, Datetime).</p>
+<p>Matrices and data frames are both 2D structures that contain data – but they are formed very differently.</p>
 <p>&nbsp;</p>
-<p>In a matrix, the number of rows and columns are defined by the <strong><em>dim</em></strong> attribute that is set when you declare the matrix using the <strong><em>nrow</em></strong> and <strong><em>ncol</em></strong> arguments. In a data frame, the number of columns is the number of vectors in the List/folder and the number of rows is the number of values in each vector, which must be the same.</p>
+<p><span class="hl">A matrix is a single vector</span> object. In a matrix, the number of rows and columns are defined by the <strong><em>dim</em></strong> attribute, which is set when you declare the matrix using the <strong><em>nrow</em></strong> and <strong><em>ncol</em></strong> arguments.</p>
+<p>&nbsp;</p>
+<p><span class="hl">A data frame is structured like a folder</span> (i.e., List object) that holds multiple vectors of the same size – the vectors can be of different types (e.g., string, Boolean, numeric, integer, Datetime). In a data frame, the number of columns is the number of vectors in the List/folder and the number of rows is the number of values in each vector, which must be the same.</p>
 </section>
 <section id="subsetting-a-data-frame" class="level3" data-number="3.3">
 <h3 data-number="3.3" class="anchored" data-anchor-id="subsetting-a-data-frame"><span class="header-section-number">3.3</span> Subsetting a data frame</h3>
-<p>When weatherData was reduced to weatherData_reduced, the row and column names stayed the same. It is easy to see the column names in <strong><em>weatherData_reduced</em></strong> are still <strong><em>dateTime</em></strong>, <strong><em>minTemp</em></strong>, <strong><em>tempDept</em></strong>, <strong><em>dewPoint</em></strong>, and <strong><em>heatDays</em></strong>. If you look at the row names in the data viewer, you can see they are still <strong>150 - 169</strong>, matching the row numbers extracted out of <strong><em>weatherData</em></strong>. This can also be seen in <strong><em>Console</em></strong>:</p>
+<p>When <strong><em>weatherData</em></strong> was reduced to <strong><em>weatherData_reduced</em></strong>, the row and column names stayed the same. It is easy to see the column names in <strong><em>weatherData_reduced</em></strong> are still <strong><em>dateTime</em></strong>, <strong><em>minTemp</em></strong>, <strong><em>tempDept</em></strong>, <strong><em>dewPoint</em></strong>, and <strong><em>heatDays</em></strong>. If you look at the row names in the data viewer, you can see they are still <strong>150 - 169</strong>, matching the row numbers extracted out of <strong><em>weatherData</em></strong>. This can also be seen in <strong><em>Console</em></strong>:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">rownames</span>(weatherData_reduced)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] <span class="st">"150"</span> <span class="st">"151"</span> <span class="st">"152"</span> <span class="st">"153"</span> <span class="st">"154"</span> <span class="st">"155"</span> <span class="st">"156"</span> <span class="st">"157"</span> <span class="st">"158"</span> <span class="st">"159"</span> <span class="st">"160"</span> <span class="st">"161"</span> <span class="st">"162"</span> <span class="st">"163"</span> <span class="st">"164"</span> <span class="st">"165"</span> <span class="st">"166"</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">18</span>] <span class="st">"167"</span> <span class="st">"168"</span> <span class="st">"169"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The <strong><em>Console</em></strong> also clearly shows that these are not number, but string values consisting of numbers. So, you can refer to the row using the index number or the row name. Here we are extracting row 4, or “153”:</p>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] <span class="st">"150"</span> <span class="st">"151"</span> <span class="st">"152"</span> <span class="st">"153"</span> <span class="st">"154"</span> <span class="st">"155"</span> <span class="st">"156"</span> <span class="st">"157"</span> <span class="st">"158"</span> <span class="st">"159"</span> <span class="st">"160"</span> <span class="st">"161"</span> <span class="st">"162"</span> <span class="st">"163"</span> </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">15</span>] <span class="st">"164"</span> <span class="st">"165"</span> <span class="st">"166"</span> <span class="st">"167"</span> <span class="st">"168"</span> <span class="st">"169"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The <strong><em>Console</em></strong> also shows that the row names are not number, but string values consisting of numbers. So, you can refer to the row using the index number or the row name. Here we are extracting row 4, or “153”:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> weatherData_reduced[«<span class="dv">4</span>»,]</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>               dateTime minTemp tempDept dewPoint heatDays</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="dv">153</span> <span class="dv">2016-06-01</span>T00<span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">00</span>      <span class="dv">59</span>      <span class="fl">6.9</span>       <span class="dv">56</span>        <span class="dv">0</span></span>
@@ -734,9 +736,9 @@ Figure&nbsp;1: Expanded view of three objects and <strong><em>weatherData_reduce
 </section>
 <section id="lists" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="lists"><span class="header-section-number">4</span> Lists</h2>
-<p>A List is an object that holds other (usually related) objects, much like a folder holds files. A data frame is a special type of List. Lists are often used to organize and send data. For instance, when you perform a statistical test, the results are often stored as Lists, as we will see later in the lesson.</p>
+<p>A List is an object that holds other objects, much like a folder holds files. A data frame is a special type of List that hols multiple vectors of the same length. Lists are often used to organize and send data. For instance, when you perform a statistical test, the results are often stored in a List, as we will see later in the lesson.</p>
 <p>&nbsp;</p>
-<p>A List is usually used as a data structure that contains vectors and subLists. A List can also include functions – this is often done when programming using the Object-Oriented Programming (OOP) paradigm, a topic not covered in this class, but you will see in some advanced packages (e.g., shiny, terra, RTMB).</p>
+<p>A List is usually used as a data structure that contains vectors and subLists. A List can include functions – this is often done when programming using the Object-Oriented Programming (OOP) paradigm, a topic beyond the scope of this class, but you will see functions inside Lists in some advanced packages (e.g., shiny, terra, RTMB).</p>
 <section id="creating-the-new-list" class="level3" data-number="4.1">
 <h3 data-number="4.1" class="anchored" data-anchor-id="creating-the-new-list"><span class="header-section-number">4.1</span> Creating the new List</h3>
 <p>Let’s create a List with the three objects above using the <strong><em>list()</em></strong> function:</p>
@@ -749,10 +751,11 @@ Figure&nbsp;1: Expanded view of three objects and <strong><em>weatherData_reduce
 </section>
 <section id="including-names-for-the-objects" class="level3" data-number="4.2">
 <h3 data-number="4.2" class="anchored" data-anchor-id="including-names-for-the-objects"><span class="header-section-number">4.2</span> Including names for the objects</h3>
-<p>If we want the objects inside the List to have names, then we have to specify a name while creating the List (<span class="note">note: you can use a different name</span>).&nbsp; You do that by setting a name equal to the object when calling <strong><em>list()</em></strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>  list2 <span class="ot">=</span> <span class="fu">list</span>(<span class="at">animals =</span> someAnimals,</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">numbers =</span> someNumbers, </span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">weather =</span> weatherData_reduced);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If we want the objects inside the List to have names, then we have to specify a name while creating the List.&nbsp; You do that by setting a name equal to the object when calling <strong><em>list()</em></strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="do">#### Same List but give a name to each of the objects</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>list2 <span class="ot">=</span> <span class="fu">list</span>(<span class="at">animals =</span> someAnimals,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">numbers =</span> someNumbers, </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">weather =</span> weatherData_reduced);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The names in the List can be different from the original. In this case, <strong><em>animals</em></strong>, <strong><em>numbers</em></strong>, and <strong><em>weather</em></strong> are the names of the original objects <strong><em>someAnimal</em></strong>, <strong><em>someNumbers</em></strong>, and <strong><em>weatherData_reduced</em></strong>.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>🞃 list2<span class="sc">:</span>       [<span class="st">"llama"</span> <span class="st">"guanaco"</span> ...]               list [<span class="dv">3</span>]</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="sc">&gt;</span> animals<span class="sc">:</span>  <span class="st">"llama"</span> <span class="st">"guanaco"</span> <span class="st">"alpaca"</span> <span class="st">"goat"</span>      str[<span class="dv">4</span>]</span>
@@ -763,7 +766,7 @@ Figure&nbsp;1: Expanded view of three objects and <strong><em>weatherData_reduce
 </section>
 <section id="creating-a-dynamic-list" class="level2" data-number="5">
 <h2 data-number="5" class="anchored" data-anchor-id="creating-a-dynamic-list"><span class="header-section-number">5</span> Creating a dynamic List</h2>
-<p>In the previous example, all the objects were put in the List at once.&nbsp; What often happens is data is generated and gets dynamically added to a List, so the objects are put in the List separately.&nbsp; We are going to create a List equivalent to <strong><em>list2</em></strong> except the three object will be put in one at a time.</p>
+<p>In the previous example, all the objects were put in the List at once.&nbsp; However, data is often generated dynamically and added to a List – so the objects are put in the List separately.&nbsp; We are going to create a List equivalent to <strong><em>list2</em></strong> except the three objects will be put in one at a time.</p>
 <p>&nbsp;</p>
 <p>First we create a List with nothing in it (i.e., an empty list):</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" data-tab="Variables"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>list3 <span class="ot">=</span> <span class="fu">list</span>();</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -789,7 +792,7 @@ Figure&nbsp;1: Expanded view of three objects and <strong><em>weatherData_reduce
 </section>
 <section id="appending-by-index" class="level3" data-number="5.2">
 <h3 data-number="5.2" class="anchored" data-anchor-id="appending-by-index"><span class="header-section-number">5.2</span> Appending by index</h3>
-<p>When you are automating the generation of a List, you often do not want to name objects, you just want to keep appending objects to the List. Here we are saying that the 1<sup>st</sup> object in <strong><em>list4</em></strong> is <strong><em>someAnimals</em></strong>, the 2<sup>nd</sup> object is <strong><em>someNumbers</em></strong>, and the 3<sup>rd</sup> object is <strong><em>weatherData_reduced</em></strong>:</p>
+<p>When you are automating the insertion of object into a List, you often do not care about naming the objects. Here we are saying that the 1<sup>st</sup> object in <strong><em>list4</em></strong> is <strong><em>someAnimals</em></strong>, the 2<sup>nd</sup> object is <strong><em>someNumbers</em></strong>, and the 3<sup>rd</sup> object is <strong><em>weatherData_reduced</em></strong>:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="do">#### To put in objects in a list by index a name</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>list4 <span class="ot">=</span> <span class="fu">list</span>()</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>list4[[<span class="dv">1</span>]] <span class="ot">=</span> someAnimals; </span>
@@ -812,7 +815,7 @@ Figure&nbsp;1: Expanded view of three objects and <strong><em>weatherData_reduce
 <p>and <strong><em>list5</em></strong> looks exactly like <strong><em>list4</em></strong>.</p>
 <section id="using-for-loops-to-append-objects" class="level4" data-number="5.3.1">
 <h4 data-number="5.3.1" class="anchored" data-anchor-id="using-for-loops-to-append-objects"><span class="header-section-number">5.3.1</span> Using for loops to append objects</h4>
-<p>However, appending to a list is often done in a <strong><em>for</em></strong> loop where you are adding data to a list each cycle. In this case, 10 random numbers are chosen each cycle of the <strong><em>for</em></strong> loop and then added to <strong><em>list6</em></strong>:</p>
+<p>Appending objects to a list is often done in a <strong><em>for</em></strong> loop where you are adding data to a list each cycle. In this case, 10 random numbers are chosen each cycle of the <strong><em>for</em></strong> loop and then added to <strong><em>list6</em></strong>:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>);     <span class="co"># use the same "random" numbers</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>list6 <span class="ot">=</span> <span class="fu">list</span>();</span>
@@ -831,17 +834,30 @@ Figure&nbsp;1: Expanded view of three objects and <strong><em>weatherData_reduce
 </section>
 </section>
 </section>
-<section id="subsetting-within-a-list" class="level2" data-number="6">
-<h2 data-number="6" class="anchored" data-anchor-id="subsetting-within-a-list"><span class="header-section-number">6</span> Subsetting within a List</h2>
+<section id="object-within-within-a-list" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="object-within-within-a-list"><span class="header-section-number">6</span> Object within within a List</h2>
+<p>The <strong><em>Variables</em></strong> tab does a good job of showing the structure of a List object. You can see that <strong><em>list3</em></strong> has 3 objects (<strong><em>animals</em></strong>, <strong><em>numbers</em></strong>, <strong><em>weather</em></strong>) and that <strong><em>weather</em></strong>, in turn, has 5 subobjects.</p>
+<div id="fig-list-viewer" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-list-viewer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R_2-13_ListInVariables.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-list-viewer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Variables tab in Positron showing the structure of a List object
+</figcaption>
+</figure>
+</div>
+<section id="subsetting-a-list" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="subsetting-a-list"><span class="header-section-number">6.1</span> Subsetting a list</h3>
 <p>There are three ways to subset a List:</p>
 <ol type="1">
-<li><p>using name inside <strong>[[ ]]</strong></p></li>
-<li><p>using name after <strong>$</strong></p></li>
-<li><p>by index number – <span style="hl">this is the only option when objects do not have a name</span></p></li>
+<li><p>using name inside double brackets <strong>[[ ]]</strong></p></li>
+<li><p>using name after dollar sign <strong>$</strong></p></li>
+<li><p>by index number inside double brackets – <span style="hl">this is the only option when objects do not have a name</span></p></li>
 </ol>
 <p>… and we can combine these.</p>
 <p>&nbsp;</p>
-<p>Here are various ways to subset <strong><em>list3</em></strong> -&gt; <strong><em>weather</em></strong> -&gt; <strong><em>minTemp</em></strong></p>
+<p>Here are various ways to subset <strong><em>minTemp</em></strong> within <strong><em>weather</em></strong> within <strong><em>list3</em></strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> list3<span class="sc">$</span>weather<span class="sc">$</span>minTemp</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] <span class="dv">64</span> <span class="dv">60</span> <span class="dv">53</span> <span class="dv">59</span> <span class="dv">57</span> <span class="dv">51</span> <span class="dv">57</span> <span class="dv">60</span> <span class="dv">55</span> <span class="dv">48</span> <span class="dv">45</span> <span class="dv">44</span> <span class="dv">54</span> <span class="dv">71</span> <span class="dv">56</span> <span class="dv">50</span> <span class="dv">60</span> <span class="dv">62</span> <span class="dv">62</span> <span class="dv">53</span></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> list3[[<span class="st">"weather"</span>]][[<span class="st">"minTemp"</span>]]</span>
@@ -856,24 +872,17 @@ Figure&nbsp;1: Expanded view of three objects and <strong><em>weatherData_reduce
 <span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] <span class="dv">64</span> <span class="dv">60</span> <span class="dv">53</span> <span class="dv">59</span> <span class="dv">57</span> <span class="dv">51</span> <span class="dv">57</span> <span class="dv">60</span> <span class="dv">55</span> <span class="dv">48</span> <span class="dv">45</span> <span class="dv">44</span> <span class="dv">54</span> <span class="dv">71</span> <span class="dv">56</span> <span class="dv">50</span> <span class="dv">60</span> <span class="dv">62</span> <span class="dv">62</span> <span class="dv">53</span></span>
 <span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> list3[[<span class="st">"weather"</span>]][[<span class="dv">2</span>]]</span>
 <span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] <span class="dv">64</span> <span class="dv">60</span> <span class="dv">53</span> <span class="dv">59</span> <span class="dv">57</span> <span class="dv">51</span> <span class="dv">57</span> <span class="dv">60</span> <span class="dv">55</span> <span class="dv">48</span> <span class="dv">45</span> <span class="dv">44</span> <span class="dv">54</span> <span class="dv">71</span> <span class="dv">56</span> <span class="dv">50</span> <span class="dv">60</span> <span class="dv">62</span> <span class="dv">62</span> <span class="dv">53</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><span class="note">Note: $ is generally easier to use than [[ ]] because it is less typing and Positron gives suggestions, but $ can only be used with name, not index values.</span></p>
-<p>&nbsp;</p>
-<p>The <strong><em>Variables</em></strong> tab does a good job of showing the structure of a List object:</p>
-<div class="quarto-figure quarto-figure-left">
-<figure class="figure">
-<p><img src="images/R_2-13_ListInVariables.png" class="img-fluid figure-img"></p>
-<figcaption>Variables tab in Positron showing the structure of a List object</figcaption>
-</figure>
-</div>
-<section id="numeric-subsetting-only-with" class="level3" data-number="6.1">
-<h3 data-number="6.1" class="anchored" data-anchor-id="numeric-subsetting-only-with"><span class="header-section-number">6.1</span> Numeric subsetting (only with [[ ]])</h3>
+<p><span class="note">Note: $ is generally easier to use than [[ ]] because it is less typing and Positron gives suggestions, but $ can only be used with names, not index values.</span></p>
+</section>
+<section id="numeric-subsetting-only-with" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="numeric-subsetting-only-with"><span class="header-section-number">6.2</span> Numeric subsetting (only with [[ ]])</h3>
 <p>Objects within a Lists that do not have a name have to be subset using <strong>[[ ]]</strong> and their index number:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>animal1 <span class="ot">=</span> list5[[<span class="dv">1</span>]];                  <span class="co"># 1st level is index only</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>dewPoint1 <span class="ot">=</span> list5[[<span class="dv">3</span>]][[<span class="st">"dewPoint"</span>]];  <span class="co"># 2nd level, in this case, does have a name </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>So, if the object inside a List does not have a name, as in <strong><em>listAtOnce</em></strong> (<strong>?@fig-list_viewer</strong>), then you have to use <strong>[[ ]]</strong> to subset the unnamed object by numeric placement.</p>
+<p>So, if the object inside a List does not have a name, as in <strong><em>list5</em></strong> (<a href="#fig-list-viewer" class="quarto-xref">Figure&nbsp;2</a>), then you have to use <strong>[[ ]]</strong> to subset the unnamed object by numeric placement.</p>
 </section>
-<section id="the-subset-operator" class="level3" data-number="6.2">
-<h3 data-number="6.2" class="anchored" data-anchor-id="the-subset-operator"><span class="header-section-number">6.2</span> The [ ] subset operator</h3>
+<section id="the-subset-operator" class="level3" data-number="6.3">
+<h3 data-number="6.3" class="anchored" data-anchor-id="the-subset-operator"><span class="header-section-number">6.3</span> The [ ] subset operator</h3>
 <p>You can use <strong>[ ]</strong> to subset the List, but instead of getting the object, you will get a List with the object in it:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>animal2 <span class="ot">=</span> list5[<span class="dv">1</span>];</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>In <strong><em>Variables</em></strong>, we can see that&nbsp; <strong><em>animal1</em></strong> (subsetted with <strong>[[ ]]</strong>) is a string vectors with 4 values.&nbsp; But, <strong><em>animal2</em></strong> (subsetted with <strong>[ ]</strong>) is a List that has a string vector with 4 values:</p>
@@ -885,20 +894,20 @@ Figure&nbsp;1: Expanded view of three objects and <strong><em>weatherData_reduce
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>   <span class="sc">$</span> [[<span class="dv">1</span>]]<span class="sc">:</span>  <span class="st">"llama"</span> <span class="st">"guanaco"</span> <span class="st">"alpaca"</span> <span class="st">"goat"</span>                 str [<span class="dv">4</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-double_single_brackets-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: The difference between using [[ ]] or $ vs [ ] for subsetting objects within a List
+Figure&nbsp;3: The difference between using [[ ]] or $ vs [ ] for subsetting objects within a List
 </figcaption>
 </figure>
 </div>
-<p>This is not very useful so <strong>[ ]</strong> is rarely used to subset a List.</p>
+<p>This is not very useful so <strong>[ ]</strong> is rarely used to subset a List, <strong>[ ]</strong> is best used to subser values in a vector</p>
 </section>
 </section>
 <section id="returned-list-from-functions" class="level2" data-number="7">
 <h2 data-number="7" class="anchored" data-anchor-id="returned-list-from-functions"><span class="header-section-number">7</span> Returned List from functions</h2>
-<p>Statistical functions often return a List. We are going to run a linear model using lm() and view the List returned from lm().</p>
+<p>Statistical functions often return a List. We are going to run a linear model using <strong><em>lm()</em></strong> and view the List returned from <strong><em>lm()</em></strong>.</p>
 <p>&nbsp;</p>
 <p>When we create a linear regression model of humidity vs temperature using <strong><em>lm()</em></strong>, the results are saved to a list, in this case named <strong><em>model1</em></strong>:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>«model1» <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula=</span>weatherData<span class="sc">$</span>avgTemp<span class="sc">~</span>weatherData<span class="sc">$</span>relHum);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>And then look at a summary of the model using <strong><em>print(summary(model1))</em></strong>:</p>
+<p>And we can look at a summary of the model using <strong><em>print(summary(model1))</em></strong>:</p>
 <div id="fig-summary_linear_reg" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-summary_linear_reg-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -920,20 +929,20 @@ Figure&nbsp;2: The difference between using [[ ]] or $ vs [ ] for subsetting obj
 <span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>F<span class="sc">-</span>statistic<span class="sc">:</span> <span class="fl">19.68</span> on <span class="dv">1</span> and <span class="dv">364</span> DF,  p<span class="sc">-</span>value<span class="sc">:</span> <span class="fl">1.213e-05</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-summary_linear_reg-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Summary of a model of a linear regression
+Figure&nbsp;4: Summary of a model of a linear regression
 </figcaption>
 </figure>
 </div>
 <section id="the-returned-list-linear-model" class="level3" data-number="7.1">
 <h3 data-number="7.1" class="anchored" data-anchor-id="the-returned-list-linear-model"><span class="header-section-number">7.1</span> The returned List: linear model</h3>
-<p><strong><em>model1</em></strong> is a List object with the information for the linear model:</p>
+<p><strong><em>model1</em></strong> is a List object with the information returned from the <strong><em>lm()</em></strong> call:</p>
 <div id="fig-returned_list" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-returned_list-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/R-2-11-modelList.png" class="fs img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-returned_list-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4: The List returned from a lm() call
+Figure&nbsp;5: The List returned from a lm() call
 </figcaption>
 </figure>
 </div>
@@ -954,10 +963,13 @@ Figure&nbsp;4: The List returned from a lm() call
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> model1<span class="sc">$</span>coefficients[<span class="st">"(Intercept)"</span>]</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>(Intercept) </span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>   <span class="fl">77.27006</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>We need to use <strong>[ ]</strong> to subset <strong><em>coefficients</em></strong> because <strong><em>coefficients</em></strong> is a vector. (Intercept) is the name of the value inside the vector. We could also subset by the index number:</p>
+<p>We use <strong>[ ]</strong> to subset <strong><em>coefficients</em></strong> because <strong><em>coefficients</em></strong> is a vector. <strong><em>(Intercept)</em></strong> is the name of the value inside the vector. We could also subset by the index number:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> model1<span class="sc">$</span>coefficients[<span class="dv">1</span>]</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>(Intercept) </span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>   <span class="fl">77.27006</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="subsetting-vectors-within-a-list" class="level3" data-number="7.3">
+<h3 data-number="7.3" class="anchored" data-anchor-id="subsetting-vectors-within-a-list"><span class="header-section-number">7.3</span> Subsetting vectors within a list</h3>
 <p>We can also subset the first ten <strong><em>residuals</em></strong> from <strong><em>model1</em></strong>:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29" data-tab="Console"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> model1<span class="sc">$</span>residuals[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>          <span class="dv">1</span>           <span class="dv">2</span>           <span class="dv">3</span>           <span class="dv">4</span>           <span class="dv">5</span> </span>
@@ -974,16 +986,18 @@ Figure&nbsp;4: The List returned from a lm() call
 <span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="fl">48.24789</span> <span class="fl">46.31307</span> <span class="fl">46.70004</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>There are also a lot of other, more obscure, values in the List object which we will not go through.&nbsp; The point is that there is a lot of information inside the List and that information can be extracted using subset operators.</p>
 </section>
-<section id="new-variables-types" class="level3" data-number="7.3">
-<h3 data-number="7.3" class="anchored" data-anchor-id="new-variables-types"><span class="header-section-number">7.3</span> New variables types</h3>
-<p>If you look through <strong><em>model1</em></strong>, you will find two new variable types: <strong><em>qr</em></strong>, <strong><em>language</em></strong>, and <strong><em>terms</em></strong>.&nbsp; <strong><em>qr</em></strong> is a special type of List (like data frames and lm). The other two are more advanced types of objects that you do not have to worry about until you get a lot more advanced in R – even Positron cannot read a <strong><em>language</em></strong> object – hence the <strong><em>??</em></strong>.</p>
+<section id="new-variables-types" class="level3" data-number="7.4">
+<h3 data-number="7.4" class="anchored" data-anchor-id="new-variables-types"><span class="header-section-number">7.4</span> New variables types</h3>
+<p>If you look through <strong><em>model1</em></strong>, you will find three new variable types: <strong><em>qr</em></strong>, <strong><em>language</em></strong>, and <strong><em>terms</em></strong>.</p>
+<p>&nbsp;</p>
+<p><strong><em>qr</em></strong>, like data frames and lm, is a special type of List with a predefined structure. <strong><em>language</em></strong>, and <strong><em>terms</em></strong> are more advanced types of objects that you do not have to worry about at this point. <span class="note">Note: Positron’s viewer cannot (as of Aug 2026) read a <strong><em>language</em></strong> object – hence the <strong><em>??</em></strong>.</span></p>
 <div id="fig-less_common_var_types" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-less_common_var_types-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/R-2-11-OtherVariableTypes.png" class="fs img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-less_common_var_types-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5: Some of the less common variable types appear in this List
+Figure&nbsp;6: Some of the less common variable types appear in this List
 </figcaption>
 </figure>
 </div>
@@ -1010,6 +1024,7 @@ Figure&nbsp;5: Some of the less common variable types appear in this List
 <li><p>the last 10 effects values</p></li>
 <li><p>the first 10 values from the original temperature vector</p></li>
 <li><p>the most extreme residual value (i.e., furthest from 0 – could be positive or negative)</p></li>
+<li><p>save all of the above values to a List named <strong><em>lm_data</em></strong></p></li>
 </ul>
 <p>&nbsp;</p>
 <p>E) Write the List to an RDS file named <strong><em>app2-13List.RDS</em></strong> in the <strong><em>data</em></strong> folder and have code to load the RDS file into <strong><em>Variables</em></strong>. The functions are <strong><em>saveRDS()</em></strong> and <strong><em>readRDS()</em></strong></p>
@@ -1044,7 +1059,7 @@ Figure&nbsp;5: Some of the less common variable types appear in this List
 <img src="images/R-1-01_Upload.png" class="fs img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-upload-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6: Upload changes to GitHub – the red circle indicates how many files that changed (in this case: 1)
+Figure&nbsp;7: Upload changes to GitHub – the red circle indicates how many files that changed (in this case: 1)
 </figcaption>
 </figure>
 </div>
@@ -1069,7 +1084,7 @@ Figure&nbsp;6: Upload changes to GitHub – the red circle indicates how many fi
 <img src="images/R-1-01_Inform.png" class="fs img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-inform-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7: Informing your instructor the application is finished
+Figure&nbsp;8: Informing your instructor the application is finished
 </figcaption>
 </figure>
 </div>
