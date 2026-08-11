@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>2-15: Debugging External Scripts</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-762521013901db335549fed2544688e3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link rel="shortcut icon" href="https://qfcatmsu.github.io/assets/images/qfc_icon.png">
+<script>mod=true; // menuCollapse=true;</script>
+<!--script src="/assets/quarto/qfc_styles.js"></script-->
+<script src="https://qfcatmsu.github.io/assets/quarto/qfc_styles.js"></script>
+
+
+<link rel="stylesheet" href="https://qfcatmsu.github.io/assets/quarto/qfc_styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+          <h1 class="quarto-secondary-nav-title">2-15: Debugging External Scripts</h1>
+        </a>     
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="quarto-sidebar-header"><div class="sidebar-header-item">
+<p>The old (RStudio) version of this class will be removed on September 30, 2026.</p>
+</div></div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text"><b style="color:darkred;">Fundamentals of Programming class (new)</b></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons-new/0-01-IntroductionAndSyllabus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction and Syllabus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Part 1: Basic Programming</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons-new/1-01_ProjectFolders.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-01: Project Folders</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons-new/1-02-Variables.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-02: Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons-new/1-03_Mathematical_Operations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-03: Mathematical Operations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons-new/1-04_Vectors_And_Data_Frames.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-04: Vectors and Data Frames</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons-new/1-05_Functions_Introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-05: Functions Introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons-new/1-06_Source_and_Execute.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-06: Source and Execute</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons-new/1-07_Outputs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-07: Outputs</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons-new/1-08_Conditional_Operations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-08: Conditional Operations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons-new/1-09_If_Else_Statements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-09: If-Else Statements</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons-new/1-10_For_Loops.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-10: For Loops</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons-new/1-11_For_Loops_and_State_Varibles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-11: For Loops and State Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons-new/1-12_MultipleConditions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-12: Multiple Conditions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons-new/1-13_User_Created_Functions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-13: User Created Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons-new/1-14_Functions2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-14: Functions 2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons-new/1-15_Nested_Loops_and _Matrices.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-15: Nested loops and Matrices</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Part 2: Data Programming</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons-new/2-01_GGPlot_Intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-01: GGPlot Introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons-new/2-02_DataFrame_Modifications.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-02: DataFrame Modifications</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons-new/2-03_DataTypesAndDateFrames.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-03: Data Types and Data Frames</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons-new/2-04_WhichStatements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-04: Which Statements</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons-new/2-05_WhichAndSubstrings.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-05: Which and Substrings</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons-new/2-06_RegularExpressions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-06: Regular Expressions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons-new/2-07_Datetime_Objects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-07: Datetime objects</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons-new/2-08_Matrices.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-08: Matrices</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons-new/2-09_Binding_Sampling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-09: Binding and Sampling</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons-new/2-10_Stacking_Mapping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-10: Stacking and Mapping</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons-new/2-11_Statistical_Tests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-11: Statistical Tests</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons-new/2-12_Objects_Attributes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-12: Objects and Attributes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons-new/2-13_Lists.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-13: Lists</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons-new/2-14_Breakpoints.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-14: Breakpoints</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons-new/2-15_Breakpoints2.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">2-15: Debugging External Scripts</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text"><b>Fundamentals of Programming class (old)</b></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/0-01-IntroductionAndSyllabus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction and Syllabus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
+ <span class="menu-text">Part 1: Basic Programming</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-01-RStudioProjectsSetup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-01: RStudio Projects Setup</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-02-Variables.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-02: Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-03_Mathematical_Operations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-03: Mathematical Operations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-04_Vectors_And_Data_Frames.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-04: Vectors and Data Frames</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-05_Functions_Introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-05: Functions Introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-06_Run_and_Source.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-06: Run and Source</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-07_Outputs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-07: Outputs</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-08_Conditional_Operations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-08: Conditional Operations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-09_If_Else_Statements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-09: If-Else Statements</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-10_For_Loops.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-10: For Loops</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-11_For_Loops_and_State_Varibles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-11: For Loops and State Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-12_MultipleConditions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-12: Multiple Conditions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-13_User_Created_Functions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-13: User Created Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-14_Functions2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-14: Functions 2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/1-15_Nested_Loops_and _Matrices.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-15: Nested loops and Matrices</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
+ <span class="menu-text">Part 2: Data Programming</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-01_GGPlot_Intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-01: GGPlot Introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-02_DataFrame_Modifications.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-02: DataFrame Modifications</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-03_DataTypesAndDateFrames.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-03: Data Types and Data Frames</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-04_WhichStatements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-04: Which Statements</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-05_WhichAndSubstrings.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-05: Which and Substrings</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-06_Datetime_Objects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-06: Datetime objects</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-07_Matrices.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-07: Matrices</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-08_Binding_Sampling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-08: Binding and Sampling</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-09_Stacking_Mapping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-09: Stacking and Mapping</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-10_Statistical_Tests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-10: Statistical Tests</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-11_Objects_Attributes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-11: Objects and Attributes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-12_Lists.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-12: Lists</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-13_Breakpoints.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-13: Breakpoints</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/2-14_Debug_External_Scripts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2-14: Debugging External Scripts (Unfinished)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title"><b>Lesson Content</b></h2>
+   
+  <ul>
+  <li><a href="#to-do" id="toc-to-do" class="nav-link active" data-scroll-target="#to-do"><span class="header-section-number">0.1</span> To-do</a></li>
+  <li><a href="#purpose" id="toc-purpose" class="nav-link" data-scroll-target="#purpose"><span class="header-section-number">1</span> Purpose</a></li>
+  <li><a href="#material" id="toc-material" class="nav-link" data-scroll-target="#material"><span class="header-section-number">2</span> Material</a></li>
+  <li><a href="#adding-breakpoints-to-external-scripts" id="toc-adding-breakpoints-to-external-scripts" class="nav-link" data-scroll-target="#adding-breakpoints-to-external-scripts"><span class="header-section-number">3</span> Adding breakpoints to external scripts &nbsp;</a>
+  <ul class="collapse">
+  <li><a href="#add-a-breakpoint-to-a-funciton" id="toc-add-a-breakpoint-to-a-funciton" class="nav-link" data-scroll-target="#add-a-breakpoint-to-a-funciton"><span class="header-section-number">3.1</span> Add a breakpoint to a funciton</a></li>
+  <li><a href="#executing-a-function-with-a-breakpoint" id="toc-executing-a-function-with-a-breakpoint" class="nav-link" data-scroll-target="#executing-a-function-with-a-breakpoint"><span class="header-section-number">3.2</span> Executing a function with a breakpoint</a></li>
+  <li><a href="#components-of-debug-mode" id="toc-components-of-debug-mode" class="nav-link" data-scroll-target="#components-of-debug-mode"><span class="header-section-number">3.3</span> Components of debug mode</a></li>
+  <li><a href="#the-function-scope" id="toc-the-function-scope" class="nav-link" data-scroll-target="#the-function-scope"><span class="header-section-number">3.4</span> The function scope</a></li>
+  <li><a href="#debugging-controls" id="toc-debugging-controls" class="nav-link" data-scroll-target="#debugging-controls"><span class="header-section-number">3.5</span> Debugging controls</a></li>
+  <li><a href="#conditional-browser" id="toc-conditional-browser" class="nav-link" data-scroll-target="#conditional-browser"><span class="header-section-number">3.6</span> conditional browser()</a></li>
+  <li><a href="#if-function-changes-you-need-to-source-again" id="toc-if-function-changes-you-need-to-source-again" class="nav-link" data-scroll-target="#if-function-changes-you-need-to-source-again"><span class="header-section-number">3.7</span> If function changes, you need to source again</a></li>
+  </ul></li>
+  <li><a href="#positron-detects-the-pracma-call" id="toc-positron-detects-the-pracma-call" class="nav-link" data-scroll-target="#positron-detects-the-pracma-call"><span class="header-section-number">4</span> Positron detects the pracma call</a></li>
+  <li><a href="#ignoring-files-in-git" id="toc-ignoring-files-in-git" class="nav-link" data-scroll-target="#ignoring-files-in-git"><span class="header-section-number">5</span> Ignoring files in Git</a></li>
+  <li><a href="#functions-from-packages" id="toc-functions-from-packages" class="nav-link" data-scroll-target="#functions-from-packages"><span class="header-section-number">6</span> Functions from packages</a>
+  <ul class="collapse">
+  <li><a href="#downloading-package-script" id="toc-downloading-package-script" class="nav-link" data-scroll-target="#downloading-package-script"><span class="header-section-number">6.1</span> Downloading package script</a></li>
+  <li><a href="#unzipping-package" id="toc-unzipping-package" class="nav-link" data-scroll-target="#unzipping-package"><span class="header-section-number">6.2</span> Unzipping package</a></li>
+  <li><a href="#install-pkgload" id="toc-install-pkgload" class="nav-link" data-scroll-target="#install-pkgload"><span class="header-section-number">6.3</span> Install pkgload</a></li>
+  <li><a href="#load-the-local-library" id="toc-load-the-local-library" class="nav-link" data-scroll-target="#load-the-local-library"><span class="header-section-number">6.4</span> load the local library</a></li>
+  </ul></li>
+  <li><a href="#debugging-package-script" id="toc-debugging-package-script" class="nav-link" data-scroll-target="#debugging-package-script"><span class="header-section-number">7</span> Debugging package script</a>
+  <ul class="collapse">
+  <li><a href="#debugging" id="toc-debugging" class="nav-link" data-scroll-target="#debugging"><span class="header-section-number">7.1</span> Debugging</a></li>
+  </ul></li>
+  <li><a href="#application" id="toc-application" class="nav-link" data-scroll-target="#application"><span class="header-section-number">8</span> Application</a></li>
+  <li><a href="#extension-namespaces-and-environments" id="toc-extension-namespaces-and-environments" class="nav-link" data-scroll-target="#extension-namespaces-and-environments"><span class="header-section-number">9</span> Extension: Namespaces and Environments</a></li>
+  <li><a href="#extension-scope" id="toc-extension-scope" class="nav-link" data-scroll-target="#extension-scope"><span class="header-section-number">10</span> Extension: Scope</a></li>
+  <li><a href="#extension-next-in-advanced-class" id="toc-extension-next-in-advanced-class" class="nav-link" data-scroll-target="#extension-next-in-advanced-class"><span class="header-section-number">11</span> Extension: Next in advanced class</a></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content column-page-right" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">2-15: Debugging External Scripts</h1>
+</div>
+
+
+
+<div class="quarto-title-meta column-page-right">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="to-do" class="level3" data-number="0.1">
+<h3 data-number="0.1" class="anchored" data-anchor-id="to-do"><span class="header-section-number">0.1</span> To-do</h3>
+<ul>
+<li><p>Can you switch environments?</p></li>
+<li><p>define scope</p></li>
+<li><p>REmove All Breakpoints very important!</p></li>
+</ul>
+</section>
+<section id="purpose" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="purpose"><span class="header-section-number">1</span> Purpose</h2>
+<ul>
+<li><p>Debug external scripts with browser()</p></li>
+<li><p>Access scripts from packages and debug</p></li>
+</ul>
+</section>
+<section id="material" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="material"><span class="header-section-number">2</span> Material</h2>
+<p>The <a href="../scripts/2-15_DebugExternalScripts.R">script for the lesson is here</a></p>
+<p>A <a href="../scripts/2-15_myFunctions.R">second script that contains a function to debug</a></p>
+<p>The <a href="../data/Lansing2016Noaa-3.csv">data used for the lesson</a> is here</p>
+</section>
+<section id="adding-breakpoints-to-external-scripts" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="adding-breakpoints-to-external-scripts"><span class="header-section-number">3</span> Adding breakpoints to external scripts &nbsp;</h2>
+<p>Let’s first <strong><em>Execute</em></strong> just the first seven line of the script <strong><em>2-15_DebugExternalScripts.R</em></strong>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>());</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"scripts/2-15_myFunctions.R"</span>);</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># read in CSV file and save the content to weatherData</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>weatherData <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="at">file=</span><span class="st">"data/Lansing2016NOAA-3.csv"</span>);</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>temps <span class="ot">=</span> <span class="fu">high_and_low</span>(weatherData<span class="sc">$</span>maxTemp, </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>                     weatherData<span class="sc">$</span>minTemp, </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>                     weatherData<span class="sc">$</span>dateYear);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong><em>high_and_low()</em></strong> is a function inside the script <strong><em>2-15_myFunctions.R</em></strong>. On line 7, it is called with three arguments: the <strong><em>maxTemp</em></strong>, <strong><em>minTemp</em></strong>, and <strong><em>dateYear</em></strong> columns from <strong><em>weatherData</em></strong>. After the function is called, <strong><em>temps</em></strong> appears in <strong><em>Variables</em></strong> as a List with 4 objects in it, which are the return value from <strong><em>high_and_low()</em></strong>. <span class="note">Note: each object in <strong><em>temps</em></strong> is also a List with 2 objects</span></p>
+<div id="fig-return-list" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-return-list-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R_2-15_List_Return.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-return-list-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: The List returned from high_and_low().
+</figcaption>
+</figure>
+</div>
+<section id="add-a-breakpoint-to-a-funciton" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="add-a-breakpoint-to-a-funciton"><span class="header-section-number">3.1</span> Add a breakpoint to a funciton</h3>
+<p>We can directly pause the function <strong><em>high_and_low()</em></strong> by adding a breakpoint to the script. Let’s put a breakpoint at line 13:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" data-tab="2-15_myFunctions.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dv">13</span>   <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="fu">length</span>(highs))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Initially, this will put a gray circle in the gutter area next to line 13. The gray circle indicates that the breakpoint is not yet active – when you mouseover the circle, Positron will indicate the breakpoint is <strong><em>unverified</em></strong>.</p>
+<p>&nbsp;</p>
+<p>The breakpoint will remain unverified until the script file is Sourced, which is done on line 2 of <strong><em>2-15_DebugExternalScripts.R:</em></strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" data-tab="2-15_DebugExternalScripts.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"scripts/2-15_myFunctions.R"</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="executing-a-function-with-a-breakpoint" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="executing-a-function-with-a-breakpoint"><span class="header-section-number">3.2</span> Executing a function with a breakpoint</h3>
+<p>When <strong><em>high_and_low()</em></strong> is called and the breakpoint is reached, R will pause the execution and put the script in debug mode.</p>
+<p>&nbsp;</p>
+<p>This time when we Execute the first seven line of the script <strong><em>2-15_DebugExternalScripts.R</em></strong>, Positron switches the file viewer to <strong><em>2-15_myFunctions.R</em></strong> and enters debug mode:</p>
+<div id="fig-debugMode" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-debugMode-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R-2-14_DebugMode.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-debugMode-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Debug mode inside a function
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="components-of-debug-mode" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="components-of-debug-mode"><span class="header-section-number">3.3</span> Components of debug mode</h3>
+<p>Most of <a href="#fig-debugMode" class="quarto-xref">Figure&nbsp;2</a> should look familiar from the last lesson. There is</p>
+<ul>
+<li><p>An arrow will appear at the code line the script is paused at. The arrow shows you the line that will be executed next</p></li>
+<li><p>Debug controls will appear in the <strong><em>Console</em></strong> tab</p></li>
+<li><p>The <strong><em>Console</em></strong> will indicate it is in browse mode&nbsp; with <code>Browse[1]&gt;</code></p></li>
+<li><p>A <strong><em>Run and Debug</em></strong> pane will appear on the left side</p></li>
+</ul>
+<p>One important difference in that <strong><em>Variables</em></strong> reflects the objects created in <strong><em>high_and_low()</em></strong>. Another way to say this is that Variables reflects the scope of <strong><em>high_and_low()</em></strong> and does not see objects created in the original script.</p>
+<p>&nbsp;</p>
+<p>When you are in you main script, Variables will switch to the scope on the main script. &lt;view Global Environment&gt;</p>
+</section>
+<section id="the-function-scope" class="level3" data-number="3.4">
+<h3 data-number="3.4" class="anchored" data-anchor-id="the-function-scope"><span class="header-section-number">3.4</span> The function scope</h3>
+<p>Arguments in a function are variables in the function’s scope that are set by the caller. In this case: <strong><em>high</em></strong>, <strong><em>low</em></strong>, and <strong><em>dates</em></strong>, are variables set by the caller to three columns from <strong><em>weatherData</em></strong> and inside the <strong><em>high_and_low()</em></strong> scope.</p>
+<p>&nbsp;</p>
+<p>The other variables in the function (<strong><em>highest_high</em></strong>, <strong><em>highest_low</em></strong>, <strong><em>lowest_high</em></strong>, and <strong><em>lowest_low</em></strong>) and in <strong><em>Variables</em></strong> because the commands to set the values were executed before <strong><em>browser()</em></strong> .</p>
+</section>
+<section id="debugging-controls" class="level3" data-number="3.5">
+<h3 data-number="3.5" class="anchored" data-anchor-id="debugging-controls"><span class="header-section-number">3.5</span> Debugging controls</h3>
+<p>All of the debugging control work the same as in last lesson.</p>
+<ul>
+<li><p><strong><em>Continue</em></strong> will unpause the script’s execution until the next <strong><em>browser()</em></strong></p>
+<ul>
+<li>If there are no more <strong><em>browser()</em></strong>, then <strong><em>Continue</em></strong> complete the function (like <strong><em>Step Out</em></strong>)</li>
+</ul></li>
+<li><p><strong><em>Step Out</em></strong> will execute the next command and move the green arrow</p></li>
+<li><p><strong><em>Step In</em></strong> will move into a function (if there is one)</p>
+<ul>
+<li>If there is no function, <strong><em>Step In</em></strong> acts like <strong><em>Next</em></strong></li>
+</ul></li>
+<li><p><strong><em>Step Out</em></strong> will complete the execution of the function</p></li>
+<li><p><strong><em>Disconnect</em></strong> will quit the script – no more code gets executed.</p></li>
+</ul>
+</section>
+<section id="conditional-browser" class="level3" data-number="3.6">
+<h3 data-number="3.6" class="anchored" data-anchor-id="conditional-browser"><span class="header-section-number">3.6</span> conditional browser()</h3>
+<p>It is often useful to put a conditional breakpoint within a <strong><em>for</em></strong> loop, especially if you <strong><em>for</em></strong> loop is cycling many times. The <strong><em>for</em></strong> loop already has four conditional statement, each checking the extreme value against the current value. You could put a breakpoint on line <strong>23</strong> to see each time the <strong><em>lowest_high</em></strong> value was changed.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="dv">20</span>    <span class="cf">else</span> <span class="cf">if</span>(highs[i] <span class="sc">&lt;</span> lowest_high<span class="sc">$</span>temp)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="dv">21</span>    { </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="dv">22</span>      lowest_high<span class="sc">$</span>temp <span class="ot">=</span> highs[i];</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="dv">23</span>      lowest_high<span class="sc">$</span>date <span class="ot">=</span> dates[i];</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="dv">24</span>    }</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Or you could add a conditional breakpoint that pauses on a certain cycle. In this case on line <strong>15</strong>, pause the script when <strong><em>i == 10</em></strong>, the tenth cycle of the loop.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="dv">13</span>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="fu">length</span>(highs))</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="dv">14</span>  {  </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="dv">15</span>    <span class="cf">if</span>(highs[i] <span class="sc">&gt;</span> highest_high<span class="sc">$</span>temp)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>«Expression<span class="sc">:</span>   i <span class="sc">==</span> <span class="dv">10</span>»       </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="dv">16</span>    {</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="dv">17</span>      highest_high<span class="sc">$</span>temp <span class="ot">=</span> highs[i];</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="dv">18</span>      highest_high<span class="sc">$</span>date <span class="ot">=</span> dates[i];</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="dv">19</span>    }</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    ...    </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Or pause based on the value of a variable, in this case, when <strong><em>highs[i]</em></strong> is more than 90</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="dv">13</span>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="fu">length</span>(highs))</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="dv">14</span>  {  </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="dv">15</span>    <span class="cf">if</span>(highs[i] <span class="sc">&gt;</span> highest_high<span class="sc">$</span>temp)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>«Expression<span class="sc">:</span>   highs[i] <span class="sc">&gt;</span> <span class="dv">90</span>»      </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="dv">16</span>    {</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="dv">17</span>      highest_high<span class="sc">$</span>temp <span class="ot">=</span> highs[i];</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="dv">18</span>      highest_high<span class="sc">$</span>date <span class="ot">=</span> dates[i];</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="dv">19</span>    }</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    ...   </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="if-function-changes-you-need-to-source-again" class="level3" data-number="3.7">
+<h3 data-number="3.7" class="anchored" data-anchor-id="if-function-changes-you-need-to-source-again"><span class="header-section-number">3.7</span> If function changes, you need to source again</h3>
+<p>When you Source a function, the function get put into Variable as it was when source – code and breakpoint. If you change either the breakpoints or the code, then you need to source the function again – otherwise Variable will have the old version.</p>
+</section>
+</section>
+<section id="positron-detects-the-pracma-call" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="positron-detects-the-pracma-call"><span class="header-section-number">4</span> Positron detects the pracma call</h2>
+<p>In this case –</p>
+</section>
+<section id="ignoring-files-in-git" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="ignoring-files-in-git"><span class="header-section-number">5</span> Ignoring files in Git</h2>
+<p>In the next section you will be downloading a package named <strong><em>pracma</em></strong> and saving it to your project folder. This means that, without intervention, the <strong><em>pracma</em></strong> package will be added to your Git repository. This is not something you want to do because it is not really part of your project and it takes up a lot of space.</p>
+<p>&nbsp;</p>
+<p>To avoid adding <strong><em>pracma</em></strong> to your Git repository:</p>
+<p>1) In Positron, click <strong><em>New -&gt; New File…</em></strong></p>
+<p>2) In the <strong><em>New File…</em></strong> prompt type in <code>.gitignore</code></p>
+<p>3) In the <strong><em>Create File</em></strong> window, go to the root folder of your project and click <strong><em>Create</em></strong></p>
+<p>4) <strong><em>.gitignore</em></strong> will open in a file editor tab in Positron</p>
+<p>5) type <code>pracma/</code> in the first line and save</p>
+<p>&nbsp;</p>
+<p>Now Git will ignore (i.e., never allow you to Stage) the <strong><em>pracma</em></strong> folder and everything in it.</p>
+</section>
+<section id="functions-from-packages" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="functions-from-packages"><span class="header-section-number">6</span> Functions from packages</h2>
+<p>R Packages have collections of script files with functions. However, it is difficult to debug a function inside a package because you do not have access to the script files – making it impossible to add breakpoints. To work around this, we are going to download the package to your computer and set up the package locally. Once installed locally, you can view, use, and modify the package’s script files just like any other external scripts.</p>
+<p>&nbsp;</p>
+<p>The steps are:</p>
+<ul>
+<li><p>download the package (in this case, <strong><em>pracma</em></strong>)</p></li>
+<li><p>unzip the package</p></li>
+<li><p>install <strong><em>pkgload</em></strong> library</p></li>
+<li><p>using <strong><em>pkgload</em></strong>, load the local version of the package in your script</p></li>
+</ul>
+<section id="downloading-package-script" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="downloading-package-script"><span class="header-section-number">6.1</span> Downloading package script</h3>
+<p>The <strong><em>utils</em></strong> package in R (installed with R) includes the function <strong><em>download.packages</em></strong> that lets you save a package to your computer. The command to download the <strong><em>pracma</em></strong> package is:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">download.packages</span>(<span class="at">pkgs=</span><span class="st">"pracma"</span>, <span class="at">destdir =</span> <span class="st">"."</span>, <span class="at">type =</span> <span class="st">"source"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This will save the <strong><em>pracma</em></strong> package, which has the name <strong><em>pracma_#.#.#.tar.gz</em></strong>, to the root folder of your project. You can change <strong><em>destdir</em></strong> to a different folder on your computer. <span class="note">Note: #.#.# is the version number of pracma</span>.</p>
+</section>
+<section id="unzipping-package" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="unzipping-package"><span class="header-section-number">6.2</span> Unzipping package</h3>
+<p>The package is downloaded as a <strong><em>*.tar.gz</em></strong> file, which is similar to a *.zip file. We now need to unzip the package to extract all of the files within:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">untar</span>(<span class="st">"pracma_#.#.#.tar.gz"</span>) <span class="co"># make sure you replace # with version numnber</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>You can now delete the <strong><em>pracma_#.#.#.tar.gz</em></strong> file from the project folder.</p>
+</section>
+<section id="install-pkgload" class="level3" data-number="6.3">
+<h3 data-number="6.3" class="anchored" data-anchor-id="install-pkgload"><span class="header-section-number">6.3</span> Install pkgload</h3>
+<p><strong><em>pkgload</em></strong> is the R package that lets you use a package directly from a local folder:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"pkgload"</span>)  </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="load-the-local-library" class="level3" data-number="6.4">
+<h3 data-number="6.4" class="anchored" data-anchor-id="load-the-local-library"><span class="header-section-number">6.4</span> load the local library</h3>
+<p>To use the functions from <strong><em>pracma</em></strong>, you would normally call:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pracma) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>However, we want to use the local version of <strong><em>pracma</em></strong> so we can debug. To load the local version of <strong><em>pracma</em></strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>pkgload<span class="sc">::</span><span class="fu">load_all</span>(<span class="st">"pracma"</span>)   </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This command will make all the functions in the local <strong><em>pracma</em></strong> folder available.</p>
+<p>&nbsp;</p>
+<p><span class="note">Note: If you do both calls, then the latter call is the one that will be in effect.</span></p>
+</section>
+</section>
+<section id="debugging-package-script" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="debugging-package-script"><span class="header-section-number">7</span> Debugging package script</h2>
+<p>All the script files are inside the <strong><em>R</em></strong> folder in the local <strong><em>pracma</em></strong> folder.</p>
+<p>&nbsp;</p>
+<p>You can open the local <strong><em>pracma</em></strong> script files in Positron. Here I have opened <strong><em>isPrime.R</em></strong>, which contains the function <strong><em>isprime()</em></strong>. This script can be loaded, modified, and breakpoints added:</p>
+<div id="fig-local-package" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-local-package-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/R_2-15_OpenLocalPackage.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-local-package-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Opening the scripts from the local version of the pracma package
+</figcaption>
+</figure>
+</div>
+<section id="debugging" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="debugging"><span class="header-section-number">7.1</span> Debugging</h3>
+<p>Let’s add a breakpoint to line 12 on isPrime.R:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="dv">12</span>   n <span class="ot">&lt;-</span> <span class="fu">length</span>(x)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>When you can call <strong><em>isprime()</em></strong> from your main script and the breakpoint is reached in <strong><em>isprime()</em></strong>, Positron will enter debug mode:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">isprime</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">71</span>,<span class="dv">88</span>,<span class="dv">2131</span>, <span class="dv">3287</span>, <span class="dv">7819</span>));</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Debug mode will work exactly as is did before for your own external scripts.</p>
+<div id="fig-local_package" class="fs quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-local_package-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/2-14_Debug_Pkg.png" class="fs img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-local_package-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Debug mode on a local package function
+</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="application" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="application"><span class="header-section-number">8</span> Application</h2>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</section>
+<section id="extension-namespaces-and-environments" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="extension-namespaces-and-environments"><span class="header-section-number">9</span> Extension: Namespaces and Environments</h2>
+<p>… how packages are loaded into R</p>
+</section>
+<section id="extension-scope" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="extension-scope"><span class="header-section-number">10</span> Extension: Scope</h2>
+<p>…Why breakpoints work in main script and browser() in external script… but not vice-versa. Similar to the reason if-else structures are a little strange in R…</p>
+</section>
+<section id="extension-next-in-advanced-class" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="extension-next-in-advanced-class"><span class="header-section-number">11</span> Extension: Next in advanced class</h2>
+<ul>
+<li><p>trace() to inject code</p></li>
+<li><p>functional programming</p></li>
+<li><p>object-oriented programming (S3 vs S7 objects)</p></li>
+<li><p>Rcpp</p></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
