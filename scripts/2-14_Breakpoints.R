@@ -1,17 +1,10 @@
 rm(list=ls());  
-source("scripts/debugTest.r");
+source("scripts/2-14_ConvertTime.r");
 
 weatherData = read.csv(file = "data/lansing2016Noaa-3.csv");
 highTemps = weatherData$maxTemp;
 lowTemps = weatherData$minTemp;
 
-a = function()
-{
-  for(i in 1:7)
-    cat(i)
-}
-
-a()
 diffTemp = highTemps - lowTemps;
 
 weatherData$diffTemp = diffTemp;

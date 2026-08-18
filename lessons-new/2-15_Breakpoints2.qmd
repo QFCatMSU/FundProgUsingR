@@ -6,15 +6,15 @@ short: "2-15"
 
 ### To-do
 
-- Can you switch environments?
+- Can you switch environments? No
 
 - define scope
 
-- REmove All Breakpoints very important!
+- Remove All Breakpoints very important!
 
 ## Purpose
 
-- Debug external scripts with browser()
+- Use breakpoints in external scripts
 
 - Access scripts from packages and debug
 
@@ -100,6 +100,18 @@ Arguments in a function are variables in the function's scope that are set by th
 
 The other variables in the function (***highest_high***, ***highest_low***, ***lowest_high***, and ***lowest_low***) and in ***Variables*** because the commands to set the values were executed before ***browser()*** .
 
+ 
+
+\<Something about how Variables reflects the function, not the rest of script\>
+
+ 
+
+ 
+
+ 
+
+ 
+
 ### Debugging controls
 
 All of the debugging control work the same as in last lesson.
@@ -108,13 +120,15 @@ All of the debugging control work the same as in last lesson.
 
   - If there are no more ***browser()***, then ***Continue*** complete the function (like ***Step Out***)
 
-- ***Step Out*** will execute the next command and move the green arrow
+- ***Step Out*** will execute the next command and move the arrow
 
 - ***Step In*** will move into a function (if there is one)
 
   - If there is no function, ***Step In*** acts like ***Next***
 
 - ***Step Out*** will complete the execution of the function
+
+  - \<bug also affects functions within a script, but not in another script\>
 
 - ***Disconnect*** will quit the script – no more code gets executed.
 
@@ -160,13 +174,19 @@ Or pause based on the value of a variable, in this case, when ***highs\[i\]*** i
 
 ### If function changes, you need to source again
 
-When you Source a function, the function get put into Variable as it was when source – code and breakpoint. If you change either the breakpoints or the code, then you need to source the function again – otherwise Variable will have the old version.
+When you Source a function, the function get put into Variable as it was when source – code and breakpoint. If you change either the breakpoints or the code, then you need to source the function again – otherwise ***Variables*** will have the old version.
 
 ## Positron detects the pracma call
 
-In this case –
+\<You can install pracma... explain that we will be using a local version but installing the package version does not hurt .\>
 
-## Ignoring files in Git
+ 
+
+ 
+
+ 
+
+## Ignoring files in Git \<make into Extension\>
 
 In the next section you will be downloading a package named ***pracma*** and saving it to your project folder. This means that, without intervention, the ***pracma*** package will be added to your Git repository. This is not something you want to do because it is not really part of your project and it takes up a lot of space.
 
@@ -250,7 +270,7 @@ This command will make all the functions in the local ***pracma*** folder availa
 
  
 
-[Note: If you do both calls, then the latter call is the one that will be in effect.]{.note}
+[Note: If you do both calls, then the latter call is the one that will be in effect.]{.note} In other words, the later command to load ***pracma*** overrides the former.
 
 ## Debugging package script
 
@@ -264,7 +284,7 @@ You can open the local ***pracma*** script files in Positron. Here I have opened
 
 ### Debugging
 
-Let's add a breakpoint to line 12 on isPrime.R:
+Let's add a breakpoint to line 12 on ***isPrime.R***:
 
 ``` r
 12   n <- length(x)
@@ -292,24 +312,20 @@ Debug mode will work exactly as is did before for your own external scripts.
 
  
 
- 
+###  End-of-class survey
 
- 
+[Please take this short (less than 5 minutes) survey regarding this class.](https://msu.co1.qualtrics.com/jfe/form/SV_b9I3VPJ2We28Qzs?online=true&sync=false&class=ggplot)
 
-## Extension: Namespaces and Environments
+## Extension: Function Scope
 
-... how packages are loaded into R
-
-## Extension: Scope
-
-...Why breakpoints work in main script and browser() in external script... but not vice-versa. Similar to the reason if-else structures are a little strange in R...
+Explain how functions should be isolated from the rest of the script (independent). This allows functions to be generalized
 
 ## Extension: Next in advanced class
 
-- trace() to inject code
+- trace() to inject code \<test code without adding it to the script\>
 
 - functional programming
 
 - object-oriented programming (S3 vs S7 objects)
 
-- Rcpp
+- Rcpp \<speed up data processing.... especially on large for loops\>

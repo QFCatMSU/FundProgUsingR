@@ -1,5 +1,5 @@
 rm(list=ls());  
-source("scripts/debugTest.r");
+source("scripts/2-14_ConvertTime.r");
 
 weatherData = read.csv(file = "data/lansing2016Noaa-3.csv");
 highTemps = weatherData$maxTemp;
