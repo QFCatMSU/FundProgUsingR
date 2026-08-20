@@ -9,16 +9,16 @@ convertTime = function(time_24Hour)
   {
     hour = 12;
     ampm = "am"
-  
-  }else if(hour < 12)
+  }
+  else if(hour < 12)
   {
     ampm = "am"
-  
-  }else if(hour == 12)
+  }
+  else if(hour == 12)
   {
     ampm = "pm" 
-  
-  }else if(hour > 12)
+  }
+  else if(hour > 12)
   {
     hour = hour - 12; 
     ampm = "pm";

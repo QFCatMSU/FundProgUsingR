@@ -6,11 +6,9 @@ short: "2-15"
 
 ### To-do
 
-- Can you switch environments? No
+- Can you switch environments? No (explain why this is good)
 
-- define scope
-
-- Remove All Breakpoints very important!
+  - define scope
 
 ## Purpose
 
@@ -25,6 +23,20 @@ The [script for the lesson is here](../scripts/2-15_DebugExternalScripts.R)
 A [second script that contains a function to debug](../scripts/2-15_myFunctions.R)
 
 The [data used for the lesson](../data/Lansing2016Noaa-3.csv) is here
+
+## External scripts and functions
+
+In programming, when you have multiple scripts, in is best practice to have a main script and all other script have only functions that are called from the main script (or from another function)
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
 
 ## Adding breakpoints to external scripts  
 
@@ -42,11 +54,11 @@ temps = high_and_low(weatherData$maxTemp,
                      weatherData$dateYear);
 ```
 
-***high_and_low()*** is a function inside the script ***2-15_myFunctions.R***. On line 7, it is called with three arguments: the ***maxTemp***, ***minTemp***, and ***dateYear*** columns from ***weatherData***. After the function is called, ***temps*** appears in ***Variables*** as a List with 4 objects in it, which are the return value from ***high_and_low()***. [Note: each object in ***temps*** is also a List with 2 objects]{.note}
+***high_and_low()*** is a function inside the script ***2-15_myFunctions.R***. On line 7, it is called with three arguments: the ***maxTemp***, ***minTemp***, and ***dateYear*** columns from ***weatherData***. After the function is called, ***temps*** appears in ***Variables*** as a List with 4 objects in it, which are the return value from ***high_and_low()***. [Note: all four objects in ***temps***are also Lists, each with 2 objects (***temp*** and ***date***)]{.note}
 
 ![The List returned from high_and_low().](images/R_2-15_List_Return.png){#fig-return-list .fs}
 
-### Add a breakpoint to a funciton
+### Add a breakpoint to a function
 
 We can directly pause the function ***high_and_low()*** by adding a breakpoint to the script. Let's put a breakpoint at line 13:
 
@@ -64,13 +76,15 @@ The breakpoint will remain unverified until the script file is Sourced, which is
 source("scripts/2-15_myFunctions.R");
 ```
 
+This code is the equivalent to clicking the Play button when ***2-15_myFunctions.R*** is showing in the viewer.
+
 ### Executing a function with a breakpoint
 
 When ***high_and_low()*** is called and the breakpoint is reached, R will pause the execution and put the script in debug mode.
 
  
 
-This time when we Execute the first seven line of the script ***2-15_DebugExternalScripts.R***, Positron switches the file viewer to ***2-15_myFunctions.R*** and enters debug mode:
+Since the breakpoints occurs within ***high_and_low()***, Positron enters debug mode and switches the file viewer to ***2-15_myFunctions.R***:
 
 ![Debug mode inside a function](images/R-2-14_DebugMode.png){#fig-debugMode .fs}
 
@@ -86,11 +100,13 @@ Most of @fig-debugMode should look familiar from the last lesson. There is
 
 - A ***Run and Debug*** pane will appear on the left side
 
-One important difference in that ***Variables*** reflects the objects created in ***high_and_low()***. Another way to say this is that Variables reflects the scope of ***high_and_low()*** and does not see objects created in the original script.
+ 
+
+One important difference in that ***Variables*** reflects the objects created in ***high_and_low()***. Another way to say this is that Variables reflects the scope of ***high_and_low()*** and does not see objects created in the original script. [Note: this is also true when a function is in the same script as the caller]{.note}.
 
  
 
-When you are in you main script, Variables will switch to the scope on the main script. \<view Global Environment\>
+When you are in you main script, ***Variables*** will switch to the scope of the main script.
 
 ### The function scope
 
@@ -106,7 +122,7 @@ The other variables in the function (***highest_high***, ***highest_low***, ***l
 
  
 
- 
+\<can switch in Run and Debug\>
 
  
 
@@ -177,6 +193,8 @@ Or pause based on the value of a variable, in this case, when ***highs\[i\]*** i
 When you Source a function, the function get put into Variable as it was when source – code and breakpoint. If you change either the breakpoints or the code, then you need to source the function again – otherwise ***Variables*** will have the old version.
 
 ## Positron detects the pracma call
+
+Starting with the 2026.08 version of Positron...
 
 \<You can install pracma... explain that we will be using a local version but installing the package version does not hurt .\>
 

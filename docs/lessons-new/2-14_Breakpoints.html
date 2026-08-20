@@ -603,13 +603,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#moving-through-code-in-debug-browse-mode" id="toc-moving-through-code-in-debug-browse-mode" class="nav-link" data-scroll-target="#moving-through-code-in-debug-browse-mode"><span class="header-section-number">6</span> Moving through code in debug (browse) mode</a>
   <ul class="collapse">
-  <li><a href="#disconnect" id="toc-disconnect" class="nav-link" data-scroll-target="#disconnect"><span class="header-section-number">6.1</span> Disconnect</a></li>
-  <li><a href="#continue-to-next-breakpoint" id="toc-continue-to-next-breakpoint" class="nav-link" data-scroll-target="#continue-to-next-breakpoint"><span class="header-section-number">6.2</span> Continue to next Breakpoint</a></li>
-  <li><a href="#continue-to-end-of-script" id="toc-continue-to-end-of-script" class="nav-link" data-scroll-target="#continue-to-end-of-script"><span class="header-section-number">6.3</span> Continue to end of script</a></li>
-  <li><a href="#breakpoint-inside-for-loop" id="toc-breakpoint-inside-for-loop" class="nav-link" data-scroll-target="#breakpoint-inside-for-loop"><span class="header-section-number">6.4</span> breakpoint inside for loop</a></li>
-  <li><a href="#moving-out-of-a-for-loop" id="toc-moving-out-of-a-for-loop" class="nav-link" data-scroll-target="#moving-out-of-a-for-loop"><span class="header-section-number">6.5</span> Moving out of a for loop</a></li>
-  <li><a href="#step-over-next" id="toc-step-over-next" class="nav-link" data-scroll-target="#step-over-next"><span class="header-section-number">6.6</span> Step Over (Next)</a></li>
-  <li><a href="#multiple-commands-on-one-line" id="toc-multiple-commands-on-one-line" class="nav-link" data-scroll-target="#multiple-commands-on-one-line"><span class="header-section-number">6.7</span> Multiple Commands on one line</a></li>
+  <li><a href="#do-not-use-source-in-debug-mode" id="toc-do-not-use-source-in-debug-mode" class="nav-link" data-scroll-target="#do-not-use-source-in-debug-mode"><span class="header-section-number">6.1</span> Do not use Source in DEbug Mode</a></li>
+  <li><a href="#disconnect" id="toc-disconnect" class="nav-link" data-scroll-target="#disconnect"><span class="header-section-number">6.2</span> Disconnect</a></li>
+  <li><a href="#continue-to-next-breakpoint" id="toc-continue-to-next-breakpoint" class="nav-link" data-scroll-target="#continue-to-next-breakpoint"><span class="header-section-number">6.3</span> Continue to next Breakpoint</a></li>
+  <li><a href="#continue-to-end-of-script" id="toc-continue-to-end-of-script" class="nav-link" data-scroll-target="#continue-to-end-of-script"><span class="header-section-number">6.4</span> Continue to end of script</a></li>
+  <li><a href="#breakpoint-inside-for-loop" id="toc-breakpoint-inside-for-loop" class="nav-link" data-scroll-target="#breakpoint-inside-for-loop"><span class="header-section-number">6.5</span> breakpoint inside for loop</a></li>
+  <li><a href="#moving-out-of-a-for-loop" id="toc-moving-out-of-a-for-loop" class="nav-link" data-scroll-target="#moving-out-of-a-for-loop"><span class="header-section-number">6.6</span> Moving out of a for loop</a></li>
+  <li><a href="#step-over-next" id="toc-step-over-next" class="nav-link" data-scroll-target="#step-over-next"><span class="header-section-number">6.7</span> Step Over (Next)</a></li>
+  <li><a href="#multiple-commands-on-one-line" id="toc-multiple-commands-on-one-line" class="nav-link" data-scroll-target="#multiple-commands-on-one-line"><span class="header-section-number">6.8</span> Multiple Commands on one line</a></li>
   </ul></li>
   <li><a href="#debugging-in-a-for-loop" id="toc-debugging-in-a-for-loop" class="nav-link" data-scroll-target="#debugging-in-a-for-loop"><span class="header-section-number">7</span> Debugging in a for loop</a>
   <ul class="collapse">
@@ -660,10 +661,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="to-do" class="level3" data-number="0.1">
 <h3 data-number="0.1" class="anchored" data-anchor-id="to-do"><span class="header-section-number">0.1</span> To-do</h3>
 <ul>
-<li>Clear all bp – including when you reload</li>
-<li>Sometimes you need to restart R Console to get bp to work</li>
-<li>breakpoints cannot be set while in debug mode (already an extension)</li>
-<li>Source while in browse mode increases #</li>
+<li>Put function in same script for this lesson?</li>
 </ul>
 </section>
 <section id="purpose" class="level2" data-number="1">
@@ -683,9 +681,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="debugging-your-code" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="debugging-your-code"><span class="header-section-number">3</span> Debugging your code</h2>
-<p>One of the most powerful debugging tools in any programming language, and a staple of most professional programmers, is the breakpoint.&nbsp; Breakpoints allows you to pause the execution of your script at a specific line or command.&nbsp; While paused, you can look at <strong><em>Variables</em></strong>, enter commands in the <strong><em>Console</em></strong>, or move through your script one command at a time. This is a very useful tool for finding problems in your script and where they are ocurring.</p>
+<p>One of the most powerful debugging tools in any programming language, and a staple of most professional programmers, is the breakpoint.&nbsp; Breakpoints allows you to pause the execution of your script at a specific line or command.&nbsp; While paused, you can look at <strong><em>Variables</em></strong>, enter commands in the <strong><em>Console</em></strong>, or move through your script one command at a time. This is a very useful tool for finding problems in your script and where they are occurring.</p>
 <p>&nbsp;</p>
-<p>The implementation of breakpoints in R was historically far less robust than most programming languages. However, in February 2026, Positron added a breakpoints – marking the first time an R IDE effectively implemented breakpoints (RStudio has breakpoints, but they are not well implemented).</p>
+<p>The implementation of breakpoints in R was historically far less robust than most programming languages. However, in February 2026, Positron added breakpoints – marking the first time an R IDE effectively implemented breakpoints (RStudio has breakpoints, but they are not well implemented).</p>
 <section id="issues-with-breakpoints-in-positron" class="level3" data-number="3.1">
 <h3 data-number="3.1" class="anchored" data-anchor-id="issues-with-breakpoints-in-positron"><span class="header-section-number">3.1</span> Issues with breakpoints in Positron</h3>
 <p>Breakpoints were first introduced to Positron in February 2026 and, while they work well, there are still some obvious bugs and quirks. Positron knows about the issues and I would expect them to be fixed by mid-2027. Until then, I will mention the bugs, how things should work, and they currently work.</p>
@@ -693,7 +691,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="setting-up-a-breakpoint" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="setting-up-a-breakpoint"><span class="header-section-number">4</span> Setting up a breakpoint</h2>
-<p>A breakpoint is like a pause button in the execution your script.&nbsp; In Positrion, you set a breakpoint by clicking to the left of the line number – this space is called the <span class="hl">gutter area</span>.&nbsp; A gray-outlined dot is initially put in the gutter area (line 4) – indicating that this is an unverified breakpoint. Once the script is sourced and the code in the line is verified, the dot becomes red (line 8). <span class="note">Note: Clicking on the breakpoint dot will get rid of the breakpoint.</span></p>
+<p>A breakpoint is like a pause button in the execution your script.&nbsp; In Positrion, you set a breakpoint by clicking to the left of the line number – this space is called the <span class="hl">gutter area</span>.&nbsp; A gray-outlined dot is initially put in the gutter area (line 4) – indicating that this is an unverified breakpoint. Once the script is sourced and the code in the line is verified, the dot becomes red (line 8). <span class="note">Note: Clicking on the breakpoint dot removes the breakpoint.</span></p>
 <div id="fig-set_breakpoint" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-set_breakpoint-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -711,7 +709,7 @@ Figure&nbsp;1: Breakpoint (red dot) set on line 8
 <h3 data-number="4.1" class="anchored" data-anchor-id="debug-mode"><span class="header-section-number">4.1</span> Debug Mode</h3>
 <p>There are 4 things in Positron that indicate you are in debug mode:</p>
 <ol type="1">
-<li><p>A hollow arrow appears at the code line the script is paused at. The arrow shows you the line that will be executed next</p></li>
+<li><p>A hollow arrow appears at the code line the script is paused at. The arrow shows you the line that will be executed next (i.e., it is paused right before the line of code)</p></li>
 <li><p>Floating debug controls appear in file tab area</p></li>
 <li><p>The <strong><em>Console</em></strong> indicates it is in browse mode with <code>Browse[1]&gt;</code></p></li>
 <li><p>The <strong><em>Run and Debug</em></strong> tab appears on the left side</p>
@@ -734,8 +732,6 @@ Figure&nbsp;2: Sourcing a script with a breakpoint puts it into debug mode
 </section>
 <section id="using-breakpoints" class="level2" data-number="5">
 <h2 data-number="5" class="anchored" data-anchor-id="using-breakpoints"><span class="header-section-number">5</span> Using breakpoints</h2>
-<p>In this lesson I will demonstrate using breakpoints within the lesson script.</p>
-<p>&nbsp;</p>
 <p><span class="note">In the lesson script:</span></p>
 <ul>
 <li><span class="note">Place a breakpoint at line 8 in the lesson’s script and click <strong>Source</strong></span></li>
@@ -774,11 +770,9 @@ Figure&nbsp;2: Sourcing a script with a breakpoint puts it into debug mode
 </ul>
 <p>5) <strong><em>Restart</em></strong>: Stops execution and restarts R</p>
 <ul>
-<li><span class="hl">BUG</span>: broken – use Restart in <strong><em>Console</em></strong> (<a href="#fig-five_bp_controls" class="quarto-xref">Figure&nbsp;3</a>)</li>
+<li><span class="hl">BUG</span>: broken – use Restart in <strong><em>Console</em></strong> (<a href="#fig-five_bp_controls" class="quarto-xref">Figure&nbsp;3</a>), which performs the same function</li>
 </ul>
 <p>6) <strong><em>Disconnect</em></strong>: quits the script (no more code is executed)</p>
-<p>&nbsp;</p>
-<p>When in debug mode <span class="hl">you should only use the buttons to control the flow of your script</span>.&nbsp; Clicking <strong><em>Source</em></strong> while in debug mode will cause problems with your script. <a href="#extension-clicking-source-in-debug-mode">Extension: Clicking Source in debug mode</a>.</p>
 <div id="fig-five_bp_controls" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-five_bp_controls-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -789,8 +783,12 @@ Figure&nbsp;3: The six breakpoint controls in debug mode
 </figcaption>
 </figure>
 </div>
-<section id="disconnect" class="level3" data-number="6.1">
-<h3 data-number="6.1" class="anchored" data-anchor-id="disconnect"><span class="header-section-number">6.1</span> Disconnect</h3>
+<section id="do-not-use-source-in-debug-mode" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="do-not-use-source-in-debug-mode"><span class="header-section-number">6.1</span> Do not use Source in DEbug Mode</h3>
+<p>When in debug mode <span class="hl">you should only use the buttons to control the flow of your script</span>.&nbsp; Clicking <strong><em>Source</em></strong> while in debug mode will put you into multiple debug modes at once, which is not something you want to do at this point. <a href="#extension-clicking-source-in-debug-mode">Extension: Clicking Source in debug mode</a>.</p>
+</section>
+<section id="disconnect" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="disconnect"><span class="header-section-number">6.2</span> Disconnect</h3>
 <p>Clicking <strong><em>Disconnect</em></strong> will take R out of debug mode and end the execution of the script.&nbsp; In other words, no more commands in the script will be executed and all the components of debug mode (<a href="#fig-source_with_bp" class="quarto-xref">Figure&nbsp;2</a>) will go away.</p>
 <p>&nbsp;</p>
 <p>When you click <strong><em>Disconnect</em></strong>, <strong><em>Q</em></strong> is put in the <strong><em>Console</em></strong>. <strong>Q</strong> is the command to quit debug mode. You could directly type <strong><em>Q</em></strong> instead of clicking <strong><em>Disconnect</em></strong>.</p>
@@ -805,8 +803,8 @@ Figure&nbsp;4: Stopping debug mode
 </figure>
 </div>
 </section>
-<section id="continue-to-next-breakpoint" class="level3" data-number="6.2">
-<h3 data-number="6.2" class="anchored" data-anchor-id="continue-to-next-breakpoint"><span class="header-section-number">6.2</span> Continue to next Breakpoint</h3>
+<section id="continue-to-next-breakpoint" class="level3" data-number="6.3">
+<h3 data-number="6.3" class="anchored" data-anchor-id="continue-to-next-breakpoint"><span class="header-section-number">6.3</span> Continue to next Breakpoint</h3>
 <p><span class="note">In the lesson script:</span></p>
 <ul>
 <li><span class="note">Add a second breakpoint on line 17 (now there are breakpoints on lines 8 and 17) and click <strong>Source</strong></span></li>
@@ -826,8 +824,8 @@ Figure&nbsp;5: Continue takes the script to the next breakpoint (if there is ano
 </figure>
 </div>
 </section>
-<section id="continue-to-end-of-script" class="level3" data-number="6.3">
-<h3 data-number="6.3" class="anchored" data-anchor-id="continue-to-end-of-script"><span class="header-section-number">6.3</span> Continue to end of script</h3>
+<section id="continue-to-end-of-script" class="level3" data-number="6.4">
+<h3 data-number="6.4" class="anchored" data-anchor-id="continue-to-end-of-script"><span class="header-section-number">6.4</span> Continue to end of script</h3>
 <p>After line 17 there are no more breakpoints, so if you click <strong><em>Continue</em></strong> again, the rest of the script will be executed and you will be taken out of debug (Browse) mode.</p>
 <div id="fig-continue_to_end" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -840,8 +838,8 @@ Figure&nbsp;6: Clicking Continue when there are no more breakpoint executes the 
 </figure>
 </div>
 </section>
-<section id="breakpoint-inside-for-loop" class="level3" data-number="6.4">
-<h3 data-number="6.4" class="anchored" data-anchor-id="breakpoint-inside-for-loop"><span class="header-section-number">6.4</span> breakpoint inside for loop</h3>
+<section id="breakpoint-inside-for-loop" class="level3" data-number="6.5">
+<h3 data-number="6.5" class="anchored" data-anchor-id="breakpoint-inside-for-loop"><span class="header-section-number">6.5</span> breakpoint inside for loop</h3>
 <p><span class="note">In lesson script:</span></p>
 <ul>
 <li><p><span class="note">Remove the breakpoints at lines 8 and 17</span></p>
@@ -863,8 +861,8 @@ Figure&nbsp;7: Continue clicked 20 times (note: i=21) with a breakpoint inside t
 </figure>
 </div>
 </section>
-<section id="moving-out-of-a-for-loop" class="level3" data-number="6.5">
-<h3 data-number="6.5" class="anchored" data-anchor-id="moving-out-of-a-for-loop"><span class="header-section-number">6.5</span> Moving out of a for loop</h3>
+<section id="moving-out-of-a-for-loop" class="level3" data-number="6.6">
+<h3 data-number="6.6" class="anchored" data-anchor-id="moving-out-of-a-for-loop"><span class="header-section-number">6.6</span> Moving out of a for loop</h3>
 <p>If you are in a <strong><em>for</em></strong> loop with thousands of cycle then you do not want to keep clicking <strong><em>Continue</em></strong> until you are out of the <strong><em>for</em></strong> loop.</p>
 <p>&nbsp;</p>
 <p>There are multiple ways to get out of the <strong><em>for</em></strong> loop with one click:</p>
@@ -872,7 +870,7 @@ Figure&nbsp;7: Continue clicked 20 times (note: i=21) with a breakpoint inside t
 <li><p>Click <strong><em>Step Out</em></strong> – this <span class="hl">should</span> complete the <strong><em>for</em></strong> loop and pause execution at the next command after the <strong><em>for</em></strong> loop (line 29)</p>
 <ul>
 <li><p><span class="hl">BUG</span>: currently, <strong><em>Step Out</em></strong> will execute your script until the next breakpoint or to the end of the script</p></li>
-<li><p>Current fix for bug: add breakpoint to line 29</p></li>
+<li><p>Current fix for bug: add breakpoint right after the <strong><em>for</em></strong> loop (line 29)</p></li>
 </ul></li>
 <li><p>Click <strong><em>Disconnect</em></strong> – this will end debug mode and stop the script but leave everything in <strong><em>Variables</em></strong></p></li>
 <li><p>Click <strong><em>Restart</em></strong> in <strong><em>Console</em></strong> tab (<a href="#fig-restartR" class="quarto-xref">Figure&nbsp;8</a>) – this will end debug mode, restart the R session, and clean out <strong><em>Variables</em></strong></p></li>
@@ -887,20 +885,20 @@ Figure&nbsp;8: Restart button in Console tab
 </figcaption>
 </figure>
 </div>
-<section id="restart-control-bug" class="level4" data-number="6.5.1">
-<h4 data-number="6.5.1" class="anchored" data-anchor-id="restart-control-bug"><span class="header-section-number">6.5.1</span> Restart control bug</h4>
-<p>The <strong><em>Restart</em></strong> button in the debug controls will also restart the R session and clean out <strong><em>Variables</em></strong>, but breakpoints will not work after this (this is a bug as of Positron 2026.08). To fix breakpoints, click <strong><em>Restart</em></strong> in the <strong><em>Console</em></strong> tab.</p>
+<section id="restart-control-bug" class="level4" data-number="6.6.1">
+<h4 data-number="6.6.1" class="anchored" data-anchor-id="restart-control-bug"><span class="header-section-number">6.6.1</span> Restart control bug</h4>
+<p>The <strong><em>Restart</em></strong> button in the debug controls will also restart the R session and clean out <strong><em>Variables</em></strong>, but breakpoints will not work after this (this is a bug as of Positron 2026.08). To fix breakpoints, click <strong><em>Restart</em></strong> in the <strong><em>Console</em></strong> tab or close out and reopen Positron.</p>
 </section>
 </section>
-<section id="step-over-next" class="level3" data-number="6.6">
-<h3 data-number="6.6" class="anchored" data-anchor-id="step-over-next"><span class="header-section-number">6.6</span> Step Over (Next)</h3>
+<section id="step-over-next" class="level3" data-number="6.7">
+<h3 data-number="6.7" class="anchored" data-anchor-id="step-over-next"><span class="header-section-number">6.7</span> Step Over (Next)</h3>
 <p><span class="note">In lesson script:</span></p>
 <ul>
 <li><p><span class="note">Remove breakpoint on line 24</span> (or click <strong><em>Run</em></strong> -&gt; <strong><em>Remove All Breakpoints</em></strong>)</p></li>
 <li><p><span class="note">Add a breakpoint on line 14</span></p></li>
 </ul>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="dv">14</span> sunsetTimes <span class="ot">=</span> weatherData<span class="sc">$</span>sunset;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>If we <strong><em>Source</em></strong> the script, the code up until line 13 will execute and line 14 will have a green arrow in the gutter.</p>
+<p>If we <strong><em>Source</em></strong> the script, the code up until line 13 will execute and line 14 will have an arrow in the gutter.</p>
 <p>&nbsp;</p>
 <p>We can now execute one command at a time using <strong><em>Step Over</em></strong>.</p>
 <p>&nbsp;</p>
@@ -918,16 +916,16 @@ Figure&nbsp;9: Clicking Step Over executes the command at the arrow and moves th
 </figure>
 </div>
 </section>
-<section id="multiple-commands-on-one-line" class="level3" data-number="6.7">
-<h3 data-number="6.7" class="anchored" data-anchor-id="multiple-commands-on-one-line"><span class="header-section-number">6.7</span> Multiple Commands on one line</h3>
+<section id="multiple-commands-on-one-line" class="level3" data-number="6.8">
+<h3 data-number="6.8" class="anchored" data-anchor-id="multiple-commands-on-one-line"><span class="header-section-number">6.8</span> Multiple Commands on one line</h3>
 <p><span class="note">In lesson script:</span></p>
 <ul>
 <li><span class="note">With breakpoint on line 14, click <strong><em>Next</em></strong> until you get to line 20</span></li>
 </ul>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="dv">20</span> testCommand1<span class="ot">=</span><span class="dv">1</span>; testCommand2<span class="ot">=</span><span class="dv">2</span>; testCommand3<span class="ot">=</span><span class="dv">3</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong><em>Step Over</em></strong> does not execute lines, <strong>Step Over</strong> <span class="hl">executes commands</span>.&nbsp; Lines 17 and 18 have one command each but line 20 has 3 commands. If there are multiple commands on one line then <strong><em>Step Over</em></strong> will execute them one at a time and the debugger will highlight the current command.</p>
+<p><strong><em>Step Over</em></strong> does not execute lines, <strong>Step Over</strong> <span class="hl">executes commands</span>.&nbsp; Lines 14, 15, 17 and 18 have one command each but line 20 has 3 commands. If there are multiple commands on one line then <strong><em>Step Over</em></strong> will execute them one at a time and the debugger will highlight the current command.</p>
 <p>&nbsp;</p>
-<p>The first time I click Step Over when line 21 is highlighted, <code>testCommand1=1</code> gets executed and <code>testCommand2=2</code> becomes highlighted within the highlighted line, indicating its the next command to execute:</p>
+<p>The first time I click Step Over when line 20 is highlighted, <code>testCommand1=1</code> gets executed and <code>testCommand2=2</code> becomes highlighted within the highlighted line, indicating its the next command to execute:</p>
 <div id="fig-multiple_command_line" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-multiple_command_line-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -982,11 +980,13 @@ Figure&nbsp;12: After executing the initialization command, the arrow moves insi
 </figcaption>
 </figure>
 </div>
-<p>If you keep clicking <strong><em>Step Over</em></strong> then debug mode will go through each command in the <strong><em>for</em></strong> loop for each cycle of the <strong><em>for</em></strong> loop (that could take a lot of time!). You can also click <strong><em>Continue</em></strong>, but that will just take you to the breakpoint on the next cycle of the for loop.</p>
+<p>If you keep clicking <strong><em>Step Over</em></strong> then debug mode will go through each command in the <strong><em>for</em></strong> loop for each cycle of the <strong><em>for</em></strong> loop (that could take a lot of time!). If you click <strong><em>Continue</em></strong>, debug mode will go to the next breakpoint or the end of script if there are no more breakpoints.</p>
 </section>
 <section id="step-out-of-the-for-loop" class="level3" data-number="7.2">
 <h3 data-number="7.2" class="anchored" data-anchor-id="step-out-of-the-for-loop"><span class="header-section-number">7.2</span> Step Out of the for loop</h3>
-<p>If you are inside a <strong><em>for</em></strong> loop and want to finish executing the whole <strong><em>for</em></strong> loop (i.e., complete every cycle of the loop), you can click <strong><em>Step Out</em></strong>.&nbsp; This will execute the rest of the <strong><em>for</em></strong> loop and put the control on the next command (in this case, the <strong><em>if-else</em></strong> structure). <span class="note">Note: No bug here – the <strong><em>for</em></strong> loop and <strong><em>Step Out</em></strong> bug only occurs when there is a breakpoint in the <strong><em>for</em></strong> loop.</span></p>
+<p><span class="note">Note: The <strong><em>for</em></strong> loop and <strong><em>Step Out</em></strong> bug only occurs when there is a breakpoint in the <strong><em>for</em></strong> loop, which is not true in this case.</span></p>
+<p>&nbsp;</p>
+<p>If you are inside a <strong><em>for</em></strong> loop and want to finish executing the whole <strong><em>for</em></strong> loop (i.e., complete every cycle of the loop), you can click <strong><em>Step Out</em></strong>.&nbsp; This will execute the rest of the <strong><em>for</em></strong> loop and put the control at the next command (in this case, the <strong><em>if-else</em></strong> structure).</p>
 <div id="fig-step_out" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-step_out-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1007,9 +1007,9 @@ Figure&nbsp;13: Clicking Step Out will execute the rest of the for loop and move
 <ul>
 <li><p><span class="note">Click <strong>Disconnect</strong></span></p></li>
 <li><p><span class="note">Remove all previous breakpoints</span> (click <strong><em>Run</em></strong> -&gt; <strong><em>Remove All Breakpoints…</em></strong>)</p></li>
-<li><p><span class="note">Right-click in the gutter area on line 25 (red circle)</span></p></li>
+<li><p><span class="note">Right-click in the gutter area on line 25</span> (<a href="#fig-conditional_br" class="quarto-xref">Figure&nbsp;16</a>)</p></li>
 <li><p><span class="note">Choose <strong><em>Add Conditional Breakpoint…</em></strong></span></p></li>
-<li><p><span class="note">Choose <strong><em>Expression</em></strong> and put in <strong>i==200</strong></span></p></li>
+<li><p><span class="note">Choose <strong><em>Expression</em></strong> (default choice) and put in <strong>i==200</strong></span></p></li>
 <li><p><span class="note">Click <strong><em>enter</em></strong></span></p></li>
 </ul>
 <div id="fig-cond-bp" class="fs quarto-float quarto-figure quarto-figure-left anchored">
@@ -1046,6 +1046,7 @@ Figure&nbsp;15: Using a conditional breakpoint inside a for loop
 <section id="pause-for-loop-based-on-variable" class="level4" data-number="7.3.3">
 <h4 data-number="7.3.3" class="anchored" data-anchor-id="pause-for-loop-based-on-variable"><span class="header-section-number">7.3.3</span> Pause for loop based on variable</h4>
 <p>This time we will pause the script inside the for loop when a variable meets a condition (<strong><em>sunsetTimes[i] == 2000</em></strong>)</p>
+<p>&nbsp;</p>
 <p><span class="note">In lesson script:</span></p>
 <ul>
 <li><p><span class="note">Click <strong>Disconnect</strong></span></p></li>
@@ -1107,12 +1108,15 @@ Figure&nbsp;17: Debug mode when the control is at the beginning of an if-else st
 </section>
 <section id="debugging-within-functions-step-in" class="level2" data-number="9">
 <h2 data-number="9" class="anchored" data-anchor-id="debugging-within-functions-step-in"><span class="header-section-number">9</span> Debugging within functions (Step In)</h2>
-<p><span class="note">## In lesson script:</span></p>
-<p><span class="note">##&nbsp;&nbsp; Remove all previous breakpoints</span></p>
-<p><span class="note">##&nbsp;&nbsp; Add a breakpoint on line 25</span></p>
+<p><span class="note">In lesson script:</span></p>
+<ul>
+<li><p><span class="note">Remove all previous breakpoints</span></p></li>
+<li><p><span class="note">Add a breakpoint on line 25</span></p></li>
+</ul>
+<p>&nbsp;</p>
 <p>Inside the <strong><em>for</em></strong> loop on lines 24 and 25, we call <strong><em>convertTime()</em></strong> twice.&nbsp; <strong><em>convertTime()</em></strong> is a function inside <strong><em>2-14_ConvertTime.r</em></strong>.&nbsp; If you click <strong><em>Step Over</em></strong> while on line 24, then the whole line is executed, along with the <strong><em>convertTime()</em></strong> function, and control will go to the next line.</p>
 <p>&nbsp;</p>
-<p>You can debug inside the <strong><em>convertTime()</em></strong> function by clicking <strong><em>Step-In</em></strong> while on the lines 24 or 25 (the lines with the function) – this will move control to the function and the whole function will be highlighted:</p>
+<p>You can also debug inside the <strong><em>convertTime()</em></strong> function by clicking <strong><em>Step-In</em></strong> while on the lines 24 or 25 (the lines with the function) – this will move control to the function and the whole function will be highlighted:</p>
 <div id="fig-step_in" class="fs quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-step_in-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1123,20 +1127,24 @@ Figure&nbsp;18: After clicking Step In on line 24, control is moved to the funct
 </figcaption>
 </figure>
 </div>
-<p><strong><em>Step-in</em></strong> works whether the function is inside the same script or in another script.&nbsp; However, <strong><em>Step-in</em></strong> will not work if the function is inside a package – we will deal with this next lesson.</p>
+<p><strong><em>Step-in</em></strong> works whether the function is inside the same script or in another script.&nbsp; However, <strong><em>Step-in</em></strong> will not work if the function is loaded from a package – we will deal with this next lesson.</p>
 <section id="executing-command-within-the-function" class="level3" data-number="9.1">
 <h3 data-number="9.1" class="anchored" data-anchor-id="executing-command-within-the-function"><span class="header-section-number">9.1</span> Executing command within the function</h3>
-<p>Once inside the function you can use the debug buttons like before. <strong><em>Step Over</em></strong> will execute one command at a time inside the function.&nbsp; <strong><em>Step Out</em></strong> will complete the whole function and return to the next command in the main script.</p>
+<p>Once inside the function you can use the debug buttons like before. <strong><em>Step Over</em></strong> will execute one command at a time inside the function.&nbsp; <strong><em>Step Out</em></strong> <span class="hl">should</span>complete the whole function and return to the next command in the main script.</p>
+<p><span class="hl">BUG</span>: <strong><em>Step Out</em></strong> will act like <strong><em>Continue</em></strong>, meaning it will run to the next breakpoint or the end of script, just like it does for a <strong><em>for</em></strong> loop</p>
 </section>
 </section>
 <section id="application" class="level2" data-number="10">
 <h2 data-number="10" class="anchored" data-anchor-id="application"><span class="header-section-number">10</span> Application</h2>
-<p>A) In Comments at the end of the script answer the following questions:</p>
+<p>Breakpoints are designed so that someone can locally debug their script. This means breakpoints are not shared so I cannot see the breakpoint you put in your script. So, everything in this application has to be answered in comments</p>
+<p>&nbsp;</p>
+<p>A) Answer the following questions:</p>
 <ol type="1">
 <li><p>Why might it be a bad idea to put breakpoint without a condition inside a <strong><em>for</em></strong> loop?</p></li>
 <li><p>What happens when you try to put a breakpoint on a line with only comments?&nbsp;(try it)</p></li>
 <li><p>What happens if you put a breakpoint at line 39 and click <strong><em>Source</em></strong>?&nbsp; How about line 35?&nbsp; Why is there a difference?</p></li>
-<li><p>What happens if you put a breakpoint in the middle of the <strong><em>ggplot()</em></strong> call?&nbsp;</p>
+<li><p>What happens if you put a breakpoint in the middle of the <strong><em>ggplot()</em></strong> call?&nbsp;</p></li>
+<li><p>What is the difference between putting a breakpoint on line 33 vs.&nbsp;line 35?</p>
 <p>&nbsp;</p></li>
 </ol>
 <p>B) Set up a conditional breakpoint within the <strong><em>for</em></strong> loop that pauses the script every 30<sup>th</sup> cycle.</p>
@@ -1159,7 +1167,9 @@ Figure&nbsp;18: After clicking Step In on line 24, control is moved to the funct
 <li><p>What areas of the lesson/application confused or still confuses you?</p></li>
 <li><p>What are some things you would like to know more about that is related to, but not covered in, this lesson?</p></li>
 </ol>
-<p>D) What would you need to do if, after the first time the conditional breakpoint in part C is hit, you want to complete the whole <strong><em>for</em></strong> loop and pause the script (i.e., pause right after the for loop completes).</p>
+<p>D) In the lesson script, where might you want to put a breakpoint if the time values are coming out like this: <code>12:8am</code>, <code>12:9am</code>, <code>12:10am</code>?</p>
+<p>&nbsp;</p>
+<p>E) What would you need to do if, after the first time the conditional breakpoint in part C is hit, you want to complete the whole <strong><em>for</em></strong> loop and pause the script (i.e., pause right after the for loop completes).</p>
 </section>
 </section>
 <section id="extension-clicking-source-in-debug-mode" class="level2" data-number="11">
