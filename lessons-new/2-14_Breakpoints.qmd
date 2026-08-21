@@ -28,19 +28,27 @@ The [data used for the lesson](../data/Lansing2016Noaa-3.csv) is here
 
 ## Debugging your code
 
-One of the most powerful debugging tools in any programming language, and a staple of most professional programmers, is the breakpoint.  Breakpoints allows you to pause the execution of your script at a specific line or command.  While paused, you can look at ***Variables***, enter commands in the ***Console***, or move through your script one command at a time. This is a very useful tool for finding problems in your script and where they are occurring.
+One of the most powerful debugging tools in any programming language, and a staple of most professional programmers, is the breakpoint.  Breakpoints allows you to pause the execution of your script at a specific line or command.  While paused, you can look at ***Variables*** as they are at that moment in the script's execution, enter commands in the ***Console***, or step through your script's execution. This is a very useful tool for tracking down hard-to-find problems in your script.
 
  
 
-The implementation of breakpoints in R was historically far less robust than most programming languages. However, in February 2026, Positron added breakpoints – marking the first time an R IDE effectively implemented breakpoints (RStudio has breakpoints, but they are not well implemented).
+The implementation of breakpoints in R was historically far less robust than most programming languages. However, in February 2026, Positron added breakpoints – marking the first time an R development environment effectively implemented breakpoints (RStudio has breakpoints, but they were not well implemented).
 
 ### Issues with breakpoints in Positron
 
-Breakpoints were first introduced to Positron in February 2026 and, while they work well, there are still some obvious bugs and quirks. Positron knows about the issues and I would expect them to be fixed by mid-2027. Until then, I will mention the bugs, how things should work, and they currently work.
+Breakpoints were first introduced to Positron in February 2026 and, while they work, there are still some obvious bugs and quirks. Positron knows about the issues and I would expect them to be fixed by mid-2027. Until then, I will mention the bugs, how things should work, and they currently work.
+
+ 
+
+Here are the bugs (and a bit of self-promotion, too):
+
+- <https://github.com/posit-dev/positron/issues/15532>
+
+- <https://github.com/posit-dev/positron/issues/15533>
 
 ## Setting up a breakpoint
 
-A breakpoint is like a pause button in the execution your script.  In Positrion, you set a breakpoint by clicking to the left of the line number -- this space is called the [gutter area]{.hl}.  A gray-outlined dot is initially put in the gutter area (line 4) – indicating that this is an unverified breakpoint. Once the script is sourced and the code in the line is verified, the dot becomes red (line 8). [Note: Clicking on the breakpoint dot removes the breakpoint.]{.note}
+A breakpoint is like a pause button in the execution your script.  In Positron, you set a breakpoint by clicking to the left of the line number -- this space is called the [gutter area]{.hl}.  A gray-outlined dot is initially put in the gutter area (line 4) – indicating that this is an unverified breakpoint. Once the script is sourced and the code in the line is verified, the dot becomes red (line 8). [Note: Clicking on the breakpoint dot removes the breakpoint.]{.note}
 
 ![Breakpoint (red dot) set on line 8](images/R_2-13_SetBreakpoint.jpg){#fig-set_breakpoint .fs}
 
@@ -54,7 +62,7 @@ When you ***Source*** your code, the script will execute up to, [but not includi
 
 There are 4 things in Positron that indicate you are in debug mode:
 
-1.  A hollow arrow appears at the code line the script is paused at. The arrow shows you the line that will be executed next (i.e., it is paused right before the line of code)
+1.  A hollow arrow appears at the code line the script is paused at. The arrow shows you the line that will be executed next (i.e., the script is paused right before the line of code)
 
 2.  Floating debug controls appear in file tab area
 
@@ -108,9 +116,25 @@ Browse[1]>
 highTemp_C     -1.667 1.667 0.556 -2.778...  int [366]
 ```
 
+Or you can modify an existing variable (this is used a lot to test different coding scenarios):
+
+``` {.r tab="Console"}
+Browse[1]> lowTemps = lowTemps - 10
+Browse[1]> lowTemps
+  [1]  14  18  15  -3  -2  10  18  20  28  ... 
+ [36]   8  10  22  19  12   1   0  -4  -8  ...
+...
+[351]  -3   6  -2  -2  -1  10  19  17  24  ...
+Browse[1]>
+```
+
 ## Moving through code in debug (browse) mode
 
-When your script arrives at a breakpoint (@fig-source_with_bp), a floating control bar with six buttons appears. In order, they are:
+When your script arrives at a breakpoint (@fig-source_with_bp), a floating control bar with six buttons appears.
+
+ 
+
+In order, the control buttons are:
 
 1\) ***Continue***: unpauses the execution of the script (like hitting the Play button when a video is paused)
 
@@ -123,7 +147,8 @@ When your script arrives at a breakpoint (@fig-source_with_bp), a floating contr
 4\) ***Step Out***: completes a ***for*** loop or function and pauses the script at the next line
 
 - if not in a ***for*** loop or function, ***Step Out*** acts like ***Continue***
-- [BUG]{.hl}: if in a ***for*** loop with a breakpoint, ***Step Out*** acts like ***Continue***
+- [BUG]{.hl}: if the breakpoint is in a ***for*** loop or function, ***Step Out*** [will exit but not pause]{.hl} at the next line
+  - this is a pretty nasty bug because it creates very confusing scenarios!
 
 5\) ***Restart***: Stops execution and restarts R
 
@@ -133,9 +158,9 @@ When your script arrives at a breakpoint (@fig-source_with_bp), a floating contr
 
 ![The six breakpoint controls in debug mode](images/R-2-13-BPControls.png){#fig-five_bp_controls .fs}
 
-### Do not use Source in DEbug Mode
+### Do not use Source in Debug Mode
 
-When in debug mode [you should only use the buttons to control the flow of your script]{.hl}.  Clicking ***Source*** while in debug mode will put you into multiple debug modes at once, which is not something you want to do at this point. [Extension: Clicking Source in debug mode].
+When in debug mode [you should only use the six buttons to control the flow of your script]{.hl}.  Clicking ***Source*** while in debug mode will put you into multiple debug modes at once. This is not something you want to do at this point. [Extension: Clicking Source in debug mode].
 
 ### Disconnect
 
@@ -171,13 +196,13 @@ After line 17 there are no more breakpoints, so if you click ***Continue*** agai
 
 ![Clicking Continue when there are no more breakpoint executes the rest of the script and takes you out of debug mode](images/R-2-13-ContinueToEnd.jpg){#fig-continue_to_end .fs}
 
-### breakpoint inside for loop
+### breakpoint inside ***for*** loop
 
 [In lesson script:]{.note}
 
 - [Remove the breakpoints at lines 8 and 17]{.note}
 
-  - either click on each to remove or click ***Run*** -\> ***Remove All Breakpoints***
+  - either click on breakpoints to remove or click ***Run*** -\> ***Remove All Breakpoints***
 
 - [Add a breakpoint at line 24 (inside the ***for*** loop)]{.note}
 
@@ -195,23 +220,23 @@ If you are in a ***for*** loop with thousands of cycle then you do not want to k
 
  
 
-There are multiple ways to get out of the ***for*** loop with one click:
+There are three ways to get out of the ***for*** loop with one click:
 
-- Click ***Step Out*** – this [should]{.hl} complete the ***for*** loop and pause execution at the next command after the ***for*** loop (line 29)
+1.  Click ***Step Out*** – this [should]{.hl} complete the ***for*** loop and pause execution at the next command after the ***for*** loop (line 29)
 
-  - [BUG]{.hl}: currently, ***Step Out*** will execute your script until the next breakpoint or to the end of the script
+    - [BUG]{.hl}: [***Step Out*** will not pause execution at the next command](https://github.com/posit-dev/positron/issues/15532)
 
-  - Current fix for bug: add breakpoint right after the ***for*** loop (line 29)
+    - [Bug fix: add breakpoint right after the ***for*** loop on line 29]{.note}
 
-- Click ***Disconnect*** – this will end debug mode and stop the script but leave everything in ***Variables***
+2.  Click ***Disconnect*** – this will end debug mode and stop the script but leave everything in ***Variables***
 
-- Click ***Restart*** in ***Console*** tab (@fig-restartR) – this will end debug mode, restart the R session, and clean out ***Variables***
+3.  Click ***Restart*** in ***Console*** tab (@fig-restartR) – this will end debug mode, restart the R session, and clean out ***Variables***
 
 ![Restart button in Console tab](images/R_2-14_RestartInConsole.png){#fig-restartR .fs}
 
 #### Restart control bug
 
-The ***Restart*** button in the debug controls will also restart the R session and clean out ***Variables***, but breakpoints will not work after this (this is a bug as of Positron 2026.08). To fix breakpoints, click ***Restart*** in the ***Console*** tab or close out and reopen Positron.
+The ***Restart*** button in the debug controls will also restart the R session and clean out ***Variables***, but breakpoints will not work after this ([this is a bug in Positron](https://github.com/posit-dev/positron/issues/15533)). If you click ***Restart*** in the debug controls, then you will need to either click ***Restart*** in the ***Console*** tab or close out and reopen Positron.
 
 ### Step Over (Next)
 
@@ -241,6 +266,14 @@ So, ***sunsetTimes*** is created and put in ***Variables*** and line 15, which c
 
 ![Clicking Step Over executes the command at the arrow and moves the arrow to the next command](images/R-2-13-Next.jpg){#fig-bp_next .fs}
 
+#### Step Over and Next
+
+Many debuggers choose to call the ***Step Over*** control ***Next***. ***Step Over*** and ***Next*** both functionally do the same thing but they take a different perspective.
+
+ 
+
+Both tell the debugger to run the next command fully. But ***Step Over*** is explicitly saying to run all functions within the command (i.e., ***Step Over*** the functions), which could be thought of as subcommands. This is to contrast with ***Step In***, which explicitly tells the debugger to go inside the functions (i.e., ***Step In*** the function). I personally feel like the term ***Next*** is more intuitive.
+
 ### Multiple Commands on one line
 
 [In lesson script:]{.note}
@@ -259,7 +292,7 @@ The first time I click Step Over when line 20 is highlighted, `testCommand1=1` g
 
 ![Only the current command is highlighted -- clicking Step Over moves through the commands on the line.](images/R-2-13-NextCommand.jpg){#fig-multiple_command_line .fs}
 
-## Debugging in a for loop
+## Debugging inside a ***for*** loop
 
 [In lesson script:]{.note}
 
@@ -303,7 +336,7 @@ If you keep clicking ***Step Over*** then debug mode will go through each comman
 
 ### Step Out of the for loop
 
-[Note: The ***for*** loop and ***Step Out*** bug only occurs when there is a breakpoint in the ***for*** loop, which is not true in this case.]{.note}
+[Note: The ***for*** loop and ***Step Out*** bug only occurs when you stop at a breakpoint in the ***for*** loop, which is not true in this case.]{.note}
 
  
 
@@ -339,13 +372,13 @@ With the conditional breakpoint on line 25, the script will pause on the **200^t
 
 #### Expressions are conditional statements
 
-The ***Expression*** for the breakpoint works just like an expression in an ***if()*** and uses the same logic.
+The ***Expression*** for the breakpoint works just like a conditional statement in an ***if()*** and uses the same logic.
 
 - `i>200` \# i greater than 200
 
 - `i<=200` \# i less than or equal to 200
 
-- `i==200 & j==300` \# i equal to 200 and j equal to 300 (assuming there is a j)
+- `i==200 & j==300` \# i equal to 200 and j equal to 300 (assuming there is a ***j***)
 
 #### Pause for loop based on variable
 
@@ -357,7 +390,7 @@ This time we will pause the script inside the for loop when a variable meets a c
 
 - [Click **Disconnect**]{.note}
 
-- [Right-click in the gutter area on line 25 (red circle)]{.note}
+- [Right-click in the gutter area on line 25]{.note}
 
 - [Choose ***Edit Breakpoint...***]{.note}
 
@@ -383,7 +416,7 @@ The script will pause on the **141^st^** cycle of the ***for*** loop, which repr
 29 if(testCommand3 == 1) # FALSE
 ```
 
-Similar to the initialization of ***for*** loops, the code inside the parentheses of ***if-else*** statements is a command.  The command, which is a conditional statements, outputs a Boolean (TRUE/FALSE) value that is used to determined if the codeblock gets executed.
+Similar to the initialization of ***for*** loops, the conditional statement inside the parentheses of ***if-else*** statements is a command.  The command outputs a Boolean (TRUE/FALSE) value that is used to determined if the codeblock gets executed.
 
  
 
@@ -407,6 +440,14 @@ The following lines are not executed in an ***if-else*** structure and will be s
 
   - the codeblock attached to these ***else*** statements will also not be executed
 
+### Quirks with debugging if-else structures
+
+If you put a breakpoint on an ***else if*** or ***else*** statement (lines 33, 37, 41, and 45 in @fig-if_else_debug) , that breakpoint will either not work or move to the ***if*** line (line 29 in @fig-if_else_debug). Breakpoints inside codeblocks attached to ***else if*** or ***else*** statements will work (assuming the codeblock gets executed).
+
+ 
+
+If you put a breakpoint on line 29 in @fig-if_else_debug and click ***Source***, ***Step Over*** will go from line 29 to 33 to 37 to 39. But only line 39 will get highlighted making it hard to see the interim steps. This seems like a bug.
+
 ## Debugging within functions (Step In)
 
 [In lesson script:]{.note}
@@ -421,17 +462,17 @@ Inside the ***for*** loop on lines 24 and 25, we call ***convertTime()*** twice.
 
  
 
-You can also debug inside the ***convertTime()*** function by clicking ***Step-In*** while on the lines 24 or 25 (the lines with the function) -- this will move control to the function and the whole function will be highlighted:
+You can also debug inside the ***convertTime()*** function by clicking ***Step In*** while on the lines 24 or 25 (the lines with the function) -- this will move control to the function and the whole function will be highlighted:
 
 ![After clicking Step In on line 24, control is moved to the function](images/R-2-13_StepIn.png){#fig-step_in .fs}
 
-***Step-in*** works whether the function is inside the same script or in another script.  However, ***Step-in*** will not work if the function is loaded from a package – we will deal with this next lesson.
+***Step In*** works whether the function is inside the same script or in another script.  However, ***Step In*** will not work if the function is loaded from a package – we will deal with this next lesson.
 
 ### Executing command within the function
 
-Once inside the function you can use the debug buttons like before. ***Step Over*** will execute one command at a time inside the function.  ***Step Out*** [should ]{.hl}complete the whole function and return to the next command in the main script.
+Once inside the function you can use the debug buttons like before. ***Step Over*** will execute one command at a time inside the function.  ***Step Out*** [should]{.hl} complete the whole function and return to the next command in the main script.
 
-[BUG]{.hl}: ***Step Out*** will act like ***Continue***, meaning it will run to the next breakpoint or the end of script, just like it does for a ***for*** loop
+[BUG]{.hl}: ***Step Out*** will act like ***Continue***, meaning it will run to the next breakpoint or the end of script, similar to a ***for*** loop
 
 ## Application
 
