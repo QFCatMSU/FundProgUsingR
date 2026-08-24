@@ -28,7 +28,7 @@ The [data used for the lesson](../data/Lansing2016Noaa-3.csv) is here
 
 ## Debugging your code
 
-One of the most powerful debugging tools in any programming language, and a staple of most professional programmers, is the breakpoint.  Breakpoints allows you to pause the execution of your script at a specific line or command.  While paused, you can look at ***Variables*** as they are at that moment in the script's execution, enter commands in the ***Console***, or step through your script's execution. This is a very useful tool for tracking down hard-to-find problems in your script.
+One of the most powerful debugging tools in any programming language, and a staple of most professional programmers, is the breakpoint.  Breakpoints allows you to pause the execution of your script at a specific line or command.  While paused, you can look at ***Variables*** as they are at that moment in the script's execution, enter commands in the ***Console***, and step through your script's execution. This is a very useful tool for tracking down hard-to-find problems in your script.
 
  
 
@@ -62,7 +62,7 @@ When you ***Source*** your code, the script will execute up to, [but not includi
 
 There are 4 things in Positron that indicate you are in debug mode:
 
-1.  A hollow arrow appears at the code line the script is paused at. The arrow shows you the line that will be executed next (i.e., the script is paused right before the line of code)
+1.  A hollow arrow appears at the code line the script is paused at. The arrow shows you the code that will be executed next.
 
 2.  Floating debug controls appear in file tab area
 
@@ -138,7 +138,7 @@ In order, the control buttons are:
 
 1\) ***Continue***: unpauses the execution of the script (like hitting the Play button when a video is paused)
 
-2\) ***Step Over***: executes the command at the arrow (in RStudio, this is called ***Next***)
+2\) ***Step Over***: executes the command at the arrow (often called ***Next***)
 
 3\) ***Step Into***: moves into a function
 
@@ -150,11 +150,11 @@ In order, the control buttons are:
 - [BUG]{.hl}: if the breakpoint is in a ***for*** loop or function, ***Step Out*** [will exit but not pause]{.hl} at the next line
   - this is a pretty nasty bug because it creates very confusing scenarios!
 
-5\) ***Restart***: Stops execution and restarts R
+5\) ***Restart***: Ends debug mode and restarts R (this clears ***Variables***)
 
 - [BUG]{.hl}: broken – use Restart in ***Console*** (@fig-five_bp_controls), which performs the same function
 
-6\) ***Disconnect***: quits the script (no more code is executed)
+6\) ***Disconnect***: Ends debug mode but does not restart R (***Variables*** will be untouched)
 
 ![The six breakpoint controls in debug mode](images/R-2-13-BPControls.png){#fig-five_bp_controls .fs}
 
@@ -204,7 +204,7 @@ After line 17 there are no more breakpoints, so if you click ***Continue*** agai
 
   - either click on breakpoints to remove or click ***Run*** -\> ***Remove All Breakpoints***
 
-- [Add a breakpoint at line 24 (inside the ***for*** loop)]{.note}
+- [Add a breakpoint at line 24 (inside the ***for*** loop)]{.note}[ and click ***Source***]{.note}
 
 ``` r
 24 sunsetTimes_12Hour[i] = convertTime(sunsetTimes[i]);
@@ -220,7 +220,7 @@ If you are in a ***for*** loop with thousands of cycle then you do not want to k
 
  
 
-There are three ways to get out of the ***for*** loop with one click:
+There are three ways to quickly get out of the ***for*** loop:
 
 1.  Click ***Step Out*** – this [should]{.hl} complete the ***for*** loop and pause execution at the next command after the ***for*** loop (line 29)
 
@@ -236,7 +236,7 @@ There are three ways to get out of the ***for*** loop with one click:
 
 #### Restart control bug
 
-The ***Restart*** button in the debug controls will also restart the R session and clean out ***Variables***, but breakpoints will not work after this ([this is a bug in Positron](https://github.com/posit-dev/positron/issues/15533)). If you click ***Restart*** in the debug controls, then you will need to either click ***Restart*** in the ***Console*** tab or close out and reopen Positron.
+The ***Restart*** button in the debug controls will also restart the R session and clean out ***Variables***, but breakpoints will not work after this ([this is a bug in Positron](https://github.com/posit-dev/positron/issues/15533)). If you click ***Restart*** in the debug controls, then you will either need to restart Positron or click ***Restart*** in the ***Console***.
 
 ### Step Over (Next)
 
@@ -244,7 +244,7 @@ The ***Restart*** button in the debug controls will also restart the R session a
 
 - [Remove breakpoint on line 24]{.note} (or click ***Run*** -\> ***Remove All Breakpoints***)
 
-- [Add a breakpoint on line 14]{.note}
+- [Add a breakpoint on line 14 and click ***Source***]{.note}
 
 ``` r
 14 sunsetTimes = weatherData$sunset;
@@ -262,7 +262,7 @@ Clicking ***Step Over*** executes the command on line 14 and moves the arrow to 
 
  
 
-So, ***sunsetTimes*** is created and put in ***Variables*** and line 15, which creates ***sunriseTimes***, is highlighted with the arrow..
+So, ***sunsetTimes*** is created and put in ***Variables*** and line 15, which creates ***sunriseTimes***, is highlighted with the arrow:
 
 ![Clicking Step Over executes the command at the arrow and moves the arrow to the next command](images/R-2-13-Next.jpg){#fig-bp_next .fs}
 
@@ -284,11 +284,11 @@ Both tell the debugger to run the next command fully. But ***Step Over*** is exp
 20 testCommand1=1; testCommand2=2; testCommand3=3;
 ```
 
-***Step Over*** does not execute lines, **Step Over** [executes commands]{.hl}.  Lines 14, 15, 17 and 18 have one command each but line 20 has 3 commands. If there are multiple commands on one line then ***Step Over*** will execute them one at a time and the debugger will highlight the current command.
+***Step Over*** does not execute lines, **Step Over** [executes commands]{.hl}.  Lines 14, 15, 17 and 18 have one command each but line 20 has three commands. If there are multiple commands on one line then ***Step Over*** will execute them one at a time and the debugger will highlight the current command.
 
  
 
-The first time I click Step Over when line 20 is highlighted, `testCommand1=1` gets executed and `testCommand2=2` becomes highlighted within the highlighted line, indicating its the next command to execute:
+The first time I click ***Step Over*** when line 20 is highlighted, `testCommand1=1` gets executed and `testCommand2=2` becomes highlighted within the highlighted line, indicating its the next command to execute:
 
 ![Only the current command is highlighted -- clicking Step Over moves through the commands on the line.](images/R-2-13-NextCommand.jpg){#fig-multiple_command_line .fs}
 
@@ -364,6 +364,8 @@ Debugging a ***for*** loop can be quite tricky if it is cycling thousands (or mi
 
 - [Click ***enter***]{.note}
 
+- [Click ***Source***]{.note}
+
 ![Adding a conditinal breakpoint inside a for loop](images/R_2-13_AddConditionalBP.png){#fig-cond-bp .fs}
 
 With the conditional breakpoint on line 25, the script will pause on the **200^th^** cycle of the ***for*** loop:
@@ -372,7 +374,7 @@ With the conditional breakpoint on line 25, the script will pause on the **200^t
 
 #### Expressions are conditional statements
 
-The ***Expression*** for the breakpoint works just like a conditional statement in an ***if()*** and uses the same logic.
+The ***Expression*** for the breakpoint works just like a conditional statement in ***if()*** and uses the same logic.
 
 - `i>200` \# i greater than 200
 
@@ -398,9 +400,11 @@ This time we will pause the script inside the for loop when a variable meets a c
 
 - [Click ***enter***]{.note}
 
+- [Click ***Source***]{.note}
+
  
 
-The script will pause on the **141^st^** cycle of the ***for*** loop, which represents the first day that sunset is at exactly 8:00pm (2000 hours)
+The script will pause on the **141^st^** cycle of the ***for*** loop, which represents the first day that sunset is at exactly 8:00pm (**2000** hours)
 
 ![Conditional breakpoint based on a variable used in the for loop](images/R-2-13-ConditionalBP2.jpg){#fig-conditional_br .fs}
 
@@ -490,8 +494,6 @@ A\) Answer the following questions:
 
 4.  What happens if you put a breakpoint in the middle of the ***ggplot()*** call? 
 
-5.  What is the difference between putting a breakpoint on line 33 vs. line 35?
-
      
 
 B\) Set up a conditional breakpoint within the ***for*** loop that pauses the script every 30^th^ cycle.
@@ -502,13 +504,9 @@ B\) Set up a conditional breakpoint within the ***for*** loop that pauses the sc
 
 C\) Set up a conditional breakpoint within a ***for*** loop to pause the code when ***windSpeed*** is between 35 and 40mph.
 
+D\) Where might you want to put a breakpoint if, when executing the lesson script, the time values are coming out like this: `12:8am`, `12:9am`, `12:10am`?
+
 {{< include ../assets/_AppInstructions.qmd >}}
-
-D\) In the lesson script, where might you want to put a breakpoint if the time values are coming out like this: `12:8am`, `12:9am`, `12:10am`?
-
- 
-
-E\) What would you need to do if, after the first time the conditional breakpoint in part C is hit, you want to complete the whole ***for*** loop and pause the script (i.e., pause right after the for loop completes).
 
 ## Extension: Clicking Source in debug mode
 
