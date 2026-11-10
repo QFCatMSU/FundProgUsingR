@@ -77,7 +77,7 @@ plot7 = ggplot( data=weatherData ) +
   theme( axis.text.x=element_text(angle=90, vjust=0.5) );
 print(plot7);
 
-#### Trap: Putting ( + ) is the wrong place ####
+#### Trap: Putting ( + ) in the wrong place ####
 plotA = ggplot( data=weatherData )
 + geom_point( mapping=aes(x=avgTemp, y=relHum) )
 + labs( title="plotA: Humidity vs Temperature",
