@@ -4,9 +4,10 @@ short: "2-13"
 # special characters for highlighting code : «»
 ---
 
-### To-do
+### Notes
 
-- The 2026.11 version of Positrion adds the Object Viewer, which gives a robust way to access and view the components within a List
+- The 2026.11 version of Positron adds the Object Viewer, which gives a robust way to access and view the components within a List. This lesson shows the Object Viewer but it is not needed to complete the lesson
+- Click on or click-drag images to resize
 
 ## Purpose
 
@@ -26,15 +27,15 @@ The [data used for this lesson and the application](../data/Lansing2016Noaa.csv)
 
 As mentioned in last lesson, there are 3 types of objects in R:
 
-- Vectors (a.k.a. atomic vectors): objects that hold multiple values of the same type (e.g., numeric, string, logical)
+- **Vectors** (a.k.a. atomic vectors): objects that hold multiple values of the same type (e.g., numeric, string, logical)
 
-  - vector are like data files on your computer
+  - vectors are like data files on your computer
 
-- Lists: objects that hold other objects (including more Lists)
+- **Lists**: objects that hold other objects (including more Lists)
 
   - lists are like folders on your computer
 
-- Functions: objects that hold operations
+- **Functions**: objects that hold operations
 
   - functions are like executable files on your computer
 
@@ -65,7 +66,11 @@ weatherData_reduced = weatherData[150:169, seq(from=1, to=10, by=2)];
 
  
 
-In ***Variables***, ***someNumbers,*** ***weatherData***, and ***weatherData_reduced*** are put in the DATA section. Positron only puts 2D data objects into the DATA section. Objects in DATA can be double-clicked and put into a data viewer tab – in @fig-data-values, ***weatherData_reduced*** is in a data viewer. All other data goes into VALUES (including ***someAnimals***).
+In ***Variables***, ***someNumbers,*** ***weatherData***, and ***weatherData_reduced*** are put in the DATA section. Positron only puts 2D data objects into the DATA section. All other objects are put in the VALUES section. Objects in DATA can be double-clicked and put into a data viewer tab (@fig-data-values).
+
+ 
+
+The data viewer tab is labeled ***Data: \<objName\>*** or, in this case, ***Data: weatherData_reduced*** is in a data viewer.
 
 ![Expanded view of three objects and ***weatherData_reduced*** in the data viewer](images/R_2-13_Data-and-Values.png){#fig-data-values .fs}
 
@@ -79,7 +84,7 @@ Matrices and data frames are both 2D structures that contain data – but they a
 
  
 
-[A data frame is structured like a folder]{.hl} (i.e., List object) that holds multiple vectors of the same size – the vectors can be of different types (e.g., string, Boolean, numeric, integer, Datetime). In a data frame, the number of columns is the number of vectors in the List/folder and the number of rows is the number of values in each vector, which must be the same.
+[A data frame is a special kind of List]{.hl} that has multiple vectors of the same size – the vectors can be of different types (e.g., string, Boolean, numeric, integer, Datetime). In a data frame, the number of columns is the number of vectors in the List and the number of rows is the number of values in each vector (and each vector must have the same number of values).
 
 ### Subsetting a data frame
 
@@ -118,7 +123,7 @@ Let's create a List with the three objects above using the ***list()*** function
 list1 = list(someAnimals, someNumbers, weatherData_reduced);
 ```
 
-When you expand ***list1*** in ***Variables***, you can see the three objects were added to the List, but they do not have names – they just have index numbers. When put in a list, [objects retain their data but not their names.]{.hl}
+When you expand ***list1*** in ***Variables***, you can see the three objects were added to the List, but they do not have names – they just have index numbers, given by ***\[\[ \# \]\]***. When put in a list, [objects retain their data but not their names.]{.hl}
 
 ``` {.r tab="Variables"}
 🞃 list1:     ["llama" "guanaco" ...]              list [3]
@@ -134,30 +139,34 @@ If we want the objects inside the List to have names, then we have to specify a 
 ``` r
 #### Same List but give a name to each of the objects
 list2 = list(animals = someAnimals,
-               numbers = someNumbers, 
-               weather = weatherData_reduced);
+             numbers = someNumbers, 
+             weather = weatherData_reduced);
 ```
 
 The names in the List can be different from the original. In this case, ***animals***, ***numbers***, and ***weather*** are the names of the original objects ***someAnimal***, ***someNumbers***, and ***weatherData_reduced***.
 
-``` r
+``` {.r tab="Variables"}
 🞃 list2:       ["llama" "guanaco" ...]               list [3]
     > animals:  "llama" "guanaco" "alpaca" "goat"      str[4]
     > numbers:  [2 rows x 3 columns] <matrix>     
     > weather:  [20 rows x 5 columns] <data.frame>
 ```
 
-[Note: names inside Lists, like variables, should follow programming naming conventions -- but this is not enforced in R.]{.note}
+[A couple of notes:]{.note}
+
+- names inside Lists, like variables, should follow programming naming conventions -- but this is not enforced in R.
+
+- The names replace the index numbers when viewing the List, but the index numbers are still valid
 
 ## Creating a dynamic List
 
-In the previous example, all the objects were put in the List at once.  However, data is often generated dynamically and added to a List – so the objects are put in the List separately.  We are going to create a List equivalent to ***list2*** except the three objects will be put in one at a time.
+In the previous example, all the objects were put in the List in one command.  However, data is often generated dynamically and added to a List – so the objects are put in the List separately.  We are going to create a List equivalent to ***list2*** except the three objects will be put in one at a time.
 
  
 
 First we create a List with nothing in it (i.e., an empty list):
 
-``` {.r tab="Variables"}
+``` r
 list3 = list();
 ```
 
@@ -214,7 +223,7 @@ list4[[2]] = someNumbers;
 list4[[3]] = weatherData_reduced; 
 ```
 
-***list4*** has the same data in the same order as ***list1***, but without the names:
+***list4*** has the same data in the same order as ***list3***, but without the names:
 
 ``` {.r tab="Variables"}
 🞃 list4:     ["llama" "guanaco" ...]              list [3]
@@ -225,7 +234,7 @@ list4[[3]] = weatherData_reduced;
 
 ### Using length() to appending objects
 
-But the problem with the above code is that you have to know the number of object in the list beforehand – an impractical task in large scripts! Instead, we can tell R to append to the next open index by using ***length()***, which gives the current number of objects in the list.
+But the problem with the above code is that you have to know the number of object in the list beforehand – an impractical task in large scripts! Instead, we can tell R to append to the next open index by using `length(list5)`, which gives the current number of objects in the list. Then we add 1 to that number, `length(list5)+1`, because we want to put the value in the next open slot.
 
 ``` r
 #### To automate the numbering of objects in a list
@@ -248,7 +257,7 @@ list6 = list();
 for (i in 1:5)
 {
   sampleData = sample(1:100, size=10);    # pick 10 random numbers
-  list6[[length(list6)+1]] = sampleData;  # at to list in next spot
+  list6[[length(list6)+1]] = sampleData;  # add to list in next spot
 }
 ```
 
@@ -267,7 +276,17 @@ And ***list6*** has stored the ***5*** sets of random numbers as ***5*** objects
 
 The ***Variables*** tab does a good job of showing the structure of a List object. You can see that ***list3*** has 3 objects (***animals***, ***numbers***, ***weather***) and that ***weather***, in turn, has 5 subobjects.
 
-![Variables tab in Positron showing the structure of a List object](images/R_2-13_ListInVariables.png){#fig-list-viewer}
+![Variables tab in Positron showing the structure of a List object](images/R_2-13_ListInVariables.png){#fig-list-viewer .fs}
+
+### Viewing a List in the Object Viewer
+
+As of version 2026.11 of Positron, double-clicking on a List (or clicking on the icon on the right circled in red) will open the List in an Object Viewer (@fig-objectViewer) . This is a really convenient way to maneuver through a List and see what the List contain.
+
+ 
+
+You can also open List or data objects within the List in a separate Viewer by clicking on the icon circled in blue.
+
+![Using Object Viewer to view a List](images/R_2-13_ObjectViewLists.png){#fig-objectViewer .fs}
 
 ### Subsetting a list
 
@@ -302,7 +321,7 @@ Here are various ways to subset ***minTemp*** within ***weather*** within ***lis
  [1] 64 60 53 59 57 51 57 60 55 48 45 44 54 71 56 50 60 62 62 53
 ```
 
-[Note: \$ is generally easier to use than \[\[ \]\] because it is less typing and Positron gives suggestions, but \$ can only be used with names, not index values.]{.note}
+\$ is generally easier to use than \[\[ \]\] because it is less typing and Positron gives suggestions, but [\$ can only be used with names, not index values]{.hl}.
 
 ### Numeric subsetting (only with \[\[ \]\])
 
@@ -314,6 +333,12 @@ dewPoint1 = list5[[3]][["dewPoint"]];  # 2nd level, in this case, does have a na
 ```
 
 So, if the object inside a List does not have a name, as in ***list5*** (@fig-list-viewer), then you have to use **\[\[ \]\]** to subset the unnamed object by numeric placement.
+
+### Subsetting Lists in the Object Viewer
+
+You can use the Object Viewer to figure out how to subset a List. When you click on an object within the List, the subset code for that object is given at the bottom of the Viewer. You can also right-click on the object to copy the subset code (what Positron calls the [Accessor]{.hl}) or send it directly to the Console. [Note: Positron Accessors always use \[\[ \]\] .]{.note}
+
+![Using Object Viewer to subset a List](images/R_2-13_ListSubset.png){#fig-subsetList .fs}
 
 ### The \[ \] subset operator
 
@@ -335,7 +360,7 @@ In ***Variables***, we can see that  ***animal1*** (subsetted with **\[\[ \]\]*
 The difference between using \[\[ \]\] or \$ vs \[ \] for subsetting objects within a List
 :::
 
-This is not very useful so **\[ \]** is rarely used to subset a List, **\[ \]** is best used to subser values in a vector
+This is not very useful so **\[ \]** is rarely used with Lists, **\[ \]** is best used to subset values in a vector
 
 ## Returned List from functions
 
@@ -343,13 +368,13 @@ Statistical functions often return a List. We are going to run a linear model us
 
  
 
-When we create a linear regression model of humidity vs temperature using ***lm()***, the results are saved to a list, in this case named ***model1***:
+When we create a linear regression model of humidity vs temperature using ***lm()***, the results are in List format and we can save to a list to a variable, in this case ***model1***:
 
 ``` r
 «model1» = lm(formula=weatherData$avgTemp~weatherData$relHum);
 ```
 
-And we can look at a summary of the model using ***print(summary(model1))***:
+We can look at a summary of the model using ***print(summary(model1))***:
 
 ::: {#fig-summary_linear_reg}
 ``` r
@@ -380,7 +405,13 @@ Summary of a model of a linear regression
 
 ![The List returned from a lm() call](images/R-2-11-modelList.png){#fig-returned_list .fs}
 
-In ***Variables***, ***model1*** is listed as ***lm*** (linear model), but ***lm***, like a data frame, is a type of list. In fact using ***typeof()***, you can see that ***model1*** is a List.
+We can also open model1 in the Object Viewer and see the full structure of the List, along with the subset code for internal objects:
+
+![Viewing the Linear model in the Object Viewer](images/R_2-13_ModelInObjectViewer.png){#fig-modelViewer .fs}
+
+### ***lm*** is another type of List
+
+In both ***Variables*** and the ***Object Viewer***, ***model1*** is listed as ***lm*** (linear model). ***lm***, like a data frame, is a type of List. In fact using ***typeof()***, you can see that ***model1*** is a List.
 
 ``` {.r tab="Console"}
 > typeof(model1)
@@ -418,7 +449,7 @@ We use **\[ \]** to subset ***coefficients*** because ***coefficients*** is a ve
 
 ### Subsetting vectors within a list
 
-We can also subset the first ten ***residuals*** from ***model1***:
+We can subset the first ten ***residuals*** from ***model1***:
 
 ``` {.r tab="Console"}
 > model1$residuals[1:10]
@@ -454,7 +485,7 @@ If you look through ***model1***, you will find three new variable types: ***qr*
 
 ## Application
 
-A\) Create one List named ***app2_13_List*** . The list will contains the objects from parts B-D in this application
+A\) Create one List named ***app2_13_List*** . The list will contains the objects from parts B-E in this application
 
  
 
@@ -470,9 +501,19 @@ C\) Using ***weatherData***, create a linear model of dewpoint vs temperature
 
 - Save the model to a List named ***linearModel1***
 
-   
+ 
 
-D\) Using only values in ***linearModel1***, find and save:
+D\) Using a ***for*** loop, select 10 random values from the 4 letter: ***W, X, Y, Z***
+
+- cycle the ***for*** loop 5 times (so, 5 vectors of 10 random letters)
+
+- save the 5 vectors to a List named ***letters***
+
+- [Note: you will need to allow the function to randomly pick values multiple times]{.note}
+
+ 
+
+E\) Using only values in ***linearModel1***, find and save:
 
 - the slope and the intercept
 
@@ -486,6 +527,6 @@ D\) Using only values in ***linearModel1***, find and save:
 
  
 
-E\) Write the List to an RDS file named ***app2-13List.RDS*** in the ***data*** folder and have code to load the RDS file into ***Variables***. The functions are ***saveRDS()*** and ***readRDS()***
+F\) Write the List to an RDS file named ***app2-13List.RDS*** in the ***data*** folder and have code to load the RDS file into ***Variables***. The functions are ***saveRDS()*** and ***readRDS()***
 
 {{< include ../assets/_AppInstructions_Pos.qmd >}}

@@ -4,11 +4,9 @@ short: "2-08"
 # special characters for highlighting code : «»
 ---
 
-### to do
+### Positron update
 
-- talk about what happens if you use as.matrix() on a dataframe with multiple types of variables
-- [Note: As of July 2026, Positron has a bug where it cannot display a Matrix with row names in the Data Viewer. This should be fixed soon and I will update this lesson to show the matrix in the viewer.]{.note}
-  - The 2026.11 version of Positron fixes this – it now has the Object Viewer the can handle the viewing of matrices
+- You need Positron version 2026.11 to see some of the matrix views in the Data Viewer
 
 ## Purpose
 
@@ -18,7 +16,7 @@ short: "2-08"
 
 ## Script for the lesson
 
-The [script for the lesson ](../scripts/2-07_Matrices_new.R)[is ](../scripts/2-08_Matrices.R)[here](../scripts/2-07_Matrices_new.R)
+The [script for the lesson is here](../scripts/2-08_Matrices.R)
 
 The [LansingJanTemps.csv](../data/LansingJanTemps.csv)
 
@@ -111,6 +109,8 @@ We can convert a data frame directly into a matrix using ***as.matrix()***:
 ``` r
 lansingJanMat = as.matrix(lansingJanDF2);
 ```
+
+[note: there is an application question that asks what happens if you use ***as.matrix()*** on a data frame with different types of values.]{.note}
 
 In ***Variables***, the matrix is placed in the ***Data*** section (like a data frame), but is presented as a two-dimensional vector (31 rows by 6 columns):
 
@@ -375,11 +375,7 @@ In Variables we see that the resulting matrix has 6 rows and 31 columns (the rev
    > [, 31]      18 53 27 31 33 49
 ```
 
-[The Positron data viewer (as of July 2026) has a bug in it where it cannot display matrices with row names]{.hl}, so double-clicking on the matrix will not display anything.
-
- 
-
-This is the view from RStudio, notice the with temperature values for the months going horizontally across the matrix instead of vertically down:
+If you double-click on lansingJanMat_T and open it in a Data Viewer, you can see the temperature values for the months going horizontally across the matrix instead of vertically down:
 
 ![The transpose matrix (reversing the rows and columns)](images/R-2-07-Transpose.jpg){#fig-transpose .fs}
 
@@ -508,11 +504,20 @@ This will put a CSV file named ***LansingJanTempsFixed.csv*** in the ***data*** 
 
    
 
-Is it best to convert the data frame into matrix?  In comments in your application script give 1 reason why it is best to convert and one reason why it is not.
+Is it best to convert the data frame into matrix?  In comments in your application script give 1 reason why it is best to convert and one reason why it is not. [Note: there is no "right" answer here.]{.note}
 
  
 
-2\) Find:
+2\) Explain, in comments what happens when you convert a data frame with mixed variable types to a matrix.
+
+You can create a ***weatherData*** data frame and convert it to a matrix to test:
+
+``` r
+weatherData = read.csv(file="data/Lansing2016NOAA.csv");
+### now convert weatherData to a matrix
+```
+
+3\) Find:
 
 - the minimum (***min()***) temperature value in January 2013
 
@@ -524,11 +529,11 @@ Is it best to convert the data frame into matrix?  In comments in your applicat
 
    
 
-3\) Using ***for*** loops, find the mean value for each day in January (i.e., mean of the rows)
+4\) Find the mean value for each day in January (i.e., mean of the rows) using:
 
- 
+   a) ***for*** loops
 
-4\) Using ***apply()***, find the mean value for each day in January (i.e., mean of the rows)
+   b) ***apply()***
 
  
 
